@@ -11,6 +11,15 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+
+/* API Configuration */
+import { API } from './app.config';
+
+/* Authentication */
+import {NbPasswordAuthStrategy, NbAuthModule, NbAuthOAuth2Token} from '@nebular/auth';
+import { NgxLoginComponent } from './auth/login/login.component';
+import { AuthGuard } from './auth/auth-guard.service';
+
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -22,7 +31,7 @@ import {
 } from '@nebular/theme';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NgxLoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -41,6 +50,41 @@ import {
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+
+    /* Authentication */
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email',
+
+          baseEndpoint: API.user.baseUrl,
+
+          token: {
+            class: NbAuthOAuth2Token,
+            key: 'elements.access_token', // this parameter tells where to look for the token
+          },
+
+          login: {
+            endpoint: API.user.login,
+            redirect: {
+              success: '/dashboard',
+              failure: null, // stay on the same page
+            },
+          },
+
+          register: {
+            redirect: {
+              success: '/dashboard',
+              failure: null, // stay on the same page
+            },
+          },
+        }),
+      ],
+      forms: {},
+    }),
+  ],
+  providers: [
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })

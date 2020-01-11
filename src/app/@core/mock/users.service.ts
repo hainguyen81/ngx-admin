@@ -1,53 +1,71 @@
 import { of as observableOf,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Contacts, RecentUsers, UserData } from '../data/users';
+import { Api } from '../data/api';
+import { Module } from '../data/module';
+import { Role } from '../data/role';
+import { RolesGroup } from '../data/roles.group';
+import { UserData } from '../data/users';
 
 @Injectable()
 export class UserService extends UserData {
 
-  private time: Date = new Date;
+  private api = {
+    media: {
+      code: 'MEDIA',
+      name: 'Media Management',
+      regexUrl: 'media/**',
+      version: '1.0.0',
+      id: '5d7660cd738fbc23b43a857e',
+    },
+  };
+
+  private module = {
+    camList: {
+      code: 'camList',
+      name: 'Danh sách Camera',
+      apiId: '5d7660cd738fbc23b43a857e',
+      api: this.api.media,
+      id: '5d54a805c1bb1a2fdc13400a',
+    },
+  };
+
+  private role = {
+    moduleId: '5d54a805c1bb1a2fdc13400a',
+    module: this.module.camList,
+    groupId: '5d766194738fbc23b43a857f',
+    writable: 1,
+    id: '5d577a746d665e1430e95c17',
+  };
+
+  private rolesGroup = {
+    company: 'hsg',
+    code: 'ADM_MEDIA',
+    name: 'Media Administrators',
+    roles: [ this.role ],
+    id: '5d766194738fbc23b43a857f',
+  };
 
   private users = {
-    nick: { name: 'Nick Jones', picture: 'assets/images/nick.png' },
-    eva: { name: 'Eva Moor', picture: 'assets/images/eva.png' },
-    jack: { name: 'Jack Williams', picture: 'assets/images/jack.png' },
-    lee: { name: 'Lee Wong', picture: 'assets/images/lee.png' },
-    alan: { name: 'Alan Thompson', picture: 'assets/images/alan.png' },
-    kate: { name: 'Kate Martinez', picture: 'assets/images/kate.png' },
+    admin: {
+      access_token: 'f90087e0-398e-4124-9522-5a4e6f0bed91',
+      token_type: 'bearer',
+      refresh_token: 'ac581551-9dd4-404a-8a4a-ecf591ebb9d0',
+      expires_in: 7889236,
+      scope: 'READ WRITE',
+      company: 'hsg',
+      enterprise: true,
+      username: 'admin@hsg.com',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      email: 'admin@hsg.com',
+      status: 1,
+      rolesGroup: this.rolesGroup,
+      id: '5d5d67786249ab06b4516c45',
+      rolesGroupId: '5d766194738fbc23b43a857f',
+    },
   };
-  private types = {
-    mobile: 'mobile',
-    home: 'home',
-    work: 'work',
-  };
-  private contacts: Contacts[] = [
-    { user: this.users.nick, type: this.types.mobile },
-    { user: this.users.eva, type: this.types.home },
-    { user: this.users.jack, type: this.types.mobile },
-    { user: this.users.lee, type: this.types.mobile },
-    { user: this.users.alan, type: this.types.home },
-    { user: this.users.kate, type: this.types.work },
-  ];
-  private recentUsers: RecentUsers[]  = [
-    { user: this.users.alan, type: this.types.home, time: this.time.setHours(21, 12)},
-    { user: this.users.eva, type: this.types.home, time: this.time.setHours(17, 45)},
-    { user: this.users.nick, type: this.types.mobile, time: this.time.setHours(5, 29)},
-    { user: this.users.lee, type: this.types.mobile, time: this.time.setHours(11, 24)},
-    { user: this.users.jack, type: this.types.mobile, time: this.time.setHours(10, 45)},
-    { user: this.users.kate, type: this.types.work, time: this.time.setHours(9, 42)},
-    { user: this.users.kate, type: this.types.work, time: this.time.setHours(9, 31)},
-    { user: this.users.jack, type: this.types.mobile, time: this.time.setHours(8, 0)},
-  ];
 
   getUsers(): Observable<any> {
     return observableOf(this.users);
-  }
-
-  getContacts(): Observable<Contacts[]> {
-    return observableOf(this.contacts);
-  }
-
-  getRecentUsers(): Observable<RecentUsers[]> {
-    return observableOf(this.recentUsers);
   }
 }

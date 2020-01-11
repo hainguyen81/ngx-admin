@@ -18,6 +18,9 @@
 @import './layout';
 @import './overrides';
 
+// Authentication
+@import '~@nebular/auth/styles/globals';
+
 // install the framework and custom global styles
 @include nb-install() {
 
@@ -30,4 +33,7 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
+
+  // Authentication
+  @include nb-auth-global();
 };
