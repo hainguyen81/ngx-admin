@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { takeWhile } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
+// import { takeWhile } from 'rxjs/operators';
+// import { forkJoin } from 'rxjs';
 
 import { UserData } from '../../../@core/data/users';
 
@@ -13,8 +13,8 @@ export class ContactsComponent implements OnDestroy {
 
   private alive = true;
 
-  contacts: any[];
-  recent: any[];
+  // contacts: any[];
+  // recent: any[];
 
   constructor(private userService: UserData) {
     /*forkJoin(

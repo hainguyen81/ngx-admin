@@ -1,6 +1,6 @@
 export const API = {
   headers: {
-    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Type': 'application/json; charset=utf-8',
   },
   user: {
     baseUrl: 'http://localhost:8082/api-rest-user/service',
