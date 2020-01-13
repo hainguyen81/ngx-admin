@@ -16,7 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { API } from './app.config';
 
 /* Authentication */
-import { NbAuthModule, NbAuthOAuth2Token } from '@nebular/auth';
+import { NbAuthModule, NbAuthOAuth2Token, NbPasswordAuthStrategy } from '@nebular/auth';
 import { AuthGuard } from './auth/auth.guard.service';
 
 import {
@@ -28,7 +28,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import {NbxOAuth2AuthStrategy} from "./auth/auth.oauth2.strategy";
+// import {NbxOAuth2AuthStrategy} from "./auth/auth.oauth2.strategy";
 
 @NgModule({
   declarations: [AppComponent],
@@ -54,7 +54,7 @@ import {NbxOAuth2AuthStrategy} from "./auth/auth.oauth2.strategy";
     /* Authentication */
     NbAuthModule.forRoot({
       strategies: [
-        NbxOAuth2AuthStrategy.setup({
+        NbPasswordAuthStrategy.setup({
           name: 'email',
           baseEndpoint: API.user.baseUrl,
 

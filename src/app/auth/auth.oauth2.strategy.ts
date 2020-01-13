@@ -1,3 +1,4 @@
+/*
 import { NbAuthResult, NbPasswordAuthStrategy } from '@nebular/auth';
 import { Observable } from 'rxjs';
 import { NbAuthStrategyClass } from '@nebular/auth/auth.options';
@@ -22,3 +23,4 @@ export declare class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     return this.http.request(method, url, { body: {}, headers: headers, observe: 'response'});
   }
 }
+*/
