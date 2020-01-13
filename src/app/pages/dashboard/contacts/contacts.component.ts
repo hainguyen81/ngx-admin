@@ -11,12 +11,12 @@ import { UserData } from '../../../@core/data/users';
 })
 export class ContactsComponent implements OnDestroy {
 
-  private alive = true;
+  // private alive = true;
 
   // contacts: any[];
   // recent: any[];
 
-  constructor(private userService: UserData) {
+  constructor() {
     /*forkJoin(
       this.userService.getContacts(),
       this.userService.getRecentUsers(),
@@ -29,6 +29,6 @@ export class ContactsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
+    // this.alive = false;
   }
 }
