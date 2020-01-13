@@ -7,7 +7,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 /* Authentication */
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { NbAuthOAuth2Token, NbAuthService } from '@nebular/auth';
 
 @Component({
   selector: 'ngx-header',
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private authService: NbAuthService) {
     /* Authentication */
     this.authService.onTokenChange()
-      .subscribe((token: NbAuthJWTToken) => {
+      .subscribe((token: NbAuthOAuth2Token) => {
 
         if (token.isValid()) {
           // here we receive a payload from the token and assigns it to our `user` variable
@@ -67,9 +67,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
-    this.userService.getUsers()
+    /*this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+      .subscribe((users: any) => this.user = users.nick);*/
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()

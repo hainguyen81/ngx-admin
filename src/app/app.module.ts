@@ -16,9 +16,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { API } from './app.config';
 
 /* Authentication */
-import {NbPasswordAuthStrategy, NbAuthModule, NbAuthOAuth2Token} from '@nebular/auth';
-import { NgxLoginComponent } from './auth/login/login.component';
-import { AuthGuard } from './auth/auth-guard.service';
+import { NbAuthModule, NbAuthOAuth2Token } from '@nebular/auth';
+import { AuthGuard } from './auth/auth.guard.service';
 
 import {
   NbChatModule,
@@ -29,9 +28,10 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import {NbxOAuth2AuthStrategy} from "./auth/auth.oauth2.strategy";
 
 @NgModule({
-  declarations: [AppComponent, NgxLoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -54,9 +54,8 @@ import {
     /* Authentication */
     NbAuthModule.forRoot({
       strategies: [
-        NbPasswordAuthStrategy.setup({
+        NbxOAuth2AuthStrategy.setup({
           name: 'email',
-
           baseEndpoint: API.user.baseUrl,
 
           token: {
@@ -80,7 +79,19 @@ import {
           },
         }),
       ],
-      forms: {},
+      forms: {
+        login: {
+          // delay before redirect after a successful login, while success message is shown to the user
+          redirectDelay: 500,
+          strategy: 'email',  // strategy id key.
+          rememberMe: false,   // whether to show or not the `rememberMe` checkbox
+          showMessages: {     // show/not show success/error messages
+            success: false,
+            error: true,
+          },
+          socialLinks: [], // social links at the bottom of a page
+        },
+      },
     }),
   ],
   providers: [

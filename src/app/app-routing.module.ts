@@ -2,7 +2,7 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 /* Authentication */
-import { AuthGuard } from './auth/auth-guard.service';
+import { AuthGuard } from './auth/auth.guard.service';
 import {
   NbAuthComponent,
   NbLoginComponent,
