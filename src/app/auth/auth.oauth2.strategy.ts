@@ -1,26 +1,53 @@
-/*
+import { Injectable } from '@angular/core';
 import { NbAuthResult, NbPasswordAuthStrategy } from '@nebular/auth';
-import { Observable } from 'rxjs';
-import { NbAuthStrategyClass } from '@nebular/auth/auth.options';
 import { NbxPasswordAuthStrategyOptions } from './auth.oauth2.strategy.options';
-import { HttpHeaders } from '@angular/common/http';
-import { Md5 } from 'ts-md5/dist/md5';
+import { NbAuthStrategyClass } from '@nebular/auth/auth.options';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Md5 } from 'ts-md5';
+import { catchError, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
-export declare class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
-  static setup(options: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions];
+@Injectable()
+export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
+  static setup(options: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
+    return [NbxOAuth2AuthStrategy, options];
+  }
 
-  authenticate(data?: any): Observable<NbAuthResult> {
-    let headers: HttpHeaders;
-    let url: string;
-    let method: string;
+  constructor(http: HttpClient, route: ActivatedRoute) {
+    super(http, route);
+  }
+
+  authenticate = (data?: any): Observable<NbAuthResult> => {
+    let oauth2: NbxOAuth2AuthStrategy;
+    oauth2 = this;
     let md5: Md5;
-
-    method = this.getOption('login.method');
-    headers = new HttpHeaders(this.getOption('login.headers'));
-    url = this.getActionEndpoint('login.endpoint');
     md5 = new Md5();
+    const module = 'login';
+    let headers: HttpHeaders;
+    headers = new HttpHeaders(oauth2.getOption(`${module}.headers`));
     headers.set('Authorization', 'Basic ' + btoa(data['email'] + ':' + md5.appendStr(data['password']).end()));
-    return this.http.request(method, url, { body: {}, headers: headers, observe: 'response'});
+    let method: string;
+    method = oauth2.getOption(`${module}.method`);
+    let url: string;
+    url = oauth2.getActionEndpoint(module);
+    let requireValidToken: boolean;
+    requireValidToken = oauth2.getOption(`${module}.requireValidToken`);
+    return oauth2.http.request(method, url, {body: {}, headers: headers, observe: 'response'})
+      .pipe(
+        map((res) => {
+          if (oauth2.getOption(`${module}.alwaysFail`)) throw oauth2.createFailResponse(data);
+          return res;
+        }),
+        map((res) =>
+          new NbAuthResult(
+            true,
+            res,
+            oauth2.getOption(`${module}.redirect.success`),
+            [],
+            oauth2.getOption('messages.getter')(module, res, oauth2.options),
+            oauth2.createToken(oauth2.getOption('token.getter')(module, res, oauth2.options), requireValidToken))),
+        catchError((res) => oauth2.handleResponseError(res, module)),
+      );
   }
 }
-*/
