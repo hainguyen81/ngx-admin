@@ -13,22 +13,30 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 /* API Configuration */
-import { API } from './app.config';
+import {API, COMMON} from './app.config';
 
 /* Authentication */
-import { NbAuthModule, NbAuthOAuth2Token } from '@nebular/auth';
+import { NbAuthModule } from '@nebular/auth';
 import { AuthGuard } from './auth/auth.guard.service';
 import { NbxOAuth2AuthStrategy } from './auth/auth.oauth2.strategy';
+import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 
 import {
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
   NbMenuModule,
-  NbSidebarModule,
+  NbSidebarModule, NbThemeModule,
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+
+/* Logger */
+import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
+
+/* Database */
+import {NgxIndexedDBModule} from 'ngx-indexed-db';
+import {dbConfig} from './db.config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +46,9 @@ import {
     HttpClientModule,
     AppRoutingModule,
 
+    /* Theme */
     ThemeModule.forRoot(),
+    NbThemeModule.forRoot({ name: COMMON.theme }),
 
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
@@ -51,6 +61,15 @@ import {
     }),
     CoreModule.forRoot(),
 
+    /* Logger */
+    LoggerModule.forRoot({
+      level: COMMON.log.level,
+      serverLogLevel: COMMON.log.serverLogLevel,
+    }),
+
+    /* Database */
+    NgxIndexedDBModule.forRoot(dbConfig),
+
     /* Authentication */
     NbAuthModule.forRoot({
       strategies: [
@@ -59,13 +78,14 @@ import {
           baseEndpoint: API.user.baseUrl,
 
           token: {
-            class: NbAuthOAuth2Token,
-            key: 'elements.access_token', // this parameter tells where to look for the token
+            class: NbxAuthOAuth2Token,
+            key: 'access_token', // this parameter tells where to look for the token
           },
 
           login: {
             endpoint: API.user.login,
             method: API.user.method,
+            headers: API.headers,
             redirect: {
               success: '/dashboard',
               failure: null, // stay on the same page
@@ -97,6 +117,7 @@ import {
   ],
   providers: [
     AuthGuard,
+    NbxOAuth2AuthStrategy,
   ],
   bootstrap: [AppComponent],
 })

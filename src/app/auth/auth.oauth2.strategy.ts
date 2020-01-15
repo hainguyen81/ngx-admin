@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { NbAuthResult, NbPasswordAuthStrategy } from '@nebular/auth';
-import { NbxPasswordAuthStrategyOptions } from './auth.oauth2.strategy.options';
-import { NbAuthStrategyClass } from '@nebular/auth/auth.options';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Md5 } from 'ts-md5';
-import { catchError, map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {NbAuthResult, NbPasswordAuthStrategy} from '@nebular/auth';
+import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
+import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Md5} from 'ts-md5';
+import {catchError, map} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -14,8 +15,14 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     return [NbxOAuth2AuthStrategy, options];
   }
 
-  constructor(http: HttpClient, route: ActivatedRoute) {
+  private readonly logger: NGXLogger;
+  protected getLogger(): NGXLogger {
+    return this.logger;
+  }
+
+  constructor(http: HttpClient, route: ActivatedRoute, logger: NGXLogger) {
     super(http, route);
+    this.logger = logger;
   }
 
   authenticate = (data?: any): Observable<NbAuthResult> => {
@@ -25,8 +32,11 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     md5 = new Md5();
     const module = 'login';
     let headers: HttpHeaders;
-    headers = new HttpHeaders(oauth2.getOption(`${module}.headers`));
-    headers.set('Authorization', 'Basic ' + btoa(data['email'] + ':' + md5.appendStr(data['password']).end()));
+    headers = new HttpHeaders(oauth2.getOption(`${module}.headers`) || {});
+    oauth2.getLogger().info(oauth2.getOption(`${module}.headers`));
+    let authorization: string;
+    authorization = btoa(data['email'] + ':' + md5.appendStr(data['password']).end());
+    headers = headers.set('Authorization', 'Basic '.concat(authorization));
     let method: string;
     method = oauth2.getOption(`${module}.method`);
     let url: string;
@@ -36,6 +46,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     return oauth2.http.request(method, url, {body: {}, headers: headers, observe: 'response'})
       .pipe(
         map((res) => {
+          oauth2.getLogger().debug(data);
           if (oauth2.getOption(`${module}.alwaysFail`)) throw oauth2.createFailResponse(data);
           return res;
         }),
