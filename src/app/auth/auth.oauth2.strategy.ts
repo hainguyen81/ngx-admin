@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {NbAuthResult, NbPasswordAuthStrategy} from '@nebular/auth';
+import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Md5} from 'ts-md5';
 import {catchError, map} from 'rxjs/operators';
@@ -46,18 +46,12 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     return oauth2.http.request(method, url, {body: {}, headers: headers, observe: 'response'})
       .pipe(
         map((res) => {
-          oauth2.getLogger().debug(data);
           if (oauth2.getOption(`${module}.alwaysFail`)) throw oauth2.createFailResponse(data);
           return res;
         }),
-        map((res) =>
-          new NbAuthResult(
-            true,
-            res,
-            oauth2.getOption(`${module}.redirect.success`),
-            [],
-            oauth2.getOption('messages.getter')(module, res, oauth2.options),
-            oauth2.createToken(oauth2.getOption('token.getter')(module, res, oauth2.options), requireValidToken))),
+        map((res) => new NbAuthResult(true, res,
+          oauth2.getOption(`${module}.redirect.success`), [], [],
+          oauth2.createToken(res.body, requireValidToken))),
         catchError((res) => oauth2.handleResponseError(res, module)),
       );
   }

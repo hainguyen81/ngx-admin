@@ -1,5 +1,4 @@
 import {isArray, isBoolean, isObject} from 'util';
-import {convertToBoolProperty} from '@nebular/theme/components/helpers';
 
 export const parseResponseJson = (data) => {
   if (typeof data === 'string') {
