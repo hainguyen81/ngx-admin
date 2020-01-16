@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
+import {NbAuthResult, NbPasswordAuthStrategy} from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Md5} from 'ts-md5';
 import {catchError, map} from 'rxjs/operators';
