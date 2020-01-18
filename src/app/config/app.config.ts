@@ -1,8 +1,8 @@
-import {NGXLogger, NGXLoggerHttpService, NgxLoggerLevel, NGXMapperService} from 'ngx-logger';
+import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {EmptyService} from '../services/empty.service';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
 import {AuthGuard} from '../auth/auth.guard.service';
-import {Injector, StaticProvider} from '@angular/core';
+import {Injector, PLATFORM_ID, StaticProvider} from '@angular/core';
 import {dbConfig} from './db.config';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
@@ -37,7 +37,7 @@ export const PROVIDERS: StaticProvider[] = [
   { provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService,
     deps: [ HttpBackend ] },
   { provide: NGXLogger, useClass: NGXLogger,
-    deps: [ NGXMapperService, NGXLoggerHttpService, COMMON.logConfig, 'XXX', DatePipe ] },
+    deps: [ NGXMapperService, NGXLoggerHttpService, COMMON.logConfig, PLATFORM_ID, DatePipe ] },
   { provide: HttpClient, useClass: HttpClient, deps: [] },
   { provide: AuthGuard, useClass: AuthGuard, deps: [] },
   { provide: MockUserService, useClass: MockUserService, deps: [] },
