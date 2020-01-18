@@ -9,6 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.service';
 import {NbxAuthOAuth2Token} from './auth.oauth2.token';
+import {LogConfig} from '../config/log.config';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -47,6 +48,8 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     }
     if (!!logger) {
       throwError('Could not inject logger!');
+    } else {
+      logger.updateConfig(LogConfig);
     }
   }
 
@@ -58,7 +61,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     const module = 'login';
     let headers: HttpHeaders;
     headers = new HttpHeaders(oauth2.getOption(`${module}.headers`) || {});
-    oauth2.getLogger().info(oauth2.getOption(`${module}.headers`));
+    oauth2.getLogger().log(oauth2.getOption(`${module}.headers`));
     let authorization: string;
     authorization = btoa(data['email'] + ':' + md5.appendStr(data['password']).end());
     headers = headers.set('Authorization', 'Basic '.concat(authorization));

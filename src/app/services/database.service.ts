@@ -2,7 +2,8 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {from, Observable, throwError} from 'rxjs';
 import {IDbService} from './interface.service';
-import {Inject} from "@angular/core";
+import {Inject} from '@angular/core';
+import {LogConfig} from '../config/log.config';
 
 export abstract class AbstractDbService<T> implements IDbService<T> {
 
@@ -24,6 +25,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
       throwError('Could not inject logger!');
     }
     dbService.currentStore = dbStore || this.constructor.name;
+    logger.updateConfig(LogConfig);
   }
 
   abstract delete(entity: T): Observable<number>;

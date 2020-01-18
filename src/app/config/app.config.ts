@@ -9,13 +9,11 @@ import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {MockUserService} from '../@core/mock/users.service';
+import {LogConfig} from './log.config';
 
 export const COMMON = {
   theme: 'dark',
-  log: {
-    level: NgxLoggerLevel.DEBUG,
-    serverLogLevel: NgxLoggerLevel.OFF,
-  },
+  logConfig: LogConfig,
 };
 
 export const API = {

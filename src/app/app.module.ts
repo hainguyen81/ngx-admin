@@ -58,8 +58,8 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 
     /* Logger */
     LoggerModule.forRoot({
-      level: AppConfig.COMMON.log.level,
-      serverLogLevel: AppConfig.COMMON.log.serverLogLevel,
+      level: AppConfig.COMMON.logConfig.level,
+      serverLogLevel: AppConfig.COMMON.logConfig.serverLogLevel,
     }),
 
     /* Database */

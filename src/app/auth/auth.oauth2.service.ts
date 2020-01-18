@@ -49,7 +49,7 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
       return super.request(url, method, options);
     }
     let user: User;
-    user = this.mockUserService.findUser('username', '');
+    user = this.mockUserService.findUser('username', 'hainguyenjc@gmail.com');
     return of(this.parseResponse(new ServiceResponse(true, user,
       options.redirectSuccess, options.errors, options.messages)));
   }

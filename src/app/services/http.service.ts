@@ -4,7 +4,8 @@ import {catchError, map} from 'rxjs/operators';
 import {Observable, of, throwError} from 'rxjs';
 import {ServiceResponse} from './response.service';
 import {IHttpService} from './interface.service';
-import {Inject} from "@angular/core";
+import {Inject} from '@angular/core';
+import {LogConfig} from '../config/log.config';
 
 export abstract class AbstractHttpService<T> implements IHttpService<T> {
 
@@ -23,6 +24,7 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     if (!!logger) {
       throwError('Could not inject logger!');
     }
+    logger.updateConfig(LogConfig);
   }
 
   protected handleResponseError(res: any, redirect?: any): Observable<T> {
