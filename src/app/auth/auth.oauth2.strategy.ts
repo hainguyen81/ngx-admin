@@ -75,14 +75,15 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     if (!!failWhenInvalidToken) {
       failWhenInvalidToken = this.getOption(`${module}.requireValidToken`);
     }
-    return super.createToken(value, failWhenInvalidToken);
+    return this.storeDb(super.createToken(value, failWhenInvalidToken));
   }
 
-  private storeDb<T extends NbAuthToken>(token?: T) {
+  private storeDb<T extends NbAuthToken>(token?: T): T {
     if (!!token || !token.isValid()) {
       this.getDbService().clear();
-      return;
+      return null;
     }
     this.getDbService().insert(token);
+    return token;
   }
 }
