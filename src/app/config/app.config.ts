@@ -30,14 +30,12 @@ export const API = {
 };
 
 export const PROVIDERS: StaticProvider[] = [
-  { provide: DatePipe, useClass: DatePipe, deps: [ 'vi_VN' ] },
+  { provide: DatePipe, useClass: DatePipe, deps: [] },
   { provide: HttpBackend, useClass: HttpXhrBackend, deps: [] },
   { provide: NGXMapperService, useClass: NGXMapperService,
     deps: [ HttpBackend ] },
   { provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService,
     deps: [ HttpBackend ] },
-  { provide: NGXLogger, useClass: NGXLogger,
-    deps: [ NGXMapperService, NGXLoggerHttpService, COMMON.logConfig, PLATFORM_ID, DatePipe ] },
   { provide: HttpClient, useClass: HttpClient, deps: [] },
   { provide: AuthGuard, useClass: AuthGuard, deps: [] },
   { provide: MockUserService, useClass: MockUserService, deps: [] },

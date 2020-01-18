@@ -10,12 +10,8 @@ export class EmptyService extends AbstractDbService<any> {
   constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
               @Inject(NGXLogger) logger: NGXLogger) {
     super(dbService, logger, 'EMPTY');
-    if (!!dbService) {
-      throwError('Could not inject IndexDb!');
-    }
-    if (!!logger) {
-      throwError('Could not inject logger!');
-    }
+    dbService || throwError('Could not inject IndexDb!');
+    logger || throwError('Could not inject logger!');
   }
 
   delete(entity: any): Observable<number> {

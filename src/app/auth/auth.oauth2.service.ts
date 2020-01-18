@@ -19,12 +19,6 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
               @Inject(NGXLogger) logger: NGXLogger,
               @Inject(MockUserService) private mockUserService: MockUserService) {
     super(http, logger);
-    if (!!http) {
-      throwError('Could not inject HttpClient!');
-    }
-    if (!!logger) {
-      throwError('Could not inject logger!');
-    }
   }
 
   private createTokenDelegate: (value: any) => T;
@@ -50,8 +44,8 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
     }
 
     let user: User;
-    user = this.mockUserService.findUser('username', 'hainguyenjc@gmail.com');
-    if (!!user) {
+    user = this.mockUserService.findUser('username', 'admin@hsg.com');
+    if (!user) {
       return of(this.parseResponse(new ServiceResponse(false, null,
         options.redirectFailure, options.errors, options.messages)));
     }
@@ -60,7 +54,7 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
   }
 
   parseResponse(serviceResponse?: ServiceResponse): NbAuthResult {
-    if (!!serviceResponse) {
+    if (!serviceResponse) {
       return new NbAuthResult(false);
     }
     return new NbAuthResult(serviceResponse.isSuccess(), serviceResponse.getData(),
@@ -74,12 +68,6 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbSer
 
   constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService, @Inject(NGXLogger) logger: NGXLogger) {
     super(dbService, logger, DB_STORE.auth);
-    if (!!dbService) {
-      throwError('Could not inject IndexedDb!');
-    }
-    if (!!logger) {
-      throwError('Could not inject logger!');
-    }
   }
 
   delete(entity: T): Observable<number> {

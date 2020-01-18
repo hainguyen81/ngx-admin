@@ -10,6 +10,7 @@ import {NGXLogger} from 'ngx-logger';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.service';
 import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 import {LogConfig} from '../config/log.config';
+import {isNull} from "util";
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -35,23 +36,13 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
               @Inject(NbxOAuth2AuthDbService) private authDbService: NbxOAuth2AuthDbService<NbAuthToken>,
               @Inject(NGXLogger) private logger: NGXLogger) {
     super(http, route);
-    if (!!route) {
-      throwError('Could not inject route!');
-    }
-    if (!!authHttpService) {
-      throwError('Could not inject HttpService!');
-    } else {
-      this.authHttpService.setCreateTokenDelegate(this.createToken);
-      this.authHttpService.setHandleResponseErrorDelegate(this.handleResponseError);
-    }
-    if (!!authDbService) {
-      throwError('Could not inject IndexedDb!');
-    }
-    if (!!logger) {
-      throwError('Could not inject logger!');
-    } else {
-      logger.updateConfig(LogConfig);
-    }
+    route || throwError('Could not inject route!');
+    authHttpService || throwError('Could not inject HttpService!');
+    this.authHttpService.setCreateTokenDelegate(this.createToken);
+    this.authHttpService.setHandleResponseErrorDelegate(this.handleResponseError);
+    authDbService || throwError('Could not inject IndexedDb!');
+    logger || throwError('Could not inject logger!');
+    logger.updateConfig(LogConfig);
   }
 
   authenticate = (data?: any): Observable<NbAuthResult> => {
@@ -76,14 +67,14 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
   }
 
   createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
-    if (!!failWhenInvalidToken) {
+    if (isNull(failWhenInvalidToken) || failWhenInvalidToken === undefined) {
       failWhenInvalidToken = this.getOption(`${module}.requireValidToken`);
     }
     return this.storeDb(super.createToken(value, failWhenInvalidToken));
   }
 
   private storeDb<T extends NbAuthToken>(token?: T): T {
-    if (!!token || !token.isValid()) {
+    if (!token || !token.isValid()) {
       this.getDbService().clear();
       return null;
     }

@@ -18,12 +18,8 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
   protected constructor(@Inject(NgxIndexedDBService) private dbService: NgxIndexedDBService,
                         @Inject(NGXLogger) private logger: NGXLogger,
                         dbStore: string) {
-    if (!!dbService) {
-      throwError('Could not inject IndexDb!');
-    }
-    if (!!logger) {
-      throwError('Could not inject logger!');
-    }
+    dbService || throwError('Could not inject IndexDb!');
+    logger || throwError('Could not inject logger!');
     dbService.currentStore = dbStore || this.constructor.name;
     logger.updateConfig(LogConfig);
   }
