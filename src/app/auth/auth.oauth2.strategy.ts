@@ -42,6 +42,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
       throwError('Could not inject HttpService!');
     } else {
       this.authHttpService.setCreateTokenDelegate(this.createToken);
+      this.authHttpService.setHandleResponseErrorDelegate(this.handleResponseError);
     }
     if (!!authDbService) {
       throwError('Could not inject IndexedDb!');
@@ -61,7 +62,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     const module = 'login';
     let headers: HttpHeaders;
     headers = new HttpHeaders(oauth2.getOption(`${module}.headers`) || {});
-    oauth2.getLogger().log(oauth2.getOption(`${module}.headers`));
+    oauth2.getLogger().info(oauth2.getOption(`${module}.headers`));
     let authorization: string;
     authorization = btoa(data['email'] + ':' + md5.appendStr(data['password']).end());
     headers = headers.set('Authorization', 'Basic '.concat(authorization));

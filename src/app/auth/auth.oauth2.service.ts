@@ -48,8 +48,13 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
     if (environment.production) {
       return super.request(url, method, options);
     }
+
     let user: User;
     user = this.mockUserService.findUser('username', 'hainguyenjc@gmail.com');
+    if (!!user) {
+      return of(this.parseResponse(new ServiceResponse(false, null,
+        options.redirectFailure, options.errors, options.messages)));
+    }
     return of(this.parseResponse(new ServiceResponse(true, user,
       options.redirectSuccess, options.errors, options.messages)));
   }

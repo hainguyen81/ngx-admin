@@ -57,10 +57,7 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
     CoreModule.forRoot(),
 
     /* Logger */
-    LoggerModule.forRoot({
-      level: AppConfig.COMMON.logConfig.level,
-      serverLogLevel: AppConfig.COMMON.logConfig.serverLogLevel,
-    }),
+    LoggerModule.forRoot(AppConfig.COMMON.logConfig),
 
     /* Database */
     NgxIndexedDBModule.forRoot(AppConfig.Db),
@@ -110,8 +107,8 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
       },
     }),
   ],
-  providers: [ AppConfig.Providers ],
-  bootstrap: [AppComponent],
+  providers: AppConfig.Providers,
+  bootstrap: [ AppComponent ],
 })
 export class AppModule {
   constructor(injector: Injector) {

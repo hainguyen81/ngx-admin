@@ -27,6 +27,11 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     logger.updateConfig(LogConfig);
   }
 
+  private handleResponseErrorDelegate: (res: any, redirect?: any) => Observable<T>;
+  public setHandleResponseErrorDelegate(delegate: (res: any, redirect?: any) => Observable<T>) {
+    this.handleResponseErrorDelegate = delegate;
+  }
+
   protected handleResponseError(res: any, redirect?: any): Observable<T> {
     const errors = [];
     if (res instanceof HttpErrorResponse) {
@@ -141,7 +146,9 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         }),
         map((res) => _this.parseResponse(new ServiceResponse(
           true, res, options.redirectSuccess, [], []))),
-        catchError((res) => _this.handleResponseError(res, options.redirectFailure)),
+        catchError((res) => (!!_this.handleResponseErrorDelegate
+          ? _this.handleResponseError(res, options.redirectFailure)
+          : _this.handleResponseErrorDelegate(res, options.redirectFailure))),
       );
   }
 
