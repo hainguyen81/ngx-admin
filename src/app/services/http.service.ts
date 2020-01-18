@@ -1,30 +1,31 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Inject} from '@angular/core';
-import {COMMON} from '../app.config';
 import {NGXLogger} from 'ngx-logger';
 import {catchError, map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {ServiceResponse} from './response.service';
 import {IHttpService} from './interface.service';
+import {Inject} from "@angular/core";
 
 export abstract class AbstractHttpService<T> implements IHttpService<T> {
 
-  private readonly http: HttpClient;
   protected getHttp(): HttpClient {
     return this.http;
   }
 
-  @Inject(NGXLogger) private logger: NGXLogger;
   protected getLogger(): NGXLogger {
     return this.logger;
   }
 
-  protected constructor(http: HttpClient) {
-    this.http = http;
-    this.getLogger().updateConfig({ level: COMMON.log.level, serverLogLevel: COMMON.log.serverLogLevel });
+  protected constructor(@Inject(HttpClient) private http: HttpClient, @Inject(NGXLogger) private logger: NGXLogger) {
+    if (!!http) {
+      throwError('Could not inject HttpClient!');
+    }
+    if (!!logger) {
+      throwError('Could not inject logger!');
+    }
   }
 
-  protected handleResponseError(res: any, redirect?: any): Observable<ServiceResponse> {
+  protected handleResponseError(res: any, redirect?: any): Observable<T> {
     const errors = [];
     if (res instanceof HttpErrorResponse) {
       if (res.error.error_description) {
@@ -33,11 +34,11 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     } else {
       errors.push('Something went wrong.');
     }
-    return of(new ServiceResponse(false, res, redirect, errors, []));
+    return of(this.parseResponse(new ServiceResponse(false, res, redirect, errors, [])));
   }
 
   public post(url: string, options?: {
-    body?: T;
+    body?: any;
     headers?: HttpHeaders | { [header: string]: string | string[]; };
     observe?: 'body';
     params?: HttpParams | { [param: string]: string | string[]; };
@@ -48,12 +49,12 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     redirectFailure?: any;
     errors?: any;
     messages?: any;
-  }): Observable<ServiceResponse> {
+  }): Observable<T> {
     return this.request(url, 'POST', options);
   }
 
   public get(url: string, options?: {
-    body?: T;
+    body?: any;
     headers?: HttpHeaders | { [header: string]: string | string[]; };
     observe?: 'body';
     params?: HttpParams | { [param: string]: string | string[]; };
@@ -64,12 +65,12 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     redirectFailure?: any;
     errors?: any;
     messages?: any;
-  }): Observable<ServiceResponse> {
+  }): Observable<T> {
     return this.request(url, 'GET', options);
   }
 
   public del(url: string, options?: {
-    body?: T;
+    body?: any;
     headers?: HttpHeaders | { [header: string]: string | string[]; };
     observe?: 'body';
     params?: HttpParams | { [param: string]: string | string[]; };
@@ -80,7 +81,7 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     redirectFailure?: any;
     errors?: any;
     messages?: any;
-  }): Observable<ServiceResponse> {
+  }): Observable<T> {
     return this.request(url, 'DELETE', options);
   }
 
@@ -96,12 +97,12 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     redirectFailure?: any;
     errors?: any;
     messages?: any;
-  }): Observable<ServiceResponse> {
+  }): Observable<T> {
     return this.request(url, 'HEAD', options);
   }
 
   public path(url: string, options?: {
-    body?: T;
+    body?: any;
     headers?: HttpHeaders | { [header: string]: string | string[]; };
     observe?: 'body';
     params?: HttpParams | { [param: string]: string | string[]; };
@@ -112,12 +113,12 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     redirectFailure?: any;
     errors?: any;
     messages?: any;
-  }): Observable<ServiceResponse> {
+  }): Observable<T> {
     return this.request(url, 'PATH', options);
   }
 
   public request(url: string, method?: string, options?: {
-    body?: T;
+    body?: any;
     headers?: HttpHeaders | { [header: string]: string | string[]; };
     observe?: 'body';
     params?: HttpParams | { [param: string]: string | string[]; };
@@ -128,7 +129,7 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
     redirectFailure?: any;
     errors?: any;
     messages?: any;
-  }): Observable<ServiceResponse> {
+  }): Observable<T> {
     let _this: AbstractHttpService<T>;
     _this = this;
     return _this.getHttp().request(method, url, options)
@@ -136,9 +137,11 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
           _this.getLogger().debug('Response', res);
           return res;
         }),
-        map((res) => new ServiceResponse(
-          true, res, options.redirectSuccess, [], [])),
+        map((res) => _this.parseResponse(new ServiceResponse(
+          true, res, options.redirectSuccess, [], []))),
         catchError((res) => _this.handleResponseError(res, options.redirectFailure)),
       );
   }
+
+  abstract parseResponse(serviceResponse?: ServiceResponse): T;
 }

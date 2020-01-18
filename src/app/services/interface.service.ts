@@ -1,6 +1,5 @@
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ServiceResponse} from './response.service';
 
 export declare interface IDbService<T> {
   findEntities(criteria?: any): Observable<T[]>;
@@ -23,5 +22,5 @@ export declare interface IHttpService<T> {
     redirectFailure?: any;
     errors?: any;
     messages?: any;
-  }): Observable<ServiceResponse>;
+  }): Observable<T>;
 }

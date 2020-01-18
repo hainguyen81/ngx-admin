@@ -1,13 +1,14 @@
-import {Injectable} from '@angular/core';
-import {NbAuthResult, NbPasswordAuthStrategy} from '@nebular/auth';
+import {Inject, Injectable} from '@angular/core';
+import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {Md5} from 'ts-md5';
-import {catchError, map} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
+import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.service';
+import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -15,14 +16,38 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     return [NbxOAuth2AuthStrategy, options];
   }
 
-  private readonly logger: NGXLogger;
   protected getLogger(): NGXLogger {
     return this.logger;
   }
 
-  constructor(http: HttpClient, route: ActivatedRoute, logger: NGXLogger) {
+  protected getHttpService(): NbxOAuth2AuthHttpService<NbxAuthOAuth2Token> {
+    return this.authHttpService;
+  }
+
+  protected getDbService(): NbxOAuth2AuthDbService<NbAuthToken> {
+    return this.authDbService;
+  }
+
+  constructor(@Inject(HttpClient) http: HttpClient,
+              @Inject(ActivatedRoute) route: ActivatedRoute,
+              @Inject(NbxOAuth2AuthHttpService) private authHttpService: NbxOAuth2AuthHttpService<NbxAuthOAuth2Token>,
+              @Inject(NbxOAuth2AuthDbService) private authDbService: NbxOAuth2AuthDbService<NbAuthToken>,
+              @Inject(NGXLogger) private logger: NGXLogger) {
     super(http, route);
-    this.logger = logger;
+    if (!!route) {
+      throwError('Could not inject route!');
+    }
+    if (!!authHttpService) {
+      throwError('Could not inject HttpService!');
+    } else {
+      this.authHttpService.setCreateTokenDelegate(this.createToken);
+    }
+    if (!!authDbService) {
+      throwError('Could not inject IndexedDb!');
+    }
+    if (!!logger) {
+      throwError('Could not inject logger!');
+    }
   }
 
   authenticate = (data?: any): Observable<NbAuthResult> => {
@@ -41,18 +66,23 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     method = oauth2.getOption(`${module}.method`);
     let url: string;
     url = oauth2.getActionEndpoint(module);
-    let requireValidToken: boolean;
-    requireValidToken = oauth2.getOption(`${module}.requireValidToken`);
-    return oauth2.http.request(method, url, {body: {}, headers: headers, observe: 'response'})
-      .pipe(
-        map((res) => {
-          if (oauth2.getOption(`${module}.alwaysFail`)) throw oauth2.createFailResponse(data);
-          return res;
-        }),
-        map((res) => new NbAuthResult(true, res,
-          oauth2.getOption(`${module}.redirect.success`), [], [],
-          oauth2.createToken(res.body, requireValidToken))),
-        catchError((res) => oauth2.handleResponseError(res, module)),
-      );
+    let options: any;
+    options = {body: {}, headers: headers, observe: 'response'};
+    return this.getHttpService().request(url, method, options);
+  }
+
+  createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
+    if (!!failWhenInvalidToken) {
+      failWhenInvalidToken = this.getOption(`${module}.requireValidToken`);
+    }
+    return super.createToken(value, failWhenInvalidToken);
+  }
+
+  private storeDb<T extends NbAuthToken>(token?: T) {
+    if (!!token || !token.isValid()) {
+      this.getDbService().clear();
+      return;
+    }
+    this.getDbService().insert(token);
   }
 }

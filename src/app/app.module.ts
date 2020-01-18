@@ -3,22 +3,19 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { CoreModule } from './@core/core.module';
-import { ThemeModule } from './@theme/theme.module';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Injector, NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {CoreModule} from './@core/core.module';
+import {ThemeModule} from './@theme/theme.module';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
 /* API Configuration */
-import {API, COMMON} from './app.config';
-
+import {AppConfig} from './config/app.config';
 /* Authentication */
-import { NbAuthModule } from '@nebular/auth';
-import { AuthGuard } from './auth/auth.guard.service';
-import { NbxOAuth2AuthStrategy } from './auth/auth.oauth2.strategy';
+import {NbAuthModule} from '@nebular/auth';
+import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 
 import {
@@ -26,17 +23,15 @@ import {
   NbDatepickerModule,
   NbDialogModule,
   NbMenuModule,
-  NbSidebarModule, NbThemeModule,
+  NbSidebarModule,
+  NbThemeModule,
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-
 /* Logger */
-import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
-
+import {LoggerModule} from 'ngx-logger';
 /* Database */
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
-import {dbConfig} from './db.config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,7 +43,7 @@ import {dbConfig} from './db.config';
 
     /* Theme */
     ThemeModule.forRoot(),
-    NbThemeModule.forRoot({ name: COMMON.theme }),
+    NbThemeModule.forRoot({ name: AppConfig.COMMON.theme }),
 
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
@@ -63,19 +58,19 @@ import {dbConfig} from './db.config';
 
     /* Logger */
     LoggerModule.forRoot({
-      level: COMMON.log.level,
-      serverLogLevel: COMMON.log.serverLogLevel,
+      level: AppConfig.COMMON.log.level,
+      serverLogLevel: AppConfig.COMMON.log.serverLogLevel,
     }),
 
     /* Database */
-    NgxIndexedDBModule.forRoot(dbConfig),
+    NgxIndexedDBModule.forRoot(AppConfig.Db),
 
     /* Authentication */
     NbAuthModule.forRoot({
       strategies: [
         NbxOAuth2AuthStrategy.setup({
           name: 'email',
-          baseEndpoint: API.user.baseUrl,
+          baseEndpoint: AppConfig.API.user.baseUrl,
 
           token: {
             class: NbxAuthOAuth2Token,
@@ -83,9 +78,9 @@ import {dbConfig} from './db.config';
           },
 
           login: {
-            endpoint: API.user.login,
-            method: API.user.method,
-            headers: API.headers,
+            endpoint: AppConfig.API.user.login,
+            method: AppConfig.API.user.method,
+            headers: AppConfig.API.headers,
             redirect: {
               success: '/dashboard',
               failure: null, // stay on the same page
@@ -115,11 +110,12 @@ import {dbConfig} from './db.config';
       },
     }),
   ],
-  providers: [
-    AuthGuard,
-    NbxOAuth2AuthStrategy,
-  ],
+  providers: [ AppConfig.Providers ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
+  constructor(injector: Injector) {
+    // @ts-ignore
+    AppConfig.Injector = Injector.create({ providers: AppConfig.Providers, parent: injector });
+  }
 }

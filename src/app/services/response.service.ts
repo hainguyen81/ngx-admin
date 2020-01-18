@@ -1,5 +1,5 @@
 import {HttpResponse} from '@angular/common/http';
-import JsonUtils from '../app.utils';
+import JsonUtils from '../utils/app.utils';
 
 export class ServiceResponse {
   private readonly success: boolean;

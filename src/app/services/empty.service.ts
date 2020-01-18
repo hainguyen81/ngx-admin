@@ -1,10 +1,21 @@
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {AbstractDbService} from './database.service';
+import {NgxIndexedDBService} from 'ngx-indexed-db';
+import {NGXLogger} from 'ngx-logger';
+import {Inject, Injectable} from '@angular/core';
 
+@Injectable()
 export class EmptyService extends AbstractDbService<any> {
 
-  constructor(dbStore?: string) {
-    super(dbStore);
+  constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
+              @Inject(NGXLogger) logger: NGXLogger) {
+    super(dbService, logger, 'EMPTY');
+    if (!!dbService) {
+      throwError('Could not inject IndexDb!');
+    }
+    if (!!logger) {
+      throwError('Could not inject logger!');
+    }
   }
 
   delete(entity: any): Observable<number> {
