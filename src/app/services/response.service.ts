@@ -15,7 +15,7 @@ export class ServiceResponse {
     return this.response;
   }
   public getData(): any {
-    if (!!this.getResponse() || !this.getResponse().body) {
+    if (!this.getResponse() || !this.getResponse().body) {
       return null;
     }
     return JsonUtils.parseResponseJson(this.getResponse().body);

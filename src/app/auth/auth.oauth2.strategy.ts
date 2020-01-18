@@ -1,5 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
-import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
+import {
+  nbAuthCreateToken,
+  NbAuthIllegalTokenError,
+  NbAuthResult,
+  NbAuthToken,
+  NbPasswordAuthStrategy
+} from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -38,8 +44,11 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     super(http, route);
     route || throwError('Could not inject route!');
     authHttpService || throwError('Could not inject HttpService!');
-    this.authHttpService.setCreateTokenDelegate(this.createToken);
-    this.authHttpService.setHandleResponseErrorDelegate(this.handleResponseError);
+    let _this = this;
+    this.authHttpService.setCreateTokenDelegate(
+      function(value: any, failWhenInvalidToken?: boolean) {
+        return _this.createToken(value, failWhenInvalidToken);
+      });
     authDbService || throwError('Could not inject IndexedDb!');
     logger || throwError('Could not inject logger!');
     logger.updateConfig(LogConfig);
@@ -67,10 +76,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
   }
 
   createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
-    if (isNull(failWhenInvalidToken) || failWhenInvalidToken === undefined) {
-      failWhenInvalidToken = this.getOption(`${module}.requireValidToken`);
-    }
-    return this.storeDb(super.createToken(value, failWhenInvalidToken));
+    return this.storeDb(super.createToken(value, this.getOption(`login.failWhenInvalidToken`)));
   }
 
   private storeDb<T extends NbAuthToken>(token?: T): T {
