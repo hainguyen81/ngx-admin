@@ -8,7 +8,7 @@ import { UserData } from '../data/users';
 import { User } from '../data/user';
 
 @Injectable()
-export class UserService extends UserData {
+export class MockUserService extends UserData {
 
   private apiMedia: Api = {
     code: 'MEDIA',
@@ -69,7 +69,22 @@ export class UserService extends UserData {
     admin: this.adminUser,
   };
 
-  getUsers(): Observable<any> {
+  public getUsers(): Observable<any> {
     return observableOf(this.users);
   }
+
+  public findUser(key: string, value?: any): User {
+    let u: User;
+    for(let k in this.users) {
+      let user = this.users[k];
+      if (user && user.hasOwnProperty(key) && user[key] === value) {
+        u = user;
+        break;
+      }
+    }
+    return u;
+  }
 }
+
+@Injectable()
+export class UserService extends MockUserService {}

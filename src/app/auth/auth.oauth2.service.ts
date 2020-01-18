@@ -1,18 +1,23 @@
 import {Inject, Injectable} from '@angular/core';
 import {DB_STORE} from '../config/db.config';
 import {AbstractDbService} from '../services/database.service';
-import {from, Observable, throwError} from 'rxjs';
+import {from, Observable, of, throwError} from 'rxjs';
 import {NbAuthResult, NbAuthToken} from '@nebular/auth';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {AbstractHttpService} from '../services/http.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../services/response.service';
+import {environment} from '../../environments/environment';
+import {MockUserService} from '../@core/mock/users.service';
+import {User} from '../@core/data/user';
 
 @Injectable()
 export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHttpService<NbAuthResult> {
 
-  constructor(@Inject(HttpClient) http: HttpClient, @Inject(NGXLogger) logger: NGXLogger) {
+  constructor(@Inject(HttpClient) http: HttpClient,
+              @Inject(NGXLogger) logger: NGXLogger,
+              @Inject(MockUserService) private mockUserService: MockUserService) {
     super(http, logger);
     if (!!http) {
       throwError('Could not inject HttpClient!');
@@ -25,6 +30,28 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
   private createTokenDelegate: (value: any) => T;
   setCreateTokenDelegate(createTokenDelegate: (value: any) => T) {
     this.createTokenDelegate = createTokenDelegate;
+  }
+
+  public request(url: string, method?: string, options?: {
+    body?: any;
+    headers?: HttpHeaders | { [header: string]: string | string[]; };
+    observe?: 'body';
+    params?: HttpParams | { [param: string]: string | string[]; };
+    reportProgress?: boolean;
+    responseType: 'arraybuffer';
+    withCredentials?: boolean;
+    redirectSuccess?: any;
+    redirectFailure?: any;
+    errors?: any;
+    messages?: any;
+  }): Observable<NbAuthResult> {
+    if (environment.production) {
+      return super.request(url, method, options);
+    }
+    let user: User;
+    user = this.mockUserService.findUser('username', '');
+    return of(this.parseResponse(new ServiceResponse(true, user,
+      options.redirectSuccess, options.errors, options.messages)));
   }
 
   parseResponse(serviceResponse?: ServiceResponse): NbAuthResult {
