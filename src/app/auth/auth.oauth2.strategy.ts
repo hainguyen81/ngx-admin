@@ -45,10 +45,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     route || throwError('Could not inject route!');
     authHttpService || throwError('Could not inject HttpService!');
     let _this = this;
-    this.authHttpService.setCreateTokenDelegate(
-      function(value: any, failWhenInvalidToken?: boolean) {
-        return _this.createToken(_this, value, failWhenInvalidToken);
-      });
+    this.authHttpService.setCreateTokenDelegate((value: any) => _this.createToken(value));
     authDbService || throwError('Could not inject IndexedDb!');
     logger || throwError('Could not inject logger!');
     logger.updateConfig(LogConfig);
@@ -75,8 +72,8 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     return this.getHttpService().request(url, method, options);
   }
 
-  createToken<T extends NbAuthToken>(assigner: NbxOAuth2AuthStrategy, value: any, failWhenInvalidToken?: boolean): T {
-    return assigner.storeDb(assigner.createToken(value, assigner.getOption(`login.failWhenInvalidToken`)));
+  createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
+    return this.storeDb(super.createToken(value, this.getOption(`login.failWhenInvalidToken`)));
   }
 
   private storeDb<T extends NbAuthToken>(token?: T): T {
