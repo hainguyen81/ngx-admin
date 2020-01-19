@@ -65,7 +65,8 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     let url: string;
     url = oauth2.getActionEndpoint(module);
     let options: any;
-    options = {body: {}, headers: headers, observe: 'response'};
+    options = {body: {}, headers: headers, observe: 'response',
+      redirectSuccess: oauth2.getOption(`${module}.redirect.success`)};
     return this.getHttpService().request(url, method, options);
   }
 
@@ -78,7 +79,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
       this.getDbService().clear();
       return null;
     }
-    this.getDbService().insert(token);
+    this.getDbService().insert(token.getPayload());
     return token;
   }
 }

@@ -141,7 +141,7 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
           return res;
         }),
         map((res) => _this.parseResponse(new ServiceResponse(
-          true, res, options.redirectSuccess, [], []))),
+          true, res, options.redirectSuccess, [], options.messages))),
         catchError((res) => (!!_this.handleResponseErrorDelegate
           ? _this.handleResponseError(res, options.redirectFailure)
           : _this.handleResponseErrorDelegate(res, options.redirectFailure))),
