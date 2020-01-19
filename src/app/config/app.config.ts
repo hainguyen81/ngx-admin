@@ -2,15 +2,16 @@ import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {EmptyService} from '../services/empty.service';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
 import {AuthGuard} from '../auth/auth.guard.service';
-import {Injector, PLATFORM_ID, StaticProvider} from '@angular/core';
+import {Injector, StaticProvider} from '@angular/core';
 import {dbConfig} from './db.config';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
 import {HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MockUserService} from '../@core/mock/users.service';
 import {LogConfig} from './log.config';
-import {DatePipe} from "@angular/common";
+import {DatePipe} from '@angular/common';
+import {NbAuthService} from '@nebular/auth';
 
 export const COMMON = {
   theme: 'dark',
@@ -37,7 +38,8 @@ export const PROVIDERS: StaticProvider[] = [
   { provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService,
     deps: [ HttpBackend ] },
   { provide: HttpClient, useClass: HttpClient, deps: [] },
-  { provide: AuthGuard, useClass: AuthGuard, deps: [] },
+  { provide: AuthGuard, useClass: AuthGuard,
+    deps: [ NbAuthService, Router ] },
   { provide: MockUserService, useClass: MockUserService, deps: [] },
   { provide: EmptyService, useClass: EmptyService,
     deps: [ NgxIndexedDBService, NGXLogger ] },
@@ -57,5 +59,5 @@ export const AppConfig = {
   Providers: PROVIDERS,
   getService: (token: any) => {
     return AppConfig.Injector['get'].apply(this, token);
-  }
+  },
 };
