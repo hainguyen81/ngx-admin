@@ -39,9 +39,9 @@ export class ServiceResponse {
     return this.messages;
   }
 
-  constructor(success: boolean, response?: any, redirect?: any, errors?: any, messages?: any) {
+  constructor(success: boolean, response?: HttpResponse<any>, redirect?: any, errors?: any, messages?: any) {
     this.success = success;
-    this.response = this.response;
+    this.response = response;
     this.setRedirect(redirect);
     this.errors = errors;
     this.messages = messages;

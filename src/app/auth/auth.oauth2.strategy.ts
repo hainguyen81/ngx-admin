@@ -1,10 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {
-  nbAuthCreateToken,
-  NbAuthIllegalTokenError,
   NbAuthResult,
   NbAuthToken,
-  NbPasswordAuthStrategy
+  NbPasswordAuthStrategy,
 } from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
@@ -16,7 +14,6 @@ import {NGXLogger} from 'ngx-logger';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.service';
 import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 import {LogConfig} from '../config/log.config';
-import {isNull} from "util";
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -44,7 +41,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     super(http, route);
     route || throwError('Could not inject route!');
     authHttpService || throwError('Could not inject HttpService!');
-    let _this = this;
+    const _this = this;
     this.authHttpService.setCreateTokenDelegate((value: any) => _this.createToken(value));
     authDbService || throwError('Could not inject IndexedDb!');
     logger || throwError('Could not inject logger!');
@@ -77,7 +74,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
   }
 
   private storeDb<T extends NbAuthToken>(token?: T): T {
-    if (!token || !token.isValid()) {
+    if (!token || !token.getPayload() || !token.isValid()) {
       this.getDbService().clear();
       return null;
     }

@@ -6,7 +6,7 @@ import {NbAuthResult, NbAuthToken} from '@nebular/auth';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {AbstractHttpService} from '../services/http.service';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../services/response.service';
 import {environment} from '../../environments/environment';
 import {MockUserService} from '../@core/mock/users.service';
@@ -49,7 +49,8 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
       return of(this.parseResponse(new ServiceResponse(false, null,
         options.redirectFailure, options.errors, options.messages)));
     }
-    return of(this.parseResponse(new ServiceResponse(true, user,
+    return of(this.parseResponse(new ServiceResponse(true,
+      new HttpResponse<any>({ body: JSON.stringify(user), status: 200, statusText: 'MOCK' }),
       options.redirectSuccess, options.errors, options.messages)));
   }
 
