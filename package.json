@@ -68,6 +68,7 @@
     "ngx-indexed-db": "^3.0.15",
     "ngx-localstorage": "^2.4.0",
     "ngx-logger": "^4.1.1",
+    "ngx-toastr": "^11.3.2",
     "node-sass": "^4.13.1",
     "normalize.css": "6.0.0",
     "pace-js": "1.0.2",
