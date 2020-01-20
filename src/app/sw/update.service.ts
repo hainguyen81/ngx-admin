@@ -4,8 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {SwUpdate, UpdateAvailableEvent} from '@angular/service-worker';
 import {first} from 'rxjs/operators';
-import {concat, interval} from 'rxjs';
-import {Subscription} from '@reactivex/rxjs/dist/package/src/internal/Subscription';
+import {concat, interval, Subscription} from 'rxjs';
 
 @Injectable()
 export abstract class UpdateService<T> extends AbstractHttpService<T> {
