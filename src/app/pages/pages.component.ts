@@ -17,6 +17,7 @@ export class PagesComponent {
   menu: NbMenuItem[];
 
   constructor(@Inject(MenuService) private menuService: MenuService) {
+    this.menu = [];
     menuService.buildMenu().subscribe((menuItems: NbMenuItem[]) => this.menu = menuItems);
   }
 }

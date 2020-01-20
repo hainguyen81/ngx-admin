@@ -7,13 +7,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {CoreModule} from './@core/core.module';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 /* API Configuration */
 import {AppConfig} from './config/app.config';
 /* Authentication */
+import {NbxOAuth2AuthModule} from './auth/auth.module';
 import {NbAuthModule} from '@nebular/auth';
 import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
@@ -56,7 +56,6 @@ import {ToastrModule} from 'ngx-toastr';
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
-    CoreModule.forRoot(),
 
     /* Toaster */
     ToastrModule.forRoot(AppConfig.TOASTER),
@@ -67,6 +66,8 @@ import {ToastrModule} from 'ngx-toastr';
     /* Database */
     NgxIndexedDBModule.forRoot(AppConfig.Db),
 
+    /* Core for Authentication */
+    NbxOAuth2AuthModule.forRoot(),
     /* Authentication */
     NbAuthModule.forRoot({
       strategies: [
