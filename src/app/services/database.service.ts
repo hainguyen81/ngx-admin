@@ -1,9 +1,10 @@
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
-import {from, Observable, throwError} from 'rxjs';
+import {from, Observable, of, throwError} from 'rxjs';
 import {IDbService} from './interface.service';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
+import {isPromise} from 'rxjs/internal-compatibility';
 
 export abstract class AbstractDbService<T> implements IDbService<T> {
 
@@ -31,5 +32,19 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
   abstract update(entity: T): Observable<number>;
   clear(): Observable<any> {
     return from(this.getDbService().clear());
-  };
+  }
+  getAll(): Observable<T[]> {
+    return this.promiseToObservable(this.getDbService().getAll());
+  }
+
+  protected promiseToObservable<K>(promise: Promise<K>): Observable<K> {
+    if (!promise || !isPromise(promise)) {
+      return of(null);
+    }
+    const _this = this;
+    return from(promise.then(value => value, (errors) => {
+      _this.getLogger().error(errors);
+      return null;
+    }));
+  }
 }

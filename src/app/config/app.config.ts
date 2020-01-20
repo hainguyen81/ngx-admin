@@ -1,17 +1,7 @@
-import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
-import {EmptyService} from '../services/empty.service';
-import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
-import {AuthGuard} from '../auth/auth.guard.service';
 import {Injector, StaticProvider} from '@angular/core';
 import {dbConfig} from './db.config';
-import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
-import {HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MockUserService} from '../@core/mock/users.service';
 import {LogConfig} from './log.config';
-import {DatePipe} from '@angular/common';
-import {NbAuthService} from '@nebular/auth';
+import {Providers} from './app.providers';
 
 export const COMMON = {
   theme: 'dark',
@@ -30,33 +20,12 @@ export const API = {
   },
 };
 
-export const PROVIDERS: StaticProvider[] = [
-  { provide: DatePipe, useClass: DatePipe, deps: [] },
-  { provide: HttpBackend, useClass: HttpXhrBackend, deps: [] },
-  { provide: NGXMapperService, useClass: NGXMapperService,
-    deps: [ HttpBackend ] },
-  { provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService,
-    deps: [ HttpBackend ] },
-  { provide: HttpClient, useClass: HttpClient, deps: [] },
-  { provide: AuthGuard, useClass: AuthGuard,
-    deps: [ NbAuthService, Router ] },
-  { provide: MockUserService, useClass: MockUserService, deps: [] },
-  { provide: EmptyService, useClass: EmptyService,
-    deps: [ NgxIndexedDBService, NGXLogger ] },
-  { provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
-    deps: [ HttpClient, NGXLogger, MockUserService ] },
-  { provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
-    deps: [ NgxIndexedDBService, NGXLogger ] },
-  { provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
-    deps: [ HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService, NbxOAuth2AuthDbService, NGXLogger ] },
-];
-
 export const AppConfig = {
   Injector: Injector,
   COMMON: COMMON,
   API: API,
   Db: dbConfig,
-  Providers: PROVIDERS,
+  Providers: Providers,
   getService: (token: any) => {
     return AppConfig.Injector['get'].apply(this, token);
   },

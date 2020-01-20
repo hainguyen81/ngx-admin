@@ -72,23 +72,24 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbSer
   }
 
   delete(entity: T): Observable<number> {
-    return from(this.getDbService().delete({ 'username': (entity.getPayload() || {}).username }));
+    return this.promiseToObservable(this.getDbService().delete({ 'username': (entity.getPayload() || {}).username }));
   }
 
   findEntities(criteria?: any): Observable<T[]> {
-    return from(this.getDbService().getByIndex('username', criteria));
+    if (!criteria) return super.getAll();
+    return this.promiseToObservable(this.getDbService().getByIndex('username', criteria));
   }
 
   findById(id?: any): Observable<T> {
-    return from(this.getDbService().getByIndex('id', id));
+    return this.promiseToObservable(this.getDbService().getByIndex('id', id));
   }
 
   insert(entity: T): Observable<number> {
-    return from(this.getDbService().clear().then(() => this.getDbService().add(entity)));
+    return this.promiseToObservable(this.getDbService().clear().then(() => this.getDbService().add(entity)));
   }
 
   update(entity: T): Observable<number> {
-    return from(this.getDbService().update({
+    return this.promiseToObservable(this.getDbService().update({
       'access_token': (entity.getPayload() || {})['access_token'],
       'refresh_token': (entity.getPayload() || {})['refresh_token'],
     }));

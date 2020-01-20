@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {
   NbAuthResult,
   NbAuthToken,
-  NbPasswordAuthStrategy,
+  NbPasswordAuthStrategy, NbTokenService,
 } from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
@@ -16,7 +16,7 @@ import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 import {LogConfig} from '../config/log.config';
 
 @Injectable()
-export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
+export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy, NbTokenService {
   static setup(options: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
     return [NbxOAuth2AuthStrategy, options];
   }
@@ -81,5 +81,13 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     }
     this.getDbService().insert(token.getPayload());
     return token;
+  }
+
+  clear(): Observable<null> {
+    return this.getDbService().clear();
+  }
+
+  get(): Observable<NbAuthToken> {
+    return undefined;
   }
 }
