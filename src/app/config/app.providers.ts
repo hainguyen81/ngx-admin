@@ -17,9 +17,9 @@ import {
   NbxAuthInterceptor,
 } from '../auth/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
-import {COMMON} from './app.config';
 import {MenuService} from '../services/implementation/menu.service';
 import {ToastrService} from 'ngx-toastr';
+import {COMMON} from './common.config';
 
 export const CommonProviders: StaticProvider[] = [
   { provide: APP_BASE_HREF, useValue: environment.baseHref },
