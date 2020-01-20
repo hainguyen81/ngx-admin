@@ -1,13 +1,14 @@
-import {of as observableOf,  Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {Api} from '../data/api';
-import {Module} from '../data/module';
-import {Role} from '../data/role';
-import {RolesGroup} from '../data/roles.group';
-import {User} from '../data/user';
+import { of as observableOf,  Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Api } from '../data/api';
+import { Module } from '../data/module';
+import { Role } from '../data/role';
+import { RolesGroup } from '../data/roles.group';
+import { UserData } from '../data/users';
+import { User } from '../data/user';
 
 @Injectable()
-export class MockUserService {
+export class MockUserService extends UserData {
 
   private apiMedia: Api = {
     code: 'MEDIA',
@@ -74,8 +75,8 @@ export class MockUserService {
 
   public findUser(key: string, value?: any): User {
     let u: User;
-    for (let k in this.users) {
-      const user = this.users[k];
+    for(let k in this.users) {
+      let user = this.users[k];
       if (user && user.hasOwnProperty(key) && user[key] === value) {
         u = user;
         break;
@@ -84,3 +85,6 @@ export class MockUserService {
     return u;
   }
 }
+
+@Injectable()
+export class UserService extends MockUserService {}
