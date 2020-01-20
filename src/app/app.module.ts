@@ -32,6 +32,8 @@ import {
 import {LoggerModule} from 'ngx-logger';
 /* Database */
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
+/* Toaster */
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -55,6 +57,9 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+
+    /* Toaster */
+    ToastrModule.forRoot(AppConfig.TOASTER),
 
     /* Logger */
     LoggerModule.forRoot(AppConfig.COMMON.logConfig),

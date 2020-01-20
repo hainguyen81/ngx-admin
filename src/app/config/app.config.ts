@@ -12,6 +12,12 @@ export const COMMON = {
   },
 };
 
+export const TOASTER = {
+  timeOut: 10000,
+  positionClass: 'toast-top-right',
+  preventDuplicates: true,
+};
+
 export const API = {
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
@@ -27,6 +33,7 @@ export const API = {
 export const AppConfig = {
   Injector: Injector,
   COMMON: COMMON,
+  TOASTER: TOASTER,
   API: API,
   Db: dbConfig,
   Providers: Providers,

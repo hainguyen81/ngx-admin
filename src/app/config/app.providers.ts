@@ -19,6 +19,7 @@ import {
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {COMMON} from './app.config';
 import {MenuService} from '../services/implementation/menu.service';
+import {ToastrService} from 'ngx-toastr';
 
 export const CommonProviders: StaticProvider[] = [
   { provide: APP_BASE_HREF, useValue: environment.baseHref },
@@ -31,6 +32,7 @@ export const CommonProviders: StaticProvider[] = [
   { provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService,
     deps: [ HttpBackend ] },
   { provide: HttpClient, useClass: HttpClient, deps: [] },
+  { provide: ToastrService, useClass: ToastrService, deps: [] },
 ];
 
 export const InterceptorProviders = [
