@@ -16,8 +16,12 @@ import {
   NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
   NbxAuthInterceptor,
 } from '../auth/auth.interceptor';
+import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
+import {COMMON} from './app.config';
 
 export const CommonProviders: StaticProvider[] = [
+  { provide: APP_BASE_HREF, useValue: environment.baseHref },
+  { provide: SW_VAPID_PUBLIC_KEY, useValue: COMMON.sw.vapid_public_key },
   { provide: LOCALE_ID, useValue: 'vi' },
   { provide: DatePipe, useClass: DatePipe, deps: [] },
   { provide: HttpBackend, useClass: HttpXhrBackend, deps: [] },
@@ -29,7 +33,6 @@ export const CommonProviders: StaticProvider[] = [
 ];
 
 export const InterceptorProviders = [
-  { provide: APP_BASE_HREF, useValue: environment.baseHref },
   { provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization' },
   { provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company' },
   { provide: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, useValue: 'access_token' },
