@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {DB_STORE} from '../config/db.config';
 import {AbstractDbService} from '../services/database.service';
-import {from, Observable, of, throwError} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {NbAuthResult, NbAuthToken} from '@nebular/auth';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';

@@ -1,4 +1,4 @@
-import {Injector, StaticProvider} from '@angular/core';
+import {Injector} from '@angular/core';
 import {dbConfig} from './db.config';
 import {LogConfig} from './log.config';
 import {Providers} from './app.providers';

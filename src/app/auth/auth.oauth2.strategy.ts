@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {
   NbAuthResult,
   NbAuthToken,
-  NbPasswordAuthStrategy, NbTokenService,
+  NbPasswordAuthStrategy,
 } from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';

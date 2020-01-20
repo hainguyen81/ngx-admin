@@ -1,5 +1,5 @@
 import {NbAuthOAuth2Token} from '@nebular/auth';
-import JsonUtils from '../utils/app.utils';
+import JsonUtils from '../utils/json.utils';
 
 export class NbxAuthOAuth2Token extends NbAuthOAuth2Token {
 
