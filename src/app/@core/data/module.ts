@@ -6,4 +6,5 @@ export interface Module {
   name: string;
   apiId: string;
   api?: Api | null;
+  children: Module[];
 }

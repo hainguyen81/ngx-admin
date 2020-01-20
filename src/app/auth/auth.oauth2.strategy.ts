@@ -75,8 +75,8 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
   }
 
   private storeDb<T extends NbAuthToken>(token?: T): T {
+    this.getDbService().clear();
     if (!token || !token.getPayload() || !token.isValid()) {
-      this.getDbService().clear();
       return null;
     }
     this.getDbService().insert(token.getPayload());

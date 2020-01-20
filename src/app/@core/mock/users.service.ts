@@ -26,6 +26,7 @@ export class MockUserService {
     apiId: '5d7660cd738fbc23b43a857e',
     api: this.api.media,
     id: '5d54a805c1bb1a2fdc13400a',
+    children: [],
   };
   private module = {
     camList: this.cameraModule,

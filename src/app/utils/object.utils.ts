@@ -15,7 +15,7 @@ export default class ObjectUtils {
     static cast<T, K>(value: T, type: Type<K>): K {
         if (value instanceof type)
             try {
-                return <K>value;
+                return value as K;
             } catch (e) {}
         return undefined;
     }

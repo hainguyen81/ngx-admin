@@ -61,7 +61,7 @@ export const AuthenticationProviders: StaticProvider[] = [
 
 export const MenuProviders: StaticProvider[] = [
   { provide: MenuService, useClass: MenuService,
-    deps: [ NgxIndexedDBService, NGXLogger ] },
+    deps: [ NgxIndexedDBService, NGXLogger, NbxOAuth2AuthDbService ] },
 ];
 
 export const Providers: StaticProvider[] = CommonProviders
