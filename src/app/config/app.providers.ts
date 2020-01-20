@@ -18,6 +18,7 @@ import {
 } from '../auth/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {COMMON} from './app.config';
+import {MenuService} from '../services/implementation/menu.service';
 
 export const CommonProviders: StaticProvider[] = [
   { provide: APP_BASE_HREF, useValue: environment.baseHref },
@@ -56,6 +57,12 @@ export const AuthenticationProviders: StaticProvider[] = [
     deps: [ HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService, NbxOAuth2AuthDbService, NGXLogger ] },
 ];
 
+export const MenuProviders: StaticProvider[] = [
+  { provide: MenuService, useClass: MenuService,
+    deps: [ NgxIndexedDBService, NGXLogger ] },
+];
+
 export const Providers: StaticProvider[] = CommonProviders
     .concat(InterceptorProviders)
-    .concat(AuthenticationProviders);
+    .concat(AuthenticationProviders)
+    .concat(MenuProviders);

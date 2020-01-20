@@ -7,10 +7,12 @@ export default class JsonUtils {
         data = JSON.parse(data);
       } catch (e) {}
     }
-    if (isObject(data) && Object.keys(data).length > 0
-      && isObject(data['status']) && data['status']['code'] === 200
-      && isBoolean(data['status']['success']) && (data['status']['success'] || false)
-      && isArray(data['elements']) && Array.from(data['elements']).length > 0) {
+    let isValid: boolean;
+    isValid = (isObject(data) && Object.keys(data).length > 0);
+    isValid = isValid && (isObject(data['status']) && data['status']['code'] === 200);
+    isValid = isValid && (isBoolean(data['status']['success']) && (data['status']['success'] || false));
+    isValid = isValid && (isArray(data['elements']) && Array.from(data['elements']).length > 0);
+    if (isValid) {
       data = Array.from(data['elements']);
     }
     return data;
