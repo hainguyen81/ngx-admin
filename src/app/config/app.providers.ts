@@ -1,9 +1,9 @@
-import {StaticProvider} from '@angular/core';
+import {Injector, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
-import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService, NbAuthSimpleInterceptor} from '@nebular/auth';
+import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MockUserService} from '../@core/mock/users.service';
 import {EmptyService} from '../services/empty.service';
@@ -11,6 +11,11 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
 import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
 import {environment} from '../../environments/environment';
+import {
+  NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,
+  NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
+  NbxAuthInterceptor,
+} from '../auth/auth.interceptor';
 
 export const CommonProviders: StaticProvider[] = [
   { provide: DatePipe, useClass: DatePipe, deps: [] },
@@ -23,9 +28,14 @@ export const CommonProviders: StaticProvider[] = [
 ];
 
 export const InterceptorProviders = [
-  {provide: APP_BASE_HREF, useValue: environment.baseHref},
-  {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'access_token'},
-  {provide: HTTP_INTERCEPTORS, useClass: NbAuthSimpleInterceptor, multi: true},
+  { provide: APP_BASE_HREF, useValue: environment.baseHref },
+  { provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization' },
+  { provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company' },
+  { provide: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, useValue: 'access_token' },
+  { provide: HTTP_INTERCEPTORS, useClass: NbxAuthInterceptor, multi: true,
+    deps: [ Injector, NB_AUTH_INTERCEPTOR_HEADER,
+      NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
+      NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM ] },
 ];
 
 export const AuthenticationProviders: StaticProvider[] = [
