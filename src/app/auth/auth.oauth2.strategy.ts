@@ -16,7 +16,7 @@ import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 import {LogConfig} from '../config/log.config';
 
 @Injectable()
-export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy, NbTokenService {
+export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
   static setup(options: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
     return [NbxOAuth2AuthStrategy, options];
   }
@@ -81,13 +81,5 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy, NbTokenServic
     }
     this.getDbService().insert(token.getPayload());
     return token;
-  }
-
-  clear(): Observable<null> {
-    return this.getDbService().clear();
-  }
-
-  get(): Observable<NbAuthToken> {
-    return undefined;
   }
 }

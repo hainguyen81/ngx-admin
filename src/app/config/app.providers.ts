@@ -1,4 +1,4 @@
-import {Injector, StaticProvider} from '@angular/core';
+import {Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
@@ -18,6 +18,7 @@ import {
 } from '../auth/auth.interceptor';
 
 export const CommonProviders: StaticProvider[] = [
+  { provide: LOCALE_ID, useValue: 'vi' },
   { provide: DatePipe, useClass: DatePipe, deps: [] },
   { provide: HttpBackend, useClass: HttpXhrBackend, deps: [] },
   { provide: NGXMapperService, useClass: NGXMapperService,
