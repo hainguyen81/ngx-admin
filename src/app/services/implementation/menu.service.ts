@@ -58,6 +58,10 @@ export function moduleToMenuItem(modules: Module[], parent?: NbMenuItem): NbMenu
 @Injectable()
 export class MenuService extends AbstractDbService<Module> {
 
+    protected getAuthDbService(): NbxOAuth2AuthDbService<NbxAuthOAuth2Token> {
+      return this.authDbService;
+    }
+
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(NbxOAuth2AuthDbService) private authDbService: NbxOAuth2AuthDbService<NbxAuthOAuth2Token>) {
@@ -67,7 +71,7 @@ export class MenuService extends AbstractDbService<Module> {
     public buildMenu(): Observable<NbMenuItem[]> {
         return super.getAll().pipe(map((modules: Module[]) => {
           if (!modules || !modules.length) {
-            return this.authDbService.getAll().pipe(map((tokens: any) => {
+            return this.getAuthDbService().getAll().pipe(map((tokens: any) => {
                 return tokens.length > 0 ? tokens.shift() : null;
               }),
               map((token: {[key: string]: string | number} | string) => this.doBuildMenuItem(token)),
