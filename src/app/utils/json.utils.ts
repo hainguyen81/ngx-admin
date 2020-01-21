@@ -1,4 +1,5 @@
 import {isArray, isBoolean, isObject} from 'util';
+import {NoParamConstructor} from './object.utils';
 
 export default class JsonUtils {
   public static parseResponseJson(data?: any): any {
@@ -24,5 +25,16 @@ export default class JsonUtils {
       data = Array.from(data).shift();
     }
     return data;
+  }
+
+  public static jsonToInstance<T>(source: any, type: NoParamConstructor<T>): T {
+    if (!source) {
+      return undefined;
+    }
+    try {
+      return Object.assign(new type(), JSON.parse(source));
+    } catch (e) {
+      return undefined;
+    }
   }
 }

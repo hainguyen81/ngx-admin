@@ -7,13 +7,13 @@ import {catchError, map} from 'rxjs/operators';
 import {NbAuthToken} from '@nebular/auth';
 import {Observable} from 'rxjs';
 import {isArray, isObject} from 'util';
-import ObjectUtils from '../../utils/object.utils';
 import {NbxAuthOAuth2Token} from '../../auth/auth.oauth2.token';
 import {Role} from '../../@core/data/role';
 import {AbstractDbService} from '../database.service';
 import {Module} from '../../@core/data/module';
 import {DB_STORE} from '../../config/db.config';
 import MenuUtils from '../../utils/menu.utils';
+import JsonUtils from '../../utils/json.utils';
 
 @Injectable()
 export class MenuService extends AbstractDbService<Module> {
@@ -58,7 +58,7 @@ export class MenuService extends AbstractDbService<Module> {
         isValidToken = isValidToken && (isObject(nbAUthToken.getPayload()) && nbAUthToken.isValid());
         if (isValidToken) {
             let payload: Object;
-            payload = ObjectUtils.cast(nbAUthToken.getPayload(), Object);
+            payload = JsonUtils.jsonToInstance(nbAUthToken.getPayload(), Object);
             isValidToken = isValidToken && (payload && payload.hasOwnProperty('rolesGroup'));
             isValidToken = isValidToken && (payload['rolesGroup'] && payload['rolesGroup'].hasOwnProperty('roles'));
             isValidToken = isValidToken && (payload['rolesGroup']['roles'] && isArray(payload['rolesGroup']['roles']));
