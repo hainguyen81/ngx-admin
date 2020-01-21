@@ -3,6 +3,7 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+import {CoreModule} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Injector, NgModule} from '@angular/core';
@@ -13,7 +14,6 @@ import {AppRoutingModule} from './app-routing.module';
 /* API Configuration */
 import {AppConfig} from './config/app.config';
 /* Authentication */
-import {NbxOAuth2AuthModule} from './auth/auth.module';
 import {NbAuthModule} from '@nebular/auth';
 import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
@@ -43,6 +43,9 @@ import {ToastrModule} from 'ngx-toastr';
     HttpClientModule,
     AppRoutingModule,
 
+    /* Core Module for layout */
+    CoreModule.forRoot(),
+
     /* Theme */
     ThemeModule.forRoot(),
     NbThemeModule.forRoot({ name: AppConfig.COMMON.theme }),
@@ -66,8 +69,6 @@ import {ToastrModule} from 'ngx-toastr';
     /* Database */
     NgxIndexedDBModule.forRoot(AppConfig.Db),
 
-    /* Core for Authentication */
-    NbxOAuth2AuthModule.forRoot(),
     /* Authentication */
     NbAuthModule.forRoot({
       strategies: [

@@ -3,6 +3,12 @@ import {CommonModule} from '@angular/common';
 import {NbAuthModule} from '@nebular/auth';
 import {NbSecurityModule, NbRoleProvider} from '@nebular/security';
 import {of as observableOf} from 'rxjs';
+import {
+  AnalyticsService,
+  LayoutService,
+  SeoService,
+  StateService,
+} from './services';
 
 export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
   if (parentModule) {
@@ -31,7 +37,14 @@ export const NB_CORE_PROVIDERS = [
       },
     },
   }).providers,
-  { provide: NbRoleProvider, useClass: NbSimpleRoleProvider },
+
+  {
+    provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
+  },
+  AnalyticsService,
+  LayoutService,
+  SeoService,
+  StateService,
 ];
 
 @NgModule({
@@ -43,14 +56,14 @@ export const NB_CORE_PROVIDERS = [
   ],
   declarations: [],
 })
-export class NbxOAuth2AuthModule {
-  constructor(@Optional() @SkipSelf() parentModule: NbxOAuth2AuthModule) {
-    throwIfAlreadyLoaded(parentModule, 'NbxOAuth2AuthModule');
+export class CoreModule {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 
   static forRoot(): ModuleWithProviders {
     return <ModuleWithProviders>{
-      ngModule: NbxOAuth2AuthModule,
+      ngModule: CoreModule,
       providers: [
         ...NB_CORE_PROVIDERS,
       ],
