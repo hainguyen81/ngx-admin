@@ -22,7 +22,7 @@ export default class MenuUtils {
         mnu.data = module;
         mnu.expanded = false;
         mnu.selected = false;
-        mnu.children = [];
+        mnu.children = (module.children && module.children.length ? [] : null);
         if (parent) {
             mnu.parent = parent;
             if (!parent.children) {
