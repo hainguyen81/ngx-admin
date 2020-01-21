@@ -71,27 +71,21 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbSer
     super(dbService, logger, DB_STORE.auth);
   }
 
-  delete(entity: T): Observable<number> {
-    return this.promiseToObservable(this.getDbService().delete({ 'username': (entity.getPayload() || {}).username }));
+  delete(entity: T): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.getDbService().currentStore = this.getDbStore();
+      this.getDbService().delete({ 'username': (entity.getPayload() || {}).username })
+          .then(() => resolve(1), (errors) => { this.getLogger().error(errors); reject(errors); });
+    });
   }
 
-  findEntities(criteria?: any): Observable<T[]> {
-    if (!criteria) return super.getAll();
-    return this.promiseToObservable(this.getDbService().getByIndex('username', criteria));
-  }
-
-  findById(id?: any): Observable<T> {
-    return this.promiseToObservable(this.getDbService().getByIndex('id', id));
-  }
-
-  insert(entity: T): Observable<number> {
-    return this.promiseToObservable(this.getDbService().clear().then(() => this.getDbService().add(entity)));
-  }
-
-  update(entity: T): Observable<number> {
-    return this.promiseToObservable(this.getDbService().update({
-      'access_token': (entity.getPayload() || {})['access_token'],
-      'refresh_token': (entity.getPayload() || {})['refresh_token'],
-    }));
+  update(entity: T): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.getDbService().currentStore = this.getDbStore();
+      this.getDbService().update({
+        'access_token': (entity.getPayload() || {})['access_token'],
+        'refresh_token': (entity.getPayload() || {})['refresh_token'],
+      }).then(() => resolve(1), (errors) => { this.getLogger().error(errors); reject(errors); });
+    });
   }
 }

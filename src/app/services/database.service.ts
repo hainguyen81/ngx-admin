@@ -1,15 +1,18 @@
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
-import {from, Observable, of, throwError} from 'rxjs';
+import {throwError} from 'rxjs';
 import {IDbService} from './interface.service';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
-import {isPromise} from 'rxjs/internal-compatibility';
 
 export abstract class AbstractDbService<T> implements IDbService<T> {
 
   protected getDbService(): NgxIndexedDBService {
     return this.dbService;
+  }
+
+  protected getDbStore(): string {
+    return this.dbStore;
   }
 
   protected getLogger(): NGXLogger {
@@ -18,33 +21,87 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
   protected constructor(@Inject(NgxIndexedDBService) private dbService: NgxIndexedDBService,
                         @Inject(NGXLogger) private logger: NGXLogger,
-                        dbStore: string) {
+                        private dbStore: string) {
     dbService || throwError('Could not inject IndexDb!');
     logger || throwError('Could not inject logger!');
     dbService.currentStore = dbStore || this.constructor.name;
     logger.updateConfig(LogConfig);
   }
 
-  abstract delete(entity: T): Observable<number>;
-  abstract findById(id?: any): Observable<T>;
-  abstract findEntities(criteria?: any): Observable<T[]>;
-  abstract insert(entity: T): Observable<number>;
-  abstract update(entity: T): Observable<number>;
-  clear(): Observable<any> {
-    return from(this.getDbService().clear());
-  }
-  getAll(): Observable<T[]> {
-    return this.promiseToObservable(this.getDbService().getAll());
+
+  abstract delete(entity: T): Promise<number>;
+  abstract update(entity: T): Promise<number>;
+
+  findEntities(indexName: string, criteria?: any): Promise<T[]> {
+    if (!criteria) return this.getAll();
+    return new Promise((resolve, reject) => {
+      this.getDbService().currentStore = this.getDbStore();
+      this.getDbService().getByIndex(indexName, criteria)
+          .then((value: T[]) => resolve(value),
+              (errors) => { this.getLogger().error(errors); reject(errors); });
+    });
   }
 
-  protected promiseToObservable<K>(promise: Promise<K>): Observable<K> {
-    if (!promise || !isPromise(promise)) {
-      return of(null);
+  findById(id?: any): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.getDbService().currentStore = this.getDbStore();
+      this.getDbService().getByIndex('id', id)
+          .then((value: T) => resolve(value),
+              (errors) => { this.getLogger().error(errors); reject(errors); });
+    });
+  }
+
+  insert(entity: T): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.getDbService().currentStore = this.getDbStore();
+      this.getDbService().clear().then(() => this.getDbService().add(entity))
+          .then(() => resolve(1), (errors) => { this.getLogger().error(errors); reject(errors); });
+    });
+  }
+
+  clear(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this.getDbService().currentStore = this.getDbStore();
+        this.getDbService().clear()
+            .then(() => resolve(), (errors) => { this.getLogger().error(errors); reject(errors); });
+      });
+  }
+
+  getAll(): Promise<T[]> {
+    return new Promise((resolve, reject) => {
+      this.getDbService().currentStore = this.getDbStore();
+      this.getDbService().getAll()
+          .then((value: T[]) => resolve(value), (errors) => { this.getLogger().error(errors); reject(errors); });
+    });
+  }
+
+  insertEntities(entities: T[]): Promise<number> {
+    if (!entities || !entities.length) {
+      return new Promise(((resolve) => resolve(0)));
     }
-    const _this = this;
-    return from(promise.then(value => value, (errors) => {
-      _this.getLogger().error(errors);
-      return null;
-    }));
+    return new Promise<number>((resolve, reject) => {
+      try {
+        this.getDbService().currentStore = this.getDbStore();
+        entities.forEach((entity: T) => this.insert(entity));
+        resolve(entities.length);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  deleteEntities(entities: T[]): Promise<number> {
+    if (!entities || !entities.length) {
+      return new Promise(((resolve) => resolve(0)));
+    }
+    return new Promise<number>((resolve, reject) => {
+      try {
+        this.getDbService().currentStore = this.getDbStore();
+        entities.forEach((entity: T) => this.delete(entity));
+        resolve(entities.length);
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 }

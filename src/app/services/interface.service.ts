@@ -2,11 +2,11 @@ import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export declare interface IDbService<T> {
-  findEntities(criteria?: any): Observable<T[]>;
-  findById(id?: any): Observable<T>;
-  insert(entity: T): Observable<number>;
-  delete(entity: T): Observable<number>;
-  update(entity: T): Observable<number>;
+  findEntities(criteria?: any): Promise<T[]>;
+  findById(id?: any): Promise<T>;
+  insert(entity: T): Promise<number>;
+  delete(entity: T): Promise<number>;
+  update(entity: T): Promise<number>;
 }
 
 export declare interface IHttpService<T> {

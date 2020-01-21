@@ -20,6 +20,7 @@ import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
 import {ToastrService} from 'ngx-toastr';
 import {COMMON} from './common.config';
+import {ModuleService} from '../services/implementation/module.service';
 
 export const CommonProviders: StaticProvider[] = [
   { provide: APP_BASE_HREF, useValue: environment.baseHref },
@@ -51,12 +52,14 @@ export const AuthenticationProviders: StaticProvider[] = [
   { provide: MockUserService, useClass: MockUserService, deps: [] },
   { provide: EmptyService, useClass: EmptyService,
     deps: [ NgxIndexedDBService, NGXLogger ] },
+  { provide: ModuleService, useClass: ModuleService,
+    deps: [ NgxIndexedDBService, NGXLogger ] },
   { provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
     deps: [ HttpClient, NGXLogger, MockUserService ] },
   { provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
     deps: [ NgxIndexedDBService, NGXLogger ] },
   { provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
-    deps: [ HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService, NbxOAuth2AuthDbService, NGXLogger ] },
+    deps: [ HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService, NbxOAuth2AuthDbService, ModuleService, NGXLogger ] },
 ];
 
 export const MenuProviders: StaticProvider[] = [

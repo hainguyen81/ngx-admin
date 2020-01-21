@@ -14,6 +14,11 @@ import {NGXLogger} from 'ngx-logger';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.service';
 import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 import {LogConfig} from '../config/log.config';
+import {ModuleService} from '../services/implementation/module.service';
+import {Module} from '../@core/data/module';
+import {isArray} from 'util';
+import {Role} from '../@core/data/role';
+import {isObject} from 'rxjs/internal-compatibility';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -33,10 +38,15 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     return this.authDbService;
   }
 
+  protected getModuleDbService(): ModuleService {
+    return this.moduleDbService;
+  }
+
   constructor(@Inject(HttpClient) http: HttpClient,
               @Inject(ActivatedRoute) route: ActivatedRoute,
               @Inject(NbxOAuth2AuthHttpService) private authHttpService: NbxOAuth2AuthHttpService<NbxAuthOAuth2Token>,
               @Inject(NbxOAuth2AuthDbService) private authDbService: NbxOAuth2AuthDbService<NbAuthToken>,
+              @Inject(ModuleService) private moduleDbService: ModuleService,
               @Inject(NGXLogger) private logger: NGXLogger) {
     super(http, route);
     route || throwError('Could not inject route!');
@@ -71,15 +81,68 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
   }
 
   createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
-    return this.storeDb(super.createToken(value, this.getOption(`login.failWhenInvalidToken`)));
+    let token: T;
+    this.storeDb(super.createToken(value, this.getOption(`login.failWhenInvalidToken`)))
+        .then((t: T) => token = t, (errors) => this.getLogger().error(errors));
+    return token;
   }
 
-  private storeDb<T extends NbAuthToken>(token?: T): T {
-    this.getDbService().clear();
+  private storeDb<T extends NbAuthToken>(token?: T): Promise<T> {
     if (!token || !token.getPayload() || !token.isValid()) {
-      return null;
+      return new Promise((resolve => resolve(null)));
     }
-    this.getDbService().insert(token.getPayload());
-    return token;
+    return new Promise((resolve, reject) => {
+      this.getDbService().clear().then(() => {
+        this.getDbService().insert(token.getPayload())
+            .then(() => {
+              // insert modules to build menu
+              this.getModuleDbService().clear()
+                  .then(() => {
+                    this.getModuleDbService().insertEntities(this.parseModules(token.getPayload()))
+                        .then(() => resolve(token), (errors) => {
+                          this.getLogger().error(errors);
+                          reject(errors);
+                        });
+                  }, (errors) => {
+                    this.getLogger().error(errors);
+                    reject(errors);
+                  });
+            }, (errors) => {
+              this.getLogger().error(errors);
+              reject(errors);
+            });
+      }, (errors) => {
+        this.getLogger().error(errors);
+        reject(errors);
+      });
+    });
+  }
+
+  private parseModules(payload?: any): Module[] {
+    let modules: Module[];
+    modules = [];
+    let isValidPayload: boolean;
+    isValidPayload = (payload && isObject(payload) && Object.keys(payload).length > 0);
+    if (!isValidPayload) {
+      return modules;
+    }
+
+    // parse role from payload token
+    isValidPayload = isValidPayload && (payload && payload.hasOwnProperty('rolesGroup'));
+    isValidPayload = isValidPayload && (payload['rolesGroup'] && payload['rolesGroup'].hasOwnProperty('roles'));
+    isValidPayload = isValidPayload && (payload['rolesGroup']['roles'] && isArray(payload['rolesGroup']['roles']));
+    if (!isValidPayload) {
+      return modules;
+    }
+
+    // parse module from role
+    let roles: Role[];
+    roles = payload['rolesGroup']['roles'];
+    roles.forEach((role: Role) => {
+      if (role.module) {
+        modules.push(role.module as Module);
+      }
+    });
+    return modules;
   }
 }

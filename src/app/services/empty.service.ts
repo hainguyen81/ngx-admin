@@ -1,4 +1,4 @@
-import {Observable, of, throwError} from 'rxjs';
+import {throwError} from 'rxjs';
 import {AbstractDbService} from './database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
@@ -14,28 +14,38 @@ export class EmptyService extends AbstractDbService<any> {
     logger || throwError('Could not inject logger!');
   }
 
-  delete(entity: any): Observable<number> {
-    super.getLogger().debug('Call delete entity....');
-    return of(0);
+  delete(entity: any): Promise<number> {
+    return new Promise((resolve) => {
+      super.getLogger().debug('Call delete entity....');
+      resolve(0);
+    });
   }
 
-  insert(entity: any): Observable<number> {
-    super.getLogger().debug('Call insert entity....');
-    return of(0);
+  insert(entity: any): Promise<number> {
+    return new Promise((resolve) => {
+      super.getLogger().debug('Call insert entity....');
+      resolve(0);
+    });
   }
 
-  update(entity: any): Observable<number> {
-    super.getLogger().debug('Call update entity....');
-    return of(0);
+  update(entity: any): Promise<number> {
+    return new Promise((resolve) => {
+      super.getLogger().debug('Call update entity....');
+      resolve(0);
+    });
   }
 
-  findById(id?: any): Observable<any> {
-    super.getLogger().debug('Call find entity by identity....');
-    return of(null);
+  findById(id?: any): Promise<any> {
+    return new Promise((resolve) => {
+      super.getLogger().debug('Call find entity by identity....');
+      resolve(null);
+    });
   }
 
-  findEntities(criteria?: any): Observable<any[]> {
-    super.getLogger().debug('Call find entities by criteria....');
-    return of([]);
+  findEntities(criteria?: any): Promise<any[]> {
+    return new Promise((resolve) => {
+      super.getLogger().debug('Call find entities by criteria....');
+      resolve([]);
+    });
   }
 }
