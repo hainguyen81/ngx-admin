@@ -1,7 +1,7 @@
 import {isArray, isBoolean, isObject} from 'util';
 
 export default class JsonUtils {
-  static parseResponseJson(data?: any): any {
+  public static parseResponseJson(data?: any): any {
     if (typeof data === 'string') {
       try {
         data = JSON.parse(data);
@@ -18,7 +18,7 @@ export default class JsonUtils {
     return data;
   }
 
-  static parseFisrtResponseJson(data?: any): any {
+  public static parseFisrtResponseJson(data?: any): any {
     data = JsonUtils.parseResponseJson(data);
     if (isArray(data)) {
       data = Array.from(data).shift();

@@ -13,47 +13,7 @@ import {Role} from '../../@core/data/role';
 import {AbstractDbService} from '../database.service';
 import {Module} from '../../@core/data/module';
 import {DB_STORE} from '../../config/db.config';
-
-export function roleToMenuItem(role: Role): NbMenuItem {
-  if (!role || !role.module) {
-    return undefined;
-  }
-  let mnu: NbMenuItem;
-  mnu = new NbMenuItem();
-  mnu.title = role.module.name;
-  mnu.data = role.module;
-  mnu.expanded = false;
-  mnu.selected = false;
-  return mnu;
-}
-
-export function moduleToMenuItem(modules: Module[], parent?: NbMenuItem): NbMenuItem[] {
-  let menuItems: NbMenuItem[];
-  menuItems = [];
-  if (modules && modules.length) {
-    modules.forEach((module: Module) => {
-      let mnu: NbMenuItem;
-      mnu = new NbMenuItem();
-      mnu.title = module.name;
-      mnu.data = module;
-      mnu.expanded = false;
-      mnu.selected = false;
-      mnu.children = [];
-      if (parent) {
-        mnu.parent = parent;
-        if (!parent.children) {
-          parent.children = [];
-        }
-        parent.children.push(mnu);
-      }
-      menuItems.push(mnu);
-      if (module.children && module.children.length) {
-        moduleToMenuItem(module.children, mnu);
-      }
-    });
-  }
-  return menuItems;
-}
+import MenuUtils from '../../utils/menu.utils';
 
 @Injectable()
 export class MenuService extends AbstractDbService<Module> {
@@ -71,7 +31,7 @@ export class MenuService extends AbstractDbService<Module> {
     public buildMenu(): Observable<NbMenuItem[]> {
         return super.getAll().pipe(map((modules: Module[]) => {
           if (!modules || !modules.length) {
-            return this.getAuthDbService().getAll().pipe(map((tokens: any) => {
+            this.getAuthDbService().getAll().pipe(map((tokens: any) => {
                 return tokens.length > 0 ? tokens.shift() : null;
               }),
               map((token: {[key: string]: string | number} | string) => this.doBuildMenuItem(token)),
@@ -80,7 +40,7 @@ export class MenuService extends AbstractDbService<Module> {
                 return [];
               }));
           } else {
-              return moduleToMenuItem(modules);
+              return MenuUtils.buildMenu(modules, NbMenuItem);
           }
         }), catchError((errors) => {
           this.getLogger().error(errors);
@@ -117,7 +77,7 @@ export class MenuService extends AbstractDbService<Module> {
                      modules.push(role.module as Module);
                    }
                 });
-                menuItems = moduleToMenuItem(modules);
+                menuItems = MenuUtils.buildMenu(modules, NbMenuItem);
             }
         }
         return menuItems;
