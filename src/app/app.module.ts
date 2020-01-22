@@ -86,14 +86,14 @@ import {ToastrModule} from 'ngx-toastr';
                         method: AppConfig.API.user.method,
                         headers: AppConfig.API.headers,
                         redirect: {
-                            success: '/dashboard',
+                            success: '/user',
                             failure: null, // stay on the same page
                         },
                     },
 
                     register: {
                         redirect: {
-                            success: '/dashboard',
+                            success: '/user',
                             failure: null, // stay on the same page
                         },
                     },

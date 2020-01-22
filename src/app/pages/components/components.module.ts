@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
-import {UserSmartTableComponent} from './user.component';
+import {SmartTableComponent} from './smart-table.component';
 import {NbCardModule} from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {NotFoundComponent} from './not-found.component';
 
 @NgModule({
     imports: [
@@ -9,8 +10,9 @@ import {Ng2SmartTableModule} from 'ng2-smart-table';
         Ng2SmartTableModule,
     ],
     declarations: [
-        UserSmartTableComponent,
+        SmartTableComponent,
+        NotFoundComponent,
     ],
 })
-export class UserModule {
+export class ComponentsModule {
 }

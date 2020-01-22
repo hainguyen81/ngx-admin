@@ -2,6 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {PagesComponent} from './pages.component';
 import {UserSmartTableComponent} from './components/user/user.component';
+import {NotFoundComponent} from './components/not-found.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
@@ -12,12 +13,9 @@ const routes: Routes = [{
     children: [
         {
             path: 'user',
-            component: UserSmartTableComponent,
+            loadChildren: () => import('./components/user/user.module')
+                .then(m => m.UserModule),
         },
-        // {
-        //   path: 'iot-dashboard',
-        //   component: DashboardComponent,
-        // },
         // {
         //   path: 'layout',
         //   loadChildren: () => import('./layout/layout.module')
@@ -58,26 +56,26 @@ const routes: Routes = [{
     //   loadChildren: () => import('./editors/editors.module')
     //     .then(m => m.EditorsModule),
     // },
-    // {
-    //   path: 'tables',
-    //   loadChildren: () => import('./tables/tables.module')
-    //     .then(m => m.TablesModule),
-    // },
-    // {
-    //   path: 'miscellaneous',
-    //   loadChildren: () => import('./miscellaneous/miscellaneous.module')
-    //     .then(m => m.MiscellaneousModule),
-    // },
-    // {
-    //   path: '',
-    //   redirectTo: 'dashboard',
-    //   pathMatch: 'full',
-    // },
-    // {
-    //   path: '**',
-    //   component: NotFoundComponent,
-    // },
-  ],
+        // {
+        //   path: 'tables',
+        //   loadChildren: () => import('./tables/tables.module')
+        //     .then(m => m.TablesModule),
+        // },
+        // {
+        //   path: 'miscellaneous',
+        //   loadChildren: () => import('./miscellaneous/miscellaneous.module')
+        //     .then(m => m.MiscellaneousModule),
+        // },
+        {
+            path: '',
+            redirectTo: 'user',
+            pathMatch: 'full',
+        },
+        {
+            path: '**',
+            component: NotFoundComponent,
+        },
+    ],
 }];
 
 @NgModule({

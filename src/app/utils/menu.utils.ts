@@ -21,7 +21,7 @@ export default class MenuUtils {
         mnu = ObjectUtils.createInstance(mnuCstr);
         mnu.title = module.name;
         mnu.icon = (module.api || {})['icon'] || '';
-        mnu.link = ApiMapperUtils.findClientLink(module.api.code);
+        mnu.link = ApiMapperUtils.findClientLink((module.api || {})['code']);
         mnu.data = module;
         mnu.expanded = false;
         mnu.selected = false;
