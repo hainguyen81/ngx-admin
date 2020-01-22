@@ -2,6 +2,7 @@ import {Role} from '../@core/data/role';
 import {NbMenuItem} from '@nebular/theme';
 import {Module} from '../@core/data/module';
 import ObjectUtils, {NoParamConstructor} from './object.utils';
+import ApiMapperUtils from './api.mapper.utils';
 
 export default class MenuUtils {
     public static roleToMenuItem<R extends Role, M extends NbMenuItem>(role: R, mnuCstr: NoParamConstructor<M>): M {
@@ -19,6 +20,8 @@ export default class MenuUtils {
         let mnu: N;
         mnu = ObjectUtils.createInstance(mnuCstr);
         mnu.title = module.name;
+        mnu.icon = (module.api || {})['icon'] || '';
+        mnu.link = ApiMapperUtils.findClientLink(module.api.code);
         mnu.data = module;
         mnu.expanded = false;
         mnu.selected = false;

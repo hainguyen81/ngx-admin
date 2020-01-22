@@ -9,32 +9,42 @@ import {User} from '../data/user';
 @Injectable()
 export class MockUserService {
 
-  private apiMedia: Api = {
-    code: 'MEDIA',
-    name: 'Media Management',
-    regexUrl: 'media/**',
+  private userApi: Api = {
+    code: 'USER_API',
+    name: 'User Management',
+    regexUrl: 'user/**',
+    baseUrl: 'http://localhost:8082/api-rest-user/service',
+    icon: 'home-outline',
     version: '1.0.0',
     id: '5d7660cd738fbc23b43a857e',
   };
   private api = {
-    media: this.apiMedia,
+    user: this.userApi,
   };
 
-  private cameraModule: Module = {
-    code: 'camList',
-    name: 'Danh sách Camera',
-    apiId: '5d7660cd738fbc23b43a857e',
-    api: this.api.media,
-    id: '5d54a805c1bb1a2fdc13400a',
+  private userModule: Module = {
+    code: 'USER_MODULE',
+    name: 'Danh sách người dùng',
+    apiId: '',
+    api: this.api.user,
+    id: '',
     children: [],
   };
+  private systemModule: Module = {
+    code: 'SYSTEM',
+    name: 'Hệ thống',
+    apiId: '',
+    api: null,
+    id: '',
+    children: [ this.userModule ],
+  };
   private module = {
-    camList: this.cameraModule,
+    system: this.systemModule,
   };
 
   private role: Role = {
     moduleId: '5d54a805c1bb1a2fdc13400a',
-    module: this.module.camList,
+    module: this.module.system,
     groupId: '5d766194738fbc23b43a857f',
     writable: true,
     id: '5d577a746d665e1430e95c17',
@@ -42,10 +52,10 @@ export class MockUserService {
 
   private rolesGroup: RolesGroup = {
     company: 'hsg',
-    code: 'ADM_MEDIA',
-    name: 'Media Administrators',
+    code: 'SYSTEM',
+    name: 'System',
     roles: [ this.role ],
-    id: '5d766194738fbc23b43a857f',
+    id: '',
   };
 
   private adminUser: User = {
@@ -74,14 +84,11 @@ export class MockUserService {
   }
 
   public findUser(key: string, value?: any): User {
-    let u: User;
-    for (let k in this.users) {
-      const user = this.users[k];
+    for (const user of Object.values(this.users)) {
       if (user && user.hasOwnProperty(key) && user[key] === value) {
-        u = user;
-        break;
+        return user;
       }
     }
-    return u;
+    return undefined;
   }
 }

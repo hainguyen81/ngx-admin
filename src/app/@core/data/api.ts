@@ -3,5 +3,7 @@ export interface Api {
   code: string;
   name: string;
   regexUrl?: string | null;
+  baseUrl?: string | null;
+  icon?: string | null;
   version?: string | null;
 }
