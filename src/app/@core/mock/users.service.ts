@@ -4,7 +4,7 @@ import {IApi} from '../data/api';
 import {IModule} from '../data/module';
 import {IRole} from '../data/role';
 import {IRolesGroup} from '../data/roles.group';
-import {IUser} from '../data/user';
+import {IUser, USER_STATUS} from '../data/user';
 
 @Injectable()
 export class MockUserService {
@@ -70,7 +70,7 @@ export class MockUserService {
         firstName: 'firstName',
         lastName: 'lastName',
         email: 'admin@hsg.com',
-        status: 1,
+        status: USER_STATUS.ACTIVATED,
         rolesGroup: this.rolesGroup,
         id: '5d5d67786249ab06b4516c45',
         rolesGroupId: '5d766194738fbc23b43a857f',
