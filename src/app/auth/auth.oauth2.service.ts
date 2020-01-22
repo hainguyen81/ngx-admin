@@ -10,82 +10,89 @@ import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common
 import {ServiceResponse} from '../services/response.service';
 import {environment} from '../../environments/environment';
 import {MockUserService} from '../@core/mock/users.service';
-import {User} from '../@core/data/user';
+import {IUser} from '../@core/data/user';
 
 @Injectable()
 export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHttpService<NbAuthResult> {
 
-  constructor(@Inject(HttpClient) http: HttpClient,
-              @Inject(NGXLogger) logger: NGXLogger,
-              @Inject(MockUserService) private mockUserService: MockUserService) {
-    super(http, logger);
-  }
-
-  private createTokenDelegate: (value: any) => T;
-  setCreateTokenDelegate(createTokenDelegate: (value: any) => T) {
-    this.createTokenDelegate = createTokenDelegate;
-  }
-
-  public request(url: string, method?: string, options?: {
-    body?: any;
-    headers?: HttpHeaders | { [header: string]: string | string[]; };
-    observe?: 'body';
-    params?: HttpParams | { [param: string]: string | string[]; };
-    reportProgress?: boolean;
-    responseType: 'arraybuffer';
-    withCredentials?: boolean;
-    redirectSuccess?: any;
-    redirectFailure?: any;
-    errors?: any;
-    messages?: any;
-  }): Observable<NbAuthResult> {
-    if (environment.production) {
-      return super.request(url, method, options);
+    constructor(@Inject(HttpClient) http: HttpClient,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(MockUserService) private mockUserService: MockUserService) {
+        super(http, logger);
     }
 
-    let user: User;
-    user = this.mockUserService.findUser('username', 'admin@hsg.com');
-    if (!user) {
-      return of(this.parseResponse(new ServiceResponse(false, null,
-        options.redirectFailure, options.errors, options.messages)));
-    }
-    return of(this.parseResponse(new ServiceResponse(true,
-      new HttpResponse<any>({ body: JSON.stringify(user), status: 200, statusText: 'MOCK' }),
-      options.redirectSuccess, options.errors, options.messages)));
-  }
+    private createTokenDelegate: (value: any) => T;
 
-  parseResponse(serviceResponse?: ServiceResponse): NbAuthResult {
-    if (!serviceResponse) {
-      return new NbAuthResult(false);
+    setCreateTokenDelegate(createTokenDelegate: (value: any) => T) {
+        this.createTokenDelegate = createTokenDelegate;
     }
-    return new NbAuthResult(serviceResponse.isSuccess(), serviceResponse.getData(),
-      serviceResponse.getRedirect(), serviceResponse.getErrors(), serviceResponse.getMessages(),
-      this.createTokenDelegate.apply(this, [ serviceResponse.getData() ]));
-  }
+
+    public request(url: string, method?: string, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body';
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }): Observable<NbAuthResult | NbAuthResult[]> {
+        if (environment.production) {
+            return super.request(url, method, options);
+        }
+
+        let user: IUser;
+        user = this.mockUserService.findUser('username', 'admin@hsg.com');
+        if (!user) {
+            return of(this.parseResponse(new ServiceResponse(false, null,
+                options.redirectFailure, options.errors, options.messages)));
+        }
+        return of(this.parseResponse(new ServiceResponse(true,
+            new HttpResponse<any>({body: JSON.stringify(user), status: 200, statusText: 'MOCK'}),
+            options.redirectSuccess, options.errors, options.messages)));
+    }
+
+    parseResponse(serviceResponse?: ServiceResponse): NbAuthResult {
+        if (!serviceResponse) {
+            return new NbAuthResult(false);
+        }
+        return new NbAuthResult(serviceResponse.isSuccess(), serviceResponse.getData(),
+            serviceResponse.getRedirect(), serviceResponse.getErrors(), serviceResponse.getMessages(),
+            this.createTokenDelegate.apply(this, [serviceResponse.getData()]));
+    }
 }
 
 @Injectable()
 export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbService<T> {
 
-  constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService, @Inject(NGXLogger) logger: NGXLogger) {
-    super(dbService, logger, DB_STORE.auth);
-  }
+    constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService, @Inject(NGXLogger) logger: NGXLogger) {
+        super(dbService, logger, DB_STORE.auth);
+    }
 
-  delete(entity: T): Promise<number> {
-    return new Promise((resolve, reject) => {
-      this.getDbService().currentStore = this.getDbStore();
-      this.getDbService().delete({ 'username': (entity.getPayload() || {}).username })
-          .then(() => resolve(1), (errors) => { this.getLogger().error(errors); reject(errors); });
-    });
-  }
+    deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
+                      reject: (reason?: any) => void, ...args: T[]) => {
+        if (args && args.length) {
+            this.getDbService().delete({'username': (args[0].getPayload() || {}).username})
+                .then(() => resolve(1), (errors) => {
+                    this.getLogger().error(errors);
+                    reject(errors);
+                });
+        }
+    }
 
-  update(entity: T): Promise<number> {
-    return new Promise((resolve, reject) => {
-      this.getDbService().currentStore = this.getDbStore();
-      this.getDbService().update({
-        'access_token': (entity.getPayload() || {})['access_token'],
-        'refresh_token': (entity.getPayload() || {})['refresh_token'],
-      }).then(() => resolve(1), (errors) => { this.getLogger().error(errors); reject(errors); });
-    });
-  }
+    updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
+                      reject: (reason?: any) => void, ...args: T[]) => {
+        if (args && args.length) {
+            this.getDbService().update({
+                'access_token': (args[0].getPayload() || {})['access_token'],
+                'refresh_token': (args[0].getPayload() || {})['refresh_token'],
+            }).then(() => resolve(1), (errors) => {
+                this.getLogger().error(errors);
+                reject(errors);
+            });
+        }
+    }
 }

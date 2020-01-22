@@ -1,30 +1,36 @@
 import {Inject, Injectable} from '@angular/core';
 import {AbstractDbService} from '../database.service';
-import {Module} from '../../@core/data/module';
+import {IModule} from '../../@core/data/module';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {DB_STORE} from '../../config/db.config';
 
 @Injectable()
-export class ModuleService extends AbstractDbService<Module> {
+export class ModuleService extends AbstractDbService<IModule> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService, @Inject(NGXLogger) logger: NGXLogger) {
         super(dbService, logger, DB_STORE.module);
     }
 
-    delete(entity: Module): Promise<number> {
-        return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().delete({'code': entity.code})
-                .then(() => resolve(1), (errors) => { this.getLogger().error(errors); reject(errors); });
-        });
+    deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
+                      reject: (reason?: any) => void, ...args: IModule[]) => {
+        if (args && args.length) {
+            this.getDbService().delete({'code': args[0].code})
+                .then(() => resolve(1), (errors) => {
+                    this.getLogger().error(errors);
+                    reject(errors);
+                });
+        }
     }
 
-    update(entity: Module): Promise<number> {
-        return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().update({ 'name': entity.name })
-                .then(() => resolve(1), (errors) => { this.getLogger().error(errors); reject(errors); });
-        });
+    updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
+                      reject: (reason?: any) => void, ...args: IModule[]) => {
+        if (args && args.length) {
+            this.getDbService().update({'name': args[0].name})
+                .then(() => resolve(1), (errors) => {
+                    this.getLogger().error(errors);
+                    reject(errors);
+                });
+        }
     }
 }

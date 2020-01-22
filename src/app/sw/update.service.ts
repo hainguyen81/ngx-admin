@@ -35,5 +35,6 @@ export abstract class UpdateService<T> extends AbstractHttpService<T> {
     }
 
     abstract intervalPeriod(): number;
+
     abstract observeUpdate(observer?: UpdateAvailableEvent): Subscription;
 }

@@ -1,18 +1,18 @@
-import {Role} from '../@core/data/role';
+import {IRole} from '../@core/data/role';
 import {NbMenuItem} from '@nebular/theme';
-import {Module} from '../@core/data/module';
+import {IModule} from '../@core/data/module';
 import ObjectUtils, {NoParamConstructor} from './object.utils';
 import ApiMapperUtils from './api.mapper.utils';
 
 export default class MenuUtils {
-    public static roleToMenuItem<R extends Role, M extends NbMenuItem>(role: R, mnuCstr: NoParamConstructor<M>): M {
+    public static roleToMenuItem<R extends IRole, M extends NbMenuItem>(role: R, mnuCstr: NoParamConstructor<M>): M {
         if (!role || !role.module) {
             return undefined;
         }
         return MenuUtils.moduleToMenuItem(role.module, mnuCstr);
     }
 
-    public static moduleToMenuItem<M extends Module, N extends NbMenuItem>(
+    public static moduleToMenuItem<M extends IModule, N extends NbMenuItem>(
         module: M, mnuCstr: NoParamConstructor<N>, parent?: N): N {
         if (!module) {
             return undefined;
@@ -36,12 +36,12 @@ export default class MenuUtils {
         return mnu;
     }
 
-    public static buildMenu<M extends Module, N extends NbMenuItem>(
+    public static buildMenu<M extends IModule, N extends NbMenuItem>(
         modules: M[], mnuCstr: NoParamConstructor<N>, parent?: N): N[] {
         let menuItems: N[];
         menuItems = [];
         if (modules && modules.length) {
-            modules.forEach((module: Module) => {
+            modules.forEach((module: IModule) => {
                 let mnu: N;
                 mnu = MenuUtils.moduleToMenuItem(module, mnuCstr, parent);
                 menuItems.push(mnu);

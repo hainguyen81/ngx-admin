@@ -19,7 +19,8 @@ export default class ObjectUtils {
         if (value instanceof type)
             try {
                 return value as K;
-            } catch (e) {}
+            } catch (e) {
+            }
         return undefined;
     }
 
