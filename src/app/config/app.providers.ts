@@ -23,6 +23,9 @@ import {COMMON} from './common.config';
 import {ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/user/user.service';
 import {UserDataSource} from '../services/implementation/user/user.datasource';
+import {ContextMenuService} from 'ngx-contextmenu';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {LocalDataSource} from 'ng2-smart-table';
 
 export const CommonProviders: StaticProvider[] = [
     {provide: APP_BASE_HREF, useValue: environment.baseHref},
@@ -34,6 +37,8 @@ export const CommonProviders: StaticProvider[] = [
     {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpBackend]},
     {provide: HttpClient, useClass: HttpClient, deps: []},
     {provide: ToastrService, useClass: ToastrService, deps: []},
+    {provide: DataSource, useClass: LocalDataSource, deps: []},
+    {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
 ];
 
 export const InterceptorProviders = [

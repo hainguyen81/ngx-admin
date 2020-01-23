@@ -14,7 +14,19 @@
                          (edit)="onEdit($event)"
                          (editConfirm)="onEditConfirm($event)"
                          (delete)="onDelete($event)"
-                         (deleteConfirm)="onDeleteConfirm($event)">
-        </ng2-smart-table>
+                         (deleteConfirm)="onDeleteConfirm($event)"
+                         (contextmenu)="onContextMenu($event)"
+        ></ng2-smart-table>
+        <context-menu #contextMenuComponent
+                      [disabled]="!contextMenu || !contextMenu.length"
+                      (close)="onContextMenuClose()">
+            <ng-template *ngFor="let menu of contextMenu"
+                         contextMenuItem let-item
+                         [visible]="menu.visible"
+                         [enabled]="menu.enabled"
+                         [divider]="menu.divider"
+                         (execute)="menu.click.apply(this, [ $event.item ])"
+            >{{menu.title($event.title)}}</ng-template>
+        </context-menu>
     </nb-card-body>
 </nb-card>

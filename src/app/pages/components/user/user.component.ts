@@ -2,6 +2,8 @@ import {SmartTableComponent} from '../smart-table.component';
 import {Component, Inject} from '@angular/core';
 import {USER_STATUS} from '../../../@core/data/user';
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
+import {ContextMenuService} from 'ngx-contextmenu';
+import {NGXLogger} from 'ngx-logger';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -69,10 +71,34 @@ export const UserTableSettings = {
 })
 export class UserSmartTableComponent extends SmartTableComponent {
 
-    constructor(@Inject(UserDataSource) private userDataSource: UserDataSource) {
-        super();
+    constructor(@Inject(UserDataSource) userDataSource: UserDataSource,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(NGXLogger) logger: NGXLogger) {
+        super(userDataSource, contextMenuService, logger);
         super.setTableHeader('Users Management');
         super.setTableSettings(UserTableSettings);
-        super.setDataSource(userDataSource);
+        super.setContextMenu([{
+            icon: (item?: any) => '',
+            title: (item?: any) => 'Title 111',
+            enabled: (item?: any) => true,
+            visible: (item?: any) => true,
+            divider: (item?: any) => false,
+            click: (item?: any) => alert('111'),
+        }, {
+            icon: (item?: any) => '',
+            title: (item?: any) => '',
+            enabled: (item?: any) => true,
+            visible: (item?: any) => true,
+            divider: (item?: any) => true,
+            click: (item?: any) => {
+            },
+        }, {
+            icon: (item?: any) => '',
+            title: (item?: any) => 'Title 222',
+            enabled: (item?: any) => true,
+            visible: (item?: any) => true,
+            divider: (item?: any) => false,
+            click: (item?: any) => alert('222'),
+        }]);
     }
 }
