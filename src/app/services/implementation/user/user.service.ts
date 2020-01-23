@@ -9,6 +9,8 @@ import {isArray} from 'util';
 import {AbstractDbService} from '../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../config/db.config';
+import {environment} from '../../../../environments/environment';
+import {MockUserService} from '../../../@core/mock/users.service';
 
 @Injectable()
 export class UserHttpService extends AbstractHttpService<IUser> {
@@ -39,6 +41,13 @@ export class UserDbService extends AbstractDbService<IUser> {
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(dbService, logger, DB_STORE.user);
+    }
+
+    getAll(): Promise<IUser[]> {
+        if (environment.production) {
+            return super.getAll();
+        }
+        return (new MockUserService()).getUsers().toPromise();
     }
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,

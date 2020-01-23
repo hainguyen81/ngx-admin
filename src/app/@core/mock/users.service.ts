@@ -79,8 +79,8 @@ export class MockUserService {
         admin: this.adminUser,
     };
 
-    public getUsers(): Observable<any> {
-        return observableOf(this.users);
+    public getUsers(): Observable<IUser[]> {
+        return observableOf(Object.values(this.users));
     }
 
     public findUser(key: string, value?: any): IUser {

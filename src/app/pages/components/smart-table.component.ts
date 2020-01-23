@@ -122,7 +122,7 @@ export class SmartTableComponent {
      */
     onRowSelect(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onRowSelect', event);
     }
 
     /**
@@ -133,7 +133,7 @@ export class SmartTableComponent {
      */
     onUserRowSelect(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onUserRowSelect', event);
         if (MouseEventGuard.isDoubleClick()) {
             this.onDoubleClick(event);
         }
@@ -147,7 +147,7 @@ export class SmartTableComponent {
      */
     onDoubleClick(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onDoubleClick', event);
     }
 
     /**
@@ -158,7 +158,7 @@ export class SmartTableComponent {
      */
     onMouseOver(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onMouseOver', event);
     }
 
     /**
@@ -169,7 +169,7 @@ export class SmartTableComponent {
      */
     onCreate(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onCreate', event);
     }
 
     /**
@@ -183,7 +183,7 @@ export class SmartTableComponent {
      */
     onCreateConfirm(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onCreateConfirm', event);
     }
 
     /**
@@ -195,7 +195,7 @@ export class SmartTableComponent {
      */
     onEdit(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onEdit', event);
     }
 
     /**
@@ -210,7 +210,7 @@ export class SmartTableComponent {
      */
     onEditConfirm(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onEditConfirm', event);
     }
 
     /**
@@ -222,7 +222,7 @@ export class SmartTableComponent {
      */
     onDelete(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onDelete', event);
     }
 
     /**
@@ -236,7 +236,7 @@ export class SmartTableComponent {
      */
     onDeleteConfirm(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onDeleteConfirm', event);
     }
 
     /**
@@ -245,7 +245,7 @@ export class SmartTableComponent {
      */
     onContextMenu(event: MouseEvent): void {
         // // TODO Waiting for implementing from children component
-        this.getLogger().debug(event);
+        this.getLogger().debug('onContextMenu', event);
         // this.getContextMenuService().show.next({
         //     // Optional - if unspecified, all context menu components will open
         //     contextMenu: this.contextMenuComponent,
