@@ -21,10 +21,6 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         return this.getAll();
     }
 
-    getSort(): any {
-        return undefined;
-    }
-
     getFilter(): any {
         return undefined;
     }

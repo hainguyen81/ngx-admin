@@ -4,7 +4,7 @@ import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../config/log.config';
-import {COMMON} from "../config/common.config";
+import {COMMON} from '../config/common.config';
 
 export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends IDbService<T>> extends DataSource {
 
@@ -30,7 +30,18 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         logger.updateConfig(LogConfig);
     }
 
+    getFilter(): any {
+        // TODO Implement by children class, please returning not undefined
+        return [];
+    }
+
+    getSort(): any {
+        // TODO Implement by children class, please returning not undefined
+        return [];
+    }
+
     getPaging(): any {
+        // TODO Implement by children class, please returning not undefined
         return {
             page: 1,
             perPage: COMMON.itemsPerPage,
