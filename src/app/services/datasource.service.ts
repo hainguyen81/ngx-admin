@@ -4,6 +4,7 @@ import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../config/log.config';
+import {COMMON} from "../config/common.config";
 
 export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends IDbService<T>> extends DataSource {
 
@@ -27,5 +28,12 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         dbService || throwError('Not found database service');
         logger || throwError('Could not inject logger!');
         logger.updateConfig(LogConfig);
+    }
+
+    getPaging(): any {
+        return {
+            page: 1,
+            perPage: COMMON.itemsPerPage,
+        };
     }
 }

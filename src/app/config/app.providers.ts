@@ -12,9 +12,9 @@ import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oau
 import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
 import {environment} from '../../environments/environment';
 import {
-  NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,
-  NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
-  NbxAuthInterceptor,
+    NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,
+    NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
+    NbxAuthInterceptor,
 } from '../auth/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';

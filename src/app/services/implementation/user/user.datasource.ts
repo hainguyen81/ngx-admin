@@ -29,10 +29,6 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         return undefined;
     }
 
-    getPaging(): any {
-        return undefined;
-    }
-
     count(): number {
         return 0;
     }

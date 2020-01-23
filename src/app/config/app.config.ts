@@ -6,13 +6,13 @@ import {API} from './api.config';
 import {COMMON} from './common.config';
 
 export const AppConfig = {
-  Injector: Injector,
-  COMMON: COMMON,
-  TOASTER: TOASTER,
-  API: API,
-  Db: dbConfig,
-  Providers: Providers,
-  getService: (token: any) => {
-    return AppConfig.Injector['get'].apply(this, token);
-  },
+    Injector: Injector,
+    COMMON: COMMON,
+    TOASTER: TOASTER,
+    API: API,
+    Db: dbConfig,
+    Providers: Providers,
+    getService: (token: any) => {
+        return AppConfig.Injector['get'].apply(this, token);
+    },
 };
