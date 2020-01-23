@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
+import {MouseEventGuard} from './customization/mouse.event.guard';
 
 @Component({
     selector: 'ngx-smart-table',
@@ -82,7 +83,7 @@ export class SmartTableComponent {
      *      source: DataSource - table data source
      */
     onRowSelect(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -92,7 +93,20 @@ export class SmartTableComponent {
      *      source: DataSource - table data source
      */
     onUserRowSelect(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
+        if (MouseEventGuard.isDoubleClick()) {
+            this.onDoubleClick(event);
+        }
+    }
+
+    /**
+     * Triggered only on a user double-click event from onUserRowSelect.
+     * @param event Object, consist of:
+     *      data: Object - selected row data object
+     *      source: DataSource - table data source
+     */
+    onDoubleClick(event): void {
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -102,7 +116,7 @@ export class SmartTableComponent {
      *      source: DataSource - table data source
      */
     onMouseOver(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -112,7 +126,7 @@ export class SmartTableComponent {
      *      source: DataSource - table data source
      */
     onCreate(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -125,7 +139,7 @@ export class SmartTableComponent {
      *      confirm: Deferred - Deferred object with resolve(newData: Object) and reject() methods.
      */
     onCreateConfirm(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -136,7 +150,7 @@ export class SmartTableComponent {
      *      source: DataSource - table data source
      */
     onEdit(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -150,7 +164,7 @@ export class SmartTableComponent {
      *      confirm: Deferred - Deferred object with resolve(newData: Object) and reject() methods.
      */
     onEditConfirm(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -161,7 +175,7 @@ export class SmartTableComponent {
      *      source: DataSource - table data source
      */
     onDelete(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 
     /**
@@ -174,6 +188,6 @@ export class SmartTableComponent {
      *      confirm: Deferred - Deferred object with resolve() and reject() methods.
      */
     onDeleteConfirm(event): void {
-        // TODO Waiting for implementing from children compoennt
+        // TODO Waiting for implementing from children component
     }
 }
