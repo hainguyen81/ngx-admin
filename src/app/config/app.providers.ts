@@ -22,6 +22,7 @@ import {ToastrService} from 'ngx-toastr';
 import {COMMON} from './common.config';
 import {ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/user/user.service';
+import {UserDataSource} from '../services/implementation/user/user.datasource';
 
 export const CommonProviders: StaticProvider[] = [
     {provide: APP_BASE_HREF, useValue: environment.baseHref},
@@ -43,7 +44,7 @@ export const InterceptorProviders = [
         provide: HTTP_INTERCEPTORS, useClass: NbxAuthInterceptor, multi: true,
         deps: [Injector, NB_AUTH_INTERCEPTOR_HEADER,
             NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
-            NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM]
+            NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM],
     },
 ];
 
@@ -54,34 +55,38 @@ export const AuthenticationProviders: StaticProvider[] = [
     {provide: ModuleService, useClass: ModuleService, deps: [NgxIndexedDBService, NGXLogger]},
     {
         provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
-        deps: [HttpClient, NGXLogger, MockUserService]
+        deps: [HttpClient, NGXLogger, MockUserService],
     },
     {
         provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
-        deps: [NgxIndexedDBService, NGXLogger]
+        deps: [NgxIndexedDBService, NGXLogger],
     },
     {
         provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
         deps: [HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService,
-            NbxOAuth2AuthDbService, ModuleService, NGXLogger]
+            NbxOAuth2AuthDbService, ModuleService, NGXLogger],
     },
 ];
 
 export const MenuProviders: StaticProvider[] = [
     {
         provide: MenuService, useClass: MenuService,
-        deps: [NgxIndexedDBService, NGXLogger, NbxOAuth2AuthDbService]
+        deps: [NgxIndexedDBService, NGXLogger, NbxOAuth2AuthDbService],
     },
 ];
 
 export const UserProviders: StaticProvider[] = [
     {
         provide: UserHttpService, useClass: UserHttpService,
-        deps: [HttpClient, NGXLogger]
+        deps: [HttpClient, NGXLogger],
     },
     {
         provide: UserDbService, useClass: UserDbService,
-        deps: [NgxIndexedDBService, NGXLogger]
+        deps: [NgxIndexedDBService, NGXLogger],
+    },
+    {
+        provide: UserDataSource, useClass: UserDataSource,
+        deps: [UserHttpService, UserDbService, NGXLogger],
     },
 ];
 

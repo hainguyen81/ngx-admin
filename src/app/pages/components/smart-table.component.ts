@@ -1,4 +1,7 @@
 import {Component} from '@angular/core';
+import {LocalDataSource} from 'ng2-smart-table';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {throwError} from 'rxjs';
 
 @Component({
     selector: 'ngx-smart-table',
@@ -51,15 +54,9 @@ export class SmartTableComponent {
         },
     };
 
-    constructor() {
-    }
+    private dataSource: DataSource = new LocalDataSource();
 
-    onDeleteConfirm(event): void {
-        if (window.confirm('Are you sure you want to delete?')) {
-            event.confirm.resolve();
-        } else {
-            event.confirm.reject();
-        }
+    constructor() {
     }
 
     protected setTableSettings(settings: any) {
@@ -68,5 +65,115 @@ export class SmartTableComponent {
 
     protected setTableHeader(header: string) {
         this.tableHeader = header;
+    }
+
+    protected setDataSource(dataSource: DataSource) {
+        this.dataSource = dataSource;
+        if (!dataSource) {
+            throwError('Not found data source!');
+        }
+    }
+
+    /**
+     * Triggered once a row is selected (either clicked or selected automatically
+     * (after page is changed, after some row is deleted, etc)).
+     * @param event Object, consist of:
+     *      data: Object - selected row data object
+     *      source: DataSource - table data source
+     */
+    onRowSelect(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered only on a user click event.
+     * @param event Object, consist of:
+     *      data: Object - selected row data object
+     *      source: DataSource - table data source
+     */
+    onUserRowSelect(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered only on a user mouseover event.
+     * @param event Object, consist of:
+     *      data: Object - highlighted row data object
+     *      source: DataSource - table data source
+     */
+    onMouseOver(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered once a Create button clicked.
+     * Triggered only if table mode = external.
+     * @param event Object, consist of:
+     *      source: DataSource - table data source
+     */
+    onCreate(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered once a Create button clicked.
+     * Triggered only if table confirmCreate = true and mode = inline.
+     * Allows you to confirm changes before they are applied to the table data source.
+     * @param event Object, consist of:
+     *      newData: Object - data entered in a new row
+     *      source: DataSource - table data source
+     *      confirm: Deferred - Deferred object with resolve(newData: Object) and reject() methods.
+     */
+    onCreateConfirm(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered once an Edit button clicked on a row.
+     * Triggered only if table mode = external.
+     * @param event Object, consist of:
+     *      data: Object - row data object
+     *      source: DataSource - table data source
+     */
+    onEdit(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered once a Save button clicked.
+     * Triggered only if table confirmSave = true and mode = inline.
+     * Allows you to confirm changes before they are applied to the table data source.
+     * @param event Object, consist of:
+     *      data: Object - original row data
+     *      newData: Object - edited data
+     *      source: DataSource - table data source
+     *      confirm: Deferred - Deferred object with resolve(newData: Object) and reject() methods.
+     */
+    onEditConfirm(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered once a Delete button clicked on a row.
+     * Triggered only if table mode = external.
+     * @param event Object, consist of:
+     *      data: Object - row data object
+     *      source: DataSource - table data source
+     */
+    onDelete(event): void {
+        // TODO Waiting for implementing from children compoennt
+    }
+
+    /**
+     * Triggered once a Delete button clicked.
+     * Triggered only if table confirmDelete = true and mode = inline.
+     * Allows you to confirm changes before they are applied to the table data source.
+     * @param event Object, consist of:
+     *      data: Object - data object to delete
+     *      source: DataSource - table data source
+     *      confirm: Deferred - Deferred object with resolve() and reject() methods.
+     */
+    onDeleteConfirm(event): void {
+        // TODO Waiting for implementing from children compoennt
     }
 }

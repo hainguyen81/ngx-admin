@@ -3,22 +3,11 @@ import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
+import {IDbService} from './interface.service';
 
 export type PromiseExecutor<T, K> = (resolve: (value?: T | PromiseLike<T>) => void,
                                      reject: (reason?: any) => void,
                                      ...args: K[]) => void;
-
-export declare interface IDbService<T> {
-    findEntities(criteria?: any): Promise<T[]>;
-
-    findById(id?: any): Promise<T>;
-
-    insert(entity: T): Promise<number>;
-
-    delete(entity: T): Promise<number>;
-
-    update(entity: T): Promise<number>;
-}
 
 export abstract class AbstractDbService<T> implements IDbService<T> {
 
