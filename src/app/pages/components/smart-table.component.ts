@@ -1,10 +1,14 @@
-import {Component, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, QueryList, ViewChildren} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {MouseEventGuard} from './customization/mouse.event.guard';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
+import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
+import {Grid} from 'ng2-smart-table/lib/grid';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {isNumber} from 'util';
 
 export interface IContextMenu {
     icon: (item?: any) => string;
@@ -20,7 +24,7 @@ export interface IContextMenu {
     templateUrl: './smart-table.component.html',
     styleUrls: ['./smart-table.component.scss'],
 })
-export class SmartTableComponent {
+export class SmartTableComponent implements AfterViewInit {
 
     private tableHeader: string;
     private settings = {
@@ -66,9 +70,12 @@ export class SmartTableComponent {
         },
     };
 
-    // @ts-ignore
-    @ViewChild(ContextMenuComponent) private contextMenuComponent: ContextMenuComponent;
+    @ViewChildren(ContextMenuComponent) private readonly queryContextMenuComponent: QueryList<ContextMenuComponent>;
+    private contextMenuComponent: ContextMenuComponent;
     private contextMenu: IContextMenu[];
+
+    @ViewChildren(Ng2SmartTableComponent) private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
+    private smartTableComponent: Ng2SmartTableComponent;
 
     constructor(@Inject(DataSource) private dataSource: DataSource,
                 @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
@@ -76,6 +83,11 @@ export class SmartTableComponent {
         contextMenuService || throwError('Could not inject context menu service');
         logger || throwError('Could not inject logger');
         dataSource = dataSource || new LocalDataSource();
+    }
+
+    ngAfterViewInit(): void {
+        this.queryContextMenuComponent.map((item) => this.contextMenuComponent = item);
+        this.querySmartTableComponent.map((item) => this.smartTableComponent = item);
     }
 
     protected getLogger(): NGXLogger {
@@ -103,14 +115,40 @@ export class SmartTableComponent {
         return this.contextMenuService;
     }
 
-    protected setContextMenuComponent(contextMenuComponent: ContextMenuComponent) {
-        contextMenuComponent || throwError('Context menu component could not be undefined');
-        this.contextMenuComponent = contextMenuComponent;
+    protected getContextMenuComponent(): ContextMenuComponent {
+        return this.contextMenuComponent;
     }
 
     protected setContextMenu(contextMenu: IContextMenu[]) {
         (contextMenu && contextMenu.length) || throwError('Context menu must be valid');
         this.contextMenu = contextMenu;
+    }
+
+    protected getSmartTableComponent(): Ng2SmartTableComponent {
+        return this.smartTableComponent;
+    }
+
+    protected getGridComponent(): Grid {
+        return this.getSmartTableComponent().grid;
+    }
+
+    public getSelectedRows(): Array<Row> {
+        return this.getGridComponent().getSelectedRows();
+    }
+
+    public getRowByIndex(rowIdx: number): Row {
+        let rows: Array<Row>;
+        rows = this.getGridComponent().getRows();
+        if (rows && rows.length && 0 <= rowIdx && rowIdx < rows.length) {
+            return rows[rowIdx];
+        }
+        return undefined;
+    }
+
+    public getRowDataByIndex(rowIdx: number): any {
+        let row: Row;
+        row = this.getRowByIndex(rowIdx);
+        return (row ? row.getData() : undefined);
     }
 
     /**
@@ -246,14 +284,27 @@ export class SmartTableComponent {
     onContextMenu(event: MouseEvent): void {
         // // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenu', event);
-        // this.getContextMenuService().show.next({
-        //     // Optional - if unspecified, all context menu components will open
-        //     contextMenu: this.contextMenuComponent,
-        //     event: event,
-        //     item: event.data,
-        // });
-        // event.preventDefault();
-        // event.stopPropagation();
+        let rowIdx: number;
+        rowIdx = -1;
+        let target: HTMLElement;
+        target = event.target as HTMLElement;
+        target = (target && target.tagName.toLowerCase() === 'tr'
+            ? target : target.closest('tr'));
+        if (target && target.tagName.toLowerCase() === 'tr'
+            && isNumber(target['rowIndex'])) {
+            rowIdx = target['rowIndex'] as number;
+            rowIdx--;
+        }
+        if (rowIdx >= 0) {
+            this.getContextMenuService().show.next({
+                // Optional - if unspecified, all context menu components will open
+                contextMenu: this.contextMenuComponent,
+                event: event,
+                item: this.getRowDataByIndex(rowIdx),
+            });
+        }
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     /**
