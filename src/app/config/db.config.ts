@@ -40,5 +40,19 @@ export const dbConfig: DBConfig = {
             {name: 'api', keypath: 'api', options: {unique: false}},
             {name: 'children', keypath: 'children', options: {unique: false}},
         ],
+    }, {
+        store: DB_STORE.user,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'scope', keypath: 'scope', options: {unique: false}},
+            {name: 'company', keypath: 'company', options: {unique: false}},
+            {name: 'enterprise', keypath: 'enterprise', options: {unique: false}},
+            {name: 'username', keypath: 'username', options: {unique: false}},
+            {name: 'firstName', keypath: 'firstName', options: {unique: false}},
+            {name: 'lastName', keypath: 'lastName', options: {unique: false}},
+            {name: 'email', keypath: 'email', options: {unique: false}},
+            {name: 'status', keypath: 'status', options: {unique: false}},
+        ],
     }],
 };
