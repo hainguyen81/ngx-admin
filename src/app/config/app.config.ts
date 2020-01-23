@@ -1,4 +1,4 @@
-import {Injector} from '@angular/core';
+import {ComponentFactoryResolver, Injector} from '@angular/core';
 import {dbConfig} from './db.config';
 import {Providers} from './app.providers';
 import {TOASTER} from './toaststr.config';

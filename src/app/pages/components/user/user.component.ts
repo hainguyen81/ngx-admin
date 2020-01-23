@@ -1,5 +1,5 @@
-import {SmartTableComponent} from '../smart-table.component';
-import {Component, Inject} from '@angular/core';
+import {IContextMenu, SmartTableComponent} from '../smart-table.component';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {USER_STATUS} from '../../../@core/data/user';
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -64,6 +64,34 @@ export const UserTableSettings = {
     },
 };
 
+export const UserContextMenu: IContextMenu[] = [{
+    icon: (item?: any) => 'plus-square',
+    title: (item?: any) => 'Add',
+    enabled: (item?: any) => true,
+    visible: (item?: any) => true,
+    divider: (item?: any) => false,
+    click: (item?: any) => {
+        alert('111');
+    },
+}, {
+    icon: (item?: any) => 'edit',
+    title: (item?: any) => 'Edit',
+    enabled: (item?: any) => true,
+    visible: (item?: any) => true,
+    divider: (item?: any) => false,
+    click: (item?: any) => {
+    },
+}, {
+    icon: (item?: any) => 'minus-square',
+    title: (item?: any) => 'Delete',
+    enabled: (item?: any) => true,
+    visible: (item?: any) => true,
+    divider: (item?: any) => false,
+    click: (item?: any) => {
+        alert('222');
+    },
+}];
+
 @Component({
     selector: 'ngx-smart-table',
     templateUrl: '../smart-table.component.html',
@@ -77,28 +105,6 @@ export class UserSmartTableComponent extends SmartTableComponent {
         super(userDataSource, contextMenuService, logger);
         super.setTableHeader('Users Management');
         super.setTableSettings(UserTableSettings);
-        super.setContextMenu([{
-            icon: (item?: any) => '',
-            title: (item?: any) => 'Title 111',
-            enabled: (item?: any) => true,
-            visible: (item?: any) => true,
-            divider: (item?: any) => false,
-            click: (item?: any) => alert('111'),
-        }, {
-            icon: (item?: any) => '',
-            title: (item?: any) => '',
-            enabled: (item?: any) => true,
-            visible: (item?: any) => true,
-            divider: (item?: any) => true,
-            click: (item?: any) => {
-            },
-        }, {
-            icon: (item?: any) => '',
-            title: (item?: any) => 'Title 222',
-            enabled: (item?: any) => true,
-            visible: (item?: any) => true,
-            divider: (item?: any) => false,
-            click: (item?: any) => alert('222'),
-        }]);
+        super.setContextMenu(UserContextMenu);
     }
 }

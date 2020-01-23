@@ -6,7 +6,7 @@
 import {CoreModule} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Injector, NgModule} from '@angular/core';
+import {ComponentFactoryResolver, Inject, Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
@@ -21,7 +21,7 @@ import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 import {
     NbChatModule,
     NbDatepickerModule,
-    NbDialogModule,
+    NbDialogModule, NbIconLibraries, NbIconModule,
     NbMenuModule,
     NbSidebarModule,
     NbThemeModule,
@@ -49,6 +49,7 @@ import {ToastrModule} from 'ngx-toastr';
         /* Theme */
         ThemeModule.forRoot(),
         NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        NbIconModule,
 
         NbSidebarModule.forRoot(),
         NbMenuModule.forRoot(),
@@ -118,8 +119,12 @@ import {ToastrModule} from 'ngx-toastr';
     bootstrap: [AppComponent],
 })
 export class AppModule {
-    constructor(injector: Injector) {
+    constructor(injector: Injector,
+                iconLibraries: NbIconLibraries) {
         // @ts-ignore
         AppConfig.Injector = Injector.create({providers: AppConfig.Providers, parent: injector});
+        iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
+        iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
+        iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
     }
 }

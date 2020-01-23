@@ -1,4 +1,10 @@
-import {AfterViewInit, Component, Inject, QueryList, ViewChildren} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    Inject, Input,
+    QueryList, TemplateRef,
+    ViewChildren, ViewContainerRef, ViewRef,
+} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
@@ -70,11 +76,22 @@ export class SmartTableComponent implements AfterViewInit {
         },
     };
 
-    @ViewChildren(ContextMenuComponent) private readonly queryContextMenuComponent: QueryList<ContextMenuComponent>;
-    private contextMenuComponent: ContextMenuComponent;
+    @ViewChildren(ContextMenuComponent)
+    private readonly queryContextMenuComponent: QueryList<ContextMenuComponent>;
+    @Input() private contextMenuComponent: ContextMenuComponent;
+
+    @ViewChildren('contextMenuComponent', {read: ViewContainerRef})
+    private readonly queryContextMenuViewComponent: QueryList<ViewContainerRef>;
+    private contextMenuViewComponent: ViewContainerRef;
+
+    @ViewChildren(TemplateRef)
+    private readonly queryContextMenuItemsComponent: QueryList<TemplateRef<any>>;
+    private contextMenuItemsViewComponent: ViewRef;
+
     private contextMenu: IContextMenu[];
 
-    @ViewChildren(Ng2SmartTableComponent) private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
+    @ViewChildren(Ng2SmartTableComponent)
+    private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
     private smartTableComponent: Ng2SmartTableComponent;
 
     constructor(@Inject(DataSource) private dataSource: DataSource,
@@ -86,8 +103,14 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.queryContextMenuComponent.map((item) => this.contextMenuComponent = item);
-        this.querySmartTableComponent.map((item) => this.smartTableComponent = item);
+        this.queryContextMenuComponent.map(
+            (item) => this.contextMenuComponent = item);
+        this.querySmartTableComponent.map(
+            (item) => this.smartTableComponent = item);
+        this.queryContextMenuViewComponent.map(
+            (item) => this.contextMenuViewComponent = item);
+        this.queryContextMenuItemsComponent.map(
+            (item) => this.contextMenuItemsViewComponent = item.createEmbeddedView(null));
     }
 
     protected getLogger(): NGXLogger {
@@ -115,8 +138,16 @@ export class SmartTableComponent implements AfterViewInit {
         return this.contextMenuService;
     }
 
+    protected getContextMenuViewComponent(): ViewContainerRef {
+        return this.contextMenuViewComponent;
+    }
+
     protected getContextMenuComponent(): ContextMenuComponent {
         return this.contextMenuComponent;
+    }
+
+    protected getContextMenuItemsViewComponent(): ViewRef {
+        return this.contextMenuItemsViewComponent;
     }
 
     protected setContextMenu(contextMenu: IContextMenu[]) {
@@ -282,7 +313,7 @@ export class SmartTableComponent implements AfterViewInit {
      * @param event MouseEvent
      */
     onContextMenu(event: MouseEvent): void {
-        // // TODO Waiting for implementing from children component
+        // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenu', event);
         let rowIdx: number;
         rowIdx = -1;
@@ -293,7 +324,7 @@ export class SmartTableComponent implements AfterViewInit {
         if (target && target.tagName.toLowerCase() === 'tr'
             && isNumber(target['rowIndex'])) {
             rowIdx = target['rowIndex'] as number;
-            rowIdx--;
+            rowIdx -= 1;
         }
         if (rowIdx >= 0) {
             this.getContextMenuService().show.next({
@@ -301,10 +332,22 @@ export class SmartTableComponent implements AfterViewInit {
                 contextMenu: this.contextMenuComponent,
                 event: event,
                 item: this.getRowDataByIndex(rowIdx),
+                anchorElement: event.target,
             });
+            event.preventDefault();
+            event.stopPropagation();
+
+        } else {
+            this.closeContextMenu();
         }
-        event.preventDefault();
-        event.stopPropagation();
+    }
+
+    protected closeContextMenu() {
+        const keyEvent = new KeyboardEvent('keydown', {key: 'Escape'});
+        this.getContextMenuService().closeAllContextMenus({
+            eventType: 'cancel',
+            event: keyEvent,
+        });
     }
 
     /**
@@ -312,5 +355,6 @@ export class SmartTableComponent implements AfterViewInit {
      */
     onContextMenuClose(): void {
         // TODO Waiting for implementing from children component
+        this.getLogger().debug('onContextMenuClose');
     }
 }
