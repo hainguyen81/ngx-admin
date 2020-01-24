@@ -26,6 +26,7 @@ import {UserDataSource} from '../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {LocalDataSource} from 'ng2-smart-table';
+import {ConnectionService} from 'ng-connection-service';
 
 export const CommonProviders: StaticProvider[] = [
     {provide: APP_BASE_HREF, useValue: environment.baseHref},
@@ -39,6 +40,7 @@ export const CommonProviders: StaticProvider[] = [
     {provide: ToastrService, useClass: ToastrService, deps: []},
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
+    {provide: ConnectionService, useClass: ConnectionService, deps: []},
 ];
 
 export const InterceptorProviders = [
@@ -56,15 +58,15 @@ export const InterceptorProviders = [
 export const AuthenticationProviders: StaticProvider[] = [
     {provide: AuthGuard, useClass: AuthGuard, deps: [NbAuthService, Router]},
     {provide: MockUserService, useClass: MockUserService, deps: []},
-    {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger]},
-    {provide: ModuleService, useClass: ModuleService, deps: [NgxIndexedDBService, NGXLogger]},
+    {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
+    {provide: ModuleService, useClass: ModuleService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
     {
         provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
         deps: [HttpClient, NGXLogger, MockUserService],
     },
     {
         provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
-        deps: [NgxIndexedDBService, NGXLogger],
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
     {
         provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
@@ -76,7 +78,7 @@ export const AuthenticationProviders: StaticProvider[] = [
 export const MenuProviders: StaticProvider[] = [
     {
         provide: MenuService, useClass: MenuService,
-        deps: [NgxIndexedDBService, NGXLogger, NbxOAuth2AuthDbService],
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
 ];
 
@@ -87,7 +89,7 @@ export const UserProviders: StaticProvider[] = [
     },
     {
         provide: UserDbService, useClass: UserDbService,
-        deps: [NgxIndexedDBService, NGXLogger],
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
     {
         provide: UserDataSource, useClass: UserDataSource,

@@ -3,6 +3,7 @@ import {AbstractDbService} from './database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {Inject, Injectable} from '@angular/core';
+import {ConnectionService} from 'ng-connection-service';
 
 /**
  * Example empty IndexDb service
@@ -11,8 +12,9 @@ import {Inject, Injectable} from '@angular/core';
 export class EmptyService extends AbstractDbService<any> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
-                @Inject(NGXLogger) logger: NGXLogger) {
-        super(dbService, logger, 'EMPTY');
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(ConnectionService) connectionService: ConnectionService) {
+        super(dbService, logger, connectionService, 'EMPTY');
         dbService || throwError('Could not inject IndexDb!');
         logger || throwError('Could not inject logger!');
     }

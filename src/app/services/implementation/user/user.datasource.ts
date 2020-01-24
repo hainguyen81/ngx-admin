@@ -28,4 +28,8 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
     count(): number {
         return 0;
     }
+
+    update(oldData: IUser, newData: IUser): Promise<number> {
+        return this.getDbService().update(newData);
+    }
 }

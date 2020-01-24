@@ -4,6 +4,7 @@ import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
 import {IDbService} from './interface.service';
+import {ConnectionService} from 'ng-connection-service';
 
 /**
  * The delegate Promise function type for delete/update delegate function of IndexDb service
@@ -24,6 +25,10 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
         return this.dbService;
     }
 
+    protected getConnectionService(): ConnectionService {
+        return this.connectionService;
+    }
+
     protected getDbStore(): string {
         return this.dbStore;
     }
@@ -34,11 +39,20 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     protected constructor(@Inject(NgxIndexedDBService) private dbService: NgxIndexedDBService,
                           @Inject(NGXLogger) private logger: NGXLogger,
+                          @Inject(ConnectionService) private connectionService: ConnectionService,
                           private dbStore: string) {
         dbService || throwError('Could not inject IndexDb!');
         logger || throwError('Could not inject logger!');
+        connectionService || throwError('Could not inject connection service!');
         dbService.currentStore = dbStore || this.constructor.name;
         logger.updateConfig(LogConfig);
+        connectionService.monitor().subscribe((connected) => {
+            if (connected) {
+                this.synchronize();
+            } else {
+                this.getLogger().warn('Not found internet connection to synchronize offline data');
+            }
+        });
     }
 
     abstract deleteExecutor: PromiseExecutor<number, T>;
@@ -144,5 +158,10 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
                 reject(e);
             }
         });
+    }
+
+    synchronize() {
+        // TODO Override by children class to synchronize offline data to service via HTTP service
+        this.getLogger().debug('Synchronize data...');
     }
 }

@@ -21,7 +21,8 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         return this.logger;
     }
 
-    protected constructor(@Inject(HttpClient) private http: HttpClient, @Inject(NGXLogger) private logger: NGXLogger) {
+    protected constructor(@Inject(HttpClient) private http: HttpClient,
+                          @Inject(NGXLogger) private logger: NGXLogger) {
         http || throwError('Could not inject HttpClient!');
         logger || throwError('Could not inject logger!');
         logger.updateConfig(LogConfig);
@@ -138,6 +139,7 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         errors?: any;
         messages?: any;
     }): Observable<T | T[]> {
+        // detect connection before requesting
         let _this: AbstractHttpService<T>;
         _this = this;
         return _this.getHttp().request(method, url, options)

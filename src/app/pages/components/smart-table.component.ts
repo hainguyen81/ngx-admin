@@ -1,6 +1,6 @@
 import {
     AfterViewInit,
-    Component,
+    Component, EventEmitter,
     Inject, Input,
     QueryList,
     ViewChildren,
@@ -48,11 +48,13 @@ export class SmartTableComponent implements AfterViewInit {
             addButtonContent: '<i class="nb-plus"></i>',
             createButtonContent: '<i class="nb-checkmark"></i>',
             cancelButtonContent: '<i class="nb-close"></i>',
+            confirmCreate: true,
         },
         edit: {
             editButtonContent: '<i class="nb-edit"></i>',
             saveButtonContent: '<i class="nb-checkmark"></i>',
             cancelButtonContent: '<i class="nb-close"></i>',
+            confirmSave: true,
         },
         delete: {
             deleteButtonContent: '<i class="nb-trash"></i>',
@@ -608,6 +610,72 @@ export class SmartTableComponent implements AfterViewInit {
                 }
             }, 300);
         }
+        !row && this.getLogger().warn('Undefined row to edit');
+    }
+
+    /**
+     * Save the specified Row
+     * @param rowIndex to save
+     * @param confirmEmitter event to fire after saving
+     */
+    protected saveRowByIndex(rowIndex: number, confirmEmitter: EventEmitter<any>) {
+        this.saveRow(this.getRowByIndex(rowIndex), confirmEmitter);
+    }
+
+    /**
+     * Save the specified Row
+     * @param confirmEmitter event to fire after saving
+     * @param item to save
+     * @param attr to detect Row
+     */
+    protected saveRowByData(confirmEmitter: EventEmitter<any>, item: any, attr?: string) {
+        this.saveRow(this.getRowByData(item, attr), confirmEmitter);
+    }
+
+    /**
+     * Save the specified Row
+     * @param row to save
+     * @param confirmEmitter event to fire after saving
+     */
+    protected saveRow(row: Row, confirmEmitter: EventEmitter<any>) {
+        if (row && !row.isInEditing) {
+            return;
+        }
+
+        row && this.getGridComponent().save(row, confirmEmitter);
+        !row && this.getLogger().warn('Undefined row to edit');
+    }
+
+    /**
+     * Delete the specified Row
+     * @param rowIndex to delete
+     * @param confirmEmitter event to fire after deleting
+     */
+    protected deleteRowByIndex(rowIndex: number, confirmEmitter: EventEmitter<any>) {
+        this.deleteRow(this.getRowByIndex(rowIndex), confirmEmitter);
+    }
+
+    /**
+     * Delete the specified Row
+     * @param confirmEmitter event to fire after deleting
+     * @param item to delete
+     * @param attr to detect Row
+     */
+    protected deleteRowByData(confirmEmitter: EventEmitter<any>, item: any, attr?: string) {
+        this.deleteRow(this.getRowByData(item, attr), confirmEmitter);
+    }
+
+    /**
+     * Delete the specified Row
+     * @param row to delete
+     * @param confirmEmitter event to fire after deleting
+     */
+    protected deleteRow(row: Row, confirmEmitter: EventEmitter<any>) {
+        if (row) {
+            return;
+        }
+
+        row && this.getGridComponent().save(row, confirmEmitter);
         !row && this.getLogger().warn('Undefined row to edit');
     }
 

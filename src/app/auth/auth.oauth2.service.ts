@@ -11,6 +11,7 @@ import {ServiceResponse} from '../services/response.service';
 import {environment} from '../../environments/environment';
 import {MockUserService} from '../@core/mock/users.service';
 import {IUser} from '../@core/data/user';
+import {ConnectionService} from 'ng-connection-service';
 
 @Injectable()
 export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHttpService<NbAuthResult> {
@@ -68,8 +69,10 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
 @Injectable()
 export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbService<T> {
 
-    constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService, @Inject(NGXLogger) logger: NGXLogger) {
-        super(dbService, logger, DB_STORE.auth);
+    constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(ConnectionService) connectionService: ConnectionService) {
+        super(dbService, logger, connectionService, DB_STORE.auth);
     }
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
