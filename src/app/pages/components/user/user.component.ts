@@ -1,10 +1,9 @@
 import {IContextMenu, SmartTableComponent} from '../smart-table.component';
-import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {USER_STATUS} from '../../../@core/data/user';
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {Row} from "ng2-smart-table/lib/data-set/row";
 
 export const UserTableSettings = {
     hideSubHeader: true,
