@@ -7,6 +7,10 @@ import {IHttpService} from './interface.service';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
 
+/**
+ * Abstract HTTP service
+ * @param <T> entity type
+ */
 export abstract class AbstractHttpService<T> implements IHttpService<T> {
 
     protected getHttp(): HttpClient {

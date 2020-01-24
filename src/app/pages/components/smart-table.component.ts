@@ -163,8 +163,20 @@ export class SmartTableComponent implements AfterViewInit {
         return this.getSmartTableComponent().grid;
     }
 
+    /**
+     * Get the selected rows
+     * @return selected rows array
+     */
     public getSelectedRows(): Array<Row> {
         return this.getGridComponent().getSelectedRows();
+    }
+
+    /**
+     * Get the rows
+     * @return rows array
+     */
+    public getRows(): Array<Row> {
+        return this.getGridComponent().getRows();
     }
 
     /**
@@ -174,7 +186,7 @@ export class SmartTableComponent implements AfterViewInit {
      */
     public getRowByIndex(rowIdx: number): Row {
         let rows: Array<Row>;
-        rows = this.getGridComponent().getRows();
+        rows = this.getRows();
         if (rows && rows.length && 0 <= rowIdx && rowIdx < rows.length) {
             return rows[rowIdx];
         }
@@ -200,7 +212,7 @@ export class SmartTableComponent implements AfterViewInit {
      */
     public getRowIndexByData(item: any, attr?: string): number {
         let rows: Array<Row>;
-        rows = this.getGridComponent().getRows();
+        rows = this.getRows();
         if (!item || !rows || !rows.length || (attr && attr.length && !item[attr])) {
             return -1;
         }
@@ -406,6 +418,15 @@ export class SmartTableComponent implements AfterViewInit {
     onContextMenuClose(): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenuClose');
+    }
+
+    /**
+     * Perform search action
+     * @param keyword to search
+     */
+    onSearch(keyword?: any) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onSearch');
     }
 
     protected editRowByIndex(rowIndex: number) {

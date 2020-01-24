@@ -1,13 +1,65 @@
 @import './themes';
 
 @mixin nb-overrides() {
-  nb-select.size-medium button {
-    padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
+    nb-select.size-medium button {
+        padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
 
-    nb-icon {
-      right: 0.41rem !important;
+        nb-icon {
+            right: 0.41rem !important;
+        }
     }
-  }
 
-  nb-auth nb-card-header { display: none !important; }
+    nb-auth nb-card-header {
+        display: none !important;
+    }
+
+    nb-card-header {
+        padding: 0.5rem 1rem;
+    }
+    nb-card-body {
+        padding: 1rem;
+    }
+
+    nb-layout-header nav {
+        height: 3.75rem;
+        padding: 0 1rem;
+    }
+    nb-layout-header.fixed ~ .layout-container {
+        padding-top: 3.75rem;
+    }
+    nb-layout .layout .layout-container .content {
+        .columns nb-layout-column {
+            padding: 1rem 1rem 0.75rem;
+        }
+
+        nb-layout-footer nav {
+            padding: 0.5rem;
+        }
+    }
+
+    nb-sidebar .scrollable {
+        padding-top: 0 !important;
+    }
+    nb-sidebar.compacted {
+        display: none;
+    }
+
+    nb-card-body {
+        ng2-smart-table {
+            table tr {
+                th, td {
+                    padding: 0.5rem 1rem;
+
+                    button, input, optgroup, select, textarea {
+                        color: nb-theme(color-basic-800);
+                        height: inherit;
+                    }
+                }
+            }
+
+            table tr.ng2-smart-titles th {
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
 }

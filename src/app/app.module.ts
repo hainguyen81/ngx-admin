@@ -19,10 +19,10 @@ import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 
 import {
-    NbChatModule,
+    NbChatModule, NbCheckboxModule,
     NbDatepickerModule,
-    NbDialogModule, NbIconLibraries, NbIconModule,
-    NbMenuModule,
+    NbDialogModule, NbIconLibraries, NbIconModule, NbInputModule,
+    NbMenuModule, NbSelectModule,
     NbSidebarModule,
     NbThemeModule,
     NbToastrModule,
@@ -50,7 +50,9 @@ import {ToastrModule} from 'ngx-toastr';
         ThemeModule.forRoot(),
         NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
         NbIconModule,
-
+        NbInputModule,
+        NbCheckboxModule,
+        NbSelectModule,
         NbSidebarModule.forRoot(),
         NbMenuModule.forRoot(),
         NbDatepickerModule.forRoot(),

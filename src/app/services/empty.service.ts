@@ -4,6 +4,9 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {Inject, Injectable} from '@angular/core';
 
+/**
+ * Example empty IndexDb service
+ */
 @Injectable()
 export class EmptyService extends AbstractDbService<any> {
 

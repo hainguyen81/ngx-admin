@@ -6,6 +6,17 @@ export const enum USER_STATUS {
     LOCKED,
 }
 
+export function convertUserStatusToDisplay(value: USER_STATUS): string {
+    switch (value) {
+        case USER_STATUS.ACTIVATED:
+            return 'Activated';
+        case USER_STATUS.LOCKED:
+            return 'Locked';
+        default:
+            return 'Not activated';
+    }
+}
+
 export interface IUser {
     id: string;
     access_token: string;

@@ -6,6 +6,12 @@ import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../config/log.config';
 import {COMMON} from '../config/common.config';
 
+/**
+ * Abstract data source for table service
+ * @param <T> IndexDb entity type
+ * @param <H> HTTP service type
+ * @param <D> IndexDb service type
+ */
 export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends IDbService<T>> extends DataSource {
 
     protected getHttpService(): H {

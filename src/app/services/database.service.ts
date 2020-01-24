@@ -5,10 +5,19 @@ import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
 import {IDbService} from './interface.service';
 
+/**
+ * The delegate Promise function type for delete/update delegate function of IndexDb service
+ * @param <T> entity type
+ * @param <K> argument type
+ */
 export type PromiseExecutor<T, K> = (resolve: (value?: T | PromiseLike<T>) => void,
                                      reject: (reason?: any) => void,
                                      ...args: K[]) => void;
 
+/**
+ * Abstract IndexedDb database service
+ * @param <T> entity type
+ */
 export abstract class AbstractDbService<T> implements IDbService<T> {
 
     protected getDbService(): NgxIndexedDBService {

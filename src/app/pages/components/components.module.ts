@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {SmartTableComponent} from './smart-table.component';
-import {NbCardModule, NbContextMenuModule, NbIconModule} from '@nebular/theme';
+import {NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbSearchModule, NbSelectModule} from '@nebular/theme';
 import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
 import {NotFoundComponent} from './not-found.component';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -12,6 +12,9 @@ import {AppConfig} from '../../config/app.config';
 @NgModule({
     imports: [
         CommonModule,
+        NbInputModule,
+        NbCheckboxModule,
+        NbSelectModule,
         NbIconModule,
         NbCardModule,
         Ng2SmartTableModule,
@@ -22,6 +25,7 @@ import {AppConfig} from '../../config/app.config';
         }),
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
+        NbSearchModule,
     ],
     declarations: [
         SmartTableComponent,

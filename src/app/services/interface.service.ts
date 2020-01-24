@@ -1,6 +1,10 @@
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
+/**
+ * The interface for HTTP service
+ * @param <T> entity type
+ */
 export declare interface IHttpService<T> {
     request(url: string, method?: string, options?: {
         body?: any;
@@ -17,6 +21,10 @@ export declare interface IHttpService<T> {
     }): Observable<T | T[]>;
 }
 
+/**
+ * The interface for IndexedDb service
+ * @param <T> entity type
+ */
 export declare interface IDbService<T> {
     findEntities(criteria?: any): Promise<T[]>;
 
