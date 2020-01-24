@@ -133,12 +133,14 @@ export class UserSmartTableComponent extends SmartTableComponent {
             return;
         }
 
-        // enter edit mode by F2
+        // enter edit mode or save by F2
         if (super.isSpecifiedKey(event, 'F2', 113)) {
             if (super.getSelectedRows().length) {
-                super.editRow(super.getSelectedRows().shift());
+                event.altKey ? super.saveSelectedRows()
+                    : super.editRow(super.getSelectedRows().shift());
             } else {
-                super.editRow(super.getRows().shift());
+                event.altKey ? super.saveAllRows()
+                    : super.editRow(super.getRows().shift());
             }
 
             // exit editing mode by Esc

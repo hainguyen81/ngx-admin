@@ -616,67 +616,125 @@ export class SmartTableComponent implements AfterViewInit {
     /**
      * Save the specified Row
      * @param rowIndex to save
-     * @param confirmEmitter event to fire after saving
      */
-    protected saveRowByIndex(rowIndex: number, confirmEmitter: EventEmitter<any>) {
-        this.saveRow(this.getRowByIndex(rowIndex), confirmEmitter);
+    protected saveRowByIndex(rowIndex: number) {
+        this.saveRow(this.getRowByIndex(rowIndex));
     }
 
     /**
      * Save the specified Row
-     * @param confirmEmitter event to fire after saving
      * @param item to save
      * @param attr to detect Row
      */
-    protected saveRowByData(confirmEmitter: EventEmitter<any>, item: any, attr?: string) {
-        this.saveRow(this.getRowByData(item, attr), confirmEmitter);
+    protected saveRowByData(item: any, attr?: string) {
+        this.saveRow(this.getRowByData(item, attr));
     }
 
     /**
      * Save the specified Row
      * @param row to save
-     * @param confirmEmitter event to fire after saving
      */
-    protected saveRow(row: Row, confirmEmitter: EventEmitter<any>) {
+    protected saveRow(row: Row) {
         if (row && !row.isInEditing) {
             return;
         }
 
-        row && this.getGridComponent().save(row, confirmEmitter);
+        row && this.getGridComponent().save(row,
+            this.getSmartTableComponent().editConfirm || new EventEmitter<any>());
         !row && this.getLogger().warn('Undefined row to edit');
+    }
+
+    /**
+     * Save the specified Row array
+     * @param rows to save
+     */
+    protected saveRows(rows: Array<Row>) {
+        if (!rows || !rows.length) {
+            return;
+        }
+
+        let editingRows: Array<Row>;
+        editingRows = [];
+        rows.forEach((row) => {
+            if (row.isInEditing) {
+                editingRows.push(row);
+            }
+        });
+        if (!editingRows.length) {
+            return;
+        }
+
+        editingRows.forEach((row) => this.saveRow(row));
+    }
+
+    /**
+     * Save the editing Row array in the selected rows
+     */
+    protected saveSelectedRows() {
+        return this.saveRows(this.getSelectedRows());
+    }
+
+    /**
+     * Save the editing Row array in all rows
+     */
+    protected saveAllRows() {
+        return this.saveRows(this.getRows());
     }
 
     /**
      * Delete the specified Row
      * @param rowIndex to delete
-     * @param confirmEmitter event to fire after deleting
      */
-    protected deleteRowByIndex(rowIndex: number, confirmEmitter: EventEmitter<any>) {
-        this.deleteRow(this.getRowByIndex(rowIndex), confirmEmitter);
+    protected deleteRowByIndex(rowIndex: number) {
+        this.deleteRow(this.getRowByIndex(rowIndex));
     }
 
     /**
      * Delete the specified Row
-     * @param confirmEmitter event to fire after deleting
      * @param item to delete
      * @param attr to detect Row
      */
-    protected deleteRowByData(confirmEmitter: EventEmitter<any>, item: any, attr?: string) {
-        this.deleteRow(this.getRowByData(item, attr), confirmEmitter);
+    protected deleteRowByData(item: any, attr?: string) {
+        this.deleteRow(this.getRowByData(item, attr));
     }
 
     /**
      * Delete the specified Row
      * @param row to delete
-     * @param confirmEmitter event to fire after deleting
      */
-    protected deleteRow(row: Row, confirmEmitter: EventEmitter<any>) {
+    protected deleteRow(row: Row) {
         if (row) {
             return;
         }
 
-        row && this.getGridComponent().save(row, confirmEmitter);
+        row && this.getGridComponent().delete(row,
+            this.getSmartTableComponent().deleteConfirm || new EventEmitter<any>());
         !row && this.getLogger().warn('Undefined row to edit');
+    }
+
+    /**
+     * Delete the specified Row array
+     * @param rows to delete
+     */
+    protected deleteRows(rows: Array<Row>) {
+        if (!rows || !rows.length) {
+            return;
+        }
+        rows.forEach((row) => this.deleteRow(row));
+    }
+
+    /**
+     * Delete the selected rows
+     */
+    protected deleteSelectedRows() {
+        return this.deleteRows(this.getSelectedRows());
+    }
+
+    /**
+     * Delete all rows
+     */
+    protected deleteAllRows() {
+        return this.deleteRows(this.getRows());
     }
 
     /**
