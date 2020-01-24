@@ -19,6 +19,7 @@ export class MenuService extends ModuleService {
                 if (modules && modules.length) {
                     menuItems = MenuUtils.buildMenu(modules, NbMenuItem);
                 }
+                this.getLogger().debug('Built menu', menuItems);
                 resolve(menuItems);
             }, (errors) => {
                 this.getLogger().error(errors);

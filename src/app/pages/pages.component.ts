@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MenuService} from '../services/implementation/menu.service';
 import {NbMenuItem} from '@nebular/theme';
 import {NGXLogger} from 'ngx-logger';
@@ -13,15 +13,33 @@ import {NGXLogger} from 'ngx-logger';
         </ngx-one-column-layout>
     `,
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit {
 
-    menu: NbMenuItem[];
+    private menu: NbMenuItem[];
+
+    protected getMenu(): NbMenuItem[] {
+        return this.menu;
+    }
+
+    protected getMenuService(): MenuService {
+        return this.menuService;
+    }
+
+    protected getLogger(): NGXLogger {
+        return this.logger;
+    }
 
     constructor(@Inject(MenuService) private menuService: MenuService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
         this.menu = [];
-        menuService.buildMenu().then(
-            (menuItems: NbMenuItem[]) => this.menu = menuItems,
-            (errors) => logger.error(errors));
+    }
+
+    ngOnInit(): void {
+        this.getMenuService().buildMenu().then(
+            (menuItems: NbMenuItem[]) => {
+                this.getLogger().debug('Menu', menuItems);
+                this.menu = menuItems;
+            },
+            (errors) => this.getLogger().error(errors));
     }
 }

@@ -145,6 +145,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
                 modules.push(role.module as IModule);
             }
         });
+        this.getLogger().debug('Modules', modules);
         return modules;
     }
 }
