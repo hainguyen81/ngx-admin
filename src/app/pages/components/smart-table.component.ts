@@ -167,6 +167,11 @@ export class SmartTableComponent implements AfterViewInit {
         return this.getGridComponent().getSelectedRows();
     }
 
+    /**
+     * Get the Row instance by the specified Row index
+     * @param rowIdx to parse
+     * @return Row or undefined
+     */
     public getRowByIndex(rowIdx: number): Row {
         let rows: Array<Row>;
         rows = this.getGridComponent().getRows();
@@ -176,10 +181,55 @@ export class SmartTableComponent implements AfterViewInit {
         return undefined;
     }
 
+    /**
+     * Get the Row data by the specified row index
+     * @param rowIdx to parse
+     * @return Row data or undefined
+     */
     public getRowDataByIndex(rowIdx: number): any {
         let row: Row;
         row = this.getRowByIndex(rowIdx);
         return (row ? row.getData() : undefined);
+    }
+
+    /**
+     * Get the Row index by the specified Row data
+     * @param item Row data
+     * @param attr attribute to compare
+     * @return Row index or -1
+     */
+    public getRowIndexByData(item: any, attr?: string): number {
+        let rows: Array<Row>;
+        rows = this.getGridComponent().getRows();
+        if (!item || !rows || !rows.length || (attr && attr.length && !item[attr])) {
+            return -1;
+        }
+        for (const row of rows) {
+            let rowData: any;
+            rowData = row.getData();
+            if (rowData && (rowData === item || rowData[attr] === item[attr])) {
+                return rows.indexOf(row);
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Get the Row instance by the specified Row data
+     * @param item Row data
+     * @param attr attribute to compare
+     * @return Row or undefined
+     */
+    public getRowByData(item: any, attr?: string): Row {
+        let rowIndex: number;
+        rowIndex = this.getRowIndexByData(item, attr);
+        if (rowIndex < 0) {
+            return undefined;
+        }
+
+        let rows: Array<Row>;
+        rows = this.getGridComponent().getRows();
+        return (rows && rows.length && rowIndex < rows.length ? rows[rowIndex] : undefined);
     }
 
     /**
@@ -356,5 +406,19 @@ export class SmartTableComponent implements AfterViewInit {
     onContextMenuClose(): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenuClose');
+    }
+
+    protected editRowByIndex(rowIndex: number) {
+        this.editRow(this.getRowByIndex(rowIndex));
+    }
+
+    protected editRowByData(item: any, attr?: string) {
+        this.editRow(this.getRowByData(item, attr));
+    }
+
+    protected editRow(row: Row) {
+        row && this.getGridComponent().selectRow(row);
+        row && this.getGridComponent().edit(row);
+        !row && this.getLogger().warn('Undefined row to edit');
     }
 }

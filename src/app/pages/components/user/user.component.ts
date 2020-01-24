@@ -4,6 +4,7 @@ import {USER_STATUS} from '../../../@core/data/user';
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
+import {Row} from "ng2-smart-table/lib/data-set/row";
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -19,6 +20,7 @@ export const UserTableSettings = {
             type: 'string',
             sort: false,
             filter: false,
+            editable: true,
         },
         firstName: {
             title: 'First Name',
@@ -106,5 +108,9 @@ export class UserSmartTableComponent extends SmartTableComponent {
         super.setTableHeader('Users Management');
         super.setTableSettings(UserTableSettings);
         super.setContextMenu(UserContextMenu);
+    }
+
+    onDoubleClick(event): void {
+        super.editRowByData(event.data, 'id');
     }
 }
