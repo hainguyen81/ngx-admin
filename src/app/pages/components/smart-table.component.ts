@@ -262,6 +262,58 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     /**
+     * Get the Row instance by the specified MouseEvent
+     * @param event MouseEvent
+     * @return Row or undefined
+     */
+    public getRowByMouseEvent(event: MouseEvent): Row {
+        let rowIdx: number;
+        rowIdx = -1;
+        let target: HTMLElement;
+        target = event.target as HTMLElement;
+        target = (target && target.tagName.toLowerCase() === 'tr'
+            ? target : target ? target.closest('tr') : undefined);
+        if (target && target.tagName.toLowerCase() === 'tr'
+            && isNumber(target['rowIndex'])) {
+            rowIdx = target['rowIndex'] as number;
+            rowIdx -= 1;
+        }
+        return this.getRowByIndex(rowIdx);
+    }
+
+    /**
+     * Get the Cell instance by the specified MouseEvent
+     * @param event MouseEvent
+     * @return Cell or undefined
+     */
+    public getCellByMouseEvent(event: MouseEvent): Cell {
+        let rowIndex: number;
+        let cellIndex: number;
+        rowIndex = -1;
+        cellIndex = -1;
+
+        let target: HTMLElement;
+        let targetCell: HTMLElement;
+        let targetRow: HTMLElement;
+        target = event.target as HTMLElement;
+        targetCell = (target && target.tagName.toLowerCase() === 'td'
+            ? target : target ? target.closest('td') : undefined);
+        targetRow = (target && target.tagName.toLowerCase() === 'tr'
+            ? target : targetCell ? targetCell.closest('tr')
+                : target ? target.closest('tr') : undefined);
+        if (targetRow && targetRow.tagName.toLowerCase() === 'tr'
+            && isNumber(targetRow['rowIndex'])) {
+            rowIndex = targetRow['rowIndex'] as number;
+            rowIndex -= 1;
+        }
+        if (targetCell && targetCell.tagName.toLowerCase() === 'td'
+            && isNumber(targetCell['cellIndex'])) {
+            cellIndex = targetCell['cellIndex'] as number;
+        }
+        return (rowIndex >= 0 && cellIndex >= 0 ? this.getCellByIndex(rowIndex, cellIndex) : undefined);
+    }
+
+    /**
      * Triggered once a row is selected (either clicked or selected automatically
      * (after page is changed, after some row is deleted, etc)).
      * @param event Object, consist of:
@@ -295,7 +347,19 @@ export class SmartTableComponent implements AfterViewInit {
      */
     onDoubleClick(event): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onDoubleClick', event);
+        if (event instanceof MouseEvent) {
+            let cell: Cell;
+            cell = this.getCellByMouseEvent(event);
+            this.getLogger().debug('onDoubleClick', event, cell);
+            if (cell) {
+                this.editCell(cell);
+            }
+            this.preventEvent(event);
+
+        } else if (event.data) {
+            this.getLogger().debug('onDoubleClick', event);
+            this.editRow(event.data);
+        }
     }
 
     /**
@@ -388,37 +452,46 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     /**
+     * Triggered click event
+     * @param event MouseEvent
+     */
+    onClick(event: MouseEvent): void {
+        // TODO Waiting for implementing from children component
+        let row: Row;
+        row = this.getRowByMouseEvent(event);
+        this.getLogger().debug('onClick', event, row);
+        if (row) {
+            this.getGridComponent().selectRow(row);
+
+            // stop firing event
+            this.preventEvent(event);
+        }
+    }
+
+    /**
      * Triggered ContextMenu.
      * @param event MouseEvent
      */
     onContextMenu(event: MouseEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenu', event);
-        let rowIdx: number;
-        rowIdx = -1;
-        let target: HTMLElement;
-        target = event.target as HTMLElement;
-        target = (target && target.tagName.toLowerCase() === 'tr'
-            ? target : target.closest('tr'));
-        if (target && target.tagName.toLowerCase() === 'tr'
-            && isNumber(target['rowIndex'])) {
-            rowIdx = target['rowIndex'] as number;
-            rowIdx -= 1;
-        }
-        if (rowIdx >= 0) {
+        let row: Row;
+        row = this.getRowByMouseEvent(event);
+        this.getLogger().debug('onContextMenu', event, row);
+        if (row) {
             this.getContextMenuService().show.next({
                 // Optional - if unspecified, all context menu components will open
                 contextMenu: this.contextMenuComponent,
                 event: event,
-                item: this.getRowDataByIndex(rowIdx),
+                item: row.getData(),
                 anchorElement: event.target,
             });
-            event.preventDefault();
-            event.stopPropagation();
 
         } else {
             this.closeContextMenu();
         }
+
+        // stop firing event
+        this.preventEvent(event);
     }
 
     /**
@@ -444,7 +517,7 @@ export class SmartTableComponent implements AfterViewInit {
      * Perform search action
      * @param keyword to search
      */
-    onSearch(keyword?: any) {
+    onSearch(keyword?: any): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSearch');
     }
@@ -453,7 +526,7 @@ export class SmartTableComponent implements AfterViewInit {
      * Perform keydown action
      * @param event KeyboardEvent
      */
-    onKeyDown(event: KeyboardEvent) {
+    onKeyDown(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown');
     }
@@ -462,7 +535,7 @@ export class SmartTableComponent implements AfterViewInit {
      * Perform keyup action
      * @param event KeyboardEvent
      */
-    onKeyUp(event: KeyboardEvent) {
+    onKeyUp(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyUp');
     }
@@ -471,7 +544,7 @@ export class SmartTableComponent implements AfterViewInit {
      * Perform keypress action
      * @param event KeyboardEvent
      */
-    onKeyPress(event: KeyboardEvent) {
+    onKeyPress(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyPress');
     }
@@ -487,7 +560,7 @@ export class SmartTableComponent implements AfterViewInit {
             return false;
         }
         const key = e.key || e.keyCode;
-        return (detectedKeys.indexOf(key) >= 0);
+        return (detectedKeys.indexOf(key) >= 0 || detectedKeys.indexOf(e.keyCode) >= 0);
     }
 
     /**
@@ -516,7 +589,7 @@ export class SmartTableComponent implements AfterViewInit {
         row = this.getRowByIndex(rowIndex);
         if (row && row.cells && row.cells.length && (propertyId || '').length) {
             for (const cell of row.cells) {
-                if (cell.getId().toLowerCase() === propertyId.toLowerCase()) {
+                if (cell.getId() && cell.getId().toLowerCase() === propertyId.toLowerCase()) {
                     return cell;
                 }
             }
@@ -592,25 +665,67 @@ export class SmartTableComponent implements AfterViewInit {
             return;
         }
 
-        row && this.getGridComponent().selectRow(row);
-        row && this.getGridComponent().edit(row);
-        if (row && row.cells && row.cells.length && row.isInEditing) {
-            // wait for showing editor
-            setTimeout(() => {
+        row && this.editCellByIndex(row.index, -1);
+        !row && this.getLogger().warn('Undefined row to edit');
+    }
+
+    /**
+     * Put the specified Cell into editing mode.
+     * It means whole Row will be in editing mode.
+     * @param rowIndex to edit
+     * @param columnIndex to edit. -1 for focus the first cell
+     */
+    protected editCellByIndex(rowIndex: number, columnIndex: number) {
+        if (0 > rowIndex || -1 > columnIndex) {
+            return;
+        }
+
+        let row: Row;
+        row = this.getRowByIndex(rowIndex);
+        if (!row || row.isInEditing || !row.cells || !row.cells.length || columnIndex >= row.cells.length) {
+            return;
+        }
+
+        let cell: Cell;
+        cell = (columnIndex < 0 ? undefined : row.cells[columnIndex]);
+        this.getGridComponent().selectRow(row);
+        this.getGridComponent().edit(row);
+
+        // wait for showing editor
+        setTimeout(() => {
+            let cellEditor: HTMLElement;
+            if (!cell || !cell.isEditable()) {
                 for (let i = 0; i < row.cells.length; i++) {
                     if (row.cells[i].isEditable()) {
-                        let cellEditor: HTMLElement;
                         cellEditor = this.getCellEditorByIndex(row.index, i);
                         this.getLogger().debug('Cell editor', cellEditor);
                         if (cellEditor) {
-                            cellEditor.focus({preventScroll: false});
                             break;
                         }
                     }
                 }
-            }, 300);
+            } else {
+                cellEditor = this.getCellEditorByIndex(row.index, columnIndex);
+                this.getLogger().debug('Cell editor', cellEditor);
+            }
+
+            if (cellEditor) {
+                cellEditor.focus({preventScroll: false});
+                (typeof cellEditor['select'] === 'function') && cellEditor['select'].apply(cellEditor);
+            }
+        }, 300);
+    }
+
+    /**
+     * Put the specified Cell into editing mode.
+     * It means whole Row will be in editing mode
+     * @param cell to edit
+     */
+    protected editCell(cell: Cell) {
+        if (!cell || !cell.getRow() || cell.getRow().isInEditing) {
+            return;
         }
-        !row && this.getLogger().warn('Undefined row to edit');
+        this.editCellByIndex(cell.getRow().index, cell.getRow().cells.indexOf(cell));
     }
 
     /**
@@ -764,13 +879,19 @@ export class SmartTableComponent implements AfterViewInit {
     /**
      * Put the specified Row out of editing mode
      * @param row to cancel editing
+     * @param refresh specify whether need to refresh data source
      */
-    protected cancelEditRow(row: Row) {
+    protected cancelEditRow(row: Row, refresh?: boolean) {
         !row && this.getLogger().warn('Undefined row to cancel');
         if (row && !row.isInEditing) {
             return;
+
         } else if (row) {
             row.isInEditing = false;
+            if (refresh) {
+                this.getGridComponent().source.refresh();
+            }
+            this.getGridComponent().selectRow(row);
         }
     }
 
@@ -780,7 +901,9 @@ export class SmartTableComponent implements AfterViewInit {
      */
     protected cancelEditRows(rows: Array<Row>) {
         if (rows && rows.length) {
-            rows.forEach((row) => this.cancelEditRow(row));
+            rows.forEach((row) => this.cancelEditRow(row, false));
+            this.getGridComponent().source.refresh();
+            this.getGridComponent().selectRow(rows.shift());
         }
     }
 
@@ -789,5 +912,18 @@ export class SmartTableComponent implements AfterViewInit {
      */
     protected cancelEditAll() {
         this.cancelEditRows(this.getRows());
+    }
+
+    /**
+     * Prevent the specified event
+     * @param event to prevent
+     */
+    protected preventEvent(event: any) {
+        (event && typeof event.preventDefault === 'function') && event.preventDefault();
+        (event && typeof event.stopPropagation === 'function') && event.stopPropagation();
+        if (event) {
+            event['cancelBubble'] = true;
+            event['returnValue'] = false;
+        }
     }
 }

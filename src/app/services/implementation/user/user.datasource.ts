@@ -3,6 +3,7 @@ import {UserDbService, UserHttpService} from './user.service';
 import {AbstractDataSource} from '../../datasource.service';
 import {IUser} from '../../../@core/data/user';
 import {NGXLogger} from 'ngx-logger';
+import {isArray} from 'util';
 
 @Injectable()
 export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, UserDbService> {
@@ -29,7 +30,26 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         return 0;
     }
 
-    update(oldData: IUser, newData: IUser): Promise<number> {
-        return this.getDbService().update(newData);
+    /**
+     * Update new data by old data as key.
+     * TODO remember return Promise of old data for updating view value
+     * @param oldData to filter for updating and returning to update view value
+     * @param newData to update into data source
+     */
+    update(oldData: IUser, newData: IUser): Promise<IUser> {
+        return this.getDbService().update(newData).then(() => {
+            this.refresh();
+            return oldData;
+        });
+    }
+
+    refresh(): void {
+        this.getLogger().debug('Refresh data source');
+        super.refresh();
+    }
+
+    load(data: Array<any>): Promise<any> {
+        this.getLogger().debug('Load data', data);
+        return super.load(data);
     }
 }

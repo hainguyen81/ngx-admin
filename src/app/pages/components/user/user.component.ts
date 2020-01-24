@@ -4,6 +4,7 @@ import {convertUserStatusToDisplay, USER_STATUS} from '../../../@core/data/user'
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
+import {ENTER, ESCAPE, F2, S} from '@angular/cdk/keycodes';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -122,10 +123,6 @@ export class UserSmartTableComponent extends SmartTableComponent {
         super.setContextMenu(UserContextMenu);
     }
 
-    onDoubleClick(event): void {
-        super.editRowByData(event.data, 'id');
-    }
-
     onKeyDown(event: KeyboardEvent) {
         super.onKeyDown(event);
 
@@ -133,23 +130,73 @@ export class UserSmartTableComponent extends SmartTableComponent {
             return;
         }
 
-        // enter edit mode or save by F2
-        if (super.isSpecifiedKey(event, 'F2', 113)) {
-            if (super.getSelectedRows().length) {
-                event.altKey ? super.saveSelectedRows()
-                    : super.editRow(super.getSelectedRows().shift());
-            } else {
-                event.altKey ? super.saveAllRows()
-                    : super.editRow(super.getRows().shift());
-            }
+        // detect save action
+        let isF2Key: boolean;
+        isF2Key = super.isSpecifiedKey(event, 'F2', F2);
+        let isEnterKey: boolean;
+        isEnterKey = super.isSpecifiedKey(event, 'Enter', ENTER);
+        let isEscKey: boolean;
+        isEscKey = super.isSpecifiedKey(event, 'Escape', 'Esc', ESCAPE);
+        let isSKey: boolean;
+        isSKey = super.isSpecifiedKey(event, 'S', 's', S);
+        let needToSave: boolean;
+        needToSave = ((isF2Key && event.altKey) || (isEnterKey && event.ctrlKey)
+            || (isSKey && event.ctrlKey));
+
+        // save row by [ALT + F2] or [CTRL + Enter] or [CTRL + S]
+        if (needToSave) {
+            this.saveData();
+
+            // stop firing event
+            this.preventEvent(event);
+
+            // enter edit mode by F2
+        } else if (isF2Key) {
+            this.enterEditMode();
+
+            // stop firing event
+            this.preventEvent(event);
 
             // exit editing mode by Esc
-        } else if (super.isSpecifiedKey(event, 'Escape', 'Esc', 27)) {
-            if (super.getSelectedRows().length) {
-                super.cancelEditRows(super.getSelectedRows());
-            } else {
-                super.cancelEditAll();
-            }
+        } else if (isEscKey) {
+            this.cancelEditMode();
+
+            // stop firing event
+            this.preventEvent(event);
+        }
+    }
+
+    /**
+     * Enter editing mode
+     */
+    private enterEditMode() {
+        if (super.getSelectedRows().length) {
+            super.editRow(super.getSelectedRows().shift());
+
+        } else {
+            super.editRow(super.getRows().shift());
+        }
+    }
+
+    /**
+     * Exit and cancel editing mode
+     */
+    private cancelEditMode() {
+        if (super.getSelectedRows().length) {
+            super.cancelEditRows(super.getSelectedRows());
+        } else {
+            super.cancelEditAll();
+        }
+    }
+
+    /**
+     * Save current editing data
+     */
+    private saveData() {
+        if (super.getSelectedRows().length) {
+            super.saveSelectedRows();
+        } else {
+            super.saveAllRows();
         }
     }
 }
