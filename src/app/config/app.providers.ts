@@ -89,7 +89,7 @@ export const UserProviders: StaticProvider[] = [
     },
     {
         provide: UserDbService, useClass: UserDbService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService, MockUserService],
     },
     {
         provide: UserDataSource, useClass: UserDataSource,

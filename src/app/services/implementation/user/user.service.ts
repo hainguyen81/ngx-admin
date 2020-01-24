@@ -41,7 +41,8 @@ export class UserDbService extends AbstractDbService<IUser> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(ConnectionService) connectionService: ConnectionService) {
+                @Inject(ConnectionService) connectionService: ConnectionService,
+                @Inject(MockUserService) private mockUserService: MockUserService) {
         super(dbService, logger, connectionService, DB_STORE.user);
     }
 
@@ -49,18 +50,24 @@ export class UserDbService extends AbstractDbService<IUser> {
         if (environment.production) {
             return super.getAll();
         }
-        return (new MockUserService()).getUsers().toPromise();
+        return this.mockUserService.getUsers().toPromise();
     }
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {
-            args[0].status = USER_STATUS.LOCKED;
-            this.getDbService().delete({'status': USER_STATUS.LOCKED})
-                .then(() => resolve(1), (errors) => {
-                    this.getLogger().error(errors);
-                    reject(errors);
-                });
+            if (environment.production) {
+                args[0].status = USER_STATUS.LOCKED;
+                this.getDbService().delete({'status': USER_STATUS.LOCKED})
+                    .then(() => resolve(1), (errors) => {
+                        this.getLogger().error(errors);
+                        reject(errors);
+                    });
+            } else {
+                const user: IUser = this.mockUserService.findUser('id', args[0].id);
+                user.status = USER_STATUS.LOCKED;
+                resolve(1);
+            }
         }
     }
 
@@ -74,11 +81,20 @@ export class UserDbService extends AbstractDbService<IUser> {
                 'rolesGroup', 'enterprise', 'id'];
             updatorMap = new Map<string, any>(Object.entries(args[0]));
             exclKeys.forEach(key => updatorMap.delete(key));
-            this.getDbService().update(updatorMap.entries(), {'id': args[0].id})
-                .then(() => resolve(1), (errors) => {
-                    this.getLogger().error(errors);
-                    reject(errors);
+
+            if (environment.production) {
+                this.getDbService().update(updatorMap.entries(), {'id': args[0].id})
+                    .then(() => resolve(1), (errors) => {
+                        this.getLogger().error(errors);
+                        reject(errors);
+                    });
+            } else {
+                const user: IUser = this.mockUserService.findUser('id', args[0].id);
+                updatorMap.forEach((value: any, key: string) => {
+                    user[key] = value;
                 });
+                resolve(1);
+            }
         }
     }
 }
