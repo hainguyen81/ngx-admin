@@ -23,6 +23,9 @@
                          (deleteConfirm)="onDeleteConfirm($event)"
                          [contextMenu]="contextMenuComponent"
                          (contextmenu)="onContextMenu($event)"
+                         (keydown)="onKeyDown($event)"
+                         (keypress)="onKeyPress($event)"
+                         (keyup)="onKeyUp($event)"
         ></ng2-smart-table>
         <context-menu #contextMenuComponent
                       [disabled]="!contextMenu || !contextMenu.length"

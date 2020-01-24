@@ -2,10 +2,10 @@ import {
     AfterViewInit,
     Component,
     Inject, Input,
-    QueryList, TemplateRef,
-    ViewChildren, ViewContainerRef, ViewRef,
+    QueryList,
+    ViewChildren,
 } from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
+import {Cell, LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {MouseEventGuard} from './customization/mouse.event.guard';
@@ -15,6 +15,14 @@ import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component'
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNumber} from 'util';
+import {
+    DocumentKeydownHandlerService,
+    DocumentKeypressHandlerService,
+    DocumentKeyupHandlerService,
+} from '../../services/implementation/document.keypress.handler.service';
+
+export const FOCUSABLE_ELEMENTS_SELETOR: string =
+    'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
 export interface IContextMenu {
     icon: (item?: any) => string;
@@ -31,6 +39,8 @@ export interface IContextMenu {
     styleUrls: ['./smart-table.component.scss'],
 })
 export class SmartTableComponent implements AfterViewInit {
+
+    private static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
 
     private tableHeader: string;
     private settings = {
@@ -78,21 +88,17 @@ export class SmartTableComponent implements AfterViewInit {
 
     @ViewChildren(ContextMenuComponent)
     private readonly queryContextMenuComponent: QueryList<ContextMenuComponent>;
-    @Input() private contextMenuComponent: ContextMenuComponent;
-
-    @ViewChildren('contextMenuComponent', {read: ViewContainerRef})
-    private readonly queryContextMenuViewComponent: QueryList<ViewContainerRef>;
-    private contextMenuViewComponent: ViewContainerRef;
-
-    @ViewChildren(TemplateRef)
-    private readonly queryContextMenuItemsComponent: QueryList<TemplateRef<any>>;
-    private contextMenuItemsViewComponent: ViewRef;
+    private contextMenuComponent: ContextMenuComponent;
 
     private contextMenu: IContextMenu[];
 
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
     private smartTableComponent: Ng2SmartTableComponent;
+
+    private documentKeyDownHandlerService: DocumentKeydownHandlerService;
+    private documentKeyUpHandlerService: DocumentKeyupHandlerService;
+    private documentKeyPressHandlerService: DocumentKeypressHandlerService;
 
     constructor(@Inject(DataSource) private dataSource: DataSource,
                 @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
@@ -107,10 +113,27 @@ export class SmartTableComponent implements AfterViewInit {
             (item) => this.contextMenuComponent = item);
         this.querySmartTableComponent.map(
             (item) => this.smartTableComponent = item);
-        this.queryContextMenuViewComponent.map(
-            (item) => this.contextMenuViewComponent = item);
-        this.queryContextMenuItemsComponent.map(
-            (item) => this.contextMenuItemsViewComponent = item.createEmbeddedView(null));
+        this.documentKeyDownHandlerService = new DocumentKeydownHandlerService(
+            (e: KeyboardEvent) => this.onKeyDown(e), this.getLogger());
+        this.documentKeyUpHandlerService = new DocumentKeyupHandlerService(
+            (e: KeyboardEvent) => this.onKeyUp(e), this.getLogger());
+        this.documentKeyPressHandlerService = new DocumentKeypressHandlerService(
+            (e: KeyboardEvent) => this.onKeyPress(e), this.getLogger());
+    }
+
+    protected getDocumentKeyDownHandlerService(): DocumentKeydownHandlerService {
+        this.documentKeyDownHandlerService || throwError('Could not handle document keydown');
+        return this.documentKeyDownHandlerService;
+    }
+
+    protected getDocumentKeyUpHandlerService(): DocumentKeyupHandlerService {
+        this.documentKeyUpHandlerService || throwError('Could not handle document keyup');
+        return this.documentKeyUpHandlerService;
+    }
+
+    protected getDocumentKeyPressHandlerService(): DocumentKeypressHandlerService {
+        this.documentKeyPressHandlerService || throwError('Could not handle document keypress');
+        return this.documentKeyPressHandlerService;
     }
 
     protected getLogger(): NGXLogger {
@@ -138,16 +161,8 @@ export class SmartTableComponent implements AfterViewInit {
         return this.contextMenuService;
     }
 
-    protected getContextMenuViewComponent(): ViewContainerRef {
-        return this.contextMenuViewComponent;
-    }
-
     protected getContextMenuComponent(): ContextMenuComponent {
         return this.contextMenuComponent;
-    }
-
-    protected getContextMenuItemsViewComponent(): ViewRef {
-        return this.contextMenuItemsViewComponent;
     }
 
     protected setContextMenu(contextMenu: IContextMenu[]) {
@@ -404,6 +419,9 @@ export class SmartTableComponent implements AfterViewInit {
         }
     }
 
+    /**
+     * Support for closing all context menu
+     */
     protected closeContextMenu() {
         const keyEvent = new KeyboardEvent('keydown', {key: 'Escape'});
         this.getContextMenuService().closeAllContextMenus({
@@ -429,17 +447,221 @@ export class SmartTableComponent implements AfterViewInit {
         this.getLogger().debug('onSearch');
     }
 
+    /**
+     * Perform keydown action
+     * @param event KeyboardEvent
+     */
+    onKeyDown(event: KeyboardEvent) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onKeyDown');
+    }
+
+    /**
+     * Perform keyup action
+     * @param event KeyboardEvent
+     */
+    onKeyUp(event: KeyboardEvent) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onKeyUp');
+    }
+
+    /**
+     * Perform keypress action
+     * @param event KeyboardEvent
+     */
+    onKeyPress(event: KeyboardEvent) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onKeyPress');
+    }
+
+    /**
+     * Support to detect the specified KeyboardEvent whether is raised from the specified keys array
+     * @param e to parse key
+     * @param detectedKeys to detect
+     * @return true for the event whether came from one of the specified keys; else false
+     */
+    protected isSpecifiedKey(e: KeyboardEvent, ...detectedKeys: any[]): boolean {
+        if (!e || !detectedKeys || !detectedKeys.length) {
+            return false;
+        }
+        const key = e.key || e.keyCode;
+        return (detectedKeys.indexOf(key) >= 0);
+    }
+
+    /**
+     * Get the Cell by row and column indexes
+     * @param rowIndex to detect Cell. base on 0
+     * @param columnIndex to detect Cell. base on 0
+     * @return Cell or undefined
+     */
+    protected getCellByIndex(rowIndex: number, columnIndex: number): Cell {
+        let row: Row;
+        row = this.getRowByIndex(rowIndex);
+        if (row && row.cells && row.cells.length && columnIndex < row.cells.length) {
+            return row.cells[columnIndex];
+        }
+        return undefined;
+    }
+
+    /**
+     * Get the Cell by row index and property identity
+     * @param rowIndex to detect Cell. base on 0
+     * @param propertyId to detect Cell
+     * @return Cell or undefined
+     */
+    protected getCellByProperty(rowIndex: number, propertyId: string): Cell {
+        let row: Row;
+        row = this.getRowByIndex(rowIndex);
+        if (row && row.cells && row.cells.length && (propertyId || '').length) {
+            for (const cell of row.cells) {
+                if (cell.getId().toLowerCase() === propertyId.toLowerCase()) {
+                    return cell;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Get the Cell editor of the specified Cell
+     * @param cell to detect Cell editor
+     * @return HTMLElement or undefined
+     */
+    protected getCellEditor(cell: Cell): HTMLElement {
+        let row: Row;
+        let columnIndex: number;
+        row = (cell ? cell.getRow() : undefined);
+        columnIndex = (row ? row.cells.indexOf(cell) : -1);
+        if (cell && cell.isEditable() && row && row.isInEditing && 0 <= columnIndex) {
+            let cells: NodeListOf<HTMLTableCellElement>;
+            cells = document.querySelectorAll(SmartTableComponent.SMART_TABLE_CELLS_SELECTOR);
+            let editors: NodeListOf<HTMLElement>;
+            editors = cells[columnIndex].querySelectorAll(FOCUSABLE_ELEMENTS_SELETOR);
+            if (editors && editors.length) {
+                return editors.item(0);
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Get the Cell editor by row and column indexes
+     * @param rowIndex to detect Cell. base on 0
+     * @param columnIndex to detect Cell. base on 0
+     * @return HTMLElement or undefined
+     */
+    protected getCellEditorByIndex(rowIndex: number, columnIndex: number): HTMLElement {
+        return this.getCellEditor(this.getCellByIndex(rowIndex, columnIndex));
+    }
+
+    /**
+     * Get the Cell editor by row index and property identity
+     * @param rowIndex to detect Cell. base on 0
+     * @param propertyId to detect Cell
+     * @return HTMLElement or undefined
+     */
+    protected getCellEditorByProperty(rowIndex: number, propertyId: string): HTMLElement {
+        return this.getCellEditor(this.getCellByProperty(rowIndex, propertyId));
+    }
+
+    /**
+     * Put the specified Row index into editing mode
+     * @param rowIndex to edit
+     */
     protected editRowByIndex(rowIndex: number) {
         this.editRow(this.getRowByIndex(rowIndex));
     }
 
+    /**
+     * Put the Row that contains the specified data (incl. data's attribute) into editing mode
+     * @param item to edit
+     * @param attr to detect Row
+     */
     protected editRowByData(item: any, attr?: string) {
         this.editRow(this.getRowByData(item, attr));
     }
 
+    /**
+     * Put the specified Row into editing mode
+     * @param row to edit
+     */
     protected editRow(row: Row) {
+        if (row && row.isInEditing) {
+            return;
+        }
+
         row && this.getGridComponent().selectRow(row);
         row && this.getGridComponent().edit(row);
+        if (row && row.cells && row.cells.length && row.isInEditing) {
+            // wait for showing editor
+            setTimeout(() => {
+                for (let i = 0; i < row.cells.length; i++) {
+                    if (row.cells[i].isEditable()) {
+                        let cellEditor: HTMLElement;
+                        cellEditor = this.getCellEditorByIndex(row.index, i);
+                        this.getLogger().debug('Cell editor', cellEditor);
+                        if (cellEditor) {
+                            cellEditor.focus({preventScroll: false});
+                            break;
+                        }
+                    }
+                }
+            }, 300);
+        }
         !row && this.getLogger().warn('Undefined row to edit');
+    }
+
+    /**
+     * Create new Row
+     */
+    protected newRow() {
+        this.getGridComponent().selectRow(this.getGridComponent().getNewRow());
+    }
+
+    /**
+     * Put the specified Row index out of editing mode
+     * @param rowIndex to cancel editing
+     */
+    protected cancelEditRowByIndex(rowIndex: number) {
+        this.cancelEditRow(this.getRowByIndex(rowIndex));
+    }
+
+    /**
+     * Put the Row that contains the specified data (incl. data's attribute) out of editing mode
+     * @param item to cancel editing
+     * @param attr to detect Row
+     */
+    protected cancelEditRowByData(item: any, attr?: string) {
+        this.cancelEditRow(this.getRowByData(item, attr));
+    }
+
+    /**
+     * Put the specified Row out of editing mode
+     * @param row to cancel editing
+     */
+    protected cancelEditRow(row: Row) {
+        !row && this.getLogger().warn('Undefined row to cancel');
+        if (row && !row.isInEditing) {
+            return;
+        } else if (row) {
+            row.isInEditing = false;
+        }
+    }
+
+    /**
+     * Put the specified rows out of editing mode
+     * @param rows to cancel editing
+     */
+    protected cancelEditRows(rows: Array<Row>) {
+        if (rows && rows.length) {
+            rows.forEach((row) => this.cancelEditRow(row));
+        }
+    }
+
+    /**
+     * Cancel all editing rows
+     */
+    protected cancelEditAll() {
+        this.cancelEditRows(this.getRows());
     }
 }

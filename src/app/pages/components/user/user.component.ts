@@ -125,4 +125,29 @@ export class UserSmartTableComponent extends SmartTableComponent {
     onDoubleClick(event): void {
         super.editRowByData(event.data, 'id');
     }
+
+    onKeyDown(event: KeyboardEvent) {
+        super.onKeyDown(event);
+
+        if (!super.getRows().length) {
+            return;
+        }
+
+        // enter edit mode by F2
+        if (super.isSpecifiedKey(event, 'F2', 113)) {
+            if (super.getSelectedRows().length) {
+                super.editRow(super.getSelectedRows().shift());
+            } else {
+                super.editRow(super.getRows().shift());
+            }
+
+            // exit editing mode by Esc
+        } else if (super.isSpecifiedKey(event, 'Escape', 'Esc', 27)) {
+            if (super.getSelectedRows().length) {
+                super.cancelEditRows(super.getSelectedRows());
+            } else {
+                super.cancelEditAll();
+            }
+        }
+    }
 }
