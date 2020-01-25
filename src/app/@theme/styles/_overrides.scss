@@ -46,19 +46,25 @@
 
     nb-card-body {
         ng2-smart-table {
-            table tr {
-                th, td {
-                    padding: 0.5rem 1rem;
+            table {
+                tr {
+                    th, td {
+                        padding: 0.5rem 1rem;
 
-                    button, input, optgroup, select, textarea {
-                        color: nb-theme(color-basic-800);
-                        height: inherit;
+                        button, input, optgroup, select, textarea {
+                            color: nb-theme(color-basic-800);
+                            height: inherit;
+                        }
                     }
                 }
-            }
 
-            table tr.ng2-smart-titles th {
-                padding: 0.5rem 1rem;
+                tr.ng2-smart-titles th {
+                    padding: 0.5rem 1rem;
+                }
+
+                tr.hover {
+                    background-color: nb-theme(color-primary-hover);
+                }
             }
         }
     }

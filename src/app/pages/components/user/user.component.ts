@@ -1,10 +1,13 @@
 import {IContextMenu, SmartTableComponent} from '../smart-table.component';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Renderer2} from '@angular/core';
 import {convertUserStatusToDisplay, USER_STATUS} from '../../../@core/data/user';
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {ENTER, ESCAPE, F2, S} from '@angular/cdk/keycodes';
+import {
+    F2,
+    S,
+} from '@angular/cdk/keycodes';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 export const UserTableSettings = {
@@ -117,8 +120,9 @@ export class UserSmartTableComponent extends SmartTableComponent {
 
     constructor(@Inject(UserDataSource) userDataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(NGXLogger) logger: NGXLogger) {
-        super(userDataSource, contextMenuService, logger);
+                @Inject(NGXLogger) logger: NGXLogger,
+                renderer: Renderer2) {
+        super(userDataSource, contextMenuService, logger, renderer);
         super.setTableHeader('Users Management');
         super.setTableSettings(UserTableSettings);
         super.setContextMenu(UserContextMenu);
@@ -127,7 +131,7 @@ export class UserSmartTableComponent extends SmartTableComponent {
     onKeyDown(event: KeyboardEvent) {
         super.onKeyDown(event);
 
-        if (!super.getRows().length) {
+        if (!super.getRows().length || super.isNavigateKey(event)) {
             return;
         }
 
@@ -137,9 +141,9 @@ export class UserSmartTableComponent extends SmartTableComponent {
         let isF2Key: boolean;
         isF2Key = super.isSpecifiedKey(event, 'F2', F2);
         let isEnterKey: boolean;
-        isEnterKey = super.isSpecifiedKey(event, 'Enter', ENTER);
+        isEnterKey = super.isEnterKey(event);
         let isEscKey: boolean;
-        isEscKey = super.isSpecifiedKey(event, 'Escape', 'Esc', ESCAPE);
+        isEscKey = super.isEscKey(event);
         let isSKey: boolean;
         isSKey = super.isSpecifiedKey(event, 'S', 's', S);
         let needToSave: boolean;

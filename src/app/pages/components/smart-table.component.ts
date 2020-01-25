@@ -1,4 +1,12 @@
-import {AfterViewInit, Component, EventEmitter, Inject, QueryList, ViewChildren,} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    EventEmitter,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+} from '@angular/core';
 import {Cell, LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
@@ -9,7 +17,21 @@ import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component'
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNumber} from 'util';
-import {DocumentKeydownHandlerService, DocumentKeypressHandlerService, DocumentKeyupHandlerService,} from '../../services/implementation/document.keypress.handler.service';
+import {
+    DocumentKeydownHandlerService,
+    DocumentKeypressHandlerService,
+    DocumentKeyupHandlerService,
+} from '../../services/implementation/document.keypress.handler.service';
+import {
+    DOWN_ARROW,
+    END,
+    ENTER,
+    ESCAPE,
+    HOME,
+    PAGE_DOWN,
+    PAGE_UP,
+    UP_ARROW,
+} from '@angular/cdk/keycodes';
 
 export const FOCUSABLE_ELEMENTS_SELETOR: string =
     'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
@@ -30,7 +52,7 @@ export interface IContextMenu {
 })
 export class SmartTableComponent implements AfterViewInit {
 
-    private static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-row';
+    private static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     private static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
 
     private tableHeader: string;
@@ -51,6 +73,7 @@ export class SmartTableComponent implements AfterViewInit {
             deleteButtonContent: '<i class="nb-trash"></i>',
             confirmDelete: true,
         },
+        rowClassFunction: (row) => '',
         columns: {
             id: {
                 title: 'ID',
@@ -95,7 +118,8 @@ export class SmartTableComponent implements AfterViewInit {
 
     constructor(@Inject(DataSource) private dataSource: DataSource,
                 @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
-                @Inject(NGXLogger) private logger: NGXLogger) {
+                @Inject(NGXLogger) private logger: NGXLogger,
+                private renderer: Renderer2) {
         contextMenuService || throwError('Could not inject context menu service');
         logger || throwError('Could not inject logger');
         dataSource = dataSource || new LocalDataSource();
@@ -112,6 +136,10 @@ export class SmartTableComponent implements AfterViewInit {
             (e: KeyboardEvent) => this.onKeyUp(e), this.getLogger());
         this.documentKeyPressHandlerService = new DocumentKeypressHandlerService(
             (e: KeyboardEvent) => this.onKeyPress(e), this.getLogger());
+    }
+
+    protected getRenderer(): Renderer2 {
+        return this.renderer;
     }
 
     protected getDocumentKeyDownHandlerService(): DocumentKeydownHandlerService {
@@ -452,8 +480,7 @@ export class SmartTableComponent implements AfterViewInit {
         row = this.getRowByEvent(event);
         this.getLogger().debug('onClick', event, row);
         if (row) {
-            this.getGridComponent().selectRow(row);
-            this.attachSelectedRowClass(row.index, true);
+            this.selectRow(row);
 
             // stop firing event
             this.preventEvent(event);
@@ -521,6 +548,132 @@ export class SmartTableComponent implements AfterViewInit {
     onKeyDown(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown');
+        if (this.isNavigateKey(event)) {
+            this.onRowNavigate(event);
+            this.preventEvent(event);
+        }
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from navigation keys
+     * @param event KeyboardEvent
+     */
+    protected isNavigateKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event,
+            'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown',
+            UP_ARROW, DOWN_ARROW, HOME, END, PAGE_UP, PAGE_DOWN);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from PAGE_UP key
+     * @param event KeyboardEvent
+     */
+    protected isPageUpKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'PageUp', PAGE_UP);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from PAGE_DOWN key
+     * @param event KeyboardEvent
+     */
+    protected isPageDownKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'PageDown', PAGE_DOWN);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from UP_ARROW key
+     * @param event KeyboardEvent
+     */
+    protected isUpKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'ArrowUp', UP_ARROW);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from DOWN_ARROW key
+     * @param event KeyboardEvent
+     */
+    protected isDownKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'ArrowDown', DOWN_ARROW);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from UP_ARROW key
+     * @param event KeyboardEvent
+     */
+    protected isHomeKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'Home', HOME);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from DOWN_ARROW key
+     * @param event KeyboardEvent
+     */
+    protected isEndKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'End', END);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from ENTER key
+     * @param event KeyboardEvent
+     */
+    protected isEnterKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'Enter', ENTER);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from ESC key
+     * @param event KeyboardEvent
+     */
+    protected isEscKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'Escape', 'Esc', ESCAPE);
+    }
+
+    /**
+     * Perform navigation keys action
+     * @param event KeyboardEvent
+     */
+    onRowNavigate(event: KeyboardEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onRowNavigate');
+        let rows: NodeListOf<HTMLTableRowElement>;
+        rows = this.getAllRowElements();
+        if (!rows || !rows.length) {
+            return;
+        }
+
+        // detect the latest hovered row element
+        let hoveredRowIndex: number;
+        hoveredRowIndex = -1;
+        for (let i: number = 0; i < rows.length; i++) {
+            let r: HTMLTableRowElement;
+            r = rows.item(i);
+            if (r.classList && r.classList.contains('hover')) {
+                hoveredRowIndex = i;
+                break;
+            }
+        }
+        if (hoveredRowIndex < 0) {
+            this.toggleRowElementClass(rows.item(0), 'hover', true);
+
+        } else {
+            // toggle hover class
+            this.toggleRowElementClass(rows.item(hoveredRowIndex), 'hover', false);
+            if (this.isHomeKey(event) || this.isPageUpKey(event)
+                || (hoveredRowIndex + 1 >= rows.length && this.isDownKey(event))) {
+                hoveredRowIndex = 0;
+
+            } else if (this.isEndKey(event) || this.isPageDownKey(event)
+                || (hoveredRowIndex - 1 < 0 && this.isUpKey(event))) {
+                hoveredRowIndex = rows.length - 1;
+
+            } else if (this.isUpKey(event)) {
+                hoveredRowIndex -= 1;
+
+            } else {
+                hoveredRowIndex += 1;
+            }
+            this.toggleRowElementClass(rows.item(hoveredRowIndex), 'hover', true);
+        }
     }
 
     /**
@@ -680,8 +833,7 @@ export class SmartTableComponent implements AfterViewInit {
 
         let cell: Cell;
         cell = (columnIndex < 0 ? undefined : row.cells[columnIndex]);
-        this.getGridComponent().selectRow(row);
-        this.attachSelectedRowClass(row.index, true);
+        this.selectRow(row);
         this.getGridComponent().edit(row);
 
         // wait for showing editor
@@ -851,8 +1003,7 @@ export class SmartTableComponent implements AfterViewInit {
     protected newRow() {
         let newRow: Row;
         newRow = this.getGridComponent().getNewRow();
-        this.getGridComponent().selectRow(newRow);
-        this.attachSelectedRowClass(newRow.index, true);
+        this.selectRow(newRow);
     }
 
     /**
@@ -887,8 +1038,7 @@ export class SmartTableComponent implements AfterViewInit {
             if (refresh) {
                 this.getGridComponent().source.refresh();
             }
-            this.getGridComponent().selectRow(row);
-            this.attachSelectedRowClass(row.index, true);
+            this.selectRow(row);
         }
     }
 
@@ -903,8 +1053,7 @@ export class SmartTableComponent implements AfterViewInit {
 
             let row: Row;
             row = rows.shift();
-            this.getGridComponent().selectRow(row);
-            this.attachSelectedRowClass(row.index, true);
+            this.selectRow(row);
         }
     }
 
@@ -929,37 +1078,192 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     /**
-     * Add/Remove selected class for the specified row index
-     * @param rowIndex to select
-     * @param add true for adding selected class; else removing it
+     * Select the specified Row
+     * @param row to select
      */
-    private attachSelectedRowClass(rowIndex: number, add?: boolean | true) {
-        if (0 > rowIndex) {
+    protected selectRow(row: Row) {
+        if (row && !row.isSelected) {
+            row.isSelected = true;
+            this.getGridComponent().selectRow(row);
+            this.getLogger().debug('Row is selected?', row.isSelected);
+
+        } else if (!row) {
+            this.getLogger().warn('Undefined row to select!');
+        }
+    }
+
+    /**
+     * Select the specified Row index
+     * @param rowIndex to select
+     */
+    protected selectRowByIndex(rowIndex: number) {
+        this.selectRow(this.getRowByIndex(rowIndex));
+    }
+
+    /**
+     * Select the specified Row data and attribute
+     * @param item to detect Row
+     * @param attr data attribute to detect Row
+     */
+    protected selectRowByData(item: any, attr?: string) {
+        this.selectRow(this.getRowByData(item, attr));
+    }
+
+    /**
+     * Select the specified Row array
+     * @param rows to select
+     */
+    protected selectRows(rows: Array<Row>) {
+        if (rows && rows.length) {
+            rows.forEach(r => this.selectRow(r));
+        } else {
+            this.getLogger().warn('Undefined rows array to select!');
+        }
+    }
+
+    /**
+     * Get the all Row DOM elements
+     * @return Row DOM elements or undefined
+     */
+    protected getAllRowElements(): NodeListOf<HTMLTableRowElement> {
+        return document.querySelectorAll(SmartTableComponent.SMART_TABLE_ROW_SELETOR);
+    }
+
+    /**
+     * Get the Row DOM element by the specified Row data and attribute
+     * @param item data to detect Row
+     * @param attr data attribute to detect Row
+     * @return Row or undefined
+     */
+    protected getRowElementByData(item: any, attr?: string): HTMLTableRowElement {
+        return this.getRowElement(this.getRowByData(item, attr));
+    }
+
+    /**
+     * Get the Row DOM element by the specified Row index
+     * @param rowIndex to detect
+     * @return Row or undefined
+     */
+    protected getRowElementByIndex(rowIndex: number): HTMLTableRowElement {
+        return this.getRowElement(this.getRowByIndex(rowIndex));
+    }
+
+    /**
+     * Get the Row DOM element by the specified Row
+     * @param row to detect
+     * @return Row or undefined
+     */
+    protected getRowElement(row: Row): HTMLTableRowElement {
+        if (!row) {
             return;
         }
 
         let rows: NodeListOf<HTMLTableRowElement>;
-        rows = document.querySelectorAll(SmartTableComponent.SMART_TABLE_ROW_SELETOR);
-        if (!rows || !rows.length || rowIndex >= rows.length) {
+        rows = this.getAllRowElements();
+        if (!rows || !rows.length || row.index >= rows.length || !this.getRenderer()) {
             return;
         }
 
-        let row: HTMLTableRowElement;
-        row = rows.item(rowIndex);
-        if (!row.classList || (add && row.classList.contains('selected'))
-            || (!add && !row.classList.contains('selected'))) {
+        return rows.item(row.index);
+    }
+
+    /**
+     * Toggle the specified Row class
+     * @param item data to detect Row
+     * @param attr data attribute to detect Row
+     * @param className to add/remove
+     */
+    protected toggleRowClassByData(item: any, className: string, attr?: string) {
+        this.toggleRowClass(this.getRowByData(item, attr), className);
+    }
+
+    /**
+     * Toggle the specified Row class
+     * @param rowIndex to toggle
+     * @param className to add/remove
+     */
+    protected toggleRowClassByIndex(rowIndex: number, className: string) {
+        this.toggleRowClass(this.getRowByIndex(rowIndex), className);
+    }
+
+    /**
+     * Toggle the specified Row class
+     * @param row to toggle
+     * @param className to add/remove
+     */
+    protected toggleRowClass(row: Row, className: string) {
+        if (!(className || '').length) {
             return;
         }
 
-        if (this.getGridComponent().getSetting('selectMode') !== 'multi' && add) {
-            rows.forEach((r) => r.classList.remove('selected'));
+        let rowEl: HTMLTableRowElement;
+        rowEl = this.getRowElement(row);
+        if (!rowEl) {
+            return;
         }
 
-        if (add) {
-            row.classList.add('selected');
+        this.toggleRowElementClass(rowEl, className,
+            (rowEl.classList && !rowEl.classList.contains(className)));
+    }
 
-        } else if (row.classList.contains('selected')) {
-            row.classList.remove('selected');
+    /**
+     * Toggle the specified Row class
+     * @param item data to detect Row
+     * @param attr data attribute to detect Row
+     * @param className to add/remove
+     * @param add true for adding class if not existed; false for removing if existed
+     */
+    protected attachRowClassByData(item: any, className: string, attr?: string, add?: boolean | false) {
+        this.attachRowClass(this.getRowByData(item, attr), className, add);
+    }
+
+    /**
+     * Toggle the specified Row class
+     * @param rowIndex to toggle
+     * @param className to add/remove
+     * @param add true for adding class if not existed; false for removing if existed
+     */
+    protected attachRowClassByIndex(rowIndex: number, className: string, add?: boolean | false) {
+        this.attachRowClass(this.getRowByIndex(rowIndex), className, add);
+    }
+
+    /**
+     * Toggle the specified Row class
+     * @param row to toggle
+     * @param className to add/remove
+     * @param add true for adding class if not existed; false for removing if existed
+     */
+    protected attachRowClass(row: Row, className: string, add?: boolean | false) {
+        if (!(className || '').length) {
+            return;
+        }
+
+        let rowEl: HTMLTableRowElement;
+        rowEl = this.getRowElement(row);
+        if (!rowEl) {
+            return;
+        }
+
+        if ((add && rowEl.classList.contains(className))
+            || (!add && !rowEl.classList.contains(className))) {
+            return;
+        }
+
+        this.toggleRowElementClass(rowEl, className, add);
+    }
+
+    /**
+     * Toggle the specified class for the specified Row DOM element
+     * @param rowEl to toggle
+     * @param className class
+     * @param add true for adding class if not existed; false for removing if existed
+     */
+    protected toggleRowElementClass(rowEl: HTMLTableRowElement, className: string, add?: boolean | false) {
+        if (!add) {
+            this.getRenderer().removeClass(rowEl, className);
+
+        } else {
+            this.getRenderer().addClass(rowEl, className);
         }
     }
 }
