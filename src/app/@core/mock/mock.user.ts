@@ -55,6 +55,24 @@ export const MockUser2: IUser = {
     id: '5d5d67786249ab06b4516c47',
     rolesGroupId: '5d766194738fbc23b43a857f',
 };
+export const MockUser3: IUser = {
+    access_token: 'f90087e0-398e-4124-9522-5a4e6f0bed94',
+    token_type: 'bearer',
+    refresh_token: 'ac581551-9dd4-404a-8a4a-ecf591ebb9d3',
+    expires_in: 7889236,
+    scope: 'READ WRITE',
+    company: 'hsg',
+    enterprise: true,
+    username: 'user3@hsg.com',
+    password: 'admin',
+    firstName: 'User3 First Name',
+    lastName: 'User3 Last Name',
+    email: 'user3@hsg.com',
+    status: USER_STATUS.ACTIVATED,
+    rolesGroup: MockRolesGroupSystem,
+    id: '5d5d67786249ab06b4516c48',
+    rolesGroupId: '5d766194738fbc23b43a857f',
+};
 
 export const MockUser = [
     MockUserAdmin,
