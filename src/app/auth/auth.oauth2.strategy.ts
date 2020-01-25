@@ -1,9 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {
-    NbAuthResult,
-    NbAuthToken,
-    NbPasswordAuthStrategy,
-} from '@nebular/auth';
+import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy,} from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
@@ -83,29 +79,29 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
             messages: oauth2.getOption(`${module}.messages`) || [],
         };
         return this.getHttpService().request(url, method, options).pipe(
-            map(tokens => {
-                return (!isArray(tokens) && tokens
-                    ? [tokens] : isArray(tokens) ? tokens as [] : []);
+            map(token => {
+                return (!isArray(token) && token
+                    ? token : isArray(token) ? token[0] : undefined);
             }),
-            map((tokens: []) => {
+            map(token => {
                 return new NbAuthResult(
-                    (tokens && tokens.length ? true : false),
+                    (token && Object.keys(token).length ? true : false),
                     new HttpResponse({
-                        body: (tokens && tokens.length ? tokens.shift() : undefined),
+                        body: (token && Object.keys(token).length ? token : undefined),
                         status: 200,
                         url: url,
                     }),
-                    (tokens && tokens.length ? options.redirectSuccess : options.redirectFailure),
-                    (tokens && tokens.length ? [] : options.errors),
+                    (token && Object.keys(token).length ? options.redirectSuccess : options.redirectFailure),
+                    (token && Object.keys(token).length ? [] : options.errors),
                     options.messages,
-                    (tokens && tokens.length ? tokens.shift() : undefined));
+                    (token && Object.keys(token).length ? token : undefined));
             })) as Observable<NbAuthResult>;
     }
 
     createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
         let token: T;
-        this.storeDb(super.createToken(value, this.getOption(`login.failWhenInvalidToken`)))
-            .then((t: T) => token = t, (errors) => this.getLogger().error(errors));
+        token = super.createToken(value, this.getOption(`login.failWhenInvalidToken`));
+        this.storeDb(token).then((t: T) => token = t, (errors) => this.getLogger().error(errors));
         return token;
     }
 

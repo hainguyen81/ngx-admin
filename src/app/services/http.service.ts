@@ -232,14 +232,16 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
                     _this.getLogger().debug('Response', res);
                     return res;
                 }),
-                map((res) => _this.parseResponse(new ServiceResponse(
-                    true, res, options.redirectSuccess, [], options.messages))),
+                map((res) => {
+                    return of(_this.parseResponse(new ServiceResponse(
+                        true, res, options.redirectSuccess, [], options.messages)));
+                }),
                 catchError((res: HttpErrorResponse) => {
                     let observer: Observable<T | T[]>;
                     observer = (typeof _this.handleResponseErrorDelegate === 'function'
                         ? _this.handleResponseErrorDelegate(url, method, res, options)
                         : _this.handleResponseError(url, method, res, options));
-                    return observer.pipe(map((value: T[] | T) => {
+                    return (observer ? observer.pipe(map((value: T[] | T) => {
                         let tokens: T[];
                         tokens = [];
                         if (!isArray(value) && value) {
@@ -251,12 +253,12 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
                             return tokens[0];
                         }
                         return undefined;
-                    }));
+                    })) : of(undefined));
                 }),
             );
     }
 
-    abstract parseResponse(serviceResponse?: ServiceResponse): T | T[];
+    abstract parseResponse(serviceResponse?: ServiceResponse): T;
 
     abstract handleOfflineMode(url: string, method?: string, res?: any, options?: {
         body?: any;

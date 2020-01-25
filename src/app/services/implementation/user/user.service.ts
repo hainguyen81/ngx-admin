@@ -5,7 +5,6 @@ import {AbstractHttpService} from '../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../response.service';
 import JsonUtils from '../../../utils/json.utils';
-import {isArray} from 'util';
 import {AbstractDbService} from '../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../config/db.config';
@@ -67,19 +66,12 @@ export class UserHttpService extends AbstractHttpService<IUser, IUser> {
         dbService || throwError('Could not inject user database service for offline mode');
     }
 
-    parseResponse(serviceResponse?: ServiceResponse): IUser | IUser[] {
+    parseResponse(serviceResponse?: ServiceResponse): IUser {
         if (!serviceResponse || !serviceResponse.getResponse()
             || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
             return undefined;
         }
-        const jsonResponse = JsonUtils.parseResponseJson(serviceResponse.getResponse().body);
-        let users: IUser[];
-        if (!isArray(jsonResponse)) {
-            users.push(jsonResponse);
-        } else {
-            users = jsonResponse as IUser[];
-        }
-        return users;
+        return JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as IUser;
     }
 
     handleOfflineMode(url: string, method?: string, res?: any, options?: {
