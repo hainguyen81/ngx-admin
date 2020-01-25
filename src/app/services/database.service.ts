@@ -100,8 +100,8 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     insert(entity: T): Promise<number> {
         return new Promise((resolve, reject) => {
             this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().clear().then(() => this.getDbService().add(entity))
-                .then(() => resolve(1), (errors) => {
+            this.getDbService().add(entity)
+                .then((affected) => resolve(affected), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
                 });

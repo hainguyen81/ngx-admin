@@ -11,5 +11,5 @@ export const MockApiUser: IApi = {
 };
 
 export const MockApi = {
-    user: this.userApi,
+    user: MockApiUser,
 };
