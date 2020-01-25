@@ -6,8 +6,8 @@ import {
 } from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
 import {Md5} from 'ts-md5';
 import {ActivatedRoute} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
@@ -19,6 +19,8 @@ import {IModule} from '../@core/data/module';
 import {isArray} from 'util';
 import {IRole} from '../@core/data/role';
 import {isObject} from 'rxjs/internal-compatibility';
+import {catchError, map} from 'rxjs/operators';
+import EncryptionUtils from '../utils/encryption.utils';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -66,9 +68,9 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
         const module = 'login';
         let headers: HttpHeaders;
         headers = new HttpHeaders(oauth2.getOption(`${module}.headers`) || {});
-        oauth2.getLogger().info(oauth2.getOption(`${module}.headers`));
         let authorization: string;
-        authorization = btoa(data['email'] + ':' + md5.appendStr(data['password']).end());
+        authorization = EncryptionUtils.base64Encode(':',
+            data['email'] || '', EncryptionUtils.md5Encode(':', data['password']));
         headers = headers.set('Authorization', 'Basic '.concat(authorization));
         let method: string;
         method = oauth2.getOption(`${module}.method`);
@@ -78,8 +80,31 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
         options = {
             body: {}, headers: headers, observe: 'response',
             redirectSuccess: oauth2.getOption(`${module}.redirect.success`),
+            redirectFailure: oauth2.getOption(`${module}.redirect.failure`),
+            errors: oauth2.getOption(`${module}.errors`) || [],
+            messages: oauth2.getOption(`${module}.messages`) || [],
         };
-        return this.getHttpService().request(url, method, options) as Observable<NbAuthResult>;
+        return this.getHttpService().request(url, method, options).pipe(
+            map(tokens => {
+                return (!isArray(tokens) && tokens
+                    ? [tokens] : isArray(tokens) ? tokens as [] : []);
+            }),
+            map((tokens: []) => {
+                return of(new NbAuthResult(
+                    (tokens && tokens.length ? true : false),
+                    new HttpResponse({
+                        body: (tokens && tokens.length ? tokens.shift() : undefined),
+                        status: 200,
+                        url: url,
+                    }),
+                    (tokens && tokens.length ? options.redirectSuccess : options.redirectFailure),
+                    (tokens && tokens.length ? [] : options.errors),
+                    options.messages,
+                    (tokens && tokens.length ? tokens.shift() : undefined)));
+            }), catchError((errors: any) => {
+                return of(new NbAuthResult(false, undefined, options.redirectFailure,
+                    errors || options.errors, options.messages, undefined));
+            })) as Observable<NbAuthResult>;
     }
 
     createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {

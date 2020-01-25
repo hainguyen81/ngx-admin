@@ -3,11 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {AbstractHttpService} from '../services/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {SwPush} from '@angular/service-worker';
+import {IDbService} from '../services/interface.service';
 
 export const SW_VAPID_PUBLIC_KEY = new InjectionToken<string>('Service Worker VAPID_PUBLIC_KEY to subscribe');
 
 @Injectable()
-export abstract class PushService<T> extends AbstractHttpService<T> {
+export abstract class AbstractPushService<T> extends AbstractHttpService<T> {
 
     protected getSwPush(): SwPush {
         return this.swPush;
@@ -20,8 +21,9 @@ export abstract class PushService<T> extends AbstractHttpService<T> {
     protected constructor(@Inject(HttpClient) http: HttpClient,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(SwPush) private swPush: SwPush,
-                          @Inject(SW_VAPID_PUBLIC_KEY) private swVapidPublicKey: string = 'VAPID_PUBLIC_KEY') {
-        super(http, logger);
+                          @Inject(SW_VAPID_PUBLIC_KEY) private swVapidPublicKey: string = 'VAPID_PUBLIC_KEY',
+                          dbService: IDbService<T>) {
+        super(http, logger, dbService);
     }
 
     subscribe() {

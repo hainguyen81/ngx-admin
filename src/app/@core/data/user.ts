@@ -26,6 +26,7 @@ export interface IUser {
     scope: string;
     company: string;
     username: string;
+    password: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -39,7 +40,7 @@ export default class User implements IUser {
     constructor(public id: string, public access_token: string,
                 public token_type: string, public refresh_token: string,
                 public expires_in: number, public scope: string,
-                public company: string, public username: string,
+                public company: string, public username: string, public password: string,
                 public firstName: string, public lastName: string,
                 public email: string, public status: USER_STATUS,
                 public rolesGroupId?: string | null, public rolesGroup?: IRolesGroup | null,

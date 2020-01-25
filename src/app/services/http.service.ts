@@ -3,7 +3,7 @@ import {NGXLogger} from 'ngx-logger';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of, throwError} from 'rxjs';
 import {ServiceResponse} from './response.service';
-import {IHttpService} from './interface.service';
+import {IDbService, IHttpService} from './interface.service';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
 
@@ -21,29 +21,110 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         return this.logger;
     }
 
+    protected getDbService(): IDbService<T> {
+        return this.dbService;
+    }
+
     protected constructor(@Inject(HttpClient) private http: HttpClient,
-                          @Inject(NGXLogger) private logger: NGXLogger) {
+                          @Inject(NGXLogger) private logger: NGXLogger,
+                          private dbService: IDbService<T>) {
         http || throwError('Could not inject HttpClient!');
         logger || throwError('Could not inject logger!');
         logger.updateConfig(LogConfig);
+        if (!dbService) {
+            this.getLogger().warn('Could not found database service for offline mode!');
+        }
     }
 
-    private handleResponseErrorDelegate: (res: any, redirect?: any) => Observable<T | T[]>;
+    private handleResponseErrorDelegate: (url: string, method?: string, res?: any, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body';
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }) => Observable<T | T[]>;
 
-    public setHandleResponseErrorDelegate(delegate: (res: any, redirect?: any) => Observable<T | T[]>) {
+    public setHandleResponseErrorDelegate(delegate: (url: string, method?: string, res?: any, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body';
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }) => Observable<T | T[]>) {
         this.handleResponseErrorDelegate = delegate;
     }
 
-    protected handleResponseError(res: any, redirect?: any): Observable<T | T[]> {
+    private handleOfflineModeDelegate: (url: string, method?: string, res?: any, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body';
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }) => Observable<T | T[]>;
+
+    public setHandleOfflineModeDelegate(delegate: (url: string, method?: string, res?: any, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body';
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }) => Observable<T | T[]>) {
+        this.handleOfflineModeDelegate = delegate;
+    }
+
+    protected handleResponseError(url: string, method?: string, res?: any, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body';
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }): Observable<T | T[]> {
         const errors = [];
-        if (res instanceof HttpErrorResponse) {
-            if (res.error.error_description) {
+        if (res && res instanceof HttpErrorResponse) {
+            // for handling offline mode
+            if (res.status > 500 && this.getDbService()) {
+                return of(this.handleOfflineModeDelegate
+                    ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options])
+                    : this.handleOfflineMode(url, method, res, options));
+
+            } else if (res.error.error_description) {
                 errors.push(res.error.error_description);
             }
+
         } else {
             errors.push('Something went wrong.');
         }
-        return of(this.parseResponse(new ServiceResponse(false, res, redirect, errors, [])));
+        return of(this.parseResponse(new ServiceResponse(false, res, options.redirectFailure, errors, [])));
     }
 
     public post(url: string, options?: {
@@ -150,10 +231,24 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
                 map((res) => _this.parseResponse(new ServiceResponse(
                     true, res, options.redirectSuccess, [], options.messages))),
                 catchError((res) => (!!_this.handleResponseErrorDelegate
-                    ? _this.handleResponseError(res, options.redirectFailure)
-                    : _this.handleResponseErrorDelegate(res, options.redirectFailure))),
+                    ? _this.handleResponseError(url, method, res, options)
+                    : _this.handleResponseErrorDelegate(url, method, res, options))),
             );
     }
 
     abstract parseResponse(serviceResponse?: ServiceResponse): T | T[];
+
+    abstract handleOfflineMode(url: string, method?: string, res?: any, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body';
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }): T | T[];
 }

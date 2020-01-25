@@ -57,16 +57,17 @@ export const InterceptorProviders = [
 
 export const AuthenticationProviders: StaticProvider[] = [
     {provide: AuthGuard, useClass: AuthGuard, deps: [NbAuthService, Router]},
-    {provide: MockUserService, useClass: MockUserService, deps: []},
-    {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
-    {provide: ModuleService, useClass: ModuleService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
     {
-        provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
-        deps: [HttpClient, NGXLogger, MockUserService],
+        provide: ModuleService, useClass: ModuleService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
     {
         provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
+        deps: [HttpClient, NGXLogger, NbxOAuth2AuthDbService],
     },
     {
         provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
@@ -84,12 +85,12 @@ export const MenuProviders: StaticProvider[] = [
 
 export const UserProviders: StaticProvider[] = [
     {
-        provide: UserHttpService, useClass: UserHttpService,
-        deps: [HttpClient, NGXLogger],
+        provide: UserDbService, useClass: UserDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
     {
-        provide: UserDbService, useClass: UserDbService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService, MockUserService],
+        provide: UserHttpService, useClass: UserHttpService,
+        deps: [HttpClient, NGXLogger, UserDbService],
     },
     {
         provide: UserDataSource, useClass: UserDataSource,
@@ -97,8 +98,17 @@ export const UserProviders: StaticProvider[] = [
     },
 ];
 
+export const MockProviders: StaticProvider[] = [
+    {
+        provide: MockUserService, useClass: MockUserService,
+        deps: [UserDbService, NGXLogger],
+    },
+    {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
+];
+
 export const Providers: StaticProvider[] = CommonProviders
     .concat(InterceptorProviders)
     .concat(AuthenticationProviders)
     .concat(MenuProviders)
-    .concat(UserProviders);
+    .concat(UserProviders)
+    .concat(MockProviders);

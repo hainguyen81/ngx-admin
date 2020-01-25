@@ -6,16 +6,20 @@ import {Observable} from 'rxjs';
 
 export const NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM = new InjectionToken<string>('Custom Interceptor Access Token Parameter');
 export const NBX_AUTH_INTERCEPTOR_COMPANY_HEADER = new InjectionToken<string>('Custom Interceptor Company Header Parameter');
+export const NBX_AUTH_AUTHORIZATION_HEADER = 'Authorization';
+export const NBX_AUTH_COMPANY_HEADER = 'Company';
+export const NBX_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
+export const NBX_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
 
 @Injectable()
 export class NbxAuthInterceptor extends NbAuthSimpleInterceptor {
     constructor(injector: Injector,
                 @Inject(NB_AUTH_INTERCEPTOR_HEADER)
-                protected headerName: string = 'Authorization',
+                protected headerName: string = NBX_AUTH_AUTHORIZATION_HEADER,
                 @Inject(NBX_AUTH_INTERCEPTOR_COMPANY_HEADER)
-                private companyHeaderName: string = 'Company',
+                private companyHeaderName: string = NBX_AUTH_COMPANY_HEADER,
                 @Inject(NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM)
-                private accessTokenParamName: string = 'access_token') {
+                private accessTokenParamName: string = NBX_AUTH_ACCESS_TOKEN_PARAM) {
         super(injector, headerName);
     }
 
