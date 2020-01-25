@@ -34,6 +34,8 @@ import {LoggerModule} from 'ngx-logger';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* Toaster */
 import {ToastrModule} from 'ngx-toastr';
+/* Mock data */
+import {MockDataModule} from './@core/mock/mock.data.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -45,6 +47,9 @@ import {ToastrModule} from 'ngx-toastr';
 
         /* Core Module for layout */
         CoreModule.forRoot(),
+
+        /* Mock Data Module */
+        MockDataModule.forRoot(),
 
         /* Theme */
         ThemeModule.forRoot(),

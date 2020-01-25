@@ -98,11 +98,7 @@ export const UserProviders: StaticProvider[] = [
     },
 ];
 
-export const MockProviders: StaticProvider[] = [
-    {
-        provide: MockUserService, useClass: MockUserService,
-        deps: [UserDbService, NGXLogger],
-    },
+export const ExampleProviders: StaticProvider[] = [
     {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
 ];
 
@@ -111,4 +107,4 @@ export const Providers: StaticProvider[] = CommonProviders
     .concat(AuthenticationProviders)
     .concat(MenuProviders)
     .concat(UserProviders)
-    .concat(MockProviders);
+    .concat(ExampleProviders);

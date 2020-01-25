@@ -27,12 +27,5 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.analytics.trackPageViews();
         this.seoService.trackCanonicalChanges();
-
-        if (AppConfig.Env.production) {
-            return;
-        }
-
-        // initialize mock data for development mode
-        this.mockUserService.initialize();
     }
 }
