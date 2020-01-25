@@ -7,8 +7,12 @@ import {first} from 'rxjs/operators';
 import {concat, interval, Subscription, throwError} from 'rxjs';
 import {IDbService} from '../services/interface.service';
 
+/**
+ * Abstract service for listening application updater
+ * @param <T> entity type
+ */
 @Injectable()
-export abstract class AbstractUpdateService<T> extends AbstractHttpService<T> {
+export abstract class AbstractUpdateService<T> extends AbstractHttpService<T, T> {
 
     protected getSwUpdate(): SwUpdate {
         return this.swUpdate;

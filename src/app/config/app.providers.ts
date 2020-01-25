@@ -5,7 +5,6 @@ import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
 import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MockUserService} from '../@core/mock/users.service';
 import {EmptyService} from '../services/empty.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
@@ -43,6 +42,21 @@ export const CommonProviders: StaticProvider[] = [
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
 ];
 
+export const UserProviders: StaticProvider[] = [
+    {
+        provide: UserDbService, useClass: UserDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: UserHttpService, useClass: UserHttpService,
+        deps: [HttpClient, NGXLogger, UserDbService],
+    },
+    {
+        provide: UserDataSource, useClass: UserDataSource,
+        deps: [UserHttpService, UserDbService, NGXLogger],
+    },
+];
+
 export const InterceptorProviders = [
     {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization'},
     {provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company'},
@@ -67,7 +81,7 @@ export const AuthenticationProviders: StaticProvider[] = [
     },
     {
         provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
-        deps: [HttpClient, NGXLogger, NbxOAuth2AuthDbService],
+        deps: [HttpClient, NGXLogger, UserDbService],
     },
     {
         provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
@@ -83,28 +97,13 @@ export const MenuProviders: StaticProvider[] = [
     },
 ];
 
-export const UserProviders: StaticProvider[] = [
-    {
-        provide: UserDbService, useClass: UserDbService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
-    },
-    {
-        provide: UserHttpService, useClass: UserHttpService,
-        deps: [HttpClient, NGXLogger, UserDbService],
-    },
-    {
-        provide: UserDataSource, useClass: UserDataSource,
-        deps: [UserHttpService, UserDbService, NGXLogger],
-    },
-];
-
 export const ExampleProviders: StaticProvider[] = [
     {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
 ];
 
 export const Providers: StaticProvider[] = CommonProviders
+    .concat(UserProviders)
     .concat(InterceptorProviders)
     .concat(AuthenticationProviders)
     .concat(MenuProviders)
-    .concat(UserProviders)
     .concat(ExampleProviders);

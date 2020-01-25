@@ -6,12 +6,13 @@ import {ServiceResponse} from './response.service';
 import {IDbService, IHttpService} from './interface.service';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
+import {isArray} from 'util';
 
 /**
  * Abstract HTTP service
  * @param <T> entity type
  */
-export abstract class AbstractHttpService<T> implements IHttpService<T> {
+export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
 
     protected getHttp(): HttpClient {
         return this.http;
@@ -21,13 +22,13 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         return this.logger;
     }
 
-    protected getDbService(): IDbService<T> {
+    protected getDbService(): IDbService<K> {
         return this.dbService;
     }
 
     protected constructor(@Inject(HttpClient) private http: HttpClient,
                           @Inject(NGXLogger) private logger: NGXLogger,
-                          private dbService: IDbService<T>) {
+                          private dbService: IDbService<K>) {
         http || throwError('Could not inject HttpClient!');
         logger || throwError('Could not inject logger!');
         logger.updateConfig(LogConfig);
@@ -110,19 +111,22 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         messages?: any;
     }): Observable<T | T[]> {
         const errors = [];
-        if (res && res instanceof HttpErrorResponse) {
-            // for handling offline mode
-            if (res.status > 500 && this.getDbService()) {
-                return of(typeof this.handleOfflineModeDelegate === 'function'
-                    ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options])
-                    : this.handleOfflineMode(url, method, res, options));
+        // for handling offline mode
+        if ((res && res instanceof HttpErrorResponse && res.status > 500 && this.getDbService())
+            || (res && !(res instanceof HttpErrorResponse))) {
+            return typeof this.handleOfflineModeDelegate === 'function'
+                ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options])
+                : this.handleOfflineMode(url, method, res, options);
 
-            } else if (res.error.error_description) {
-                errors.push(res.error.error_description);
-            }
+        } else if (res && res instanceof HttpErrorResponse
+            && res.error && (res.error.error_description || '').length) {
+            errors.push(res.error.error_description);
+
+        } else if (res && res instanceof HttpErrorResponse && res.error) {
+            errors.push(res.error);
 
         } else {
-            errors.push('Something went wrong.');
+            errors.push(res);
         }
         return of(this.parseResponse(new ServiceResponse(false, res, options.redirectFailure, errors, [])));
     }
@@ -221,7 +225,7 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         messages?: any;
     }): Observable<T | T[]> {
         // detect connection before requesting
-        let _this: AbstractHttpService<T>;
+        let _this: AbstractHttpService<T, K>;
         _this = this;
         return _this.getHttp().request(method, url, options)
             .pipe(map((res) => {
@@ -230,9 +234,25 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
                 }),
                 map((res) => _this.parseResponse(new ServiceResponse(
                     true, res, options.redirectSuccess, [], options.messages))),
-                catchError((res) => (typeof _this.handleResponseErrorDelegate === 'function'
-                    ? _this.handleResponseErrorDelegate(url, method, res, options)
-                    : _this.handleResponseError(url, method, res, options))),
+                catchError((res: HttpErrorResponse) => {
+                    let observer: Observable<T | T[]>;
+                    observer = (typeof _this.handleResponseErrorDelegate === 'function'
+                        ? _this.handleResponseErrorDelegate(url, method, res, options)
+                        : _this.handleResponseError(url, method, res, options));
+                    return observer.pipe(map((value: T[] | T) => {
+                        let tokens: T[];
+                        tokens = [];
+                        if (!isArray(value) && value) {
+                            tokens.push(value as T);
+                        } else if (isArray(value)) {
+                            tokens = tokens.concat(value as T[]);
+                        }
+                        if (tokens && tokens.length) {
+                            return tokens[0];
+                        }
+                        return undefined;
+                    }));
+                }),
             );
     }
 
@@ -250,5 +270,5 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         redirectFailure?: any;
         errors?: any;
         messages?: any;
-    }): T | T[];
+    }): Observable<T | T[]>;
 }

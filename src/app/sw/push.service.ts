@@ -7,8 +7,12 @@ import {IDbService} from '../services/interface.service';
 
 export const SW_VAPID_PUBLIC_KEY = new InjectionToken<string>('Service Worker VAPID_PUBLIC_KEY to subscribe');
 
+/**
+ * Abstract service for pushing notification
+ * @param <T> entity type
+ */
 @Injectable()
-export abstract class AbstractPushService<T> extends AbstractHttpService<T> {
+export abstract class AbstractPushService<T> extends AbstractHttpService<T, T> {
 
     protected getSwPush(): SwPush {
         return this.swPush;

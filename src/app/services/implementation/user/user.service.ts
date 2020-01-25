@@ -10,7 +10,7 @@ import {AbstractDbService} from '../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 
 @Injectable()
 export class UserDbService extends AbstractDbService<IUser> {
@@ -58,7 +58,7 @@ export class UserDbService extends AbstractDbService<IUser> {
 }
 
 @Injectable()
-export class UserHttpService extends AbstractHttpService<IUser> {
+export class UserHttpService extends AbstractHttpService<IUser, IUser> {
 
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -94,7 +94,7 @@ export class UserHttpService extends AbstractHttpService<IUser> {
         redirectFailure?: any;
         errors?: any;
         messages?: any;
-    }): IUser[] | IUser {
+    }): Observable<IUser[] | IUser> {
         return undefined;
     }
 }

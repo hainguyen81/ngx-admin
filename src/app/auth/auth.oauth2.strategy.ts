@@ -7,8 +7,7 @@ import {
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Md5} from 'ts-md5';
+import {Observable, throwError} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.service';
@@ -19,8 +18,9 @@ import {IModule} from '../@core/data/module';
 import {isArray} from 'util';
 import {IRole} from '../@core/data/role';
 import {isObject} from 'rxjs/internal-compatibility';
-import {catchError, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import EncryptionUtils from '../utils/encryption.utils';
+import {NBX_AUTH_AUTHORIZATION_TYPE} from './auth.interceptor';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -63,15 +63,13 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     authenticate = (data?: any): Observable<NbAuthResult> => {
         let oauth2: NbxOAuth2AuthStrategy;
         oauth2 = this;
-        let md5: Md5;
-        md5 = new Md5();
         const module = 'login';
         let headers: HttpHeaders;
         headers = new HttpHeaders(oauth2.getOption(`${module}.headers`) || {});
         let authorization: string;
         authorization = EncryptionUtils.base64Encode(':',
             data['email'] || '', EncryptionUtils.md5Encode(':', data['password']));
-        headers = headers.set('Authorization', 'Basic '.concat(authorization));
+        headers = headers.set('Authorization', [NBX_AUTH_AUTHORIZATION_TYPE, authorization].join(' '));
         let method: string;
         method = oauth2.getOption(`${module}.method`);
         let url: string;

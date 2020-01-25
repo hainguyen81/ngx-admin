@@ -5,16 +5,21 @@ import {NbAuthToken} from '@nebular/auth';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {AbstractHttpService} from '../services/http.service';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../services/response.service';
 import {ConnectionService} from 'ng-connection-service';
 import {
     NBX_AUTH_ACCESS_TOKEN_PARAM,
     NBX_AUTH_AUTHORIZATION_HEADER,
+    NBX_AUTH_AUTHORIZATION_TYPE,
     NBX_AUTH_REFRESH_TOKEN_PARAM,
 } from './auth.interceptor';
-import {throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import EncryptionUtils from '../utils/encryption.utils';
+import PromiseUtils from '../utils/promise.utils';
+import {IUser} from '../@core/data/user';
+import {UserDbService} from '../services/implementation/user/user.service';
+import JsonUtils from '../utils/json.utils';
 
 @Injectable()
 export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbService<T> {
@@ -54,11 +59,11 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbSer
 }
 
 @Injectable()
-export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHttpService<T> {
+export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHttpService<T, IUser> {
 
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(NbxOAuth2AuthDbService) dbService: NbxOAuth2AuthDbService<T>) {
+                @Inject(UserDbService) dbService: UserDbService) {
         super(http, logger, dbService);
         dbService || throwError('Could not inject authentication database service for offline mode');
     }
@@ -88,34 +93,68 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
         redirectFailure?: any;
         errors?: any;
         messages?: any;
-    }): T[] | T {
-        let token: T;
-        token = undefined;
+    }): Observable<T[] | T> {
         let headers: HttpHeaders;
         headers = (options && options.headers ? options.headers as HttpHeaders : undefined);
         if (headers && headers.has(NBX_AUTH_AUTHORIZATION_HEADER)) {
-            let dbService: NbxOAuth2AuthDbService<T>;
-            dbService = this.getDbService() as NbxOAuth2AuthDbService<T>;
+            let dbService: UserDbService;
+            dbService = this.getDbService() as UserDbService;
             let authorization: string;
             authorization = headers.get(NBX_AUTH_AUTHORIZATION_HEADER);
-            dbService.getAll().then((tokens) => {
-                if (tokens.length) {
-                    for (const tk of tokens) {
-                        let encryptedToken: string;
-                        encryptedToken = EncryptionUtils.base64Encode(':',
-                            tk.getPayload()['username'] || '',
-                            tk.getPayload()['password'] || '');
-                        if (authorization.toLowerCase() === encryptedToken.toLowerCase()) {
-                            token = tk;
-                            break;
+            return PromiseUtils.promiseToObservable(
+                dbService.getAll().then((users) => {
+                    let token: T;
+                    token = undefined;
+                    if (users && users.length) {
+                        for (const u of users) {
+                            let encryptedToken: string;
+                            encryptedToken = EncryptionUtils.base64Encode(':',
+                                u.username || '', u.password || '');
+                            encryptedToken = [NBX_AUTH_AUTHORIZATION_TYPE, encryptedToken].join(' ');
+                            if (authorization.toLowerCase() === encryptedToken.toLowerCase()) {
+                                let tokenValue: any;
+                                tokenValue = JsonUtils.parseFisrtResponseJson(JSON.stringify(u));
+                                delete tokenValue['password'];
+                                token = this.parseResponse(new ServiceResponse(true,
+                                    new HttpResponse({
+                                        body: JSON.stringify(tokenValue),
+                                        headers: headers,
+                                        status: 200, url: url,
+                                    }),
+                                    options.redirectSuccess, options.errors, options.messages));
+                                break;
+                            }
                         }
                     }
-                }
+                    if (!token) {
+                        token = this.parseResponse(new ServiceResponse(false,
+                            new HttpResponse({
+                                body: '', headers: headers,
+                                status: 401, url: url,
+                            }),
+                            options.redirectFailure, options.errors, options.messages));
+                    }
+                    return token;
 
-            }, (errors) => {
-                this.getLogger().error('Not found any valid token', errors);
-            });
+                }, (errors) => {
+                    this.getLogger().error('Not found any valid token', errors);
+                    return this.parseResponse(new ServiceResponse(false,
+                        new HttpResponse({
+                            body: '', headers: headers,
+                            status: 401, url: url,
+                        }),
+                        options.redirectFailure, options.errors, options.messages));
+
+                }).catch((errors) => {
+                    this.getLogger().error('Not found any valid token', errors);
+                    return this.parseResponse(new ServiceResponse(false,
+                        new HttpResponse({
+                            body: '', headers: headers,
+                            status: 401, url: url,
+                        }),
+                        options.redirectFailure, options.errors, options.messages));
+                }));
         }
-        return token;
+        return of(undefined);
     }
 }
