@@ -5,6 +5,7 @@ import {UserDataSource} from '../../../services/implementation/user/user.datasou
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {ENTER, ESCAPE, F2, S} from '@angular/cdk/keycodes';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -131,6 +132,8 @@ export class UserSmartTableComponent extends SmartTableComponent {
         }
 
         // detect save action
+        let actionRow: Row;
+        actionRow = this.getRowByEvent(event);
         let isF2Key: boolean;
         isF2Key = super.isSpecifiedKey(event, 'F2', F2);
         let isEnterKey: boolean;
@@ -145,21 +148,21 @@ export class UserSmartTableComponent extends SmartTableComponent {
 
         // save row by [ALT + F2] or [CTRL + Enter] or [CTRL + S]
         if (needToSave) {
-            this.saveData();
+            this.saveData(actionRow);
 
             // stop firing event
             this.preventEvent(event);
 
             // enter edit mode by F2
         } else if (isF2Key) {
-            this.enterEditMode();
+            this.enterEditMode(actionRow);
 
             // stop firing event
             this.preventEvent(event);
 
             // exit editing mode by Esc
         } else if (isEscKey) {
-            this.cancelEditMode();
+            this.cancelEditMode(actionRow);
 
             // stop firing event
             this.preventEvent(event);
@@ -168,35 +171,41 @@ export class UserSmartTableComponent extends SmartTableComponent {
 
     /**
      * Enter editing mode
+     * @param row to edit. NULL for the first selected row or the first row
+     * @param columnIndex to focus
      */
-    private enterEditMode() {
-        if (super.getSelectedRows().length) {
-            super.editRow(super.getSelectedRows().shift());
-
-        } else {
-            super.editRow(super.getRows().shift());
+    private enterEditMode(row?: Row, columnIndex?: number) {
+        let editRow: Row;
+        editRow = (row ? row : super.getSelectedRows().length
+            ? super.getSelectedRows().shift() : super.getRows().shift());
+        if (editRow) {
+            super.editCellByIndex(editRow.index, columnIndex);
         }
     }
 
     /**
      * Exit and cancel editing mode
+     * @param row to cancel editing. NULL for all selected editing rows or all editing rows
      */
-    private cancelEditMode() {
-        if (super.getSelectedRows().length) {
-            super.cancelEditRows(super.getSelectedRows());
-        } else {
-            super.cancelEditAll();
+    private cancelEditMode(row?: Row) {
+        let cancelRows: Row[];
+        cancelRows = (row ? [row] : super.getSelectedRows().length
+            ? super.getSelectedRows() : super.getRows());
+        if (cancelRows && cancelRows.length) {
+            super.cancelEditRows(cancelRows);
         }
     }
 
     /**
      * Save current editing data
+     * @param row to save. NULL for all selected editing rows or all editing rows
      */
-    private saveData() {
-        if (super.getSelectedRows().length) {
-            super.saveSelectedRows();
-        } else {
-            super.saveAllRows();
+    private saveData(row?: Row) {
+        let saveRows: Row[];
+        saveRows = (row ? [row] : super.getSelectedRows().length
+            ? super.getSelectedRows() : super.getRows());
+        if (saveRows && saveRows.length) {
+            super.saveRows(saveRows);
         }
     }
 }

@@ -262,11 +262,11 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     /**
-     * Get the Row instance by the specified MouseEvent
-     * @param event MouseEvent
+     * Get the Row instance by the specified DOM event
+     * @param event DOM event
      * @return Row or undefined
      */
-    public getRowByMouseEvent(event: MouseEvent): Row {
+    public getRowByEvent(event: Event): Row {
         let rowIdx: number;
         rowIdx = -1;
         let target: HTMLElement;
@@ -282,11 +282,11 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     /**
-     * Get the Cell instance by the specified MouseEvent
-     * @param event MouseEvent
+     * Get the Cell instance by the specified DOM event
+     * @param event DOM event
      * @return Cell or undefined
      */
-    public getCellByMouseEvent(event: MouseEvent): Cell {
+    public getCellByEvent(event: Event): Cell {
         let rowIndex: number;
         let cellIndex: number;
         rowIndex = -1;
@@ -349,7 +349,7 @@ export class SmartTableComponent implements AfterViewInit {
         // TODO Waiting for implementing from children component
         if (event instanceof MouseEvent) {
             let cell: Cell;
-            cell = this.getCellByMouseEvent(event);
+            cell = this.getCellByEvent(event);
             this.getLogger().debug('onDoubleClick', event, cell);
             if (cell) {
                 this.editCell(cell);
@@ -458,7 +458,7 @@ export class SmartTableComponent implements AfterViewInit {
     onClick(event: MouseEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByMouseEvent(event);
+        row = this.getRowByEvent(event);
         this.getLogger().debug('onClick', event, row);
         if (row) {
             this.getGridComponent().selectRow(row);
@@ -475,7 +475,7 @@ export class SmartTableComponent implements AfterViewInit {
     onContextMenu(event: MouseEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByMouseEvent(event);
+        row = this.getRowByEvent(event);
         this.getLogger().debug('onContextMenu', event, row);
         if (row) {
             this.getContextMenuService().show.next({
