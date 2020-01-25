@@ -179,9 +179,14 @@ export class UserSmartTableComponent extends SmartTableComponent {
      * @param columnIndex to focus
      */
     private enterEditMode(row?: Row, columnIndex?: number) {
+        let hoveredRows: NodeListOf<HTMLTableRowElement>;
+        hoveredRows = super.getRowElementsBySelector(
+            [UserSmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join(''));
         let editRow: Row;
-        editRow = (row ? row : super.getSelectedRows().length
-            ? super.getSelectedRows().shift() : super.getRows().shift());
+        editRow = (row ? row : hoveredRows && hoveredRows.length
+            ? super.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
+            : super.getSelectedRows().length ? super.getSelectedRows().shift()
+                : super.getRows().shift());
         if (editRow) {
             super.editCellByIndex(editRow.index, columnIndex);
         }

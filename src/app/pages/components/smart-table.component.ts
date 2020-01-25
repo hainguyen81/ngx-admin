@@ -52,8 +52,8 @@ export interface IContextMenu {
 })
 export class SmartTableComponent implements AfterViewInit {
 
-    private static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
-    private static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
+    protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
+    protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
 
     private tableHeader: string;
     private settings = {
@@ -1122,11 +1122,22 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     /**
+     * Get the Row DOM elements by the specified selector
+     * @return Row DOM elements or undefined
+     */
+    protected getRowElementsBySelector(selector: string): NodeListOf<HTMLTableRowElement> {
+        if (!(selector || '').length) {
+            return undefined;
+        }
+        return document.querySelectorAll(selector);
+    }
+
+    /**
      * Get the all Row DOM elements
      * @return Row DOM elements or undefined
      */
     protected getAllRowElements(): NodeListOf<HTMLTableRowElement> {
-        return document.querySelectorAll(SmartTableComponent.SMART_TABLE_ROW_SELETOR);
+        return this.getRowElementsBySelector(SmartTableComponent.SMART_TABLE_ROW_SELETOR);
     }
 
     /**
