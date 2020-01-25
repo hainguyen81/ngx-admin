@@ -6,11 +6,12 @@
 import {CoreModule} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ComponentFactoryResolver, Inject, Injector, NgModule} from '@angular/core';
+import {Inject, Injector, NgModule, OnInit} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
+import {throwError} from 'rxjs';
 /* API Configuration */
 import {AppConfig} from './config/app.config';
 /* Authentication */
@@ -34,6 +35,8 @@ import {LoggerModule} from 'ngx-logger';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* Toaster */
 import {ToastrModule} from 'ngx-toastr';
+/* Mock data services */
+import {MockUserService} from './@core/mock/users.service';
 
 @NgModule({
     declarations: [AppComponent],
@@ -120,13 +123,26 @@ import {ToastrModule} from 'ngx-toastr';
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],
 })
-export class AppModule {
+export class AppModule implements OnInit {
     constructor(injector: Injector,
-                iconLibraries: NbIconLibraries) {
+                iconLibraries: NbIconLibraries,
+                @Inject(MockUserService) private mockUserService: MockUserService) {
+        AppConfig.Env.production || mockUserService
+        || throwError('Could not inject mock user service to initialize mock data');
+
         // @ts-ignore
         AppConfig.Injector = Injector.create({providers: AppConfig.Providers, parent: injector});
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
+    }
+
+    ngOnInit(): void {
+        if (AppConfig.Env.production) {
+            return;
+        }
+
+        // initialize mock data for development mode
+        this.mockUserService.initialize();
     }
 }

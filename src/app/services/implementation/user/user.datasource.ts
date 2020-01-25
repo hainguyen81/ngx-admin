@@ -3,7 +3,6 @@ import {UserDbService, UserHttpService} from './user.service';
 import {AbstractDataSource} from '../../datasource.service';
 import {IUser} from '../../../@core/data/user';
 import {NGXLogger} from 'ngx-logger';
-import {isArray} from 'util';
 
 @Injectable()
 export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, UserDbService> {

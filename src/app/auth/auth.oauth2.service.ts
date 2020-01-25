@@ -11,7 +11,6 @@ import {ConnectionService} from 'ng-connection-service';
 import {
     NBX_AUTH_ACCESS_TOKEN_PARAM,
     NBX_AUTH_AUTHORIZATION_HEADER,
-    NBX_AUTH_COMPANY_HEADER,
     NBX_AUTH_REFRESH_TOKEN_PARAM,
 } from './auth.interceptor';
 import {throwError} from 'rxjs';

@@ -4,6 +4,7 @@ import {Providers} from './app.providers';
 import {TOASTER} from './toaststr.config';
 import {API} from './api.config';
 import {COMMON} from './common.config';
+import {environment} from '../../environments/environment';
 
 export const AppConfig = {
     Injector: Injector,
@@ -12,6 +13,7 @@ export const AppConfig = {
     API: API,
     Db: dbConfig,
     Providers: Providers,
+    Env: environment,
     getService: (token: any) => {
         return AppConfig.Injector['get'].apply(this, token);
     },
