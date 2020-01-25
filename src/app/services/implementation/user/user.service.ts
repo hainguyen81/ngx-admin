@@ -29,7 +29,7 @@ export class UserDbService extends AbstractDbService<IUser> {
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {
             args[0].status = USER_STATUS.LOCKED;
-            this.getDbService().delete({'status': USER_STATUS.LOCKED})
+            this.getDbService().delete(this.getDbStore(), {'status': USER_STATUS.LOCKED})
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
@@ -47,7 +47,8 @@ export class UserDbService extends AbstractDbService<IUser> {
                 'rolesGroup', 'enterprise', 'id'];
             updatorMap = new Map<string, any>(Object.entries(args[0]));
             exclKeys.forEach(key => updatorMap.delete(key));
-            this.getDbService().update(updatorMap.entries(), {'id': args[0].id})
+            this.getDbService().update(this.getDbStore(),
+                updatorMap.entries(), {'id': args[0].id})
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);

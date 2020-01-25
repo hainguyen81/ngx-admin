@@ -18,7 +18,7 @@ export class ModuleService extends AbstractDbService<IModule> {
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IModule[]) => {
         if (args && args.length) {
-            this.getDbService().delete({'id': args[0].id})
+            this.getDbService().delete(this.getDbStore(), {'id': args[0].id})
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
@@ -31,7 +31,8 @@ export class ModuleService extends AbstractDbService<IModule> {
         if (args && args.length) {
             let updatorMap: Map<string, any>;
             updatorMap = new Map<string, any>(Object.entries(args[0]));
-            this.getDbService().update(updatorMap.entries(), {'id': args[0].id})
+            this.getDbService().update(this.getDbStore(),
+                updatorMap.entries(), {'id': args[0].id})
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);

@@ -28,7 +28,7 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbSer
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: T[]) => {
         if (args && args.length) {
-            this.getDbService().delete({'id': (args[0].getPayload() || {}).id})
+            this.getDbService().delete(this.getDbStore(), {'id': (args[0].getPayload() || {}).id})
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
@@ -43,7 +43,8 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbSer
             updatorMap = new Map<string, any>();
             updatorMap.set(NBX_AUTH_ACCESS_TOKEN_PARAM, (args[0].getPayload() || {})[NBX_AUTH_ACCESS_TOKEN_PARAM]);
             updatorMap.set(NBX_AUTH_REFRESH_TOKEN_PARAM, (args[0].getPayload() || {})[NBX_AUTH_REFRESH_TOKEN_PARAM]);
-            this.getDbService().update(updatorMap, {'id': (args[0].getPayload() || {}).id})
+            this.getDbService().update(this.getDbStore(),
+                updatorMap, {'id': (args[0].getPayload() || {}).id})
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);

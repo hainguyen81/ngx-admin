@@ -44,7 +44,6 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
         dbService || throwError('Could not inject IndexDb!');
         logger || throwError('Could not inject logger!');
         connectionService || throwError('Could not inject connection service!');
-        dbService.currentStore = dbStore || this.constructor.name;
         logger.updateConfig(LogConfig);
         connectionService.monitor().subscribe((connected) => {
             if (connected) {
@@ -60,14 +59,12 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     delete(entity: T): Promise<number> {
         return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
             this.deleteExecutor.apply(this, [resolve, reject, entity]);
         });
     }
 
     update(entity: T): Promise<number> {
         return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
             this.updateExecutor.apply(this, [resolve, reject, entity]);
         });
     }
@@ -75,8 +72,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     findEntities(indexName: string, criteria?: any): Promise<T[]> {
         if (!criteria) return this.getAll();
         return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().getByIndex(indexName, criteria)
+            this.getDbService().getByIndex(this.getDbStore(), indexName, criteria)
                 .then((value: T[]) => resolve(value),
                     (errors) => {
                         this.getLogger().error(errors);
@@ -87,8 +83,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     findById(id?: any): Promise<T> {
         return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().getByIndex('id', id)
+            this.getDbService().getByIndex(this.getDbStore(), 'id', id)
                 .then((value: T) => resolve(value),
                     (errors) => {
                         this.getLogger().error(errors);
@@ -99,8 +94,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     insert(entity: T): Promise<number> {
         return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().add(entity)
+            this.getDbService().add(this.getDbStore(), entity)
                 .then((affected) => resolve(affected), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
@@ -110,8 +104,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     clear(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().clear()
+            this.getDbService().clear(this.getDbStore())
                 .then(() => resolve(), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
@@ -121,8 +114,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     getAll(): Promise<T[]> {
         return new Promise((resolve, reject) => {
-            this.getDbService().currentStore = this.getDbStore();
-            this.getDbService().getAll()
+            this.getDbService().getAll(this.getDbStore())
                 .then((value: T[]) => resolve(value), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
@@ -131,25 +123,25 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     }
 
     insertEntities(entities: T[]): Promise<number> {
-        let deferedPromises: Promise<number>[];
-        deferedPromises = [];
+        let promises: Promise<number>[];
+        promises = [];
         if (entities && entities.length) {
-            entities.forEach((entity: T) => deferedPromises.push(this.insert(entity)));
+            entities.forEach((entity: T) => promises.push(this.insert(entity)));
         }
         return this.invokePromises(0,
             (result: number, value: number) => (result + value),
-            deferedPromises);
+            promises);
     }
 
     deleteEntities(entities: T[]): Promise<number> {
-        let deferedPromises: Promise<number>[];
-        deferedPromises = [];
+        let promises: Promise<number>[];
+        promises = [];
         if (entities && entities.length) {
-            entities.forEach((entity: T) => deferedPromises.push(this.delete(entity)));
+            entities.forEach((entity: T) => promises.push(this.delete(entity)));
         }
         return this.invokePromises(0,
             (result: number, value: number) => (result + value),
-            deferedPromises);
+            promises);
     }
 
     /**
@@ -167,7 +159,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
         if (!promises || !promises.length || !calculateResult) {
             return new Promise(((resolve) => resolve(defValue)));
         }
-        Promise.all(promises).then((values: K[]) => {
+        return Promise.all(promises).then((values: K[]) => {
             let result: K;
             result = defValue;
             if (values && values.length) {
