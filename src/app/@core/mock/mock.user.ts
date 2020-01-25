@@ -78,4 +78,5 @@ export const MockUser = [
     MockUserAdmin,
     MockUser1,
     MockUser2,
+    MockUser3,
 ];
