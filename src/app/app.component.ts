@@ -6,10 +6,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AnalyticsService} from './@core/services/analytics.service';
 import {SeoService} from './@core/services/seo.service';
-import {AppConfig} from './config/app.config';
-import {throwError} from 'rxjs';
-/* Mock data services */
-import {MockUserService} from './@core/mock/users.service';
 
 @Component({
     selector: 'ngx-app',
@@ -18,10 +14,7 @@ import {MockUserService} from './@core/mock/users.service';
 export class AppComponent implements OnInit {
 
     constructor(@Inject(AnalyticsService) private analytics: AnalyticsService,
-                @Inject(SeoService) private seoService: SeoService,
-                @Inject(MockUserService) private mockUserService: MockUserService) {
-        AppConfig.Env.production || mockUserService
-        || throwError('Could not inject mock user service to initialize mock data');
+                @Inject(SeoService) private seoService: SeoService) {
     }
 
     ngOnInit(): void {
