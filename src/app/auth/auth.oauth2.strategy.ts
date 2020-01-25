@@ -90,7 +90,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
                     ? [tokens] : isArray(tokens) ? tokens as [] : []);
             }),
             map((tokens: []) => {
-                return of(new NbAuthResult(
+                return new NbAuthResult(
                     (tokens && tokens.length ? true : false),
                     new HttpResponse({
                         body: (tokens && tokens.length ? tokens.shift() : undefined),
@@ -100,10 +100,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
                     (tokens && tokens.length ? options.redirectSuccess : options.redirectFailure),
                     (tokens && tokens.length ? [] : options.errors),
                     options.messages,
-                    (tokens && tokens.length ? tokens.shift() : undefined)));
-            }), catchError((errors: any) => {
-                return of(new NbAuthResult(false, undefined, options.redirectFailure,
-                    errors || options.errors, options.messages, undefined));
+                    (tokens && tokens.length ? tokens.shift() : undefined));
             })) as Observable<NbAuthResult>;
     }
 
