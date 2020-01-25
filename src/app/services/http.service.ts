@@ -113,7 +113,7 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
         if (res && res instanceof HttpErrorResponse) {
             // for handling offline mode
             if (res.status > 500 && this.getDbService()) {
-                return of(this.handleOfflineModeDelegate
+                return of(typeof this.handleOfflineModeDelegate === 'function'
                     ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options])
                     : this.handleOfflineMode(url, method, res, options));
 
@@ -230,9 +230,9 @@ export abstract class AbstractHttpService<T> implements IHttpService<T> {
                 }),
                 map((res) => _this.parseResponse(new ServiceResponse(
                     true, res, options.redirectSuccess, [], options.messages))),
-                catchError((res) => (!!_this.handleResponseErrorDelegate
-                    ? _this.handleResponseError(url, method, res, options)
-                    : _this.handleResponseErrorDelegate(url, method, res, options))),
+                catchError((res) => (typeof _this.handleResponseErrorDelegate === 'function'
+                    ? _this.handleResponseErrorDelegate(url, method, res, options)
+                    : _this.handleResponseError(url, method, res, options))),
             );
     }
 
