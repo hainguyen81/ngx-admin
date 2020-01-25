@@ -25,8 +25,10 @@ export class MockUserService {
         MockUser.forEach(u => {
             u.password = EncryptionUtils.md5Encode(':', u.password);
         });
-        this.userDbService.insertEntities(MockUser)
-            .then(() => this.logger.debug('Initialized mock user data!'),
-                (errors) => this.logger.error('Could not initialize mock user data', errors));
+        this.userDbService.clear().then(() => {
+            this.userDbService.insertEntities(MockUser)
+                .then(() => this.logger.debug('Initialized mock user data!'),
+                    (errors) => this.logger.error('Could not initialize mock user data', errors));
+        });
     }
 }
