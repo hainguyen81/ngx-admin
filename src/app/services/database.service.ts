@@ -131,32 +131,54 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     }
 
     insertEntities(entities: T[]): Promise<number> {
-        if (!entities || !entities.length) {
-            return new Promise(((resolve) => resolve(0)));
+        let deferedPromises: Promise<number>[];
+        deferedPromises = [];
+        if (entities && entities.length) {
+            entities.forEach((entity: T) => deferedPromises.push(this.insert(entity)));
         }
-        return new Promise<number>((resolve, reject) => {
-            try {
-                this.getDbService().currentStore = this.getDbStore();
-                entities.forEach((entity: T) => this.insert(entity));
-                resolve(entities.length);
-            } catch (e) {
-                reject(e);
-            }
-        });
+        return this.invokePromises(0,
+            (result: number, value: number) => (result + value),
+            deferedPromises);
     }
 
     deleteEntities(entities: T[]): Promise<number> {
-        if (!entities || !entities.length) {
-            return new Promise(((resolve) => resolve(0)));
+        let deferedPromises: Promise<number>[];
+        deferedPromises = [];
+        if (entities && entities.length) {
+            entities.forEach((entity: T) => deferedPromises.push(this.delete(entity)));
         }
-        return new Promise<number>((resolve, reject) => {
-            try {
-                this.getDbService().currentStore = this.getDbStore();
-                entities.forEach((entity: T) => this.delete(entity));
-                resolve(entities.length);
-            } catch (e) {
-                reject(e);
+        return this.invokePromises(0,
+            (result: number, value: number) => (result + value),
+            deferedPromises);
+    }
+
+    /**
+     * Invoke multiple promises for combining into one promise
+     * @param defValue default value if promises array is empty or error
+     * @param calculateResult the function to combine multiple result to one.
+     * The first parameter is result that will be returned (combined),
+     * the second parameter is result of every promise to combine
+     * @param promises promises array to invoke
+     * @return the combined promise or promise of default value
+     */
+    protected invokePromises<K>(defValue: K,
+                                calculateResult: (result: K, value: K) => K,
+                                promises: Promise<K>[]): Promise<K> {
+        if (!promises || !promises.length || !calculateResult) {
+            return new Promise(((resolve) => resolve(defValue)));
+        }
+        Promise.all(promises).then((values: K[]) => {
+            let result: K;
+            result = defValue;
+            if (values && values.length) {
+                for (const value of values) {
+                    result = calculateResult(result, value);
+                }
             }
+            return result;
+        }).catch((errors) => {
+            this.getLogger().error('Could not invoke multiple promises', errors);
+            return defValue;
         });
     }
 
