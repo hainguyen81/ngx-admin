@@ -1,10 +1,4 @@
-import {
-    AfterViewInit,
-    Component, EventEmitter,
-    Inject, Input,
-    QueryList,
-    ViewChildren,
-} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Inject, QueryList, ViewChildren,} from '@angular/core';
 import {Cell, LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
@@ -15,11 +9,7 @@ import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component'
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNumber} from 'util';
-import {
-    DocumentKeydownHandlerService,
-    DocumentKeypressHandlerService,
-    DocumentKeyupHandlerService,
-} from '../../services/implementation/document.keypress.handler.service';
+import {DocumentKeydownHandlerService, DocumentKeypressHandlerService, DocumentKeyupHandlerService,} from '../../services/implementation/document.keypress.handler.service';
 
 export const FOCUSABLE_ELEMENTS_SELETOR: string =
     'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
@@ -40,6 +30,7 @@ export interface IContextMenu {
 })
 export class SmartTableComponent implements AfterViewInit {
 
+    private static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-row';
     private static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
 
     private tableHeader: string;
@@ -462,6 +453,7 @@ export class SmartTableComponent implements AfterViewInit {
         this.getLogger().debug('onClick', event, row);
         if (row) {
             this.getGridComponent().selectRow(row);
+            this.attachSelectedRowClass(row.index, true);
 
             // stop firing event
             this.preventEvent(event);
@@ -689,6 +681,7 @@ export class SmartTableComponent implements AfterViewInit {
         let cell: Cell;
         cell = (columnIndex < 0 ? undefined : row.cells[columnIndex]);
         this.getGridComponent().selectRow(row);
+        this.attachSelectedRowClass(row.index, true);
         this.getGridComponent().edit(row);
 
         // wait for showing editor
@@ -856,7 +849,10 @@ export class SmartTableComponent implements AfterViewInit {
      * Create new Row
      */
     protected newRow() {
-        this.getGridComponent().selectRow(this.getGridComponent().getNewRow());
+        let newRow: Row;
+        newRow = this.getGridComponent().getNewRow();
+        this.getGridComponent().selectRow(newRow);
+        this.attachSelectedRowClass(newRow.index, true);
     }
 
     /**
@@ -892,6 +888,7 @@ export class SmartTableComponent implements AfterViewInit {
                 this.getGridComponent().source.refresh();
             }
             this.getGridComponent().selectRow(row);
+            this.attachSelectedRowClass(row.index, true);
         }
     }
 
@@ -901,9 +898,13 @@ export class SmartTableComponent implements AfterViewInit {
      */
     protected cancelEditRows(rows: Array<Row>) {
         if (rows && rows.length) {
-            rows.forEach((row) => this.cancelEditRow(row, false));
+            rows.forEach((r) => this.cancelEditRow(r, false));
             this.getGridComponent().source.refresh();
-            this.getGridComponent().selectRow(rows.shift());
+
+            let row: Row;
+            row = rows.shift();
+            this.getGridComponent().selectRow(row);
+            this.attachSelectedRowClass(row.index, true);
         }
     }
 
@@ -924,6 +925,41 @@ export class SmartTableComponent implements AfterViewInit {
         if (event) {
             event['cancelBubble'] = true;
             event['returnValue'] = false;
+        }
+    }
+
+    /**
+     * Add/Remove selected class for the specified row index
+     * @param rowIndex to select
+     * @param add true for adding selected class; else removing it
+     */
+    private attachSelectedRowClass(rowIndex: number, add?: boolean | true) {
+        if (0 > rowIndex) {
+            return;
+        }
+
+        let rows: NodeListOf<HTMLTableRowElement>;
+        rows = document.querySelectorAll(SmartTableComponent.SMART_TABLE_ROW_SELETOR);
+        if (!rows || !rows.length || rowIndex >= rows.length) {
+            return;
+        }
+
+        let row: HTMLTableRowElement;
+        row = rows.item(rowIndex);
+        if (!row.classList || (add && row.classList.contains('selected'))
+            || (!add && !row.classList.contains('selected'))) {
+            return;
+        }
+
+        if (this.getGridComponent().getSetting('selectMode') !== 'multi' && add) {
+            rows.forEach((r) => r.classList.remove('selected'));
+        }
+
+        if (add) {
+            row.classList.add('selected');
+
+        } else if (row.classList.contains('selected')) {
+            row.classList.remove('selected');
         }
     }
 }
