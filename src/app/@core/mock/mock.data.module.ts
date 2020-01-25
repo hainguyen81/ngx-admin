@@ -1,4 +1,4 @@
-import {Inject, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CommonProviders, UserProviders} from '../../config/app.providers';
 import {MockUserService} from './users.service';
@@ -6,6 +6,7 @@ import {UserDbService} from '../../services/implementation/user/user.service';
 import {NGXLogger} from 'ngx-logger';
 import {throwIfAlreadyLoaded} from '../core.module';
 import {AppConfig} from '../../config/app.config';
+import {throwError} from 'rxjs';
 
 export const MOCK_PROVIDERS = CommonProviders
     .concat(UserProviders)
@@ -25,11 +26,13 @@ export const MOCK_PROVIDERS = CommonProviders
 })
 export class MockDataModule {
 
-    @Inject(MockUserService) mockUserService: MockUserService;
+    private moduleInjector: Injector;
 
-    constructor(@Optional() @SkipSelf() parentModule: MockDataModule) {
+    constructor(@Optional() @SkipSelf() parentModule: MockDataModule,
+                injector: Injector) {
         throwIfAlreadyLoaded(parentModule, 'MockDataModule');
         // initialize mock data if necessary
+        this.moduleInjector = Injector.create({providers: MOCK_PROVIDERS, parent: injector});
         this.initialization();
     }
 
@@ -42,11 +45,16 @@ export class MockDataModule {
         };
     }
 
-    initialization() {
+    protected getService<T>(token: Type<T> | InjectionToken<T>): T {
+        this.moduleInjector || throwError('Could not create injector to inject mock services!');
+        return this.moduleInjector.get(token);
+    }
+
+    protected initialization() {
         if (AppConfig.Env.production) {
             return;
         }
 
-        this.mockUserService.initialize();
+        this.getService(MockUserService).initialize();
     }
 }
