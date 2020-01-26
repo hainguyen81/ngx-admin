@@ -122,7 +122,7 @@ export class SmartTableComponent implements AfterViewInit {
     private documentKeyUpHandlerService: DocumentKeyupHandlerService;
     private documentKeyPressHandlerService: DocumentKeypressHandlerService;
 
-    private edittingRows: Array<Row>;
+    private edittingRows: Array<Row> = [];
     private allowMultiEdit: boolean = false;
 
     constructor(@Inject(DataSource) private dataSource: DataSource,
@@ -1005,20 +1005,14 @@ export class SmartTableComponent implements AfterViewInit {
      * @param row to save
      */
     protected saveRow(row: Row) {
+        row && this.removeEditingRow(row);
         if (row && !row.isInEditing) {
             return;
         }
 
-        if (row) {
-            let editingRowIndex: number;
-            editingRowIndex = this.edittingRows.indexOf(row);
-            this.getGridComponent().save(row,
-                this.getSmartTableComponent().editConfirm || new EventEmitter<any>());
-            if (editingRowIndex >= 0) {
-                this.edittingRows.slice(editingRowIndex, 1);
-            }
-
-        } else this.getLogger().warn('Undefined row to edit');
+        row && this.getGridComponent().save(row,
+            this.getSmartTableComponent().editConfirm || new EventEmitter<any>());
+        !row && this.getLogger().warn('Undefined row to edit');
     }
 
     /**
@@ -1084,16 +1078,10 @@ export class SmartTableComponent implements AfterViewInit {
             return;
         }
 
-        if (row) {
-            let editingRowIndex: number;
-            editingRowIndex = this.edittingRows.indexOf(row);
-            this.getGridComponent().delete(row,
-                this.getSmartTableComponent().deleteConfirm || new EventEmitter<any>());
-            if (editingRowIndex >= 0) {
-                this.edittingRows.slice(editingRowIndex, 1);
-            }
-
-        } else this.getLogger().warn('Undefined row to delete');
+        row && this.removeEditingRow(row);
+        row && this.getGridComponent().delete(row,
+            this.getSmartTableComponent().deleteConfirm || new EventEmitter<any>());
+        !row && this.getLogger().warn('Undefined row to delete');
     }
 
     /**
@@ -1154,17 +1142,13 @@ export class SmartTableComponent implements AfterViewInit {
      */
     protected cancelEditRow(row: Row, refresh?: boolean) {
         !row && this.getLogger().warn('Undefined row to cancel');
+        row && this.removeEditingRow(row);
         if (row && !row.isInEditing) {
             return;
 
         } else if (row) {
-            let editingRowIndex: number;
-            editingRowIndex = this.edittingRows.indexOf(row);
             row.isInEditing = false;
             row.isSelected = false;
-            if (editingRowIndex >= 0) {
-                this.edittingRows.slice(editingRowIndex, 1);
-            }
         }
     }
 
@@ -1476,5 +1460,34 @@ export class SmartTableComponent implements AfterViewInit {
             eventType: 'cancel',
             event: keyEvent,
         });
+    }
+
+    /**
+     * Remove the specified Row out of the editing rows cache
+     * @param row to remove
+     */
+    private removeEditingRow(row: Row) {
+        if (!row) {
+            return;
+        }
+
+        let rows: Array<Row>;
+        rows = this.getEditingRows();
+        if (!rows || !rows.length) {
+            return;
+        }
+
+        let rowCacheIndex: number;
+        rowCacheIndex = rows.indexOf(row);
+        if (rowCacheIndex < 0) {
+            for (let i: number = 0; i < rows.length; i++) {
+                if (row.index === rows[i].index) {
+                    rowCacheIndex = i;
+                    break;
+                }
+            }
+        }
+
+        (rowCacheIndex >= 0) && rows.splice(rowCacheIndex, 1);
     }
 }
