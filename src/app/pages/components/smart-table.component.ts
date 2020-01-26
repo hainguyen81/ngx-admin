@@ -56,6 +56,7 @@ export class SmartTableComponent implements AfterViewInit {
 
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
+    protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
 
     // -------------------------------------------------
     // DECLARATION
@@ -531,9 +532,8 @@ export class SmartTableComponent implements AfterViewInit {
         row = (cell ? cell.getRow() : undefined);
         columnIndex = (row ? row.cells.indexOf(cell) : -1);
         if (cell && cell.isEditable() && row && row.isInEditing && 0 <= columnIndex) {
-            let cells: NodeListOf<HTMLTableCellElement>;
-            cells = this.getElementsBySelector(
-                SmartTableComponent.SMART_TABLE_CELLS_SELECTOR) as NodeListOf<HTMLTableCellElement>;
+            let cells: NodeListOf<HTMLElement>;
+            cells = this.getElementsBySelector(SmartTableComponent.SMART_TABLE_CELLS_EDIT_MODE_SELECTOR);
             let editors: NodeListOf<HTMLElement>;
             editors = this.getElementsBySelector(FOCUSABLE_ELEMENTS_SELETOR, cells[columnIndex]);
             if (editors && editors.length) {

@@ -177,6 +177,10 @@ export class UserSmartTableComponent extends SmartTableComponent {
 
             // delete row by [DELETE]
         } else if (isDelKey) {
+            this.deleteData(actionRow);
+
+            // stop firing event
+            this.preventEvent(event);
 
             // insert new row by [INSERT]
         } else if (isInsertKey) {
@@ -226,6 +230,23 @@ export class UserSmartTableComponent extends SmartTableComponent {
             ? super.getSelectedRows() : super.getRows());
         if (saveRows && saveRows.length) {
             super.saveRows(saveRows);
+        }
+    }
+
+    /**
+     * Delete the specified row
+     * @param row to delete. NULL for the first selected row
+     */
+    private deleteData(row?: Row) {
+        let hoveredRows: NodeListOf<HTMLTableRowElement>;
+        hoveredRows = super.getRowElementsBySelector(
+            [UserSmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join(''));
+        let delRow: Row;
+        delRow = (row ? row : hoveredRows && hoveredRows.length
+            ? super.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
+            : super.getSelectedRows().length ? super.getSelectedRows().shift() : undefined);
+        if (delRow) {
+            super.deleteRowByIndex(delRow.index);
         }
     }
 }

@@ -42,6 +42,18 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         });
     }
 
+    /**
+     * Remove the specified data
+     * @param data to remove
+     * @return effected records number
+     */
+    remove(data: IUser): Promise<number> {
+        return this.getDbService().delete(data).then(() => {
+            this.refresh();
+            return 1;
+        });
+    }
+
     refresh(): void {
         this.getLogger().debug('Refresh data source');
         super.refresh();
