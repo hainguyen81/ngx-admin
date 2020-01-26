@@ -29,7 +29,7 @@ export class UserDbService extends AbstractDbService<IUser> {
         if (args && args.length) {
             args[0].status = USER_STATUS.LOCKED;
             this.updateExecutor.apply(this, [resolve, reject, args]);
-        }
+        } else resolve(0);
     }
 
     updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
@@ -48,7 +48,7 @@ export class UserDbService extends AbstractDbService<IUser> {
                     this.getLogger().error(errors);
                     reject(errors);
                 });
-        }
+        } else resolve(0);
     }
 }
 
