@@ -62,8 +62,8 @@
                     padding: 0.5rem 1rem;
                 }
 
-                tr.hover {
-                    background-color: nb-theme(color-primary-hover);
+                tr.selected, tr.hover {
+                    background-color: nb-theme(color-primary-focus);
                 }
             }
         }
