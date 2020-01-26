@@ -1075,10 +1075,6 @@ export class SmartTableComponent implements AfterViewInit {
      * @param row to delete
      */
     protected deleteRow(row: Row) {
-        if (row) {
-            return;
-        }
-
         row && this.removeEditingRow(row);
         row && this.getGridComponent().delete(row,
             this.getSmartTableComponent().deleteConfirm || new EventEmitter<any>());

@@ -28,11 +28,7 @@ export class UserDbService extends AbstractDbService<IUser> {
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {
             args[0].status = USER_STATUS.LOCKED;
-            this.getDbService().delete(this.getDbStore(), {'status': USER_STATUS.LOCKED})
-                .then(() => resolve(1), (errors) => {
-                    this.getLogger().error(errors);
-                    reject(errors);
-                });
+            this.updateExecutor.apply(this, [resolve, reject, args]);
         }
     }
 
