@@ -146,6 +146,10 @@ export class UserSmartTableComponent extends SmartTableComponent {
         isEscKey = super.isEscKey(event);
         let isSKey: boolean;
         isSKey = super.isSpecifiedKey(event, 'S', 's', S);
+        let isDelKey: boolean;
+        isDelKey = super.isDeleteKey(event);
+        let isInsertKey: boolean;
+        isInsertKey = super.isInsertKey(event);
         let needToSave: boolean;
         needToSave = ((isF2Key && event.altKey) || (isEnterKey && event.ctrlKey)
             || (isSKey && event.ctrlKey));
@@ -170,6 +174,13 @@ export class UserSmartTableComponent extends SmartTableComponent {
 
             // stop firing event
             this.preventEvent(event);
+
+            // delete row by [DELETE]
+        } else if (isDelKey) {
+
+            // insert new row by [INSERT]
+        } else if (isInsertKey) {
+
         }
     }
 

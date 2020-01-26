@@ -23,11 +23,13 @@ import {
     DocumentKeyupHandlerService,
 } from '../../services/implementation/document.keypress.handler.service';
 import {
+    DELETE,
     DOWN_ARROW,
     END,
     ENTER,
     ESCAPE,
     HOME,
+    INSERT,
     PAGE_DOWN,
     PAGE_UP,
     UP_ARROW,
@@ -1447,6 +1449,22 @@ export class SmartTableComponent implements AfterViewInit {
      */
     protected isEscKey(event: KeyboardEvent): boolean {
         return this.isSpecifiedKey(event, 'Escape', 'Esc', ESCAPE);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from DELETE key
+     * @param event KeyboardEvent
+     */
+    protected isDeleteKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'Delete', 'Del', DELETE);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from INSERT key
+     * @param event KeyboardEvent
+     */
+    protected isInsertKey(event: KeyboardEvent): boolean {
+        return this.isSpecifiedKey(event, 'Insert', 'Ins', INSERT);
     }
 
     /**
