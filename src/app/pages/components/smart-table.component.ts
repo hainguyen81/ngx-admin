@@ -378,11 +378,11 @@ export class SmartTableComponent implements AfterViewInit {
      * Get the DOM elements by the specified selector
      * @return DOM elements or undefined
      */
-    protected getElementsBySelector(selector: string): NodeListOf<HTMLElement> {
+    protected getElementsBySelector(selector: string, element?: HTMLElement): NodeListOf<HTMLElement> {
         if (!(selector || '').length) {
             return undefined;
         }
-        return document.querySelectorAll(selector);
+        return (element || document).querySelectorAll(selector);
     }
 
     /**
@@ -532,9 +532,10 @@ export class SmartTableComponent implements AfterViewInit {
         columnIndex = (row ? row.cells.indexOf(cell) : -1);
         if (cell && cell.isEditable() && row && row.isInEditing && 0 <= columnIndex) {
             let cells: NodeListOf<HTMLTableCellElement>;
-            cells = document.querySelectorAll(SmartTableComponent.SMART_TABLE_CELLS_SELECTOR);
+            cells = this.getElementsBySelector(
+                SmartTableComponent.SMART_TABLE_CELLS_SELECTOR) as NodeListOf<HTMLTableCellElement>;
             let editors: NodeListOf<HTMLElement>;
-            editors = cells[columnIndex].querySelectorAll(FOCUSABLE_ELEMENTS_SELETOR);
+            editors = this.getElementsBySelector(FOCUSABLE_ELEMENTS_SELETOR, cells[columnIndex]);
             if (editors && editors.length) {
                 return editors.item(0);
             }
@@ -942,7 +943,7 @@ export class SmartTableComponent implements AfterViewInit {
 
         let cell: Cell;
         cell = (columnIndex < 0 ? undefined : row.cells[columnIndex]);
-        this.edittingRows.push(row);
+        this.getEditingRows().push(row);
         this.selectRow(row);
         this.getGridComponent().edit(row);
 
