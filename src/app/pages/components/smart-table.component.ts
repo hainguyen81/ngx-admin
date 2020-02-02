@@ -739,19 +739,9 @@ export class SmartTableComponent implements AfterViewInit {
         let row: Row;
         row = this.getRowByEvent(event);
         this.getLogger().debug('onContextMenu', event, row);
-        if (row) {
-            this.getContextMenuService().show.next({
-                // Optional - if unspecified, all context menu components will open
-                contextMenu: this.contextMenuComponent,
-                event: event,
-                item: row.getData(),
-                anchorElement: event.target,
-            });
+        if (this.showHideContextMenuOnRow(row)) {
             // stop firing event
             this.preventEvent(event);
-
-        } else {
-            this.closeContextMenu();
         }
     }
 
@@ -778,10 +768,19 @@ export class SmartTableComponent implements AfterViewInit {
      */
     onKeyDown(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyDown', 'Is navigate key?',
-            KeyboardUtils.isNavigateKey(event), 'Is in edit mode?', this.isInEditMode());
+        this.getLogger().debug('onKeyDown', event);
         if (KeyboardUtils.isNavigateKey(event) && !this.isInEditMode()) {
             this.onRowNavigate(event);
+
+        } else if (KeyboardUtils.isContextMenuKey(event) && !this.isInEditMode()) {
+            let hoveredRows: NodeListOf<HTMLTableRowElement>;
+            hoveredRows = this.getRowElementsBySelector([SmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join(''));
+            let row: Row;
+            row = (hoveredRows && hoveredRows.length ? this.getRowByElement(hoveredRows.item(0)) : undefined);
+            if (this.showHideContextMenuOnRow(row)) {
+                // stop firing event
+                this.preventEvent(event);
+            }
         }
     }
 
@@ -1359,5 +1358,27 @@ export class SmartTableComponent implements AfterViewInit {
         }
 
         (rowCacheIndex >= 0) && rows.splice(rowCacheIndex, 1);
+    }
+
+    /**
+     * Show/Hide context menu base on the specified Row
+     * @param row to show/hide
+     * @return true for showing context menu; else false
+     */
+    protected showHideContextMenuOnRow(row: Row): boolean {
+        this.getLogger().debug('onContextMenu', row);
+        if (row) {
+            this.getContextMenuService().show.next({
+                // Optional - if unspecified, all context menu components will open
+                contextMenu: this.contextMenuComponent,
+                item: row.getData(),
+                anchorElement: this.getRowElement(row),
+            });
+            return true;
+
+        } else {
+            this.closeContextMenu();
+        }
+        return false;
     }
 }

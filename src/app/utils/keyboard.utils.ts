@@ -1,4 +1,5 @@
 import {
+    CONTEXT_MENU,
     DELETE,
     DOWN_ARROW,
     END,
@@ -117,5 +118,13 @@ export default class KeyboardUtils {
      */
     public static isInsertKey(event: KeyboardEvent): boolean {
         return KeyboardUtils.isSpecifiedKey(event, 'Insert', 'Ins', INSERT);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from INSERT key
+     * @param event KeyboardEvent
+     */
+    public static isContextMenuKey(event: KeyboardEvent): boolean {
+        return KeyboardUtils.isSpecifiedKey(event, 'ContextMenu', CONTEXT_MENU);
     }
 }
