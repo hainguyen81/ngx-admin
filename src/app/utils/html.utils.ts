@@ -25,6 +25,6 @@ export default class HtmlUtils {
      * @return focusable DOM elements or undefined
      */
     public static getFocusableElements(element?: HTMLElement): NodeListOf<HTMLElement> {
-        return this.getElementsBySelector(FOCUSABLE_ELEMENTS_SELETOR, element);
+        return HtmlUtils.getElementsBySelector(FOCUSABLE_ELEMENTS_SELETOR, element);
     }
 }

@@ -11,6 +11,9 @@ import {
     UP_ARROW,
 } from '@angular/cdk/keycodes';
 
+/**
+ * Keyboard utilities
+ */
 export default class KeyboardUtils {
     /**
      * Support to detect the specified KeyboardEvent whether is raised from the specified keys array
@@ -44,7 +47,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isNavigateKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event,
+        return KeyboardUtils.isSpecifiedKey(event,
             'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown',
             UP_ARROW, DOWN_ARROW, HOME, END, PAGE_UP, PAGE_DOWN);
     }
@@ -54,7 +57,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isPageUpKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'PageUp', PAGE_UP);
+        return KeyboardUtils.isSpecifiedKey(event, 'PageUp', PAGE_UP);
     }
 
     /**
@@ -62,7 +65,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isPageDownKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'PageDown', PAGE_DOWN);
+        return KeyboardUtils.isSpecifiedKey(event, 'PageDown', PAGE_DOWN);
     }
 
     /**
@@ -70,7 +73,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isUpKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'ArrowUp', UP_ARROW);
+        return KeyboardUtils.isSpecifiedKey(event, 'ArrowUp', UP_ARROW);
     }
 
     /**
@@ -78,7 +81,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isDownKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'ArrowDown', DOWN_ARROW);
+        return KeyboardUtils.isSpecifiedKey(event, 'ArrowDown', DOWN_ARROW);
     }
 
     /**
@@ -86,7 +89,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isHomeKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Home', HOME);
+        return KeyboardUtils.isSpecifiedKey(event, 'Home', HOME);
     }
 
     /**
@@ -94,7 +97,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isEndKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'End', END);
+        return KeyboardUtils.isSpecifiedKey(event, 'End', END);
     }
 
     /**
@@ -102,7 +105,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isEnterKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Enter', ENTER);
+        return KeyboardUtils.isSpecifiedKey(event, 'Enter', ENTER);
     }
 
     /**
@@ -110,7 +113,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isEscKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Escape', 'Esc', ESCAPE);
+        return KeyboardUtils.isSpecifiedKey(event, 'Escape', 'Esc', ESCAPE);
     }
 
     /**
@@ -118,7 +121,7 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isDeleteKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Delete', 'Del', DELETE);
+        return KeyboardUtils.isSpecifiedKey(event, 'Delete', 'Del', DELETE);
     }
 
     /**
@@ -126,6 +129,6 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isInsertKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Insert', 'Ins', INSERT);
+        return KeyboardUtils.isSpecifiedKey(event, 'Insert', 'Ins', INSERT);
     }
 }
