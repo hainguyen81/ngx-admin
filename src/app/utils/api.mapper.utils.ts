@@ -1,5 +1,8 @@
 import {API} from '../config/api.config';
 
+/**
+ * API client link mapper utilities
+ */
 export default class ApiMapperUtils {
     public static findClientLink(apiCode?: string): string {
         if (!apiCode) {

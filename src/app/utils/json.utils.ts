@@ -1,7 +1,14 @@
 import {isArray, isBoolean, isObject} from 'util';
 import {NoParamConstructor} from './object.utils';
 
+/**
+ * JSON utilities
+ */
 export default class JsonUtils {
+    /**
+     * Parse HTTP response json data
+     * @param data HTTP response data to parse
+     */
     public static parseResponseJson(data?: any): any {
         if (typeof data === 'string') {
             try {
@@ -20,6 +27,10 @@ export default class JsonUtils {
         return data;
     }
 
+    /**
+     * Parse the first JSON element from the HTTP response data
+     * @param data HTTP response data to parse
+     */
     public static parseFisrtResponseJson(data?: any): any {
         data = JsonUtils.parseResponseJson(data);
         if (isArray(data)) {
@@ -28,6 +39,12 @@ export default class JsonUtils {
         return data;
     }
 
+    /**
+     * Convert the specified source JSON to the specified type
+     * @param source to convert
+     * @param type the destination type
+     * @return the converted value or undefined
+     */
     public static jsonToInstance<T>(source: any, type: NoParamConstructor<T>): T {
         if (!source) {
             return undefined;

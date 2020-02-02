@@ -22,21 +22,8 @@ import {
     DocumentKeypressHandlerService,
     DocumentKeyupHandlerService,
 } from '../../services/implementation/document.keypress.handler.service';
-import {
-    DELETE,
-    DOWN_ARROW,
-    END,
-    ENTER,
-    ESCAPE,
-    HOME,
-    INSERT,
-    PAGE_DOWN,
-    PAGE_UP,
-    UP_ARROW,
-} from '@angular/cdk/keycodes';
-
-export const FOCUSABLE_ELEMENTS_SELETOR: string =
-    'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+import HtmlUtils from '../../utils/html.utils';
+import KeyboardUtils from '../../utils/keyboard.utils';
 
 export interface IContextMenu {
     icon: (item?: any) => string;
@@ -376,22 +363,11 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     /**
-     * Get the DOM elements by the specified selector
-     * @return DOM elements or undefined
-     */
-    protected getElementsBySelector(selector: string, element?: HTMLElement): NodeListOf<HTMLElement> {
-        if (!(selector || '').length) {
-            return undefined;
-        }
-        return (element || document).querySelectorAll(selector);
-    }
-
-    /**
      * Get the Row DOM elements by the specified selector
      * @return Row DOM elements or undefined
      */
     protected getRowElementsBySelector(selector: string): NodeListOf<HTMLTableRowElement> {
-        return this.getElementsBySelector(selector) as NodeListOf<HTMLTableRowElement>;
+        return HtmlUtils.getElementsBySelector(selector) as NodeListOf<HTMLTableRowElement>;
     }
 
     /**
@@ -533,9 +509,9 @@ export class SmartTableComponent implements AfterViewInit {
         columnIndex = (row ? row.cells.indexOf(cell) : -1);
         if (cell && cell.isEditable() && row && row.isInEditing && 0 <= columnIndex) {
             let cells: NodeListOf<HTMLElement>;
-            cells = this.getElementsBySelector(SmartTableComponent.SMART_TABLE_CELLS_EDIT_MODE_SELECTOR);
+            cells = HtmlUtils.getElementsBySelector(SmartTableComponent.SMART_TABLE_CELLS_EDIT_MODE_SELECTOR);
             let editors: NodeListOf<HTMLElement>;
-            editors = this.getElementsBySelector(FOCUSABLE_ELEMENTS_SELETOR, cells[columnIndex]);
+            editors = HtmlUtils.getFocusableElements(cells[columnIndex]);
             if (editors && editors.length) {
                 return editors.item(0);
             }
@@ -574,7 +550,7 @@ export class SmartTableComponent implements AfterViewInit {
         }
 
         let cellEls: NodeListOf<HTMLTableCellElement>;
-        cellEls = this.getElementsBySelector(
+        cellEls = HtmlUtils.getElementsBySelector(
             SmartTableComponent.SMART_TABLE_CELLS_SELECTOR) as NodeListOf<HTMLTableCellElement>;
         if (!cellEls || !cellEls.length) {
             return undefined;
@@ -803,7 +779,7 @@ export class SmartTableComponent implements AfterViewInit {
     onKeyDown(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown');
-        if (this.isNavigateKey(event) && !this.isInEditMode()) {
+        if (KeyboardUtils.isNavigateKey(event) && !this.isInEditMode()) {
             this.onRowNavigate(event);
         }
     }
@@ -838,15 +814,15 @@ export class SmartTableComponent implements AfterViewInit {
         } else {
             // toggle hover class
             this.toggleRowElementClass(rows.item(hoveredRowIndex), 'hover', false);
-            if (this.isHomeKey(event) || this.isPageUpKey(event)
-                || (hoveredRowIndex + 1 >= rows.length && this.isDownKey(event))) {
+            if (KeyboardUtils.isHomeKey(event) || KeyboardUtils.isPageUpKey(event)
+                || (hoveredRowIndex + 1 >= rows.length && KeyboardUtils.isDownKey(event))) {
                 hoveredRowIndex = 0;
 
-            } else if (this.isEndKey(event) || this.isPageDownKey(event)
-                || (hoveredRowIndex - 1 < 0 && this.isUpKey(event))) {
+            } else if (KeyboardUtils.isEndKey(event) || KeyboardUtils.isPageDownKey(event)
+                || (hoveredRowIndex - 1 < 0 && KeyboardUtils.isUpKey(event))) {
                 hoveredRowIndex = rows.length - 1;
 
-            } else if (this.isUpKey(event)) {
+            } else if (KeyboardUtils.isUpKey(event)) {
                 hoveredRowIndex -= 1;
 
             } else {
@@ -878,20 +854,6 @@ export class SmartTableComponent implements AfterViewInit {
     // -------------------------------------------------
     // ACTIONS
     // -------------------------------------------------
-
-    /**
-     * Support to detect the specified KeyboardEvent whether is raised from the specified keys array
-     * @param e to parse key
-     * @param detectedKeys to detect
-     * @return true for the event whether came from one of the specified keys; else false
-     */
-    protected isSpecifiedKey(e: KeyboardEvent, ...detectedKeys: any[]): boolean {
-        if (!e || !detectedKeys || !detectedKeys.length) {
-            return false;
-        }
-        const key = e.key || e.keyCode;
-        return (detectedKeys.indexOf(key) >= 0 || detectedKeys.indexOf(e.keyCode) >= 0);
-    }
 
     /**
      * Put the specified Row index into editing mode
@@ -1356,96 +1318,6 @@ export class SmartTableComponent implements AfterViewInit {
         } else {
             this.getRenderer().addClass(rowEl, className);
         }
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from navigation keys
-     * @param event KeyboardEvent
-     */
-    protected isNavigateKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event,
-            'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown',
-            UP_ARROW, DOWN_ARROW, HOME, END, PAGE_UP, PAGE_DOWN);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from PAGE_UP key
-     * @param event KeyboardEvent
-     */
-    protected isPageUpKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'PageUp', PAGE_UP);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from PAGE_DOWN key
-     * @param event KeyboardEvent
-     */
-    protected isPageDownKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'PageDown', PAGE_DOWN);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from UP_ARROW key
-     * @param event KeyboardEvent
-     */
-    protected isUpKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'ArrowUp', UP_ARROW);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from DOWN_ARROW key
-     * @param event KeyboardEvent
-     */
-    protected isDownKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'ArrowDown', DOWN_ARROW);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from UP_ARROW key
-     * @param event KeyboardEvent
-     */
-    protected isHomeKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Home', HOME);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from DOWN_ARROW key
-     * @param event KeyboardEvent
-     */
-    protected isEndKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'End', END);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from ENTER key
-     * @param event KeyboardEvent
-     */
-    protected isEnterKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Enter', ENTER);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from ESC key
-     * @param event KeyboardEvent
-     */
-    protected isEscKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Escape', 'Esc', ESCAPE);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from DELETE key
-     * @param event KeyboardEvent
-     */
-    protected isDeleteKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Delete', 'Del', DELETE);
-    }
-
-    /**
-     * Get a boolean value indicating event whether is from INSERT key
-     * @param event KeyboardEvent
-     */
-    protected isInsertKey(event: KeyboardEvent): boolean {
-        return this.isSpecifiedKey(event, 'Insert', 'Ins', INSERT);
     }
 
     /**

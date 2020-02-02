@@ -1,5 +1,8 @@
 import {Md5} from 'ts-md5';
 
+/**
+ * Encryption utilities
+ */
 export default class EncryptionUtils {
     public static base64Encode(sep: string, ...values: string[]): string {
         let separator: string;

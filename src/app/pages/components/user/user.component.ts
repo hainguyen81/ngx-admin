@@ -9,6 +9,7 @@ import {
     S,
 } from '@angular/cdk/keycodes';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
+import KeyboardUtils from '../../../utils/keyboard.utils';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -131,7 +132,7 @@ export class UserSmartTableComponent extends SmartTableComponent {
     onKeyDown(event: KeyboardEvent) {
         super.onKeyDown(event);
 
-        if (!super.getRows().length || super.isNavigateKey(event)) {
+        if (!super.getRows().length || KeyboardUtils.isNavigateKey(event)) {
             return;
         }
 
@@ -139,17 +140,17 @@ export class UserSmartTableComponent extends SmartTableComponent {
         let actionRow: Row;
         actionRow = this.getRowByEvent(event);
         let isF2Key: boolean;
-        isF2Key = super.isSpecifiedKey(event, 'F2', F2);
+        isF2Key = KeyboardUtils.isSpecifiedKey(event, 'F2', F2);
         let isEnterKey: boolean;
-        isEnterKey = super.isEnterKey(event);
+        isEnterKey = KeyboardUtils.isEnterKey(event);
         let isEscKey: boolean;
-        isEscKey = super.isEscKey(event);
+        isEscKey = KeyboardUtils.isEscKey(event);
         let isSKey: boolean;
-        isSKey = super.isSpecifiedKey(event, 'S', 's', S);
+        isSKey = KeyboardUtils.isSpecifiedKey(event, 'S', 's', S);
         let isDelKey: boolean;
-        isDelKey = super.isDeleteKey(event);
+        isDelKey = KeyboardUtils.isDeleteKey(event);
         let isInsertKey: boolean;
-        isInsertKey = super.isInsertKey(event);
+        isInsertKey = KeyboardUtils.isInsertKey(event);
         let needToSave: boolean;
         needToSave = ((isF2Key && event.altKey) || (isEnterKey && event.ctrlKey)
             || (isSKey && event.ctrlKey));
