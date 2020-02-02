@@ -773,10 +773,13 @@ export class SmartTableComponent implements AfterViewInit {
             this.onRowNavigate(event);
 
         } else if (KeyboardUtils.isContextMenuKey(event) && !this.isInEditMode()) {
+            const hoveredRowsSelector: string =
+                [SmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join('');
             let hoveredRows: NodeListOf<HTMLTableRowElement>;
-            hoveredRows = this.getRowElementsBySelector([SmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join(''));
+            hoveredRows = this.getRowElementsBySelector(hoveredRowsSelector);
             let row: Row;
-            row = (hoveredRows && hoveredRows.length ? this.getRowByElement(hoveredRows.item(0)) : undefined);
+            row = (hoveredRows && hoveredRows.length
+                ? this.getRowByElement(hoveredRows.item(0)) : undefined);
             if (this.showHideContextMenuOnRow(row)) {
                 // stop firing event
                 this.preventEvent(event);
