@@ -778,7 +778,8 @@ export class SmartTableComponent implements AfterViewInit {
      */
     onKeyDown(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyDown');
+        this.getLogger().debug('onKeyDown', 'Is navigate key?',
+            KeyboardUtils.isNavigateKey(event), 'Is in edit mode?', this.isInEditMode());
         if (KeyboardUtils.isNavigateKey(event) && !this.isInEditMode()) {
             this.onRowNavigate(event);
         }

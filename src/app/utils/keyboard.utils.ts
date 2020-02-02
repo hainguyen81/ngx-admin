@@ -21,25 +21,12 @@ export default class KeyboardUtils {
      * @param detectedKeys to detect
      * @return true for the event whether came from one of the specified keys; else false
      */
-    public static isSpecifiedKeyEvent(e: KeyboardEvent, ...detectedKeys: any[]): boolean {
+    public static isSpecifiedKey(e: KeyboardEvent, ...detectedKeys: any[]): boolean {
         if (!e || !detectedKeys || !detectedKeys.length) {
             return false;
         }
         const key = e.key || e.keyCode;
         return (detectedKeys.indexOf(key) >= 0 || detectedKeys.indexOf(e.keyCode) >= 0);
-    }
-
-    /**
-     * Support to detect the specified key code or key ascii whether is raised from the specified keys array
-     * @param e to parse key
-     * @param detectedKeys to detect
-     * @return true for the event whether came from one of the specified keys; else false
-     */
-    public static isSpecifiedKey(keyCodeOrKey: any, ...detectedKeys: any[]): boolean {
-        if (!keyCodeOrKey || !detectedKeys || !detectedKeys.length) {
-            return false;
-        }
-        return detectedKeys.indexOf(keyCodeOrKey) >= 0;
     }
 
     /**
