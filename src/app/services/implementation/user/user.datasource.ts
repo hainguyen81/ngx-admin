@@ -7,6 +7,8 @@ import {NGXLogger} from 'ngx-logger';
 @Injectable()
 export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, UserDbService> {
 
+    private keywords: string[];
+
     constructor(@Inject(UserHttpService) httpService: UserHttpService,
                 @Inject(UserDbService) dbService: UserDbService,
                 @Inject(NGXLogger) logger: NGXLogger) {
@@ -25,7 +27,11 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
     }
 
     getFilter(): any {
-        return undefined;
+        return this.keywords;
+    }
+
+    setFilter(conf: Array<any>, andOperator?: boolean, doEmit?: boolean): void {
+        this.keywords = [];
     }
 
     count(): number {

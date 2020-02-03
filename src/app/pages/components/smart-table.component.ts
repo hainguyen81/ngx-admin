@@ -45,6 +45,7 @@ export class SmartTableComponent implements AfterViewInit {
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
     protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
     protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
+    protected static SEARCH_FIELD_SELECTOR: string = '[type="search"]';
 
     // -------------------------------------------------
     // DECLARATION
@@ -763,7 +764,7 @@ export class SmartTableComponent implements AfterViewInit {
      */
     onSearch(keyword?: any): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onSearch');
+        this.getLogger().debug('onSearch', keyword);
     }
 
     /**
@@ -803,8 +804,11 @@ export class SmartTableComponent implements AfterViewInit {
         // check whether navigating on context menu
         let targetEl: HTMLElement;
         targetEl = event.target as HTMLElement;
-        if (targetEl && targetEl.closest(SmartTableComponent.CONTEXT_MENU_SELECTOR)) {
+        if (targetEl
+            && (targetEl.closest(SmartTableComponent.CONTEXT_MENU_SELECTOR)
+                || targetEl.closest(SmartTableComponent.SEARCH_FIELD_SELECTOR))) {
             return;
+
         } else {
             // close context menu if necessary
             this.closeContextMenu();

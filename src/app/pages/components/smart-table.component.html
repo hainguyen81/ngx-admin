@@ -1,12 +1,15 @@
 <nb-card>
     <nb-card-header>
-        <!--<div class="input-group">
-            <div class="input-group-prepend"><nb-icon id="searchIcon" icon="search" pack="fa"></nb-icon></div>
-            <input type="text" #search id="search" placeholder="Search"
-                   class="nb-search"
-                   (keydown.enter)="onSearch(search.value)">
-        </div>-->
-        {{tableHeader}}
+        <div class="form-group row has-search m-md-auto">
+            <label for="search" class="col-form-label">{{tableHeader}}</label>
+            <div class="col-sm-5">
+                <nb-icon id="searchIcon" icon="search" pack="fa" class="form-control-feedback"></nb-icon>
+                <input type="search" #search id="search" placeholder="Search"
+                       class="form-control nb-search pt-0 py-0"
+                       [disabled]="isInEditMode()"
+                       (keydown.enter)="onSearch(search.value)">
+            </div>
+        </div>
     </nb-card-header>
 
     <nb-card-body>
