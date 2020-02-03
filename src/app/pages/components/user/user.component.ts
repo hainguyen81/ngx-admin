@@ -132,7 +132,8 @@ export class UserSmartTableComponent extends SmartTableComponent {
     onKeyDown(event: KeyboardEvent) {
         super.onKeyDown(event);
 
-        if (!super.getRows().length || KeyboardUtils.isNavigateKey(event)) {
+        if (!super.getRows().length || KeyboardUtils.isNavigateKey(event)
+            || KeyboardUtils.isContextMenuKey(event)) {
             return;
         }
 
@@ -173,6 +174,9 @@ export class UserSmartTableComponent extends SmartTableComponent {
         } else if (isEscKey) {
             this.cancelEditMode(actionRow);
 
+            // close context menu if necessary
+            super.closeContextMenu();
+
             // stop firing event
             this.preventEvent(event);
 
@@ -187,6 +191,7 @@ export class UserSmartTableComponent extends SmartTableComponent {
         } else if (isInsertKey) {
 
         }
+        this.getLogger().debug('userComponent - onKeyDown', event);
     }
 
     /**

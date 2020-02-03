@@ -2,6 +2,7 @@ import {EventEmitter, Inject, Output} from '@angular/core';
 import {fromEvent, Subscribable, throwError} from 'rxjs';
 import {FromEventTarget} from 'rxjs/internal/observable/fromEvent';
 import {NGXLogger} from 'ngx-logger';
+import KeyboardUtils from '../utils/keyboard.utils';
 
 /**
  * The delegate Subscribe function type for handling event
@@ -71,15 +72,11 @@ export abstract class AbstractKeyboardEventHandlerService<T> extends AbstractEve
     }
 
     protected isEnterKey(e: KeyboardEvent) {
-        let key: any;
-        key = this.getKey(e);
-        return (key === 'Enter' || key === 13);
+        return KeyboardUtils.isEnterKey(e);
     }
 
     protected isEscKey(e: KeyboardEvent) {
-        let key: any;
-        key = this.getKey(e);
-        return (key === 'Escape' || key === 'Esc' || key === 27);
+        return KeyboardUtils.isEscKey(e);
     }
 
     handleEvent(e: KeyboardEvent): void {

@@ -428,6 +428,9 @@ export class SmartTableComponent implements AfterViewInit {
 
         let cell: Cell;
         cell = this.getCellByElement(rowEl.cells.item(0));
+        if (!cell && rowEl.rowIndex > 0) {
+            cell = this.getCellByIndex(rowEl.rowIndex - 1, 0);
+        }
         return (cell ? cell.getRow() : undefined);
     }
 
@@ -739,7 +742,7 @@ export class SmartTableComponent implements AfterViewInit {
         let row: Row;
         row = this.getRowByEvent(event);
         this.getLogger().debug('onContextMenu', event, row);
-        if (this.showHideContextMenuOnRow(row)) {
+        if (this.showHideContextMenuOnRow(row, event)) {
             // stop firing event
             this.preventEvent(event);
         }
@@ -770,6 +773,10 @@ export class SmartTableComponent implements AfterViewInit {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown', event);
         if (KeyboardUtils.isNavigateKey(event) && !this.isInEditMode()) {
+            // close context menu if necessary
+            this.closeContextMenu();
+
+            // handle navigation keys
             this.onRowNavigate(event);
 
         } else if (KeyboardUtils.isContextMenuKey(event) && !this.isInEditMode()) {
@@ -780,7 +787,7 @@ export class SmartTableComponent implements AfterViewInit {
             let row: Row;
             row = (hoveredRows && hoveredRows.length
                 ? this.getRowByElement(hoveredRows.item(0)) : undefined);
-            if (this.showHideContextMenuOnRow(row)) {
+            if (this.showHideContextMenuOnRow(row, event)) {
                 // stop firing event
                 this.preventEvent(event);
             }
@@ -842,7 +849,11 @@ export class SmartTableComponent implements AfterViewInit {
      */
     onKeyUp(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyUp');
+        this.getLogger().debug('onKeyUp', event);
+        if (KeyboardUtils.isContextMenuKey(event)) {
+            // stop firing event
+            this.preventEvent(event);
+        }
     }
 
     /**
@@ -1139,13 +1150,18 @@ export class SmartTableComponent implements AfterViewInit {
      * Prevent the specified event
      * @param event to prevent
      */
-    protected preventEvent(event: any) {
-        (event && typeof event.preventDefault === 'function') && event.preventDefault();
-        (event && typeof event.stopPropagation === 'function') && event.stopPropagation();
-        if (event) {
-            event['cancelBubble'] = true;
-            event['returnValue'] = false;
+    protected preventEvent(event: Event): boolean {
+        if (!event) {
+            return true;
         }
+
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        event.cancelBubble = true;
+        event.returnValue = false;
+        this.getLogger().debug('Prevent event', event);
+        return false;
     }
 
     /**
@@ -1366,14 +1382,20 @@ export class SmartTableComponent implements AfterViewInit {
     /**
      * Show/Hide context menu base on the specified Row
      * @param row to show/hide
+     * @param event current event
      * @return true for showing context menu; else false
      */
-    protected showHideContextMenuOnRow(row: Row): boolean {
+    protected showHideContextMenuOnRow(row: Row, event?: Event): boolean {
         this.getLogger().debug('onContextMenu', row);
         if (row) {
+            let mouseEvent: MouseEvent;
+            mouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
+            let kbEvent: KeyboardEvent;
+            kbEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
             this.getContextMenuService().show.next({
                 // Optional - if unspecified, all context menu components will open
                 contextMenu: this.contextMenuComponent,
+                event: mouseEvent || kbEvent,
                 item: row.getData(),
                 anchorElement: this.getRowElement(row),
             });
