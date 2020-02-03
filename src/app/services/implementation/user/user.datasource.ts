@@ -14,7 +14,10 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
     }
 
     getAll(): Promise<IUser | IUser[]> {
-        return super.getDbService().getAll();
+        // sort by uid desc
+        return super.getDbService().getAll()
+            .then((users) => users.sort(
+                (u1, u2) => u1['uid'] > u2['uid'] ? -1 : u1['uid'] < u2['uid'] ? 1 : 0));
     }
 
     getElements(): Promise<IUser | IUser[]> {
@@ -61,6 +64,7 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
 
     load(data: Array<any>): Promise<any> {
         this.getLogger().debug('Load data', data);
+        data.sort((a, b) => (a.uid > b.uid ? -1 : a.uid < b.uid ? 1 : 0));
         return super.load(data);
     }
 

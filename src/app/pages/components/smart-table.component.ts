@@ -1110,13 +1110,25 @@ export class SmartTableComponent implements AfterViewInit {
      * Create new Row
      */
     protected newRow() {
+        // not new row if editing
+        if (this.isInEditMode()) {
+            return;
+        }
+
+        // create new row
         let newRow: Row;
         newRow = this.getGridComponent().getNewRow();
         newRow.index = 0;
+
+        // insert new row data into data source
         this.getGridComponent().create(newRow,
-            this.getSmartTableComponent().deleteConfirm || new EventEmitter<any>());
-        newRow.isInEditing = false;
-        this.editRow(newRow);
+            this.getSmartTableComponent().createConfirm || new EventEmitter<any>());
+
+        // wait for editing this row
+        setTimeout(() => {
+            newRow.isInEditing = false;
+            this.editRow(newRow);
+        }, 100);
     }
 
     /**
