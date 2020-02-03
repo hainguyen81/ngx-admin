@@ -1136,7 +1136,7 @@ export class SmartTableComponent implements AfterViewInit {
      * @param rowIndex to cancel editing
      */
     protected cancelEditRowByIndex(rowIndex: number) {
-        this.cancelEditRow(this.getRowByIndex(rowIndex));
+        this.cancelEditRow(this.getRowByIndex(rowIndex), true);
     }
 
     /**
@@ -1145,7 +1145,7 @@ export class SmartTableComponent implements AfterViewInit {
      * @param attr to detect Row
      */
     protected cancelEditRowByData(item: any, attr?: string) {
-        this.cancelEditRow(this.getRowByData(item, attr));
+        this.cancelEditRow(this.getRowByData(item, attr), true);
     }
 
     /**
@@ -1163,6 +1163,10 @@ export class SmartTableComponent implements AfterViewInit {
             row.isInEditing = false;
             row.isSelected = false;
         }
+        // refresh for reset editors' data
+        if (refresh) {
+            this.getGridComponent().source.refresh();
+        }
     }
 
     /**
@@ -1172,6 +1176,8 @@ export class SmartTableComponent implements AfterViewInit {
     protected cancelEditRows(rows: Array<Row>) {
         if (rows && rows.length) {
             rows.forEach((r) => this.cancelEditRow(r, false));
+            // refresh for reset editors' data
+            this.getGridComponent().source.refresh();
         }
     }
 
