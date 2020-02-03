@@ -44,6 +44,7 @@ export class SmartTableComponent implements AfterViewInit {
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
     protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
+    protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
 
     // -------------------------------------------------
     // DECLARATION
@@ -773,9 +774,6 @@ export class SmartTableComponent implements AfterViewInit {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown', event);
         if (KeyboardUtils.isNavigateKey(event) && !this.isInEditMode()) {
-            // close context menu if necessary
-            this.closeContextMenu();
-
             // handle navigation keys
             this.onRowNavigate(event);
 
@@ -801,6 +799,17 @@ export class SmartTableComponent implements AfterViewInit {
     onRowNavigate(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onRowNavigate');
+
+        // check whether navigating on context menu
+        let targetEl: HTMLElement;
+        targetEl = event.target as HTMLElement;
+        if (targetEl && targetEl.closest(SmartTableComponent.CONTEXT_MENU_SELECTOR)) {
+            return;
+        } else {
+            // close context menu if necessary
+            this.closeContextMenu();
+        }
+
         let rows: NodeListOf<HTMLTableRowElement>;
         rows = this.getAllRowElements();
         if (!rows || !rows.length) {
@@ -1392,13 +1401,26 @@ export class SmartTableComponent implements AfterViewInit {
             mouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
             let kbEvent: KeyboardEvent;
             kbEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
+            let rowEl: HTMLTableRowElement;
+            rowEl = this.getRowElement(row);
+            let target: Node;
+            target = (event && event.target instanceof Node
+                && rowEl.contains(event.target as Node) ? event.target : rowEl);
             this.getContextMenuService().show.next({
                 // Optional - if unspecified, all context menu components will open
                 contextMenu: this.contextMenuComponent,
                 event: mouseEvent || kbEvent,
                 item: row.getData(),
-                anchorElement: this.getRowElement(row),
+                anchorElement: target,
             });
+            // wait for showing context menu and focus on it
+            setTimeout(() => {
+                let ctxMnuEls: NodeListOf<HTMLElement>;
+                ctxMnuEls = this.getRowElementsBySelector(SmartTableComponent.CONTEXT_MENU_SELECTOR);
+                if (ctxMnuEls && ctxMnuEls.length) {
+                    ctxMnuEls[0].focus({ preventScroll: true });
+                }
+            }, 300);
             return true;
 
         } else {
