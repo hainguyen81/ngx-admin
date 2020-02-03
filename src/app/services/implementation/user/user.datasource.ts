@@ -63,4 +63,16 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         this.getLogger().debug('Load data', data);
         return super.load(data);
     }
+
+    prepend(data: IUser): Promise<number> {
+        return this.append(data);
+    }
+
+    append(data: IUser): Promise<any> {
+        this.getLogger().debug('New data', data);
+        return this.getDbService().insert(data).then(() => {
+            this.refresh();
+            return 1;
+        });
+    }
 }

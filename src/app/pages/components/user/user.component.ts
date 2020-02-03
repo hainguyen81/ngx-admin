@@ -2,7 +2,7 @@ import {IContextMenu, SmartTableComponent} from '../smart-table.component';
 import {Component, Inject, Renderer2} from '@angular/core';
 import {convertUserStatusToDisplay, USER_STATUS} from '../../../@core/data/user';
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
-import {ContextMenuService} from 'ngx-contextmenu';
+import {ContextMenuService, IContextMenuClickEvent} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {
     F2,
@@ -84,40 +84,41 @@ export const UserTableSettings = {
     },
 };
 
-export const UserContextMenu: IContextMenu[] = [{
-    icon: (item?: any) => 'plus-square',
-    title: (item?: any) => 'Add',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
-    click: (item?: any) => {
-        alert('111');
-    },
-}, {
-    icon: (item?: any) => 'edit',
-    title: (item?: any) => 'Edit',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
-    click: (item?: any) => {
-    },
-}, {
-    icon: (item?: any) => 'minus-square',
-    title: (item?: any) => 'Delete',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
-    click: (item?: any) => {
-        alert('222');
-    },
-}];
-
 @Component({
     selector: 'ngx-smart-table',
     templateUrl: '../smart-table.component.html',
     styleUrls: ['../smart-table.component.scss'],
 })
 export class UserSmartTableComponent extends SmartTableComponent {
+
+    private readonly UserContextMenu: IContextMenu[] = [{
+        icon: (item?: any) => 'plus-square',
+        title: (item?: any) => 'Add',
+        enabled: (item?: any) => true,
+        visible: (item?: any) => true,
+        divider: (item?: any) => false,
+        click: (item?: any) => {
+            this.newRow();
+        },
+    }, {
+        icon: (item?: any) => 'edit',
+        title: (item?: any) => 'Edit',
+        enabled: (item?: any) => true,
+        visible: (item?: any) => true,
+        divider: (item?: any) => false,
+        click: (item?: any) => {
+            this.editRowByData(item, 'id');
+        },
+    }, {
+        icon: (item?: any) => 'minus-square',
+        title: (item?: any) => 'Delete',
+        enabled: (item?: any) => true,
+        visible: (item?: any) => true,
+        divider: (item?: any) => false,
+        click: (item?: any) => {
+            this.deleteRowByData(item, 'id');
+        },
+    }];
 
     constructor(@Inject(UserDataSource) userDataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -126,7 +127,7 @@ export class UserSmartTableComponent extends SmartTableComponent {
         super(userDataSource, contextMenuService, logger, renderer);
         super.setTableHeader('Users Management');
         super.setTableSettings(UserTableSettings);
-        super.setContextMenu(UserContextMenu);
+        super.setContextMenu(this.UserContextMenu);
     }
 
     onKeyDown(event: KeyboardEvent) {
@@ -189,7 +190,10 @@ export class UserSmartTableComponent extends SmartTableComponent {
 
             // insert new row by [INSERT]
         } else if (isInsertKey) {
+            this.newRow();
 
+            // stop firing event
+            this.preventEvent(event);
         }
         this.getLogger().debug('userComponent - onKeyDown', event);
     }

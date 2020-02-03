@@ -38,7 +38,7 @@
                 [visible]="item?.visible?.apply(this, [ undefined ])"
                 [enabled]="item?.enabled?.apply(this, [ undefined ])"
                 [divider]="item?.divider?.apply(this, [ undefined ])"
-                (execute)="item?.click?.apply(this, [ $event.item ])"
+                (execute)="onMenuEvent($event, item)"
             ><span><nb-icon [icon]="item?.icon?.apply(this, [ undefined ])" pack="fa"></nb-icon>
                 {{item?.title?.apply(this, [undefined])}}</span></ng-template>
         </context-menu>

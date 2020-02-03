@@ -28,14 +28,16 @@ export class UserDbService extends AbstractDbService<IUser> {
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {
+            this.getLogger().debug('Delete data', args, 'First data', args[0]);
             args[0].status = USER_STATUS.LOCKED;
-            this.updateExecutor.apply(this, [resolve, reject, args]);
+            this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
     }
 
     updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {
+            this.getLogger().debug('Update data', args, 'First data', args[0]);
             this.getDbService().update(this.getDbStore(), args[0])
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error('Could not update data', errors);

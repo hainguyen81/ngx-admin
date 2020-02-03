@@ -11,7 +11,7 @@ import {Cell, LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {MouseEventGuard} from './customization/mouse.event.guard';
-import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
+import {ContextMenuComponent, ContextMenuService, IContextMenuClickEvent} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
 import {Grid} from 'ng2-smart-table/lib/grid';
@@ -874,6 +874,21 @@ export class SmartTableComponent implements AfterViewInit {
         this.getLogger().debug('onKeyPress');
     }
 
+    /**
+     * Perform action on menu item has been clicked
+     * @param event Object, consist of:
+     *      event: action event
+     *      item: menu item data
+     * @param menuItem IContextMenu that has been activated
+     */
+    onMenuEvent(event, menuItem?: IContextMenu) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMenuEvent', event);
+        if (event && event.item && menuItem && typeof menuItem['click'] === 'function') {
+            menuItem['click']['apply'](this, [ event.item ]);
+        }
+    }
+
     // -------------------------------------------------
     // ACTIONS
     // -------------------------------------------------
@@ -1097,7 +1112,11 @@ export class SmartTableComponent implements AfterViewInit {
     protected newRow() {
         let newRow: Row;
         newRow = this.getGridComponent().getNewRow();
-        this.selectRow(newRow);
+        newRow.index = 0;
+        this.getGridComponent().create(newRow,
+            this.getSmartTableComponent().deleteConfirm || new EventEmitter<any>());
+        newRow.isInEditing = false;
+        this.editRow(newRow);
     }
 
     /**
