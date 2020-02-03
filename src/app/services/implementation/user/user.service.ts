@@ -10,6 +10,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
+import ObjectUtils from '../../../utils/object.utils';
 
 @Injectable()
 export class UserDbService extends AbstractDbService<IUser> {
@@ -35,17 +36,9 @@ export class UserDbService extends AbstractDbService<IUser> {
     updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {
-            let updatorMap: Map<string, any>;
-            const exclKeys: string[] = [
-                'access_token', 'token_type', 'refresh_token',
-                'expires_in', 'scope', 'company', 'rolesGroupId',
-                'rolesGroup', 'enterprise', 'id'];
-            updatorMap = new Map<string, any>(Object.entries(args[0]));
-            exclKeys.forEach(key => updatorMap.delete(key));
-            this.getDbService().update(this.getDbStore(),
-                updatorMap.entries(), {'id': args[0].id})
+            this.getDbService().update(this.getDbStore(), args[0])
                 .then(() => resolve(1), (errors) => {
-                    this.getLogger().error(errors);
+                    this.getLogger().error('Could not update data', errors);
                     reject(errors);
                 });
         } else resolve(0);

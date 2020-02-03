@@ -56,4 +56,20 @@ export default class ObjectUtils {
     public static createInstanceWithArguments<T>(type: Constructor<T>, ...args: any[]): T {
         return new type(args);
     }
+
+    /**
+     * Convert the specified Map to Object
+     * @param m to convert
+     * @return Object or undefined
+     */
+    public static fromMap<K, V>(m: Map<K, V>): Object {
+        if (!m || m.size <= 0) {
+            return undefined;
+        }
+        return Array.from(m).reduce((o, [k, v]) => {
+            // Be careful! Maps can have non-String keys; object literals can't.
+            // @ts-ignore
+            return Object.assign(o, { [k]: v });
+        }, {});
+    }
 }

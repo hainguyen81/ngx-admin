@@ -29,10 +29,7 @@ export class ModuleService extends AbstractDbService<IModule> {
     updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IModule[]) => {
         if (args && args.length) {
-            let updatorMap: Map<string, any>;
-            updatorMap = new Map<string, any>(Object.entries(args[0]));
-            this.getDbService().update(this.getDbStore(),
-                updatorMap.entries(), {'id': args[0].id})
+            this.getDbService().update(this.getDbStore(), args[0])
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
