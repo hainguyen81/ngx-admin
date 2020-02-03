@@ -29,8 +29,19 @@ export class UserDbService extends AbstractDbService<IUser> {
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {
             this.getLogger().debug('Delete data', args, 'First data', args[0]);
-            args[0].status = USER_STATUS.LOCKED;
-            this.updateExecutor.apply(this, [resolve, reject, ...args]);
+            // if existed user
+            if ((args[0].id || '').length) {
+                args[0].status = USER_STATUS.LOCKED;
+                this.updateExecutor.apply(this, [resolve, reject, ...args]);
+
+                // if new user (invalid user identity)
+            } else {
+                this.getDbService().deleteRecord(this.getDbStore(), args[0]['uid'])
+                    .then(() => resolve(1), (errors) => {
+                        this.getLogger().error('Could not delete data', errors);
+                        reject(errors);
+                    });
+            }
         } else resolve(0);
     }
 

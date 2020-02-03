@@ -1,6 +1,6 @@
 import {IContextMenu, SmartTableComponent} from '../smart-table.component';
 import {Component, Inject, Renderer2} from '@angular/core';
-import {convertUserStatusToDisplay, USER_STATUS} from '../../../@core/data/user';
+import {convertUserStatusToDisplay, IUser, USER_STATUS} from '../../../@core/data/user';
 import {UserDataSource} from '../../../services/implementation/user/user.datasource';
 import {ContextMenuService, IContextMenuClickEvent} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -227,6 +227,14 @@ export class UserSmartTableComponent extends SmartTableComponent {
             ? super.getSelectedRows() : super.getRows());
         if (cancelRows && cancelRows.length) {
             super.cancelEditRows(cancelRows);
+            cancelRows.forEach(r => {
+                let rowData: IUser;
+                rowData = r.getData();
+                // delete row if empty identity
+                if (!(rowData.id || '').length) {
+                    this.deleteData(r);
+                }
+            });
         }
     }
 
