@@ -16,6 +16,7 @@ import {CommonModule} from '@angular/common';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../config/app.config';
+import {TreeviewModule} from 'ngx-treeview';
 
 @NgModule({
     imports: [
@@ -25,12 +26,16 @@ import {AppConfig} from '../../config/app.config';
         NbSelectModule,
         NbIconModule,
         NbCardModule,
+        /* Table */
         Ng2SmartTableModule,
+        /* Context Menu */
         NbContextMenuModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,
         }),
+        /* Treeview */
+        TreeviewModule.forRoot(),
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
         NbSearchModule,
