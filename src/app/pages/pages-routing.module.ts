@@ -2,6 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {PagesComponent} from './pages.component';
 import {NotFoundComponent} from './components/not-found.component';
+import {CustomerSmartTableComponent} from './components/customer/customer.component';
 import {UserSmartTableComponent} from './components/user/user.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
@@ -14,6 +15,10 @@ const routes: Routes = [{
         {
             path: 'user',
             component: UserSmartTableComponent,
+        },
+        {
+            path: 'customer',
+            component: CustomerSmartTableComponent,
         },
         // {
         //   path: 'layout',

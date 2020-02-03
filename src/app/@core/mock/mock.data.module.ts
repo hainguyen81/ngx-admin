@@ -1,19 +1,26 @@
 import {InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CommonProviders, UserProviders} from '../../config/app.providers';
+import {CommonProviders, CustomerProviders, UserProviders} from '../../config/app.providers';
 import {MockUserService} from './users.service';
 import {UserDbService} from '../../services/implementation/user/user.service';
 import {NGXLogger} from 'ngx-logger';
 import {throwIfAlreadyLoaded} from '../core.module';
 import {AppConfig} from '../../config/app.config';
 import {throwError} from 'rxjs';
+import {MockCustomerService} from './customers.service';
+import {CustomerDbService} from '../../services/implementation/customer/customer.service';
 
 export const MOCK_PROVIDERS = CommonProviders
     .concat(UserProviders)
+    .concat(CustomerProviders)
     .concat([
         {
             provide: MockUserService, useClass: MockUserService,
             deps: [UserDbService, NGXLogger],
+        },
+        {
+            provide: MockCustomerService, useClass: MockCustomerService,
+            deps: [CustomerDbService, NGXLogger],
         },
     ]);
 
@@ -56,5 +63,6 @@ export class MockDataModule {
         }
 
         this.getService(MockUserService).initialize();
+        this.getService(MockCustomerService).initialize();
     }
 }

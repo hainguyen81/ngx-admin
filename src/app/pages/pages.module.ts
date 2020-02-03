@@ -5,6 +5,7 @@ import {PagesRoutingModule} from './pages-routing.module';
 import {UserModule} from './components/user/user.module';
 import {ComponentsModule} from './components/components.module';
 import {NbMenuModule} from '@nebular/theme';
+import {CustomerModule} from './components/customer/customer.module';
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import {NbMenuModule} from '@nebular/theme';
         ComponentsModule,
 
         UserModule,
+        CustomerModule,
     ],
     declarations: [
         PagesComponent,

@@ -4,6 +4,7 @@ export const DB_STORE: any = {
     auth: 'auth',
     module: 'module',
     user: 'user',
+    customer: 'customer',
 };
 
 export const dbConfig: DBConfig = {
@@ -53,6 +54,17 @@ export const dbConfig: DBConfig = {
             {name: 'firstName', keypath: 'firstName', options: {unique: false}},
             {name: 'lastName', keypath: 'lastName', options: {unique: false}},
             {name: 'email', keypath: 'email', options: {unique: true}},
+            {name: 'status', keypath: 'status', options: {unique: false}},
+        ],
+    }, {
+        store: DB_STORE.customer,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'customerName', keypath: 'customerName', options: {unique: false}},
+            {name: 'email', keypath: 'email', options: {unique: true}},
+            {name: 'tel', keypath: 'tel', options: {unique: true}},
+            {name: 'address', keypath: 'address', options: {unique: false}},
             {name: 'status', keypath: 'status', options: {unique: false}},
         ],
     }],

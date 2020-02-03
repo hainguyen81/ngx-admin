@@ -26,6 +26,8 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {LocalDataSource} from 'ng2-smart-table';
 import {ConnectionService} from 'ng-connection-service';
+import {CustomerDbService, CustomerHttpService} from '../services/implementation/customer/customer.service';
+import {CustomerDatasource} from '../services/implementation/customer/customer.datasource';
 
 export const CommonProviders: StaticProvider[] = [
     {provide: APP_BASE_HREF, useValue: environment.baseHref},
@@ -54,6 +56,21 @@ export const UserProviders: StaticProvider[] = [
     {
         provide: UserDataSource, useClass: UserDataSource,
         deps: [UserHttpService, UserDbService, NGXLogger],
+    },
+];
+
+export const CustomerProviders: StaticProvider[] = [
+    {
+        provide: CustomerDbService, useClass: CustomerDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: CustomerHttpService, useClass: CustomerHttpService,
+        deps: [HttpClient, NGXLogger, UserDbService],
+    },
+    {
+        provide: CustomerDatasource, useClass: CustomerDatasource,
+        deps: [CustomerHttpService, CustomerDbService, NGXLogger],
     },
 ];
 
@@ -103,6 +120,7 @@ export const ExampleProviders: StaticProvider[] = [
 
 export const Providers: StaticProvider[] = CommonProviders
     .concat(UserProviders)
+    .concat(CustomerProviders)
     .concat(InterceptorProviders)
     .concat(AuthenticationProviders)
     .concat(MenuProviders)
