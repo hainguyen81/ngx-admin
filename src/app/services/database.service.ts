@@ -146,6 +146,16 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
             promises);
     }
 
+    count(): Promise<number> {
+        return new Promise((resolve, reject) => {
+            this.getDbService().count(this.getDbStore())
+                .then((recNumber) => resolve(recNumber), (errors) => {
+                    this.getLogger().error(errors);
+                    reject(errors);
+                });
+        });
+    }
+
     /**
      * Invoke multiple promises for combining into one promise
      * @param defValue default value if promises array is empty or error

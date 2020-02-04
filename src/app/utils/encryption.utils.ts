@@ -4,6 +4,12 @@ import {Md5} from 'ts-md5';
  * Encryption utilities
  */
 export default class EncryptionUtils {
+    /**
+     * Encode the specified values array with the separator to base64 encoded value
+     * @param sep value separator
+     * @param values to encode
+     * @return base64 encoded value
+     */
     public static base64Encode(sep: string, ...values: string[]): string {
         let separator: string;
         separator = ((sep || '').length ? sep : ':');
@@ -15,6 +21,21 @@ export default class EncryptionUtils {
         return encrypted;
     }
 
+    /**
+     * Decode the specified base64 encoded value
+     * @param base64Value to decode
+     * @return base64 decoded value
+     */
+    public static base64Decode(base64Value: string): string {
+        return (!(base64Value || '').length ? '' : atob(base64Value));
+    }
+
+    /**
+     * Encode MD5 the specified values array with the separator
+     * @param sep value separator
+     * @param values to encode
+     * @return MD5 encoded value
+     */
     public static md5Encode(sep: string, ...values: string[]): string {
         let separator: string;
         separator = ((sep || '').length ? sep : ':');

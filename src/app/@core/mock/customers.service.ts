@@ -21,13 +21,20 @@ export class MockCustomerService {
         if (environment.production) {
             return;
         }
-        let mockCustomers: ICustomer[];
-        mockCustomers = customersGenerate();
-        this.logger.debug('Generate customers', mockCustomers);
-        this.customerDbService.clear().then(() => {
-            this.customerDbService.insertEntities(mockCustomers)
-                .then((affected: number) => this.logger.debug('Initialized mock customers data', affected),
-                    (errors) => this.logger.error('Could not initialize mock customers data', errors));
+
+        // just generate mock data if empty
+        this.customerDbService.count().then((recNumber: number) => {
+            if (recNumber <= 0) {
+                // generate mock customers data
+                let mockCustomers: ICustomer[];
+                mockCustomers = customersGenerate();
+                this.logger.debug('Generate customers', mockCustomers);
+                this.customerDbService.insertEntities(mockCustomers)
+                    .then((affected: number) => this.logger.debug('Initialized mock customers data', affected),
+                        (errors) => this.logger.error('Could not initialize mock customers data', errors));
+            } else {
+                this.logger.debug('Initialized mock customers data', recNumber);
+            }
         });
     }
 }

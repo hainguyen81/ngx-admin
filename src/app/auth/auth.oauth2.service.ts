@@ -101,28 +101,34 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
             dbService = this.getDbService() as UserDbService;
             let authorization: string;
             authorization = headers.get(NBX_AUTH_AUTHORIZATION_HEADER);
+            this.getLogger().debug('Check authentication', authorization);
             return PromiseUtils.promiseToObservable(
                 dbService.getAll().then((users) => {
                     let token: T;
                     if (users && users.length) {
-                        for (const u of users) {
+                        let foundUsers: IUser[];
+                        foundUsers = users.filter((u: IUser) => {
                             let encryptedToken: string;
                             encryptedToken = EncryptionUtils.base64Encode(':',
                                 u.username || '', u.password || '');
                             encryptedToken = [NBX_AUTH_AUTHORIZATION_TYPE, encryptedToken].join(' ');
-                            if (authorization.toLowerCase() === encryptedToken.toLowerCase()) {
-                                let tokenValue: any;
-                                tokenValue = JsonUtils.parseFisrtResponseJson(JSON.stringify(u));
-                                delete tokenValue['password'];
-                                token = this.parseResponse(new ServiceResponse(true,
-                                    new HttpResponse({
-                                        body: JSON.stringify(tokenValue),
-                                        headers: headers,
-                                        status: 200, url: url,
-                                    }),
-                                    options.redirectSuccess, options.errors, options.messages));
-                                break;
-                            }
+                            this.getLogger().debug('Encrypted authentication', encryptedToken,
+                                'User Name', u.username, 'Password', u.password);
+                            return (authorization.toLowerCase() === encryptedToken.toLowerCase());
+                        });
+                        if (foundUsers && foundUsers.length) {
+                            let u: IUser;
+                            u = foundUsers[0];
+                            let tokenValue: any;
+                            tokenValue = JsonUtils.parseFisrtResponseJson(JSON.stringify(u));
+                            delete tokenValue['password'];
+                            token = this.parseResponse(new ServiceResponse(true,
+                                new HttpResponse({
+                                    body: JSON.stringify(tokenValue),
+                                    headers: headers,
+                                    status: 200, url: url,
+                                }),
+                                options.redirectSuccess, options.errors, options.messages));
                         }
                     }
                     if (!token) {

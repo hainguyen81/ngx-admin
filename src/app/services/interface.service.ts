@@ -67,4 +67,10 @@ export declare interface IDbService<T> {
      * @return a Promise of affected records number
      */
     update(entity: T): Promise<number>;
+
+    /**
+     * Get the number of records in database
+     * @return the number of records in database
+     */
+    count(): Promise<number>;
 }

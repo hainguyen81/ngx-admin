@@ -21,14 +21,19 @@ export class MockUserService {
         if (environment.production) {
             return;
         }
-        // encrypt MD5
-        let mockUsers: IUser[];
-        mockUsers = usersGenerate();
-        this.logger.debug('Generate users', mockUsers);
-        this.userDbService.clear().then(() => {
-            this.userDbService.insertEntities(mockUsers)
-                .then((affected: number) => this.logger.debug('Initialized mock users data', affected),
-                    (errors) => this.logger.error('Could not initialize mock user data', errors));
+        // just generate mock data if empty
+        this.userDbService.count().then((recNumber: number) => {
+            if (recNumber <= 0) {
+                // generate mock users
+                let mockUsers: IUser[];
+                mockUsers = usersGenerate();
+                this.logger.debug('Generate users', mockUsers);
+                this.userDbService.insertEntities(mockUsers)
+                    .then((affected: number) => this.logger.debug('Initialized mock users data', affected),
+                        (errors) => this.logger.error('Could not initialize mock user data', errors));
+            } else {
+                this.logger.debug('Initialized mock users data', recNumber);
+            }
         });
     }
 }
