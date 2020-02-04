@@ -22,6 +22,18 @@
 				"status": "Status",
 				"enterprise": "Enterprise"
 			}
+		},
+		"customer": {
+			"title": "Customers Management",
+			"table": {
+				"noData": "Not found any customers",
+				"customerName": "Customer Name",
+				"email": "Email",
+				"tel": "Tel.",
+				"address": "Address",
+				"status": "Status",
+				"enterprise": "Enterprise"
+			}
 		}
 	}
 }

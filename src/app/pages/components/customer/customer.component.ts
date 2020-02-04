@@ -14,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 export const CustomerTableSettings = {
     hideSubHeader: true,
-    noDataMessage: 'Not found any customers',
+    noDataMessage: 'system.customer.table.noData',
     actions: {
         add: false,
         edit: false,
@@ -22,31 +22,31 @@ export const CustomerTableSettings = {
     },
     columns: {
         customerName: {
-            title: 'Customer Name',
+            title: 'system.customer.table.customerName',
             type: 'string',
             sort: false,
             filter: false,
         },
         email: {
-            title: 'Email',
+            title: 'system.customer.table.email',
             type: 'string',
             sort: false,
             filter: false,
         },
         tel: {
-            title: 'Tel',
+            title: 'system.customer.table.tel',
             type: 'string',
             sort: false,
             filter: false,
         },
         address: {
-            title: 'Address',
+            title: 'system.customer.table.address',
             type: 'string',
             sort: false,
             filter: false,
         },
         status: {
-            title: 'Status',
+            title: 'system.customer.table.status',
             type: 'string',
             valuePrepareFunction: convertCustomerStatusToDisplay,
             sort: false,
@@ -72,7 +72,7 @@ export const CustomerTableSettings = {
             },
         },
         enterprise: {
-            title: 'Enterprise',
+            title: 'system.customer.table.enterprise',
             type: 'boolean',
             sort: false,
             filter: false,
@@ -87,21 +87,21 @@ export const CustomerTableSettings = {
 export const CustomerContextMenu: IContextMenu[] = [{
     id: (item?: any) => CONTEXT_MENU_ADD,
     icon: (item?: any) => 'plus-square',
-    title: (item?: any) => 'Add',
+    title: (item?: any) => 'common.contextMenu.add',
     enabled: (item?: any) => true,
     visible: (item?: any) => true,
     divider: (item?: any) => false,
 }, {
     id: (item?: any) => CONTEXT_MENU_EDIT,
     icon: (item?: any) => 'edit',
-    title: (item?: any) => 'Edit',
+    title: (item?: any) => 'common.contextMenu.edit',
     enabled: (item?: any) => true,
     visible: (item?: any) => true,
     divider: (item?: any) => false,
 }, {
     id: (item?: any) => CONTEXT_MENU_DELETE,
     icon: (item?: any) => 'minus-square',
-    title: (item?: any) => 'Delete',
+    title: (item?: any) => 'common.contextMenu.delete',
     enabled: (item?: any) => true,
     visible: (item?: any) => true,
     divider: (item?: any) => false,
@@ -120,6 +120,6 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService) {
         super(dataSource, contextMenuService, logger, renderer, translateService,
-            'Customers Management', CustomerTableSettings, CustomerContextMenu);
+            'system.customer.title', CustomerTableSettings, CustomerContextMenu);
     }
 }

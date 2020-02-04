@@ -22,6 +22,18 @@
 				"status": "Trạng thái",
 				"enterprise": "Enterprise"
 			}
+		},
+		"customer": {
+			"title": "Quản lý khách hàng",
+			"table": {
+				"noData": "Không có bất kỳ khách hàng nào",
+				"customerName": "Tên khách hàng",
+				"email": "Thư điện tử",
+				"tel": "ĐT",
+				"address": "Địa chỉ",
+				"status": "Trạng thái",
+				"enterprise": "Enterprise"
+			}
 		}
 	}
 }
