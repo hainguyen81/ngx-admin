@@ -63,6 +63,6 @@ export function usersGenerate(): IUser[] {
         mockUser.lastName = 'User'.concat((i + 1).toString(), ' Last Name');
         mockUsers.push(mockUser);
     }
-    mockUsers[0].password = EncryptionUtils.md5Encode(mockUsers[0].password);
+    mockUsers[0].password = EncryptionUtils.md5Encode(':', mockUsers[0].password);
     return mockUsers;
 }
