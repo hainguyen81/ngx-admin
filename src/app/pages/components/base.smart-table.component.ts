@@ -197,4 +197,16 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                 break;
         }
     }
+
+    onSearch(keyword?: any): void {
+        if (!(keyword || '').length) {
+            this.getDataSource().setFilter(null, false);
+            this.getDataSource().refresh();
+            return;
+        }
+
+        this.doSearch(keyword);
+    }
+
+    abstract doSearch(keyword: any): void;
 }

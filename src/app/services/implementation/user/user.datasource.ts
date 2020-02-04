@@ -1,37 +1,30 @@
 import {Inject, Injectable} from '@angular/core';
 import {UserDbService, UserHttpService} from './user.service';
 import {AbstractDataSource} from '../../datasource.service';
-import {IUser} from '../../../@core/data/user';
+import user, {IUser} from '../../../@core/data/user';
 import {NGXLogger} from 'ngx-logger';
 
 @Injectable()
 export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, UserDbService> {
 
-    private keywords: string[];
-
     constructor(@Inject(UserHttpService) httpService: UserHttpService,
                 @Inject(UserDbService) dbService: UserDbService,
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
+        super.setSort([ { field: 'uid', direction: 'desc' } ]);
     }
 
     getAll(): Promise<IUser | IUser[]> {
         // sort by uid desc
-        return super.getDbService().getAll()
-            .then((users) => users.sort(
-                (u1, u2) => u1['uid'] > u2['uid'] ? -1 : u1['uid'] < u2['uid'] ? 1 : 0));
+        return super.getDbService().getAll().then((users) => {
+            users = this.filter(users);
+            users = this.sort(users);
+            return users;
+        });
     }
 
     getElements(): Promise<IUser | IUser[]> {
         return this.getAll();
-    }
-
-    getFilter(): any {
-        return this.keywords;
-    }
-
-    setFilter(conf: Array<any>, andOperator?: boolean, doEmit?: boolean): void {
-        this.keywords = [];
     }
 
     count(): number {
@@ -63,14 +56,10 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         });
     }
 
-    refresh(): void {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-
     load(data: Array<any>): Promise<any> {
         this.getLogger().debug('Load data', data);
-        data.sort((a, b) => (a.uid > b.uid ? -1 : a.uid < b.uid ? 1 : 0));
+        data = this.filter(data);
+        data = this.sort(data);
         return super.load(data);
     }
 

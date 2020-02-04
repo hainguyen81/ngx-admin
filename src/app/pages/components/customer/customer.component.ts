@@ -122,4 +122,15 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
         super(dataSource, contextMenuService, logger, renderer, translateService,
             'system.customer.title', CustomerTableSettings, CustomerContextMenu);
     }
+
+    doSearch(keyword: any): void {
+        this.getDataSource().setFilter([
+            { field: 'customerName', search: keyword },
+            { field: 'email', search: keyword },
+            { field: 'title', search: keyword },
+            { field: 'tel', search: keyword },
+            { field: 'address', search: keyword },
+        ], false);
+        this.getDataSource().refresh();
+    }
 }

@@ -123,4 +123,14 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
         super(userDataSource, contextMenuService, logger, renderer, translateService,
             'system.user.title', UserTableSettings, UserContextMenu);
     }
+
+    doSearch(keyword: any): void {
+        this.getDataSource().setFilter([
+            { field: 'username', search: keyword },
+            { field: 'firstName', search: keyword },
+            { field: 'lastName', search: keyword },
+            { field: 'email', search: keyword },
+        ], false);
+        this.getDataSource().refresh();
+    }
 }
