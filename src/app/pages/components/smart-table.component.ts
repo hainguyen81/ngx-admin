@@ -26,12 +26,13 @@ import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 
 export interface IContextMenu {
+    id?: (item?: any) => string;
     icon: (item?: any) => string;
     title: (item?: any) => string;
     enabled: (item?: any) => boolean;
     visible: (item?: any) => boolean;
     divider: (item?: any) => boolean;
-    click: (item?: any) => void;
+    click?: (item?: any) => void | null;
 }
 
 @Component({
