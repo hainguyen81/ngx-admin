@@ -10,7 +10,6 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
-import ObjectUtils from '../../../utils/object.utils';
 
 @Injectable()
 export class UserDbService extends AbstractDbService<IUser> {
