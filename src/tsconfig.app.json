@@ -10,7 +10,9 @@
       "@nebular/*": [
         "../node_modules/@nebular/*"
       ]
-    }
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
   },
   "exclude": [
     "test.ts",

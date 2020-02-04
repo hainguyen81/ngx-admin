@@ -10,6 +10,7 @@ import {
 } from '../base.smart-table.component';
 import {CustomerDatasource} from '../../../services/implementation/customer/customer.datasource';
 import {convertCustomerStatusToDisplay, CUSTOMER_STATUS} from '../../../@core/data/customer';
+import {TranslateService} from '@ngx-translate/core';
 
 export const CustomerTableSettings = {
     hideSubHeader: true,
@@ -116,7 +117,7 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
     constructor(@Inject(CustomerDatasource) dataSource: CustomerDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
-                renderer: Renderer2) {
+                @Inject(Renderer2) renderer: Renderer2) {
         super(dataSource, contextMenuService, logger, renderer,
             'Customers Management', CustomerTableSettings, CustomerContextMenu);
     }

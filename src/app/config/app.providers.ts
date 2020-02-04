@@ -1,6 +1,6 @@
-import {Inject, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
+import {Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe} from '@angular/common';
-import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend, XhrFactory} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
 import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
@@ -29,8 +29,8 @@ import {ConnectionService} from 'ng-connection-service';
 import {CustomerDbService, CustomerHttpService} from '../services/implementation/customer/customer.service';
 import {CustomerDatasource} from '../services/implementation/customer/customer.datasource';
 import {TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {throwError} from 'rxjs';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,15 +43,21 @@ export const CommonProviders: StaticProvider[] = [
     {provide: SW_VAPID_PUBLIC_KEY, useValue: COMMON.sw.vapid_public_key},
     {provide: LOCALE_ID, useValue: 'vi'},
     {provide: DatePipe, useClass: DatePipe, deps: []},
-    {provide: HttpBackend, useClass: HttpXhrBackend, deps: []},
+    {provide: HttpBackend, useExisting: HttpXhrBackend, deps: []},
     {provide: NGXMapperService, useClass: NGXMapperService, deps: [HttpBackend]},
     {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpBackend]},
-    {provide: HttpClient, useClass: HttpClient, deps: []},
+    {provide: HttpClient, useClass: HttpClient, deps: [HttpBackend]},
     {provide: ToastrService, useClass: ToastrService, deps: []},
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
-    {provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient]},
+];
+
+export const I18NProviders: StaticProvider[] = [
+    {
+        provide: TranslateLoader, useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+    },
 ];
 
 export const UserProviders: StaticProvider[] = [
@@ -129,6 +135,7 @@ export const ExampleProviders: StaticProvider[] = [
 ];
 
 export const Providers: StaticProvider[] = CommonProviders
+    .concat(I18NProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
     .concat(InterceptorProviders)

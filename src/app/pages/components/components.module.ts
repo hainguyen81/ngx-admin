@@ -17,7 +17,6 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../config/app.config';
 import {TreeviewModule} from 'ngx-treeview';
-import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -27,8 +26,6 @@ import {TranslateModule} from '@ngx-translate/core';
         NbSelectModule,
         NbIconModule,
         NbCardModule,
-        /* i18n */
-        TranslateModule.forRoot(AppConfig.i18n.config),
         /* Table */
         Ng2SmartTableModule,
         /* Context Menu */

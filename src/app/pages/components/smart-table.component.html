@@ -4,7 +4,8 @@
             <label for="search" class="col-form-label">{{tableHeader}}</label>
             <div class="col-sm-5">
                 <nb-icon id="searchIcon" icon="search" pack="fa" class="form-control-feedback"></nb-icon>
-                <input type="search" #search id="search" placeholder="{{ 'common.search.placeholder' | translate }}"
+                <input type="search" #search id="search"
+                       placeholder="Search"
                        class="form-control nb-search pt-0 py-0"
                        [disabled]="isInEditMode()"
                        (keydown.enter)="onSearch(search.value)">

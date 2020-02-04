@@ -9,6 +9,7 @@ import {
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import KeyboardUtils from '../../utils/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {TranslateService} from '@ngx-translate/core';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -22,11 +23,11 @@ export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
 export abstract class BaseSmartTableComponent<T extends DataSource> extends SmartTableComponent {
 
     protected constructor(@Inject(DataSource) dataSource: T,
-                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(NGXLogger) logger: NGXLogger,
-                renderer: Renderer2,
-                tableHeader: string, tableSettings: any,
-                contextMenu: IContextMenu[]) {
+                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(Renderer2) renderer: Renderer2,
+                          tableHeader: string, tableSettings: any,
+                          contextMenu: IContextMenu[]) {
         super(dataSource, contextMenuService, logger, renderer);
         super.setTableHeader(tableHeader || '');
         super.setTableSettings(tableSettings);

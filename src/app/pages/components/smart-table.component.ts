@@ -24,6 +24,7 @@ import {
 } from '../../services/implementation/document.keypress.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
+import {TranslateService} from '@ngx-translate/core';
 
 export interface IContextMenu {
     id?: (item?: any) => string;
@@ -119,7 +120,7 @@ export class SmartTableComponent implements AfterViewInit {
     constructor(@Inject(DataSource) private dataSource: DataSource,
                 @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) private logger: NGXLogger,
-                private renderer: Renderer2) {
+                @Inject(Renderer2) private renderer: Renderer2) {
         contextMenuService || throwError('Could not inject context menu service');
         logger || throwError('Could not inject logger');
         dataSource = dataSource || new LocalDataSource();

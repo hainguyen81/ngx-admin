@@ -11,7 +11,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {throwError} from 'rxjs';
 /* API Configuration */
 import {AppConfig} from './config/app.config';
 /* Authentication */
@@ -34,7 +33,7 @@ import {LoggerModule} from 'ngx-logger';
 /* Database */
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* i18n */
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateModule} from '@ngx-translate/core';
 /* Toaster */
 import {ToastrModule} from 'ngx-toastr';
 /* Mock data */
@@ -72,7 +71,7 @@ import {MockDataModule} from './@core/mock/mock.data.module';
         }),
 
         /* i18n */
-        TranslateModule.forRoot(AppConfig.i18n.config),
+        TranslateModule.forRoot(),
 
         /* Toaster */
         ToastrModule.forRoot(AppConfig.TOASTER),
@@ -133,10 +132,7 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 })
 export class AppModule {
     constructor(injector: Injector,
-                iconLibraries: NbIconLibraries,
-                translateService: TranslateService) {
-        translateService || throwError('Could not inject TranslateService');
-        translateService.setDefaultLang(AppConfig.i18n.defaultLang);
+                iconLibraries: NbIconLibraries) {
         // @ts-ignore
         AppConfig.Injector = Injector.create({providers: AppConfig.Providers, parent: injector});
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});

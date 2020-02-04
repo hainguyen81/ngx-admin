@@ -10,6 +10,7 @@ import {
     CONTEXT_MENU_DELETE,
     CONTEXT_MENU_EDIT,
 } from '../base.smart-table.component';
+import {TranslateService} from '@ngx-translate/core';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -117,7 +118,7 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
     constructor(@Inject(UserDataSource) userDataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
-                renderer: Renderer2) {
+                @Inject(Renderer2) renderer: Renderer2) {
         super(userDataSource, contextMenuService, logger, renderer,
             'Users Management', UserTableSettings, UserContextMenu);
     }
