@@ -63,7 +63,7 @@ export const dbConfig: DBConfig = {
             {name: 'id', keypath: 'id', options: {unique: true}},
             {name: 'customerName', keypath: 'customerName', options: {unique: false}},
             {name: 'email', keypath: 'email', options: {unique: true}},
-            {name: 'tel', keypath: 'tel', options: {unique: true}},
+            {name: 'tel', keypath: 'tel', options: {unique: false}},
             {name: 'address', keypath: 'address', options: {unique: false}},
             {name: 'status', keypath: 'status', options: {unique: false}},
         ],

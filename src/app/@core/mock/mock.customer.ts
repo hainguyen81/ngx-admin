@@ -20,8 +20,8 @@ export function customersGenerate(): ICustomer[] {
         let mockCustomer: ICustomer;
         mockCustomer = ObjectUtils.deepCopy(MockCustomerTemplate);
         mockCustomer.id = IdGenerators.oid.generate();
-        mockCustomer.customerName = 'Customer '.concat((i + 1).toFixed(0));
-        mockCustomer.email = 'customer'.concat((i + 1).toFixed(0), '@hsg.com');
+        mockCustomer.customerName = 'Customer '.concat((i + 1).toString());
+        mockCustomer.email = 'customer'.concat((i + 1).toString(), '@hsg.com');
         mockCustomers.push(mockCustomer);
     }
     return mockCustomers;

@@ -24,9 +24,10 @@ export class MockUserService {
         // encrypt MD5
         let mockUsers: IUser[];
         mockUsers = usersGenerate();
+        this.logger.debug('Generate users', mockUsers);
         this.userDbService.clear().then(() => {
             this.userDbService.insertEntities(mockUsers)
-                .then(() => this.logger.debug('Initialized mock user data!'),
+                .then((affected: number) => this.logger.debug('Initialized mock users data', affected),
                     (errors) => this.logger.error('Could not initialize mock user data', errors));
         });
     }

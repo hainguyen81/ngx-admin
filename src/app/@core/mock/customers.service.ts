@@ -23,10 +23,11 @@ export class MockCustomerService {
         }
         let mockCustomers: ICustomer[];
         mockCustomers = customersGenerate();
+        this.logger.debug('Generate customers', mockCustomers);
         this.customerDbService.clear().then(() => {
             this.customerDbService.insertEntities(mockCustomers)
-                .then(() => this.logger.debug('Initialized mock user data!'),
-                    (errors) => this.logger.error('Could not initialize mock user data', errors));
+                .then((affected: number) => this.logger.debug('Initialized mock customers data', affected),
+                    (errors) => this.logger.error('Could not initialize mock customers data', errors));
         });
     }
 }

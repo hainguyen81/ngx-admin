@@ -56,8 +56,11 @@ export function usersGenerate(): IUser[] {
         mockUser.id = IdGenerators.oid.generate();
         mockUser.access_token = IdGenerators.uuid.v4();
         mockUser.refresh_token = IdGenerators.uuid.v4();
-        mockUser.username = 'user'.concat((i + 1).toFixed(0), '@hsg.com');
-        mockUser.password = EncryptionUtils.md5Encode(mockUser.password);
+        mockUser.username = 'user'.concat((i + 1).toString(), '@hsg.com');
+        mockUser.email = mockUser.username;
+        mockUser.password = EncryptionUtils.md5Encode(':', mockUser.password);
+        mockUser.firstName = 'User'.concat((i + 1).toString(), ' First Name');
+        mockUser.lastName = 'User'.concat((i + 1).toString(), ' Last Name');
         mockUsers.push(mockUser);
     }
     mockUsers[0].password = EncryptionUtils.md5Encode(mockUsers[0].password);
