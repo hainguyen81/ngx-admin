@@ -5,7 +5,7 @@
             <div class="col-sm-5">
                 <nb-icon id="searchIcon" icon="search" pack="fa" class="form-control-feedback"></nb-icon>
                 <input type="search" #search id="search"
-                       placeholder="Search"
+                       [placeholder]="'common.search.placeholder' | translate"
                        class="form-control nb-search pt-0 py-0"
                        [disabled]="isInEditMode()"
                        (keydown.enter)="onSearch(search.value)">

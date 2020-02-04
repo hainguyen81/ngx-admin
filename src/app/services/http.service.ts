@@ -112,7 +112,8 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
     }): Observable<T | T[]> {
         const errors = [];
         // for handling offline mode
-        if ((res && res instanceof HttpErrorResponse && res.status > 500 && this.getDbService())
+        if ((res && res instanceof HttpErrorResponse
+            && (res.status === 0 || res.status > 500) && this.getDbService())
             || (res && !(res instanceof HttpErrorResponse))) {
             return typeof this.handleOfflineModeDelegate === 'function'
                 ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options])

@@ -30,12 +30,8 @@ export class AppComponent implements OnInit {
         this.analytics.trackPageViews();
         this.seoService.trackCanonicalChanges();
 
-        this.logger.debug('TranslateLoader', this.translateService.currentLoader);
         this.translateService.setDefaultLang(AppConfig.i18n.defaultLang);
         this.translateService.use(AppConfig.i18n.use);
         this.translateService.addLangs(AppConfig.i18n.languages);
-        this.logger.debug('TranslateService', this.translateService);
-        this.translateService.get('common.search.placeholder')
-            .subscribe(value => this.logger.debug('Translated', value));
     }
 }
