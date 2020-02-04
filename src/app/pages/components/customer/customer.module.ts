@@ -9,6 +9,7 @@ import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../config/app.config';
 import {CustomerSmartTableComponent} from './customer.component';
 import {CustomerDatasource} from '../../../services/implementation/customer/customer.datasource';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -19,6 +20,9 @@ import {CustomerDatasource} from '../../../services/implementation/customer/cust
         NbCheckboxModule,
         NbSelectModule,
         Ng2SmartTableModule,
+        /* i18n */
+        TranslateModule,
+        /* Context Menu */
         NbContextMenuModule,
         ContextMenuModule.forRoot({
             autoFocus: true,

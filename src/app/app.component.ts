@@ -33,5 +33,7 @@ export class AppComponent implements OnInit {
         this.translateService.setDefaultLang(AppConfig.i18n.defaultLang);
         this.translateService.use(AppConfig.i18n.use);
         this.translateService.addLangs(AppConfig.i18n.languages);
+        this.translateService.get('common.search.placeholder')
+            .subscribe(value => this.logger.debug('Translated?', value));
     }
 }

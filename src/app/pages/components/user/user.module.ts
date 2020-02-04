@@ -8,6 +8,7 @@ import {UserDataSource} from '../../../services/implementation/user/user.datasou
 import {UserDbService, UserHttpService} from '../../../services/implementation/user/user.service';
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../config/app.config';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -18,6 +19,9 @@ import {AppConfig} from '../../../config/app.config';
         NbCheckboxModule,
         NbSelectModule,
         Ng2SmartTableModule,
+        /* i18n */
+        TranslateModule,
+        /* Context Menu */
         NbContextMenuModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
