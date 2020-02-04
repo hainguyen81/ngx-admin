@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MenuService} from '../services/implementation/menu.service';
 import {NbMenuItem} from '@nebular/theme';
 import {NGXLogger} from 'ngx-logger';
+import {TranslateService} from '@ngx-translate/core';
+import {throwError} from 'rxjs';
 
 @Component({
     selector: 'ngx-pages',
@@ -29,8 +31,16 @@ export class PagesComponent implements OnInit {
         return this.logger;
     }
 
+    protected getTranslateService(): TranslateService {
+        return this.translateService;
+    }
+
     constructor(@Inject(MenuService) private menuService: MenuService,
-                @Inject(NGXLogger) private logger: NGXLogger) {
+                @Inject(NGXLogger) private logger: NGXLogger,
+                @Inject(TranslateService) private translateService: TranslateService) {
+        menuService || throwError('Could not inject MenuService');
+        logger || throwError('Could not inject NGXLogger');
+        translateService || throwError('Could not inject TranslateService');
         this.menu = [];
     }
 
@@ -38,8 +48,29 @@ export class PagesComponent implements OnInit {
         this.getMenuService().buildMenu().then(
             (menuItems: NbMenuItem[]) => {
                 this.getLogger().debug('Menu', menuItems);
+                this.translateMenus(menuItems);
                 this.menu = menuItems;
             },
             (errors) => this.getLogger().error(errors));
+    }
+
+    private translateMenu(menuItem: NbMenuItem): void {
+        if (!menuItem || !menuItem.title) {
+            return;
+        }
+        menuItem.title = this.getTranslateService().instant(menuItem.title);
+        if (menuItem.children && menuItem.children.length) {
+            for (const menu of menuItem.children) {
+                this.translateMenu(menu);
+            }
+        }
+    }
+    private translateMenus(menuItems: NbMenuItem[]): void {
+        if (!menuItems || !menuItems.length) {
+            return;
+        }
+        for (const menu of menuItems) {
+            this.translateMenu(menu);
+        }
     }
 }
