@@ -38,6 +38,8 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ToastrModule} from 'ngx-toastr';
 /* Mock data */
 import {MockDataModule} from './@core/mock/mock.data.module';
+/* SplitPane */
+import {AngularSplitModule} from 'angular-split';
 
 @NgModule({
     declarations: [AppComponent],
@@ -126,6 +128,9 @@ import {MockDataModule} from './@core/mock/mock.data.module';
                 },
             },
         }),
+
+        /* SplitPane */
+        AngularSplitModule.forRoot(),
     ],
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],

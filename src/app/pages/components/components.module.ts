@@ -18,6 +18,7 @@ import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../config/app.config';
 import {TreeviewModule} from 'ngx-treeview';
 import {TranslateModule} from '@ngx-translate/core';
+import {AngularSplitModule} from 'angular-split';
 
 @NgModule({
     imports: [
@@ -39,6 +40,8 @@ import {TranslateModule} from '@ngx-translate/core';
         }),
         /* Tree-view */
         TreeviewModule.forRoot(),
+        /* SplitPane */
+        AngularSplitModule.forRoot(),
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
         NbSearchModule,
