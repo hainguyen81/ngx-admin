@@ -1,0 +1,10 @@
+{
+	"common": {
+		"search": {
+			"placeholder": "Search"
+		}
+	},
+	"system": {
+		"title": "System"
+	}
+}

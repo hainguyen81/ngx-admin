@@ -6,11 +6,12 @@
 import {CoreModule} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Inject, Injector, NgModule, OnInit} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
+import {throwError} from 'rxjs';
 /* API Configuration */
 import {AppConfig} from './config/app.config';
 /* Authentication */
@@ -32,6 +33,8 @@ import {
 import {LoggerModule} from 'ngx-logger';
 /* Database */
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
+/* i18n */
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 /* Toaster */
 import {ToastrModule} from 'ngx-toastr';
 /* Mock data */
@@ -67,6 +70,9 @@ import {MockDataModule} from './@core/mock/mock.data.module';
         NbChatModule.forRoot({
             messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
         }),
+
+        /* i18n */
+        TranslateModule.forRoot(AppConfig.i18n.config),
 
         /* Toaster */
         ToastrModule.forRoot(AppConfig.TOASTER),
@@ -127,11 +133,14 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 })
 export class AppModule {
     constructor(injector: Injector,
-                iconLibraries: NbIconLibraries) {
+                iconLibraries: NbIconLibraries,
+                translateService: TranslateService) {
+        translateService || throwError('Could not inject TranslateService');
+        translateService.setDefaultLang(AppConfig.i18n.defaultLang);
         // @ts-ignore
         AppConfig.Injector = Injector.create({providers: AppConfig.Providers, parent: injector});
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
-    }
+   }
 }

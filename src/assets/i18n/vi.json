@@ -1,0 +1,10 @@
+{
+  "common": {
+    "search": {
+      "placeholder": "Tìm kiếm"
+    }
+  },
+  "system": {
+		"title": "Hệ thống"
+	}
+}

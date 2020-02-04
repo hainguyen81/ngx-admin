@@ -1,4 +1,4 @@
-import {Injector, LOCALE_ID, StaticProvider} from '@angular/core';
+import {Inject, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
@@ -28,6 +28,15 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {ConnectionService} from 'ng-connection-service';
 import {CustomerDbService, CustomerHttpService} from '../services/implementation/customer/customer.service';
 import {CustomerDatasource} from '../services/implementation/customer/customer.datasource';
+import {TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {throwError} from 'rxjs';
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient) {
+    http || throwError('Not found HttpClient to create TranslateHttpLoader');
+    return new TranslateHttpLoader(http);
+}
 
 export const CommonProviders: StaticProvider[] = [
     {provide: APP_BASE_HREF, useValue: environment.baseHref},
@@ -42,6 +51,7 @@ export const CommonProviders: StaticProvider[] = [
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
+    {provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient]},
 ];
 
 export const UserProviders: StaticProvider[] = [

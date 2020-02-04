@@ -14,6 +14,7 @@ import {CustomerModule} from './components/customer/customer.module';
         NbMenuModule,
         ComponentsModule,
 
+        /* System module */
         UserModule,
         CustomerModule,
     ],
