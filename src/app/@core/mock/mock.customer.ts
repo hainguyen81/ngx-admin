@@ -1,6 +1,10 @@
 import {ICustomer, CUSTOMER_STATUS} from '../data/customer';
+import ObjectUtils from '../../utils/object.utils';
+import {IdGenerators} from '../../config/generator.config';
 
-export const MockCustomer1: ICustomer = {
+export const MAXIMUM_MOCK_CUSTOMERS: number = 10000;
+
+export const MockCustomerTemplate: ICustomer = {
     id: '1',
     customerName: 'Customer 1',
     email: 'customer1@hsg.com',
@@ -8,34 +12,17 @@ export const MockCustomer1: ICustomer = {
     address: 'Tan Binh',
     status: CUSTOMER_STATUS.ACTIVATED,
 };
-export const MockCustomer2: ICustomer = {
-    id: '2',
-    customerName: 'Customer 2',
-    email: 'customer2@hsg.com',
-    tel: '0939007978',
-    address: 'Quan 1',
-    status: CUSTOMER_STATUS.ACTIVATED,
-};
-export const MockCustomer3: ICustomer = {
-    id: '3',
-    customerName: 'Customer 3',
-    email: 'customer3@hsg.com',
-    tel: '0908037705',
-    address: 'Quan 2',
-    status: CUSTOMER_STATUS.ACTIVATED,
-};
-export const MockCustomer4: ICustomer = {
-    id: '4',
-    customerName: 'Customer 4',
-    email: 'customer4@hsg.com',
-    tel: '0916191818',
-    address: 'Quan 3',
-    status: CUSTOMER_STATUS.ACTIVATED,
-};
 
-export const MockCustomer = [
-    MockCustomer1,
-    MockCustomer2,
-    MockCustomer3,
-    MockCustomer4,
-];
+export function customersGenerate(): ICustomer[] {
+    let mockCustomers: ICustomer[];
+    mockCustomers = [];
+    for (let i: number = 0; i < MAXIMUM_MOCK_CUSTOMERS; i++) {
+        let mockCustomer: ICustomer;
+        mockCustomer = ObjectUtils.deepCopy(MockCustomerTemplate);
+        mockCustomer.id = IdGenerators.oid.generate();
+        mockCustomer.customerName = 'Customer '.concat((i + 1).toFixed(0));
+        mockCustomer.email = 'customer'.concat((i + 1).toFixed(0), '@hsg.com');
+        mockCustomers.push(mockCustomer);
+    }
+    return mockCustomers;
+}

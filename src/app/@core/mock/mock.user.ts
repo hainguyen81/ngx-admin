@@ -1,5 +1,10 @@
 import {IUser, USER_STATUS} from '../data/user';
 import {MockRolesGroupSystem} from './mock.role';
+import ObjectUtils from '../../utils/object.utils';
+import {IdGenerators} from '../../config/generator.config';
+import EncryptionUtils from '../../utils/encryption.utils';
+
+export const MAXIMUM_MOCK_USERS: number = 10000;
 
 export const MockUserAdmin: IUser = {
     access_token: 'f90087e0-398e-4124-9522-5a4e6f0bed91',
@@ -19,7 +24,7 @@ export const MockUserAdmin: IUser = {
     id: '5d5d67786249ab06b4516c45',
     rolesGroupId: '5d766194738fbc23b43a857f',
 };
-export const MockUser1: IUser = {
+export const MockUserTemplate: IUser = {
     access_token: 'f90087e0-398e-4124-9522-5a4e6f0bed92',
     token_type: 'bearer',
     refresh_token: 'ac581551-9dd4-404a-8a4a-ecf591ebb9d1',
@@ -37,46 +42,24 @@ export const MockUser1: IUser = {
     id: '5d5d67786249ab06b4516c46',
     rolesGroupId: '5d766194738fbc23b43a857f',
 };
-export const MockUser2: IUser = {
-    access_token: 'f90087e0-398e-4124-9522-5a4e6f0bed93',
-    token_type: 'bearer',
-    refresh_token: 'ac581551-9dd4-404a-8a4a-ecf591ebb9d2',
-    expires_in: 7889236,
-    scope: 'READ WRITE',
-    company: 'hsg',
-    enterprise: true,
-    username: 'user2@hsg.com',
-    password: 'admin',
-    firstName: 'User2 First Name',
-    lastName: 'User2 Last Name',
-    email: 'user2@hsg.com',
-    status: USER_STATUS.ACTIVATED,
-    rolesGroup: MockRolesGroupSystem,
-    id: '5d5d67786249ab06b4516c47',
-    rolesGroupId: '5d766194738fbc23b43a857f',
-};
-export const MockUser3: IUser = {
-    access_token: 'f90087e0-398e-4124-9522-5a4e6f0bed94',
-    token_type: 'bearer',
-    refresh_token: 'ac581551-9dd4-404a-8a4a-ecf591ebb9d3',
-    expires_in: 7889236,
-    scope: 'READ WRITE',
-    company: 'hsg',
-    enterprise: true,
-    username: 'user3@hsg.com',
-    password: 'admin',
-    firstName: 'User3 First Name',
-    lastName: 'User3 Last Name',
-    email: 'user3@hsg.com',
-    status: USER_STATUS.ACTIVATED,
-    rolesGroup: MockRolesGroupSystem,
-    id: '5d5d67786249ab06b4516c48',
-    rolesGroupId: '5d766194738fbc23b43a857f',
-};
 
 export const MockUser = [
     MockUserAdmin,
-    MockUser1,
-    MockUser2,
-    MockUser3,
 ];
+
+export function usersGenerate(): IUser[] {
+    let mockUsers: IUser[];
+    mockUsers = MockUser;
+    for (let i: number = 0; i < MAXIMUM_MOCK_USERS; i++) {
+        let mockUser: IUser;
+        mockUser = ObjectUtils.deepCopy(MockUserTemplate);
+        mockUser.id = IdGenerators.oid.generate();
+        mockUser.access_token = IdGenerators.uuid.v4();
+        mockUser.refresh_token = IdGenerators.uuid.v4();
+        mockUser.username = 'user'.concat((i + 1).toFixed(0), '@hsg.com');
+        mockUser.password = EncryptionUtils.md5Encode(mockUser.password);
+        mockUsers.push(mockUser);
+    }
+    mockUsers[0].password = EncryptionUtils.md5Encode(mockUsers[0].password);
+    return mockUsers;
+}

@@ -4,7 +4,8 @@ import {environment} from '../../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../config/log.config';
 import {CustomerDbService} from '../../services/implementation/customer/customer.service';
-import {MockCustomer} from './mock.customer';
+import {customersGenerate} from './mock.customer';
+import {ICustomer} from '../data/customer';
 
 @Injectable()
 export class MockCustomerService {
@@ -20,8 +21,10 @@ export class MockCustomerService {
         if (environment.production) {
             return;
         }
+        let mockCustomers: ICustomer[];
+        mockCustomers = customersGenerate();
         this.customerDbService.clear().then(() => {
-            this.customerDbService.insertEntities(MockCustomer)
+            this.customerDbService.insertEntities(mockCustomers)
                 .then(() => this.logger.debug('Initialized mock user data!'),
                     (errors) => this.logger.error('Could not initialize mock user data', errors));
         });

@@ -2,10 +2,10 @@ import {Inject, Injectable} from '@angular/core';
 import {UserDbService} from '../../services/implementation/user/user.service';
 import {throwError} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {MockUser} from './mock.user';
+import {MockUser, usersGenerate} from './mock.user';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../config/log.config';
-import EncryptionUtils from '../../utils/encryption.utils';
+import {IUser} from '../data/user';
 
 @Injectable()
 export class MockUserService {
@@ -22,11 +22,10 @@ export class MockUserService {
             return;
         }
         // encrypt MD5
-        MockUser.forEach(u => {
-            u.password = EncryptionUtils.md5Encode(':', u.password);
-        });
+        let mockUsers: IUser[];
+        mockUsers = usersGenerate();
         this.userDbService.clear().then(() => {
-            this.userDbService.insertEntities(MockUser)
+            this.userDbService.insertEntities(mockUsers)
                 .then(() => this.logger.debug('Initialized mock user data!'),
                     (errors) => this.logger.error('Could not initialize mock user data', errors));
         });
