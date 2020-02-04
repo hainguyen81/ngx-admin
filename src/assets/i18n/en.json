@@ -2,9 +2,26 @@
 	"common": {
 		"search": {
 			"placeholder": "Search"
+		},
+		"contextMenu": {
+			"add": "Add",
+			"edit": "Edit",
+			"delete": "Delete"
 		}
 	},
 	"system": {
-		"title": "System"
+		"title": "System",
+		"user": {
+			"title": "Users Management",
+			"table": {
+				"noData": "Not found any users",
+				"username": "User Name",
+				"firstName": "First Name",
+				"lastName": "Last Name",
+				"email": "Email",
+				"status": "Status",
+				"enterprise": "Enterprise"
+			}
+		}
 	}
 }

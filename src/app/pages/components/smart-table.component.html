@@ -1,7 +1,7 @@
 <nb-card>
     <nb-card-header>
         <div class="form-group row has-search m-md-auto">
-            <label for="search" class="col-form-label">{{tableHeader}}</label>
+            <label for="search" class="col-form-label">{{tableHeader | translate}}</label>
             <div class="col-sm-5">
                 <nb-icon id="searchIcon" icon="search" pack="fa" class="form-control-feedback"></nb-icon>
                 <input type="search" #search id="search"
@@ -44,7 +44,7 @@
                 [divider]="item?.divider?.apply(this, [ undefined ])"
                 (execute)="onMenuEvent($event, item)"
             ><span><nb-icon [icon]="item?.icon?.apply(this, [ undefined ])" pack="fa"></nb-icon>
-                {{item?.title?.apply(this, [undefined])}}</span></ng-template>
+                {{item?.title?.apply(this, [undefined]) | translate}}</span></ng-template>
         </context-menu>
     </nb-card-body>
 </nb-card>

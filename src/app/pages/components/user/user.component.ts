@@ -14,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 export const UserTableSettings = {
     hideSubHeader: true,
-    noDataMessage: 'Not found any users',
+    noDataMessage: 'system.user.table.noData',
     actions: {
         add: false,
         edit: false,
@@ -22,32 +22,32 @@ export const UserTableSettings = {
     },
     columns: {
         username: {
-            title: 'User Name',
+            title: 'system.user.table.username',
             type: 'string',
             sort: false,
             filter: false,
             editable: true,
         },
         firstName: {
-            title: 'First Name',
+            title: 'system.user.table.firstName',
             type: 'string',
             sort: false,
             filter: false,
         },
         lastName: {
-            title: 'Last Name',
+            title: 'system.user.table.lastName',
             type: 'string',
             sort: false,
             filter: false,
         },
         email: {
-            title: 'Email',
+            title: 'system.user.table.email',
             type: 'string',
             sort: false,
             filter: false,
         },
         status: {
-            title: 'Status',
+            title: 'system.user.table.status',
             type: 'string',
             valuePrepareFunction: convertUserStatusToDisplay,
             sort: false,
@@ -73,7 +73,7 @@ export const UserTableSettings = {
             },
         },
         enterprise: {
-            title: 'Enterprise',
+            title: 'system.user.table.enterprise',
             type: 'boolean',
             sort: false,
             filter: false,
@@ -88,21 +88,21 @@ export const UserTableSettings = {
 export const UserContextMenu: IContextMenu[] = [{
     id: (item?: any) => CONTEXT_MENU_ADD,
     icon: (item?: any) => 'plus-square',
-    title: (item?: any) => 'Add',
+    title: (item?: any) => 'common.contextMenu.add',
     enabled: (item?: any) => true,
     visible: (item?: any) => true,
     divider: (item?: any) => false,
 }, {
     id: (item?: any) => CONTEXT_MENU_EDIT,
     icon: (item?: any) => 'edit',
-    title: (item?: any) => 'Edit',
+    title: (item?: any) => 'common.contextMenu.edit',
     enabled: (item?: any) => true,
     visible: (item?: any) => true,
     divider: (item?: any) => false,
 }, {
     id: (item?: any) => CONTEXT_MENU_DELETE,
     icon: (item?: any) => 'minus-square',
-    title: (item?: any) => 'Delete',
+    title: (item?: any) => 'common.contextMenu.delete',
     enabled: (item?: any) => true,
     visible: (item?: any) => true,
     divider: (item?: any) => false,
@@ -118,8 +118,9 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
     constructor(@Inject(UserDataSource) userDataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(Renderer2) renderer: Renderer2) {
-        super(userDataSource, contextMenuService, logger, renderer,
-            'Users Management', UserTableSettings, UserContextMenu);
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService) {
+        super(userDataSource, contextMenuService, logger, renderer, translateService,
+            'system.user.title', UserTableSettings, UserContextMenu);
     }
 }

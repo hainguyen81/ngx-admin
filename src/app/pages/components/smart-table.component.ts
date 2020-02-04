@@ -120,9 +120,11 @@ export class SmartTableComponent implements AfterViewInit {
     constructor(@Inject(DataSource) private dataSource: DataSource,
                 @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) private logger: NGXLogger,
-                @Inject(Renderer2) private renderer: Renderer2) {
+                @Inject(Renderer2) private renderer: Renderer2,
+                @Inject(TranslateService) private translateService: TranslateService) {
         contextMenuService || throwError('Could not inject context menu service');
         logger || throwError('Could not inject logger');
+        translateService || throwError('Could not inject TranslateService');
         dataSource = dataSource || new LocalDataSource();
     }
 
@@ -163,6 +165,10 @@ export class SmartTableComponent implements AfterViewInit {
         return this.renderer;
     }
 
+    protected getTranslateService(): TranslateService {
+        return this.translateService;
+    }
+
     protected getDocumentKeyDownHandlerService(): DocumentKeydownHandlerService {
         this.documentKeyDownHandlerService || throwError('Could not handle document keydown');
         return this.documentKeyDownHandlerService;
@@ -183,6 +189,19 @@ export class SmartTableComponent implements AfterViewInit {
     }
 
     protected setTableSettings(settings: any) {
+        // apply translate
+        if (settings && Object.keys(settings).length) {
+            if (settings.hasOwnProperty('noDataMessage')) {
+                settings['noDataMessage'] = this.getTranslateService().instant(settings['noDataMessage']);
+            }
+            if (settings.hasOwnProperty('columns')) {
+                Object.values(settings['columns']).forEach(column => {
+                    if (column && column.hasOwnProperty('title')) {
+                        column['title'] = this.getTranslateService().instant(column['title']);
+                    }
+                });
+            }
+        }
         this.settings = settings;
     }
 

@@ -26,9 +26,10 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
+                          @Inject(TranslateService) translateService: TranslateService,
                           tableHeader: string, tableSettings: any,
                           contextMenu: IContextMenu[]) {
-        super(dataSource, contextMenuService, logger, renderer);
+        super(dataSource, contextMenuService, logger, renderer, translateService);
         super.setTableHeader(tableHeader || '');
         super.setTableSettings(tableSettings);
         super.setContextMenu(contextMenu || []);

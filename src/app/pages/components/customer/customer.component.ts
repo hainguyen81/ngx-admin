@@ -117,8 +117,9 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
     constructor(@Inject(CustomerDatasource) dataSource: CustomerDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(Renderer2) renderer: Renderer2) {
-        super(dataSource, contextMenuService, logger, renderer,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService) {
+        super(dataSource, contextMenuService, logger, renderer, translateService,
             'Customers Management', CustomerTableSettings, CustomerContextMenu);
     }
 }
