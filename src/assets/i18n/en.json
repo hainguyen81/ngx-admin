@@ -11,8 +11,10 @@
 	},
 	"system": {
 		"title": "System",
+		"menu": "System",
 		"user": {
 			"title": "Users Management",
+			"menu": "Users Management",
 			"table": {
 				"noData": "Not found any users",
 				"username": "User Name",
@@ -25,6 +27,7 @@
 		},
 		"customer": {
 			"title": "Customers Management",
+			"menu": "Customers Management",
 			"table": {
 				"noData": "Not found any customers",
 				"customerName": "Customer Name",

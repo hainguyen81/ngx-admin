@@ -2,7 +2,7 @@ import {IApi} from '../data/api';
 
 export const MockApiUser: IApi = {
     code: 'USER_API',
-    name: 'User Management',
+    name: 'system.user.menu',
     regexUrl: 'user/**',
     baseUrl: 'http://localhost:8082/api-rest-user/service',
     icon: { icon: 'users', pack: 'fa' },
@@ -12,7 +12,7 @@ export const MockApiUser: IApi = {
 
 export const MockApiCustomer: IApi = {
     code: 'CUSTOMER_API',
-    name: 'Customer Management',
+    name: 'system.customer.menu',
     regexUrl: 'customer/**',
     baseUrl: 'http://localhost:8082/api-rest-customer/service',
     icon: { icon: 'address-card', pack: 'fa' },

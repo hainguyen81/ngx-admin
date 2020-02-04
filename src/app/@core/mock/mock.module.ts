@@ -3,7 +3,7 @@ import {MockApiCustomer, MockApiUser} from './mock.api';
 
 export const MockModuleUser: IModule = {
     code: 'USER_MODULE',
-    name: 'Người dùng',
+    name: 'system.user.menu',
     apiId: '',
     api: MockApiUser,
     id: '',
@@ -12,7 +12,7 @@ export const MockModuleUser: IModule = {
 
 export const MockModuleCustomer: IModule = {
     code: 'CUSTOMER_MODULE',
-    name: 'Khách hàng',
+    name: 'system.customer.menu',
     apiId: '',
     api: MockApiCustomer,
     id: '',
@@ -21,10 +21,11 @@ export const MockModuleCustomer: IModule = {
 
 export const MockModuleSystem: IModule = {
     code: 'SYSTEM',
-    name: 'Hệ thống',
+    name: 'system.menu',
     apiId: '',
     api: null,
     id: '',
+    icon: { icon: 'cog', pack: 'fa' },
     children: [MockModuleUser, MockModuleCustomer],
 };
 

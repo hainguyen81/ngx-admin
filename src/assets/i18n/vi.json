@@ -11,8 +11,10 @@
 	},
 	"system": {
 		"title": "Hệ thống",
+		"menu": "Hệ thống",
 		"user": {
 			"title": "Quản lý người dùng",
+			"menu": "Người dùng",
 			"table": {
 				"noData": "Không có bất kỳ người dùng nào",
 				"username": "Tên đăng nhập",
@@ -25,6 +27,7 @@
 		},
 		"customer": {
 			"title": "Quản lý khách hàng",
+			"menu": "Khách hàng",
 			"table": {
 				"noData": "Không có bất kỳ khách hàng nào",
 				"customerName": "Tên khách hàng",
