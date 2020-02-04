@@ -10,19 +10,21 @@ import {throwError} from 'rxjs';
 import {MockCustomerService} from './customers.service';
 import {CustomerDbService} from '../../services/implementation/customer/customer.service';
 
+export const MOCK_DATA_PROVIDERS = [
+    {
+        provide: MockUserService, useClass: MockUserService,
+        deps: [UserDbService, NGXLogger],
+    },
+    {
+        provide: MockCustomerService, useClass: MockCustomerService,
+        deps: [CustomerDbService, NGXLogger],
+    },
+];
+
 export const MOCK_PROVIDERS = CommonProviders
     .concat(UserProviders)
     .concat(CustomerProviders)
-    .concat([
-        {
-            provide: MockUserService, useClass: MockUserService,
-            deps: [UserDbService, NGXLogger],
-        },
-        {
-            provide: MockCustomerService, useClass: MockCustomerService,
-            deps: [CustomerDbService, NGXLogger],
-        },
-    ]);
+    .concat(MOCK_DATA_PROVIDERS);
 
 @NgModule({
     imports: [
@@ -33,7 +35,7 @@ export const MOCK_PROVIDERS = CommonProviders
 })
 export class MockDataModule {
 
-    private moduleInjector: Injector;
+    private readonly moduleInjector: Injector;
 
     constructor(@Optional() @SkipSelf() parentModule: MockDataModule,
                 injector: Injector) {
@@ -62,7 +64,11 @@ export class MockDataModule {
             return;
         }
 
-        this.getService(MockUserService).initialize();
-        this.getService(MockCustomerService).initialize();
+        MOCK_DATA_PROVIDERS.forEach(provider => {
+            const mockService: any = this.getService(provider['provider']);
+            mockService && typeof mockService['initialize'] === 'function'
+            && typeof mockService['initialize']['apply'] === 'function'
+            && mockService['initialize']['apply'](this);
+        });
     }
 }

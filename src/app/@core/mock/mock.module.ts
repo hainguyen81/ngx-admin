@@ -1,9 +1,9 @@
 import {IModule} from '../data/module';
-import {MockApiUser} from './mock.api';
+import {MockApiCustomer, MockApiUser} from './mock.api';
 
 export const MockModuleUser: IModule = {
     code: 'USER_MODULE',
-    name: 'Danh sách người dùng',
+    name: 'Người dùng',
     apiId: '',
     api: MockApiUser,
     id: '',
@@ -12,9 +12,9 @@ export const MockModuleUser: IModule = {
 
 export const MockModuleCustomer: IModule = {
     code: 'CUSTOMER_MODULE',
-    name: 'Danh sách KH',
+    name: 'Khách hàng',
     apiId: '',
-    api: MockApiUser,
+    api: MockApiCustomer,
     id: '',
     children: [],
 };
