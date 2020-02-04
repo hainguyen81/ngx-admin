@@ -16,8 +16,8 @@ export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
 
 @Component({
     selector: 'ngx-smart-table',
-    templateUrl: '../smart-table.component.html',
-    styleUrls: ['../smart-table.component.scss'],
+    templateUrl: './smart-table.component.html',
+    styleUrls: ['./smart-table.component.scss'],
 })
 export abstract class BaseSmartTableComponent<T extends DataSource> extends SmartTableComponent {
 
