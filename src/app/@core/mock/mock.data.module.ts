@@ -54,7 +54,7 @@ export class MockDataModule {
         };
     }
 
-    protected getService<T>(token: Type<T> | InjectionToken<T>): T {
+    protected getService<T>(token: Type<T> | InjectionToken<T> | any): T {
         this.moduleInjector || throwError('Could not create injector to inject mock services!');
         return this.moduleInjector.get(token);
     }
@@ -65,10 +65,9 @@ export class MockDataModule {
         }
 
         MOCK_DATA_PROVIDERS.forEach(provider => {
-            const mockService: any = this.getService(provider['provider']);
+            const mockService: any = this.getService(provider['provide']);
             mockService && typeof mockService['initialize'] === 'function'
-            && typeof mockService['initialize']['apply'] === 'function'
-            && mockService['initialize']['apply'](this);
+            && mockService['initialize']['apply'](mockService);
         });
     }
 }
