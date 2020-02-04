@@ -1,17 +1,19 @@
 import {Inject, Injectable} from '@angular/core';
 import {UserDbService, UserHttpService} from './user.service';
 import {AbstractDataSource} from '../../datasource.service';
-import user, {IUser} from '../../../@core/data/user';
+import {IUser} from '../../../@core/data/user';
 import {NGXLogger} from 'ngx-logger';
 
 @Injectable()
 export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, UserDbService> {
 
+    private latestCount: number = 0;
+
     constructor(@Inject(UserHttpService) httpService: UserHttpService,
                 @Inject(UserDbService) dbService: UserDbService,
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
-        super.setSort([ { field: 'uid', direction: 'desc' } ]);
+        super.setSort([{field: 'uid', direction: 'desc'}]);
     }
 
     getAll(): Promise<IUser | IUser[]> {
@@ -19,6 +21,8 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         return super.getDbService().getAll().then((users) => {
             users = this.filter(users);
             users = this.sort(users);
+            this.latestCount = (users || []).length;
+            users = this.paginate(users);
             return users;
         });
     }
@@ -28,7 +32,7 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
     }
 
     count(): number {
-        return 0;
+        return this.latestCount;
     }
 
     /**

@@ -7,5 +7,5 @@ export const COMMON = {
         vapid_public_key: '',
         base_url: 'http://localhost:8089/api-rest-notification/service',
     },
-    itemsPerPage: 15,
+    itemsPerPage: 10,
 };

@@ -2,7 +2,7 @@ import {ICustomer, CUSTOMER_STATUS} from '../data/customer';
 import ObjectUtils from '../../utils/object.utils';
 import {IdGenerators} from '../../config/generator.config';
 
-export const MAXIMUM_MOCK_CUSTOMERS: number = 10000;
+export const MAXIMUM_MOCK_CUSTOMERS: number = 100;
 
 export const MockCustomerTemplate: ICustomer = {
     id: '1',

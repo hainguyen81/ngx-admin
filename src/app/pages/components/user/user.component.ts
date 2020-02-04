@@ -11,6 +11,7 @@ import {
     CONTEXT_MENU_EDIT,
 } from '../base.smart-table.component';
 import {TranslateService} from '@ngx-translate/core';
+import {AppConfig} from '../../../config/app.config';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -19,6 +20,10 @@ export const UserTableSettings = {
         add: false,
         edit: false,
         delete: false,
+    },
+    pager: {
+        display: true,
+        perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
         username: {

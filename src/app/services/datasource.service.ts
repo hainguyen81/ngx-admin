@@ -156,6 +156,14 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         return this;
     }
 
+    setPage(page: number, doEmit?: boolean): void {
+        this.pagingCfg['page'] = page;
+        if (!doEmit) {
+            doEmit = (((this.pagingCfg['perPage'] as number) || 0) > 0);
+        }
+        super.setPage(page, doEmit || false);
+    }
+
     protected prepareData(data: Array<T>): Array<T> {
         data = this.filter(data);
         data = this.sort(data);

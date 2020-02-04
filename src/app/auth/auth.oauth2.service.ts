@@ -112,8 +112,6 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                             encryptedToken = EncryptionUtils.base64Encode(':',
                                 u.username || '', u.password || '');
                             encryptedToken = [NBX_AUTH_AUTHORIZATION_TYPE, encryptedToken].join(' ');
-                            this.getLogger().debug('Encrypted authentication', encryptedToken,
-                                'User Name', u.username, 'Password', u.password);
                             return (authorization.toLowerCase() === encryptedToken.toLowerCase());
                         });
                         if (foundUsers && foundUsers.length) {

@@ -4,7 +4,7 @@ import ObjectUtils from '../../utils/object.utils';
 import {IdGenerators} from '../../config/generator.config';
 import EncryptionUtils from '../../utils/encryption.utils';
 
-export const MAXIMUM_MOCK_USERS: number = 10000;
+export const MAXIMUM_MOCK_USERS: number = 100;
 
 export const MockUserAdmin: IUser = {
     access_token: 'f90087e0-398e-4124-9522-5a4e6f0bed91',

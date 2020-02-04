@@ -4,9 +4,10 @@ import {AbstractDataSource} from '../../datasource.service';
 import {ICustomer} from '../../../@core/data/customer';
 import {NGXLogger} from 'ngx-logger';
 
-
 @Injectable()
 export class CustomerDatasource extends AbstractDataSource<ICustomer, CustomerHttpService, CustomerDbService> {
+
+    private latestCount: number = 0;
 
     constructor(@Inject(CustomerHttpService) httpService: CustomerHttpService,
                 @Inject(CustomerDbService) dbService: CustomerDbService,
@@ -15,19 +16,21 @@ export class CustomerDatasource extends AbstractDataSource<ICustomer, CustomerHt
     }
 
     getAll(): Promise<ICustomer | ICustomer[]> {
-        return super.getDbService().getAll();
+        return super.getDbService().getAll().then((customers: ICustomer[]) => {
+            customers = this.filter(customers);
+            customers = this.sort(customers);
+            this.latestCount = (customers || []).length;
+            customers = this.paginate(customers);
+            return customers;
+        });
     }
 
     getElements(): Promise<ICustomer | ICustomer[]> {
         return this.getAll();
     }
 
-    getFilter(): any {
-        return undefined;
-    }
-
     count(): number {
-        return 0;
+        return this.latestCount;
     }
 
     /**

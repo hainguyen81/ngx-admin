@@ -11,6 +11,7 @@ import {
 import {CustomerDatasource} from '../../../services/implementation/customer/customer.datasource';
 import {convertCustomerStatusToDisplay, CUSTOMER_STATUS} from '../../../@core/data/customer';
 import {TranslateService} from '@ngx-translate/core';
+import {AppConfig} from '../../../config/app.config';
 
 export const CustomerTableSettings = {
     hideSubHeader: true,
@@ -19,6 +20,10 @@ export const CustomerTableSettings = {
         add: false,
         edit: false,
         delete: false,
+    },
+    pager: {
+        display: true,
+        perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
         customerName: {
