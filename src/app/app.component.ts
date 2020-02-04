@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import {Component, Inject, OnInit} from '@angular/core';
-import {TranslateLoader, TranslateService} from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 import {AnalyticsService, SeoService} from './@core/services';
 import {throwError} from 'rxjs';
 import {AppConfig} from './config/app.config';
