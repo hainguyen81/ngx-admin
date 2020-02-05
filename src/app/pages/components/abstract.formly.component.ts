@@ -116,8 +116,21 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         super(dataSource, contextMenuService, logger, renderer, translateService);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
         this.queryFormlyForm.map((item) => this.formlyForm = item);
+    }
+
+    /**
+     * Perform submit action
+     * @param event submit event
+     */
+    onSubmit(event): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onSubmit');
     }
 }
