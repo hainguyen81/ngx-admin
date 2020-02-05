@@ -1,5 +1,5 @@
 import {IContextMenu, SmartTableComponent} from './smart-table.component';
-import {Component, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {
@@ -36,6 +36,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
      * @param tableHeader the table caption
      * @param tableSettings the table settings
      * @param contextMenu the context menu items array
@@ -45,9 +46,10 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
+                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           tableHeader: string, tableSettings: any,
                           contextMenu: IContextMenu[]) {
-        super(dataSource, contextMenuService, logger, renderer, translateService);
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
         super.setTableHeader(tableHeader || '');
         super.setTableSettings(tableSettings);
         super.setContextMenu(contextMenu || []);

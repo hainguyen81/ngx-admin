@@ -1,6 +1,6 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent} from './abstract.component';
-import {AfterViewInit, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -101,6 +101,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
@@ -110,10 +111,11 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
+                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           private config: FormlyConfig,
                           private fields: FormlyFieldConfig,
                           private options: FormlyFormOptions) {
-        super(dataSource, contextMenuService, logger, renderer, translateService);
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
     }
 
     // -------------------------------------------------

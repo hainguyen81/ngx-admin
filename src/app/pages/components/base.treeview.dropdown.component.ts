@@ -1,4 +1,4 @@
-import {Component, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
 import {NgxTreeviewComponent} from './treeview.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -27,6 +27,7 @@ export abstract class BaseNgxDropdownTreeviewComponent<T extends DataSource> ext
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
      * @param treeviewConfig {TreeviewConfig}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
@@ -34,7 +35,9 @@ export abstract class BaseNgxDropdownTreeviewComponent<T extends DataSource> ext
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
+                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           treeviewConfig?: TreeviewConfig) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, treeviewConfig, true);
+        super(dataSource, contextMenuService, logger, renderer,
+            translateService, factoryResolver, treeviewConfig, true);
     }
 }

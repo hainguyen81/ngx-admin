@@ -1,4 +1,4 @@
-import {AfterViewInit, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -115,6 +115,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
      * @param treeviewConfig {TreeviewConfig}
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
@@ -123,8 +124,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
-                          private treeviewConfig?: TreeviewConfig, private dropdown?: boolean | false) {
-        super(dataSource, contextMenuService, logger, renderer, translateService);
+                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                          private treeviewConfig?: TreeviewConfig,
+                          private dropdown?: boolean | false) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
         this.setConfig(treeviewConfig);
     }
 

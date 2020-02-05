@@ -1,6 +1,6 @@
 import {
     AfterViewInit,
-    Component,
+    Component, ComponentFactoryResolver,
     EventEmitter,
     Inject,
     QueryList,
@@ -116,13 +116,15 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
-                @Inject(TranslateService) translateService: TranslateService) {
-        super(dataSource, contextMenuService, logger, renderer, translateService);
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
     }
 
     ngAfterViewInit(): void {
