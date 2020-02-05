@@ -44,6 +44,7 @@ import {AngularSplitModule} from 'angular-split';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
+import {FormlyMaterialModule} from '@ngx-formly/material';
 
 @NgModule({
     declarations: [AppComponent],
@@ -148,6 +149,7 @@ import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
          * - NativeScript: FormlyNativescriptModule
          */
         FormlyBootstrapModule,
+        FormlyMaterialModule,
     ],
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],

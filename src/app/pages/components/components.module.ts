@@ -23,6 +23,7 @@ import {NgxTreeviewComponent} from './treeview.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
+import {FormlyMaterialModule} from '@ngx-formly/material';
 
 @NgModule({
     imports: [
@@ -59,6 +60,7 @@ import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
          * - NativeScript: FormlyNativescriptModule
          */
         FormlyBootstrapModule,
+        FormlyMaterialModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
