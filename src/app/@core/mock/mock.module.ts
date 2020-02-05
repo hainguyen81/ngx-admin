@@ -1,5 +1,5 @@
 import {IModule} from '../data/module';
-import {MockApiCustomer, MockApiUser} from './mock.api';
+import {MockApiCustomer, MockApiOrganization, MockApiUser} from './mock.api';
 
 export const MockModuleUser: IModule = {
     code: 'USER_MODULE',
@@ -19,14 +19,27 @@ export const MockModuleCustomer: IModule = {
     children: [],
 };
 
+export const MockModuleOrganization: IModule = {
+    code: 'ORGANIZATION_MODULE',
+    name: 'system.organization.menu',
+    apiId: '',
+    api: MockApiOrganization,
+    id: '',
+    children: [],
+};
+
 export const MockModuleSystem: IModule = {
     code: 'SYSTEM',
     name: 'system.menu',
     apiId: '',
     api: null,
     id: '',
-    icon: { icon: 'cog', pack: 'fa' },
-    children: [MockModuleUser, MockModuleCustomer],
+    icon: {icon: 'cog', pack: 'fa'},
+    children: [
+        MockModuleOrganization,
+        MockModuleUser,
+        MockModuleCustomer,
+    ],
 };
 
 export const MockModule = {

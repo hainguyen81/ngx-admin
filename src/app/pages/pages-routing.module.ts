@@ -13,6 +13,10 @@ const routes: Routes = [{
     component: PagesComponent,
     children: [
         {
+            path: 'organization',
+            component: NotFoundComponent,
+        },
+        {
             path: 'user',
             component: UserSmartTableComponent,
         },
@@ -72,7 +76,7 @@ const routes: Routes = [{
         // },
         {
             path: '',
-            redirectTo: 'user',
+            redirectTo: 'organization',
             pathMatch: 'full',
         },
         {

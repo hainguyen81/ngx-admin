@@ -10,18 +10,22 @@
 		}
 	},
 	"system": {
-		"title": "Hệ thống",
-		"menu": "Hệ thống",
-		"user": {
-			"title": "Quản lý người dùng",
-			"menu": "Người dùng",
-			"table": {
-				"noData": "Không có bất kỳ người dùng nào",
-				"username": "Tên đăng nhập",
-				"firstName": "Họ",
-				"lastName": "Tên",
-				"email": "Thư điện tử",
-				"status": "Trạng thái",
+        "title": "Hệ thống",
+        "menu": "Hệ thống",
+        "organization": {
+            "title": "Quản lý tổ chức",
+            "menu": "Tổ chức"
+        },
+        "user": {
+            "title": "Quản lý người dùng",
+            "menu": "Người dùng",
+            "table": {
+                "noData": "Không có bất kỳ người dùng nào",
+                "username": "Tên đăng nhập",
+                "firstName": "Họ",
+                "lastName": "Tên",
+                "email": "Thư điện tử",
+                "status": "Trạng thái",
 				"enterprise": "Enterprise"
 			}
 		},

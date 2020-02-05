@@ -10,18 +10,22 @@
 		}
 	},
 	"system": {
-		"title": "System",
-		"menu": "System",
-		"user": {
-			"title": "Users Management",
-			"menu": "Users Management",
-			"table": {
-				"noData": "Not found any users",
-				"username": "User Name",
-				"firstName": "First Name",
-				"lastName": "Last Name",
-				"email": "Email",
-				"status": "Status",
+        "title": "System",
+        "menu": "System",
+        "organization": {
+            "title": "Organization Management",
+            "menu": "Organization"
+        },
+        "user": {
+            "title": "Users Management",
+            "menu": "Users Management",
+            "table": {
+                "noData": "Not found any users",
+                "username": "User Name",
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Email",
+                "status": "Status",
 				"enterprise": "Enterprise"
 			}
 		},
