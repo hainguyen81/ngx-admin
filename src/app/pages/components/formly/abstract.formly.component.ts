@@ -1,5 +1,5 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractComponent} from './abstract.component';
+import {AbstractComponent} from '../abstract.component';
 import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';

@@ -3,7 +3,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent} from './abstract.component';
+import {AbstractComponent} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 
@@ -38,7 +38,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * Get a boolean value indicating this component whether is drop-down tree-view component
      * @return true for drop-down; else false
      */
-    protected isDropDown(): boolean {
+    public isDropDown(): boolean {
         return this.dropdown;
     }
 

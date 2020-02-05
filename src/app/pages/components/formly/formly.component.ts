@@ -14,7 +14,7 @@ import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/co
     templateUrl: './formly.component.html',
     styleUrls: ['./formly.component.scss'],
 })
-export class FormlyComponent extends AbstractFormlyComponent<any, DataSource> {
+export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS

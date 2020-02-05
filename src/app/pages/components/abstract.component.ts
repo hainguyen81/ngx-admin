@@ -10,12 +10,31 @@ import {
     DocumentKeypressHandlerService,
     DocumentKeyupHandlerService,
 } from '../../services/implementation/document.keypress.handler.service';
-import {IContextMenu} from './smart-table.component';
+import HtmlUtils from '../../utils/html.utils';
+
+export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
+export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
+export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
+
+/**
+ * Context menu item declaration
+ */
+export interface IContextMenu {
+    id?: (item?: any) => string;
+    icon: (item?: any) => string;
+    title: (item?: any) => string;
+    enabled: (item?: any) => boolean;
+    visible: (item?: any) => boolean;
+    divider: (item?: any) => boolean;
+    click?: (item?: any) => void | null;
+}
 
 /**
  * Abstract component
  */
 export class AbstractComponent implements AfterViewInit {
+
+    protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
 
     // -------------------------------------------------
     // DECLARATION
@@ -224,5 +243,76 @@ export class AbstractComponent implements AfterViewInit {
     onKeyPress(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyPress');
+    }
+
+    /**
+     * Triggered closed ContextMenu.
+     */
+    onContextMenuClose(): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onContextMenuClose');
+    }
+
+    /**
+     * Perform action on menu item has been clicked
+     * @param event Object, consist of:
+     *      event: action event
+     *      item: menu item data
+     * @param menuItem IContextMenu that has been activated
+     */
+    onMenuEvent(event, menuItem?: IContextMenu) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMenuEvent', event);
+        if (event && event.item && menuItem && typeof menuItem['click'] === 'function') {
+            menuItem['click']['apply'](this, [event.item]);
+        }
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Show/Hide context menu base on the specified Row
+     * @param event current event
+     * @param target element target to show context menu if event is invalid
+     * @param data attached data
+     * @return true for showing context menu; else false
+     */
+    protected showHideContextMenu(event?: Event, target?: Element | EventTarget, data?: any): boolean {
+        this.getLogger().debug('showHideContextMenu', data);
+        let mouseEvent: MouseEvent;
+        mouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
+        let kbEvent: KeyboardEvent;
+        kbEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
+        let eventTarget: Element | EventTarget;
+        eventTarget = (event && event.target instanceof Node ? event.target : target);
+        this.getContextMenuService().show.next({
+            // Optional - if unspecified, all context menu components will open
+            contextMenu: this.getContextMenuComponent(),
+            event: mouseEvent || kbEvent,
+            item: data,
+            anchorElement: eventTarget,
+        });
+        // wait for showing context menu and focus on it
+        setTimeout(() => {
+            let ctxMnuEls: NodeListOf<HTMLElement>;
+            ctxMnuEls = HtmlUtils.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
+            if (ctxMnuEls && ctxMnuEls.length) {
+                ctxMnuEls[0].focus({preventScroll: true});
+            }
+        }, 300);
+        return true;
+    }
+
+    /**
+     * Support for closing all context menu
+     */
+    public closeContextMenu() {
+        const keyEvent = new KeyboardEvent('keydown', {key: 'Escape'});
+        this.getContextMenuService().closeAllContextMenus({
+            eventType: 'cancel',
+            event: keyEvent,
+        });
     }
 }

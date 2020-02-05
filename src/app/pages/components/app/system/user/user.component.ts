@@ -1,17 +1,17 @@
-import {IContextMenu} from '../smart-table.component';
-import {Component, Inject, Renderer2} from '@angular/core';
-import {convertUserStatusToDisplay, USER_STATUS} from '../../../@core/data/user';
-import {UserDataSource} from '../../../services/implementation/user/user.datasource';
+import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
+import {convertUserStatusToDisplay, USER_STATUS} from '../../../../../@core/data/user';
+import {UserDataSource} from '../../../../../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
+import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
+import {TranslateService} from '@ngx-translate/core';
+import {AppConfig} from '../../../../../config/app.config';
 import {
-    BaseSmartTableComponent,
     CONTEXT_MENU_ADD,
     CONTEXT_MENU_DELETE,
     CONTEXT_MENU_EDIT,
-} from '../base.smart-table.component';
-import {TranslateService} from '@ngx-translate/core';
-import {AppConfig} from '../../../config/app.config';
+    IContextMenu,
+} from '../../../abstract.component';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -115,8 +115,8 @@ export const UserContextMenu: IContextMenu[] = [{
 
 @Component({
     selector: 'ngx-smart-table',
-    templateUrl: '../smart-table.component.html',
-    styleUrls: ['../smart-table.component.scss'],
+    templateUrl: '../../../smart-table/smart-table.component.html',
+    styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSource> {
 
@@ -124,8 +124,9 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
-                @Inject(TranslateService) translateService: TranslateService) {
-        super(userDataSource, contextMenuService, logger, renderer, translateService,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
+        super(userDataSource, contextMenuService, logger, renderer, translateService, factoryResolver,
             'system.user.title', UserTableSettings, UserContextMenu);
     }
 

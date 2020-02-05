@@ -1,17 +1,17 @@
-import {IContextMenu} from '../smart-table.component';
-import {Component, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
+import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
+import {CustomerDatasource} from '../../../../../services/implementation/customer/customer.datasource';
+import {convertCustomerStatusToDisplay, CUSTOMER_STATUS} from '../../../../../@core/data/customer';
+import {TranslateService} from '@ngx-translate/core';
+import {AppConfig} from '../../../../../config/app.config';
 import {
-    BaseSmartTableComponent,
     CONTEXT_MENU_ADD,
     CONTEXT_MENU_DELETE,
     CONTEXT_MENU_EDIT,
-} from '../base.smart-table.component';
-import {CustomerDatasource} from '../../../services/implementation/customer/customer.datasource';
-import {convertCustomerStatusToDisplay, CUSTOMER_STATUS} from '../../../@core/data/customer';
-import {TranslateService} from '@ngx-translate/core';
-import {AppConfig} from '../../../config/app.config';
+    IContextMenu,
+} from '../../../abstract.component';
 
 export const CustomerTableSettings = {
     hideSubHeader: true,
@@ -114,8 +114,8 @@ export const CustomerContextMenu: IContextMenu[] = [{
 
 @Component({
     selector: 'ngx-smart-table',
-    templateUrl: '../smart-table.component.html',
-    styleUrls: ['../smart-table.component.scss'],
+    templateUrl: '../../../smart-table/smart-table.component.html',
+    styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class CustomerSmartTableComponent extends BaseSmartTableComponent<CustomerDatasource> {
 
@@ -123,18 +123,19 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
-                @Inject(TranslateService) translateService: TranslateService) {
-        super(dataSource, contextMenuService, logger, renderer, translateService,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver,
             'system.customer.title', CustomerTableSettings, CustomerContextMenu);
     }
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
-            { field: 'customerName', search: keyword },
-            { field: 'email', search: keyword },
-            { field: 'title', search: keyword },
-            { field: 'tel', search: keyword },
-            { field: 'address', search: keyword },
+            {field: 'customerName', search: keyword},
+            {field: 'email', search: keyword},
+            {field: 'title', search: keyword},
+            {field: 'tel', search: keyword},
+            {field: 'address', search: keyword},
         ], false);
         this.getDataSource().refresh();
     }

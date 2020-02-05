@@ -1,4 +1,4 @@
-import {IContextMenu, SmartTableComponent} from './smart-table.component';
+import {SmartTableComponent} from './smart-table.component';
 import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -7,13 +7,15 @@ import {
     S,
 } from '@angular/cdk/keycodes';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import KeyboardUtils from '../../utils/keyboard.utils';
+import KeyboardUtils from '../../../utils/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
-
-export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
-export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
-export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
+import {
+    CONTEXT_MENU_ADD,
+    CONTEXT_MENU_DELETE,
+    CONTEXT_MENU_EDIT,
+    IContextMenu,
+} from '../abstract.component';
 
 /**
  * Base smart table component base on {Ng2SmartTableComponent}

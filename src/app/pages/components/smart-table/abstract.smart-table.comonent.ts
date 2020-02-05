@@ -1,6 +1,6 @@
 import {
     AfterViewInit,
-    Component, ComponentFactoryResolver,
+    ComponentFactoryResolver,
     EventEmitter,
     Inject,
     QueryList,
@@ -9,42 +9,26 @@ import {
 } from '@angular/core';
 import {Cell} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {MouseEventGuard} from './customization/mouse.event.guard';
+import {MouseEventGuard} from '../customization/mouse.event.guard';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNumber} from 'util';
-import HtmlUtils from '../../utils/html.utils';
-import KeyboardUtils from '../../utils/keyboard.utils';
+import HtmlUtils from '../../../utils/html.utils';
+import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent} from './abstract.component';
-
-export interface IContextMenu {
-    id?: (item?: any) => string;
-    icon: (item?: any) => string;
-    title: (item?: any) => string;
-    enabled: (item?: any) => boolean;
-    visible: (item?: any) => boolean;
-    divider: (item?: any) => boolean;
-    click?: (item?: any) => void | null;
-}
+import {AbstractComponent, IContextMenu} from '../abstract.component';
 
 /**
- * Smart table base on {Ng2SmartTableComponent}
+ * Abstract smart table base on {Ng2SmartTableComponent}
  */
-@Component({
-    selector: 'ngx-smart-table',
-    templateUrl: './smart-table.component.html',
-    styleUrls: ['./smart-table.component.scss'],
-})
-export class SmartTableComponent extends AbstractComponent implements AfterViewInit {
+export class AbstractSmartTableComponent<T extends DataSource> extends AbstractComponent implements AfterViewInit {
 
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
     protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
-    protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
     protected static SEARCH_FIELD_SELECTOR: string = '[type="search"]';
 
     // -------------------------------------------------
@@ -118,12 +102,12 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      */
-    constructor(@Inject(DataSource) dataSource: DataSource,
-                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(Renderer2) renderer: Renderer2,
-                @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
+    protected constructor(@Inject(DataSource) dataSource: T,
+                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(Renderer2) renderer: Renderer2,
+                          @Inject(TranslateService) translateService: TranslateService,
+                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
     }
 
@@ -341,7 +325,7 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
      * @return Row DOM elements or undefined
      */
     protected getAllRowElements(): NodeListOf<HTMLTableRowElement> {
-        return this.getRowElementsBySelector(SmartTableComponent.SMART_TABLE_ROW_SELETOR);
+        return this.getRowElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR);
     }
 
     /**
@@ -478,7 +462,7 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
         columnIndex = (row ? row.cells.indexOf(cell) : -1);
         if (cell && cell.isEditable() && row && row.isInEditing && 0 <= columnIndex) {
             let cells: NodeListOf<HTMLElement>;
-            cells = HtmlUtils.getElementsBySelector(SmartTableComponent.SMART_TABLE_CELLS_EDIT_MODE_SELECTOR);
+            cells = HtmlUtils.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_CELLS_EDIT_MODE_SELECTOR);
             let editors: NodeListOf<HTMLElement>;
             editors = HtmlUtils.getFocusableElements(cells[columnIndex]);
             if (editors && editors.length) {
@@ -520,7 +504,7 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
 
         let cellEls: NodeListOf<HTMLTableCellElement>;
         cellEls = HtmlUtils.getElementsBySelector(
-            SmartTableComponent.SMART_TABLE_CELLS_SELECTOR) as NodeListOf<HTMLTableCellElement>;
+            AbstractSmartTableComponent.SMART_TABLE_CELLS_SELECTOR) as NodeListOf<HTMLTableCellElement>;
         if (!cellEls || !cellEls.length) {
             return undefined;
         }
@@ -715,14 +699,6 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
     }
 
     /**
-     * Triggered closed ContextMenu.
-     */
-    onContextMenuClose(): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenuClose');
-    }
-
-    /**
      * Perform search action
      * @param keyword to search
      */
@@ -744,7 +720,7 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
 
         } else if (KeyboardUtils.isContextMenuKey(event) && !this.isInEditMode()) {
             const hoveredRowsSelector: string =
-                [SmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join('');
+                [AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join('');
             let hoveredRows: NodeListOf<HTMLTableRowElement>;
             hoveredRows = this.getRowElementsBySelector(hoveredRowsSelector);
             let row: Row;
@@ -769,8 +745,8 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
         let targetEl: HTMLElement;
         targetEl = event.target as HTMLElement;
         if (targetEl
-            && (targetEl.closest(SmartTableComponent.CONTEXT_MENU_SELECTOR)
-                || targetEl.closest(SmartTableComponent.SEARCH_FIELD_SELECTOR))) {
+            && (targetEl.closest(AbstractSmartTableComponent.CONTEXT_MENU_SELECTOR)
+                || targetEl.closest(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR))) {
             return;
 
         } else {
@@ -840,21 +816,6 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
     onKeyPress(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyPress');
-    }
-
-    /**
-     * Perform action on menu item has been clicked
-     * @param event Object, consist of:
-     *      event: action event
-     *      item: menu item data
-     * @param menuItem IContextMenu that has been activated
-     */
-    onMenuEvent(event, menuItem?: IContextMenu) {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMenuEvent', event);
-        if (event && event.item && menuItem && typeof menuItem['click'] === 'function') {
-            menuItem['click']['apply'](this, [ event.item ]);
-        }
     }
 
     // -------------------------------------------------
@@ -1354,17 +1315,6 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
     }
 
     /**
-     * Support for closing all context menu
-     */
-    public closeContextMenu() {
-        const keyEvent = new KeyboardEvent('keydown', {key: 'Escape'});
-        this.getContextMenuService().closeAllContextMenus({
-            eventType: 'cancel',
-            event: keyEvent,
-        });
-    }
-
-    /**
      * Remove the specified Row out of the editing rows cache
      * @param row to remove
      */
@@ -1400,7 +1350,7 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
      * @return true for showing context menu; else false
      */
     protected showHideContextMenuOnRow(row: Row, event?: Event): boolean {
-        this.getLogger().debug('onContextMenu', row);
+        this.getLogger().debug('showHideContextMenuOnRow', row);
         if (row) {
             let mouseEvent: MouseEvent;
             mouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
@@ -1410,23 +1360,8 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
             rowEl = this.getRowElement(row);
             let target: Node;
             target = (event && event.target instanceof Node
-                && rowEl.contains(event.target as Node) ? event.target : rowEl);
-            this.getContextMenuService().show.next({
-                // Optional - if unspecified, all context menu components will open
-                contextMenu: this.getContextMenuComponent(),
-                event: mouseEvent || kbEvent,
-                item: row.getData(),
-                anchorElement: target,
-            });
-            // wait for showing context menu and focus on it
-            setTimeout(() => {
-                let ctxMnuEls: NodeListOf<HTMLElement>;
-                ctxMnuEls = this.getRowElementsBySelector(SmartTableComponent.CONTEXT_MENU_SELECTOR);
-                if (ctxMnuEls && ctxMnuEls.length) {
-                    ctxMnuEls[0].focus({ preventScroll: true });
-                }
-            }, 300);
-            return true;
+            && rowEl.contains(event.target as Node) ? event.target : rowEl);
+            return super.showHideContextMenu(event, target, row.getData());
 
         } else {
             this.closeContextMenu();

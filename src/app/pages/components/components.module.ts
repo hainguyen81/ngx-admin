@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SmartTableComponent} from './smart-table.component';
+import {SmartTableComponent} from './smart-table/smart-table.component';
 import {
     NbCardModule,
     NbCheckboxModule,
@@ -19,11 +19,12 @@ import {AppConfig} from '../../config/app.config';
 import {TreeviewModule} from 'ngx-treeview';
 import {TranslateModule} from '@ngx-translate/core';
 import {AngularSplitModule} from 'angular-split';
-import {NgxTreeviewComponent} from './treeview.component';
+import {NgxTreeviewComponent} from './treeview/treeview.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
-import {FormlyComponent} from './formly.component';
+import {NgxFormlyComponent} from './formly/formly.component';
+import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
 
 @NgModule({
     imports: [
@@ -69,7 +70,8 @@ import {FormlyComponent} from './formly.component';
     declarations: [
         SmartTableComponent,
         NgxTreeviewComponent,
-        FormlyComponent,
+        NgxFormlyComponent,
+        NgxSplitPaneComponent,
         NotFoundComponent,
     ],
     providers: [
