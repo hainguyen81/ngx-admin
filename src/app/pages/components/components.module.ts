@@ -23,6 +23,7 @@ import {NgxTreeviewComponent} from './treeview.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
+import {FormlyComponent} from './formly.component';
 
 @NgModule({
     imports: [
@@ -68,6 +69,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
     declarations: [
         SmartTableComponent,
         NgxTreeviewComponent,
+        FormlyComponent,
         NotFoundComponent,
     ],
     providers: [
