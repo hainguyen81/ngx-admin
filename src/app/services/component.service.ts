@@ -39,6 +39,15 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
     }
 
     /**
+     * Set the {ViewContainerRef} instance
+     * @param viewContainerRef to apply
+     */
+    setViewContainerRef(viewContainerRef: ViewContainerRef): void {
+        viewContainerRef || throwError('Could not inject ViewContainerRef');
+        this.viewContainerRef = viewContainerRef;
+    }
+
+    /**
      * Get the component type
      * @return the component type
      */
