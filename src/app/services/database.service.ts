@@ -131,7 +131,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
             entities.forEach((entity: T) => promises.push(this.insert(entity)));
         }
         return this.invokePromises(0,
-            (result: number, value: number) => (result + value),
+            (result: number, value: number) => (result + (value > 0 ? 1 : 0)),
             promises);
     }
 
@@ -142,7 +142,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
             entities.forEach((entity: T) => promises.push(this.delete(entity)));
         }
         return this.invokePromises(0,
-            (result: number, value: number) => (result + value),
+            (result: number, value: number) => (result + (value > 0 ? 1 : 0)),
             promises);
     }
 
