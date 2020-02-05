@@ -22,7 +22,6 @@ import {AngularSplitModule} from 'angular-split';
 import {NgxTreeviewComponent} from './treeview.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
-import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 
 @NgModule({
@@ -59,7 +58,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
          * - Kendo:        FormlyKendoModule
          * - NativeScript: FormlyNativescriptModule
          */
-        FormlyBootstrapModule,
+        /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
 
         /* Logger */

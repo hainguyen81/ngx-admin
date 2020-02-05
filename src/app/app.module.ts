@@ -43,7 +43,6 @@ import {AngularSplitModule} from 'angular-split';
 /* Formly for form builder */
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
-import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 
 @NgModule({
@@ -148,7 +147,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
          * - Kendo:        FormlyKendoModule
          * - NativeScript: FormlyNativescriptModule
          */
-        FormlyBootstrapModule,
+        /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
     ],
     providers: AppConfig.Providers,
