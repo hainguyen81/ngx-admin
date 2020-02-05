@@ -7,24 +7,19 @@ import {
     Renderer2,
     ViewChildren,
 } from '@angular/core';
-import {Cell, LocalDataSource} from 'ng2-smart-table';
+import {Cell} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {throwError} from 'rxjs';
 import {MouseEventGuard} from './customization/mouse.event.guard';
-import {ContextMenuComponent, ContextMenuService, IContextMenuClickEvent} from 'ngx-contextmenu';
+import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNumber} from 'util';
-import {
-    DocumentKeydownHandlerService,
-    DocumentKeypressHandlerService,
-    DocumentKeyupHandlerService,
-} from '../../services/implementation/document.keypress.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
+import {AbstractComponent} from './abstract.component';
 
 export interface IContextMenu {
     id?: (item?: any) => string;
@@ -41,7 +36,7 @@ export interface IContextMenu {
     templateUrl: './smart-table.component.html',
     styleUrls: ['./smart-table.component.scss'],
 })
-export class SmartTableComponent implements AfterViewInit {
+export class SmartTableComponent extends AbstractComponent implements AfterViewInit {
 
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
@@ -100,45 +95,25 @@ export class SmartTableComponent implements AfterViewInit {
         },
     };
 
-    @ViewChildren(ContextMenuComponent)
-    private readonly queryContextMenuComponent: QueryList<ContextMenuComponent>;
-    private contextMenuComponent: ContextMenuComponent;
-
-    private contextMenu: IContextMenu[];
-
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
     private smartTableComponent: Ng2SmartTableComponent;
 
-    private documentKeyDownHandlerService: DocumentKeydownHandlerService;
-    private documentKeyUpHandlerService: DocumentKeyupHandlerService;
-    private documentKeyPressHandlerService: DocumentKeypressHandlerService;
-
     private edittingRows: Array<Row> = [];
     private allowMultiEdit: boolean = false;
 
-    constructor(@Inject(DataSource) private dataSource: DataSource,
-                @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
-                @Inject(NGXLogger) private logger: NGXLogger,
-                @Inject(Renderer2) private renderer: Renderer2,
-                @Inject(TranslateService) private translateService: TranslateService) {
-        contextMenuService || throwError('Could not inject context menu service');
-        logger || throwError('Could not inject logger');
-        translateService || throwError('Could not inject TranslateService');
-        dataSource = dataSource || new LocalDataSource();
+    constructor(@Inject(DataSource) dataSource: DataSource,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService) {
+        super(dataSource, contextMenuService, logger, renderer, translateService);
     }
 
     ngAfterViewInit(): void {
-        this.queryContextMenuComponent.map(
-            (item) => this.contextMenuComponent = item);
+        super.ngAfterViewInit();
         this.querySmartTableComponent.map(
             (item) => this.smartTableComponent = item);
-        this.documentKeyDownHandlerService = new DocumentKeydownHandlerService(
-            (e: KeyboardEvent) => this.onKeyDown(e), this.getLogger());
-        this.documentKeyUpHandlerService = new DocumentKeyupHandlerService(
-            (e: KeyboardEvent) => this.onKeyUp(e), this.getLogger());
-        this.documentKeyPressHandlerService = new DocumentKeypressHandlerService(
-            (e: KeyboardEvent) => this.onKeyPress(e), this.getLogger());
     }
 
     // -------------------------------------------------
@@ -161,33 +136,6 @@ export class SmartTableComponent implements AfterViewInit {
         }
     }
 
-    protected getRenderer(): Renderer2 {
-        return this.renderer;
-    }
-
-    protected getTranslateService(): TranslateService {
-        return this.translateService;
-    }
-
-    protected getDocumentKeyDownHandlerService(): DocumentKeydownHandlerService {
-        this.documentKeyDownHandlerService || throwError('Could not handle document keydown');
-        return this.documentKeyDownHandlerService;
-    }
-
-    protected getDocumentKeyUpHandlerService(): DocumentKeyupHandlerService {
-        this.documentKeyUpHandlerService || throwError('Could not handle document keyup');
-        return this.documentKeyUpHandlerService;
-    }
-
-    protected getDocumentKeyPressHandlerService(): DocumentKeypressHandlerService {
-        this.documentKeyPressHandlerService || throwError('Could not handle document keypress');
-        return this.documentKeyPressHandlerService;
-    }
-
-    protected getLogger(): NGXLogger {
-        return this.logger;
-    }
-
     protected setTableSettings(settings: any) {
         // apply translate
         if (settings && Object.keys(settings).length) {
@@ -207,28 +155,6 @@ export class SmartTableComponent implements AfterViewInit {
 
     protected setTableHeader(header: string) {
         this.tableHeader = header;
-    }
-
-    protected getDataSource(): DataSource {
-        return this.dataSource;
-    }
-
-    protected setDataSource(dataSource: DataSource) {
-        dataSource || throwError('Not found data source!');
-        this.dataSource = dataSource;
-    }
-
-    protected getContextMenuService(): ContextMenuService {
-        return this.contextMenuService;
-    }
-
-    protected getContextMenuComponent(): ContextMenuComponent {
-        return this.contextMenuComponent;
-    }
-
-    protected setContextMenu(contextMenu: IContextMenu[]) {
-        (contextMenu && contextMenu.length) || throwError('Context menu must be valid');
-        this.contextMenu = contextMenu;
     }
 
     protected getSmartTableComponent(): Ng2SmartTableComponent {
@@ -1470,7 +1396,7 @@ export class SmartTableComponent implements AfterViewInit {
                 && rowEl.contains(event.target as Node) ? event.target : rowEl);
             this.getContextMenuService().show.next({
                 // Optional - if unspecified, all context menu components will open
-                contextMenu: this.contextMenuComponent,
+                contextMenu: this.getContextMenuComponent(),
                 event: mouseEvent || kbEvent,
                 item: row.getData(),
                 anchorElement: target,
