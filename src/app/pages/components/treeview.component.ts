@@ -28,7 +28,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param treeviewConfig {TreeviewConfig}
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
-    protected constructor(@Inject(DataSource) dataSource: DataSource,
+    constructor(@Inject(DataSource) dataSource: DataSource,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,

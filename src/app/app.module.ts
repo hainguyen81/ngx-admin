@@ -40,6 +40,10 @@ import {ToastrModule} from 'ngx-toastr';
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* SplitPane */
 import {AngularSplitModule} from 'angular-split';
+/* Formly for form builder */
+import {ReactiveFormsModule} from '@angular/forms';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 
 @NgModule({
     declarations: [AppComponent],
@@ -131,6 +135,19 @@ import {AngularSplitModule} from 'angular-split';
 
         /* SplitPane */
         AngularSplitModule.forRoot(),
+
+        /* Formly for form builder */
+        ReactiveFormsModule,
+        FormlyModule.forRoot(),
+        /**
+         * - Bootstrap:    FormlyBootstrapModule
+         * - Material2:    FormlyMaterialModule
+         * - Ionic:        FormlyIonicModule
+         * - PrimeNG:      FormlyPrimeNGModule
+         * - Kendo:        FormlyKendoModule
+         * - NativeScript: FormlyNativescriptModule
+         */
+        FormlyBootstrapModule,
     ],
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],

@@ -20,6 +20,9 @@ import {TreeviewModule} from 'ngx-treeview';
 import {TranslateModule} from '@ngx-translate/core';
 import {AngularSplitModule} from 'angular-split';
 import {NgxTreeviewComponent} from './treeview.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
 
 @NgModule({
     imports: [
@@ -43,6 +46,20 @@ import {NgxTreeviewComponent} from './treeview.component';
         TreeviewModule.forRoot(),
         /* SplitPane */
         AngularSplitModule.forRoot(),
+
+        /* Formly for form builder */
+        ReactiveFormsModule,
+        FormlyModule.forRoot(),
+        /**
+         * - Bootstrap:    FormlyBootstrapModule
+         * - Material2:    FormlyMaterialModule
+         * - Ionic:        FormlyIonicModule
+         * - PrimeNG:      FormlyPrimeNGModule
+         * - Kendo:        FormlyKendoModule
+         * - NativeScript: FormlyNativescriptModule
+         */
+        FormlyBootstrapModule,
+
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
         NbSearchModule,
