@@ -1,0 +1,24 @@
+<nb-card>
+    <nb-card-header>
+        {{paneHeader | translate}}
+    </nb-card-header>
+
+    <nb-card-body>
+        <as-split [contextMenu]="splitPaneContextMenuComponent">
+
+        </as-split>
+        <context-menu #splitPaneContextMenuComponent
+                      [disabled]="!contextMenu || !contextMenu.length"
+                      (close)="onContextMenuClose()">
+            <ng-template
+                contextMenuItem
+                *ngFor="let item of contextMenu"
+                [visible]="item?.visible?.apply(this, [ undefined ])"
+                [enabled]="item?.enabled?.apply(this, [ undefined ])"
+                [divider]="item?.divider?.apply(this, [ undefined ])"
+                (execute)="onMenuEvent($event, item)"
+            ><span><nb-icon [icon]="item?.icon?.apply(this, [ undefined ])" pack="fa"></nb-icon>
+                {{item?.title?.apply(this, [undefined]) | translate}}</span></ng-template>
+        </context-menu>
+    </nb-card-body>
+</nb-card>

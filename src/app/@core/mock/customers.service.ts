@@ -10,9 +10,9 @@ import {ICustomer} from '../data/customer';
 @Injectable()
 export class MockCustomerService {
 
-    constructor(@Inject(CustomerDbService) private customerDbService: CustomerDbService,
+    constructor(@Inject(CustomerDbService) private dbService: CustomerDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
-        customerDbService || throwError('Could not inject user database service');
+        dbService || throwError('Could not inject user database service');
         logger || throwError('Could not inject logger service');
         logger.updateConfig(LogConfig);
     }
@@ -23,13 +23,13 @@ export class MockCustomerService {
         }
 
         // just generate mock data if empty
-        this.customerDbService.count().then((recNumber: number) => {
+        this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
-                // generate mock customers data
+                // generate mock data
                 let mockCustomers: ICustomer[];
                 mockCustomers = customersGenerate();
                 this.logger.debug('Generate customers', mockCustomers);
-                this.customerDbService.insertEntities(mockCustomers)
+                this.dbService.insertEntities(mockCustomers)
                     .then((affected: number) => this.logger.debug('Initialized mock customers data', affected),
                         (errors) => this.logger.error('Could not initialize mock customers data', errors));
             } else {

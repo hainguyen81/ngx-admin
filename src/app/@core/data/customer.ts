@@ -19,14 +19,14 @@ export interface ICustomer {
     id: string;
     customerName: string;
     email: string;
-    tel: string;
-    address: string;
+    tel?: string | null;
+    address?: string | null;
     status: CUSTOMER_STATUS;
 }
 
 export default class Customer implements ICustomer {
     constructor(public id: string, public customerName: string,
-                public email: string, public tel: string,
-                public address: string, public status: CUSTOMER_STATUS) {
+                public email: string, public status: CUSTOMER_STATUS,
+                public tel?: string, public address?: string) {
     }
 }

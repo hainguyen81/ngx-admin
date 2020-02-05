@@ -5,6 +5,7 @@ export const DB_STORE: any = {
     module: 'module',
     user: 'user',
     customer: 'customer',
+    organization: 'organization',
 };
 
 export const dbConfig: DBConfig = {
@@ -66,6 +67,28 @@ export const dbConfig: DBConfig = {
             {name: 'tel', keypath: 'tel', options: {unique: false}},
             {name: 'address', keypath: 'address', options: {unique: false}},
             {name: 'status', keypath: 'status', options: {unique: false}},
+        ],
+    }, {
+        store: DB_STORE.organization,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'code', keypath: 'code', options: {unique: false}},
+            {name: 'name', keypath: 'name', options: {unique: false}},
+            {name: 'parentId', keypath: 'parentId', options: {unique: false}},
+            {name: 'parent', keypath: 'parent', options: {unique: false}},
+            {name: 'type', keypath: 'type', options: {unique: false}},
+            {name: 'tax', keypath: 'tax', options: {unique: false}},
+            {name: 'address', keypath: 'address', options: {unique: false}},
+            {name: 'tel', keypath: 'tel', options: {unique: false}},
+            {name: 'fax', keypath: 'fax', options: {unique: false}},
+            {name: 'email', keypath: 'email', options: {unique: false}},
+            {name: 'remark', keypath: 'remark', options: {unique: false}},
+            {name: 'managerId', keypath: 'managerId', options: {unique: false}},
+            {name: 'manager', keypath: 'manager', options: {unique: false}},
+            {name: 'contact', keypath: 'contact', options: {unique: false}},
+            {name: 'image', keypath: 'image', options: {unique: false}},
+            {name: 'children', keypath: 'children', options: {unique: false}},
         ],
     }],
 };
