@@ -102,6 +102,18 @@ export class SmartTableComponent extends AbstractComponent implements AfterViewI
     private edittingRows: Array<Row> = [];
     private allowMultiEdit: boolean = false;
 
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {SmartTableComponent} class
+     * @param dataSource {DataSource}
+     * @param contextMenuService {ContextMenuService}
+     * @param logger {NGXLogger}
+     * @param renderer {Renderer2}
+     * @param translateService {TranslateService}
+     */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,

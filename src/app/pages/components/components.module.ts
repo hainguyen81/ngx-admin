@@ -19,7 +19,7 @@ import {AppConfig} from '../../config/app.config';
 import {TreeviewModule} from 'ngx-treeview';
 import {TranslateModule} from '@ngx-translate/core';
 import {AngularSplitModule} from 'angular-split';
-import {TreeviewComponent} from './treeview.component';
+import {NgxTreeviewComponent} from './treeview.component';
 
 @NgModule({
     imports: [
@@ -49,7 +49,7 @@ import {TreeviewComponent} from './treeview.component';
     ],
     declarations: [
         SmartTableComponent,
-        TreeviewComponent,
+        NgxTreeviewComponent,
         NotFoundComponent,
     ],
     providers: [

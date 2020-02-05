@@ -1,2 +1,13 @@
-<nb-card>
-</nb-card>
+<ngx-treeview *ngIf="!dropdown"
+              [config]="treeviewConfig"
+              [items]="treeviewItems"
+              (selectedChange)="onSelectedChange($event)"
+              (filterChange)="onFilterChange($event)">
+</ngx-treeview>
+<ngx-dropdown-treeview *ngIf="dropdown"
+                       [buttonClass]="buttonClass"
+                       [config]="treeviewConfig"
+                       [items]="treeviewItems"
+                       (selectedChange)="onSelectedChange($event)"
+                       (filterChange)="onFilterChange($event)">
+</ngx-dropdown-treeview>

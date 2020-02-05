@@ -22,6 +22,21 @@ export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
 })
 export abstract class BaseSmartTableComponent<T extends DataSource> extends SmartTableComponent {
 
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {BaseSmartTableComponent} class
+     * @param dataSource {DataSource}
+     * @param contextMenuService {ContextMenuService}
+     * @param logger {NGXLogger}
+     * @param renderer {Renderer2}
+     * @param translateService {TranslateService}
+     * @param tableHeader the table caption
+     * @param tableSettings the table settings
+     * @param contextMenu the context menu items array
+     */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                           @Inject(NGXLogger) logger: NGXLogger,
