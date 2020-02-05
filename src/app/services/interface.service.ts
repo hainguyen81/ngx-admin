@@ -1,5 +1,28 @@
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {ComponentFactoryResolver, ViewContainerRef} from '@angular/core';
+
+/**
+ * The interface for component
+ * @param <T> component type
+ */
+export declare interface IComponentService<T> {
+    /**
+     * Get the {ComponentFactoryResolver} instance to resolve component type
+     * @return the {ComponentFactoryResolver} instance
+     */
+    getFactoryResolver(): ComponentFactoryResolver;
+
+    /**
+     * Get the {ViewContainerRef} instance to create and add component
+     */
+    getViewContainerRef(): ViewContainerRef;
+
+    /**
+     * Resolve (create) and add component to {ViewContainerRef}
+     */
+    resolve(): void;
+}
 
 /**
  * The interface for HTTP service
