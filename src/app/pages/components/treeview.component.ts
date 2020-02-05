@@ -30,12 +30,12 @@ export class NgxTreeviewComponent<T extends DataSource>
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
     protected constructor(@Inject(DataSource) dataSource: T,
-                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(Renderer2) renderer: Renderer2,
-                @Inject(TranslateService) translateService: TranslateService,
-                treeviewConfig?: TreeviewConfig,
-                dropdown?: boolean | false) {
+                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(Renderer2) renderer: Renderer2,
+                          @Inject(TranslateService) translateService: TranslateService,
+                          treeviewConfig?: TreeviewConfig,
+                          dropdown?: boolean | false) {
         super(dataSource, contextMenuService, logger, renderer, translateService, treeviewConfig, dropdown);
     }
 
