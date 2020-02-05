@@ -12,8 +12,7 @@ import {AbstractTreeviewComponent} from './abstract.treeview.component';
     templateUrl: './treeview.component.html',
     styleUrls: ['./treeview.component.scss'],
 })
-export class NgxTreeviewComponent<T extends DataSource>
-    extends AbstractTreeviewComponent<T> implements AfterViewInit {
+export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -29,7 +28,7 @@ export class NgxTreeviewComponent<T extends DataSource>
      * @param treeviewConfig {TreeviewConfig}
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
-    protected constructor(@Inject(DataSource) dataSource: T,
+    protected constructor(@Inject(DataSource) dataSource: DataSource,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
