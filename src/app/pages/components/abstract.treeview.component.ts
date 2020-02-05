@@ -7,6 +7,9 @@ import {AbstractComponent} from './abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 
+/**
+ * Abstract tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
+ */
 export abstract class AbstractTreeviewComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit {
 
@@ -116,12 +119,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
     protected constructor(@Inject(DataSource) dataSource: T,
-                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(Renderer2) renderer: Renderer2,
-                @Inject(TranslateService) translateService: TranslateService,
-                private treeviewConfig?: TreeviewConfig,
-                private dropdown?: boolean | false) {
+                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(Renderer2) renderer: Renderer2,
+                          @Inject(TranslateService) translateService: TranslateService,
+                          private treeviewConfig?: TreeviewConfig, private dropdown?: boolean | false) {
         super(dataSource, contextMenuService, logger, renderer, translateService);
         this.setConfig(treeviewConfig);
     }

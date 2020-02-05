@@ -31,6 +31,9 @@ export interface IContextMenu {
     click?: (item?: any) => void | null;
 }
 
+/**
+ * Smart table base on {Ng2SmartTableComponent}
+ */
 @Component({
     selector: 'ngx-smart-table',
     templateUrl: './smart-table.component.html',

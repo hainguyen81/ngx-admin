@@ -2,12 +2,19 @@
               [config]="treeviewConfig"
               [items]="treeviewItems"
               (selectedChange)="onSelectedChange($event)"
-              (filterChange)="onFilterChange($event)">
+              (filterChange)="onFilterChange($event)"
+              (keydown)="onKeyDown($event)"
+              (keyup)="onKeyUp($event)"
+              (keypress)="onKeyPress($event)">
 </ngx-treeview>
+
 <ngx-dropdown-treeview *ngIf="dropdown"
                        [buttonClass]="buttonClass"
                        [config]="treeviewConfig"
                        [items]="treeviewItems"
                        (selectedChange)="onSelectedChange($event)"
-                       (filterChange)="onFilterChange($event)">
+                       (filterChange)="onFilterChange($event)"
+                       (keydown)="onKeyDown($event)"
+                       (keyup)="onKeyUp($event)"
+                       (keypress)="onKeyPress($event)">
 </ngx-dropdown-treeview>

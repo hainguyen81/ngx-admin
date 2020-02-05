@@ -7,6 +7,9 @@ import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeviewItem} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
 
+/**
+ * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
+ */
 @Component({
     selector: 'ngx-tree-view',
     templateUrl: './treeview.component.html',
@@ -19,7 +22,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponent} class
+     * Create a new instance of {NgxTreeviewComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param logger {NGXLogger}
@@ -29,12 +32,11 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          treeviewConfig?: TreeviewConfig,
-                          dropdown?: boolean | false) {
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                treeviewConfig?: TreeviewConfig, dropdown?: boolean | false) {
         super(dataSource, contextMenuService, logger, renderer, translateService, treeviewConfig, dropdown);
     }
 

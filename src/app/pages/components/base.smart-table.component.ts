@@ -15,6 +15,9 @@ export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
 export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
 
+/**
+ * Base smart table component base on {Ng2SmartTableComponent}
+ */
 @Component({
     selector: 'ngx-smart-table',
     templateUrl: './smart-table.component.html',
