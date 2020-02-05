@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy,} from '@nebular/auth';
+import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
