@@ -48,8 +48,8 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(dataSource, contextMenuService, logger, renderer,
-            translateService, factoryResolver, OrganizationTreeviewConfig);
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+        super.setConfig(OrganizationTreeviewConfig);
     }
 
     // -------------------------------------------------
