@@ -1,6 +1,6 @@
 import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {FormlyComponent} from './formly.component';
+import {NgxFormlyComponent} from './formly.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,7 +14,7 @@ import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/co
     templateUrl: './formly.component.html',
     styleUrls: ['./formly.component.scss'],
 })
-export abstract class BaseFormlyComponent<T, D extends DataSource> extends FormlyComponent {
+export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFormlyComponent {
 
     // -------------------------------------------------
     // CONSTRUCTION

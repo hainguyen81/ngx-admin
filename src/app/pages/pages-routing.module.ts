@@ -4,6 +4,7 @@ import {PagesComponent} from './pages.component';
 import {NotFoundComponent} from './components/not-found.component';
 import {CustomerSmartTableComponent} from './components/app/system/customer/customer.component';
 import {UserSmartTableComponent} from './components/app/system/user/user.component';
+import {OrganizationTreeviewComponent} from './components/app/system/organization/organization.treeview.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
@@ -14,7 +15,7 @@ const routes: Routes = [{
     children: [
         {
             path: 'organization',
-            component: NotFoundComponent,
+            component: OrganizationTreeviewComponent,
         },
         {
             path: 'user',
