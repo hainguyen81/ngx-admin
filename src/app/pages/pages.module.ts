@@ -8,6 +8,7 @@ import {NbMenuModule} from '@nebular/theme';
 import {UserModule} from './components/app/system/user/user.module';
 import {CustomerModule} from './components/app/system/customer/customer.module';
 import {OrganizationModule} from './components/app/system/organization/organization.module';
+import {AppMaterialModule} from '../app.material.module';
 
 @NgModule({
     imports: [
@@ -15,6 +16,9 @@ import {OrganizationModule} from './components/app/system/organization/organizat
         ThemeModule,
         NbMenuModule,
         ComponentsModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
 
         /* System module */
         OrganizationModule,

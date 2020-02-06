@@ -48,9 +48,11 @@ import {AngularSplitModule} from 'angular-split';
 /* Formly for form builder */
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
-import { FormlyMaterialModule } from '@ngx-formly/material';
+import {FormlyMaterialModule} from '@ngx-formly/material';
 /* Treeview */
 import {TreeviewModule} from 'ngx-treeview';
+/* Angular material modules */
+import {AppMaterialModule} from './app.material.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -59,6 +61,9 @@ import {TreeviewModule} from 'ngx-treeview';
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
 
         /* Core Module for layout */
         CoreModule.forRoot(),

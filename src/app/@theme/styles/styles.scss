@@ -21,19 +21,30 @@
 // Authentication
 @import '~@nebular/auth/styles/globals';
 
+// angular material theme
+@import '~@angular/material/theming';
+
 // install the framework and custom global styles
 @include nb-install() {
 
-  // framework global styles
-  @include nb-theme-global();
-  @include nb-auth-global();
+    // framework global styles
+    @include nb-theme-global();
+    @include nb-auth-global();
 
-  @include ngx-layout();
-  // loading progress bar
-  @include ngx-pace-theme();
+    @include ngx-layout();
+    // loading progress bar
+    @include ngx-pace-theme();
 
-  @include nb-overrides();
+    // angular material theme
+    @include mat-core();
+    //$dark-primary: mat-palette($mat-blue-grey);
+    //$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+    //$dark-warn:    mat-palette($mat-deep-orange);
+    //$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+    //@include angular-material-theme($dark-theme);
 
-  // Authentication
-  @include nb-auth-global();
+    @include nb-overrides();
+
+    // Authentication
+    @include nb-auth-global();
 };

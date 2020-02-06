@@ -25,6 +25,7 @@ import {FormlyModule} from '@ngx-formly/core';
 import {NgxFormlyComponent} from './formly/formly.component';
 import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
 import {FormlyMaterialModule} from '@ngx-formly/material';
+import {AppMaterialModule} from '../../app.material.module';
 
 @NgModule({
     imports: [
@@ -35,6 +36,9 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
         NbIconModule,
         NbCardModule,
         NbSearchModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
 
         /* i18n */
         TranslateModule,
