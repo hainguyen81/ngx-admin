@@ -40,10 +40,13 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           model: T,
-                          config: FormlyConfig,
-                          fields: FormlyFieldConfig,
-                          options: FormlyFormOptions) {
-        super(dataSource, contextMenuService, logger, renderer,
-            translateService, factoryResolver, model, config, fields, options);
+                          config?: FormlyConfig,
+                          fields?: FormlyFieldConfig,
+                          options?: FormlyFormOptions) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+        super.setModel(model);
+        super.setConfig(config);
+        super.setFields(fields);
+        super.setOptions(options);
     }
 }

@@ -4,7 +4,6 @@ import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/c
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
 
 /**
  * Form component base on {FormlyModule}
@@ -17,11 +16,25 @@ import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/co
 export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource> {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private model: any;
+
+    // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
     getModel(): any {
         return this.model;
+    }
+
+    /**
+     * Set the form data model
+     * @param model to apply
+     */
+    protected setModel(model: any) {
+        this.model = model || {};
     }
 
     // -------------------------------------------------
@@ -36,22 +49,13 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
-     * @param model form data model
-     * @param config {FormlyConfig}
-     * @param fields {FormlyFieldConfig}
-     * @param options {FormlyFormOptions}
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                private model: any,
-                config: FormlyConfig,
-                fields: FormlyFieldConfig,
-                options: FormlyFormOptions) {
-        super(dataSource, contextMenuService, logger, renderer,
-            translateService, factoryResolver, config, fields, options);
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
     }
 }

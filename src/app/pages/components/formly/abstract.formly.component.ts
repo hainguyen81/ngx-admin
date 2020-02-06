@@ -112,9 +112,9 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          private config: FormlyConfig,
-                          private fields: FormlyFieldConfig,
-                          private options: FormlyFormOptions) {
+                          private config?: FormlyConfig,
+                          private fields?: FormlyFieldConfig,
+                          private options?: FormlyFormOptions) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
     }
 
