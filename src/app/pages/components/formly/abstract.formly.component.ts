@@ -6,6 +6,7 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
 import {FormGroup} from '@angular/forms';
+import {isArray} from 'util';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -80,6 +81,13 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                     field.templateOptions.label = translate.instant(field.templateOptions.label);
                     field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
                     field.templateOptions.description = translate.instant(field.templateOptions.description);
+                    if (isArray(field.templateOptions.options)) {
+                        field.templateOptions.options.forEach(option => {
+                            if (option && option['label']) {
+                                option['label'] = translate.instant(option['label']);
+                            }
+                        });
+                    }
                 }
             });
         }

@@ -7,6 +7,26 @@
 			"add": "Thêm",
 			"edit": "Sửa",
 			"delete": "Xoá"
+		},
+		"enum": {
+			"userStatus": {
+				"activated": "Đã kích hoạt",
+				"locked": "Khoá",
+				"notActivated": "Chưa kích hoạt"
+			},
+			"customerStatus": {
+				"activated": "Đã kích hoạt",
+				"locked": "Khoá",
+				"notActivated": "Chưa kích hoạt"
+			},
+			"organizationType": {
+				"head": "Hội sở",
+				"branch": "Chi nhánh",
+				"division": "Phân khu",
+				"unit": "Đơn vị",
+				"department": "Phòng ban",
+				"team_group": "Đội / Nhóm"
+			}
 		}
 	},
 	"system": {

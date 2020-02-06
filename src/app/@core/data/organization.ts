@@ -12,17 +12,17 @@ export const enum ORGANIZTAION_TYPE {
 export function convertOrganizationTypeToDisplay(value: ORGANIZTAION_TYPE): string {
     switch (value) {
         case ORGANIZTAION_TYPE.HEAD_CENTER:
-            return 'Head Center';
+            return 'common.enum.organizationType.head';
         case ORGANIZTAION_TYPE.BRANCH:
-            return 'Branch';
+            return 'common.enum.organizationType.branch';
         case ORGANIZTAION_TYPE.DIVISION:
-            return 'Division';
+            return 'common.enum.organizationType.division';
         case ORGANIZTAION_TYPE.UNIT:
-            return 'Unit';
+            return 'common.enum.organizationType.unit';
         case ORGANIZTAION_TYPE.DEPARTMENT:
-            return 'Department';
+            return 'common.enum.organizationType.department';
         default:
-            return 'Team/Group';
+            return 'common.enum.organizationType.team_group';
     }
 }
 

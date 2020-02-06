@@ -7,7 +7,7 @@ import {NGXLogger} from 'ngx-logger';
 import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import {isNumber} from 'util';
+import {isArray, isNumber} from 'util';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
@@ -138,9 +138,19 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
                 settings['noDataMessage'] = this.getTranslateService().instant(settings['noDataMessage']);
             }
             if (settings.hasOwnProperty('columns')) {
+                let translate: TranslateService;
+                translate = this.getTranslateService();
                 Object.values(settings['columns']).forEach(column => {
                     if (column && column.hasOwnProperty('title')) {
-                        column['title'] = this.getTranslateService().instant(column['title']);
+                        column['title'] = translate.instant(column['title']);
+                        if (column['editor'] && column['editor']['config']
+                            && isArray(column['editor']['config']['list'])) {
+                            Array.from(column['editor']['config']['list']).forEach(item => {
+                                if (item && item.hasOwnProperty('title')) {
+                                    item['title'] = translate.instant(item['title']);
+                                }
+                            });
+                        }
                     }
                 });
             }

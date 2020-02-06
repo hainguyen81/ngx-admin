@@ -10,11 +10,11 @@ export const enum USER_STATUS {
 export function convertUserStatusToDisplay(value: USER_STATUS): string {
     switch (value) {
         case USER_STATUS.ACTIVATED:
-            return 'Activated';
+            return 'common.enum.userStatus.activated';
         case USER_STATUS.LOCKED:
-            return 'Locked';
+            return 'common.enum.userStatus.locked';
         default:
-            return 'Not activated';
+            return 'common.enum.userStatus.notActivated';
     }
 }
 
