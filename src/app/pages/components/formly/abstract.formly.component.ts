@@ -62,7 +62,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * Get the form fields configuration
      * @return the form fields configuration
      */
-    public getFields(): FormlyFieldConfig {
+    public getFields(): FormlyFieldConfig[] {
         return this.fields;
     }
 
@@ -70,7 +70,18 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * Set the form fields configuration
      * @param fields to apply
      */
-    protected setFields(fields: FormlyFieldConfig) {
+    protected setFields(fields: FormlyFieldConfig[]) {
+        // apply translate
+        if (fields && fields.length) {
+            let translate: TranslateService;
+            translate = this.getTranslateService();
+            fields.forEach(field => {
+                if (field.templateOptions) {
+                    field.templateOptions.label = translate.instant(field.templateOptions.label);
+                    field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
+                }
+            });
+        }
         this.fields = fields;
     }
 
@@ -113,7 +124,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           private config?: FormlyConfig,
-                          private fields?: FormlyFieldConfig,
+                          private fields?: FormlyFieldConfig[] | [],
                           private options?: FormlyFormOptions) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
     }

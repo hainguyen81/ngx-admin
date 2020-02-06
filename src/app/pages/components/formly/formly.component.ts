@@ -25,6 +25,10 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    /**
+     * Get the form data model
+     * @return the form data model
+     */
     getModel(): any {
         return this.model;
     }

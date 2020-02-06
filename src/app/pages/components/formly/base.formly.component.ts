@@ -17,6 +17,18 @@ import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/co
 export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFormlyComponent {
 
     // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    getModel(): T {
+        return super.getModel() as T;
+    }
+
+    protected setModel(model: T) {
+        super.setModel(model);
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -28,7 +40,6 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
-     * @param model form data model
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
@@ -39,12 +50,10 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          model: T,
                           config?: FormlyConfig,
-                          fields?: FormlyFieldConfig,
+                          fields?: FormlyFieldConfig[],
                           options?: FormlyFormOptions) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
-        super.setModel(model);
         super.setConfig(config);
         super.setFields(fields);
         super.setOptions(options);

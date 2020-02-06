@@ -8,8 +8,9 @@ import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
-import {OrganizationDbService, OrganizationHttpService,} from '../../../../../services/implementation/organization/organization.service';
+import {OrganizationDbService, OrganizationHttpService} from '../../../../../services/implementation/organization/organization.service';
 import {TreeviewModule} from 'ngx-treeview';
+import {OrganizationFormlyComponent} from './organization.formly.component';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import {TreeviewModule} from 'ngx-treeview';
     ],
     declarations: [
         OrganizationTreeviewComponent,
+        OrganizationFormlyComponent,
     ],
     providers: [
         {

@@ -14,8 +14,58 @@
         "menu": "Hệ thống",
         "organization": {
             "title": "Quản lý tổ chức",
-            "menu": "Tổ chức"
-        },
+            "menu": "Tổ chức",
+			"form": {
+				"belongTo": {
+					"label": "Trực thuộc",
+					"placeholder": "Trực thuộc"
+				},
+				"manager": {
+					"label": "Quản lý",
+					"placeholder": "Quản lý"
+				},
+				"code": {
+					"label": "Mã",
+					"placeholder": "Mã"
+				},
+				"name": {
+					"label": "Tên",
+					"placeholder": "Tên"
+				},
+				"type": {
+					"label": "Loại",
+					"placeholder": "Loại"
+				},
+				"tax": {
+					"label": "Mã số thuế",
+					"placeholder": "Mã số thuế"
+				},
+				"address": {
+					"label": "Địa chỉ",
+					"placeholder": "Địa chỉ"
+				},
+				"tel": {
+					"label": "Tel",
+					"placeholder": "Tel"
+				},
+				"fax": {
+					"label": "Fax",
+					"placeholder": "Fax"
+				},
+				"email": {
+					"label": "Thư điện tử",
+					"placeholder": "Thư điện tử"
+				},
+				"contact": {
+					"label": "Người liên hệ",
+					"placeholder": "Người liên hệ"
+				},
+				"remark": {
+					"label": "Ghi chú",
+					"placeholder": "Ghi chú"
+				}
+			}
+		},
         "user": {
             "title": "Quản lý người dùng",
             "menu": "Người dùng",

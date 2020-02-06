@@ -1,4 +1,4 @@
-import {AfterViewInit, ComponentFactoryResolver, EventEmitter, Inject, QueryList, Renderer2, ViewChildren,} from '@angular/core';
+import {AfterViewInit, ComponentFactoryResolver, EventEmitter, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
 import {Cell} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {MouseEventGuard} from '../customization/mouse.event.guard';
