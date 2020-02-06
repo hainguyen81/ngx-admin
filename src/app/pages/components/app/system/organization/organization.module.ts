@@ -11,6 +11,9 @@ import {OrganizationDataSource} from '../../../../../services/implementation/org
 import {OrganizationDbService, OrganizationHttpService} from '../../../../../services/implementation/organization/organization.service';
 import {TreeviewModule} from 'ngx-treeview';
 import {OrganizationFormlyComponent} from './organization.formly.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyMaterialModule} from '@ngx-formly/material';
 
 @NgModule({
     imports: [
@@ -34,6 +37,20 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 
         /* Tree-view */
         TreeviewModule.forRoot(),
+
+        /* Formly for form builder */
+        ReactiveFormsModule,
+        FormlyModule.forRoot(),
+        /**
+         * - Bootstrap:    FormlyBootstrapModule
+         * - Material2:    FormlyMaterialModule
+         * - Ionic:        FormlyIonicModule
+         * - PrimeNG:      FormlyPrimeNGModule
+         * - Kendo:        FormlyKendoModule
+         * - NativeScript: FormlyNativescriptModule
+         */
+        /*FormlyBootstrapModule,*/
+        FormlyMaterialModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
