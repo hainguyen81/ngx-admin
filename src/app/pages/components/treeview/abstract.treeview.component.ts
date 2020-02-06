@@ -1,4 +1,12 @@
-import {AfterViewInit, ComponentFactoryResolver, Inject, OnInit, QueryList, Renderer2, ViewChildren,} from '@angular/core';
+import {
+    AfterViewInit,
+    ComponentFactoryResolver,
+    Inject,
+    OnInit,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
