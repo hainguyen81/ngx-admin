@@ -22,9 +22,9 @@ import {AngularSplitModule} from 'angular-split';
 import {NgxTreeviewComponent} from './treeview/treeview.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
-import {FormlyMaterialModule} from '@ngx-formly/material';
 import {NgxFormlyComponent} from './formly/formly.component';
 import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
+import {FormlyMaterialModule} from '@ngx-formly/material';
 
 @NgModule({
     imports: [

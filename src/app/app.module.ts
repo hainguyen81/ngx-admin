@@ -48,7 +48,7 @@ import {AngularSplitModule} from 'angular-split';
 /* Formly for form builder */
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
-import {FormlyMaterialModule} from '@ngx-formly/material';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 /* Treeview */
 import {TreeviewModule} from 'ngx-treeview';
 
