@@ -33,9 +33,8 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                horizontal?: boolean | false) {
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
         super(dataSource, contextMenuService, logger, renderer,
-            translateService, factoryResolver, horizontal);
+            translateService, factoryResolver, false);
     }
 }
