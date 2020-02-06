@@ -1,4 +1,12 @@
-import {AfterViewInit, ComponentFactoryResolver, EventEmitter, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {
+    AfterViewInit,
+    ComponentFactoryResolver,
+    EventEmitter,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren
+} from '@angular/core';
 import {Cell} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {MouseEventGuard} from '../customization/mouse.event.guard';
@@ -134,20 +142,23 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     protected setTableSettings(settings: any) {
         // apply translate
         if (settings && Object.keys(settings).length) {
-            if (settings.hasOwnProperty('noDataMessage')) {
-                settings['noDataMessage'] = this.getTranslateService().instant(settings['noDataMessage']);
+            let translate: TranslateService;
+            translate = this.getTranslateService();
+            if (settings.hasOwnProperty('noDataMessage') && (settings['noDataMessage'] || '').length) {
+                settings['noDataMessage'] = translate.instant(settings['noDataMessage'] || '');
             }
             if (settings.hasOwnProperty('columns')) {
-                let translate: TranslateService;
-                translate = this.getTranslateService();
                 Object.values(settings['columns']).forEach(column => {
-                    if (column && column.hasOwnProperty('title')) {
-                        column['title'] = translate.instant(column['title']);
+                    if (column) {
+                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
+                            column['title'] = translate.instant(column['title']);
+                        }
                         if (column['editor'] && column['editor']['config']
                             && isArray(column['editor']['config']['list'])) {
                             Array.from(column['editor']['config']['list']).forEach(item => {
-                                if (item && item.hasOwnProperty('title')) {
-                                    item['title'] = translate.instant(item['title']);
+                                if (item && item.hasOwnProperty('title')
+                                    && (item['title'] || '').length) {
+                                    item['title'] = translate.instant(item['title'] || '');
                                 }
                             });
                         }

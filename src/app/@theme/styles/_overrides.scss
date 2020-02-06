@@ -84,4 +84,9 @@
         pointer-events: none;
         color: nb-theme(color-basic-800);
     }
+
+    /* Angular Material theme */
+    .mat-form-field-flex {
+        padding-top: 0.5em;
+    }
 }

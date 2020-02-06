@@ -5,7 +5,11 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import Organization, {convertOrganizationTypeToDisplay, IOrganization, ORGANIZTAION_TYPE} from '../../../../../@core/data/organization';
+import Organization, {
+    convertOrganizationTypeToDisplay,
+    IOrganization,
+    ORGANIZTAION_TYPE
+} from '../../../../../@core/data/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 
 /* default organization formly config */
@@ -19,7 +23,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.belongTo.label',
             placeholder: 'system.organization.form.belongTo.placeholder',
-            description: 'system.organization.form.belongTo.description',
             options: [
                 { value: 1, label: 'Parent 1'  },
                 { value: 2, label: 'Parent 2'  },
@@ -34,7 +37,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.manager.label',
             placeholder: 'system.organization.form.manager.placeholder',
-            description: 'system.organization.form.manager.description',
             options: [
                 { value: 1, label: 'Manager 1'  },
                 { value: 2, label: 'Manager 2'  },
@@ -49,7 +51,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.code.label',
             placeholder: 'system.organization.form.code.placeholder',
-            description: 'system.organization.form.code.description',
         },
     },
     {
@@ -58,7 +59,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.name.label',
             placeholder: 'system.organization.form.name.placeholder',
-            description: 'system.organization.form.name.description',
         },
     },
     {
@@ -67,7 +67,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.type.label',
             placeholder: 'system.organization.form.type.placeholder',
-            description: 'system.organization.form.type.description',
             options: [
                 {
                     value: ORGANIZTAION_TYPE.HEAD_CENTER,
@@ -102,7 +101,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.tax.label',
             placeholder: 'system.organization.form.tax.placeholder',
-            description: 'system.organization.form.tax.description',
         },
     },
     {
@@ -111,7 +109,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.address.label',
             placeholder: 'system.organization.form.address.placeholder',
-            description: 'system.organization.form.address.description',
         },
     },
     {
@@ -120,7 +117,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.tel.label',
             placeholder: 'system.organization.form.tel.placeholder',
-            description: 'system.organization.form.tel.description',
         },
     },
     {
@@ -129,7 +125,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.fax.label',
             placeholder: 'system.organization.form.fax.placeholder',
-            description: 'system.organization.form.fax.description',
         },
     },
     {
@@ -138,7 +133,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.email.label',
             placeholder: 'system.organization.form.email.placeholder',
-            description: 'system.organization.form.email.description',
         },
     },
     {
@@ -147,7 +141,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.contact.label',
             placeholder: 'system.organization.form.contact.placeholder',
-            description: 'system.organization.form.contact.description',
         },
     },
     {
@@ -156,7 +149,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         templateOptions: {
             label: 'system.organization.form.remark.label',
             placeholder: 'system.organization.form.remark.placeholder',
-            description: 'system.organization.form.remark.description',
         },
     },
 ];

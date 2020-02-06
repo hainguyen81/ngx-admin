@@ -78,12 +78,18 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
             translate = this.getTranslateService();
             fields.forEach(field => {
                 if (field.templateOptions) {
-                    field.templateOptions.label = translate.instant(field.templateOptions.label);
-                    field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
-                    field.templateOptions.description = translate.instant(field.templateOptions.description);
+                    if ((field.templateOptions.label || '').length) {
+                        field.templateOptions.label = translate.instant(field.templateOptions.label);
+                    }
+                    if ((field.templateOptions.placeholder || '').length) {
+                        field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
+                    }
+                    if ((field.templateOptions.description || '').length) {
+                        field.templateOptions.description = translate.instant(field.templateOptions.description);
+                    }
                     if (isArray(field.templateOptions.options)) {
                         field.templateOptions.options.forEach(option => {
-                            if (option && option['label']) {
+                            if (option && (option['label'] || '').length) {
                                 option['label'] = translate.instant(option['label']);
                             }
                         });

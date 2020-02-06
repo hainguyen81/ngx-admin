@@ -27,24 +27,25 @@
 // install the framework and custom global styles
 @include nb-install() {
 
-    // framework global styles
-    @include nb-theme-global();
-    @include nb-auth-global();
-
-    @include ngx-layout();
-    // loading progress bar
-    @include ngx-pace-theme();
-
     // angular material theme
     @include mat-core();
-    //$dark-primary: mat-palette($mat-blue-grey);
-    //$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
-    //$dark-warn:    mat-palette($mat-deep-orange);
-    //$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-    //@include angular-material-theme($dark-theme);
+    $mix-material-primary: mat-palette($mat-teal, 50, 50, 50);
+    $mix-material-accent: mat-palette($mat-teal, 50, 50, 50);
+    $mix-material-theme: mat-dark-theme($mix-material-primary, $mix-material-accent);
+    @include angular-material-theme($mix-material-theme);
 
-    @include nb-overrides();
+    // framework global styles
+    @include nb-theme-global();
 
     // Authentication
     @include nb-auth-global();
+
+    // Layout
+    @include ngx-layout();
+
+    // loading progress bar
+    @include ngx-pace-theme();
+
+    // application overrides
+    @include nb-overrides();
 };
