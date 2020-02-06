@@ -163,14 +163,15 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         super.ngOnInit();
 
         // listen data-source changed for updating tree-view items
-        this.getDataSource().onChanged().toPromise().then(value => {
+        this.getDataSource().onChanged().subscribe(value => {
+            this.getLogger().debug('DataSource hass been changed', value);
             if (value && value['elements']) {
                 this.treeviewItems = this.mappingDataSourceToTreeviewItems(value['elements']);
             } else {
                 this.treeviewItems = [];
             }
 
-        }).catch((errors) => this.getLogger().error('Could not apply data-source changed'));
+        });
     }
 
     // -------------------------------------------------

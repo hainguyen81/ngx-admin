@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, OnInit, Renderer2} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
@@ -7,8 +7,8 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeviewItem} from 'ngx-treeview';
-import {isArray} from 'util';
 import {IOrganization} from '../../../../../@core/data/organization';
+import OrganizationUtils from '../../../../../utils/organization.utils';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -27,7 +27,8 @@ export const OrganizationTreeviewConfig: TreeviewConfig = {
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
-export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource> {
+export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
+    implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -53,6 +54,15 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
     }
 
     // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+        super.getDataSource().refresh();
+    }
+
+    // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
 
@@ -61,30 +71,6 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      * @param data to map
      */
     mappingDataSourceToTreeviewItems(data: any): TreeviewItem[] {
-        let items: TreeviewItem[];
-        items = super.mappingDataSourceToTreeviewItems(data);
-        let arrData: any[];
-        if (!isArray(data)) {
-            arrData.push(data);
-        } else {
-            arrData = arrData.concat(data as []);
-        }
-        for (const dat of arrData) {
-            let organization: IOrganization;
-            organization = dat as IOrganization;
-            if (organization) {
-                let item: TreeviewItem;
-                item = new TreeviewItem({
-                    checked: false,
-                    children: [],
-                    collapsed: false,
-                    disabled: false,
-                    text: organization.name,
-                    value: organization,
-                });
-                items.push(item);
-            }
-        }
-        return items;
+        return OrganizationUtils.buildOrganization(data as IOrganization[]);
     }
 }

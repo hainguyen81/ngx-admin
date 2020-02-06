@@ -43,6 +43,15 @@ export default class ObjectUtils {
      * @param type to create
      * @return new instance
      */
+    public static createInstanceByType<T>(type: Type<T>): T {
+        return new type();
+    }
+
+    /**
+     * Create a new instance of the specified type
+     * @param type to create
+     * @return new instance
+     */
     public static createInstance<T>(type: NoParamConstructor<T>): T {
         return new type();
     }
