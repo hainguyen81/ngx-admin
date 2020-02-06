@@ -41,14 +41,21 @@ export default class HierarchyUtils {
             }
         }
 
-        if ((parentBuiltPropertyName || '').length && (childrenBuiltPropertyName || '').length) {
-            item[childrenBuiltPropertyName] = [];
-            if (parent) {
+        if (parent) {
+            if ((parentBuiltPropertyName || '').length) {
                 item[parentBuiltPropertyName] = parent;
-                if (!parent[childrenBuiltPropertyName] || !isArray(parent[childrenBuiltPropertyName])) {
-                    parent[childrenBuiltPropertyName] = [];
+            }
+
+            if ((childrenBuiltPropertyName || '').length) {
+                // check for building children via temporary variable
+                // because some type require children property must be not empty such as TreeviewItem type
+                let childrenOfParent: N[];
+                childrenOfParent = (!parent[childrenBuiltPropertyName] || !isArray(parent[childrenBuiltPropertyName])
+                                ? [] : Array.from(parent[childrenBuiltPropertyName]));
+                childrenOfParent.push(item);
+                if (childrenOfParent && childrenOfParent.length) {
+                    parent[childrenBuiltPropertyName] = childrenOfParent;
                 }
-                Array.from(parent[childrenBuiltPropertyName]).push(item);
             }
         }
         return item;
@@ -79,15 +86,16 @@ export default class HierarchyUtils {
             entities.forEach((entity: M) => {
                 let builtItem: N;
                 builtItem = HierarchyUtils.buildHierarchyItem(
-                    entity, builtType, null, parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper);
+                    entity, builtType, parent,
+                    parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper);
                 items.push(builtItem);
                 if ((childrenEntityPropertyName || '').length && isArray(entity[childrenEntityPropertyName])
                     && Array.from(entity[childrenEntityPropertyName]).length) {
                     this.buildHierarchyTree(
                         Array.from(entity[childrenEntityPropertyName]),
-                        builtType, builtItem, childrenEntityPropertyName,
-                        parentBuiltPropertyName, childrenBuiltPropertyName,
-                        entityMapper);
+                        builtType, builtItem,
+                        childrenEntityPropertyName,
+                        parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper);
                 }
             });
         }

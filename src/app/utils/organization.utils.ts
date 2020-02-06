@@ -1,4 +1,3 @@
-import {Type} from '@angular/core';
 import HierarchyUtils from './hierarchy.utils';
 import {IOrganization} from '../@core/data/organization';
 import {TreeviewItem} from 'ngx-treeview';
@@ -17,7 +16,6 @@ export default class OrganizationUtils {
             if (!item) {
                 item = new TreeviewItem({
                     checked: false,
-                    children: [],
                     collapsed: false,
                     disabled: false,
                     text: org.name,
