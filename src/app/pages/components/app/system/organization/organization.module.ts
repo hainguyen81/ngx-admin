@@ -5,7 +5,7 @@ import {
     NbContextMenuModule,
     NbIconModule,
     NbInputModule,
-    NbSelectModule
+    NbSelectModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -17,7 +17,7 @@ import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {
     OrganizationDbService,
-    OrganizationHttpService
+    OrganizationHttpService,
 } from '../../../../../services/implementation/organization/organization.service';
 import {TreeviewModule} from 'ngx-treeview';
 import {OrganizationFormlyComponent} from './organization.formly.component';
@@ -25,6 +25,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {OrganizationSplitPaneComponent} from './organization.component';
+import {AngularSplitModule} from 'angular-split';
 
 @NgModule({
     imports: [
@@ -45,6 +46,9 @@ import {OrganizationSplitPaneComponent} from './organization.component';
             autoFocus: true,
             useBootstrap4: true,
         }),
+
+        /* SplitPane */
+        AngularSplitModule.forRoot(),
 
         /* Tree-view */
         TreeviewModule.forRoot(),
