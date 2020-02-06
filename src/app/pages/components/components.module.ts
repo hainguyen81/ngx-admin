@@ -1,14 +1,6 @@
 import {NgModule} from '@angular/core';
 import {SmartTableComponent} from './smart-table/smart-table.component';
-import {
-    NbCardModule,
-    NbCheckboxModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbInputModule,
-    NbSearchModule,
-    NbSelectModule,
-} from '@nebular/theme';
+import {NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbSearchModule, NbSelectModule,} from '@nebular/theme';
 import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
 import {NotFoundComponent} from './not-found.component';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -34,18 +26,24 @@ import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
         NbSelectModule,
         NbIconModule,
         NbCardModule,
+        NbSearchModule,
+
         /* i18n */
         TranslateModule,
+
         /* Table */
         Ng2SmartTableModule,
+
         /* Context Menu */
         NbContextMenuModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,
         }),
+
         /* Tree-view */
         TreeviewModule.forRoot(),
+
         /* SplitPane */
         AngularSplitModule.forRoot(),
 
@@ -65,7 +63,6 @@ import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
-        NbSearchModule,
     ],
     declarations: [
         SmartTableComponent,

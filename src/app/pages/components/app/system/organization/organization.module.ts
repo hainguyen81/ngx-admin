@@ -8,10 +8,8 @@ import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
-import {
-    OrganizationDbService,
-    OrganizationHttpService,
-} from '../../../../../services/implementation/organization/organization.service';
+import {OrganizationDbService, OrganizationHttpService,} from '../../../../../services/implementation/organization/organization.service';
+import {TreeviewModule} from 'ngx-treeview';
 
 @NgModule({
     imports: [
@@ -22,14 +20,20 @@ import {
         NbCheckboxModule,
         NbSelectModule,
         Ng2SmartTableModule,
+
         /* i18n */
         TranslateModule,
+
         /* Context Menu */
         NbContextMenuModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,
         }),
+
+        /* Tree-view */
+        TreeviewModule.forRoot(),
+
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],

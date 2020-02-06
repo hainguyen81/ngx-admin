@@ -77,7 +77,7 @@ const routes: Routes = [{
         // },
         {
             path: '',
-            redirectTo: 'user',
+            redirectTo: 'organization',
             pathMatch: 'full',
         },
         {
