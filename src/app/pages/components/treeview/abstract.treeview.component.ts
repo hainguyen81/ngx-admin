@@ -43,6 +43,14 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     }
 
     /**
+     * Set a boolean value indicating this component whether is drop-down tree-view component
+     * @param dropdown true for drop-down; else false
+     */
+    protected setDropDown(dropdown?: boolean | false) {
+        this.dropdown = dropdown;
+    }
+
+    /**
      * Get the drop-down button class in drop-down tree-view mode
      * return the drop-down button class
      */

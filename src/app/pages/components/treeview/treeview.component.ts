@@ -28,17 +28,15 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
-     * @param dropdown specify using drop-down tree-view or normal tree-view
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                dropdown?: boolean | false) {
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
         super(dataSource, contextMenuService, logger, renderer,
-            translateService, factoryResolver, null, dropdown);
+            translateService, factoryResolver, null, false);
     }
 
     // -------------------------------------------------

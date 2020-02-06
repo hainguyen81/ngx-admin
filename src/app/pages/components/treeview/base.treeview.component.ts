@@ -34,6 +34,7 @@ export abstract class BaseNgxTreeviewComponent<T extends DataSource> extends Ngx
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, false);
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+        super.setDropDown(false);
     }
 }
