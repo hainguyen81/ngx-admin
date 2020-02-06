@@ -18,51 +18,63 @@
 			"form": {
 				"belongTo": {
 					"label": "Trực thuộc",
-					"placeholder": "Trực thuộc"
+					"placeholder": "Trực thuộc",
+					"description": "Trực thuộc"
 				},
 				"manager": {
 					"label": "Quản lý",
-					"placeholder": "Quản lý"
+					"placeholder": "Quản lý",
+					"description": "Quản lý"
 				},
 				"code": {
 					"label": "Mã",
-					"placeholder": "Mã"
+					"placeholder": "Mã",
+					"description": "Mã"
 				},
 				"name": {
 					"label": "Tên",
-					"placeholder": "Tên"
+					"placeholder": "Tên",
+					"description": "Tên"
 				},
 				"type": {
 					"label": "Loại",
-					"placeholder": "Loại"
+					"placeholder": "Loại",
+					"description": "Loại"
 				},
 				"tax": {
 					"label": "Mã số thuế",
-					"placeholder": "Mã số thuế"
+					"placeholder": "Mã số thuế",
+					"description": "Mã số thuế"
 				},
 				"address": {
 					"label": "Địa chỉ",
-					"placeholder": "Địa chỉ"
+					"placeholder": "Địa chỉ",
+					"description": "Địa chỉ"
 				},
 				"tel": {
 					"label": "Tel",
-					"placeholder": "Tel"
+					"placeholder": "Tel",
+					"description": "Tel"
 				},
 				"fax": {
 					"label": "Fax",
-					"placeholder": "Fax"
+					"placeholder": "Fax",
+					"description": "Fax"
 				},
 				"email": {
 					"label": "Thư điện tử",
-					"placeholder": "Thư điện tử"
+					"placeholder": "Thư điện tử",
+					"description": "Thư điện tử"
 				},
 				"contact": {
 					"label": "Người liên hệ",
-					"placeholder": "Người liên hệ"
+					"placeholder": "Người liên hệ",
+					"description": "Người liên hệ"
 				},
 				"remark": {
 					"label": "Ghi chú",
-					"placeholder": "Ghi chú"
+					"placeholder": "Ghi chú",
+					"description": "Ghi chú"
 				}
 			}
 		},

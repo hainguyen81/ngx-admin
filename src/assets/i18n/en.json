@@ -18,51 +18,63 @@
 			"form": {
 				"belongTo": {
 					"label": "Belong to",
-					"placeholder": "Belong to"
+					"placeholder": "Belong to",
+					"description": "Belong to"
 				},
 				"manager": {
 					"label": "Manager",
-					"placeholder": "Manager"
+					"placeholder": "Manager",
+					"description": "Manager"
 				},
 				"code": {
 					"label": "Code",
-					"placeholder": "Code"
+					"placeholder": "Code",
+					"description": "Code"
 				},
 				"name": {
 					"label": "Name",
-					"placeholder": "Name"
+					"placeholder": "Name",
+					"description": "Name"
 				},
 				"type": {
 					"label": "Type",
-					"placeholder": "Type"
+					"placeholder": "Type",
+					"description": "Type"
 				},
 				"tax": {
 					"label": "Tax",
-					"placeholder": "Tax"
+					"placeholder": "Tax",
+					"description": "Tax"
 				},
 				"address": {
 					"label": "Address",
-					"placeholder": "Address"
+					"placeholder": "Address",
+					"description": "Address"
 				},
 				"tel": {
 					"label": "Tel",
-					"placeholder": "Tel"
+					"placeholder": "Tel",
+					"description": "Tel"
 				},
 				"fax": {
 					"label": "Fax",
-					"placeholder": "Fax"
+					"placeholder": "Fax",
+					"description": "Fax"
 				},
 				"email": {
 					"label": "Email",
-					"placeholder": "Email"
+					"placeholder": "Email",
+					"description": "Email"
 				},
 				"contact": {
 					"label": "Contact",
-					"placeholder": "Contact"
+					"placeholder": "Contact",
+					"description": "Contact"
 				},
 				"remark": {
 					"label": "Remark",
-					"placeholder": "Remark"
+					"placeholder": "Remark",
+					"description": "Remark"
 				}
 			}
         },

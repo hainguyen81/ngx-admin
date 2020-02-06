@@ -79,6 +79,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                 if (field.templateOptions) {
                     field.templateOptions.label = translate.instant(field.templateOptions.label);
                     field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
+                    field.templateOptions.description = translate.instant(field.templateOptions.description);
                 }
             });
         }
