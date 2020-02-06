@@ -1,7 +1,7 @@
 import {IModule} from './module';
+import {IModel} from './base';
 
-export interface IRole {
-    id: string;
+export interface IRole extends IModel {
     moduleId: string;
     groupId: string;
     writable?: boolean | false;

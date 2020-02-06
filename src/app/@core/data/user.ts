@@ -1,4 +1,5 @@
 import {IRolesGroup} from './roles.group';
+import {IModel} from './base';
 
 export const enum USER_STATUS {
     NOT_ACTIVATED,
@@ -17,8 +18,7 @@ export function convertUserStatusToDisplay(value: USER_STATUS): string {
     }
 }
 
-export interface IUser {
-    id: string;
+export interface IUser extends IModel {
     access_token: string;
     token_type: string;
     refresh_token: string;

@@ -1,5 +1,6 @@
-export interface IApi {
-    id: string;
+import {IModel} from './base';
+
+export interface IApi extends IModel {
     code: string;
     name: string;
     regexUrl?: string | null;

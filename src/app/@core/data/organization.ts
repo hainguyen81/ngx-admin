@@ -1,3 +1,5 @@
+import {IModel} from './base';
+
 export const enum ORGANIZTAION_TYPE {
     HEAD_CENTER,
     BRANCH,
@@ -24,8 +26,7 @@ export function convertOrganizationTypeToDisplay(value: ORGANIZTAION_TYPE): stri
     }
 }
 
-export interface IOrganization {
-    id: string;
+export interface IOrganization extends IModel {
     code: string;
     name: string;
     parentId?: string | null;

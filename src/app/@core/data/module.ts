@@ -1,7 +1,7 @@
 import {IApi} from './api';
+import {IModel} from './base';
 
-export interface IModule {
-    id: string;
+export interface IModule extends IModel {
     code: string;
     name: string;
     apiId: string;

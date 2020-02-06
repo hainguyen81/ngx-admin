@@ -1,7 +1,7 @@
 import {IRole} from './role';
+import {IModel} from './base';
 
-export interface IRolesGroup {
-    id: string;
+export interface IRolesGroup extends IModel {
     company: string;
     code: string;
     name: string;

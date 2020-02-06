@@ -1,3 +1,5 @@
+import {IModel} from './base';
+
 export const enum CUSTOMER_STATUS {
     NOT_ACTIVATED,
     ACTIVATED,
@@ -15,8 +17,7 @@ export function convertCustomerStatusToDisplay(value: CUSTOMER_STATUS): string {
     }
 }
 
-export interface ICustomer {
-    id: string;
+export interface ICustomer extends IModel {
     customerName: string;
     email: string;
     tel?: string | null;

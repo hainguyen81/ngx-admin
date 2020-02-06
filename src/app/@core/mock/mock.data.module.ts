@@ -1,6 +1,6 @@
 import {InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CommonProviders, CustomerProviders, UserProviders} from '../../config/app.providers';
+import {CommonProviders, CustomerProviders, OrganizationProviders, UserProviders} from '../../config/app.providers';
 import {MockUserService} from './users.service';
 import {UserDbService} from '../../services/implementation/user/user.service';
 import {NGXLogger} from 'ngx-logger';
@@ -9,6 +9,8 @@ import {AppConfig} from '../../config/app.config';
 import {throwError} from 'rxjs';
 import {MockCustomerService} from './customers.service';
 import {CustomerDbService} from '../../services/implementation/customer/customer.service';
+import {MockOrganizationService} from './organization.service';
+import {OrganizationDbService} from '../../services/implementation/organization/organization.service';
 
 export const MOCK_DATA_PROVIDERS = [
     {
@@ -19,9 +21,14 @@ export const MOCK_DATA_PROVIDERS = [
         provide: MockCustomerService, useClass: MockCustomerService,
         deps: [CustomerDbService, NGXLogger],
     },
+    {
+        provide: MockOrganizationService, useClass: MockOrganizationService,
+        deps: [OrganizationDbService, NGXLogger],
+    },
 ];
 
 export const MOCK_PROVIDERS = CommonProviders
+    .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
     .concat(MOCK_DATA_PROVIDERS);
