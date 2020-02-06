@@ -31,6 +31,11 @@ import {CustomerDatasource} from '../services/implementation/customer/customer.d
 import {TranslateLoader} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {
+    OrganizationDbService,
+    OrganizationHttpService,
+} from '../services/implementation/organization/organization.service';
+import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -90,6 +95,21 @@ export const CustomerProviders: StaticProvider[] = [
     },
 ];
 
+export const OrganizationProviders: StaticProvider[] = [
+    {
+        provide: OrganizationDbService, useClass: OrganizationDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: OrganizationHttpService, useClass: OrganizationHttpService,
+        deps: [HttpClient, NGXLogger, OrganizationDbService],
+    },
+    {
+        provide: OrganizationDataSource, useClass: OrganizationDataSource,
+        deps: [OrganizationHttpService, OrganizationDbService, NGXLogger],
+    },
+];
+
 export const InterceptorProviders = [
     {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization'},
     {provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company'},
@@ -136,6 +156,7 @@ export const ExampleProviders: StaticProvider[] = [
 
 export const Providers: StaticProvider[] = CommonProviders
     .concat(I18NProviders)
+    .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
     .concat(InterceptorProviders)
