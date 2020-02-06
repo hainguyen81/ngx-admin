@@ -4,8 +4,11 @@
     </nb-card-header>
 
     <nb-card-body>
-        <as-split [contextMenu]="splitPaneContextMenuComponent">
-
+        <as-split [contextMenu]="splitPaneContextMenuComponent"
+                  unit="percent"
+                  direction="{{isHorizontal() ? 'horizontal' : 'vertical'}}"
+                  (dragEnd)="onDragEnd('percent', $event)"
+                  #splitComponent="asSplit">
         </as-split>
         <context-menu #splitPaneContextMenuComponent
                       [disabled]="!contextMenu || !contextMenu.length"

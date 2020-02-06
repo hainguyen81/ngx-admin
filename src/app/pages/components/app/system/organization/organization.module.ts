@@ -1,5 +1,12 @@
 import {NgModule} from '@angular/core';
-import {NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbSelectModule} from '@nebular/theme';
+import {
+    NbCardModule,
+    NbCheckboxModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbInputModule,
+    NbSelectModule
+} from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
@@ -8,12 +15,16 @@ import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
-import {OrganizationDbService, OrganizationHttpService} from '../../../../../services/implementation/organization/organization.service';
+import {
+    OrganizationDbService,
+    OrganizationHttpService
+} from '../../../../../services/implementation/organization/organization.service';
 import {TreeviewModule} from 'ngx-treeview';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
+import {OrganizationSplitPaneComponent} from './organization.component';
 
 @NgModule({
     imports: [
@@ -58,6 +69,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
     declarations: [
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
+        OrganizationSplitPaneComponent,
     ],
     providers: [
         {

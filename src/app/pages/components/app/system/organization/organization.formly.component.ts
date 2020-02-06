@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import Organization, {
     convertOrganizationTypeToDisplay,
     IOrganization,
-    ORGANIZTAION_TYPE
+    ORGANIZTAION_TYPE,
 } from '../../../../../@core/data/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 

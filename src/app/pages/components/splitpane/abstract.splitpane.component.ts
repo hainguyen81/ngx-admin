@@ -1,6 +1,14 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent} from '../abstract.component';
-import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {
+    AfterViewInit,
+    ComponentFactoryResolver,
+    Inject,
+    OnInit,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,7 +18,7 @@ import {SplitComponent} from 'angular-split';
  * Abstract SplitPane component base on {AngularSplitModule}
  */
 export abstract class AbstractSplitpaneComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+    extends AbstractComponent implements AfterViewInit, OnInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -44,6 +52,9 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      */
     public setHorizontal(horizontal?: boolean): void {
         this.horizontal = horizontal || false;
+        if (this.getSplitComponent()) {
+            this.getSplitComponent().direction = (this.horizontal ? 'horizontal' : 'vertical');
+        }
     }
 
     /**
@@ -80,7 +91,24 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.querySplitComponent.map(
-            (item) => this.splitComponent = item);
+        if (!this.splitComponent) {
+            this.querySplitComponent.map(
+                (item) => this.splitComponent = item);
+        }
+        this.setHorizontal(this.horizontal);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    /**
+     * Perform resize areas
+     * @param unit size unit
+     * @param sizes area sizes
+     */
+    onDragEnd(unit, {sizes}): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onDragEnd', unit, sizes);
     }
 }
