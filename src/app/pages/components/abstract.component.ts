@@ -1,15 +1,11 @@
-import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, ComponentFactoryResolver, Inject, OnInit, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {LocalDataSource} from 'ng2-smart-table';
-import {
-    DocumentKeydownHandlerService,
-    DocumentKeypressHandlerService,
-    DocumentKeyupHandlerService,
-} from '../../services/implementation/document.keypress.handler.service';
+import {DocumentKeydownHandlerService, DocumentKeypressHandlerService, DocumentKeyupHandlerService,} from '../../services/implementation/document.keypress.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
@@ -32,7 +28,7 @@ export interface IContextMenu {
 /**
  * Abstract component
  */
-export class AbstractComponent implements AfterViewInit {
+export class AbstractComponent implements AfterViewInit, OnInit {
 
     protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
 
@@ -216,6 +212,10 @@ export class AbstractComponent implements AfterViewInit {
             (e: KeyboardEvent) => this.onKeyUp(e), this.getLogger());
         this.documentKeyPressHandlerService = new DocumentKeypressHandlerService(
             (e: KeyboardEvent) => this.onKeyPress(e), this.getLogger());
+    }
+
+    ngOnInit(): void {
+        // TODO Waiting for implementing from children component
     }
 
     /**

@@ -19,10 +19,15 @@ import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 
 import {
-    NbChatModule, NbCheckboxModule,
+    NbChatModule,
+    NbCheckboxModule,
     NbDatepickerModule,
-    NbDialogModule, NbIconLibraries, NbIconModule, NbInputModule,
-    NbMenuModule, NbSelectModule,
+    NbDialogModule,
+    NbIconLibraries,
+    NbIconModule,
+    NbInputModule,
+    NbMenuModule,
+    NbSelectModule,
     NbSidebarModule,
     NbThemeModule,
     NbToastrModule,
@@ -44,6 +49,8 @@ import {AngularSplitModule} from 'angular-split';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
+/* Treeview */
+import {TreeviewModule} from 'ngx-treeview';
 
 @NgModule({
     declarations: [AppComponent],
@@ -135,6 +142,9 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 
         /* SplitPane */
         AngularSplitModule.forRoot(),
+
+        /* Tree-view */
+        TreeviewModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,

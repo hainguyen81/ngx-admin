@@ -81,7 +81,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                     disabled: false,
                     text: organization.name,
                     value: organization,
-                }, true);
+                });
                 items.push(item);
             }
         }

@@ -1,4 +1,4 @@
-import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {AfterViewInit, ComponentFactoryResolver, Inject, OnInit, QueryList, Renderer2, ViewChildren,} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -7,11 +7,20 @@ import {AbstractComponent} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 
+/* default tree-view config */
+export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
+    hasAllCheckBox: false,
+    hasCollapseExpand: true,
+    hasFilter: false,
+    decoupleChildFromParent: false,
+    maxHeight: 500,
+});
+
 /**
  * Abstract tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
  */
 export abstract class AbstractTreeviewComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+    extends AbstractComponent implements AfterViewInit, OnInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -71,7 +80,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return the {TreeviewConfig} instance
      */
     public getConfig(): TreeviewConfig {
-        return this.treeviewConfig;
+        return this.treeviewConfig || DefaultTreeviewConfig;
     }
 
     /**
@@ -79,13 +88,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param cfg to apply. NULL for default
      */
     protected setConfig(cfg?: TreeviewConfig) {
-        this.treeviewConfig = cfg || TreeviewConfig.create({
-            hasAllCheckBox: false,
-            hasCollapseExpand: true,
-            hasFilter: false,
-            decoupleChildFromParent: false,
-            maxHeight: 500,
-        });
+        this.treeviewConfig = cfg || DefaultTreeviewConfig;
     }
 
     /**
@@ -146,6 +149,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             (item) => this.treeviewComponent = item);
         this.queryDropdownTreeviewComponent.map(
             (item) => this.dropdownTreeviewComponent = item);
+    }
+
+    ngOnInit(): void {
+        super.ngOnInit();
 
         // listen data-source changed for updating tree-view items
         this.getDataSource().onChanged().toPromise().then(value => {

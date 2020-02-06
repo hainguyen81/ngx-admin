@@ -1,12 +1,4 @@
-import {
-    AfterViewInit,
-    ComponentFactoryResolver,
-    EventEmitter,
-    Inject,
-    QueryList,
-    Renderer2,
-    ViewChildren,
-} from '@angular/core';
+import {AfterViewInit, ComponentFactoryResolver, EventEmitter, Inject, QueryList, Renderer2, ViewChildren,} from '@angular/core';
 import {Cell} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {MouseEventGuard} from '../customization/mouse.event.guard';
@@ -19,7 +11,53 @@ import {isNumber} from 'util';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent, IContextMenu} from '../abstract.component';
+import {AbstractComponent} from '../abstract.component';
+
+/* default smart table settings */
+export const DefaultTableSettings = {
+    add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmCreate: true,
+    },
+    edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true,
+    },
+    delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true,
+    },
+    columns: {
+        id: {
+            title: 'ID',
+            type: 'number',
+        },
+        firstName: {
+            title: 'First Name',
+            type: 'string',
+        },
+        lastName: {
+            title: 'Last Name',
+            type: 'string',
+        },
+        username: {
+            title: 'Username',
+            type: 'string',
+        },
+        email: {
+            title: 'E-mail',
+            type: 'string',
+        },
+        age: {
+            title: 'Age',
+            type: 'number',
+        },
+    },
+};
 
 /**
  * Abstract smart table base on {Ng2SmartTableComponent}
@@ -36,51 +74,7 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     // -------------------------------------------------
 
     private tableHeader: string;
-    private settings = {
-        add: {
-            addButtonContent: '<i class="nb-plus"></i>',
-            createButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>',
-            confirmCreate: true,
-        },
-        edit: {
-            editButtonContent: '<i class="nb-edit"></i>',
-            saveButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>',
-            confirmSave: true,
-        },
-        delete: {
-            deleteButtonContent: '<i class="nb-trash"></i>',
-            confirmDelete: true,
-        },
-        rowClassFunction: (row) => '',
-        columns: {
-            id: {
-                title: 'ID',
-                type: 'number',
-            },
-            firstName: {
-                title: 'First Name',
-                type: 'string',
-            },
-            lastName: {
-                title: 'Last Name',
-                type: 'string',
-            },
-            username: {
-                title: 'Username',
-                type: 'string',
-            },
-            email: {
-                title: 'E-mail',
-                type: 'string',
-            },
-            age: {
-                title: 'Age',
-                type: 'number',
-            },
-        },
-    };
+    private settings: any = DefaultTableSettings;
 
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
