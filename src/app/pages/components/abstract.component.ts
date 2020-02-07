@@ -220,6 +220,7 @@ export class AbstractComponent
         translateService || throwError('Could not inject TranslateService');
         factoryResolver || throwError('Could not inject ComponentFactoryResolver');
         dataSource = dataSource || new LocalDataSource();
+        dataSource.onChanged().subscribe(value => this.onDataSourceChanged(value));
     }
 
     // -------------------------------------------------
@@ -362,6 +363,15 @@ export class AbstractComponent
     onResized(event: ResizedEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onResized', event);
+    }
+
+    /**
+     * Perform action on data-source changed event
+     * @param value changed value
+     */
+    onDataSourceChanged(value: any) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onDataSourceChanged', value);
     }
 
     // -------------------------------------------------

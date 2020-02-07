@@ -161,21 +161,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             (item) => this.dropdownTreeviewComponent = item);
     }
 
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        // listen data-source changed for updating tree-view items
-        this.getDataSource().onChanged().subscribe(value => {
-            this.getLogger().debug('DataSource hass been changed', value);
-            if (value && value['elements']) {
-                this.treeviewItems = this.mappingDataSourceToTreeviewItems(value['elements']);
-            } else {
-                this.treeviewItems = [];
-            }
-
-        });
-    }
-
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
@@ -191,6 +176,19 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param event event data
      */
     abstract onFilterChange(event: any): void;
+
+    /**
+     * Perform action on data-source changed event
+     * @param value changed value
+     */
+    onDataSourceChanged(value: any) {
+        this.getLogger().debug('DataSource has been changed', value);
+        if (value && value['elements']) {
+            this.treeviewItems = this.mappingDataSourceToTreeviewItems(value['elements']);
+        } else {
+            this.treeviewItems = [];
+        }
+    }
 
     // -------------------------------------------------
     // FUNCTIONS
