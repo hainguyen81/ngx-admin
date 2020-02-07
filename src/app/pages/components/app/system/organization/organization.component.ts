@@ -16,6 +16,26 @@ import {OrganizationTreeviewComponentService} from './organization.treeview.comp
 import {OrganizationFormlyComponentService} from './organization.formly.component.service';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationFormlyComponent} from './organization.formly.component';
+import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
+import {SplitAreaDirective} from 'angular-split';
+
+/* Organization left area configuration */
+export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
+    size: 30,
+    minSize: 20,
+    maxSize: 30,
+    lockSize: false,
+    visible: true,
+};
+
+/* Organization right area configuration */
+export const OrganizationFormAreaConfig: ISplitAreaConfig = {
+    size: 70,
+    minSize: 50,
+    maxSize: 70,
+    lockSize: false,
+    visible: false,
+};
 
 /**
  * Organization split-pane component base on {AngularSplitModule}
@@ -103,6 +123,11 @@ export class OrganizationSplitPaneComponent
     private createPaneComponents() {
         const componentFactoryResolver: ComponentFactoryResolver = this.getFactoryResolver();
         const viewContainerRefs: ViewContainerRef[] = this.getSplitAreaHolderViewContainerComponents();
+        const splitAreas: SplitAreaDirective[] = this.getSplitAreaComponents();
+
+        // configure areas
+        this.configArea(splitAreas[0], OrganizationTreeAreaConfig);
+        this.configArea(splitAreas[1], OrganizationFormAreaConfig);
 
         // create tree-view component
         let treeviewComponentService: OrganizationTreeviewComponentService;
