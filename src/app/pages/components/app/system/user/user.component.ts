@@ -134,14 +134,14 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      */
-    constructor(@Inject(UserDataSource) userDataSource: UserDataSource,
+    constructor(@Inject(UserDataSource) dataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
-        super(userDataSource, contextMenuService, logger, renderer, translateService,
+        super(dataSource, contextMenuService, logger, renderer, translateService,
             factoryResolver, viewContainerRef,
             'system.user.title', UserTableSettings, UserContextMenu);
     }

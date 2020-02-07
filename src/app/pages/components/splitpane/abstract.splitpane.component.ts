@@ -30,9 +30,6 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     @ViewChildren(SplitAreaDirective)
     private readonly querySplitAreaDirectiveComponents: QueryList<SplitAreaDirective>;
     private splitAreas: SplitAreaDirective[];
-    @ViewChildren(SplitAreaDirective, { read: ViewContainerRef })
-    private readonly querySplitAreaViewContainerRefs: QueryList<ViewContainerRef>;
-    private splitAreaViewContainerRefs: ViewContainerRef[];
 
     private paneHeader: string;
 
@@ -95,14 +92,6 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
         return this.splitAreas;
     }
 
-    /**
-     * Get the {ViewContainerRef} instances array of {SplitAreaDirective}
-     * @return the {ViewContainerRef} instances array of {SplitAreaDirective}
-     */
-    protected getSplitAreaViewContainerComponents(): ViewContainerRef[] {
-        return this.splitAreaViewContainerRefs;
-    }
-
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -138,11 +127,6 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
         if (!this.splitComponent) {
             this.querySplitComponent.map(
                 (item) => this.splitComponent = item);
-        }
-        if (!this.splitAreaViewContainerRefs || !this.splitAreaViewContainerRefs.length) {
-            this.splitAreaViewContainerRefs = [];
-            this.querySplitAreaViewContainerRefs.forEach(
-                (item) => this.splitAreaViewContainerRefs.push(item));
         }
         if (!this.splitAreas || !this.splitAreas.length) {
             this.splitAreas = [];

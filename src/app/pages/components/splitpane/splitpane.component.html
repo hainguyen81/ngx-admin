@@ -13,9 +13,9 @@
                 #splitComponent="asSplit">
             <as-split-area
                     #area{{index}}
-                    *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers"
-                    ngx-component-placeholder>
+                    *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers">
                 <!-- Split area {{index}} content placeholder -->
+                <ng-template #splitAreaHolder></ng-template>
             </as-split-area>
         </as-split>
         <context-menu #splitPaneContextMenuComponent

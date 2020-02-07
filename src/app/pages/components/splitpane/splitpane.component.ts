@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ComponentFactoryResolver,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractSplitpaneComponent} from './abstract.splitpane.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -14,6 +23,26 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./splitpane.component.scss'],
 })
 export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource> implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @ViewChildren('splitAreaHolder', { read: ViewContainerRef })
+    private readonly querySplitAreaHolderViewContainerRefs: QueryList<ViewContainerRef>;
+    private splitAreaHolderViewContainerRefs: ViewContainerRef[];
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {ViewContainerRef} instances array of {SplitAreaDirective}
+     * @return the {ViewContainerRef} instances array of {SplitAreaDirective}
+     */
+    protected getSplitAreaHolderViewContainerComponents(): ViewContainerRef[] {
+        return this.splitAreaHolderViewContainerRefs;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -38,5 +67,15 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
         super(dataSource, contextMenuService, logger, renderer,
             translateService, factoryResolver, viewContainerRef, 0, false);
+    }
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this.splitAreaHolderViewContainerRefs || !this.splitAreaHolderViewContainerRefs.length) {
+            this.splitAreaHolderViewContainerRefs = [];
+            this.querySplitAreaHolderViewContainerRefs.forEach(
+                (item) => this.splitAreaHolderViewContainerRefs.push(item));
+        }
     }
 }

@@ -1,8 +1,6 @@
 import {
-    AfterViewInit,
     Component,
     ComponentFactoryResolver,
-    ComponentRef,
     Inject, OnInit,
     Renderer2,
     ViewContainerRef,
@@ -15,8 +13,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {OrganizationTreeviewComponentService} from './organization.treeview.component.service';
 import {OrganizationFormlyComponentService} from './organization.formly.component.service';
-import {SplitAreaDirective} from 'angular-split';
-import {OrganizationSplitPaneAreaComponentService} from './organization.splitpane.area.component.service';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 
@@ -81,6 +77,7 @@ export class OrganizationSplitPaneComponent
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        super.setPaneHeader('system.organization.title');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);
     }
@@ -93,7 +90,7 @@ export class OrganizationSplitPaneComponent
         super.ngOnInit();
 
         // wait for component initialize and create them
-        setTimeout(this.createPaneComponents, 300);
+        setTimeout(() => this.createPaneComponents(), 300);
     }
 
     // -------------------------------------------------
@@ -104,20 +101,21 @@ export class OrganizationSplitPaneComponent
      * Create left/right component panes
      */
     private createPaneComponents() {
+        const componentFactoryResolver: ComponentFactoryResolver = this.getFactoryResolver();
+        const viewContainerRefs: ViewContainerRef[] = this.getSplitAreaHolderViewContainerComponents();
+
         // create tree-view component
         let treeviewComponentService: OrganizationTreeviewComponentService;
         treeviewComponentService = new OrganizationTreeviewComponentService(
-            super.getFactoryResolver(),
-            super.getSplitAreaViewContainerComponents()[0],
-            this.getLogger());
+            componentFactoryResolver, viewContainerRefs[0], this.getLogger());
+        treeviewComponentService.setViewContainerRef(viewContainerRefs[0]);
         this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
 
         // create formly form component
         let formlyComponentService: OrganizationFormlyComponentService;
         formlyComponentService = new OrganizationFormlyComponentService(
-            super.getFactoryResolver(),
-            super.getSplitAreaViewContainerComponents()[1],
-            this.getLogger());
+            componentFactoryResolver, viewContainerRefs[1], this.getLogger());
+        formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
         this.organizationFormlyComponent = formlyComponentService.resolve().instance;
     }
 }

@@ -87,6 +87,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
         const componentFactory: ComponentFactory<T> =
             this.getFactoryResolver().resolveComponentFactory(this.getComponentType());
         const componentRef: ComponentRef<T> = componentFactory.create(this.getViewContainerRef().injector);
+        componentRef.hostView.detectChanges();
         this.getViewContainerRef().insert(componentRef.hostView);
         return componentRef;
     }
