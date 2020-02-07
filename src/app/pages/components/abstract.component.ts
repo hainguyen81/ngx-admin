@@ -403,7 +403,7 @@ export class AbstractComponent
         // wait for showing context menu and focus on it
         setTimeout(() => {
             let ctxMnuEls: NodeListOf<HTMLElement>;
-            ctxMnuEls = HtmlUtils.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
+            ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
             if (ctxMnuEls && ctxMnuEls.length) {
                 ctxMnuEls[0].focus({preventScroll: true});
             }
@@ -420,5 +420,22 @@ export class AbstractComponent
             eventType: 'cancel',
             event: keyEvent,
         });
+    }
+
+    /**
+     * Get the DOM elements by the specified selector
+     * @return DOM elements or undefined
+     */
+    protected getElementsBySelector(selector: string, element?: HTMLElement): NodeListOf<HTMLElement> {
+        return HtmlUtils.getElementsBySelector(selector, element);
+    }
+
+    /**
+     * Get the focusable DOM elements of the specified element
+     * @param element to filter. undefined for filtering whole document
+     * @return focusable DOM elements or undefined
+     */
+    protected getFocusableElements(element?: HTMLElement): NodeListOf<HTMLElement> {
+        return HtmlUtils.getFocusableElements(element);
     }
 }

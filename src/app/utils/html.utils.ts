@@ -10,6 +10,8 @@ export const FOCUSABLE_ELEMENTS_SELETOR: string =
 export default class HtmlUtils {
     /**
      * Get the DOM elements by the specified selector
+     * @param selector to find
+     * @param element parent element or document
      * @return DOM elements or undefined
      */
     public static getElementsBySelector(selector: string, element?: HTMLElement): NodeListOf<HTMLElement> {

@@ -17,7 +17,6 @@ import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component'
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isArray, isNumber} from 'util';
-import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent} from '../abstract.component';
@@ -335,7 +334,7 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
      * @return Row DOM elements or undefined
      */
     protected getRowElementsBySelector(selector: string): NodeListOf<HTMLTableRowElement> {
-        return HtmlUtils.getElementsBySelector(selector) as NodeListOf<HTMLTableRowElement>;
+        return this.getElementsBySelector(selector) as NodeListOf<HTMLTableRowElement>;
     }
 
     /**
@@ -480,9 +479,9 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
         columnIndex = (row ? row.cells.indexOf(cell) : -1);
         if (cell && cell.isEditable() && row && row.isInEditing && 0 <= columnIndex) {
             let cells: NodeListOf<HTMLElement>;
-            cells = HtmlUtils.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_CELLS_EDIT_MODE_SELECTOR);
+            cells = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_CELLS_EDIT_MODE_SELECTOR);
             let editors: NodeListOf<HTMLElement>;
-            editors = HtmlUtils.getFocusableElements(cells[columnIndex]);
+            editors = this.getFocusableElements(cells[columnIndex]);
             if (editors && editors.length) {
                 return editors.item(0);
             }
@@ -521,7 +520,7 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
         }
 
         let cellEls: NodeListOf<HTMLTableCellElement>;
-        cellEls = HtmlUtils.getElementsBySelector(
+        cellEls = this.getElementsBySelector(
             AbstractSmartTableComponent.SMART_TABLE_CELLS_SELECTOR) as NodeListOf<HTMLTableCellElement>;
         if (!cellEls || !cellEls.length) {
             return undefined;

@@ -13,6 +13,7 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
+import {ResizedEvent} from 'angular-resize-event';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -28,6 +29,10 @@ export interface ISplitAreaConfig {
  */
 export abstract class AbstractSplitpaneComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit {
+
+    protected static SPLIT_ELEMENT_SELECTOR: string = 'as-split';
+    protected static SPLIT_AREA_ELEMENT_SELECTOR: string = 'as-split-area';
+    protected static SPLIT_GUTTER_ELEMENT_SELECTOR: string = '.as-split-gutter';
 
     // -------------------------------------------------
     // DECLARATION
@@ -157,6 +162,26 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     onDragEnd(unit, {sizes}): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onDragEnd', unit, sizes);
+    }
+
+    onResized(event: ResizedEvent): void {
+        super.onResized(event);
+
+        let splitEls: NodeListOf<HTMLElement>;
+        let splitGutterEls: NodeListOf<HTMLElement>;
+        splitEls = this.getElementsBySelector(
+            AbstractSplitpaneComponent.SPLIT_ELEMENT_SELECTOR,
+            event.element.nativeElement as HTMLElement);
+        splitGutterEls = this.getElementsBySelector(
+            AbstractSplitpaneComponent.SPLIT_GUTTER_ELEMENT_SELECTOR,
+            event.element.nativeElement as HTMLElement);
+        if (splitEls && splitEls.length && splitGutterEls && splitGutterEls.length) {
+            let splitEl: HTMLElement;
+            let splitGutterEl: HTMLElement;
+            splitEl = splitEls.item(0);
+            splitGutterEl = splitGutterEls.item(0);
+            this.getRenderer().setStyle(splitGutterEl, 'height', splitEl.offsetHeight + 'px');
+        }
     }
 
     // -------------------------------------------------
