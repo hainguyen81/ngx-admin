@@ -2,9 +2,8 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent} from '../abstract.component';
 import {
     AfterViewInit,
-    ComponentFactoryResolver, ContentChildren,
+    ComponentFactoryResolver,
     Inject,
-    OnInit,
     QueryList,
     Renderer2,
     ViewChildren, ViewContainerRef,
@@ -19,7 +18,7 @@ import {throwError} from 'rxjs';
  * Abstract SplitPane component base on {AngularSplitModule}
  */
 export abstract class AbstractSplitpaneComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit, OnInit {
+    extends AbstractComponent implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION

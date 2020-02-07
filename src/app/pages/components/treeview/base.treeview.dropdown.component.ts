@@ -4,6 +4,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
+import {throwError} from 'rxjs';
 
 /**
  * Base tree-view component base on {DropdownTreeviewComponent}
@@ -14,6 +15,18 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./treeview.component.scss'],
 })
 export abstract class BaseNgxDropdownTreeviewComponent<T extends DataSource> extends NgxTreeviewComponent {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    isDropDown(): boolean {
+        return true;
+    }
+
+    protected setDropDown(dropdown?: boolean) {
+        throwError('Unsupport changing dropdown property');
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

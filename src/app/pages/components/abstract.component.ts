@@ -1,10 +1,16 @@
 import {
+    AfterContentChecked,
+    AfterContentInit,
+    AfterViewChecked,
     AfterViewInit,
     ComponentFactoryResolver,
+    DoCheck,
     Inject,
+    OnChanges,
+    OnDestroy,
     OnInit,
     QueryList,
-    Renderer2,
+    Renderer2, SimpleChanges,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -41,7 +47,11 @@ export interface IContextMenu {
 /**
  * Abstract component
  */
-export class AbstractComponent implements AfterViewInit, OnInit {
+export class AbstractComponent
+    implements OnChanges, OnInit, DoCheck,
+        AfterContentInit, AfterContentChecked,
+        AfterViewInit, AfterViewChecked,
+        OnDestroy {
 
     protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
 
@@ -215,12 +225,52 @@ export class AbstractComponent implements AfterViewInit, OnInit {
     // EVENTS
     // -------------------------------------------------
 
+    ngOnChanges(changes: SimpleChanges): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngOnChanges', changes,
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
+    }
+
+    ngOnInit(): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngOnInit',
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
+    }
+
+    ngDoCheck(): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngDoCheck',
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
+    }
+
+    ngAfterContentInit(): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngAfterContentInit',
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
+    }
+
+    ngAfterContentChecked(): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngAfterContentChecked',
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
+    }
+
     ngAfterViewInit(): void {
-        if (!this.viewContainerRef) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngAfterViewInit',
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
+
+        if (!this.viewContainerRef && this.queryViewContainerRef) {
             this.queryViewContainerRef.map(
                 (item) => this.viewContainerRef = item);
         }
-        if (!this.contextMenuComponent) {
+        if (!this.contextMenuComponent && this.queryContextMenuComponent) {
             this.queryContextMenuComponent.map(
                 (item) => this.contextMenuComponent = item);
         }
@@ -232,8 +282,18 @@ export class AbstractComponent implements AfterViewInit, OnInit {
             (e: KeyboardEvent) => this.onKeyPress(e), this.getLogger());
     }
 
-    ngOnInit(): void {
+    ngAfterViewChecked(): void {
         // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngAfterViewChecked',
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
+    }
+
+    ngOnDestroy(): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('ngOnDestroy',
+            'queryViewContainerRef', this.queryViewContainerRef,
+            'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     /**

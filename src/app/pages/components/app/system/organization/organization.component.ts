@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ComponentRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -30,7 +30,7 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 })
 export class OrganizationSplitPaneComponent
     extends BaseSplitPaneComponent<OrganizationDataSource>
-    implements AfterViewInit {
+    implements OnInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -89,23 +89,35 @@ export class OrganizationSplitPaneComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    ngOnInit(): void {
+        super.ngOnInit();
 
+        // wait for component initialize and create them
+        setTimeout(this.createPaneComponents, 300);
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Create left/right component panes
+     */
+    private createPaneComponents() {
         // create tree-view component
         let treeviewComponentService: OrganizationTreeviewComponentService;
         treeviewComponentService = new OrganizationTreeviewComponentService(
-            super.getFactoryResolver(), super.getSplitAreaViewContainerComponents()[0], this.getLogger());
+            super.getFactoryResolver(),
+            super.getSplitAreaViewContainerComponents()[0],
+            this.getLogger());
         this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
-        // this.getTreeviewComponentService().setViewContainerRef(leftAreaRef.injector.get(ViewContainerRef));
-        // let treeviewRef: ComponentRef<OrganizationTreeviewComponent>;
-        // treeviewRef = this.getTreeviewComponentService().resolve();
-        // this.organizationTreeviewComponent = treeviewRef.instance;
-        //
-        // // create formly component
-        // this.getFormlyComponentService().setViewContainerRef(rightAreaRef.injector.get(ViewContainerRef));
-        // let formlyRef: ComponentRef<OrganizationFormlyComponent>;
-        // formlyRef = this.getFormlyComponentService().resolve();
-        // this.organizationFormlyComponent = formlyRef.instance;
+
+        // create formly form component
+        let formlyComponentService: OrganizationFormlyComponentService;
+        formlyComponentService = new OrganizationFormlyComponentService(
+            super.getFactoryResolver(),
+            super.getSplitAreaViewContainerComponents()[1],
+            this.getLogger());
+        this.organizationFormlyComponent = formlyComponentService.resolve().instance;
     }
 }

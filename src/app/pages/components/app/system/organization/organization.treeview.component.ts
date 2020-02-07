@@ -27,8 +27,7 @@ export const OrganizationTreeviewConfig: TreeviewConfig = {
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
-export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
-    implements OnInit {
+export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource> implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION

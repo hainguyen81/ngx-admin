@@ -13,7 +13,8 @@
                 #splitComponent="asSplit">
             <as-split-area
                     #area{{index}}
-                    *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers">
+                    *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers"
+                    ngx-component-placeholder>
                 <!-- Split area {{index}} content placeholder -->
             </as-split-area>
         </as-split>
