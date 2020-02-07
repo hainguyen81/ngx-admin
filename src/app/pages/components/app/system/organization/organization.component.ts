@@ -142,8 +142,5 @@ export class OrganizationSplitPaneComponent
             componentFactoryResolver, viewContainerRefs[1], this.getLogger());
         formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
         this.organizationFormlyComponent = formlyComponentService.resolve().instance;
-
-        // hide form area
-        this.getSplitAreaComponents()[1].visible = false;
     }
 }
