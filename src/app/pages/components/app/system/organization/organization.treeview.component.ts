@@ -13,8 +13,8 @@ import OrganizationUtils from '../../../../../utils/organization.utils';
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
     hasAllCheckBox: false,
-    hasCollapseExpand: true,
-    hasDivider: true,
+    hasCollapseExpand: false,
+    hasDivider: false,
     hasFilter: true,
     maxHeight: -1,
 };

@@ -27,6 +27,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {OrganizationSplitPaneComponent} from './organization.component';
 import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../../@theme/theme.module';
+import {AngularResizedEventModule} from 'angular-resize-event';
 
 @NgModule({
     imports: [
@@ -38,6 +39,9 @@ import {ThemeModule} from '../../../../../@theme/theme.module';
         NbCheckboxModule,
         NbSelectModule,
         Ng2SmartTableModule,
+
+        // Specify AngularResizedEventModule library as an import
+        AngularResizedEventModule,
 
         /* i18n */
         TranslateModule,
