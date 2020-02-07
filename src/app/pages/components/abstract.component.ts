@@ -26,6 +26,7 @@ import {
     DocumentKeyupHandlerService,
 } from '../../services/implementation/document.keypress.handler.service';
 import HtmlUtils from '../../utils/html.utils';
+import {ResizedEvent} from 'angular-resize-event';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -227,44 +228,44 @@ export class AbstractComponent
 
     ngOnChanges(changes: SimpleChanges): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngOnChanges', changes,
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngOnChanges', changes,
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     ngOnInit(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngOnInit',
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngOnInit',
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     ngDoCheck(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngDoCheck',
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngDoCheck',
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     ngAfterContentInit(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngAfterContentInit',
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngAfterContentInit',
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     ngAfterContentChecked(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngAfterContentChecked',
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngAfterContentChecked',
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     ngAfterViewInit(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngAfterViewInit',
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngAfterViewInit',
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
 
         if (!this.viewContainerRef && this.queryViewContainerRef) {
             this.queryViewContainerRef.map(
@@ -284,16 +285,16 @@ export class AbstractComponent
 
     ngAfterViewChecked(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngAfterViewChecked',
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngAfterViewChecked',
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     ngOnDestroy(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('ngOnDestroy',
-            'queryViewContainerRef', this.queryViewContainerRef,
-            'queryContextMenuComponent', this.queryContextMenuComponent);
+        // this.getLogger().debug('ngOnDestroy',
+        //     'queryViewContainerRef', this.queryViewContainerRef,
+        //     'queryContextMenuComponent', this.queryContextMenuComponent);
     }
 
     /**
@@ -344,6 +345,23 @@ export class AbstractComponent
         if (event && event.item && menuItem && typeof menuItem['click'] === 'function') {
             menuItem['click']['apply'](this, [event.item]);
         }
+    }
+
+    /**
+     * Perform action on resize event
+     * @param event event
+     */
+    onResize(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onResize', event);
+    }
+    /**
+     * Perform action on resize event
+     * @param event event
+     */
+    onResized(event: ResizedEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onResized', event);
     }
 
     // -------------------------------------------------

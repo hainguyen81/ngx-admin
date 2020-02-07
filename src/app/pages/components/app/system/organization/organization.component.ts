@@ -34,7 +34,7 @@ export const OrganizationFormAreaConfig: ISplitAreaConfig = {
     minSize: 50,
     maxSize: 70,
     lockSize: false,
-    visible: false,
+    visible: true,
 };
 
 /**
@@ -129,12 +129,12 @@ export class OrganizationSplitPaneComponent
         this.configArea(splitAreas[0], OrganizationTreeAreaConfig);
         this.configArea(splitAreas[1], OrganizationFormAreaConfig);
 
-        // create tree-view component
-        let treeviewComponentService: OrganizationTreeviewComponentService;
-        treeviewComponentService = new OrganizationTreeviewComponentService(
-            componentFactoryResolver, viewContainerRefs[0], this.getLogger());
-        treeviewComponentService.setViewContainerRef(viewContainerRefs[0]);
-        this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
+        // // create tree-view component
+        // let treeviewComponentService: OrganizationTreeviewComponentService;
+        // treeviewComponentService = new OrganizationTreeviewComponentService(
+        //     componentFactoryResolver, viewContainerRefs[0], this.getLogger());
+        // treeviewComponentService.setViewContainerRef(viewContainerRefs[0]);
+        // this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
 
         // create formly form component
         let formlyComponentService: OrganizationFormlyComponentService;

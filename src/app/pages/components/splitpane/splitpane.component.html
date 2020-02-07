@@ -10,6 +10,7 @@
                 unit="percent"
                 direction="{{isHorizontal() ? 'horizontal' : 'vertical'}}"
                 (dragEnd)="onDragEnd('percent', $event)"
+                (resized)="onResized($event)"
                 #splitComponent="asSplit">
             <as-split-area
                     #area{{index}}

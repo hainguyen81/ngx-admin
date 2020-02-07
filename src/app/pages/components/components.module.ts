@@ -27,6 +27,7 @@ import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AppMaterialModule} from '../../app.material.module';
 import {ThemeModule} from '../../@theme/theme.module';
+import {AngularResizedEventModule} from 'angular-resize-event';
 
 @NgModule({
     imports: [
@@ -41,6 +42,9 @@ import {ThemeModule} from '../../@theme/theme.module';
 
         /* Angular material modules */
         AppMaterialModule,
+
+        // Specify AngularResizedEventModule library as an import
+        AngularResizedEventModule,
 
         /* i18n */
         TranslateModule,
