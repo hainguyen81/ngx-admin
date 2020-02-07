@@ -27,7 +27,7 @@ export const OrganizationTreeviewConfig: TreeviewConfig = {
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
-export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource> implements OnInit {
+export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -52,15 +52,6 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
         super.setConfig(OrganizationTreeviewConfig);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngOnInit(): void {
-        super.ngOnInit();
-        super.getDataSource().refresh();
     }
 
     // -------------------------------------------------
