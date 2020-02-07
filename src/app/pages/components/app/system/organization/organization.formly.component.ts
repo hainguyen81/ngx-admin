@@ -5,7 +5,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {
+import Organization, {
     convertOrganizationTypeToDisplay,
     IOrganization,
     ORGANIZTAION_TYPE,
@@ -187,5 +187,6 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
         super(dataSource, contextMenuService, logger, renderer, translateService,
             factoryResolver, viewContainerRef,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
+        super.setModel(new Organization(undefined, undefined, undefined, undefined));
     }
 }

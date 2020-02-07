@@ -1,6 +1,5 @@
 <form [formGroup]="getFormGroup()"
-      (ngSubmit)="onSubmit($event)"
-      *ngIf="getModel()">
+      (ngSubmit)="onSubmit($event)">
     <formly-form [model]="getModel()"
                  [fields]="getFields()"
                  [options]="getOptions()"

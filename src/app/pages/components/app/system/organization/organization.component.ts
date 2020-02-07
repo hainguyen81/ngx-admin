@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -130,19 +130,19 @@ export class OrganizationSplitPaneComponent
         treeviewComponentService.setViewContainerRef(viewContainerRefs[0]);
         this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
 
-        // create formly form component
-        let formlyComponentService: OrganizationFormlyComponentService;
-        formlyComponentService = new OrganizationFormlyComponentService(
-            componentFactoryResolver, viewContainerRefs[1], this.getLogger());
-        formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
-        this.organizationFormlyComponent = formlyComponentService.resolve().instance;
-
         // handle click tree-view item to show form
         this.organizationTreeviewComponent.setClickItemListener((e, it) => {
-            if (it && it.value && this.organizationFormlyComponent) {
+            if (it && it.value) {
                 let organization: IOrganization;
                 organization = it.value as IOrganization;
                 if (organization) {
+                    // create formly form component
+                    let formlyComponentService: OrganizationFormlyComponentService;
+                    formlyComponentService = new OrganizationFormlyComponentService(
+                        componentFactoryResolver, viewContainerRefs[1], this.getLogger());
+                    formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
+                    formlyComponentService.getViewContainerRef().clear();
+                    this.organizationFormlyComponent = formlyComponentService.resolve().instance;
                     this.organizationFormlyComponent.setModel(organization);
                 }
             }

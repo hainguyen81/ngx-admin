@@ -1,6 +1,14 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent} from '../abstract.component';
-import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
+import {
+    AfterViewInit,
+    ComponentFactoryResolver,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewContainerRef
+} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -24,6 +32,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
 
     /* whole form group */
     private readonly formGroup: FormGroup = new FormGroup({});
+    private renderForm?: boolean | true;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
