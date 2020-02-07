@@ -4,22 +4,20 @@
     </nb-card-header>
 
     <nb-card-body>
-        <div class="split-pane" (resized)="onResized($event)">
-            <as-split
-                    #asSplit
-                    [contextMenu]="splitPaneContextMenuComponent"
-                    unit="percent"
-                    direction="{{isHorizontal() ? 'horizontal' : 'vertical'}}"
-                    (dragEnd)="onDragEnd('percent', $event)"
-                    #splitComponent="asSplit">
-                <as-split-area
-                        #area{{index}}
-                        *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers">
-                    <!-- Split area {{index}} content placeholder -->
-                    <ng-template #splitAreaHolder></ng-template>
-                </as-split-area>
-            </as-split>
-        </div>
+        <as-split
+            #asSplit
+            [contextMenu]="splitPaneContextMenuComponent"
+            unit="percent"
+            direction="{{isHorizontal() ? 'horizontal' : 'vertical'}}"
+            (dragEnd)="onDragEnd('percent', $event)"
+            #splitComponent="asSplit">
+            <as-split-area
+                #area{{index}}
+                *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers">
+                <!-- Split area {{index}} content placeholder -->
+                <ng-template #splitAreaHolder (resized)="onResized($event)"></ng-template>
+            </as-split-area>
+        </as-split>
         <context-menu #splitPaneContextMenuComponent
                       [disabled]="!contextMenu || !contextMenu.length"
                       (close)="onContextMenuClose()">

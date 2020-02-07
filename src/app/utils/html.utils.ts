@@ -14,7 +14,7 @@ export default class HtmlUtils {
      * @param element parent element or document
      * @return DOM elements or undefined
      */
-    public static getElementsBySelector(selector: string, element?: HTMLElement): NodeListOf<HTMLElement> {
+    public static getElementsBySelector(selector: string, element?: Element): NodeListOf<HTMLElement> {
         if (!(selector || '').length) {
             return undefined;
         }
@@ -26,7 +26,7 @@ export default class HtmlUtils {
      * @param element to filter. undefined for filtering whole document
      * @return focusable DOM elements or undefined
      */
-    public static getFocusableElements(element?: HTMLElement): NodeListOf<HTMLElement> {
+    public static getFocusableElements(element?: Element): NodeListOf<HTMLElement> {
         return HtmlUtils.getElementsBySelector(FOCUSABLE_ELEMENTS_SELETOR, element);
     }
 }

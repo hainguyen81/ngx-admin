@@ -6,7 +6,8 @@ import {
     Inject,
     QueryList,
     Renderer2,
-    ViewChildren, ViewContainerRef,
+    ViewChildren,
+    ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -167,20 +168,19 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     onResized(event: ResizedEvent): void {
         super.onResized(event);
 
-        let splitEls: NodeListOf<HTMLElement>;
-        let splitGutterEls: NodeListOf<HTMLElement>;
-        splitEls = this.getElementsBySelector(
-            AbstractSplitpaneComponent.SPLIT_ELEMENT_SELECTOR,
-            event.element.nativeElement as HTMLElement);
-        splitGutterEls = this.getElementsBySelector(
-            AbstractSplitpaneComponent.SPLIT_GUTTER_ELEMENT_SELECTOR,
-            event.element.nativeElement as HTMLElement);
-        if (splitEls && splitEls.length && splitGutterEls && splitGutterEls.length) {
-            let splitEl: HTMLElement;
-            let splitGutterEl: HTMLElement;
-            splitEl = splitEls.item(0);
-            splitGutterEl = splitGutterEls.item(0);
-            this.getRenderer().setStyle(splitGutterEl, 'height', splitEl.offsetHeight + 'px');
+        let eventEl: Element;
+        eventEl = event.element.nativeElement as Element;
+        let splitEl: Element;
+        splitEl = (eventEl ? eventEl.closest(
+            AbstractSplitpaneComponent.SPLIT_ELEMENT_SELECTOR) : undefined);
+        if (splitEl) {
+            let splitGutterEls: NodeListOf<Element>;
+            splitGutterEls = this.getElementsBySelector(
+                AbstractSplitpaneComponent.SPLIT_GUTTER_ELEMENT_SELECTOR);
+            if (splitGutterEls && splitGutterEls.length) {
+                this.getRenderer().setStyle(splitGutterEls.item(0),
+                    'height', (splitEl as HTMLElement).offsetHeight + 'px');
+            }
         }
     }
 

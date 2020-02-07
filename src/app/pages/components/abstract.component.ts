@@ -10,7 +10,8 @@ import {
     OnDestroy,
     OnInit,
     QueryList,
-    Renderer2, SimpleChanges,
+    Renderer2,
+    SimpleChanges,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -426,7 +427,7 @@ export class AbstractComponent
      * Get the DOM elements by the specified selector
      * @return DOM elements or undefined
      */
-    protected getElementsBySelector(selector: string, element?: HTMLElement): NodeListOf<HTMLElement> {
+    protected getElementsBySelector(selector: string, element?: Element): NodeListOf<HTMLElement> {
         return HtmlUtils.getElementsBySelector(selector, element);
     }
 
@@ -435,7 +436,7 @@ export class AbstractComponent
      * @param element to filter. undefined for filtering whole document
      * @return focusable DOM elements or undefined
      */
-    protected getFocusableElements(element?: HTMLElement): NodeListOf<HTMLElement> {
+    protected getFocusableElements(element?: Element): NodeListOf<HTMLElement> {
         return HtmlUtils.getFocusableElements(element);
     }
 }
