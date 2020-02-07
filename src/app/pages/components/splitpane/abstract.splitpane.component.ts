@@ -14,6 +14,15 @@ import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
 
+/* Split area configuration */
+export interface ISplitAreaConfig {
+    size?: number | null;
+    minSize?: number | null;
+    maxSize?: number | null;
+    lockSize?: boolean | false;
+    visible?: boolean | true;
+}
+
 /**
  * Abstract SplitPane component base on {AngularSplitModule}
  */
@@ -148,5 +157,26 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     onDragEnd(unit, {sizes}): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onDragEnd', unit, sizes);
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Configure the specified area
+     * @param area to config
+     * @param config to apply
+     */
+    protected configArea(area: SplitAreaDirective, config: ISplitAreaConfig): void {
+        if (!area || !config) {
+            return;
+        }
+
+        area.size = config.size;
+        area.minSize = config.minSize;
+        area.maxSize = config.maxSize;
+        area.lockSize = config.lockSize;
+        area.visible = config.visible;
     }
 }

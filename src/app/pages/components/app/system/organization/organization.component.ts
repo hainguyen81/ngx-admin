@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     Component,
     ComponentFactoryResolver,
     Inject, OnInit,
@@ -26,7 +27,7 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 })
 export class OrganizationSplitPaneComponent
     extends BaseSplitPaneComponent<OrganizationDataSource>
-    implements OnInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -86,11 +87,10 @@ export class OrganizationSplitPaneComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
 
-        // wait for component initialize and create them
-        setTimeout(() => this.createPaneComponents(), 300);
+        this.createPaneComponents();
     }
 
     // -------------------------------------------------
@@ -117,5 +117,8 @@ export class OrganizationSplitPaneComponent
             componentFactoryResolver, viewContainerRefs[1], this.getLogger());
         formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
         this.organizationFormlyComponent = formlyComponentService.resolve().instance;
+
+        // hide form area
+        this.getSplitAreaComponents()[1].visible = false;
     }
 }
