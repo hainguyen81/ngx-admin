@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -28,15 +28,17 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
         super(dataSource, contextMenuService, logger, renderer,
-            translateService, factoryResolver, null, false);
+            translateService, factoryResolver, viewContainerRef, null, false);
     }
 
     // -------------------------------------------------

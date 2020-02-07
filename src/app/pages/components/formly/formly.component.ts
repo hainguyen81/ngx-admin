@@ -1,6 +1,6 @@
 import {AbstractFormlyComponent} from './abstract.formly.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -53,13 +53,15 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
     }
 }

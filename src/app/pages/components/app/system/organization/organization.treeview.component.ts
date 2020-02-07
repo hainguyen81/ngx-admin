@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, OnInit, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
@@ -35,21 +35,23 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {BaseNgxTreeviewComponent} class
+     * Create a new instance of {OrganizationTreeviewComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
         super.setConfig(OrganizationTreeviewConfig);
     }
 

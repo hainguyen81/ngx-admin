@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
@@ -119,13 +119,29 @@ export const CustomerContextMenu: IContextMenu[] = [{
 })
 export class CustomerSmartTableComponent extends BaseSmartTableComponent<CustomerDatasource> {
 
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {CustomerSmartTableComponent} class
+     * @param dataSource {CustomerDatasource}
+     * @param contextMenuService {ContextMenuService}
+     * @param logger {NGXLogger}
+     * @param renderer {Renderer2}
+     * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     */
     constructor(@Inject(CustomerDatasource) dataSource: CustomerDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+        super(dataSource, contextMenuService, logger, renderer, translateService,
+            factoryResolver, viewContainerRef,
             'system.customer.title', CustomerTableSettings, CustomerContextMenu);
     }
 

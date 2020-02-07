@@ -1,6 +1,6 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent} from '../abstract.component';
-import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {AfterViewInit, ComponentFactoryResolver, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -128,6 +128,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
@@ -138,10 +139,11 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           private config?: FormlyConfig,
                           private fields?: FormlyFieldConfig[] | [],
                           private options?: FormlyFormOptions) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
     }
 
     // -------------------------------------------------
@@ -150,7 +152,10 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
-        this.queryFormlyForm.map((item) => this.formlyForm = item);
+
+        if (!this.formlyForm) {
+            this.queryFormlyForm.map((item) => this.formlyForm = item);
+        }
     }
 
     /**

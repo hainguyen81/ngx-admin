@@ -26,10 +26,12 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {OrganizationSplitPaneComponent} from './organization.component';
 import {AngularSplitModule} from 'angular-split';
+import {ThemeModule} from '../../../../../@theme/theme.module';
 
 @NgModule({
     imports: [
         CommonModule,
+        ThemeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,
@@ -69,6 +71,10 @@ import {AngularSplitModule} from 'angular-split';
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
+    ],
+    entryComponents: [
+        OrganizationTreeviewComponent,
+        OrganizationFormlyComponent,
     ],
     declarations: [
         OrganizationTreeviewComponent,

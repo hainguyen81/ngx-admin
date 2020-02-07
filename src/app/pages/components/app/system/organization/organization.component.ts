@@ -1,9 +1,9 @@
 import {
+    AfterViewInit,
     Component,
     ComponentFactoryResolver,
     ComponentRef,
     Inject,
-    OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -30,78 +30,82 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 })
 export class OrganizationSplitPaneComponent
     extends BaseSplitPaneComponent<OrganizationDataSource>
-    implements OnInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    @Inject(OrganizationSplitPaneAreaComponentService)
-    private organizationSplitPaneAreaComponentService: OrganizationSplitPaneAreaComponentService;
-    private organizationSplitPaneAreas: SplitAreaDirective[];
-    @Inject(OrganizationTreeviewComponentService)
-    private organizationTreeviewComponentService: OrganizationTreeviewComponentService;
     private organizationTreeviewComponent: OrganizationTreeviewComponent;
-    @Inject(OrganizationFormlyComponentService)
-    private organizationFormlyComponentService: OrganizationFormlyComponentService;
     private organizationFormlyComponent: OrganizationFormlyComponent;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {OrganizationTreeviewComponent} instance
+     * @return the {OrganizationTreeviewComponent} instance
+     */
+    protected getTreeviewComponent(): OrganizationTreeviewComponent {
+        return this.organizationTreeviewComponent;
+    }
+
+    /**
+     * Get the {OrganizationFormlyComponent} instance
+     * @return the {OrganizationFormlyComponent} instance
+     */
+    protected getFormlyComponent(): OrganizationFormlyComponent {
+        return this.organizationFormlyComponent;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponent} class
+     * Create a new instance of {OrganizationSplitPaneComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
         super.setHorizontal(true);
+        super.setNumberOfAreas(2);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        // create split areas
-        this.organizationSplitPaneAreaComponentService.setViewContainerRef(super.getViewContainerRef());
-        let leftAreaRef: ComponentRef<SplitAreaDirective>;
-        leftAreaRef = this.organizationSplitPaneAreaComponentService.resolve();
-        leftAreaRef.instance.size = 30;
-        leftAreaRef.instance.minSize = 15;
-        this.getSplitComponent().addArea(leftAreaRef.instance);
-
-        let rightAreaRef: ComponentRef<SplitAreaDirective>;
-        rightAreaRef = this.organizationSplitPaneAreaComponentService.resolve();
-        rightAreaRef.instance.size = 70;
-        rightAreaRef.instance.minSize = 50;
-        this.getSplitComponent().addArea(rightAreaRef.instance);
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
 
         // create tree-view component
-        this.organizationTreeviewComponentService.setViewContainerRef(
-            leftAreaRef.injector.get(ViewContainerRef));
-        let treeviewRef: ComponentRef<OrganizationTreeviewComponent>;
-        treeviewRef = this.organizationTreeviewComponentService.resolve();
-        this.organizationTreeviewComponent = treeviewRef.instance;
-
-        // create formly component
-        this.organizationFormlyComponentService.setViewContainerRef(
-            rightAreaRef.injector.get(ViewContainerRef));
-        let formlyRef: ComponentRef<OrganizationFormlyComponent>;
-        formlyRef = this.organizationFormlyComponentService.resolve();
-        this.organizationFormlyComponent = formlyRef.instance;
+        let treeviewComponentService: OrganizationTreeviewComponentService;
+        treeviewComponentService = new OrganizationTreeviewComponentService(
+            super.getFactoryResolver(), super.getSplitAreaViewContainerComponents()[0], this.getLogger());
+        this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
+        // this.getTreeviewComponentService().setViewContainerRef(leftAreaRef.injector.get(ViewContainerRef));
+        // let treeviewRef: ComponentRef<OrganizationTreeviewComponent>;
+        // treeviewRef = this.getTreeviewComponentService().resolve();
+        // this.organizationTreeviewComponent = treeviewRef.instance;
+        //
+        // // create formly component
+        // this.getFormlyComponentService().setViewContainerRef(rightAreaRef.injector.get(ViewContainerRef));
+        // let formlyRef: ComponentRef<OrganizationFormlyComponent>;
+        // formlyRef = this.getFormlyComponentService().resolve();
+        // this.organizationFormlyComponent = formlyRef.instance;
     }
 }

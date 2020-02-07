@@ -26,10 +26,12 @@ import {NgxFormlyComponent} from './formly/formly.component';
 import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AppMaterialModule} from '../../app.material.module';
+import {ThemeModule} from '../../@theme/theme.module';
 
 @NgModule({
     imports: [
         CommonModule,
+        ThemeModule,
         NbInputModule,
         NbCheckboxModule,
         NbSelectModule,
@@ -75,6 +77,7 @@ import {AppMaterialModule} from '../../app.material.module';
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
+        ThemeModule,
     ],
     declarations: [
         SmartTableComponent,

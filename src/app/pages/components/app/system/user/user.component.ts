@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {convertUserStatusToDisplay, USER_STATUS} from '../../../../../@core/data/user';
 import {UserDataSource} from '../../../../../services/implementation/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -120,13 +120,29 @@ export const UserContextMenu: IContextMenu[] = [{
 })
 export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSource> {
 
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {UserSmartTableComponent} class
+     * @param dataSource {UserDataSource}
+     * @param contextMenuService {ContextMenuService}
+     * @param logger {NGXLogger}
+     * @param renderer {Renderer2}
+     * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     */
     constructor(@Inject(UserDataSource) userDataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(userDataSource, contextMenuService, logger, renderer, translateService, factoryResolver,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+        super(userDataSource, contextMenuService, logger, renderer, translateService,
+            factoryResolver, viewContainerRef,
             'system.user.title', UserTableSettings, UserContextMenu);
     }
 

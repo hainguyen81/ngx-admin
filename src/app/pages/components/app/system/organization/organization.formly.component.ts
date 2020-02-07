@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {BaseFormlyComponent} from '../../../formly/base.formly.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -168,21 +168,24 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponent} class
+     * Create a new instance of {OrganizationFormlyComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+        super(dataSource, contextMenuService, logger, renderer, translateService,
+            factoryResolver, viewContainerRef,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
         super.setModel(new Organization('', '', '', ORGANIZTAION_TYPE.HEAD_CENTER));
     }

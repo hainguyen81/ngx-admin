@@ -1,11 +1,24 @@
-import {AfterViewInit, ComponentFactoryResolver, Inject, OnInit, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
+import {
+    AfterViewInit,
+    ComponentFactoryResolver,
+    Inject,
+    OnInit,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {LocalDataSource} from 'ng2-smart-table';
-import {DocumentKeydownHandlerService, DocumentKeypressHandlerService, DocumentKeyupHandlerService,} from '../../services/implementation/document.keypress.handler.service';
+import {
+    DocumentKeydownHandlerService,
+    DocumentKeypressHandlerService,
+    DocumentKeyupHandlerService,
+} from '../../services/implementation/document.keypress.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
@@ -36,9 +49,8 @@ export class AbstractComponent implements AfterViewInit, OnInit {
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren(ViewContainerRef)
+    @ViewChildren(AbstractComponent, { read: ViewContainerRef })
     private readonly queryViewContainerRef: QueryList<ViewContainerRef>;
-    private viewContainerRef: ViewContainerRef;
 
     @ViewChildren(ContextMenuComponent)
     private readonly queryContextMenuComponent: QueryList<ContextMenuComponent>;
@@ -182,13 +194,15 @@ export class AbstractComponent implements AfterViewInit, OnInit {
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
                           @Inject(NGXLogger) private logger: NGXLogger,
                           @Inject(Renderer2) private renderer: Renderer2,
                           @Inject(TranslateService) private translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver) {
+                          @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
+                          @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef) {
         contextMenuService || throwError('Could not inject ContextMenuService');
         logger || throwError('Could not inject NGXLogger');
         renderer || throwError('Could not inject Renderer2');
@@ -202,10 +216,14 @@ export class AbstractComponent implements AfterViewInit, OnInit {
     // -------------------------------------------------
 
     ngAfterViewInit(): void {
-        this.queryViewContainerRef.map(
-            (item) => this.viewContainerRef = item);
-        this.queryContextMenuComponent.map(
-            (item) => this.contextMenuComponent = item);
+        if (!this.viewContainerRef) {
+            this.queryViewContainerRef.map(
+                (item) => this.viewContainerRef = item);
+        }
+        if (!this.contextMenuComponent) {
+            this.queryContextMenuComponent.map(
+                (item) => this.contextMenuComponent = item);
+        }
         this.documentKeyDownHandlerService = new DocumentKeydownHandlerService(
             (e: KeyboardEvent) => this.onKeyDown(e), this.getLogger());
         this.documentKeyUpHandlerService = new DocumentKeyupHandlerService(

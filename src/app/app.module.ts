@@ -11,13 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-/* API Configuration */
-import {AppConfig} from './config/app.config';
-/* Authentication */
-import {NbAuthModule} from '@nebular/auth';
-import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
-import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
-
+/* Nebular Theme */
 import {
     NbChatModule,
     NbCheckboxModule,
@@ -33,6 +27,12 @@ import {
     NbToastrModule,
     NbWindowModule,
 } from '@nebular/theme';
+/* API Configuration */
+import {AppConfig} from './config/app.config';
+/* Authentication */
+import {NbAuthModule} from '@nebular/auth';
+import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
+import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 /* Logger */
 import {LoggerModule} from 'ngx-logger';
 /* Database */

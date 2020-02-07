@@ -2,17 +2,18 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent} from '../abstract.component';
 import {
     AfterViewInit,
-    ComponentFactoryResolver,
+    ComponentFactoryResolver, ContentChildren,
     Inject,
     OnInit,
     QueryList,
     Renderer2,
-    ViewChildren,
+    ViewChildren, ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {SplitComponent} from 'angular-split';
+import {SplitAreaDirective, SplitComponent} from 'angular-split';
+import {throwError} from 'rxjs';
 
 /**
  * Abstract SplitPane component base on {AngularSplitModule}
@@ -27,6 +28,12 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     @ViewChildren(SplitComponent)
     private readonly querySplitComponent: QueryList<SplitComponent>;
     private splitComponent: SplitComponent;
+    @ViewChildren(SplitAreaDirective)
+    private readonly querySplitAreaDirectiveComponents: QueryList<SplitAreaDirective>;
+    private splitAreas: SplitAreaDirective[];
+    @ViewChildren(SplitAreaDirective, { read: ViewContainerRef })
+    private readonly querySplitAreaViewContainerRefs: QueryList<ViewContainerRef>;
+    private splitAreaViewContainerRefs: ViewContainerRef[];
 
     private paneHeader: string;
 
@@ -44,6 +51,22 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
 
     protected setPaneHeader(header: string) {
         this.paneHeader = header;
+    }
+
+    /**
+     * Get the number of split-area
+     * @return the number of split-area
+     */
+    public getNumberOfAreas(): number {
+        return this.numberOfAreas;
+    }
+
+    /**
+     * Set the number of split-area
+     * @param numberOfAreas the number of split-area
+     */
+    protected setNumberOfAreas(numberOfAreas: number): void {
+        this.numberOfAreas = numberOfAreas;
     }
 
     /**
@@ -65,6 +88,22 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
         return this.splitComponent;
     }
 
+    /**
+     * Get the {SplitAreaDirective} instances array
+     * @return the {SplitAreaDirective} instances array
+     */
+    protected getSplitAreaComponents(): SplitAreaDirective[] {
+        return this.splitAreas;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instances array of {SplitAreaDirective}
+     * @return the {ViewContainerRef} instances array of {SplitAreaDirective}
+     */
+    protected getSplitAreaViewContainerComponents(): ViewContainerRef[] {
+        return this.splitAreaViewContainerRefs;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -77,6 +116,9 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     * @param numberOfAreas the number of split-area
+     * @param horizontal true for horizontal; else vertical
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -84,8 +126,11 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          private numberOfAreas: number,
                           private horizontal?: boolean | false) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        (numberOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
     }
 
     ngAfterViewInit(): void {
@@ -94,6 +139,16 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
         if (!this.splitComponent) {
             this.querySplitComponent.map(
                 (item) => this.splitComponent = item);
+        }
+        if (!this.splitAreaViewContainerRefs || !this.splitAreaViewContainerRefs.length) {
+            this.splitAreaViewContainerRefs = [];
+            this.querySplitAreaViewContainerRefs.forEach(
+                (item) => this.splitAreaViewContainerRefs.push(item));
+        }
+        if (!this.splitAreas || !this.splitAreas.length) {
+            this.splitAreas = [];
+            this.querySplitAreaDirectiveComponents.forEach(
+                (item) => this.splitAreas.push(item));
         }
         this.setHorizontal(this.horizontal);
     }

@@ -5,7 +5,7 @@ import {
     OnInit,
     QueryList,
     Renderer2,
-    ViewChildren,
+    ViewChildren, ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -135,6 +135,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
      * @param treeviewConfig {TreeviewConfig}
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
@@ -144,9 +145,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           private treeviewConfig?: TreeviewConfig,
                           private dropdown?: boolean | false) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver);
+        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
         this.setConfig(treeviewConfig);
     }
 
