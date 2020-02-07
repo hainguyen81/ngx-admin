@@ -16,7 +16,7 @@ export default class OrganizationUtils {
             if (!item) {
                 item = new TreeviewItem({
                     checked: false,
-                    collapsed: false,
+                    collapsed: true,
                     disabled: false,
                     text: org.name,
                     value: org,

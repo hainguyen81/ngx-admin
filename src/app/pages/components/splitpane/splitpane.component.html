@@ -15,7 +15,9 @@
                 #area{{index}}
                 *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers">
                 <!-- Split area {{index}} content placeholder -->
-                <ng-template #splitAreaHolder (resized)="onResized($event)"></ng-template>
+                <div class="area-content p-sm-1" (resized)="onResized($event)">
+                    <ng-template #splitAreaHolder></ng-template>
+                </div>
             </as-split-area>
         </as-split>
         <context-menu #splitPaneContextMenuComponent

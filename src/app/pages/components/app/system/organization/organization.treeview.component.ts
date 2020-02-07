@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
@@ -30,6 +30,24 @@ export const OrganizationTreeviewConfig: TreeviewConfig = {
 export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource> {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private clickItemDelegate: (event: MouseEvent, item: TreeviewItem) => void;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Set the item click listener
+     * @param clickItemDelegate listener
+     */
+    public setClickItemListener(clickItemDelegate: (event: MouseEvent, item: TreeviewItem) => void) {
+        this.clickItemDelegate = clickItemDelegate;
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -52,6 +70,20 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
         super.setConfig(OrganizationTreeviewConfig);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    /**
+     * Raise when tree-view item has been clicked
+     * @param event {MouseEvent}
+     * @param item {TreeviewItem}
+     */
+    onClickItem(event: MouseEvent, item: TreeviewItem) {
+        super.onClickItem(event, item);
+        this.clickItemDelegate && this.clickItemDelegate.apply(this, [event, item]);
     }
 
     // -------------------------------------------------

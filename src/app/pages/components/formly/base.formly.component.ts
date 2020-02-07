@@ -24,7 +24,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
         return super.getModel() as T;
     }
 
-    protected setModel(model: T) {
+    public setModel(model: T) {
         super.setModel(model);
     }
 

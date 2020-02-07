@@ -375,6 +375,96 @@ export class AbstractComponent
         this.getLogger().debug('onDataSourceChanged', value);
     }
 
+    /**
+     * Triggered click event
+     * @param event MouseEvent
+     */
+    onClick(event: MouseEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onClick', event);
+    }
+
+    /**
+     * Triggered only on a user double-click event.
+     * @param event event data
+     */
+    onDoubleClick(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onDoubleClick', event);
+    }
+
+    /**
+     * Triggered only on a user `mousedown` event.
+     * @param event event data
+     */
+    onMouseDown(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseDown', event);
+    }
+
+    /**
+     * Triggered only on a user `mouseenter` event.
+     * @param event event data
+     */
+    onMouseEnter(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseEnter', event);
+    }
+
+    /**
+     * Triggered only on a user `mouseleave` event.
+     * @param event event data
+     */
+    onMouseLeave(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseLeave', event);
+    }
+
+    /**
+     * Triggered only on a user `mousemove` event.
+     * @param event event data
+     */
+    onMouseMove(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseMove', event);
+    }
+
+    /**
+     * Triggered only on a user `mouseout` event.
+     * @param event event data
+     */
+    onMouseOut(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseOut', event);
+    }
+
+    /**
+     * Triggered only on a user `mouseover` event.
+     * @param event event data
+     */
+    onMouseOver(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseOver', event);
+    }
+
+    /**
+     * Triggered only on a user `mouseup` event.
+     * @param event event data
+     */
+    onMouseUp(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseUp', event);
+    }
+
+    /**
+     * Triggered only on a user `mousewheel` event.
+     * @param event event data
+     */
+    onMouseWheel(event: any): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onMouseWheel', event);
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------

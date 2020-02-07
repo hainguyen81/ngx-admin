@@ -89,4 +89,9 @@
     .mat-form-field-flex {
         padding-top: 0.5em;
     }
+
+    /* SplitPane */
+    .as-horizontal > .as-split-gutter, .as-vertical > .as-split-gutter {
+        background-color: transparent !important;
+    }
 }

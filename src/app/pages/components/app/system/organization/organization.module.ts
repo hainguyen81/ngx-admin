@@ -21,7 +21,7 @@ import {
 } from '../../../../../services/implementation/organization/organization.service';
 import {TreeviewModule} from 'ngx-treeview';
 import {OrganizationFormlyComponent} from './organization.formly.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {OrganizationSplitPaneComponent} from './organization.component';
@@ -39,6 +39,7 @@ import {AngularResizedEventModule} from 'angular-resize-event';
         NbCheckboxModule,
         NbSelectModule,
         Ng2SmartTableModule,
+        FormsModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

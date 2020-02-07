@@ -20,7 +20,7 @@ import {TreeviewModule} from 'ngx-treeview';
 import {TranslateModule} from '@ngx-translate/core';
 import {AngularSplitModule} from 'angular-split';
 import {NgxTreeviewComponent} from './treeview/treeview.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {NgxFormlyComponent} from './formly/formly.component';
 import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
@@ -39,6 +39,7 @@ import {AngularResizedEventModule} from 'angular-resize-event';
         NbIconModule,
         NbCardModule,
         NbSearchModule,
+        FormsModule,
 
         /* Angular material modules */
         AppMaterialModule,

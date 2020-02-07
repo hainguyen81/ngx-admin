@@ -1,11 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ComponentFactoryResolver,
-    Inject, OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -18,11 +11,12 @@ import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {SplitAreaDirective} from 'angular-split';
+import {IOrganization} from '../../../../../@core/data/organization';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
     size: 30,
-    minSize: 20,
+    /*minSize: 20,*/
     maxSize: 30,
     lockSize: false,
     visible: true,
@@ -31,7 +25,7 @@ export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
 /* Organization right area configuration */
 export const OrganizationFormAreaConfig: ISplitAreaConfig = {
     size: 70,
-    minSize: 50,
+    /*minSize: 50,*/
     maxSize: 70,
     lockSize: false,
     visible: true,
@@ -142,5 +136,16 @@ export class OrganizationSplitPaneComponent
             componentFactoryResolver, viewContainerRefs[1], this.getLogger());
         formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
         this.organizationFormlyComponent = formlyComponentService.resolve().instance;
+
+        // handle click tree-view item to show form
+        this.organizationTreeviewComponent.setClickItemListener((e, it) => {
+            if (it && it.value && this.organizationFormlyComponent) {
+                let organization: IOrganization;
+                organization = it.value as IOrganization;
+                if (organization) {
+                    this.organizationFormlyComponent.setModel(organization);
+                }
+            }
+        });
     }
 }

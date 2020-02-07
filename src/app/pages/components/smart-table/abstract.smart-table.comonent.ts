@@ -595,17 +595,6 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     }
 
     /**
-     * Triggered only on a user mouseover event.
-     * @param event Object, consist of:
-     *      data: Object - highlighted row data object
-     *      source: DataSource - table data source
-     */
-    onMouseOver(event): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseOver', event);
-    }
-
-    /**
      * Triggered once a Create button clicked.
      * Triggered only if table mode = external.
      * @param event Object, consist of:

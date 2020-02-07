@@ -1,20 +1,68 @@
 <ngx-treeview *ngIf="!isDropDown()"
               [config]="getConfig()"
               [items]="getTreeviewItems()"
+              [itemTemplate]="itemTemplate"
               (selectedChange)="onSelectedChange($event)"
               (filterChange)="onFilterChange($event)"
               (keydown)="onKeyDown($event)"
               (keyup)="onKeyUp($event)"
-              (keypress)="onKeyPress($event)">
+              (keypress)="onKeyPress($event)"
+              (click)="onClick($event)"
+              (dblclick)="onDoubleClick($event)"
+              (mousedown)="onMouseDown($event)"
+              (mouseenter)="onMouseEnter($event)"
+              (mouseleave)="onMouseLeave($event)"
+              (mousemove)="onMouseMove($event)"
+              (mouseout)="onMouseOut($event)"
+              (mouseover)="onMouseOver($event)"
+              (mouseup)="onMouseUp($event)"
+              (mousewheel)="onMouseWheel($event)">
 </ngx-treeview>
 
 <ngx-dropdown-treeview *ngIf="isDropDown()"
                        [buttonClass]="getButtonClass()"
                        [config]="getConfig()"
                        [items]="getTreeviewItems()"
+                       [itemTemplate]="itemTemplate"
                        (selectedChange)="onSelectedChange($event)"
                        (filterChange)="onFilterChange($event)"
                        (keydown)="onKeyDown($event)"
                        (keyup)="onKeyUp($event)"
-                       (keypress)="onKeyPress($event)">
+                       (keypress)="onKeyPress($event)"
+                       (click)="onClick($event)"
+                       (dblclick)="onDoubleClick($event)"
+                       (mousedown)="onMouseDown($event)"
+                       (mouseenter)="onMouseEnter($event)"
+                       (mouseleave)="onMouseLeave($event)"
+                       (mousemove)="onMouseMove($event)"
+                       (mouseout)="onMouseOut($event)"
+                       (mouseover)="onMouseOver($event)"
+                       (mouseup)="onMouseUp($event)"
+                       (mousewheel)="onMouseWheel($event)">
 </ngx-dropdown-treeview>
+
+<ng-template #itemTemplate
+             let-item="item"
+             let-onCollapseExpand="onCollapseExpand"
+             let-onCheckedChange="onCheckedChange">
+    <div class="form-inline row-item">
+        <nb-icon *ngIf="item.children && item.collapsed"
+                 pack="fa" icon="caret-right"
+                 (click)="onCollapseExpand()"></nb-icon>
+        <nb-icon *ngIf="item.children && !item.collapsed"
+                 pack="fa" icon="caret-down"
+                 (click)="onCollapseExpand()"></nb-icon>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input"
+                   *ngIf="isEnabledItemCheck()"
+                   [(ngModel)]="item.checked"
+                   (ngModelChange)="onCheckedChange()"
+                   [disabled]="item.disabled"
+                   [indeterminate]="item.indeterminate"
+                   (click)="onClickItem($event, item);"/>
+            <label class="form-check-label"
+                   (click)="item.checked = !item.checked; onCheckedChange(); onClickItem($event, item);">
+                {{item.text}}</label>
+        </div>
+    </div>
+</ng-template>

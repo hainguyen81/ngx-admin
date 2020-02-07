@@ -17,6 +17,32 @@ import {AbstractTreeviewComponent} from './abstract.treeview.component';
 export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> implements AfterViewInit {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private enabledItemCheck?: boolean | false;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating this component whether uses checkbox for tree-view item
+     * @return true for using checkbox; else false
+     */
+    public isEnabledItemCheck(): boolean {
+        return this.enabledItemCheck;
+    }
+
+    /**
+     * Set a boolean value indicating this component whether uses checkbox for tree-view item
+     * @param enabledItemCheck true for using checkbox; else false
+     */
+    protected setEnabledItemCheck(enabledItemCheck?: boolean | false): void {
+        this.enabledItemCheck = enabledItemCheck;
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -61,6 +87,16 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     onFilterChange(event: any): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onFilterChange', event);
+    }
+
+    /**
+     * Raise when tree-view item has been clicked
+     * @param event {MouseEvent}
+     * @param item {TreeviewItem}
+     */
+    onClickItem(event: MouseEvent, item: TreeviewItem) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onClickItem', event, item);
     }
 
     // -------------------------------------------------

@@ -19,7 +19,7 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
     // DECLARATION
     // -------------------------------------------------
 
-    private model: any;
+    private model: any = undefined;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -37,7 +37,7 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
      * Set the form data model
      * @param model to apply
      */
-    protected setModel(model: any) {
+    public setModel(model: any) {
         this.model = model || {};
     }
 

@@ -168,19 +168,21 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     onResized(event: ResizedEvent): void {
         super.onResized(event);
 
-        let eventEl: Element;
-        eventEl = event.element.nativeElement as Element;
-        let splitEl: Element;
-        splitEl = (eventEl ? eventEl.closest(
-            AbstractSplitpaneComponent.SPLIT_ELEMENT_SELECTOR) : undefined);
-        if (splitEl) {
-            let splitGutterEls: NodeListOf<Element>;
-            splitGutterEls = this.getElementsBySelector(
-                AbstractSplitpaneComponent.SPLIT_GUTTER_ELEMENT_SELECTOR);
-            if (splitGutterEls && splitGutterEls.length) {
-                this.getRenderer().setStyle(splitGutterEls.item(0),
-                    'height', (splitEl as HTMLElement).offsetHeight + 'px');
-            }
+        let splitAreaEls: NodeListOf<HTMLElement>;
+        splitAreaEls = this.getElementsBySelector(
+            AbstractSplitpaneComponent.SPLIT_AREA_ELEMENT_SELECTOR);
+        let splitGutterEls: NodeListOf<HTMLElement>;
+        splitGutterEls = this.getElementsBySelector(
+            AbstractSplitpaneComponent.SPLIT_GUTTER_ELEMENT_SELECTOR);
+        if (splitAreaEls && splitAreaEls.length && splitGutterEls && splitGutterEls.length) {
+            let maxHeight: number;
+            maxHeight = 0;
+            splitAreaEls.forEach(splitAreaEl => {
+                maxHeight = Math.max(splitAreaEl.offsetHeight, maxHeight);
+            });
+            let splitGutterEl: HTMLElement;
+            splitGutterEl = splitGutterEls.item(0);
+            this.getRenderer().setStyle(splitGutterEl, 'height', maxHeight + 'px');
         }
     }
 
