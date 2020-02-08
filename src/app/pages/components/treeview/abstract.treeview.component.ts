@@ -15,6 +15,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
+import HtmlUtils from '../../../utils/html.utils';
+import KeyboardUtils from '../../../utils/keyboard.utils';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -33,6 +35,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
 
     protected static TREEVIEW_ELEMENT_SELECTOR: string = 'ngx-treeview';
     protected static TREEVIEW_ITEM_ELEMENT_SELECTOR: string = 'ngx-treeview-item';
+    protected static TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR: string = '.row-item';
     protected static TREEVIEW_SEARCH_ELEMENT_SELECTOR: string = '.row-filter';
 
     // -------------------------------------------------
@@ -160,35 +163,42 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.treeviewComponent && this.queryTreeviewComponent) {
-            this.queryTreeviewComponent.map(
-                (item) => {
-                    this.treeviewComponent = item;
-                    this.treeviewComponent
-                    && this.treeviewComponent.selectedChange
-                        .subscribe(value => this.onSelectedChange({$data: value}));
-                    this.treeviewComponent
-                    && this.treeviewComponent.filterChange
-                        .subscribe(value => this.onFilterChange({$data: value}));
-                });
-        }
-        if (!this.dropdownTreeviewComponent && this.queryDropdownTreeviewComponent) {
-            this.queryDropdownTreeviewComponent.map(
-                (item) => {
-                    this.dropdownTreeviewComponent = item;
-                    this.dropdownTreeviewComponent
-                    && this.dropdownTreeviewComponent.selectedChange
-                        .subscribe(value => this.onSelectedChange({$data: value}));
-                    this.dropdownTreeviewComponent
-                    && this.dropdownTreeviewComponent.filterChange
-                        .subscribe(value => this.onFilterChange({$data: value}));
-                });
-        }
+        (!this.treeviewComponent && this.queryTreeviewComponent)
+        && this.queryTreeviewComponent.map(
+            (item) => {
+                this.treeviewComponent = item;
+                this.treeviewComponent
+                && this.treeviewComponent.selectedChange
+                    .subscribe(value => this.onSelectedChange({$data: value}));
+                this.treeviewComponent
+                && this.treeviewComponent.filterChange
+                    .subscribe(value => this.onFilterChange({$data: value}));
+            });
+        (!this.dropdownTreeviewComponent && this.queryDropdownTreeviewComponent)
+        && this.queryDropdownTreeviewComponent.map(
+            (item) => {
+                this.dropdownTreeviewComponent = item;
+                this.dropdownTreeviewComponent
+                && this.dropdownTreeviewComponent.selectedChange
+                    .subscribe(value => this.onSelectedChange({$data: value}));
+                this.dropdownTreeviewComponent
+                && this.dropdownTreeviewComponent.filterChange
+                    .subscribe(value => this.onFilterChange({$data: value}));
+            });
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    /**
+     * Raise when tree-view item has been clicked
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {TreeviewItem}
+     */
+    onClickItem(event: IEvent) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onClickItem', event);
+    }
 
     /**
      * Raise when selected items have been changed
@@ -222,6 +232,77 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         }
     }
 
+    /**
+     * Perform navigate keydown action
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
+     */
+    onNavigateKeyDown(event: IEvent): void {
+        super.onNavigateKeyDown(event);
+
+        let kbEvent: KeyboardEvent;
+        kbEvent = event.$event as KeyboardEvent;
+
+        // check whether navigating on context menu
+        let targetEl: HTMLElement;
+        targetEl = event.$event.target as HTMLElement;
+        if (targetEl && targetEl.closest(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR)) {
+            return;
+        }
+
+        // detect the latest hovered item element
+        let treeviewItemEls: NodeListOf<HTMLElement>;
+        treeviewItemEls = this.getElementsBySelector(
+            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
+        let hoveredItemEls: NodeListOf<HTMLElement>;
+        hoveredItemEls = this.getElementsBySelector(
+            [AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
+        if (!hoveredItemEls || !hoveredItemEls.length) {
+            this.toggleTreeviewItemElement(treeviewItemEls.item(0));
+
+        } else {
+            let hoveredItemEl: HTMLElement;
+            hoveredItemEl = hoveredItemEls.item(hoveredItemEls.length - 1);
+            let nextSibling: Element;
+            nextSibling = HtmlUtils.next(hoveredItemEl,
+                AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
+            let prevSibling: Element;
+            prevSibling = HtmlUtils.previous(hoveredItemEl,
+                AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
+
+            // toggle hover class
+            if (KeyboardUtils.isHomeKey(kbEvent) || KeyboardUtils.isPageUpKey(kbEvent)
+                || (KeyboardUtils.isUpKey(kbEvent) && !prevSibling)) {
+                this.toggleElementClass(hoveredItemEl, 'selected', false);
+                this.toggleTreeviewItemElement(treeviewItemEls.item(0));
+
+            } else if (KeyboardUtils.isEndKey(kbEvent) || KeyboardUtils.isPageDownKey(kbEvent)
+                || (KeyboardUtils.isDownKey(kbEvent) && !nextSibling)) {
+                this.toggleElementClass(hoveredItemEl, 'selected', false);
+                this.toggleTreeviewItemElement(treeviewItemEls.item(treeviewItemEls.length - 1));
+
+            } else if (KeyboardUtils.isUpKey(kbEvent)) {
+                this.toggleElementClass(hoveredItemEl, 'selected', false);
+                this.toggleTreeviewItemElement(prevSibling as HTMLElement);
+
+            } else if (KeyboardUtils.isDownKey(kbEvent)) {
+                this.toggleElementClass(hoveredItemEl, 'selected', false);
+                this.toggleTreeviewItemElement(nextSibling as HTMLElement);
+
+            } else if (KeyboardUtils.isRightKey(kbEvent) || KeyboardUtils.isLeftKey(kbEvent)) {
+                if (!this.toggleExpandCollapseTreeviewItemElement(hoveredItemEl)) {
+                    // toggle selected parent item
+                    let parentEl: HTMLElement;
+                    parentEl = hoveredItemEl.parentElement.closest(
+                        AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement;
+                    parentEl && this.toggleElementClass(hoveredItemEl, 'selected', false);
+                    parentEl && this.toggleTreeviewItemElement(parentEl);
+                }
+            }
+        }
+
+        this.preventEvent(event.$event);
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
@@ -231,4 +312,35 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param data to map
      */
     abstract mappingDataSourceToTreeviewItems(data: any): TreeviewItem[];
+
+    /**
+     * Get {TreeviewItem} of the specified tree-view item DOM element
+     * @param treeviewItemEl to detect
+     * @return {TreeviewItem}
+     */
+    abstract getTreeviewItemByElement(treeviewItemEl: HTMLElement): TreeviewItem;
+
+    /**
+     * Toggle expand/collapse the specified tree-view item element
+     * @param treeviewItemEl to toggle
+     * @return true for toggled; else false
+     */
+    protected toggleExpandCollapseTreeviewItemElement(treeviewItemEl: HTMLElement): boolean {
+        let item: TreeviewItem;
+        item = (treeviewItemEl ? this.getTreeviewItemByElement(treeviewItemEl) : undefined);
+        if (item && item.children && item.children.length) {
+            item.collapsed = !item.collapsed;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Toggle selected the specified tree-view item element
+     * @param treeviewItemEl to toggle
+     */
+    protected toggleTreeviewItemElement(treeviewItemEl: HTMLElement) {
+        treeviewItemEl && this.toggleElementClass(treeviewItemEl, 'selected', true);
+        treeviewItemEl && this.onClickItem({$data: this.getTreeviewItemByElement(treeviewItemEl)});
+    }
 }

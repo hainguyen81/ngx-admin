@@ -91,6 +91,15 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         && this.clickItemDelegate.apply(this, [event.$event, event.$data]);
     }
 
+    /**
+     * Perform action on data-source changed event
+     * @param event {IEvent} that contains {$event} as changed values
+     */
+    onDataSourceChanged(event: IEvent) {
+        super.onDataSourceChanged(event);
+        setTimeout(() => this.focus(), 300);
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -108,11 +117,17 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      */
     public focus(): void {
         let treeviewEls: NodeListOf<HTMLElement>;
-        treeviewEls = this.getElementsBySelector(OrganizationTreeviewComponent.TREEVIEW_ELEMENT_SELECTOR);
+        treeviewEls = this.getElementsBySelector(
+            OrganizationTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
         if (treeviewEls && treeviewEls.length) {
-            let treeviewEl: HTMLElement;
-            treeviewEl = treeviewEls.item(0);
-            treeviewEl.focus();
+            this.toggleTreeviewItemElement(treeviewEls.item(0));
+
+        } else {
+            treeviewEls = this.getElementsBySelector(
+                OrganizationTreeviewComponent.TREEVIEW_ELEMENT_SELECTOR);
+            if (treeviewEls && treeviewEls.length) {
+                treeviewEls.item(0).focus();
+            }
         }
     }
 }

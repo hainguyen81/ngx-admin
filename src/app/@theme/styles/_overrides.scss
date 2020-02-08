@@ -104,8 +104,11 @@
             cursor: pointer;
         }
 
-        ngx-treeview-item.selected, ngx-treeview-item.hover,
-        ngx-treeview-item:hover, ngx-treeview-item:active, ngx-treeview-item:focus {
+        ngx-treeview-item.selected > .treeview-item > .row-item,
+        ngx-treeview-item.hover > .treeview-item > .row-item,
+        ngx-treeview-item > .treeview-item > .row-item:hover,
+        ngx-treeview-item > .treeview-item > .row-item:active,
+        ngx-treeview-item > .treeview-item > .row-item:focus {
             background-color: nb-theme(color-primary-focus);
         }
     }

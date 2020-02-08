@@ -132,7 +132,6 @@ export class OrganizationSplitPaneComponent
         this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
 
         // handle click tree-view item to show form
-        this.organizationTreeviewComponent.focus();
         this.organizationTreeviewComponent.setClickItemListener((e, it) => {
             if (it && it.value) {
                 let organization: IOrganization;

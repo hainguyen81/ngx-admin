@@ -25,7 +25,7 @@ import {
     DocumentKeydownHandlerService,
     DocumentKeypressHandlerService,
     DocumentKeyupHandlerService,
-} from '../../services/implementation/document.keypress.handler.service';
+} from '../../services/implementation/document.keyboard.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 
@@ -645,12 +645,29 @@ export class AbstractComponent
     }
 
     /**
+     * Get the first occurred DOM elements by the specified selector
+     * @return DOM elements or undefined
+     */
+    protected getFirstElementBySelector(selector: string, element?: Element): HTMLElement {
+        return HtmlUtils.getFirstElementBySelector(selector, element);
+    }
+
+    /**
      * Get the focusable DOM elements of the specified element
      * @param element to filter. undefined for filtering whole document
      * @return focusable DOM elements or undefined
      */
     protected getFocusableElements(element?: Element): NodeListOf<HTMLElement> {
         return HtmlUtils.getFocusableElements(element);
+    }
+
+    /**
+     * Get the first occurred focusable DOM elements of the specified element
+     * @param element to filter. undefined for filtering whole document
+     * @return focusable DOM elements or undefined
+     */
+    protected getFirstFocusableElement(element?: Element): HTMLElement {
+        return HtmlUtils.getFirstFocusableElement(element);
     }
 
     /**
