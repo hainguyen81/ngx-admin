@@ -162,7 +162,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.formlyForm) {
+        if (!this.formlyForm && this.queryFormlyForm) {
             this.queryFormlyForm.map((item) => this.formlyForm = item);
         }
     }
@@ -173,6 +173,6 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      */
     onSubmit(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onSubmit');
+        this.getLogger().debug('onSubmit', event);
     }
 }

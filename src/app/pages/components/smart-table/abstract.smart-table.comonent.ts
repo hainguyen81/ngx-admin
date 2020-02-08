@@ -118,8 +118,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
-        this.querySmartTableComponent.map(
-            (item) => this.smartTableComponent = item);
+
+        if (!this.smartTableComponent && this.querySmartTableComponent) {
+            this.querySmartTableComponent.map(
+                (item) => this.smartTableComponent = item);
+        }
     }
 
     // -------------------------------------------------

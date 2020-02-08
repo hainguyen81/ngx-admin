@@ -138,11 +138,11 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.splitComponent) {
+        if (!this.splitComponent && this.querySplitComponent) {
             this.querySplitComponent.map(
                 (item) => this.splitComponent = item);
         }
-        if (!this.splitAreas || !this.splitAreas.length) {
+        if ((!this.splitAreas || !this.splitAreas.length) && this.querySplitAreaDirectiveComponents) {
             this.splitAreas = [];
             this.querySplitAreaDirectiveComponents.forEach(
                 (item) => this.splitAreas.push(item));
