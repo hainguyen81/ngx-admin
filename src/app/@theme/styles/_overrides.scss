@@ -48,8 +48,11 @@
         ng2-smart-table {
             table {
                 tr {
+                    cursor: pointer;
+
                     th, td {
                         padding: 0.5rem 1rem;
+                        cursor: pointer;
 
                         button, input, optgroup, select, textarea {
                             color: nb-theme(color-basic-800);
@@ -93,5 +96,17 @@
     /* SplitPane */
     .as-horizontal > .as-split-gutter, .as-vertical > .as-split-gutter {
         background-color: transparent !important;
+    }
+
+    /* tree-view */
+    ngx-treeview {
+        ngx-treeview-item, ngx-treeview-item * {
+            cursor: pointer;
+        }
+
+        ngx-treeview-item.selected, ngx-treeview-item.hover,
+        ngx-treeview-item:hover, ngx-treeview-item:active, ngx-treeview-item:focus {
+            background-color: nb-theme(color-primary-focus);
+        }
     }
 }

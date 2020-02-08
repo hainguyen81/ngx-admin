@@ -780,18 +780,21 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             if (KeyboardUtils.isHomeKey(kbEvent) || KeyboardUtils.isPageUpKey(kbEvent)
                 || (hoveredRowIndex + 1 >= rows.length && KeyboardUtils.isDownKey(kbEvent))) {
                 hoveredRowIndex = 0;
+                this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
 
             } else if (KeyboardUtils.isEndKey(kbEvent) || KeyboardUtils.isPageDownKey(kbEvent)
                 || (hoveredRowIndex - 1 < 0 && KeyboardUtils.isUpKey(kbEvent))) {
                 hoveredRowIndex = rows.length - 1;
+                this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
 
             } else if (KeyboardUtils.isUpKey(kbEvent)) {
                 hoveredRowIndex -= 1;
+                this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
 
-            } else {
+            } else if (KeyboardUtils.isDownKey(kbEvent)) {
                 hoveredRowIndex += 1;
+                this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
             }
-            this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
         }
         this.preventEvent(event.$event);
     }

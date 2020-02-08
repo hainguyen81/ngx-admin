@@ -367,7 +367,6 @@ export class AbstractComponent
                 || KeyboardUtils.isContextMenuKey(event.$event as KeyboardEvent))) {
             // stop firing event
             this.preventEvent(event.$event);
-
         }
     }
 
@@ -615,10 +614,10 @@ export class AbstractComponent
      * @param add true for adding class if not existed; false for removing if existed
      */
     protected toggleElementClass(element: HTMLElement, className: string, add?: boolean | false) {
-        if (!add) {
+        if (!add && (className || '').length && element.classList.contains(className)) {
             this.getRenderer().removeClass(element, className);
 
-        } else {
+        } else if ((className || '').length && !element.classList.contains(className)) {
             this.getRenderer().addClass(element, className);
         }
     }

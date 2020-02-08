@@ -46,4 +46,34 @@ export default class HtmlUtils {
         event.returnValue = false;
         return false;
     }
+
+    /**
+     * Get the next sibling element of the specified element by the specified element selector
+     * @param element to find next sibling element
+     * @param selector to filter
+     * @return next sibling element or undefined
+     */
+    public static nextSibling(element?: Element, selector?: string): Element {
+        let siblingEl: Element;
+        siblingEl = (element || document.body).nextElementSibling;
+        if (!(selector || '').length || !siblingEl || siblingEl.matches(selector)) {
+            return siblingEl;
+        }
+        return this.nextSibling(siblingEl, selector);
+    }
+
+    /**
+     * Get the previous sibling element of the specified element by the specified element selector
+     * @param element to find previous sibling element
+     * @param selector to filter
+     * @return previous sibling element or undefined
+     */
+    public static previousSibling(element?: Element, selector?: string): Element {
+        let siblingEl: Element;
+        siblingEl = (element || document.body).previousElementSibling;
+        if (!(selector || '').length || !siblingEl || siblingEl.matches(selector)) {
+            return siblingEl;
+        }
+        return this.nextSibling(siblingEl, selector);
+    }
 }

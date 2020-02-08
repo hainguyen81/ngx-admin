@@ -7,8 +7,10 @@ import {
     ESCAPE,
     HOME,
     INSERT,
+    LEFT_ARROW,
     PAGE_DOWN,
     PAGE_UP,
+    RIGHT_ARROW,
     UP_ARROW,
 } from '@angular/cdk/keycodes';
 
@@ -36,8 +38,10 @@ export default class KeyboardUtils {
      */
     public static isNavigateKey(event: KeyboardEvent): boolean {
         return KeyboardUtils.isSpecifiedKey(event,
-            'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown',
-            UP_ARROW, DOWN_ARROW, HOME, END, PAGE_UP, PAGE_DOWN);
+            'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+            'Home', 'End', 'PageUp', 'PageDown',
+            UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,
+            HOME, END, PAGE_UP, PAGE_DOWN);
     }
 
     /**
@@ -70,6 +74,22 @@ export default class KeyboardUtils {
      */
     public static isDownKey(event: KeyboardEvent): boolean {
         return KeyboardUtils.isSpecifiedKey(event, 'ArrowDown', DOWN_ARROW);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from LEFT_ARROW key
+     * @param event KeyboardEvent
+     */
+    public static isLeftKey(event: KeyboardEvent): boolean {
+        return KeyboardUtils.isSpecifiedKey(event, 'ArrowLeft', LEFT_ARROW);
+    }
+
+    /**
+     * Get a boolean value indicating event whether is from RIGHT_ARROW key
+     * @param event KeyboardEvent
+     */
+    public static isRightKey(event: KeyboardEvent): boolean {
+        return KeyboardUtils.isSpecifiedKey(event, 'ArrowRight', RIGHT_ARROW);
     }
 
     /**

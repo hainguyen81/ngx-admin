@@ -6,6 +6,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {TreeviewItem} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
 import {IEvent} from '../abstract.component';
+import KeyboardUtils from '../../../utils/keyboard.utils';
+import HtmlUtils from '../../../utils/html.utils';
 
 /**
  * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
@@ -79,6 +81,105 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     onClickItem(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickItem', event);
+        if (event && event.$event && event.$event.target instanceof Element) {
+            let targetEl: Element;
+            targetEl = event.$event.target as Element;
+            let itemEl: Element;
+            itemEl = (targetEl.tagName === NgxTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR
+                ? targetEl : targetEl.closest(NgxTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR));
+            if (itemEl && !itemEl.classList.contains('selected')) {
+                // clear another selected items
+                let prevSelectedItemEls: NodeListOf<HTMLElement>;
+                prevSelectedItemEls = this.getElementsBySelector(
+                    [NgxTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
+                if (prevSelectedItemEls && prevSelectedItemEls.length) {
+                    prevSelectedItemEls.forEach(selItemEl => this.toggleElementClass(selItemEl, 'selected', false));
+                }
+
+                // toggle current selected item
+                this.toggleElementClass(itemEl as HTMLElement, 'selected', true);
+            }
+        }
+    }
+
+    /**
+     * Perform navigate keydown action
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
+     */
+    onNavigateKeyDown(event: IEvent): void {
+        super.onNavigateKeyDown(event);
+
+        let kbEvent: KeyboardEvent;
+        kbEvent = event.$event as KeyboardEvent;
+
+        // check whether navigating on context menu
+        let targetEl: HTMLElement;
+        targetEl = event.$event.target as HTMLElement;
+        if (targetEl
+            && (targetEl.closest(AbstractTreeviewComponent.CONTEXT_MENU_SELECTOR)
+                || targetEl.closest(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR))) {
+            return;
+
+        } else {
+            // close context menu if necessary
+            this.closeContextMenu();
+        }
+
+        // detect event data
+        let item: TreeviewItem;
+        item = event.$data as TreeviewItem;
+
+        // detect the latest hovered item element
+        let treeviewItemEls: NodeListOf<HTMLElement>;
+        treeviewItemEls = this.getElementsBySelector(
+            NgxTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
+        let hoveredItemEls: NodeListOf<HTMLElement>;
+        hoveredItemEls = this.getElementsBySelector(
+            [AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
+        if (!hoveredItemEls || !hoveredItemEls.length) {
+            this.toggleElementClass(treeviewItemEls.item(0), 'selected', true);
+
+        } else {
+            let hoveredItemEl: HTMLElement;
+            hoveredItemEl = hoveredItemEls.item(hoveredItemEls.length - 1);
+            let nextSibling: Element;
+            nextSibling = HtmlUtils.nextSibling(hoveredItemEl,
+                NgxTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
+            let prevSibling: Element;
+            prevSibling = HtmlUtils.previousSibling(hoveredItemEl,
+                NgxTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
+
+            // toggle hover class
+            this.toggleElementClass(hoveredItemEl, 'selected', false);
+            if (KeyboardUtils.isHomeKey(kbEvent) || KeyboardUtils.isPageUpKey(kbEvent)
+                || (KeyboardUtils.isUpKey(kbEvent) && !prevSibling)) {
+                hoveredItemEl = treeviewItemEls.item(0);
+                this.toggleElementClass(hoveredItemEl, 'selected', true);
+
+            } else if (KeyboardUtils.isEndKey(kbEvent) || KeyboardUtils.isPageDownKey(kbEvent)
+                || (KeyboardUtils.isDownKey(kbEvent) && !nextSibling)) {
+                hoveredItemEl = treeviewItemEls.item(treeviewItemEls.length - 1);
+                this.toggleElementClass(hoveredItemEl, 'selected', true);
+
+            } else if (KeyboardUtils.isUpKey(kbEvent)) {
+                hoveredItemEl = prevSibling as HTMLElement;
+                this.toggleElementClass(hoveredItemEl, 'selected', true);
+
+            } else if (KeyboardUtils.isDownKey(kbEvent)) {
+                hoveredItemEl = nextSibling as HTMLElement;
+                this.toggleElementClass(hoveredItemEl, 'selected', true);
+
+            } else if (KeyboardUtils.isRightKey(kbEvent) && item
+                && item.children && item.children.length && item.collapsed) {
+                item.collapsed = !item.collapsed;
+
+            } else if (KeyboardUtils.isLeftKey(kbEvent) && item
+                && item.children && item.children.length && !item.collapsed) {
+                item.collapsed = !item.collapsed;
+            }
+        }
+
+        this.preventEvent(event.$event);
     }
 
     // -------------------------------------------------

@@ -31,6 +31,10 @@ export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
 export abstract class AbstractTreeviewComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit, OnInit {
 
+    protected static TREEVIEW_ELEMENT_SELECTOR: string = 'ngx-treeview';
+    protected static TREEVIEW_ITEM_ELEMENT_SELECTOR: string = 'ngx-treeview-item';
+    protected static TREEVIEW_SEARCH_ELEMENT_SELECTOR: string = '.row-filter';
+
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
