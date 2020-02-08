@@ -7,7 +7,7 @@ import {
     QueryList,
     Renderer2,
     ViewChildren,
-    ViewContainerRef
+    ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
