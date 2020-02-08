@@ -312,8 +312,18 @@ export class AbstractComponent
     onKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown', event);
+
+        // check whether navigating on context menu
+        let isOnContextMenu: boolean;
+        let targetEl: HTMLElement;
+        targetEl = event.$event.target as HTMLElement;
+        isOnContextMenu = (targetEl && !!targetEl.closest(AbstractComponent.CONTEXT_MENU_SELECTOR));
+
         if (event && event.$event instanceof KeyboardEvent
-            && KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent)) {
+            && KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent) && !isOnContextMenu) {
+            // close context menu
+            this.closeContextMenu();
+
             // handle navigation keys
             this.onNavigateKeyDown(event);
 

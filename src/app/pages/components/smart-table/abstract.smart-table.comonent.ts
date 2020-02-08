@@ -743,14 +743,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         // check whether navigating on context menu
         let targetEl: HTMLElement;
         targetEl = event.$event.target as HTMLElement;
-        if (targetEl
-            && (targetEl.closest(AbstractSmartTableComponent.CONTEXT_MENU_SELECTOR)
-                || targetEl.closest(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR))) {
+        if (targetEl && targetEl.closest(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR)) {
             return;
-
-        } else {
-            // close context menu if necessary
-            this.closeContextMenu();
         }
 
         let rows: NodeListOf<HTMLTableRowElement>;

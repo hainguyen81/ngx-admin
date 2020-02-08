@@ -115,14 +115,8 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         // check whether navigating on context menu
         let targetEl: HTMLElement;
         targetEl = event.$event.target as HTMLElement;
-        if (targetEl
-            && (targetEl.closest(AbstractTreeviewComponent.CONTEXT_MENU_SELECTOR)
-                || targetEl.closest(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR))) {
+        if (targetEl && targetEl.closest(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR)) {
             return;
-
-        } else {
-            // close context menu if necessary
-            this.closeContextMenu();
         }
 
         // detect event data
