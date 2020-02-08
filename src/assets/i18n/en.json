@@ -1,14 +1,15 @@
 {
-	"common": {
-		"search": {
-			"placeholder": "Search"
-		},
-		"contextMenu": {
-			"add": "Add",
-			"edit": "Edit",
-			"delete": "Delete"
-		},
-		"enum": {
+    "app": "Hi! System",
+    "common": {
+        "search": {
+            "placeholder": "Search"
+        },
+        "contextMenu": {
+            "add": "Add",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "enum": {
 			"userStatus": {
 				"activated": "Activated",
 				"locked": "Locked",
@@ -17,18 +18,21 @@
 			"customerStatus": {
 				"activated": "Activated",
 				"locked": "Locked",
-				"notActivated": "Not activated"
-			},
-			"organizationType": {
-				"head": "Head Center",
-				"branch": "Branch",
-				"division": "Division",
-				"unit": "Unit",
-				"department": "Department",
-				"team_group": "Team/Group"
-			}
-		}
-	},
+                "notActivated": "Not activated"
+            },
+            "organizationType": {
+                "head": "Head Center",
+                "branch": "Branch",
+                "division": "Division",
+                "unit": "Unit",
+                "department": "Department",
+                "team_group": "Team/Group"
+            }
+        },
+        "login": {
+            "title": "Login"
+        }
+    },
 	"system": {
         "title": "System",
         "menu": "System",

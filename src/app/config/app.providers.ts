@@ -1,6 +1,6 @@
 import {Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe} from '@angular/common';
-import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend, XhrFactory} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
 import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
@@ -28,7 +28,7 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {ConnectionService} from 'ng-connection-service';
 import {CustomerDbService, CustomerHttpService} from '../services/implementation/customer/customer.service';
 import {CustomerDatasource} from '../services/implementation/customer/customer.datasource';
-import {TranslateLoader} from '@ngx-translate/core';
+import {TranslateLoader, TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {
@@ -36,6 +36,8 @@ import {
     OrganizationHttpService,
 } from '../services/implementation/organization/organization.service';
 import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
+import {Meta, Title} from '@angular/platform-browser';
+import PageHeaderService from '../services/header.service';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -62,6 +64,10 @@ export const I18NProviders: StaticProvider[] = [
     {
         provide: TranslateLoader, useFactory: HttpLoaderFactory,
         deps: [HttpClient],
+    },
+    {
+        provide: PageHeaderService, useClass: PageHeaderService,
+        deps: [Title, Meta, NGXLogger, TranslateService]
     },
 ];
 

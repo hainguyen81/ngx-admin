@@ -1,6 +1,5 @@
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-
 /* Authentication */
 import {AuthGuard} from './auth/auth.guard.service';
 import {
@@ -17,20 +16,22 @@ const routes: Routes = [
         path: 'dashboard',
         // here we tell Angular to check the access with our AuthGuard
         canActivate: [AuthGuard],
-        loadChildren: () => import('app/pages/pages.module')
-            .then(m => m.PagesModule),
+        loadChildren: () => import('app/pages/pages.module').then(m => m.PagesModule),
     },
     {
         path: 'auth',
         component: NbAuthComponent,
+        data: {headerConfig: {title: 'common.login.title'}},
         children: [
             {
                 path: '',
                 component: NbLoginComponent,
+                data: {headerConfig: {title: 'common.login.title'}},
             },
             {
                 path: 'login',
                 component: NbLoginComponent,
+                data: {headerConfig: {title: 'common.login.title'}},
             },
             {
                 path: 'register',

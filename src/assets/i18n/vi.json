@@ -1,14 +1,15 @@
 {
-	"common": {
-		"search": {
-			"placeholder": "Tìm kiếm"
-		},
-		"contextMenu": {
-			"add": "Thêm",
-			"edit": "Sửa",
-			"delete": "Xoá"
-		},
-		"enum": {
+    "app": "Hi! System",
+    "common": {
+        "search": {
+            "placeholder": "Tìm kiếm"
+        },
+        "contextMenu": {
+            "add": "Thêm",
+            "edit": "Sửa",
+            "delete": "Xoá"
+        },
+        "enum": {
 			"userStatus": {
 				"activated": "Đã kích hoạt",
 				"locked": "Khoá",
@@ -17,18 +18,21 @@
 			"customerStatus": {
 				"activated": "Đã kích hoạt",
 				"locked": "Khoá",
-				"notActivated": "Chưa kích hoạt"
-			},
-			"organizationType": {
-				"head": "Hội sở",
-				"branch": "Chi nhánh",
-				"division": "Phân khu",
-				"unit": "Đơn vị",
-				"department": "Phòng ban",
-				"team_group": "Đội / Nhóm"
-			}
-		}
-	},
+                "notActivated": "Chưa kích hoạt"
+            },
+            "organizationType": {
+                "head": "Hội sở",
+                "branch": "Chi nhánh",
+                "division": "Phân khu",
+                "unit": "Đơn vị",
+                "department": "Phòng ban",
+                "team_group": "Đội / Nhóm"
+            }
+        },
+        "login": {
+            "title": "Đăng nhập"
+        }
+    },
 	"system": {
         "title": "Hệ thống",
         "menu": "Hệ thống",

@@ -52,6 +52,7 @@
              let-onCollapseExpand="onCollapseExpand"
              let-onCheckedChange="onCheckedChange">
     <div class="form-inline row-item"
+         [id]="item.value['id'] || ''"
          (keydown)="onKeyDown({ $event: $event, $data: item })"
          (keypress)="onKeyPress({ $event: $event, $data: item })"
          (keyup)="onKeyUp({ $event: $event, $data: item })"

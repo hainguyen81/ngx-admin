@@ -9,6 +9,9 @@ import {i18n} from './i18n.config';
 import {IdGenerators} from './generator.config';
 
 export const AppConfig = {
+    PageConfig: {
+        title: 'app',
+    },
     Injector: Injector,
     COMMON: COMMON,
     TOASTER: TOASTER,
