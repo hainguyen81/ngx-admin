@@ -41,6 +41,10 @@
             (mouseover)="onMouseOver({ $event: $event, $data: smartTableComponent })"
             (mouseup)="onMouseUp({ $event: $event, $data: smartTableComponent })"
             (mousewheel)="onMouseWheel({ $event: $event, $data: smartTableComponent })"
+            (focus)="onFocus({ $event: $event, $data: smartTableComponent })"
+            (focusin)="onFocusIn({ $event: $event, $data: smartTableComponent })"
+            (focusout)="onFocusOut({ $event: $event, $data: smartTableComponent })"
+            (blur)="onBlur({ $event: $event, $data: smartTableComponent })"
         ></ng2-smart-table>
         <context-menu #contextMenuComponent
                       [disabled]="!contextMenu || !contextMenu.length"

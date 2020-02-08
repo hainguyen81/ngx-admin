@@ -102,4 +102,17 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
     mappingDataSourceToTreeviewItems(data: any): TreeviewItem[] {
         return OrganizationUtils.buildOrganization(data as IOrganization[]);
     }
+
+    /**
+     * Focus on tree-view
+     */
+    public focus(): void {
+        let treeviewEls: NodeListOf<HTMLElement>;
+        treeviewEls = this.getElementsBySelector(OrganizationTreeviewComponent.TREEVIEW_ELEMENT_SELECTOR);
+        if (treeviewEls && treeviewEls.length) {
+            let treeviewEl: HTMLElement;
+            treeviewEl = treeviewEls.item(0);
+            treeviewEl.focus();
+        }
+    }
 }

@@ -534,6 +534,42 @@ export class AbstractComponent
         this.getLogger().debug('onMouseWheel', event);
     }
 
+    /**
+     * Triggered `focus` event
+     * @param event {IEvent} that contains {$event} as FocusEvent
+     */
+    onFocus(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onFocus', event);
+    }
+
+    /**
+     * Triggered `focusin` event
+     * @param event {IEvent} that contains {$event} as FocusEvent
+     */
+    onFocusIn(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onFocusIn', event);
+    }
+
+    /**
+     * Triggered `focusout` event
+     * @param event {IEvent} that contains {$event} as FocusEvent
+     */
+    onFocusOut(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onFocusOut', event);
+    }
+
+    /**
+     * Triggered `blur` event
+     * @param event {IEvent} that contains {$event} as FocusEvent
+     */
+    onBlur(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onBlur', event);
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
