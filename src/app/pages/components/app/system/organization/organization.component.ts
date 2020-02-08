@@ -143,7 +143,7 @@ export class OrganizationSplitPaneComponent
                     formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
                     formlyComponentService.getViewContainerRef().clear();
                     this.organizationFormlyComponent = formlyComponentService.resolve().instance;
-                    this.organizationFormlyComponent.setModel(organization);
+                    this.organizationFormlyComponent.getFormGroup().reset(organization);
                 }
             }
         });
