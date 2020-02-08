@@ -28,6 +28,7 @@ import {
 } from '../../services/implementation/document.keypress.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import {ResizedEvent} from 'angular-resize-event';
+import KeyboardUtils from '../../utils/keyboard.utils';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -306,6 +307,45 @@ export class AbstractComponent
     onKeyDown(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown', event);
+        if (KeyboardUtils.isNavigateKey(event)) {
+            // handle navigation keys
+            this.onNavigateKeyDown(event);
+
+        } else if (KeyboardUtils.isContextMenuKey(event)) {
+            // handle context menu key
+            this.onContextMenuKeyDown(event);
+
+        } else {
+            // handle action keydown
+            this.onActionKeyDown(event);
+        }
+    }
+
+    /**
+     * Perform navigate keydown action
+     * @param event KeyboardEvent
+     */
+    onNavigateKeyDown(event: KeyboardEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onNavigateKeyDown', event);
+    }
+
+    /**
+     * Perform context menu keydown action
+     * @param event KeyboardEvent
+     */
+    onContextMenuKeyDown(event: KeyboardEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onContextMenuKeyDown', event);
+    }
+
+    /**
+     * Perform keydown action (not navigate and context menu key
+     * @param event KeyboardEvent
+     */
+    onActionKeyDown(event: KeyboardEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onContextMenuKeyDown', event);
     }
 
     /**
@@ -315,6 +355,12 @@ export class AbstractComponent
     onKeyUp(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyUp', event);
+        if (KeyboardUtils.isNavigateKey(event)
+            || KeyboardUtils.isContextMenuKey(event)) {
+            // stop firing event
+            this.preventEvent(event);
+
+        }
     }
 
     /**
@@ -324,6 +370,20 @@ export class AbstractComponent
     onKeyPress(event: KeyboardEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyPress');
+    }
+
+    /**
+     * Triggered ContextMenu.
+     * @param event MouseEvent
+     */
+    onContextMenu(event: MouseEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onContextMenu', event);
+        if ((!this.getContextMenu() || !this.getContextMenu().length)
+            || this.showHideContextMenu(event, event.target, undefined)) {
+            // stop firing event
+            this.preventEvent(event);
+        }
     }
 
     /**
@@ -470,6 +530,14 @@ export class AbstractComponent
     // -------------------------------------------------
 
     /**
+     * Prevent the specified event
+     * @param event to prevent
+     */
+    protected preventEvent(event: Event): boolean {
+        return HtmlUtils.preventEvent(event);
+    }
+
+    /**
      * Show/Hide context menu base on the specified Row
      * @param event current event
      * @param target element target to show context menu if event is invalid
@@ -528,5 +596,20 @@ export class AbstractComponent
      */
     protected getFocusableElements(element?: Element): NodeListOf<HTMLElement> {
         return HtmlUtils.getFocusableElements(element);
+    }
+
+    /**
+     * Toggle the specified class for the specified DOM element
+     * @param element to toggle
+     * @param className class
+     * @param add true for adding class if not existed; false for removing if existed
+     */
+    protected toggleElementClass(element: HTMLElement, className: string, add?: boolean | false) {
+        if (!add) {
+            this.getRenderer().removeClass(element, className);
+
+        } else {
+            this.getRenderer().addClass(element, className);
+        }
     }
 }

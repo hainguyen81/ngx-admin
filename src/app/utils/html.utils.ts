@@ -29,4 +29,21 @@ export default class HtmlUtils {
     public static getFocusableElements(element?: Element): NodeListOf<HTMLElement> {
         return HtmlUtils.getElementsBySelector(FOCUSABLE_ELEMENTS_SELETOR, element);
     }
+
+    /**
+     * Prevent the specified event
+     * @param event to prevent
+     */
+    public static preventEvent(event: Event): boolean {
+        if (!event) {
+            return true;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        event.cancelBubble = true;
+        event.returnValue = false;
+        return false;
+    }
 }

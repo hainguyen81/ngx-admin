@@ -2,20 +2,12 @@ import {SmartTableComponent} from './smart-table.component';
 import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {
-    F2,
-    S,
-} from '@angular/cdk/keycodes';
+import {F2, S,} from '@angular/cdk/keycodes';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    CONTEXT_MENU_ADD,
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
-    IContextMenu,
-} from '../abstract.component';
+import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu,} from '../abstract.component';
 
 /**
  * Base smart table component base on {Ng2SmartTableComponent}
@@ -59,11 +51,14 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         super.setContextMenu(contextMenu || []);
     }
 
-    onKeyDown(event: KeyboardEvent) {
-        super.onKeyDown(event);
+    /**
+     * Perform keydown action (not navigate and context menu key
+     * @param event KeyboardEvent
+     */
+    onActionKeyDown(event: KeyboardEvent): void {
+        super.onActionKeyDown(event);
 
-        if (!super.getRows().length || KeyboardUtils.isNavigateKey(event)
-            || KeyboardUtils.isContextMenuKey(event)) {
+        if (!super.getRows().length) {
             return;
         }
 
@@ -124,7 +119,6 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
             // stop firing event
             super.preventEvent(event);
         }
-        super.getLogger().debug('userComponent - onKeyDown', event);
     }
 
     /**

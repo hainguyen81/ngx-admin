@@ -9,6 +9,8 @@ import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeviewItem} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/organization';
 import OrganizationUtils from '../../../../../utils/organization.utils';
+import {IContextMenu} from '../../../abstract.component';
+import {COMMON} from '../../../../../config/common.config';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -18,6 +20,8 @@ export const OrganizationTreeviewConfig: TreeviewConfig = {
     hasFilter: true,
     maxHeight: -1,
 };
+
+export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 /**
  * Base tree-view component base on {TreeviewComponent}
@@ -70,6 +74,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
         super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
         super.setConfig(OrganizationTreeviewConfig);
+        super.setContextMenu(OrganizationContextMenu);
     }
 
     // -------------------------------------------------

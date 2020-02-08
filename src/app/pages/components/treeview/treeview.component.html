@@ -4,9 +4,11 @@
               [itemTemplate]="itemTemplate"
               (selectedChange)="onSelectedChange($event)"
               (filterChange)="onFilterChange($event)"
+              [contextMenu]="treeviewContextMenuComponent"
+              (contextmenu)="onContextMenu($event)"
               (keydown)="onKeyDown($event)"
-              (keyup)="onKeyUp($event)"
               (keypress)="onKeyPress($event)"
+              (keyup)="onKeyUp($event)"
               (click)="onClick($event)"
               (dblclick)="onDoubleClick($event)"
               (mousedown)="onMouseDown($event)"
@@ -16,7 +18,8 @@
               (mouseout)="onMouseOut($event)"
               (mouseover)="onMouseOver($event)"
               (mouseup)="onMouseUp($event)"
-              (mousewheel)="onMouseWheel($event)">
+              (mousewheel)="onMouseWheel($event)"
+>
 </ngx-treeview>
 
 <ngx-dropdown-treeview *ngIf="isDropDown()"
@@ -26,9 +29,11 @@
                        [itemTemplate]="itemTemplate"
                        (selectedChange)="onSelectedChange($event)"
                        (filterChange)="onFilterChange($event)"
+                       [contextMenu]="treeviewContextMenuComponent"
+                       (contextmenu)="onContextMenu($event)"
                        (keydown)="onKeyDown($event)"
-                       (keyup)="onKeyUp($event)"
                        (keypress)="onKeyPress($event)"
+                       (keyup)="onKeyUp($event)"
                        (click)="onClick($event)"
                        (dblclick)="onDoubleClick($event)"
                        (mousedown)="onMouseDown($event)"
@@ -38,7 +43,8 @@
                        (mouseout)="onMouseOut($event)"
                        (mouseover)="onMouseOver($event)"
                        (mouseup)="onMouseUp($event)"
-                       (mousewheel)="onMouseWheel($event)">
+                       (mousewheel)="onMouseWheel($event)"
+>
 </ngx-dropdown-treeview>
 
 <ng-template #itemTemplate
@@ -66,3 +72,17 @@
         </div>
     </div>
 </ng-template>
+
+<context-menu #treeviewContextMenuComponent
+              [disabled]="!contextMenu || !contextMenu.length"
+              (close)="onContextMenuClose()">
+    <ng-template
+        contextMenuItem
+        *ngFor="let item of contextMenu"
+        [visible]="item?.visible?.apply(this, [ undefined ])"
+        [enabled]="item?.enabled?.apply(this, [ undefined ])"
+        [divider]="item?.divider?.apply(this, [ undefined ])"
+        (execute)="onMenuEvent($event, item)"
+    ><span><nb-icon [icon]="item?.icon?.apply(this, [ undefined ])" pack="fa"></nb-icon>
+        {{item?.title?.apply(this, [undefined]) | translate}}</span></ng-template>
+</context-menu>

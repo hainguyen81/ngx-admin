@@ -714,38 +714,11 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     }
 
     /**
-     * Perform keydown action
+     * Perform navigate keydown action
      * @param event KeyboardEvent
      */
-    onKeyDown(event: KeyboardEvent): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyDown', event);
-        if (KeyboardUtils.isNavigateKey(event) && !this.isInEditMode()) {
-            // handle navigation keys
-            this.onRowNavigate(event);
-
-        } else if (KeyboardUtils.isContextMenuKey(event) && !this.isInEditMode()) {
-            const hoveredRowsSelector: string =
-                [AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join('');
-            let hoveredRows: NodeListOf<HTMLTableRowElement>;
-            hoveredRows = this.getRowElementsBySelector(hoveredRowsSelector);
-            let row: Row;
-            row = (hoveredRows && hoveredRows.length
-                ? this.getRowByElement(hoveredRows.item(0)) : undefined);
-            if (this.showHideContextMenuOnRow(row, event)) {
-                // stop firing event
-                this.preventEvent(event);
-            }
-        }
-    }
-
-    /**
-     * Perform navigation keys action
-     * @param event KeyboardEvent
-     */
-    onRowNavigate(event: KeyboardEvent): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onRowNavigate');
+    onNavigateKeyDown(event: KeyboardEvent): void {
+        super.onNavigateKeyDown(event);
 
         // check whether navigating on context menu
         let targetEl: HTMLElement;
@@ -777,12 +750,13 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
                 break;
             }
         }
+
         if (hoveredRowIndex < 0) {
-            this.toggleRowElementClass(rows.item(0), 'hover', true);
+            this.toggleElementClass(rows.item(0), 'hover', true);
 
         } else {
             // toggle hover class
-            this.toggleRowElementClass(rows.item(hoveredRowIndex), 'hover', false);
+            this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', false);
             if (KeyboardUtils.isHomeKey(event) || KeyboardUtils.isPageUpKey(event)
                 || (hoveredRowIndex + 1 >= rows.length && KeyboardUtils.isDownKey(event))) {
                 hoveredRowIndex = 0;
@@ -797,31 +771,30 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
             } else {
                 hoveredRowIndex += 1;
             }
-            this.toggleRowElementClass(rows.item(hoveredRowIndex), 'hover', true);
+            this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
         }
         this.preventEvent(event);
     }
 
     /**
-     * Perform keyup action
+     * Perform context menu keydown action
      * @param event KeyboardEvent
      */
-    onKeyUp(event: KeyboardEvent): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyUp', event);
-        if (KeyboardUtils.isContextMenuKey(event)) {
+    onContextMenuKeyDown(event: KeyboardEvent): void {
+        super.onContextMenuKeyDown(event);
+
+        // check for showing context menu on currently hovered row
+        const hoveredRowsSelector: string =
+            [AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join('');
+        let hoveredRows: NodeListOf<HTMLTableRowElement>;
+        hoveredRows = this.getRowElementsBySelector(hoveredRowsSelector);
+        let row: Row;
+        row = (hoveredRows && hoveredRows.length
+            ? this.getRowByElement(hoveredRows.item(0)) : undefined);
+        if (this.showHideContextMenuOnRow(row, event)) {
             // stop firing event
             this.preventEvent(event);
         }
-    }
-
-    /**
-     * Perform keypress action
-     * @param event KeyboardEvent
-     */
-    onKeyPress(event: KeyboardEvent): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyPress');
     }
 
     // -------------------------------------------------
@@ -1128,24 +1101,6 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     // -------------------------------------------------
 
     /**
-     * Prevent the specified event
-     * @param event to prevent
-     */
-    protected preventEvent(event: Event): boolean {
-        if (!event) {
-            return true;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        event.cancelBubble = true;
-        event.returnValue = false;
-        this.getLogger().debug('Prevent event', event);
-        return false;
-    }
-
-    /**
      * Select the specified Row
      * @param row to select
      */
@@ -1255,7 +1210,7 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
             return;
         }
 
-        this.toggleRowElementClass(rowEl, className,
+        this.toggleElementClass(rowEl, className,
             (rowEl.classList && !rowEl.classList.contains(className)));
     }
 
@@ -1302,22 +1257,7 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
             return;
         }
 
-        this.toggleRowElementClass(rowEl, className, add);
-    }
-
-    /**
-     * Toggle the specified class for the specified Row DOM element
-     * @param rowEl to toggle
-     * @param className class
-     * @param add true for adding class if not existed; false for removing if existed
-     */
-    protected toggleRowElementClass(rowEl: HTMLTableRowElement, className: string, add?: boolean | false) {
-        if (!add) {
-            this.getRenderer().removeClass(rowEl, className);
-
-        } else {
-            this.getRenderer().addClass(rowEl, className);
-        }
+        this.toggleElementClass(rowEl, className, add);
     }
 
     /**
@@ -1358,10 +1298,6 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     protected showHideContextMenuOnRow(row: Row, event?: Event): boolean {
         this.getLogger().debug('showHideContextMenuOnRow', row);
         if (row) {
-            let mouseEvent: MouseEvent;
-            mouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
-            let kbEvent: KeyboardEvent;
-            kbEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
             let rowEl: HTMLTableRowElement;
             rowEl = this.getRowElement(row);
             let target: Node;

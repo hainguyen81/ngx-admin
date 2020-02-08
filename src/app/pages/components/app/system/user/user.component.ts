@@ -6,12 +6,8 @@ import {NGXLogger} from 'ngx-logger';
 import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
-import {
-    CONTEXT_MENU_ADD,
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
-    IContextMenu,
-} from '../../../abstract.component';
+import {IContextMenu} from '../../../abstract.component';
+import {COMMON} from '../../../../../config/common.config';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -90,28 +86,7 @@ export const UserTableSettings = {
     },
 };
 
-export const UserContextMenu: IContextMenu[] = [{
-    id: (item?: any) => CONTEXT_MENU_ADD,
-    icon: (item?: any) => 'plus-square',
-    title: (item?: any) => 'common.contextMenu.add',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
-}, {
-    id: (item?: any) => CONTEXT_MENU_EDIT,
-    icon: (item?: any) => 'edit',
-    title: (item?: any) => 'common.contextMenu.edit',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
-}, {
-    id: (item?: any) => CONTEXT_MENU_DELETE,
-    icon: (item?: any) => 'minus-square',
-    title: (item?: any) => 'common.contextMenu.delete',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
-}];
+export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
     selector: 'ngx-smart-table',
