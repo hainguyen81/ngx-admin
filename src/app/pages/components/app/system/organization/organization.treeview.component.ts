@@ -9,7 +9,7 @@ import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeviewItem} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/organization';
 import OrganizationUtils from '../../../../../utils/organization.utils';
-import {IContextMenu} from '../../../abstract.component';
+import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
@@ -83,12 +83,12 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
 
     /**
      * Raise when tree-view item has been clicked
-     * @param event {MouseEvent}
-     * @param item {TreeviewItem}
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {TreeviewItem}
      */
-    onClickItem(event: MouseEvent, item: TreeviewItem) {
-        super.onClickItem(event, item);
-        this.clickItemDelegate && this.clickItemDelegate.apply(this, [event, item]);
+    onClickItem(event: IEvent) {
+        super.onClickItem(event);
+        this.clickItemDelegate
+        && this.clickItemDelegate.apply(this, [event.$event, event.$data]);
     }
 
     // -------------------------------------------------

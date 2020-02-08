@@ -5,6 +5,7 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {TreeviewItem} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
+import {IEvent} from '../abstract.component';
 
 /**
  * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
@@ -72,31 +73,12 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // -------------------------------------------------
 
     /**
-     * Raise when selected items have been changed
-     * @param event event data
-     */
-    onSelectedChange(event: any): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onSelectedChange', event);
-    }
-
-    /**
-     * Raise when tree-view filter has been changed
-     * @param event event data
-     */
-    onFilterChange(event: any): void {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFilterChange', event);
-    }
-
-    /**
      * Raise when tree-view item has been clicked
-     * @param event {MouseEvent}
-     * @param item {TreeviewItem}
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {TreeviewItem}
      */
-    onClickItem(event: MouseEvent, item: TreeviewItem) {
+    onClickItem(event: IEvent) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onClickItem', event, item);
+        this.getLogger().debug('onClickItem', event);
     }
 
     // -------------------------------------------------

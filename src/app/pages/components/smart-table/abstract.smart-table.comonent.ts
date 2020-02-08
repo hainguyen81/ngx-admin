@@ -19,7 +19,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isArray, isNumber} from 'util';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -70,7 +70,8 @@ export const DefaultTableSettings = {
 /**
  * Abstract smart table base on {Ng2SmartTableComponent}
  */
-export class AbstractSmartTableComponent<T extends DataSource> extends AbstractComponent implements AfterViewInit {
+export abstract class AbstractSmartTableComponent<T extends DataSource>
+    extends AbstractComponent implements AfterViewInit {
 
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
@@ -548,22 +549,22 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     /**
      * Triggered once a row is selected (either clicked or selected automatically
      * (after page is changed, after some row is deleted, etc)).
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      data: Object - selected row data object
      *      source: DataSource - table data source
      */
-    onRowSelect(event): void {
+    onRowSelect(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onRowSelect', event);
     }
 
     /**
      * Triggered only on a user click event.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      data: Object - selected row data object
      *      source: DataSource - table data source
      */
-    onUserRowSelect(event): void {
+    onUserRowSelect(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onUserRowSelect', event);
         if (MouseEventGuard.isDoubleClick()) {
@@ -573,34 +574,34 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
 
     /**
      * Triggered only on a user double-click event from onUserRowSelect.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      data: Object - selected row data object
      *      source: DataSource - table data source
      */
-    onDoubleClick(event): void {
+    onDoubleClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        if (event instanceof MouseEvent) {
+        if (event && event.$event instanceof MouseEvent) {
             let cell: Cell;
-            cell = this.getCellByEvent(event);
+            cell = this.getCellByEvent(event.$event);
             this.getLogger().debug('onDoubleClick', event, cell);
             if (cell) {
                 this.editCell(cell);
             }
-            this.preventEvent(event);
+            this.preventEvent(event.$event);
 
-        } else if (event.data) {
+        } else if (event && event.$data && event.$data['data']) {
             this.getLogger().debug('onDoubleClick', event);
-            this.editRow(event.data);
+            this.editRow(event.$data['data']);
         }
     }
 
     /**
      * Triggered once a Create button clicked.
      * Triggered only if table mode = external.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      source: DataSource - table data source
      */
-    onCreate(event): void {
+    onCreate(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onCreate', event);
     }
@@ -609,12 +610,12 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
      * Triggered once a Create button clicked.
      * Triggered only if table confirmCreate = true and mode = inline.
      * Allows you to confirm changes before they are applied to the table data source.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      newData: Object - data entered in a new row
      *      source: DataSource - table data source
      *      confirm: Deferred - Deferred object with resolve(newData: Object) and reject() methods.
      */
-    onCreateConfirm(event): void {
+    onCreateConfirm(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onCreateConfirm', event);
     }
@@ -622,11 +623,11 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     /**
      * Triggered once an Edit button clicked on a row.
      * Triggered only if table mode = external.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      data: Object - row data object
      *      source: DataSource - table data source
      */
-    onEdit(event): void {
+    onEdit(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onEdit', event);
     }
@@ -635,13 +636,13 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
      * Triggered once a Save button clicked.
      * Triggered only if table confirmSave = true and mode = inline.
      * Allows you to confirm changes before they are applied to the table data source.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      data: Object - original row data
      *      newData: Object - edited data
      *      source: DataSource - table data source
      *      confirm: Deferred - Deferred object with resolve(newData: Object) and reject() methods.
      */
-    onEditConfirm(event): void {
+    onEditConfirm(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onEditConfirm', event);
     }
@@ -649,11 +650,11 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
     /**
      * Triggered once a Delete button clicked on a row.
      * Triggered only if table mode = external.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      data: Object - row data object
      *      source: DataSource - table data source
      */
-    onDelete(event): void {
+    onDelete(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onDelete', event);
     }
@@ -662,67 +663,83 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
      * Triggered once a Delete button clicked.
      * Triggered only if table confirmDelete = true and mode = inline.
      * Allows you to confirm changes before they are applied to the table data source.
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      data: Object - data object to delete
      *      source: DataSource - table data source
      *      confirm: Deferred - Deferred object with resolve() and reject() methods.
      */
-    onDeleteConfirm(event): void {
+    onDeleteConfirm(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onDeleteConfirm', event);
     }
 
     /**
      * Triggered click event
-     * @param event MouseEvent
+     * @param event {IEvent} that contains {$event} as MouseEvent
      */
-    onClick(event: MouseEvent): void {
+    onClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByEvent(event);
+        row = this.getRowByEvent(event.$event);
         this.getLogger().debug('onClick', event, row);
         if (row) {
             this.selectRow(row);
 
             // stop firing event
-            this.preventEvent(event);
+            this.preventEvent(event.$event);
         }
     }
 
     /**
      * Triggered ContextMenu.
-     * @param event MouseEvent
+     * @param event {IEvent} that contains {$event} as MouseEvent
      */
-    onContextMenu(event: MouseEvent): void {
+    onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByEvent(event);
+        row = this.getRowByEvent(event.$event);
         this.getLogger().debug('onContextMenu', event, row);
-        if (this.showHideContextMenuOnRow(row, event)) {
+        if (this.showHideContextMenuOnRow(row, event.$event)) {
             // stop firing event
-            this.preventEvent(event);
+            this.preventEvent(event.$event);
         }
     }
 
     /**
      * Perform search action
-     * @param keyword to search
+     * @param {IEvent} that contains {$event} as action event and {$data} as keyword to search
      */
-    onSearch(keyword?: any): void {
+    onSearch(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onSearch', keyword);
+        this.getLogger().debug('onSearch', event);
+        if (event && !(event.$data || '').length) {
+            this.getDataSource().setFilter(null, false);
+            this.getDataSource().refresh();
+            return;
+        }
+
+        this.doSearch(event.$data);
     }
 
     /**
-     * Perform navigate keydown action
-     * @param event KeyboardEvent
+     * Perform search data by the specified keyword
+     * @param keyword to filter
      */
-    onNavigateKeyDown(event: KeyboardEvent): void {
+    abstract doSearch(keyword: any): void;
+
+    /**
+     * Perform navigate keydown action
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
+     */
+    onNavigateKeyDown(event: IEvent): void {
         super.onNavigateKeyDown(event);
+
+        let kbEvent: KeyboardEvent;
+        kbEvent = event.$event as KeyboardEvent;
 
         // check whether navigating on context menu
         let targetEl: HTMLElement;
-        targetEl = event.target as HTMLElement;
+        targetEl = event.$event.target as HTMLElement;
         if (targetEl
             && (targetEl.closest(AbstractSmartTableComponent.CONTEXT_MENU_SELECTOR)
                 || targetEl.closest(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR))) {
@@ -757,15 +774,15 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
         } else {
             // toggle hover class
             this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', false);
-            if (KeyboardUtils.isHomeKey(event) || KeyboardUtils.isPageUpKey(event)
-                || (hoveredRowIndex + 1 >= rows.length && KeyboardUtils.isDownKey(event))) {
+            if (KeyboardUtils.isHomeKey(kbEvent) || KeyboardUtils.isPageUpKey(kbEvent)
+                || (hoveredRowIndex + 1 >= rows.length && KeyboardUtils.isDownKey(kbEvent))) {
                 hoveredRowIndex = 0;
 
-            } else if (KeyboardUtils.isEndKey(event) || KeyboardUtils.isPageDownKey(event)
-                || (hoveredRowIndex - 1 < 0 && KeyboardUtils.isUpKey(event))) {
+            } else if (KeyboardUtils.isEndKey(kbEvent) || KeyboardUtils.isPageDownKey(kbEvent)
+                || (hoveredRowIndex - 1 < 0 && KeyboardUtils.isUpKey(kbEvent))) {
                 hoveredRowIndex = rows.length - 1;
 
-            } else if (KeyboardUtils.isUpKey(event)) {
+            } else if (KeyboardUtils.isUpKey(kbEvent)) {
                 hoveredRowIndex -= 1;
 
             } else {
@@ -773,14 +790,14 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
             }
             this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
         }
-        this.preventEvent(event);
+        this.preventEvent(event.$event);
     }
 
     /**
      * Perform context menu keydown action
-     * @param event KeyboardEvent
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
-    onContextMenuKeyDown(event: KeyboardEvent): void {
+    onContextMenuKeyDown(event: IEvent): void {
         super.onContextMenuKeyDown(event);
 
         // check for showing context menu on currently hovered row
@@ -791,9 +808,9 @@ export class AbstractSmartTableComponent<T extends DataSource> extends AbstractC
         let row: Row;
         row = (hoveredRows && hoveredRows.length
             ? this.getRowByElement(hoveredRows.item(0)) : undefined);
-        if (this.showHideContextMenuOnRow(row, event)) {
+        if (this.showHideContextMenuOnRow(row, event.$event)) {
             // stop firing event
-            this.preventEvent(event);
+            this.preventEvent(event.$event);
         }
     }
 

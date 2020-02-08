@@ -1,5 +1,5 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractComponent} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {
     AfterViewInit,
     ComponentFactoryResolver,
@@ -169,9 +169,9 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
 
     /**
      * Perform submit action
-     * @param event submit event
+     * @param event {IEvent} that contains {$event} as submit event and {$data} as model
      */
-    onSubmit(event): void {
+    onSubmit(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSubmit');
     }

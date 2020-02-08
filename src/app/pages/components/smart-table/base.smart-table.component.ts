@@ -2,12 +2,12 @@ import {SmartTableComponent} from './smart-table.component';
 import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {F2, S,} from '@angular/cdk/keycodes';
+import {F2, S} from '@angular/cdk/keycodes';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
-import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu,} from '../abstract.component';
+import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu, IEvent} from '../abstract.component';
 
 /**
  * Base smart table component base on {Ng2SmartTableComponent}
@@ -53,9 +53,9 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
 
     /**
      * Perform keydown action (not navigate and context menu key
-     * @param event KeyboardEvent
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
-    onActionKeyDown(event: KeyboardEvent): void {
+    onActionKeyDown(event: IEvent): void {
         super.onActionKeyDown(event);
 
         if (!super.getRows().length) {
@@ -63,37 +63,39 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         }
 
         // detect save action
+        let kbEvent: KeyboardEvent;
+        kbEvent = event.$event as KeyboardEvent;
         let actionRow: Row;
-        actionRow = super.getRowByEvent(event);
+        actionRow = super.getRowByEvent(kbEvent);
         let isF2Key: boolean;
-        isF2Key = KeyboardUtils.isSpecifiedKey(event, 'F2', F2);
+        isF2Key = KeyboardUtils.isSpecifiedKey(kbEvent, 'F2', F2);
         let isEnterKey: boolean;
-        isEnterKey = KeyboardUtils.isEnterKey(event);
+        isEnterKey = KeyboardUtils.isEnterKey(kbEvent);
         let isEscKey: boolean;
-        isEscKey = KeyboardUtils.isEscKey(event);
+        isEscKey = KeyboardUtils.isEscKey(kbEvent);
         let isSKey: boolean;
-        isSKey = KeyboardUtils.isSpecifiedKey(event, 'S', 's', S);
+        isSKey = KeyboardUtils.isSpecifiedKey(kbEvent, 'S', 's', S);
         let isDelKey: boolean;
-        isDelKey = KeyboardUtils.isDeleteKey(event);
+        isDelKey = KeyboardUtils.isDeleteKey(kbEvent);
         let isInsertKey: boolean;
-        isInsertKey = KeyboardUtils.isInsertKey(event);
+        isInsertKey = KeyboardUtils.isInsertKey(kbEvent);
         let needToSave: boolean;
-        needToSave = ((isF2Key && event.altKey) || (isEnterKey && event.ctrlKey)
-            || (isSKey && event.ctrlKey));
+        needToSave = ((isF2Key && kbEvent.altKey) || (isEnterKey && kbEvent.ctrlKey)
+            || (isSKey && kbEvent.ctrlKey));
 
         // save row by [ALT + F2] or [CTRL + Enter] or [CTRL + S]
         if (needToSave) {
             this.saveData(actionRow);
 
             // stop firing event
-            super.preventEvent(event);
+            super.preventEvent(event.$event);
 
             // enter edit mode by F2
         } else if (isF2Key) {
             this.enterEditMode(actionRow);
 
             // stop firing event
-            super.preventEvent(event);
+            super.preventEvent(event.$event);
 
             // exit editing mode by Esc
         } else if (isEscKey) {
@@ -103,21 +105,21 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
             super.closeContextMenu();
 
             // stop firing event
-            super.preventEvent(event);
+            super.preventEvent(event.$event);
 
             // delete row by [DELETE]
         } else if (isDelKey) {
             this.deleteData(actionRow);
 
             // stop firing event
-            super.preventEvent(event);
+            super.preventEvent(event.$event);
 
             // insert new row by [INSERT]
         } else if (isInsertKey) {
             super.newRow();
 
             // stop firing event
-            super.preventEvent(event);
+            super.preventEvent(event.$event);
         }
     }
 
@@ -200,9 +202,18 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         return (!data || !(data['id'] || '').length);
     }
 
-    onMenuEvent(event, menuItem?: IContextMenu) {
+    /**
+     * Perform action on menu item has been clicked
+     * @param event {IEvent} that contains {$data} as Object, consist of:
+     *      event: action event
+     *      item: menu item data
+     */
+    onMenuEvent(event) {
+        let menuItem: IContextMenu;
+        menuItem = (event && event.$data && event.$data['item']
+            ? event.$data['item'] as IContextMenu : undefined);
         let mnuId: string;
-        mnuId = (menuItem ? menuItem.id.apply(this, [ event.item ]) : '');
+        mnuId = (menuItem ? menuItem.id.apply(this, [event.item]) : '');
         switch (mnuId) {
             case CONTEXT_MENU_ADD:
                 this.newRow();
@@ -215,16 +226,4 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                 break;
         }
     }
-
-    onSearch(keyword?: any): void {
-        if (!(keyword || '').length) {
-            this.getDataSource().setFilter(null, false);
-            this.getDataSource().refresh();
-            return;
-        }
-
-        this.doSearch(keyword);
-    }
-
-    abstract doSearch(keyword: any): void;
 }

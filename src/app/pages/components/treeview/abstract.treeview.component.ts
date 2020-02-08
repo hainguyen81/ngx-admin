@@ -5,13 +5,14 @@ import {
     OnInit,
     QueryList,
     Renderer2,
-    ViewChildren, ViewContainerRef,
+    ViewChildren,
+    ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 
@@ -155,10 +156,30 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.queryTreeviewComponent.map(
-            (item) => this.treeviewComponent = item);
-        this.queryDropdownTreeviewComponent.map(
-            (item) => this.dropdownTreeviewComponent = item);
+        if (!this.treeviewComponent && this.queryTreeviewComponent) {
+            this.queryTreeviewComponent.map(
+                (item) => {
+                    this.treeviewComponent = item;
+                    this.treeviewComponent
+                    && this.treeviewComponent.selectedChange
+                        .subscribe(value => this.onSelectedChange({$data: value}));
+                    this.treeviewComponent
+                    && this.treeviewComponent.filterChange
+                        .subscribe(value => this.onFilterChange({$data: value}));
+                });
+        }
+        if (!this.dropdownTreeviewComponent && this.queryDropdownTreeviewComponent) {
+            this.queryDropdownTreeviewComponent.map(
+                (item) => {
+                    this.dropdownTreeviewComponent = item;
+                    this.dropdownTreeviewComponent
+                    && this.dropdownTreeviewComponent.selectedChange
+                        .subscribe(value => this.onSelectedChange({$data: value}));
+                    this.dropdownTreeviewComponent
+                    && this.dropdownTreeviewComponent.filterChange
+                        .subscribe(value => this.onFilterChange({$data: value}));
+                });
+        }
     }
 
     // -------------------------------------------------
@@ -167,24 +188,31 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
 
     /**
      * Raise when selected items have been changed
-     * @param event event data
+     * @param event {IEvent} that contains {$data} as selected values
      */
-    abstract onSelectedChange(event: any): void;
+    onSelectedChange(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onSelectedChange', event);
+    }
 
     /**
      * Raise when tree-view filter has been changed
-     * @param event event data
+     * @param event {IEvent} that contains {$data} as filtered values
      */
-    abstract onFilterChange(event: any): void;
+    onFilterChange(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onFilterChange', event);
+    }
 
     /**
      * Perform action on data-source changed event
-     * @param value changed value
+     * @param event {IEvent} that contains {$event} as changed values
      */
-    onDataSourceChanged(value: any) {
-        this.getLogger().debug('DataSource has been changed', value);
-        if (value && value['elements']) {
-            this.treeviewItems = this.mappingDataSourceToTreeviewItems(value['elements']);
+    onDataSourceChanged(event: IEvent) {
+        this.getLogger().debug('DataSource has been changed', event);
+        if (event && event.$data && event.$data.hasOwnProperty('elements')) {
+            this.treeviewItems = this.mappingDataSourceToTreeviewItems(event.$data['elements']);
+
         } else {
             this.treeviewItems = [];
         }

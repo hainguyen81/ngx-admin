@@ -1,49 +1,49 @@
-<ngx-treeview *ngIf="!isDropDown()"
-              [config]="getConfig()"
-              [items]="getTreeviewItems()"
-              [itemTemplate]="itemTemplate"
-              (selectedChange)="onSelectedChange($event)"
-              (filterChange)="onFilterChange($event)"
-              [contextMenu]="treeviewContextMenuComponent"
-              (contextmenu)="onContextMenu($event)"
-              (keydown)="onKeyDown($event)"
-              (keypress)="onKeyPress($event)"
-              (keyup)="onKeyUp($event)"
-              (click)="onClick($event)"
-              (dblclick)="onDoubleClick($event)"
-              (mousedown)="onMouseDown($event)"
-              (mouseenter)="onMouseEnter($event)"
-              (mouseleave)="onMouseLeave($event)"
-              (mousemove)="onMouseMove($event)"
-              (mouseout)="onMouseOut($event)"
-              (mouseover)="onMouseOver($event)"
-              (mouseup)="onMouseUp($event)"
-              (mousewheel)="onMouseWheel($event)"
+<ngx-treeview
+    #treeviewComponent
+    *ngIf="!isDropDown()"
+    [config]="getConfig()"
+    [items]="getTreeviewItems()"
+    [itemTemplate]="itemTemplate"
+    [contextMenu]="treeviewContextMenuComponent"
+    (contextmenu)="onContextMenu({ $event: $event, $data: treeviewComponent })"
+    (keydown)="onKeyDown({ $event: $event, $data: treeviewComponent })"
+    (keypress)="onKeyPress({ $event: $event, $data: treeviewComponent })"
+    (keyup)="onKeyUp({ $event: $event, $data: treeviewComponent })"
+    (click)="onClick({ $event: $event, $data: treeviewComponent })"
+    (dblclick)="onDoubleClick({ $event: $event, $data: treeviewComponent })"
+    (mousedown)="onMouseDown({ $event: $event, $data: treeviewComponent })"
+    (mouseenter)="onMouseEnter({ $event: $event, $data: treeviewComponent })"
+    (mouseleave)="onMouseLeave({ $event: $event, $data: treeviewComponent })"
+    (mousemove)="onMouseMove({ $event: $event, $data: treeviewComponent })"
+    (mouseout)="onMouseOut({ $event: $event, $data: treeviewComponent })"
+    (mouseover)="onMouseOver({ $event: $event, $data: treeviewComponent })"
+    (mouseup)="onMouseUp({ $event: $event, $data: treeviewComponent })"
+    (mousewheel)="onMouseWheel({ $event: $event, $data: treeviewComponent })"
 >
 </ngx-treeview>
 
-<ngx-dropdown-treeview *ngIf="isDropDown()"
-                       [buttonClass]="getButtonClass()"
-                       [config]="getConfig()"
-                       [items]="getTreeviewItems()"
-                       [itemTemplate]="itemTemplate"
-                       (selectedChange)="onSelectedChange($event)"
-                       (filterChange)="onFilterChange($event)"
-                       [contextMenu]="treeviewContextMenuComponent"
-                       (contextmenu)="onContextMenu($event)"
-                       (keydown)="onKeyDown($event)"
-                       (keypress)="onKeyPress($event)"
-                       (keyup)="onKeyUp($event)"
-                       (click)="onClick($event)"
-                       (dblclick)="onDoubleClick($event)"
-                       (mousedown)="onMouseDown($event)"
-                       (mouseenter)="onMouseEnter($event)"
-                       (mouseleave)="onMouseLeave($event)"
-                       (mousemove)="onMouseMove($event)"
-                       (mouseout)="onMouseOut($event)"
-                       (mouseover)="onMouseOver($event)"
-                       (mouseup)="onMouseUp($event)"
-                       (mousewheel)="onMouseWheel($event)"
+<ngx-dropdown-treeview
+    #dropdownTreeviewComponent
+    *ngIf="isDropDown()"
+    [buttonClass]="getButtonClass()"
+    [config]="getConfig()"
+    [items]="getTreeviewItems()"
+    [itemTemplate]="itemTemplate"
+    [contextMenu]="treeviewContextMenuComponent"
+    (contextmenu)="onContextMenu({ $event: $event, $data: dropdownTreeviewComponent })"
+    (keydown)="onKeyDown({ $event: $event, $data: dropdownTreeviewComponent })"
+    (keypress)="onKeyPress({ $event: $event, $data: dropdownTreeviewComponent })"
+    (keyup)="onKeyUp({ $event: $event, $data: dropdownTreeviewComponent })"
+    (click)="onClick({ $event: $event, $data: dropdownTreeviewComponent })"
+    (dblclick)="onDoubleClick({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mousedown)="onMouseDown({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mouseenter)="onMouseEnter({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mouseleave)="onMouseLeave({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mousemove)="onMouseMove({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mouseout)="onMouseOut({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mouseover)="onMouseOver({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mouseup)="onMouseUp({ $event: $event, $data: dropdownTreeviewComponent })"
+    (mousewheel)="onMouseWheel({ $event: $event, $data: dropdownTreeviewComponent })"
 >
 </ngx-dropdown-treeview>
 
@@ -51,7 +51,20 @@
              let-item="item"
              let-onCollapseExpand="onCollapseExpand"
              let-onCheckedChange="onCheckedChange">
-    <div class="form-inline row-item">
+    <div class="form-inline row-item"
+         (keydown)="onKeyDown({ $event: $event, $data: item })"
+         (keypress)="onKeyPress({ $event: $event, $data: item })"
+         (keyup)="onKeyUp({ $event: $event, $data: item })"
+         (click)="onClick({ $event: $event, $data: item })"
+         (dblclick)="onDoubleClick({ $event: $event, $data: item })"
+         (mousedown)="onMouseDown({ $event: $event, $data: item })"
+         (mouseenter)="onMouseEnter({ $event: $event, $data: item })"
+         (mouseleave)="onMouseLeave({ $event: $event, $data: item })"
+         (mousemove)="onMouseMove({ $event: $event, $data: item })"
+         (mouseout)="onMouseOut({ $event: $event, $data: item })"
+         (mouseover)="onMouseOver({ $event: $event, $data: item })"
+         (mouseup)="onMouseUp({ $event: $event, $data: item })"
+         (mousewheel)="onMouseWheel({ $event: $event, $data: item })">
         <nb-icon *ngIf="item.children && item.collapsed"
                  pack="fa" icon="caret-right"
                  (click)="onCollapseExpand()"></nb-icon>
@@ -65,9 +78,9 @@
                    (ngModelChange)="onCheckedChange()"
                    [disabled]="item.disabled"
                    [indeterminate]="item.indeterminate"
-                   (click)="onClickItem($event, item);"/>
+                   (click)="onClickItem({ $event: $event, $data: item });"/>
             <label class="form-check-label"
-                   (click)="item.checked = !item.checked; onCheckedChange(); onClickItem($event, item);">
+                   (click)="item.checked = !item.checked; onCheckedChange(); onClickItem({ $event: $event, $data: item });">
                 {{item.text}}</label>
         </div>
     </div>
@@ -79,10 +92,10 @@
     <ng-template
         contextMenuItem
         *ngFor="let item of contextMenu"
-        [visible]="item?.visible?.apply(this, [ undefined ])"
-        [enabled]="item?.enabled?.apply(this, [ undefined ])"
-        [divider]="item?.divider?.apply(this, [ undefined ])"
-        (execute)="onMenuEvent($event, item)"
-    ><span><nb-icon [icon]="item?.icon?.apply(this, [ undefined ])" pack="fa"></nb-icon>
-        {{item?.title?.apply(this, [undefined]) | translate}}</span></ng-template>
+        [visible]="item?.visible?.apply(this, [ item ])"
+        [enabled]="item?.enabled?.apply(this, [ item ])"
+        [divider]="item?.divider?.apply(this, [ item ])"
+        (execute)="onMenuEvent({ $data: $event })"
+    ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+        {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
 </context-menu>

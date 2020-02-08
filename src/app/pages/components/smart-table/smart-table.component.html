@@ -8,37 +8,39 @@
                        [placeholder]="'common.search.placeholder' | translate"
                        class="form-control nb-search pt-0 py-0"
                        [disabled]="isInEditMode()"
-                       (keydown.enter)="onSearch(search.value)">
+                       (keydown.enter)="onSearch({ $data: search.value })">
             </div>
         </div>
     </nb-card-header>
 
     <nb-card-body>
-        <ng2-smart-table [settings]="settings"
-                         [source]="dataSource"
-                         (rowSelect)="onRowSelect($event)"
-                         (userRowSelect)="onUserRowSelect($event)"
-                         (create)="onCreate($event)"
-                         (createConfirm)="onCreateConfirm($event)"
-                         (edit)="onEdit($event)"
-                         (editConfirm)="onEditConfirm($event)"
-                         (delete)="onDelete($event)"
-                         (deleteConfirm)="onDeleteConfirm($event)"
-                         [contextMenu]="contextMenuComponent"
-                         (contextmenu)="onContextMenu($event)"
-                         (keydown)="onKeyDown($event)"
-                         (keypress)="onKeyPress($event)"
-                         (keyup)="onKeyUp($event)"
-                         (click)="onClick($event)"
-                         (dblclick)="onDoubleClick($event)"
-                         (mousedown)="onMouseDown($event)"
-                         (mouseenter)="onMouseEnter($event)"
-                         (mouseleave)="onMouseLeave($event)"
-                         (mousemove)="onMouseMove($event)"
-                         (mouseout)="onMouseOut($event)"
-                         (mouseover)="onMouseOver($event)"
-                         (mouseup)="onMouseUp($event)"
-                         (mousewheel)="onMouseWheel($event)"
+        <ng2-smart-table
+            #smartTableComponent
+            [settings]="settings"
+            [source]="dataSource"
+            (rowSelect)="onRowSelect({ $data: $event })"
+            (userRowSelect)="onUserRowSelect( { $data: $event })"
+            (create)="onCreate({ $data: $event })"
+            (createConfirm)="onCreateConfirm({ $data: $event })"
+            (edit)="onEdit({ $data: $event })"
+            (editConfirm)="onEditConfirm({ $data: $event })"
+            (delete)="onDelete({ $data: $event })"
+            (deleteConfirm)="onDeleteConfirm({ $data: $event })"
+            [contextMenu]="contextMenuComponent"
+            (contextmenu)="onContextMenu({ $event: $event, $data: smartTableComponent })"
+            (keydown)="onKeyDown({ $event: $event, $data: smartTableComponent })"
+            (keypress)="onKeyPress({ $event: $event, $data: smartTableComponent })"
+            (keyup)="onKeyUp({ $event: $event, $data: smartTableComponent })"
+            (click)="onClick({ $event: $event, $data: smartTableComponent })"
+            (dblclick)="onDoubleClick( { $event: $event, $data: smartTableComponent })"
+            (mousedown)="onMouseDown({ $event: $event, $data: smartTableComponent })"
+            (mouseenter)="onMouseEnter({ $event: $event, $data: smartTableComponent })"
+            (mouseleave)="onMouseLeave({ $event: $event, $data: smartTableComponent })"
+            (mousemove)="onMouseMove({ $event: $event, $data: smartTableComponent })"
+            (mouseout)="onMouseOut({ $event: $event, $data: smartTableComponent })"
+            (mouseover)="onMouseOver({ $event: $event, $data: smartTableComponent })"
+            (mouseup)="onMouseUp({ $event: $event, $data: smartTableComponent })"
+            (mousewheel)="onMouseWheel({ $event: $event, $data: smartTableComponent })"
         ></ng2-smart-table>
         <context-menu #contextMenuComponent
                       [disabled]="!contextMenu || !contextMenu.length"
@@ -46,12 +48,12 @@
             <ng-template
                 contextMenuItem
                 *ngFor="let item of contextMenu"
-                [visible]="item?.visible?.apply(this, [ undefined ])"
-                [enabled]="item?.enabled?.apply(this, [ undefined ])"
-                [divider]="item?.divider?.apply(this, [ undefined ])"
-                (execute)="onMenuEvent($event, item)"
-            ><span><nb-icon [icon]="item?.icon?.apply(this, [ undefined ])" pack="fa"></nb-icon>
-                {{item?.title?.apply(this, [undefined]) | translate}}</span></ng-template>
+                [visible]="item?.visible?.apply(this, [ item ])"
+                [enabled]="item?.enabled?.apply(this, [ item ])"
+                [divider]="item?.divider?.apply(this, [ item ])"
+                (execute)="onMenuEvent({ $data: $event })"
+            ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+                {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
         </context-menu>
     </nb-card-body>
 </nb-card>

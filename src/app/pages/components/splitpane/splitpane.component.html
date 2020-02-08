@@ -9,7 +9,7 @@
             [contextMenu]="splitPaneContextMenuComponent"
             unit="percent"
             direction="{{isHorizontal() ? 'horizontal' : 'vertical'}}"
-            (dragEnd)="onDragEnd('percent', $event)"
+            (dragEnd)="onDragEnd({ $data: { unit: 'percent', sizes: $event } })"
             #splitComponent="asSplit">
             <as-split-area
                 #area{{index}}
@@ -26,12 +26,12 @@
             <ng-template
                 contextMenuItem
                 *ngFor="let item of contextMenu"
-                [visible]="item?.visible?.apply(this, [ undefined ])"
-                [enabled]="item?.enabled?.apply(this, [ undefined ])"
-                [divider]="item?.divider?.apply(this, [ undefined ])"
-                (execute)="onMenuEvent($event, item)"
-            ><span><nb-icon [icon]="item?.icon?.apply(this, [ undefined ])" pack="fa"></nb-icon>
-                {{item?.title?.apply(this, [undefined]) | translate}}</span></ng-template>
+                [visible]="item?.visible?.apply(this, [ item ])"
+                [enabled]="item?.enabled?.apply(this, [ item ])"
+                [divider]="item?.divider?.apply(this, [ item ])"
+                (execute)="onMenuEvent({ $data: $event })"
+            ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+                {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
         </context-menu>
     </nb-card-body>
 </nb-card>

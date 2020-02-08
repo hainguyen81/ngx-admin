@@ -1,5 +1,5 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractComponent} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {
     AfterViewInit,
     ComponentFactoryResolver,
@@ -14,7 +14,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
-import {ResizedEvent} from 'angular-resize-event';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -157,15 +156,18 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
 
     /**
      * Perform resize areas
-     * @param unit size unit
-     * @param sizes area sizes
+     * @param event {IEvent} that contains {$data} as Object, consist of: unit, {sizes}
      */
-    onDragEnd(unit, {sizes}): void {
+    onDragEnd(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onDragEnd', unit, sizes);
+        this.getLogger().debug('onDragEnd', event);
     }
 
-    onResized(event: ResizedEvent): void {
+    /**
+     * Perform action on resize event
+     * @param event {IEvent} that contains {$data} as ResizedEvent
+     */
+    onResized(event: IEvent): void {
         super.onResized(event);
 
         let splitAreaEls: NodeListOf<HTMLElement>;

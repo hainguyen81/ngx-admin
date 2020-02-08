@@ -27,7 +27,6 @@ import {
     DocumentKeyupHandlerService,
 } from '../../services/implementation/document.keypress.handler.service';
 import HtmlUtils from '../../utils/html.utils';
-import {ResizedEvent} from 'angular-resize-event';
 import KeyboardUtils from '../../utils/keyboard.utils';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
@@ -45,6 +44,12 @@ export interface IContextMenu {
     visible: (item?: any) => boolean;
     divider: (item?: any) => boolean;
     click?: (item?: any) => void | null;
+}
+
+/* Customize event for abstract component */
+export interface IEvent {
+    $data?: any | null;
+    $event?: Event | null;
 }
 
 /**
@@ -222,7 +227,7 @@ export class AbstractComponent
         translateService || throwError('Could not inject TranslateService');
         factoryResolver || throwError('Could not inject ComponentFactoryResolver');
         dataSource = dataSource || new LocalDataSource();
-        dataSource.onChanged().subscribe(value => this.onDataSourceChanged(value));
+        dataSource.onChanged().subscribe(value => this.onDataSourceChanged({$data: value}));
     }
 
     // -------------------------------------------------
@@ -279,11 +284,11 @@ export class AbstractComponent
                 (item) => this.contextMenuComponent = item);
         }
         this.documentKeyDownHandlerService = new DocumentKeydownHandlerService(
-            (e: KeyboardEvent) => this.onKeyDown(e), this.getLogger());
+            (e: KeyboardEvent) => this.onKeyDown({$event: e}), this.getLogger());
         this.documentKeyUpHandlerService = new DocumentKeyupHandlerService(
-            (e: KeyboardEvent) => this.onKeyUp(e), this.getLogger());
+            (e: KeyboardEvent) => this.onKeyUp({$event: e}), this.getLogger());
         this.documentKeyPressHandlerService = new DocumentKeypressHandlerService(
-            (e: KeyboardEvent) => this.onKeyPress(e), this.getLogger());
+            (e: KeyboardEvent) => this.onKeyPress({$event: e}), this.getLogger());
     }
 
     ngAfterViewChecked(): void {
@@ -304,18 +309,20 @@ export class AbstractComponent
      * Perform keydown action
      * @param event KeyboardEvent
      */
-    onKeyDown(event: KeyboardEvent): void {
+    onKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyDown', event);
-        if (KeyboardUtils.isNavigateKey(event)) {
+        if (event && event.$event instanceof KeyboardEvent
+            && KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent)) {
             // handle navigation keys
             this.onNavigateKeyDown(event);
 
-        } else if (KeyboardUtils.isContextMenuKey(event)) {
+        } else if (event && event.$event instanceof KeyboardEvent
+            && KeyboardUtils.isContextMenuKey(event.$event)) {
             // handle context menu key
             this.onContextMenuKeyDown(event);
 
-        } else {
+        } else if (event && event.$event instanceof KeyboardEvent) {
             // handle action keydown
             this.onActionKeyDown(event);
         }
@@ -323,66 +330,68 @@ export class AbstractComponent
 
     /**
      * Perform navigate keydown action
-     * @param event KeyboardEvent
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
-    onNavigateKeyDown(event: KeyboardEvent): void {
+    onNavigateKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onNavigateKeyDown', event);
     }
 
     /**
      * Perform context menu keydown action
-     * @param event KeyboardEvent
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
-    onContextMenuKeyDown(event: KeyboardEvent): void {
+    onContextMenuKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenuKeyDown', event);
     }
 
     /**
      * Perform keydown action (not navigate and context menu key
-     * @param event KeyboardEvent
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
-    onActionKeyDown(event: KeyboardEvent): void {
+    onActionKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenuKeyDown', event);
     }
 
     /**
      * Perform keyup action
-     * @param event KeyboardEvent
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
-    onKeyUp(event: KeyboardEvent): void {
+    onKeyUp(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyUp', event);
-        if (KeyboardUtils.isNavigateKey(event)
-            || KeyboardUtils.isContextMenuKey(event)) {
+        if (event && event.$event instanceof KeyboardEvent
+            && (KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent)
+                || KeyboardUtils.isContextMenuKey(event.$event as KeyboardEvent))) {
             // stop firing event
-            this.preventEvent(event);
+            this.preventEvent(event.$event);
 
         }
     }
 
     /**
      * Perform keypress action
-     * @param event KeyboardEvent
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
-    onKeyPress(event: KeyboardEvent): void {
+    onKeyPress(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyPress');
+        this.getLogger().debug('onKeyPress', event);
     }
 
     /**
      * Triggered ContextMenu.
-     * @param event MouseEvent
+     * @param event {IEvent} that contains {$event} as MouseEvent
      */
-    onContextMenu(event: MouseEvent): void {
+    onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenu', event);
-        if ((!this.getContextMenu() || !this.getContextMenu().length)
-            || this.showHideContextMenu(event, event.target, undefined)) {
+        if (event && event.$event instanceof MouseEvent
+            && ((!this.getContextMenu() || !this.getContextMenu().length)
+                || this.showHideContextMenu(event.$event, event.$event.target, event.$data))) {
             // stop firing event
-            this.preventEvent(event);
+            this.preventEvent(event.$event);
         }
     }
 
@@ -396,131 +405,132 @@ export class AbstractComponent
 
     /**
      * Perform action on menu item has been clicked
-     * @param event Object, consist of:
+     * @param event {IEvent} that contains {$data} as Object, consist of:
      *      event: action event
      *      item: menu item data
-     * @param menuItem IContextMenu that has been activated
      */
-    onMenuEvent(event, menuItem?: IContextMenu) {
+    onMenuEvent(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMenuEvent', event);
-        if (event && event.item && menuItem && typeof menuItem['click'] === 'function') {
-            menuItem['click']['apply'](this, [event.item]);
+        if (event && event.$data && event.$data['item']
+            && typeof event.$data['item']['click'] === 'function') {
+            event.$data['item']['click']['apply'](this, [event.$data['item']]);
         }
     }
 
     /**
      * Perform action on resize event
-     * @param event event
+     * @param event {IEvent} that contains {$event} as DOM resize event
      */
-    onResize(event: any): void {
+    onResize(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onResize', event);
     }
+
     /**
      * Perform action on resize event
-     * @param event event
+     * @param event {IEvent} that contains {$data} as ResizedEvent
      */
-    onResized(event: ResizedEvent): void {
+    onResized(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onResized', event);
     }
 
     /**
      * Perform action on data-source changed event
-     * @param value changed value
+     * @param value {IEvent} that contains {$data} as changed value
      */
-    onDataSourceChanged(value: any) {
+    onDataSourceChanged(value: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onDataSourceChanged', value);
     }
 
     /**
      * Triggered click event
-     * @param event MouseEvent
+     * @param event {IEvent} that contains {$event} as MouseEvent
      */
-    onClick(event: MouseEvent): void {
+    onClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClick', event);
     }
 
     /**
      * Triggered only on a user double-click event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `dbclick` event
      */
-    onDoubleClick(event: any): void {
+    onDoubleClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onDoubleClick', event);
     }
 
     /**
      * Triggered only on a user `mousedown` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mousedown` MouseEvent
      */
-    onMouseDown(event: any): void {
+    onMouseDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseDown', event);
     }
 
     /**
      * Triggered only on a user `mouseenter` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mouseenter` event
      */
-    onMouseEnter(event: any): void {
+    onMouseEnter(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseEnter', event);
     }
 
     /**
      * Triggered only on a user `mouseleave` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mouseleave` event
      */
-    onMouseLeave(event: any): void {
+    onMouseLeave(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseLeave', event);
     }
 
     /**
      * Triggered only on a user `mousemove` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mousemove` event
      */
-    onMouseMove(event: any): void {
+    onMouseMove(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseMove', event);
     }
 
     /**
      * Triggered only on a user `mouseout` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mouseout` event
      */
-    onMouseOut(event: any): void {
+    onMouseOut(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseOut', event);
     }
 
     /**
      * Triggered only on a user `mouseover` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mouseover` event
      */
-    onMouseOver(event: any): void {
+    onMouseOver(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseOver', event);
     }
 
     /**
      * Triggered only on a user `mouseup` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mouseup` event
      */
-    onMouseUp(event: any): void {
+    onMouseUp(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseUp', event);
     }
 
     /**
      * Triggered only on a user `mousewheel` event.
-     * @param event event data
+     * @param event {IEvent} that contains {$event} as DOM `mousewheel` event
      */
-    onMouseWheel(event: any): void {
+    onMouseWheel(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMouseWheel', event);
     }
