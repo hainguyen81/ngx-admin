@@ -28,9 +28,9 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AppMaterialModule} from '../../app.material.module';
 import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {ToastrModule} from "ngx-toastr";
-import {BrowserModule} from "@angular/platform-browser";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [

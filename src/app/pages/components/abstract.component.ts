@@ -12,7 +12,6 @@ import {
     QueryList,
     Renderer2,
     SimpleChanges,
-    Type,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -30,7 +29,6 @@ import {
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 import {ToasterService} from 'angular2-toaster';
-import {AppConfig} from '../../config/app.config';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -209,15 +207,6 @@ export class AbstractComponent
     protected setContextMenu(contextMenu: IContextMenu[]) {
         (contextMenu && contextMenu.length) || throwError('Context menu must be valid');
         this.contextMenu = contextMenu;
-    }
-
-    /**
-     * Get the injectable service instance by the specified service type
-     * @param service srvice type to inject
-     * @return the injectable service instance by the specified service type
-     */
-    protected getService<T>(service: Type<T>): T {
-        return AppConfig.getService(service);
     }
 
     // -------------------------------------------------
