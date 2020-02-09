@@ -29,9 +29,8 @@
                 [visible]="item?.visible?.apply(this, [ item ])"
                 [enabled]="item?.enabled?.apply(this, [ item ])"
                 [divider]="item?.divider?.apply(this, [ item ])"
-                (execute)="$event.item = item; onMenuEvent({ $data: $event })"
-            ><span (click)="onMenuEvent({ $event: $event, $data: item })">
-                <nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+                (execute)="onMenuEvent({ $event: $event.event, $data: { item: $event.item, menu: item } })"
+            ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
                 {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
         </context-menu>
     </nb-card-body>

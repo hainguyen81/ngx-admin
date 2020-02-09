@@ -205,13 +205,14 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
     /**
      * Perform action on menu item has been clicked
      * @param event {IEvent} that contains {$data} as Object, consist of:
-     *      event: action event
+     *      menu: menu item
      *      item: menu item data
+     * and {$event} as action event
      */
     onMenuEvent(event) {
         let menuItem: IContextMenu;
-        menuItem = (event && event.$data && event.$data['item']
-            ? event.$data['item'] as IContextMenu : undefined);
+        menuItem = (event && event.$data && event.$data['menu']
+            ? event.$data['menu'] as IContextMenu : undefined);
         let mnuId: string;
         mnuId = (menuItem ? menuItem.id.apply(this, [event.item]) : '');
         switch (mnuId) {

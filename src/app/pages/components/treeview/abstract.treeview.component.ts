@@ -12,7 +12,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent, IEvent,} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
@@ -306,8 +306,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     /**
      * Perform action on menu item has been clicked
      * @param event {IEvent} that contains {$data} as Object, consist of:
-     *      event: action event
+     *      menu: menu item
      *      item: menu item data
+     * and {$event} as action event
      */
     onMenuEvent(event) {
         this.getLogger().debug('onMenuEvent', event);

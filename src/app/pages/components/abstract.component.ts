@@ -419,15 +419,16 @@ export class AbstractComponent
     /**
      * Perform action on menu item has been clicked
      * @param event {IEvent} that contains {$data} as Object, consist of:
-     *      event: action event
+     *      menu: menu item
      *      item: menu item data
+     * and {$event} as action event
      */
     onMenuEvent(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMenuEvent', event);
-        if (event && event.$data && event.$data['item']
-            && typeof event.$data['item']['click'] === 'function') {
-            event.$data['item']['click']['apply'](this, [event.$data['item']]);
+        if (event && event.$data && event.$data['menu']
+            && typeof event.$data['menu']['click'] === 'function') {
+            event.$data['menu']['click']['apply'](this, [event.$data['menu']]);
         }
     }
 
