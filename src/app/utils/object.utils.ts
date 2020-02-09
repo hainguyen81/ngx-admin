@@ -112,4 +112,18 @@ export default class ObjectUtils {
         }
         return target;
     }
+
+    /**
+     * Get the first occurred value that is not un-defined in the specified arguments
+     * @param args to detect
+     * @return the first occurred value or undefined
+     */
+    public static ifDefined(...args: any): any {
+        for (const arg of args) {
+            if (arg) {
+                return arg;
+            }
+        }
+        return undefined;
+    }
 }

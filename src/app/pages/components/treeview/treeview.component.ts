@@ -14,7 +14,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {TreeviewItem} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
 import {IEvent} from '../abstract.component';
-import {throwError} from 'rxjs';
 import {ToasterService} from 'angular2-toaster';
 
 /**
@@ -138,57 +137,5 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         // TODO Waiting for implementing from children component
         this.getLogger().debug('mappingDataSourceToTreeviewItems', data);
         return [];
-    }
-
-    /**
-     * Get {TreeviewItem} of the specified tree-view item DOM element
-     * @param treeviewItemEl to detect
-     * @return {TreeviewItem}
-     */
-    public getTreeviewItemByElement(treeviewItemEl: HTMLElement): TreeviewItem {
-        treeviewItemEl || throwError('Could not get tree-view item of undefined element');
-
-        let itemRowEl: HTMLElement;
-        itemRowEl = this.getFirstElementBySelector(
-            AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR, treeviewItemEl);
-        if (itemRowEl && (itemRowEl.id || '').length) {
-            return this.findTreeviewItemById(itemRowEl.id);
-        }
-        return undefined;
-    }
-
-    /**
-     * Find the tree-item by data identity
-     * @param id to find
-     * @param item specify whether filter only in this item. undefined for all items
-     * @return {TreeviewItem}
-     */
-    private findTreeviewItemById(id: string, item?: TreeviewItem): TreeviewItem {
-        // if specifying item to filter
-        if (item) {
-            if (item && item.value && item.value['id'] === id) {
-                return item;
-            }
-            if (item.children && item.children.length) {
-                for (const it of item.children) {
-                    let found: TreeviewItem;
-                    found = this.findTreeviewItemById(id, it);
-                    if (found) {
-                        return found;
-                    }
-                }
-            }
-
-            // search all
-        } else {
-            for (const it of this.getTreeviewItems()) {
-                let found: TreeviewItem;
-                found = this.findTreeviewItemById(id, it);
-                if (found) {
-                    return found;
-                }
-            }
-        }
-        return undefined;
     }
 }

@@ -19,7 +19,6 @@ import OrganizationUtils from '../../../../../utils/organization.utils';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToasterService} from 'angular2-toaster';
-import {IdGenerators} from '../../../../../config/generator.config';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -131,9 +130,44 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         if (newItem) {
             newItem.text = this.getTranslateService().instant('system.organization.new');
             newItem.value = new Organization(
-                IdGenerators.oid.generate(), '', '', undefined);
+                undefined, undefined, undefined, undefined);
         }
         return newItem;
+    }
+
+    /**
+     * Delete the specified {TreeviewItem}
+     * @param treeviewItem to delete
+     * @return the deleted {TreeviewItem}
+     */
+    protected deleteItem(treeviewItem: TreeviewItem): TreeviewItem {
+        return this.doDeleteItemFromDataSource(super.deleteItem(treeviewItem));
+    }
+
+    /**
+     * Delete the specified {TreeviewItem} from data source
+     * @param item to delete
+     * @return the deleted item
+     */
+    private doDeleteItemFromDataSource(item: TreeviewItem): TreeviewItem {
+        if (!item || !item.value) {
+            return item;
+        }
+
+        // check for deleting children first
+        if (item.children && item.children.length) {
+            for (const it of item.children) {
+                this.doDeleteItemFromDataSource(it);
+            }
+        }
+
+        // if valid identity to delete
+        if (item.value && (item.value['id'] || '').length) {
+            this.getDataSource().remove(item.value)
+                .then(() => this.getLogger().debug('DELETED?', item.value),
+                    (errors) => this.getLogger().error(errors));
+        }
+        return item;
     }
 
     /**

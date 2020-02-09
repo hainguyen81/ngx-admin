@@ -60,7 +60,7 @@
              let-onCollapseExpand="onCollapseExpand"
              let-onCheckedChange="onCheckedChange">
     <div class="form-inline row-item"
-         [id]="item.value['id'] || ''"
+         [id]="generateTreeviewItemKey(item) || ''"
          [contextMenu]="treeviewContextMenuComponent"
          (contextmenu)="onContextMenu({ $event: $event, $data: item })"
          (keydown)="onKeyDown({ $event: $event, $data: item })"

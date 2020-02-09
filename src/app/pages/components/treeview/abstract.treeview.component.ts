@@ -26,6 +26,8 @@ import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} fr
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {ToasterService} from 'angular2-toaster';
+import ObjectUtils from '../../../utils/object.utils';
+import {throwError} from 'rxjs';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -359,7 +361,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             collapsed: true,
             disabled: false,
             text: '',
-            value: {'id': (new Date()).getTime().toString()},
+            value: undefined,
         });
         if (parent) {
             if (!parent.children) {
@@ -381,10 +383,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     /**
      * Delete the specified {TreeviewItem}
      * @param treeviewItem to delete
+     * @return the deleted {TreeviewItem}
      */
-    protected deleteItem(treeviewItem: TreeviewItem): void {
+    protected deleteItem(treeviewItem: TreeviewItem): TreeviewItem {
         if (!treeviewItem) {
-            return;
+            return undefined;
         }
 
         let itIdx: number;
@@ -392,11 +395,14 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         if (itIdx < 0) {
             for (const it of this.getTreeviewItems()) {
                 if (it.children && this.doDeleteItem(it, treeviewItem)) {
-                    break;
+                    return it;
                 }
             }
+
         } else {
-            this.getTreeviewItems().splice(itIdx, 1);
+            let delItems: TreeviewItem[];
+            delItems = this.getTreeviewItems().splice(itIdx, 1);
+            return (delItems && delItems.length > 0 ? delItems[0] : undefined);
         }
     }
 
@@ -433,11 +439,20 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     abstract mappingDataSourceToTreeviewItems(data: any): TreeviewItem[];
 
     /**
-     * Get {TreeviewItem} of the specified tree-view item DOM element
-     * @param treeviewItemEl to detect
-     * @return {TreeviewItem}
+     * Generate the specified {TreeviewItem} key to improve the item searching
+     * @param item to generate key
+     * @return item key
      */
-    abstract getTreeviewItemByElement(treeviewItemEl: HTMLElement): TreeviewItem;
+    protected generateTreeviewItemKey(item?: TreeviewItem): string {
+        let key: string;
+        key = ObjectUtils.ifDefined(
+            (item || {})['key'], ((item || {})['value'] || {})['uid'],
+            ((item || {})['value'] || {})['id'], (new Date()).getTime().toString());
+        if (item) {
+            item['key'] = key;
+        }
+        return key;
+    }
 
     /**
      * Toggle expand/collapse the specified tree-view item element
@@ -480,17 +495,74 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param treeviewItem to toggle
      */
     protected toggleTreeviewItem(treeviewItem: TreeviewItem) {
-        if (!treeviewItem || !treeviewItem.value || !treeviewItem.value['id']) {
+        let itemKey: string;
+        itemKey = this.generateTreeviewItemKey(treeviewItem);
+        if (!treeviewItem || !treeviewItem.value || !(itemKey || '').length) {
             return;
         }
 
         let treeviewItemElSelector: string;
-        treeviewItemElSelector = '[id=\''.concat(treeviewItem.value['id']).concat('\']')
+        treeviewItemElSelector = '[id=\''.concat(itemKey).concat('\']')
             .concat(AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR);
         let treeviewItemEl: HTMLElement;
         treeviewItemEl = this.getFirstElementBySelector(treeviewItemElSelector);
         treeviewItemEl = (treeviewItemEl ? treeviewItemEl.closest(
             AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement : undefined);
         this.toggleTreeviewItemElement(treeviewItemEl);
+    }
+
+    /**
+     * Get {TreeviewItem} of the specified tree-view item DOM element
+     * @param treeviewItemEl to detect
+     * @return {TreeviewItem}
+     */
+    public getTreeviewItemByElement(treeviewItemEl: HTMLElement): TreeviewItem {
+        treeviewItemEl || throwError('Could not get tree-view item of undefined element');
+
+        let itemRowEl: HTMLElement;
+        itemRowEl = this.getFirstElementBySelector(
+            AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR, treeviewItemEl);
+        if (itemRowEl && (itemRowEl.id || '').length) {
+            return this.findTreeviewItemByKey(itemRowEl.id);
+        }
+        return undefined;
+    }
+
+    /**
+     * Find the tree-item by data identity
+     * @param id to find
+     * @param item specify whether filter only in this item. undefined for all items
+     * @return {TreeviewItem}
+     */
+    protected findTreeviewItemByKey(id: string, item?: TreeviewItem): TreeviewItem {
+        // if specifying item to filter
+        if (item) {
+            let itemKey: string;
+            itemKey = this.generateTreeviewItemKey(item);
+            if (item && item.value && itemKey === id) {
+                return item;
+            }
+
+            if (item.children && item.children.length) {
+                for (const it of item.children) {
+                    let found: TreeviewItem;
+                    found = this.findTreeviewItemByKey(id, it);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+
+            // search all
+        } else {
+            for (const it of this.getTreeviewItems()) {
+                let found: TreeviewItem;
+                found = this.findTreeviewItemByKey(id, it);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+        return undefined;
     }
 }
