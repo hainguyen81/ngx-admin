@@ -29,6 +29,7 @@ import {AppMaterialModule} from '../../app.material.module';
 import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
+import {ToasterModule} from 'angular2-toaster';
 
 @NgModule({
     imports: [
@@ -53,6 +54,7 @@ import {ToastrModule} from 'ngx-toastr';
 
         /* Toaster */
         ToastrModule,
+        ToasterModule,
 
         /* Table */
         Ng2SmartTableModule,
