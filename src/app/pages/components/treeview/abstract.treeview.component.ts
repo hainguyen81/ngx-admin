@@ -21,7 +21,7 @@ import {
     IEvent,
 } from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
+import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {ToasterService} from 'angular2-toaster';
@@ -329,13 +329,13 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
         switch (mnuId) {
             case CONTEXT_MENU_ADD:
-                // this.newRow();
+                this.newItem(event.$data['item']);
                 break;
             case CONTEXT_MENU_EDIT:
-                // this.editRowByData(event.item, 'id');
+                this.onClickItem({$event: event.$event, $data: event.$data['item']});
                 break;
             case CONTEXT_MENU_DELETE:
-                // this.deleteRowByData(event.item, 'id');
+                // TODO Waiting for implementing from children component
                 break;
         }
     }
@@ -343,6 +343,34 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
+
+    /**
+     * Create new tree-view item node with the specified node data and the parent node
+     * @param parent parent tree-view item {TreeviewItem}
+     * @param treeItem new tree-view item data {TreeItem}
+     */
+    protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): void {
+        let newItem: TreeviewItem;
+        newItem = new TreeviewItem(treeItem || {
+            checked: false,
+            collapsed: true,
+            disabled: false,
+            text: '',
+            value: {},
+        });
+        if (parent) {
+            if (!parent.children) {
+                parent.children = [];
+            }
+            parent.children.push(newItem);
+
+        } else {
+            if (!this.treeviewItems) {
+                this.treeviewItems = [];
+            }
+            this.treeviewItems.push(newItem);
+        }
+    }
 
     /**
      * Map the specified data from data-source to tree-view items to show
