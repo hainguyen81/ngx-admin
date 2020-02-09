@@ -12,7 +12,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent, IEvent} from '../abstract.component';
+import {AbstractComponent, IEvent,} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
@@ -301,6 +301,32 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         }
 
         this.preventEvent(event.$event);
+    }
+
+    /**
+     * Perform action on menu item has been clicked
+     * @param event {IEvent} that contains {$data} as Object, consist of:
+     *      event: action event
+     *      item: menu item data
+     */
+    onMenuEvent(event) {
+        this.getLogger().debug('onMenuEvent', event);
+        // let menuItem: IContextMenu;
+        // menuItem = (event && event.$data && event.$data['item']
+        //     ? event.$data['item'] as IContextMenu : undefined);
+        // let mnuId: string;
+        // mnuId = (menuItem ? menuItem.id.apply(this, [event.item]) : '');
+        // switch (mnuId) {
+        //     case CONTEXT_MENU_ADD:
+        //         this.newRow();
+        //         break;
+        //     case CONTEXT_MENU_EDIT:
+        //         this.editRowByData(event.item, 'id');
+        //         break;
+        //     case CONTEXT_MENU_DELETE:
+        //         this.deleteRowByData(event.item, 'id');
+        //         break;
+        // }
     }
 
     // -------------------------------------------------

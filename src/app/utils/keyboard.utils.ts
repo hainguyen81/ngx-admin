@@ -5,6 +5,7 @@ import {
     END,
     ENTER,
     ESCAPE,
+    F10,
     HOME,
     INSERT,
     LEFT_ARROW,
@@ -145,6 +146,8 @@ export default class KeyboardUtils {
      * @param event KeyboardEvent
      */
     public static isContextMenuKey(event: KeyboardEvent): boolean {
-        return KeyboardUtils.isSpecifiedKey(event, 'ContextMenu', CONTEXT_MENU);
+        return KeyboardUtils.isSpecifiedKey(event,
+            'ContextMenu', 'F10',
+            CONTEXT_MENU, F10);
     }
 }

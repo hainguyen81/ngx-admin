@@ -318,9 +318,13 @@ export class AbstractComponent
         let targetEl: HTMLElement;
         targetEl = event.$event.target as HTMLElement;
         isOnContextMenu = (targetEl && !!targetEl.closest(AbstractComponent.CONTEXT_MENU_SELECTOR));
+        // if action key on context-menu, not handle it
+        if (isOnContextMenu) {
+            return;
+        }
 
         if (event && event.$event instanceof KeyboardEvent
-            && KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent) && !isOnContextMenu) {
+            && KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent)) {
             // close context menu
             this.closeContextMenu();
 
@@ -606,8 +610,8 @@ export class AbstractComponent
         let kbEvent: KeyboardEvent;
         kbEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
         let eventTarget: Element | EventTarget;
-        eventTarget = (event && event.target instanceof Node ? event.target : target);
-        this.getContextMenuService().show.next({
+        eventTarget = (target ? target : event && event.target instanceof Node ? event.target : undefined);
+        eventTarget && this.getContextMenuService().show.next({
             // Optional - if unspecified, all context menu components will open
             contextMenu: this.getContextMenuComponent(),
             event: mouseEvent || kbEvent,
@@ -615,14 +619,17 @@ export class AbstractComponent
             anchorElement: eventTarget,
         });
         // wait for showing context menu and focus on it
-        setTimeout(() => {
-            let ctxMnuEls: NodeListOf<HTMLElement>;
-            ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
-            if (ctxMnuEls && ctxMnuEls.length) {
-                ctxMnuEls[0].focus({preventScroll: true});
-            }
-        }, 300);
-        return true;
+        if (eventTarget) {
+            setTimeout(() => {
+                let ctxMnuEls: NodeListOf<HTMLElement>;
+                ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
+                if (ctxMnuEls && ctxMnuEls.length) {
+                    ctxMnuEls[0].focus({preventScroll: true});
+                }
+            }, 300);
+            return true;
+        }
+        return false;
     }
 
     /**
