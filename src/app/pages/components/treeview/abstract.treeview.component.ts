@@ -329,7 +329,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
         switch (mnuId) {
             case CONTEXT_MENU_ADD:
-                this.toggleTreeviewItem(this.newItem(event.$data['item']));
+                let newItem: TreeviewItem;
+                newItem = this.newItem(event.$data['item']);
+                // wait for rendering new item
+                setTimeout(() => this.toggleTreeviewItem(newItem), 300);
                 break;
             case CONTEXT_MENU_EDIT:
                 this.toggleTreeviewItem(event.$data['item']);
