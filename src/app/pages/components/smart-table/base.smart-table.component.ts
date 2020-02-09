@@ -214,16 +214,16 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         menuItem = (event && event.$data && event.$data['menu']
             ? event.$data['menu'] as IContextMenu : undefined);
         let mnuId: string;
-        mnuId = (menuItem ? menuItem.id.apply(this, [event.item]) : '');
+        mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
         switch (mnuId) {
             case CONTEXT_MENU_ADD:
                 this.newRow();
                 break;
             case CONTEXT_MENU_EDIT:
-                this.editRowByData(event.item, 'id');
+                this.editRowByData(event.$data['item'], 'id');
                 break;
             case CONTEXT_MENU_DELETE:
-                this.deleteRowByData(event.item, 'id');
+                this.deleteRowByData(event.$data['item'], 'id');
                 break;
         }
     }
