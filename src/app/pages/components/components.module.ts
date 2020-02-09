@@ -28,6 +28,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AppMaterialModule} from '../../app.material.module';
 import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
     imports: [
@@ -49,6 +50,9 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 
         /* i18n */
         TranslateModule,
+
+        /* Toaster */
+        ToastrModule,
 
         /* Table */
         Ng2SmartTableModule,
