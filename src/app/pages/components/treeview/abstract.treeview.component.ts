@@ -329,7 +329,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
         switch (mnuId) {
             case CONTEXT_MENU_ADD:
-                this.newItem(event.$data['item']);
+                this.toggleTreeviewItem(this.newItem(event.$data['item']));
                 break;
             case CONTEXT_MENU_EDIT:
                 this.toggleTreeviewItem(event.$data['item']);
@@ -364,6 +364,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 parent.children = [];
             }
             parent.children.push(newItem);
+            // expand parent for new item
+            parent.collapsed = false;
 
         } else {
             if (!this.treeviewItems) {
