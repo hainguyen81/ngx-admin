@@ -332,10 +332,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 this.newItem(event.$data['item']);
                 break;
             case CONTEXT_MENU_EDIT:
-                this.onClickItem({$event: event.$event, $data: event.$data['item']});
+                this.toggleTreeviewItem(event.$data['item']);
                 break;
             case CONTEXT_MENU_DELETE:
-                // TODO Waiting for implementing from children component
+                this.deleteItem(event.$data['item']);
                 break;
         }
     }
@@ -348,15 +348,16 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * Create new tree-view item node with the specified node data and the parent node
      * @param parent parent tree-view item {TreeviewItem}
      * @param treeItem new tree-view item data {TreeItem}
+     * @return new tree-view item
      */
-    protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): void {
+    protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): TreeviewItem {
         let newItem: TreeviewItem;
         newItem = new TreeviewItem(treeItem || {
             checked: false,
             collapsed: true,
             disabled: false,
             text: '',
-            value: {},
+            value: {'id': (new Date()).getTime().toString()},
         });
         if (parent) {
             if (!parent.children) {
@@ -370,6 +371,55 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             }
             this.treeviewItems.push(newItem);
         }
+        return newItem;
+    }
+
+    /**
+     * Delete the specified {TreeviewItem}
+     * @param treeviewItem to delete
+     */
+    protected deleteItem(treeviewItem: TreeviewItem): void {
+        if (!treeviewItem) {
+            return;
+        }
+
+        let itIdx: number;
+        itIdx = this.getTreeviewItems().indexOf(treeviewItem);
+        if (itIdx < 0) {
+            for (const it of this.getTreeviewItems()) {
+                if (it.children && this.doDeleteItem(it, treeviewItem)) {
+                    break;
+                }
+            }
+        } else {
+            this.getTreeviewItems().splice(itIdx, 1);
+        }
+    }
+
+    /**
+     * Delete the specified {TreeviewItem} out of the specified {TreeviewItem} parent if existed
+     * @param parent to detect
+     * @param delItem to delete
+     * @return true for deleted; else false
+     */
+    private doDeleteItem(parent: TreeviewItem, delItem: TreeviewItem): boolean {
+        if (!parent || !parent.children) {
+            return false;
+        }
+
+        let itIdx: number;
+        itIdx = parent.children.indexOf(delItem);
+        if (itIdx < 0) {
+            for (const it of parent.children) {
+                if (it.children && this.doDeleteItem(it, delItem)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        parent.children.splice(itIdx, 1);
+        return true;
     }
 
     /**
@@ -407,5 +457,24 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     protected toggleTreeviewItemElement(treeviewItemEl: HTMLElement) {
         treeviewItemEl && this.toggleElementClass(treeviewItemEl, 'selected', true);
         treeviewItemEl && this.onClickItem({$data: this.getTreeviewItemByElement(treeviewItemEl)});
+    }
+
+    /**
+     * Toggle selected the specified tree-view item
+     * @param treeviewItem to toggle
+     */
+    protected toggleTreeviewItem(treeviewItem: TreeviewItem) {
+        if (!treeviewItem || !treeviewItem.value || !treeviewItem.value['id']) {
+            return;
+        }
+
+        let treeviewItemElSelector: string;
+        treeviewItemElSelector = '[id=\''.concat(treeviewItem.value['id']).concat('\']')
+            .concat(AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR);
+        let treeviewItemEl: HTMLElement;
+        treeviewItemEl = this.getFirstElementBySelector(treeviewItemElSelector);
+        treeviewItemEl = (treeviewItemEl ? treeviewItemEl.closest(
+            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement : undefined);
+        this.toggleTreeviewItemElement(treeviewItemEl);
     }
 }

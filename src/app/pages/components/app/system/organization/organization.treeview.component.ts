@@ -6,12 +6,13 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {TreeviewItem} from 'ngx-treeview';
-import {IOrganization} from '../../../../../@core/data/organization';
+import {TreeItem, TreeviewItem} from 'ngx-treeview';
+import Organization, {IOrganization} from '../../../../../@core/data/organization';
 import OrganizationUtils from '../../../../../utils/organization.utils';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToasterService} from 'angular2-toaster';
+import {IdGenerators} from '../../../../../config/generator.config';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -107,6 +108,22 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Create new tree-view item node with the specified node data and the parent node
+     * @param parent parent tree-view item {TreeviewItem}
+     * @param treeItem new tree-view item data {TreeItem}
+     * @return new tree-view item
+     */
+    protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): TreeviewItem {
+        let newItem: TreeviewItem;
+        newItem = super.newItem(parent, treeItem);
+        if (newItem) {
+            newItem.value = new Organization(
+                IdGenerators.oid.generate(), '', '', undefined);
+        }
+        return newItem;
+    }
 
     /**
      * Mapping organization data to organization tree item
