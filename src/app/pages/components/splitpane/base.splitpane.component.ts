@@ -4,6 +4,7 @@ import {NgxSplitPaneComponent} from './splitpane.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
+import {ToasterService} from 'angular2-toaster';
 
 /**
  * Base horizontal split-pane component base on {AngularSplitModule}
@@ -23,6 +24,7 @@ export abstract class BaseSplitPaneComponent<T extends DataSource> extends NgxSp
      * Create a new instance of {AbstractComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -31,11 +33,13 @@ export abstract class BaseSplitPaneComponent<T extends DataSource> extends NgxSp
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(ToasterService) toasterService: ToasterService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef);
     }
 }

@@ -20,23 +20,24 @@ import {isArray, isNumber} from 'util';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
+import {ToasterService} from 'angular2-toaster';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
     add: {
-        addButtonContent: '<i class="nb-plus"></i>',
-        createButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
+        addButtonContent: '<i class=\'nb-plus\'></i>',
+        createButtonContent: '<i class=\'nb-checkmark\'></i>',
+        cancelButtonContent: '<i class=\'nb-close\'></i>',
         confirmCreate: true,
     },
     edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-        saveButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
+        editButtonContent: '<i class=\'nb-edit\'></i>',
+        saveButtonContent: '<i class=\'nb-checkmark\'></i>',
+        cancelButtonContent: '<i class=\'nb-close\'></i>',
         confirmSave: true,
     },
     delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
+        deleteButtonContent: '<i class=\'nb-trash\'></i>',
         confirmDelete: true,
     },
     columns: {
@@ -76,7 +77,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
     protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
-    protected static SEARCH_FIELD_SELECTOR: string = '[type="search"]';
+    protected static SEARCH_FIELD_SELECTOR: string = '[type=\'search\']';
 
     // -------------------------------------------------
     // DECLARATION
@@ -100,6 +101,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * Create a new instance of {SmartTableComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -108,12 +110,14 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(ToasterService) toasterService: ToasterService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef);
     }
 
     ngAfterViewInit(): void {

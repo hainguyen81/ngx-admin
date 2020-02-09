@@ -7,6 +7,7 @@ import {TreeviewItem} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
 import {IEvent} from '../abstract.component';
 import {throwError} from 'rxjs';
+import {ToasterService} from 'angular2-toaster';
 
 /**
  * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
@@ -52,6 +53,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * Create a new instance of {NgxTreeviewComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -60,13 +62,14 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToasterService) toasterService: ToasterService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
-        super(dataSource, contextMenuService, logger, renderer,
-            translateService, factoryResolver, viewContainerRef, null, false);
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef, null, false);
     }
 
     // -------------------------------------------------

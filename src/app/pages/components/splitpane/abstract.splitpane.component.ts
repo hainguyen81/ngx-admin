@@ -14,6 +14,7 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
+import {ToasterService} from 'angular2-toaster';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -114,6 +115,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      * Create a new instance of {AbstractComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -124,6 +126,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(ToasterService) toasterService: ToasterService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
@@ -131,7 +134,8 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           private numberOfAreas: number,
                           private horizontal?: boolean | false) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef);
         (numberOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
     }
 

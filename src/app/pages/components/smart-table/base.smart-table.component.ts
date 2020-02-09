@@ -8,6 +8,7 @@ import KeyboardUtils from '../../../utils/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
 import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu, IEvent} from '../abstract.component';
+import {ToasterService} from 'angular2-toaster';
 
 /**
  * Base smart table component base on {Ng2SmartTableComponent}
@@ -27,6 +28,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      * Create a new instance of {BaseSmartTableComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -38,6 +40,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(ToasterService) toasterService: ToasterService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
@@ -45,7 +48,8 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           tableHeader: string, tableSettings: any,
                           contextMenu: IContextMenu[]) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef);
         super.setTableHeader(tableHeader || '');
         super.setTableSettings(tableSettings);
         super.setContextMenu(contextMenu || []);

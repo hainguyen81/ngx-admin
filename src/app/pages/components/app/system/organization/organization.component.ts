@@ -12,6 +12,7 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/organization';
+import {ToasterService} from 'angular2-toaster';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -78,6 +79,7 @@ export class OrganizationSplitPaneComponent
      * Create a new instance of {OrganizationSplitPaneComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -86,12 +88,14 @@ export class OrganizationSplitPaneComponent
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToasterService) toasterService: ToasterService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef);
         super.setPaneHeader('system.organization.title');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);

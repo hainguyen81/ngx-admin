@@ -28,6 +28,7 @@ import {
 } from '../../services/implementation/document.keyboard.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
+import {ToasterService} from 'angular2-toaster';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -100,24 +101,24 @@ export class AbstractComponent
     }
 
     /**
-     * Get the Renderer2 instance for applying HTML element attributes
-     * @return the Renderer2 instance
+     * Get the {Renderer2} instance for applying HTML element attributes
+     * @return the {Renderer2} instance
      */
     protected getRenderer(): Renderer2 {
         return this.renderer;
     }
 
     /**
-     * Get the TranslateService instance for applying multilingual
-     * @return the TranslateService instance
+     * Get the {TranslateService} instance for applying multilingual
+     * @return the {TranslateService} instance
      */
     protected getTranslateService(): TranslateService {
         return this.translateService;
     }
 
     /**
-     * Get the DocumentKeydownHandlerService instance for handling document `keydown` event
-     * @return the DocumentKeydownHandlerService instance
+     * Get the {DocumentKeydownHandlerService} instance for handling document `keydown` event
+     * @return the {DocumentKeydownHandlerService} instance
      */
     protected getDocumentKeyDownHandlerService(): DocumentKeydownHandlerService {
         this.documentKeyDownHandlerService || throwError('Could not handle document keydown');
@@ -125,8 +126,8 @@ export class AbstractComponent
     }
 
     /**
-     * Get the DocumentKeyupHandlerService instance for handling document `keyup` event
-     * @return the DocumentKeyupHandlerService instance
+     * Get the {DocumentKeyupHandlerService} instance for handling document `keyup` event
+     * @return the {DocumentKeyupHandlerService} instance
      */
     protected getDocumentKeyUpHandlerService(): DocumentKeyupHandlerService {
         this.documentKeyUpHandlerService || throwError('Could not handle document keyup');
@@ -134,8 +135,8 @@ export class AbstractComponent
     }
 
     /**
-     * Get the DocumentKeypressHandlerService instance for handling document `keypress` event
-     * @return the DocumentKeypressHandlerService instance
+     * Get the {DocumentKeypressHandlerService} instance for handling document `keypress` event
+     * @return the {DocumentKeypressHandlerService} instance
      */
     protected getDocumentKeyPressHandlerService(): DocumentKeypressHandlerService {
         this.documentKeyPressHandlerService || throwError('Could not handle document keypress');
@@ -143,23 +144,23 @@ export class AbstractComponent
     }
 
     /**
-     * Get the NGXLogger instance for logging
-     * @return the NGXLogger instance
+     * Get the {NGXLogger} instance for logging
+     * @return the {NGXLogger} instance
      */
     protected getLogger(): NGXLogger {
         return this.logger;
     }
 
     /**
-     * Get the component DataSource instance
-     * @return the component DataSource instance
+     * Get the component {DataSource} instance
+     * @return the component {DataSource} instance
      */
     protected getDataSource(): DataSource {
         return this.dataSource;
     }
 
     /**
-     * Set the component DataSource instance
+     * Set the component {DataSource} instance
      * @param dataSource to apply
      */
     protected setDataSource(dataSource: DataSource) {
@@ -168,8 +169,16 @@ export class AbstractComponent
     }
 
     /**
-     * Get the ContextMenuService instance for handling context menu
-     * @return the ContextMenuService instance
+     * Get the {ToasterService} instance for showing notification popup
+     * @return the {ToasterService} instance
+     */
+    protected getToasterService(): ToasterService {
+        return this.toasterService;
+    }
+
+    /**
+     * Get the {ContextMenuService} instance for handling context menu
+     * @return the {ContextMenuService} instance
      */
     protected getContextMenuService(): ContextMenuService {
         return this.contextMenuService;
@@ -208,6 +217,7 @@ export class AbstractComponent
      * Create a new instance of {AbstractComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -216,12 +226,14 @@ export class AbstractComponent
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
+                          @Inject(ToasterService) private toasterService: ToasterService,
                           @Inject(NGXLogger) private logger: NGXLogger,
                           @Inject(Renderer2) private renderer: Renderer2,
                           @Inject(TranslateService) private translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef) {
         contextMenuService || throwError('Could not inject ContextMenuService');
+        toasterService || throwError('Could not inject ToasterService');
         logger || throwError('Could not inject NGXLogger');
         renderer || throwError('Could not inject Renderer2');
         translateService || throwError('Could not inject TranslateService');
@@ -428,7 +440,7 @@ export class AbstractComponent
         this.getLogger().debug('onMenuEvent', event);
         if (event && event.$data && event.$data['menu']
             && typeof event.$data['menu']['click'] === 'function') {
-            event.$data['menu']['click']['apply'](this, [event.$data['menu']]);
+            event.$data['menu']['click']['apply'](this, [event.$data['item']]);
         }
     }
 

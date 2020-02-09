@@ -12,11 +12,19 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent, IEvent} from '../abstract.component';
+import {
+    AbstractComponent,
+    CONTEXT_MENU_ADD,
+    CONTEXT_MENU_DELETE,
+    CONTEXT_MENU_EDIT,
+    IContextMenu,
+    IEvent,
+} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
+import {ToasterService} from 'angular2-toaster';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -139,6 +147,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * Create a new instance of {AbstractComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -149,6 +158,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(ToasterService) toasterService: ToasterService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
@@ -156,7 +166,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           private treeviewConfig?: TreeviewConfig,
                           private dropdown?: boolean | false) {
-        super(dataSource, contextMenuService, logger, renderer, translateService, factoryResolver, viewContainerRef);
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef);
         this.setConfig(treeviewConfig);
     }
 
@@ -311,23 +322,22 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * and {$event} as action event
      */
     onMenuEvent(event) {
-        this.getLogger().debug('onMenuEvent', event);
-        // let menuItem: IContextMenu;
-        // menuItem = (event && event.$data && event.$data['item']
-        //     ? event.$data['item'] as IContextMenu : undefined);
-        // let mnuId: string;
-        // mnuId = (menuItem ? menuItem.id.apply(this, [event.item]) : '');
-        // switch (mnuId) {
-        //     case CONTEXT_MENU_ADD:
-        //         this.newRow();
-        //         break;
-        //     case CONTEXT_MENU_EDIT:
-        //         this.editRowByData(event.item, 'id');
-        //         break;
-        //     case CONTEXT_MENU_DELETE:
-        //         this.deleteRowByData(event.item, 'id');
-        //         break;
-        // }
+        let menuItem: IContextMenu;
+        menuItem = (event && event.$data && event.$data['menu']
+            ? event.$data['menu'] as IContextMenu : undefined);
+        let mnuId: string;
+        mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
+        switch (mnuId) {
+            case CONTEXT_MENU_ADD:
+                // this.newRow();
+                break;
+            case CONTEXT_MENU_EDIT:
+                // this.editRowByData(event.item, 'id');
+                break;
+            case CONTEXT_MENU_DELETE:
+                // this.deleteRowByData(event.item, 'id');
+                break;
+        }
     }
 
     // -------------------------------------------------

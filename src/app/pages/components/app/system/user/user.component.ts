@@ -8,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
 import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
+import {ToasterService} from 'angular2-toaster';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -103,6 +104,7 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
      * Create a new instance of {UserSmartTableComponent} class
      * @param dataSource {UserDataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -111,13 +113,14 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
      */
     constructor(@Inject(UserDataSource) dataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToasterService) toasterService: ToasterService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
-        super(dataSource, contextMenuService, logger, renderer, translateService,
-            factoryResolver, viewContainerRef,
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef,
             'system.user.title', UserTableSettings, UserContextMenu);
     }
 

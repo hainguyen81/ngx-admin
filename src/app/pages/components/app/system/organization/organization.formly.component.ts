@@ -11,6 +11,7 @@ import Organization, {
     ORGANIZTAION_TYPE,
 } from '../../../../../@core/data/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
+import {ToasterService} from 'angular2-toaster';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -171,6 +172,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * Create a new instance of {OrganizationFormlyComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -179,13 +181,14 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToasterService) toasterService: ToasterService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
-        super(dataSource, contextMenuService, logger, renderer, translateService,
-            factoryResolver, viewContainerRef,
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver, viewContainerRef,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
         super.setModel(new Organization(undefined, undefined, undefined, undefined));
     }
