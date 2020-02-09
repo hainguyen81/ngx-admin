@@ -39,16 +39,17 @@
         "organization": {
             "title": "Organization Management",
             "menu": "Organization",
-			"form": {
-				"belongTo": {
-					"label": "Belong to",
-					"placeholder": "Belong to",
-					"description": "Belong to"
-				},
-				"manager": {
-					"label": "Manager",
-					"placeholder": "Manager",
-					"description": "Manager"
+            "new": "New Organization",
+            "form": {
+                "belongTo": {
+                    "label": "Belong to",
+                    "placeholder": "Belong to",
+                    "description": "Belong to"
+                },
+                "manager": {
+                    "label": "Manager",
+                    "placeholder": "Manager",
+                    "description": "Manager"
 				},
 				"code": {
 					"label": "Code",

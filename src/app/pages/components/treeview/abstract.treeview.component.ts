@@ -287,20 +287,16 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             // toggle hover class
             if (KeyboardUtils.isHomeKey(kbEvent) || KeyboardUtils.isPageUpKey(kbEvent)
                 || (KeyboardUtils.isUpKey(kbEvent) && !prevSibling)) {
-                this.toggleElementClass(hoveredItemEl, 'selected', false);
                 this.toggleTreeviewItemElement(treeviewItemEls.item(0));
 
             } else if (KeyboardUtils.isEndKey(kbEvent) || KeyboardUtils.isPageDownKey(kbEvent)
                 || (KeyboardUtils.isDownKey(kbEvent) && !nextSibling)) {
-                this.toggleElementClass(hoveredItemEl, 'selected', false);
                 this.toggleTreeviewItemElement(treeviewItemEls.item(treeviewItemEls.length - 1));
 
             } else if (KeyboardUtils.isUpKey(kbEvent)) {
-                this.toggleElementClass(hoveredItemEl, 'selected', false);
                 this.toggleTreeviewItemElement(prevSibling as HTMLElement);
 
             } else if (KeyboardUtils.isDownKey(kbEvent)) {
-                this.toggleElementClass(hoveredItemEl, 'selected', false);
                 this.toggleTreeviewItemElement(nextSibling as HTMLElement);
 
             } else if (KeyboardUtils.isRightKey(kbEvent) || KeyboardUtils.isLeftKey(kbEvent)) {
@@ -309,7 +305,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                     let parentEl: HTMLElement;
                     parentEl = hoveredItemEl.parentElement.closest(
                         AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement;
-                    parentEl && this.toggleElementClass(hoveredItemEl, 'selected', false);
                     parentEl && this.toggleTreeviewItemElement(parentEl);
                 }
             }
@@ -464,8 +459,20 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param treeviewItemEl to toggle
      */
     protected toggleTreeviewItemElement(treeviewItemEl: HTMLElement) {
-        treeviewItemEl && this.toggleElementClass(treeviewItemEl, 'selected', true);
-        treeviewItemEl && this.onClickItem({$data: this.getTreeviewItemByElement(treeviewItemEl)});
+        if (!treeviewItemEl) {
+            return;
+        }
+
+        // remove previous selected elements
+        let hoveredItemEls: NodeListOf<HTMLElement>;
+        hoveredItemEls = this.getElementsBySelector(
+            [AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
+        hoveredItemEls && hoveredItemEls.length
+        && hoveredItemEls.forEach(el => this.toggleElementClass(el, 'selected', false));
+
+        // toggle selected current element
+        this.toggleElementClass(treeviewItemEl, 'selected', true);
+        this.onClickItem({$data: this.getTreeviewItemByElement(treeviewItemEl)});
     }
 
     /**

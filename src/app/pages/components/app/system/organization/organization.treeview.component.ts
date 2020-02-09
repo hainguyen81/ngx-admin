@@ -20,7 +20,6 @@ import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToasterService} from 'angular2-toaster';
 import {IdGenerators} from '../../../../../config/generator.config';
-import AppUtils from '../../../../../utils/app.utils';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -130,12 +129,10 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         let newItem: TreeviewItem;
         newItem = super.newItem(parent, treeItem);
         if (newItem) {
+            newItem.text = this.getTranslateService().instant('system.organization.new');
             newItem.value = new Organization(
                 IdGenerators.oid.generate(), '', '', undefined);
         }
-        let detectorChangesRef: ChangeDetectorRef;
-        detectorChangesRef = AppUtils.getService(ChangeDetectorRef);
-        detectorChangesRef && detectorChangesRef.detectChanges();
         return newItem;
     }
 

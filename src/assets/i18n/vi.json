@@ -39,16 +39,17 @@
         "organization": {
             "title": "Quản lý tổ chức",
             "menu": "Tổ chức",
-			"form": {
-				"belongTo": {
-					"label": "Trực thuộc",
-					"placeholder": "Trực thuộc",
-					"description": "Trực thuộc"
-				},
-				"manager": {
-					"label": "Quản lý",
-					"placeholder": "Quản lý",
-					"description": "Quản lý"
+            "new": "Bộ phận mới",
+            "form": {
+                "belongTo": {
+                    "label": "Trực thuộc",
+                    "placeholder": "Trực thuộc",
+                    "description": "Trực thuộc"
+                },
+                "manager": {
+                    "label": "Quản lý",
+                    "placeholder": "Quản lý",
+                    "description": "Quản lý"
 				},
 				"code": {
 					"label": "Mã",
