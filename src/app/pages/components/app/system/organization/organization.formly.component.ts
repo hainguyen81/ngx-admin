@@ -1,4 +1,11 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {BaseFormlyComponent} from '../../../formly/base.formly.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -178,6 +185,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -186,9 +194,11 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef,
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
         super.setModel(new Organization(undefined, undefined, undefined, undefined));
     }

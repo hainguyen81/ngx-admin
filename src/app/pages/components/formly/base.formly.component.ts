@@ -1,4 +1,11 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NgxFormlyComponent} from './formly.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -43,6 +50,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
@@ -55,11 +63,13 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           config?: FormlyConfig,
                           fields?: FormlyFieldConfig[],
                           options?: FormlyFormOptions) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef);
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef);
         super.setConfig(config);
         super.setFields(fields);
         super.setOptions(options);

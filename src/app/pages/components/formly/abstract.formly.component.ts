@@ -2,6 +2,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     ComponentFactoryResolver,
     Inject,
     QueryList,
@@ -140,6 +141,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
@@ -152,11 +154,13 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           private config?: FormlyConfig,
                           private fields?: FormlyFieldConfig[] | [],
                           private options?: FormlyFormOptions) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef);
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef);
     }
 
     // -------------------------------------------------

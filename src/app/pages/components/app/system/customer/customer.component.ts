@@ -1,4 +1,11 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
@@ -109,6 +116,7 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      */
     constructor(@Inject(CustomerDatasource) dataSource: CustomerDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -117,9 +125,11 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef,
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef,
             'system.customer.title', CustomerTableSettings, CustomerContextMenu);
     }
 

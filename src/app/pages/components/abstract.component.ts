@@ -3,6 +3,7 @@ import {
     AfterContentInit,
     AfterViewChecked,
     AfterViewInit,
+    ChangeDetectorRef,
     ComponentFactoryResolver,
     DoCheck,
     Inject,
@@ -98,6 +99,14 @@ export class AbstractComponent
      */
     protected getViewContainerRef(): ViewContainerRef {
         return this.viewContainerRef;
+    }
+
+    /**
+     * Get the {ChangeDetectorRef} instance
+     * @return the {ChangeDetectorRef} instance
+     */
+    protected getChangeDetectorRef(): ChangeDetectorRef {
+        return this.changeDetectorRef;
     }
 
     /**
@@ -223,6 +232,7 @@ export class AbstractComponent
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
@@ -231,7 +241,8 @@ export class AbstractComponent
                           @Inject(Renderer2) private renderer: Renderer2,
                           @Inject(TranslateService) private translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef) {
+                          @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef) {
         contextMenuService || throwError('Could not inject ContextMenuService');
         toasterService || throwError('Could not inject ToasterService');
         logger || throwError('Could not inject NGXLogger');

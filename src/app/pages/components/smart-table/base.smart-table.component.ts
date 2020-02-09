@@ -1,5 +1,12 @@
 import {SmartTableComponent} from './smart-table.component';
-import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {F2, S} from '@angular/cdk/keycodes';
@@ -34,6 +41,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      * @param tableHeader the table caption
      * @param tableSettings the table settings
      * @param contextMenu the context menu items array
@@ -46,10 +54,12 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           tableHeader: string, tableSettings: any,
                           contextMenu: IContextMenu[]) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef);
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef);
         super.setTableHeader(tableHeader || '');
         super.setTableSettings(tableSettings);
         super.setContextMenu(contextMenu || []);

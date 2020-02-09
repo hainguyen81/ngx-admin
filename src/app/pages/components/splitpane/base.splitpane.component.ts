@@ -1,4 +1,11 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NgxSplitPaneComponent} from './splitpane.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -30,6 +37,7 @@ export abstract class BaseSplitPaneComponent<T extends DataSource> extends NgxSp
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -38,8 +46,10 @@ export abstract class BaseSplitPaneComponent<T extends DataSource> extends NgxSp
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef);
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef);
     }
 }

@@ -2,6 +2,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     ComponentFactoryResolver,
     Inject,
     QueryList,
@@ -121,6 +122,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      * @param numberOfAreas the number of split-area
      * @param horizontal true for horizontal; else vertical
      */
@@ -132,10 +134,12 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           private numberOfAreas: number,
                           private horizontal?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef);
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef);
         (numberOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
     }
 

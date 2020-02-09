@@ -1,5 +1,6 @@
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     ComponentFactoryResolver,
     Inject,
     OnInit,
@@ -153,6 +154,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      * @param treeviewConfig {TreeviewConfig}
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
@@ -164,10 +166,12 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           private treeviewConfig?: TreeviewConfig,
                           private dropdown?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef);
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef);
         this.setConfig(treeviewConfig);
     }
 

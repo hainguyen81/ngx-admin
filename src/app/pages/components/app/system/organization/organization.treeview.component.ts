@@ -1,4 +1,11 @@
-import {Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
@@ -13,6 +20,7 @@ import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToasterService} from 'angular2-toaster';
 import {IdGenerators} from '../../../../../config/generator.config';
+import AppUtils from '../../../../../utils/app.utils';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -67,6 +75,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -75,9 +84,11 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef) {
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
         super(dataSource, contextMenuService, toasterService, logger,
-            renderer, translateService, factoryResolver, viewContainerRef);
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
     }
@@ -122,6 +133,9 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
             newItem.value = new Organization(
                 IdGenerators.oid.generate(), '', '', undefined);
         }
+        let detectorChangesRef: ChangeDetectorRef;
+        detectorChangesRef = AppUtils.getService(ChangeDetectorRef);
+        detectorChangesRef && detectorChangesRef.detectChanges();
         return newItem;
     }
 
