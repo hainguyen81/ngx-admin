@@ -38,6 +38,7 @@ import {
 import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
+import {ToasterService} from 'angular2-toaster';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -55,6 +56,7 @@ export const CommonProviders: StaticProvider[] = [
     {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpBackend]},
     {provide: HttpClient, useClass: HttpClient, deps: [HttpBackend]},
     {provide: ToastrService, useClass: ToastrService, deps: []},
+    {provide: ToasterService, useClass: ToasterService, deps: []},
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
@@ -67,7 +69,7 @@ export const I18NProviders: StaticProvider[] = [
     },
     {
         provide: PageHeaderService, useClass: PageHeaderService,
-        deps: [Title, Meta, NGXLogger, TranslateService]
+        deps: [Title, Meta, NGXLogger, TranslateService],
     },
 ];
 
