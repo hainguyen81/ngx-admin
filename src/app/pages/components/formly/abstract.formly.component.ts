@@ -18,6 +18,67 @@ import {FormGroup} from '@angular/forms';
 import {isArray} from 'util';
 import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
+import {NbComponentSize} from '@nebular/theme/components/component-size';
+import {NbComponentStatus} from '@nebular/theme/components/component-status';
+import {NbComponentShape} from '@nebular/theme/components/component-shape';
+import {NbButtonAppearance} from '@nebular/theme/components/button/button.component';
+
+export const ACTION_SAVE: string = 'ACTION_SAVE';
+export const ACTION_RESET: string = 'ACTION_RESET';
+
+/* form actions configuration */
+export interface IFormActionsConfig {
+    id: string;
+    label: string;
+    icon?: { icon: string, pack?: string | 'fa' } | null;
+    class?: string | null;
+    description?: string | null;
+    type: string;
+    click?: (e: IEvent) => any | null;
+
+    /**
+     * Button size, available sizes:
+     * `tiny`, `small`, `medium`, `large`, `giant`
+     */
+    size?: NbComponentSize | 'large';
+    /**
+     * Button status (adds specific styles):
+     * `basic`, `primary`, `info`, `success`, `warning`, `danger`, `control`.
+     */
+    status?: NbComponentStatus | 'basic';
+    /**
+     * Button shapes: `rectangle`, `round`, `semi-round`
+     */
+    shape?: NbComponentShape | 'rectangle';
+    /**
+     * Button appearance: `filled`, `outline`, `ghost`, `hero`
+     */
+    appearance?: NbButtonAppearance | 'hero';
+    /**
+     * Sets `filled` appearance
+     */
+    filled?: boolean | false;
+    /**
+     * Sets `outline` appearance
+     */
+    outline?: boolean | true;
+    /**
+     * Sets `ghost` appearance
+     */
+    ghost?: boolean | false;
+    /**
+     * Sets `hero` appearance
+     */
+    hero?: boolean | true;
+    /**
+     * If set element will fill its container
+     */
+    fullWidth?: boolean | true;
+    /**
+     * Disables the button
+     */
+    disabled?: boolean | false;
+}
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -113,6 +174,22 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     }
 
     /**
+     * Get the form actions configuration
+     * @return the form actions configuration
+     */
+    public getActions(): IFormActionsConfig[] {
+        return this.actions;
+    }
+
+    /**
+     * Set the form actions configuration
+     * @param actions to apply
+     */
+    protected setActions(actions: IFormActionsConfig[]) {
+        this.actions = actions;
+    }
+
+    /**
      * Get the form options configuration
      * @return the form options configuration
      */
@@ -146,6 +223,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
+     * @param actions {IFormActionsConfig}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -158,7 +236,8 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           private config?: FormlyConfig,
                           private fields?: FormlyFieldConfig[] | [],
-                          private options?: FormlyFormOptions) {
+                          private options?: FormlyFormOptions,
+                          private actions?: IFormActionsConfig[] | []) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);

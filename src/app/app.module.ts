@@ -13,6 +13,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 /* Nebular Theme */
 import {
+    NbButtonModule,
     NbChatModule,
     NbCheckboxModule,
     NbDatepickerModule,
@@ -78,6 +79,7 @@ import {AppMaterialModule} from './app.material.module';
         NbIconModule,
         NbInputModule,
         NbCheckboxModule,
+        NbButtonModule,
         NbSelectModule,
         NbSidebarModule.forRoot(),
         NbMenuModule.forRoot(),

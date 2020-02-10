@@ -13,6 +13,7 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
 import {ToasterService} from 'angular2-toaster';
+import {IFormActionsConfig} from './abstract.formly.component';
 
 /**
  * Base form component base on {FormlyModule}
@@ -54,6 +55,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
+     * @param actions {IFormActionsConfig}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -66,12 +68,14 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           config?: FormlyConfig,
                           fields?: FormlyFieldConfig[],
-                          options?: FormlyFormOptions) {
+                          options?: FormlyFormOptions,
+                          actions?: IFormActionsConfig[] | []) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);
         super.setConfig(config);
         super.setFields(fields);
         super.setOptions(options);
+        super.setActions(actions);
     }
 }

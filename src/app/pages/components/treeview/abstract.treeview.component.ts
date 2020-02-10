@@ -441,6 +441,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         key = ObjectUtils.ifDefined(
             (item || {})['key'], ((item || {})['value'] || {})['uid'],
             ((item || {})['value'] || {})['id'], (new Date()).getTime().toString());
+        key = key.toString();
         if (item) {
             item['key'] = key;
         }

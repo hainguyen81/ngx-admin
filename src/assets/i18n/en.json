@@ -29,6 +29,12 @@
                 "team_group": "Team/Group"
             }
         },
+		"form": {
+			"action": {
+				"save": "Save",
+				"reset": "Reset"
+			}
+		},
         "login": {
             "title": "Login"
         }

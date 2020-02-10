@@ -1,13 +1,14 @@
 import {NgModule} from '@angular/core';
 import {SmartTableComponent} from './smart-table/smart-table.component';
 import {
+    NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
     NbContextMenuModule,
     NbIconModule,
-    NbInputModule,
+    NbInputModule, NbLayoutModule,
     NbSearchModule,
-    NbSelectModule,
+    NbSelectModule, NbThemeModule,
 } from '@nebular/theme';
 import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
 import {NotFoundComponent} from './not-found.component';
@@ -35,10 +36,13 @@ import {ToasterModule} from 'angular2-toaster';
     imports: [
         CommonModule,
         ThemeModule,
+        NbThemeModule,
+        NbLayoutModule,
         NbInputModule,
         NbCheckboxModule,
         NbSelectModule,
         NbIconModule,
+        NbButtonModule,
         NbCardModule,
         NbSearchModule,
         FormsModule,
@@ -88,7 +92,6 @@ import {ToasterModule} from 'angular2-toaster';
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
-        ThemeModule,
     ],
     declarations: [
         SmartTableComponent,

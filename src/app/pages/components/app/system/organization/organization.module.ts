@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
 import {
+    NbBadgeModule,
+    NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
     NbContextMenuModule,
     NbIconModule,
-    NbInputModule,
-    NbSelectModule,
+    NbInputModule, NbLayoutModule,
+    NbSelectModule, NbThemeModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -28,18 +30,25 @@ import {OrganizationSplitPaneComponent} from './organization.component';
 import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
+import {AppMaterialModule} from '../../../../../app.material.module';
 
 @NgModule({
     imports: [
         CommonModule,
         ThemeModule,
+        NbThemeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,
         NbCheckboxModule,
         NbSelectModule,
+        NbButtonModule,
+        NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

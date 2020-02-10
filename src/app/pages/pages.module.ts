@@ -3,7 +3,7 @@ import {ThemeModule} from '../@theme/theme.module';
 import {PagesComponent} from './pages.component';
 import {PagesRoutingModule} from './pages-routing.module';
 import {ComponentsModule} from './components/components.module';
-import {NbMenuModule} from '@nebular/theme';
+import {NbButtonModule, NbMenuModule, NbThemeModule} from '@nebular/theme';
 /* system modules */
 import {UserModule} from './components/app/system/user/user.module';
 import {CustomerModule} from './components/app/system/customer/customer.module';
@@ -14,6 +14,8 @@ import {AppMaterialModule} from '../app.material.module';
     imports: [
         PagesRoutingModule,
         ThemeModule,
+        NbThemeModule,
+        NbButtonModule,
         NbMenuModule,
         ComponentsModule,
 

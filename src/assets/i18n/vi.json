@@ -29,6 +29,12 @@
                 "team_group": "Đội / Nhóm"
             }
         },
+		"form": {
+			"action": {
+				"save": "Lưu",
+				"reset": "Reset"
+			}
+		},
         "login": {
             "title": "Đăng nhập"
         }
