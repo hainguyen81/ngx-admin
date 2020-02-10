@@ -21,10 +21,10 @@ import ComponentUtils from '../../../utils/component.utils';
 import {NbComponentSize} from '@nebular/theme/components/component-size';
 import {NbComponentStatus} from '@nebular/theme/components/component-status';
 import {NbComponentShape} from '@nebular/theme/components/component-shape';
-import {NbButtonAppearance} from '@nebular/theme/components/button/button.component';
 
 export const ACTION_SAVE: string = 'ACTION_SAVE';
 export const ACTION_RESET: string = 'ACTION_RESET';
+export const ACTION_DELETE: string = 'ACTION_DELETE';
 
 /* form actions configuration */
 export interface IFormActionsConfig {
@@ -34,13 +34,20 @@ export interface IFormActionsConfig {
     class?: string | null;
     description?: string | null;
     type: string;
+    /**
+     * Perform action when clicking on action
+     * @param e {IEvent} that contains {$event} as action event
+     * and {$data} as Object, consist of:
+     *      form: {FormGroup}
+     *      model: data model
+     */
     click?: (e: IEvent) => any | null;
 
     /**
      * Button size, available sizes:
      * `tiny`, `small`, `medium`, `large`, `giant`
      */
-    size?: NbComponentSize | 'large';
+    size?: NbComponentSize | 'medium';
     /**
      * Button status (adds specific styles):
      * `basic`, `primary`, `info`, `success`, `warning`, `danger`, `control`.
@@ -51,17 +58,13 @@ export interface IFormActionsConfig {
      */
     shape?: NbComponentShape | 'rectangle';
     /**
-     * Button appearance: `filled`, `outline`, `ghost`, `hero`
-     */
-    appearance?: NbButtonAppearance | 'hero';
-    /**
      * Sets `filled` appearance
      */
     filled?: boolean | false;
     /**
      * Sets `outline` appearance
      */
-    outline?: boolean | true;
+    outline?: boolean | false;
     /**
      * Sets `ghost` appearance
      */

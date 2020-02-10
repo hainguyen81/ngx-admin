@@ -93,6 +93,11 @@
         padding-top: 0.5em;
     }
 
+    /* Nebular Buttons */
+    [nbButton][class*='appearance-'] {
+        text-transform: capitalize;
+    }
+
     /* SplitPane */
     .as-horizontal > .as-split-gutter, .as-vertical > .as-split-gutter {
         background-color: transparent !important;

@@ -31,9 +31,10 @@
         },
 		"form": {
 			"action": {
-				"save": "Lưu",
-				"reset": "Reset"
-			}
+                "save": "Lưu",
+                "reset": "Reset",
+                "delete": "Xóa"
+            }
 		},
         "login": {
             "title": "Đăng nhập"

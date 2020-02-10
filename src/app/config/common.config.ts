@@ -5,7 +5,12 @@ import {
     CONTEXT_MENU_EDIT,
     IContextMenu,
 } from '../pages/components/abstract.component';
-import {ACTION_RESET, ACTION_SAVE, IFormActionsConfig} from '../pages/components/formly/abstract.formly.component';
+import {
+    ACTION_DELETE,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IFormActionsConfig,
+} from '../pages/components/formly/abstract.formly.component';
 
 /* base context menu items */
 export const BaseContextMenu: IContextMenu[] = [{
@@ -37,11 +42,22 @@ export const BaseFormlyActions: IFormActionsConfig[] = [{
     label: 'common.form.action.save',
     type: 'submit',
     status: 'primary',
+    icon: {icon: 'save', pack: 'fa'},
+    size: 'medium',
+}, {
+    id: ACTION_DELETE,
+    label: 'common.form.action.delete',
+    type: 'button',
+    status: 'danger',
+    icon: {icon: 'trash-alt', pack: 'fa'},
+    size: 'medium',
 }, {
     id: ACTION_RESET,
     label: 'common.form.action.reset',
     type: 'reset',
     status: 'warning',
+    icon: {icon: 'redo', pack: 'fa'},
+    size: 'medium',
 }];
 
 export const COMMON = {

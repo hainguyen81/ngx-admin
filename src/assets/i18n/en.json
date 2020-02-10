@@ -31,9 +31,10 @@
         },
 		"form": {
 			"action": {
-				"save": "Save",
-				"reset": "Reset"
-			}
+                "save": "Save",
+                "reset": "Reset",
+                "delete": "Delete"
+            }
 		},
         "login": {
             "title": "Login"
