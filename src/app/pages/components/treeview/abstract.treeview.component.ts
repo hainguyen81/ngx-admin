@@ -28,6 +28,7 @@ import KeyboardUtils from '../../../utils/keyboard.utils';
 import {ToasterService} from 'angular2-toaster';
 import ObjectUtils from '../../../utils/object.utils';
 import {throwError} from 'rxjs';
+import ComponentUtils from '../../../utils/component.utils';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -180,28 +181,20 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        (!this.treeviewComponent && this.queryTreeviewComponent)
-        && this.queryTreeviewComponent.map(
-            (item) => {
-                this.treeviewComponent = item;
-                this.treeviewComponent
-                && this.treeviewComponent.selectedChange
-                    .subscribe(value => this.onSelectedChange({$data: value}));
-                this.treeviewComponent
-                && this.treeviewComponent.filterChange
-                    .subscribe(value => this.onFilterChange({$data: value}));
-            });
-        (!this.dropdownTreeviewComponent && this.queryDropdownTreeviewComponent)
-        && this.queryDropdownTreeviewComponent.map(
-            (item) => {
-                this.dropdownTreeviewComponent = item;
-                this.dropdownTreeviewComponent
-                && this.dropdownTreeviewComponent.selectedChange
-                    .subscribe(value => this.onSelectedChange({$data: value}));
-                this.dropdownTreeviewComponent
-                && this.dropdownTreeviewComponent.filterChange
-                    .subscribe(value => this.onFilterChange({$data: value}));
-            });
+        if (!this.treeviewComponent) {
+            this.treeviewComponent = ComponentUtils.queryComponent(
+                this.queryTreeviewComponent, (component) => {
+                    component && component.selectedChange.subscribe(value => this.onSelectedChange({$data: value}));
+                    component && component.filterChange.subscribe(value => this.onFilterChange({$data: value}));
+                });
+        }
+        if (!this.dropdownTreeviewComponent) {
+            this.dropdownTreeviewComponent = ComponentUtils.queryComponent(
+                this.queryDropdownTreeviewComponent, (component) => {
+                    component && component.selectedChange.subscribe(value => this.onSelectedChange({$data: value}));
+                    component && component.filterChange.subscribe(value => this.onFilterChange({$data: value}));
+                });
+        }
     }
 
     // -------------------------------------------------

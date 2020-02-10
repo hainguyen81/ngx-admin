@@ -16,6 +16,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
 import {ToasterService} from 'angular2-toaster';
+import ComponentUtils from '../../../utils/component.utils';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -43,6 +44,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     @ViewChildren(SplitComponent)
     private readonly querySplitComponent: QueryList<SplitComponent>;
     private splitComponent: SplitComponent;
+
     @ViewChildren(SplitAreaDirective)
     private readonly querySplitAreaDirectiveComponents: QueryList<SplitAreaDirective>;
     private splitAreas: SplitAreaDirective[];
@@ -146,14 +148,11 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.splitComponent && this.querySplitComponent) {
-            this.querySplitComponent.map(
-                (item) => this.splitComponent = item);
+        if (!this.splitComponent) {
+            this.splitComponent = ComponentUtils.queryComponent(this.querySplitComponent);
         }
-        if ((!this.splitAreas || !this.splitAreas.length) && this.querySplitAreaDirectiveComponents) {
-            this.splitAreas = [];
-            this.querySplitAreaDirectiveComponents.forEach(
-                (item) => this.splitAreas.push(item));
+        if ((!this.splitAreas || !this.splitAreas.length)) {
+            this.splitAreas = ComponentUtils.queryComponents(this.querySplitAreaDirectiveComponents);
         }
         this.setHorizontal(this.horizontal);
     }

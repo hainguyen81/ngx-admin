@@ -17,6 +17,7 @@ import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@n
 import {FormGroup} from '@angular/forms';
 import {isArray} from 'util';
 import {ToasterService} from 'angular2-toaster';
+import ComponentUtils from '../../../utils/component.utils';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -170,8 +171,8 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.formlyForm && this.queryFormlyForm) {
-            this.queryFormlyForm.map((item) => this.formlyForm = item);
+        if (!this.formlyForm) {
+            this.formlyForm = ComponentUtils.queryComponent(this.queryFormlyForm);
         }
     }
 

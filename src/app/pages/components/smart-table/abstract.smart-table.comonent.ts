@@ -22,6 +22,7 @@ import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {ToasterService} from 'angular2-toaster';
+import ComponentUtils from '../../../utils/component.utils';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -127,9 +128,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.smartTableComponent && this.querySmartTableComponent) {
-            this.querySmartTableComponent.map(
-                (item) => this.smartTableComponent = item);
+        if (!this.smartTableComponent) {
+            this.smartTableComponent = ComponentUtils.queryComponent(this.querySmartTableComponent);
         }
     }
 

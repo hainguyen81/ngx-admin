@@ -21,6 +21,7 @@ import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component'
 import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/organization';
 import {ToasterService} from 'angular2-toaster';
+import ComponentUtils from '../../../../../utils/component.utils';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -128,6 +129,36 @@ export class OrganizationSplitPaneComponent
     // -------------------------------------------------
 
     /**
+     * Create organization tree-view component {OrganizationTreeviewComponent}
+     * @param componentFactoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     * @return {OrganizationTreeviewComponent}
+     */
+    private createOrganizationTreeviewComponent(
+        componentFactoryResolver: ComponentFactoryResolver,
+        viewContainerRef: ViewContainerRef): OrganizationTreeviewComponent {
+        let treeviewComponentService: OrganizationTreeviewComponentService;
+        treeviewComponentService = new OrganizationTreeviewComponentService(
+            componentFactoryResolver, viewContainerRef, this.getLogger());
+        return ComponentUtils.createComponent(treeviewComponentService, viewContainerRef);
+    }
+
+    /**
+     * Create organization formly component {OrganizationFormlyComponent}
+     * @param componentFactoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     * @return {OrganizationFormlyComponent}
+     */
+    private createOrganizationFormlyComponent(
+        componentFactoryResolver: ComponentFactoryResolver,
+        viewContainerRef: ViewContainerRef): OrganizationFormlyComponent {
+        let formlyComponentService: OrganizationFormlyComponentService;
+        formlyComponentService = new OrganizationFormlyComponentService(
+            componentFactoryResolver, viewContainerRef, this.getLogger());
+        return ComponentUtils.createComponent(formlyComponentService, viewContainerRef, true);
+    }
+
+    /**
      * Create left/right component panes
      */
     private createPaneComponents() {
@@ -140,11 +171,8 @@ export class OrganizationSplitPaneComponent
         this.configArea(splitAreas[1], OrganizationFormAreaConfig);
 
         // create tree-view component
-        let treeviewComponentService: OrganizationTreeviewComponentService;
-        treeviewComponentService = new OrganizationTreeviewComponentService(
-            componentFactoryResolver, viewContainerRefs[0], this.getLogger());
-        treeviewComponentService.setViewContainerRef(viewContainerRefs[0]);
-        this.organizationTreeviewComponent = treeviewComponentService.resolve().instance;
+        this.organizationTreeviewComponent = this.createOrganizationTreeviewComponent(
+            componentFactoryResolver, viewContainerRefs[0]);
 
         // handle click tree-view item to show form
         this.organizationTreeviewComponent.setClickItemListener((e, it) => {
@@ -153,12 +181,8 @@ export class OrganizationSplitPaneComponent
                 organization = it.value as IOrganization;
                 if (organization) {
                     // create formly form component
-                    let formlyComponentService: OrganizationFormlyComponentService;
-                    formlyComponentService = new OrganizationFormlyComponentService(
-                        componentFactoryResolver, viewContainerRefs[1], this.getLogger());
-                    formlyComponentService.setViewContainerRef(viewContainerRefs[1]);
-                    formlyComponentService.getViewContainerRef().clear();
-                    this.organizationFormlyComponent = formlyComponentService.resolve().instance;
+                    this.organizationFormlyComponent = this.createOrganizationFormlyComponent(
+                        componentFactoryResolver, viewContainerRefs[1]);
                     this.organizationFormlyComponent.getFormGroup().reset(organization);
                 }
             }

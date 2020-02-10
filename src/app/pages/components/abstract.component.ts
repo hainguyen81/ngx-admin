@@ -30,6 +30,7 @@ import {
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 import {ToasterService} from 'angular2-toaster';
+import ComponentUtils from '../../utils/component.utils';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -298,14 +299,13 @@ export class AbstractComponent
         //     'queryViewContainerRef', this.queryViewContainerRef,
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
 
-        if (!this.viewContainerRef && this.queryViewContainerRef) {
-            this.queryViewContainerRef.map(
-                (item) => this.viewContainerRef = item);
+        if (!this.viewContainerRef) {
+            this.viewContainerRef = ComponentUtils.queryComponent(this.queryViewContainerRef);
         }
-        if (!this.contextMenuComponent && this.queryContextMenuComponent) {
-            this.queryContextMenuComponent.map(
-                (item) => this.contextMenuComponent = item);
+        if (!this.contextMenuComponent) {
+            this.contextMenuComponent = ComponentUtils.queryComponent(this.queryContextMenuComponent);
         }
+
         this.documentKeyDownHandlerService = new DocumentKeydownHandlerService(
             (e: KeyboardEvent) => this.onKeyDown({$event: e}), this.getLogger());
         this.documentKeyUpHandlerService = new DocumentKeyupHandlerService(
