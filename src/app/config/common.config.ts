@@ -44,6 +44,7 @@ export const BaseFormlyActions: IFormActionsConfig[] = [{
     status: 'primary',
     icon: {icon: 'save', pack: 'fa'},
     size: 'medium',
+    shape: 'rectangle',
 }, {
     id: ACTION_DELETE,
     label: 'common.form.action.delete',
@@ -51,6 +52,7 @@ export const BaseFormlyActions: IFormActionsConfig[] = [{
     status: 'danger',
     icon: {icon: 'trash-alt', pack: 'fa'},
     size: 'medium',
+    shape: 'rectangle',
 }, {
     id: ACTION_RESET,
     label: 'common.form.action.reset',
@@ -58,6 +60,7 @@ export const BaseFormlyActions: IFormActionsConfig[] = [{
     status: 'warning',
     icon: {icon: 'redo', pack: 'fa'},
     size: 'medium',
+    shape: 'rectangle',
 }];
 
 export const COMMON = {

@@ -33,7 +33,7 @@ export interface IFormActionsConfig {
     icon?: { icon: string, pack?: string | 'fa' } | null;
     class?: string | null;
     description?: string | null;
-    type: string;
+    type?: string | 'button';
     /**
      * Perform action when clicking on action
      * @param e {IEvent} that contains {$event} as action event
