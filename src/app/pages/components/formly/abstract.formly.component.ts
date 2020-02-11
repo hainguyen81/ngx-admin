@@ -152,26 +152,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         if (fields && fields.length) {
             let translate: TranslateService;
             translate = this.getTranslateService();
-            fields.forEach(field => {
-                if (field.templateOptions) {
-                    if ((field.templateOptions.label || '').length) {
-                        field.templateOptions.label = translate.instant(field.templateOptions.label);
-                    }
-                    if ((field.templateOptions.placeholder || '').length) {
-                        field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
-                    }
-                    if ((field.templateOptions.description || '').length) {
-                        field.templateOptions.description = translate.instant(field.templateOptions.description);
-                    }
-                    if (isArray(field.templateOptions.options)) {
-                        field.templateOptions.options.forEach(option => {
-                            if (option && (option['label'] || '').length) {
-                                option['label'] = translate.instant(option['label']);
-                            }
-                        });
-                    }
-                }
-            });
+            fields.forEach(field => this.translateFormFieldConfig(translate, field));
         }
         this.fields = fields;
     }
@@ -265,5 +246,44 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     onSubmit(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSubmit', event);
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Translate the specified {FormlyFieldConfig}
+     * @param translate {TranslateService}
+     * @param field to translate
+     */
+    private translateFormFieldConfig(translate?: TranslateService, field?: FormlyFieldConfig) {
+        if (!translate || !field) {
+            return;
+        }
+
+        if (field.templateOptions) {
+            if ((field.templateOptions.label || '').length) {
+                field.templateOptions.label = translate.instant(field.templateOptions.label);
+            }
+            if ((field.templateOptions.placeholder || '').length) {
+                field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
+            }
+            if ((field.templateOptions.description || '').length) {
+                field.templateOptions.description = translate.instant(field.templateOptions.description);
+            }
+            if (isArray(field.templateOptions.options)) {
+                field.templateOptions.options.forEach(option => {
+                    if (option && (option['label'] || '').length) {
+                        option['label'] = translate.instant(option['label']);
+                    }
+                });
+            }
+        }
+        if (isArray(field.fieldGroup)) {
+            field.fieldGroup.forEach(f => {
+                this.translateFormFieldConfig(translate, f);
+            });
+        }
     }
 }

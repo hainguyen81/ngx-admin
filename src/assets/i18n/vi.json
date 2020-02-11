@@ -88,27 +88,62 @@
 					"placeholder": "Tel",
 					"description": "Tel"
 				},
-				"fax": {
-					"label": "Fax",
-					"placeholder": "Fax",
-					"description": "Fax"
-				},
-				"email": {
-					"label": "Thư điện tử",
-					"placeholder": "Thư điện tử",
-					"description": "Thư điện tử"
-				},
-				"contact": {
-					"label": "Người liên hệ",
-					"placeholder": "Người liên hệ",
-					"description": "Người liên hệ"
-				},
-				"remark": {
-					"label": "Ghi chú",
-					"placeholder": "Ghi chú",
-					"description": "Ghi chú"
-				}
-			}
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Thư điện tử",
+                    "placeholder": "Thư điện tử",
+                    "description": "Thư điện tử"
+                },
+                "legal_representative": {
+                    "label": "Người đại diện",
+                    "placeholder": "Người đại diện",
+                    "description": "Người đại diện"
+                },
+                "tel_representative": {
+                    "label": "ĐT người đại diện",
+                    "placeholder": "ĐT người đại diện",
+                    "description": "ĐT người đại diện"
+                },
+                "business_license": {
+                    "label": "Giấy phép kinh doanh",
+                    "placeholder": "Giấy phép kinh doanh",
+                    "description": "Giấy phép kinh doanh"
+                },
+                "business_license_dt": {
+                    "label": "Ngày cấp",
+                    "placeholder": "Ngày cấp",
+                    "description": "Ngày cấp"
+                },
+                "date_incorporation": {
+                    "label": "Ngày thành lập",
+                    "placeholder": "Ngày thành lập",
+                    "description": "Ngày thành lập"
+                },
+                "bank_company": {
+                    "label": "Ngân hàng",
+                    "placeholder": "Ngân hàng",
+                    "description": "Ngân hàng"
+                },
+                "bank_company_at": {
+                    "label": "Chi nhánh",
+                    "placeholder": "Chi nhánh",
+                    "description": "Chi nhánh"
+                },
+                "bank_company_account": {
+                    "label": "Số TK",
+                    "placeholder": "Số TK",
+                    "description": "Số TK"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú",
+                    "description": "Ghi chú"
+                }
+            }
 		},
         "user": {
             "title": "Quản lý người dùng",
