@@ -7,7 +7,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractToolbar, IToolbarActionsConfig} from './abstract.toolbar.component';
+import {AbstractToolbarComponent, IToolbarActionsConfig} from './abstract.toolbar.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToasterService} from 'angular2-toaster';
 import {NGXLogger} from 'ngx-logger';
@@ -21,7 +21,7 @@ import {TranslateService} from '@ngx-translate/core';
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
 })
-export class NgxToolbarComponent extends AbstractToolbar<DataSource> {
+export class NgxToolbarComponent extends AbstractToolbarComponent<DataSource> {
 
     // -------------------------------------------------
     // CONSTRUCTION

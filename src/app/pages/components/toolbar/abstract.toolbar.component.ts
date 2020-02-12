@@ -13,7 +13,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent, IEvent,} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -86,7 +86,7 @@ export interface IToolbarActionsConfig {
 /**
  * Abstract toolbar component base on {MatToolbar}
  */
-export abstract class AbstractToolbar<T extends DataSource>
+export abstract class AbstractToolbarComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit, OnInit {
 
     protected static TOOLBAR_ELEMENT_SELECTOR: string = 'mat-toolbar';

@@ -15,6 +15,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ToasterService} from 'angular2-toaster';
+import ComponentUtils from '../../../utils/component.utils';
 
 /**
  * SplitPane component base on {AngularSplitModule}
@@ -30,13 +31,25 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren('splitAreaHolder', { read: ViewContainerRef })
+    @ViewChildren('splitAreaHolder', {read: ViewContainerRef})
     private readonly querySplitAreaHolderViewContainerRefs: QueryList<ViewContainerRef>;
     private splitAreaHolderViewContainerRefs: ViewContainerRef[];
+
+    @ViewChildren('headerHolder', {read: ViewContainerRef})
+    private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
+    private headerViewContainerRef: ViewContainerRef;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {ViewContainerRef} instance of header panel
+     * @return the {ViewContainerRef} instance of header panel
+     */
+    protected getHeaderViewContainerComponent(): ViewContainerRef {
+        return this.headerViewContainerRef;
+    }
 
     /**
      * Get the {ViewContainerRef} instances array of {SplitAreaDirective}
@@ -79,10 +92,13 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        if (!this.headerViewContainerRef) {
+            this.headerViewContainerRef =
+                ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
+        }
         if (!this.splitAreaHolderViewContainerRefs || !this.splitAreaHolderViewContainerRefs.length) {
-            this.splitAreaHolderViewContainerRefs = [];
-            this.querySplitAreaHolderViewContainerRefs.forEach(
-                (item) => this.splitAreaHolderViewContainerRefs.push(item));
+            this.splitAreaHolderViewContainerRefs =
+                ComponentUtils.queryComponents(this.querySplitAreaHolderViewContainerRefs);
         }
     }
 }
