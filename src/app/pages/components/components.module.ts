@@ -6,9 +6,11 @@ import {
     NbCheckboxModule,
     NbContextMenuModule,
     NbIconModule,
-    NbInputModule, NbLayoutModule,
+    NbInputModule,
+    NbLayoutModule,
     NbSearchModule,
-    NbSelectModule, NbThemeModule,
+    NbSelectModule,
+    NbThemeModule,
 } from '@nebular/theme';
 import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
 import {NotFoundComponent} from './not-found.component';
@@ -31,6 +33,7 @@ import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
 import {ToasterModule} from 'angular2-toaster';
+import {NgxToolbarComponent} from './toolbar/toolbar.component';
 
 @NgModule({
     imports: [
@@ -95,6 +98,7 @@ import {ToasterModule} from 'angular2-toaster';
     ],
     declarations: [
         SmartTableComponent,
+        NgxToolbarComponent,
         NgxTreeviewComponent,
         NgxFormlyComponent,
         NgxSplitPaneComponent,
