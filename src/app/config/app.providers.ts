@@ -39,6 +39,8 @@ import {OrganizationDataSource} from '../services/implementation/organization/or
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
 import {ToasterService} from 'angular2-toaster';
+import { CategoriesDbService, CategoriesHttpService } from '../services/implementation/categories/categories.service';
+import { CategoriesDataSource } from '../services/implementation/categories/categories.datasource';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -118,6 +120,21 @@ export const OrganizationProviders: StaticProvider[] = [
     },
 ];
 
+export const CategoriesProviders: StaticProvider[] = [
+    {
+        provide: CategoriesDbService, useClass: CategoriesDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: CategoriesHttpService, useClass: CategoriesHttpService,
+        deps: [HttpClient, NGXLogger, CategoriesDbService],
+    },
+    {
+        provide: CategoriesDataSource, useClass: CategoriesDataSource,
+        deps: [CategoriesHttpService, CategoriesDbService, NGXLogger],
+    },
+];
+
 export const InterceptorProviders = [
     {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization'},
     {provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company'},
@@ -167,6 +184,7 @@ export const Providers: StaticProvider[] = CommonProviders
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
+    .concat(CategoriesProviders)
     .concat(InterceptorProviders)
     .concat(AuthenticationProviders)
     .concat(MenuProviders)

@@ -24,4 +24,11 @@ export const API = {
         method: 'POST',
         client: '/dashboard/customer',
     },
+    categories: {
+        code: 'CATEGORIES_API',
+        baseUrl: 'http://localhost:8082/api-rest-categories/service',
+        login: '/oauth/token?grant_type=client_credentials',
+        method: 'POST',
+        client: '/dashboard/categories',
+    },
 };

@@ -135,6 +135,10 @@
 				"status": "Status",
 				"enterprise": "Enterprise"
 			}
-		}
+        },
+        "categories": {
+            "title": "Categories Management",
+            "menu": "Categories"
+        }
 	}
 }

@@ -30,8 +30,19 @@ export const MockApiOrganization: IApi = {
     id: '5d7660cd738fbc23b43a857g',
 };
 
+export const MockApiCategories: IApi = {
+    code: 'CATEGORIES_API',
+    name: 'system.categories.menu',
+    regexUrl: 'organization/**',
+    baseUrl: 'http://localhost:8082/api-rest-categories/service',
+    icon: {icon: 'sitemap', pack: 'fa'},
+    version: '1.0.0',
+    id: '5d7660cd738fbc23b43a857h',
+};
+
 export const MockApi = {
     user: MockApiUser,
     customer: MockApiCustomer,
     organization: MockApiOrganization,
+    categories: MockApiCategories
 };
