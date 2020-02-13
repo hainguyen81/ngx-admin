@@ -1,0 +1,54 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span
+            *ngIf="toolbarHeader && ((toolbarHeader.title || '').length > 0 || (toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0))"
+            class="ngx-toolbar-header">
+            <nb-icon [icon]="toolbarHeader.icon.icon"
+                     [pack]="toolbarHeader.icon.pack"
+                     *ngIf="(toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0)"
+            ></nb-icon><span [class.pl-2]="(toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0)">
+            {{(toolbarHeader.title || '') | translate}}</span></span>
+        <span
+            *ngIf="toolbarHeader && ((toolbarHeader.title || '').length > 0 || (toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0))"
+            class="separator"></span>
+
+        <!-- disabled && not full width -->
+        <div class="btn-group btn-group-justified ngx-toolbar-actions-group">
+            <div class="btn-group ngx-toolbar-actions" *ngFor="let action of getActions()">
+                <!-- disabled && not full width -->
+                <button
+                    nbButton
+                    [id]="action.id"
+                    [title]="action.description || ''"
+                    [classList]="action.class || ''"
+                    [type]="action.type || 'button'"
+                    [filled]="action.filled"
+                    [outline]="action.outline"
+                    [ghost]="action.ghost"
+                    [hero]="action.hero"
+                    [fullWidth]="action.fullWidth"
+                    [disabled]="action.disabled"
+                    [size]="action.size"
+                    [shape]="action.shape"
+                    [status]="action.status"
+                    (click)="onClickAction({ $event: $event, $data: action });"
+                    (mousedown)="onMouseDown({ $event: $event, $data: action })"
+                    (mouseenter)="onMouseEnter({ $event: $event, $data: action })"
+                    (mouseleave)="onMouseLeave({ $event: $event, $data: action })"
+                    (mousemove)="onMouseMove({ $event: $event, $data: action })"
+                    (mouseout)="onMouseOut({ $event: $event, $data: action })"
+                    (mouseover)="onMouseOver({ $event: $event, $data: action })"
+                    (mouseup)="onMouseUp({ $event: $event, $data: action })"
+                    (mousewheel)="onMouseWheel({ $event: $event, $data: action })"
+                    (focus)="onFocus({ $event: $event, $data: action })"
+                    (focusin)="onFocusIn({ $event: $event, $data: action })"
+                    (focusout)="onFocusOut({ $event: $event, $data: action })"
+                    (blur)="onBlur({ $event: $event, $data: action })"
+                ><span><nb-icon [icon]="action.icon.icon"
+                                *ngIf="action.icon && action.icon.icon.length > 0"
+                                [pack]="action.icon.pack"></nb-icon>
+                    {{action.label | translate}}</span></button>
+            </div>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

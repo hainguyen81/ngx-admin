@@ -29,13 +29,23 @@
                 "team_group": "Team/Group"
             }
         },
-		"form": {
-			"action": {
+        "toast": {
+            "save.success": {
+                "title": "Save",
+                "body": "Data has been saved successfully!"
+            },
+            "delete.success": {
+                "title": "Deletion",
+                "body": "Data has been deleted successfully!"
+            }
+        },
+        "form": {
+            "action": {
                 "save": "Save",
                 "reset": "Reset",
                 "delete": "Delete"
             }
-		},
+        },
         "login": {
             "title": "Login"
         }
@@ -88,27 +98,62 @@
 					"placeholder": "Tel",
 					"description": "Tel"
 				},
-				"fax": {
-					"label": "Fax",
-					"placeholder": "Fax",
-					"description": "Fax"
-				},
-				"email": {
-					"label": "Email",
-					"placeholder": "Email",
-					"description": "Email"
-				},
-				"contact": {
-					"label": "Contact",
-					"placeholder": "Contact",
-					"description": "Contact"
-				},
-				"remark": {
-					"label": "Remark",
-					"placeholder": "Remark",
-					"description": "Remark"
-				}
-			}
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Email",
+                    "description": "Email"
+                },
+                "legal_representative": {
+                    "label": "The legal representative",
+                    "placeholder": "The legal representative",
+                    "description": "The legal representative"
+                },
+                "tel_representative": {
+                    "label": "Tel. representative",
+                    "placeholder": "Tel. representative",
+                    "description": "Tel. representative"
+                },
+                "business_license": {
+                    "label": "Business license",
+                    "placeholder": "Business license",
+                    "description": "Business license"
+                },
+                "business_license_dt": {
+                    "label": "Issued on",
+                    "placeholder": "Issued on",
+                    "description": "Issued on"
+                },
+                "date_incorporation": {
+                    "label": "Date of incorporation",
+                    "placeholder": "Date of incorporation",
+                    "description": "Date of incorporation"
+                },
+                "bank_company": {
+                    "label": "Bank name",
+                    "placeholder": "Bank name",
+                    "description": "Bank name"
+                },
+                "bank_company_at": {
+                    "label": "Bank branch",
+                    "placeholder": "Bank branch",
+                    "description": "Bank branch"
+                },
+                "bank_company_account": {
+                    "label": "Bank account No.",
+                    "placeholder": "Bank account No.",
+                    "description": "Bank account No."
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark",
+                    "description": "Remark"
+                }
+            }
         },
         "user": {
             "title": "Users Management",

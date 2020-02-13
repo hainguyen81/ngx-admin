@@ -4,16 +4,16 @@
                  [fields]="getFields()"
                  [options]="getOptions()"
                  [form]="getFormGroup()">
-        <div class="d-flex text-center w-100 align-content-center">
-            <div class="btn-group btn-group-justified d-lg-table pt-lg-5 pb-md-3">
-                <div class="btn-group pl-5 pr-5 d-table-cell" *ngFor="let action of getActions()">
+        <div class="d-flex w-100 justify-content-center" *ngIf="getActions() && getActions().length > 0">
+            <div class="btn-group btn-group-justified d-lg-table pt-md-5 pb-md-3">
+                <div class="btn-group pl-3 pr-3 d-table-cell" *ngFor="let action of getActions()">
                     <!-- disabled && not full width -->
                     <button
                         nbButton
                         [id]="action.id"
-                        [title]="action.description"
+                        [title]="action.description || ''"
                         [classList]="action.class || ''"
-                        [type]="action.type"
+                        [type]="action.type || 'button'"
                         [filled]="action.filled"
                         [outline]="action.outline"
                         [ghost]="action.ghost"

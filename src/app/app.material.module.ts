@@ -41,6 +41,7 @@ import {MatButtonModule} from '@angular/material/button';
         MatTableModule,
         MatPaginatorModule,
         MatCardModule,
+        MatToolbarModule,
     ],
     exports: [
         MatButtonModule,
@@ -60,6 +61,7 @@ import {MatButtonModule} from '@angular/material/button';
         MatTableModule,
         MatPaginatorModule,
         MatCardModule,
+        MatToolbarModule,
     ],
     providers: [
         MatDatepickerModule,

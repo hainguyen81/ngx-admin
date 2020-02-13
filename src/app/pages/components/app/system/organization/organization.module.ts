@@ -1,13 +1,14 @@
 import {NgModule} from '@angular/core';
 import {
-    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
     NbContextMenuModule,
     NbIconModule,
-    NbInputModule, NbLayoutModule,
-    NbSelectModule, NbThemeModule,
+    NbInputModule,
+    NbLayoutModule,
+    NbSelectModule,
+    NbThemeModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -31,6 +32,7 @@ import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {AppMaterialModule} from '../../../../../app.material.module';
+import {OrganizationToolbarComponent} from './organization.toolbar.component';
 
 @NgModule({
     imports: [
@@ -89,10 +91,12 @@ import {AppMaterialModule} from '../../../../../app.material.module';
     entryComponents: [
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
+        OrganizationToolbarComponent,
     ],
     declarations: [
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
+        OrganizationToolbarComponent,
         OrganizationSplitPaneComponent,
     ],
     providers: [

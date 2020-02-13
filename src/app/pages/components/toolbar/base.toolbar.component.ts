@@ -7,42 +7,29 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {NgxFormlyComponent} from './formly.component';
+import {NgxToolbarComponent} from './toolbar.component';
 import {ContextMenuService} from 'ngx-contextmenu';
+import {ToasterService} from 'angular2-toaster';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
-import {ToasterService} from 'angular2-toaster';
-import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
+import {IToolbarActionsConfig, IToolbarHeaderConfig} from './abstract.toolbar.component';
 
 /**
- * Base form component base on {FormlyModule}
+ * Toolbar component base on {MatToolbar}
  */
 @Component({
-    selector: 'ngx-formly-form',
-    templateUrl: './formly.component.html',
-    styleUrls: ['./formly.component.scss'],
+    selector: 'ngx-toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
 })
-export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFormlyComponent {
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    getModel(): T {
-        return super.getModel() as T;
-    }
-
-    public setModel(model: T) {
-        super.setModel(model);
-    }
+export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxToolbarComponent {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponent} class
+     * Create a new instance of {BaseNgxToolbarComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
@@ -52,12 +39,10 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
-     * @param config {FormlyConfig}
-     * @param fields {FormlyFieldConfig}
-     * @param options {FormlyFormOptions}
-     * @param actions {IFormActionsConfig}
+     * @param toolbarHeader toolbar header
+     * @param actions {IToolbarActionsConfig}
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
+    protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                           @Inject(ToasterService) toasterService: ToasterService,
                           @Inject(NGXLogger) logger: NGXLogger,
@@ -66,16 +51,11 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          config?: FormlyConfig,
-                          fields?: FormlyFieldConfig[],
-                          options?: FormlyFormOptions,
-                          actions?: IToolbarActionsConfig[] | []) {
+                          toolbarHeader?: IToolbarHeaderConfig, actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);
-        super.setConfig(config);
-        super.setFields(fields);
-        super.setOptions(options);
-        super.setActions(actions);
+        this.setToolbarHeader(toolbarHeader);
+        this.setActions(actions);
     }
 }

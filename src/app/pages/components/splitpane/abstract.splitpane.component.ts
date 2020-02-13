@@ -49,8 +49,6 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
     private readonly querySplitAreaDirectiveComponents: QueryList<SplitAreaDirective>;
     private splitAreas: SplitAreaDirective[];
 
-    private paneHeader: string;
-
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
@@ -61,10 +59,6 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      */
     public isHorizontal(): boolean {
         return this.horizontal;
-    }
-
-    protected setPaneHeader(header: string) {
-        this.paneHeader = header;
     }
 
     /**

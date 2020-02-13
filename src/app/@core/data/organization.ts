@@ -40,8 +40,15 @@ export interface IOrganization extends IModel {
     remark?: string | null;
     managerId?: string | null;
     manager?: any;
-    contact?: string | null;
     image?: string | { icon: string, pack: string } | null;
+    legal_representative?: string | null;
+    tel_representative?: string | null;
+    business_license?: string | null;
+    business_license_dt?: number | string | null;
+    date_incorporation?: number | string | null;
+    bank_company?: string | null;
+    bank_company_at?: string | null;
+    bank_company_account?: string | null;
     children?: IOrganization[] | null;
 }
 
@@ -53,7 +60,12 @@ export default class Organization implements IOrganization {
                 public tel?: string | null, public fax?: string | null,
                 public email?: string | null, public remark?: string | null,
                 public managerId?: string | null, public manager?: any,
-                public contact?: string | null, public image?: string | { icon: string, pack: string } | null,
+                public image?: string | { icon: string, pack: string } | null,
+                public legal_representative?: string | null, public tel_representative?: string | null,
+                public business_license?: string | null, public business_license_dt?: number | string | null,
+                public date_incorporation?: number | string | null,
+                public bank_company?: string | null, public bank_company_at?: string | null,
+                public bank_company_account?: string | null,
                 public children?: IOrganization[] | null) {
     }
 }

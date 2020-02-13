@@ -18,70 +18,7 @@ import {FormGroup} from '@angular/forms';
 import {isArray} from 'util';
 import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
-import {NbComponentSize} from '@nebular/theme/components/component-size';
-import {NbComponentStatus} from '@nebular/theme/components/component-status';
-import {NbComponentShape} from '@nebular/theme/components/component-shape';
-
-export const ACTION_SAVE: string = 'ACTION_SAVE';
-export const ACTION_RESET: string = 'ACTION_RESET';
-export const ACTION_DELETE: string = 'ACTION_DELETE';
-
-/* form actions configuration */
-export interface IFormActionsConfig {
-    id: string;
-    label: string;
-    icon?: { icon: string, pack?: string | 'fa' } | null;
-    class?: string | null;
-    description?: string | null;
-    type: string;
-    /**
-     * Perform action when clicking on action
-     * @param e {IEvent} that contains {$event} as action event
-     * and {$data} as Object, consist of:
-     *      form: {FormGroup}
-     *      model: data model
-     */
-    click?: (e: IEvent) => any | null;
-
-    /**
-     * Button size, available sizes:
-     * `tiny`, `small`, `medium`, `large`, `giant`
-     */
-    size?: NbComponentSize | 'medium';
-    /**
-     * Button status (adds specific styles):
-     * `basic`, `primary`, `info`, `success`, `warning`, `danger`, `control`.
-     */
-    status?: NbComponentStatus | 'basic';
-    /**
-     * Button shapes: `rectangle`, `round`, `semi-round`
-     */
-    shape?: NbComponentShape | 'rectangle';
-    /**
-     * Sets `filled` appearance
-     */
-    filled?: boolean | false;
-    /**
-     * Sets `outline` appearance
-     */
-    outline?: boolean | false;
-    /**
-     * Sets `ghost` appearance
-     */
-    ghost?: boolean | false;
-    /**
-     * Sets `hero` appearance
-     */
-    hero?: boolean | true;
-    /**
-     * If set element will fill its container
-     */
-    fullWidth?: boolean | true;
-    /**
-     * Disables the button
-     */
-    disabled?: boolean | false;
-}
+import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -152,26 +89,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         if (fields && fields.length) {
             let translate: TranslateService;
             translate = this.getTranslateService();
-            fields.forEach(field => {
-                if (field.templateOptions) {
-                    if ((field.templateOptions.label || '').length) {
-                        field.templateOptions.label = translate.instant(field.templateOptions.label);
-                    }
-                    if ((field.templateOptions.placeholder || '').length) {
-                        field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
-                    }
-                    if ((field.templateOptions.description || '').length) {
-                        field.templateOptions.description = translate.instant(field.templateOptions.description);
-                    }
-                    if (isArray(field.templateOptions.options)) {
-                        field.templateOptions.options.forEach(option => {
-                            if (option && (option['label'] || '').length) {
-                                option['label'] = translate.instant(option['label']);
-                            }
-                        });
-                    }
-                }
-            });
+            fields.forEach(field => this.translateFormFieldConfig(translate, field));
         }
         this.fields = fields;
     }
@@ -180,7 +98,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * Get the form actions configuration
      * @return the form actions configuration
      */
-    public getActions(): IFormActionsConfig[] {
+    public getActions(): IToolbarActionsConfig[] {
         return this.actions;
     }
 
@@ -188,7 +106,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * Set the form actions configuration
      * @param actions to apply
      */
-    protected setActions(actions: IFormActionsConfig[]) {
+    protected setActions(actions: IToolbarActionsConfig[]) {
         this.actions = actions;
     }
 
@@ -240,7 +158,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           private config?: FormlyConfig,
                           private fields?: FormlyFieldConfig[] | [],
                           private options?: FormlyFormOptions,
-                          private actions?: IFormActionsConfig[] | []) {
+                          private actions?: IToolbarActionsConfig[] | []) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);
@@ -265,5 +183,44 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     onSubmit(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSubmit', event);
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Translate the specified {FormlyFieldConfig}
+     * @param translate {TranslateService}
+     * @param field to translate
+     */
+    private translateFormFieldConfig(translate?: TranslateService, field?: FormlyFieldConfig) {
+        if (!translate || !field) {
+            return;
+        }
+
+        if (field.templateOptions) {
+            if ((field.templateOptions.label || '').length) {
+                field.templateOptions.label = translate.instant(field.templateOptions.label);
+            }
+            if ((field.templateOptions.placeholder || '').length) {
+                field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
+            }
+            if ((field.templateOptions.description || '').length) {
+                field.templateOptions.description = translate.instant(field.templateOptions.description);
+            }
+            if (isArray(field.templateOptions.options)) {
+                field.templateOptions.options.forEach(option => {
+                    if (option && (option['label'] || '').length) {
+                        option['label'] = translate.instant(option['label']);
+                    }
+                });
+            }
+        }
+        if (isArray(field.fieldGroup)) {
+            field.fieldGroup.forEach(f => {
+                this.translateFormFieldConfig(translate, f);
+            });
+        }
     }
 }

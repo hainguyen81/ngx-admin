@@ -1,0 +1,19 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    .mat-toolbar {
+        background: transparent !important;
+
+        .mat-toolbar-row {
+            padding: 0;
+
+            .ngx-toolbar-actions-group .ngx-toolbar-actions {
+                padding-left: 0.75em;
+            }
+        }
+    }
+    .mat-toolbar.mat-toolbar-multiple-rows {
+        min-height: 32px !important;
+        height: 32px !important;
+    }
+}
