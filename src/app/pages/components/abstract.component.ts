@@ -715,4 +715,32 @@ export class AbstractComponent
             this.getRenderer().addClass(element, className);
         }
     }
+
+    /**
+     * Show success notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showSuccess(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().popAsync('info',
+            this.getTranslateService().instant(title),
+            this.getTranslateService().instant(body));
+    }
+
+    /**
+     * Show success notification toast about saving data
+     */
+    protected showSaveDataSuccess(): void {
+        this.showSuccess('common.toast.save.success.title', 'common.toast.save.success.body');
+    }
+
+    /**
+     * Show success notification toast about saving data
+     */
+    protected showDeleteDataSuccess(): void {
+        this.showSuccess('common.toast.delete.success.title', 'common.toast.delete.success.body');
+    }
 }

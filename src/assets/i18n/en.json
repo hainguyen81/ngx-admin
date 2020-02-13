@@ -29,13 +29,23 @@
                 "team_group": "Team/Group"
             }
         },
-		"form": {
-			"action": {
+        "toast": {
+            "save.success": {
+                "title": "Save",
+                "body": "Data has been saved successfully!"
+            },
+            "delete.success": {
+                "title": "Deletion",
+                "body": "Data has been deleted successfully!"
+            }
+        },
+        "form": {
+            "action": {
                 "save": "Save",
                 "reset": "Reset",
                 "delete": "Delete"
             }
-		},
+        },
         "login": {
             "title": "Login"
         }

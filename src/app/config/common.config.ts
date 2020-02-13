@@ -40,10 +40,10 @@ export const BaseContextMenu: IContextMenu[] = [{
 export const BaseToolbarActions: IToolbarActionsConfig[] = [{
     id: ACTION_SAVE,
     label: 'common.form.action.save',
-    type: 'submit',
+    type: 'button',
     status: 'primary',
     icon: {icon: 'save', pack: 'fa'},
-    size: 'medium',
+    size: 'small',
     shape: 'rectangle',
 }, {
     id: ACTION_DELETE,
@@ -51,15 +51,15 @@ export const BaseToolbarActions: IToolbarActionsConfig[] = [{
     type: 'button',
     status: 'danger',
     icon: {icon: 'trash-alt', pack: 'fa'},
-    size: 'medium',
+    size: 'small',
     shape: 'rectangle',
 }, {
     id: ACTION_RESET,
     label: 'common.form.action.reset',
-    type: 'reset',
+    type: 'button',
     status: 'warning',
     icon: {icon: 'redo', pack: 'fa'},
-    size: 'medium',
+    size: 'small',
     shape: 'rectangle',
 }];
 

@@ -5,8 +5,9 @@
             class="ngx-toolbar-header">
             <nb-icon [icon]="toolbarHeader.icon.icon"
                      [pack]="toolbarHeader.icon.pack"
-                     *ngIf="(toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0)"></nb-icon>
-            {{(toolbarHeader.title || '') | translate}}</span>
+                     *ngIf="(toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0)"
+            ></nb-icon><span [class.pl-2]="(toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0)">
+            {{(toolbarHeader.title || '') | translate}}</span></span>
         <span
             *ngIf="toolbarHeader && ((toolbarHeader.title || '').length > 0 || (toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0))"
             class="separator"></span>

@@ -29,13 +29,23 @@
                 "team_group": "Đội / Nhóm"
             }
         },
-		"form": {
-			"action": {
+        "toast": {
+            "save.success": {
+                "title": "Lưu",
+                "body": "Dữ liệu đã lưu thành công!"
+            },
+            "delete.success": {
+                "title": "Xóa",
+                "body": "Đã xóa dữ liệu!"
+            }
+        },
+        "form": {
+            "action": {
                 "save": "Lưu",
                 "reset": "Reset",
                 "delete": "Xóa"
             }
-		},
+        },
         "login": {
             "title": "Đăng nhập"
         }

@@ -25,6 +25,12 @@ import ComponentUtils from '../../../../../utils/component.utils';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';
 import {IEvent} from '../../../abstract.component';
+import {
+    ACTION_DELETE,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IToolbarActionsConfig,
+} from '../../../toolbar/abstract.toolbar.component';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -132,8 +138,22 @@ export class OrganizationSplitPaneComponent
      * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
      */
     onClickAction(event: IEvent) {
-        // TODO Waiting for implementing from children component
-        this.getLogger().debug('Organization - onClickAction', event);
+        if (!event || !event.$data || !(event.$data as IToolbarActionsConfig)) {
+            return;
+        }
+        let action: IToolbarActionsConfig;
+        action = event.$data as IToolbarActionsConfig;
+        switch (action.id) {
+            case ACTION_SAVE:
+                this.doSave();
+                break;
+            case ACTION_RESET:
+                this.doReset();
+                break;
+            case ACTION_DELETE:
+                this.doDelete();
+                break;
+        }
     }
 
     // -------------------------------------------------
@@ -223,5 +243,32 @@ export class OrganizationSplitPaneComponent
         });
     }
 
+    // -------------------------------------------------
+    // MAIN FUNCTION
+    // -------------------------------------------------
 
+    /**
+     * Perform saving data
+     */
+    private doSave(): void {
+        this.getDataSource().update(
+            this.getFormlyComponent().getModel(),
+            this.getFormlyComponent().getModel())
+            .then(() => this.showSaveDataSuccess());
+    }
+
+    /**
+     * Perform resetting data
+     */
+    private doReset(): void {
+        this.organizationFormlyComponent.getFormGroup().reset();
+    }
+
+    /**
+     * Perform deleting data
+     */
+    private doDelete(): void {
+        this.getDataSource().remove(this.getFormlyComponent().getModel())
+            .then(() => this.showDeleteDataSuccess());
+    }
 }
