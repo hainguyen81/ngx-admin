@@ -31,7 +31,7 @@ export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].conc
 @Component({
     selector: 'ngx-toolbar',
     templateUrl: '../../../toolbar/toolbar.component.html',
-    styleUrls: ['../../../toolbar.component.scss'],
+    styleUrls: ['../../../toolbar/toolbar.component.scss'],
 })
 export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<OrganizationDataSource> {
     // -------------------------------------------------
