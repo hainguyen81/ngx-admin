@@ -2,8 +2,10 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
+    EventEmitter,
     Inject,
     OnInit,
+    Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -28,7 +30,6 @@ export const ACTION_DELETE: string = 'ACTION_DELETE';
 
 /* toolbar actions configuration */
 export declare type ToolbarActionType = 'button' | 'submit' | 'reset';
-
 export interface IToolbarActionsConfig {
     id: string;
     label: string;
@@ -83,6 +84,12 @@ export interface IToolbarActionsConfig {
     disabled?: boolean | false;
 }
 
+/* toolbar header configuration */
+export interface IToolbarHeaderConfig {
+    title?: string | '';
+    icon?: { icon: string, pack?: string | 'fa' } | null;
+}
+
 /**
  * Abstract toolbar component base on {MatToolbar}
  */
@@ -103,18 +110,37 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
     private readonly queryToolbarActionsComponent: QueryList<NbButtonComponent>;
     private toolbarActionComponents: NbButtonComponent[];
 
-    private toolbarHeader: string;
+    private toolbarHeader?: IToolbarHeaderConfig | null;
+
+    @Output()
+    private actionClick = new EventEmitter<IEvent>();
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
     /**
+     * Get the toolbar header
+     * @return the toolbar header
+     */
+    public getToolbarHeader(): IToolbarHeaderConfig {
+        return this.toolbarHeader;
+    }
+
+    /**
      * Set the toolbar header
      * @param header to apply
      */
-    protected setToolbarHeader(header: string) {
+    public setToolbarHeader(header: IToolbarHeaderConfig) {
         this.toolbarHeader = header;
+    }
+
+    /**
+     * Get the {EventEmitter} event listener when clicking an action
+     * @return the {EventEmitter} event listener
+     */
+    public actionListener(): EventEmitter<IEvent> {
+        return this.actionClick;
     }
 
     /**
@@ -175,11 +201,11 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          private header?: IToolbarHeaderConfig,
                           private actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);
-        this.setActions(actions);
     }
 
     ngAfterViewInit(): void {
@@ -198,11 +224,23 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
     // -------------------------------------------------
 
     /**
-     * Raise when tree-view item has been clicked
+     * Raise when action item has been clicked
      * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
      */
     onClickAction(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickAction', event);
+        let fired: boolean;
+        fired = false;
+        if (event && event.$data) {
+            let action: IToolbarActionsConfig;
+            action = event.$data as IToolbarActionsConfig;
+            if (action && typeof action.click === 'function') {
+                action.click.apply(this, [event]);
+                fired = true;
+            }
+        }
+        // via event
+        if (!fired) this.actionListener().emit(event);
     }
 }

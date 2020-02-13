@@ -1,8 +1,15 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <span *ngIf="(toolbarHeader || '').length > 0"
-              class="ngx-toolbar-header">{{toolbarHeader | translate}}</span>
-        <span *ngIf="(toolbarHeader || '').length > 0" class="separator"></span>
+        <span
+            *ngIf="toolbarHeader && ((toolbarHeader.title || '').length > 0 || (toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0))"
+            class="ngx-toolbar-header">
+            <nb-icon [icon]="toolbarHeader.icon.icon"
+                     [pack]="toolbarHeader.icon.pack"
+                     *ngIf="(toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0)"></nb-icon>
+            {{(toolbarHeader.title || '') | translate}}</span>
+        <span
+            *ngIf="toolbarHeader && ((toolbarHeader.title || '').length > 0 || (toolbarHeader.icon && (toolbarHeader.icon.icon || '').length > 0))"
+            class="separator"></span>
 
         <!-- disabled && not full width -->
         <div class="btn-group btn-group-justified ngx-toolbar-actions-group">
@@ -23,7 +30,7 @@
                     [size]="action.size"
                     [shape]="action.shape"
                     [status]="action.status"
-                    (click)="action.click && action.click({ $event: $event, $data: action });"
+                    (click)="onClickAction({ $event: $event, $data: action });"
                     (mousedown)="onMouseDown({ $event: $event, $data: action })"
                     (mouseenter)="onMouseEnter({ $event: $event, $data: action })"
                     (mouseleave)="onMouseLeave({ $event: $event, $data: action })"
@@ -36,7 +43,9 @@
                     (focusin)="onFocusIn({ $event: $event, $data: action })"
                     (focusout)="onFocusOut({ $event: $event, $data: action })"
                     (blur)="onBlur({ $event: $event, $data: action })"
-                ><span><nb-icon [icon]="action.icon.icon" *ngIf="action.icon" [pack]="action.icon.pack"></nb-icon>
+                ><span><nb-icon [icon]="action.icon.icon"
+                                *ngIf="action.icon && action.icon.icon.length > 0"
+                                [pack]="action.icon.pack"></nb-icon>
                     {{action.label | translate}}</span></button>
             </div>
         </div>

@@ -9,8 +9,8 @@ import {
     ACTION_DELETE,
     ACTION_RESET,
     ACTION_SAVE,
-    IFormActionsConfig,
-} from '../pages/components/formly/abstract.formly.component';
+    IToolbarActionsConfig,
+} from '../pages/components/toolbar/abstract.toolbar.component';
 
 /* base context menu items */
 export const BaseContextMenu: IContextMenu[] = [{
@@ -36,8 +36,8 @@ export const BaseContextMenu: IContextMenu[] = [{
     divider: (item?: any) => false,
 }];
 
-/* base formly actions */
-export const BaseFormlyActions: IFormActionsConfig[] = [{
+/* base toolbar actions */
+export const BaseToolbarActions: IToolbarActionsConfig[] = [{
     id: ACTION_SAVE,
     label: 'common.form.action.save',
     type: 'submit',
@@ -72,5 +72,5 @@ export const COMMON = {
     },
     itemsPerPage: 10,
     baseMenu: BaseContextMenu,
-    baseFormActions: BaseFormlyActions,
+    baseToolbarActions: BaseToolbarActions,
 };

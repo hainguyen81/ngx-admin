@@ -19,8 +19,6 @@ import Organization, {
 } from '../../../../../@core/data/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToasterService} from 'angular2-toaster';
-import {COMMON} from '../../../../../config/common.config';
-import {IFormActionsConfig} from '../../../formly/abstract.formly.component';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -298,9 +296,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
     },
 ];
 
-/* formly actions */
-export const OrganizationFormlyActions: IFormActionsConfig[] = [].concat(COMMON.baseFormActions);
-
 /**
  * Form component base on {FormlyModule}
  */
@@ -339,7 +334,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
-            OrganizationFormConfig, OrganizationFormFieldsConfig, null, OrganizationFormlyActions);
+            OrganizationFormConfig, OrganizationFormFieldsConfig);
         super.setModel(new Organization(undefined, undefined, undefined, undefined));
     }
 }

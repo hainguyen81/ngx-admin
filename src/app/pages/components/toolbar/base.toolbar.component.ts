@@ -12,7 +12,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {ToasterService} from 'angular2-toaster';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {IToolbarActionsConfig} from './abstract.toolbar.component';
+import {IToolbarActionsConfig, IToolbarHeaderConfig} from './abstract.toolbar.component';
 
 /**
  * Toolbar component base on {MatToolbar}
@@ -51,7 +51,7 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          toolbarHeader?: string, actions?: IToolbarActionsConfig[]) {
+                          toolbarHeader?: IToolbarHeaderConfig, actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);

@@ -22,6 +22,9 @@ import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/organization';
 import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../../../utils/component.utils';
+import {OrganizationToolbarComponent} from './organization.toolbar.component';
+import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';
+import {IEvent} from '../../../abstract.component';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -57,6 +60,7 @@ export class OrganizationSplitPaneComponent
     // DECLARATION
     // -------------------------------------------------
 
+    private organizationToolbarComponent: OrganizationToolbarComponent;
     private organizationTreeviewComponent: OrganizationTreeviewComponent;
     private organizationFormlyComponent: OrganizationFormlyComponent;
 
@@ -108,7 +112,6 @@ export class OrganizationSplitPaneComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);
-        super.setPaneHeader('system.organization.title');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);
     }
@@ -124,9 +127,33 @@ export class OrganizationSplitPaneComponent
         this.createPaneComponents();
     }
 
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
+     */
+    onClickAction(event: IEvent) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('Organization - onClickAction', event);
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Create organization toolbar component {OrganizationToolbarComponent}
+     * @param componentFactoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     * @return {OrganizationToolbarComponent}
+     */
+    private createOrganizationToolbarComponent(
+        componentFactoryResolver: ComponentFactoryResolver,
+        viewContainerRef: ViewContainerRef): OrganizationToolbarComponent {
+        let toolbarComponentService: OrganizationToolbarComponentService;
+        toolbarComponentService = new OrganizationToolbarComponentService(
+            componentFactoryResolver, viewContainerRef, this.getLogger());
+        return ComponentUtils.createComponent(toolbarComponentService, viewContainerRef);
+    }
 
     /**
      * Create organization tree-view component {OrganizationTreeviewComponent}
@@ -164,11 +191,18 @@ export class OrganizationSplitPaneComponent
     private createPaneComponents() {
         const componentFactoryResolver: ComponentFactoryResolver = this.getFactoryResolver();
         const viewContainerRefs: ViewContainerRef[] = this.getSplitAreaHolderViewContainerComponents();
+        const headerViewContainer = this.getHeaderViewContainerComponent();
         const splitAreas: SplitAreaDirective[] = this.getSplitAreaComponents();
 
         // configure areas
         this.configArea(splitAreas[0], OrganizationTreeAreaConfig);
         this.configArea(splitAreas[1], OrganizationFormAreaConfig);
+
+        // create toolbar component
+        this.organizationToolbarComponent = this.createOrganizationToolbarComponent(
+            componentFactoryResolver, headerViewContainer);
+        this.organizationToolbarComponent.actionListener()
+            .subscribe((e: IEvent) => this.onClickAction(e));
 
         // create tree-view component
         this.organizationTreeviewComponent = this.createOrganizationTreeviewComponent(
@@ -188,4 +222,6 @@ export class OrganizationSplitPaneComponent
             }
         });
     }
+
+
 }

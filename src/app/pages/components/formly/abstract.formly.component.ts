@@ -18,70 +18,7 @@ import {FormGroup} from '@angular/forms';
 import {isArray} from 'util';
 import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
-import {NbComponentSize} from '@nebular/theme/components/component-size';
-import {NbComponentStatus} from '@nebular/theme/components/component-status';
-import {NbComponentShape} from '@nebular/theme/components/component-shape';
-
-export const ACTION_SAVE: string = 'ACTION_SAVE';
-export const ACTION_RESET: string = 'ACTION_RESET';
-export const ACTION_DELETE: string = 'ACTION_DELETE';
-
-/* form actions configuration */
-export interface IFormActionsConfig {
-    id: string;
-    label: string;
-    icon?: { icon: string, pack?: string | 'fa' } | null;
-    class?: string | null;
-    description?: string | null;
-    type?: string | 'button';
-    /**
-     * Perform action when clicking on action
-     * @param e {IEvent} that contains {$event} as action event
-     * and {$data} as Object, consist of:
-     *      form: {FormGroup}
-     *      model: data model
-     */
-    click?: (e: IEvent) => any | null;
-
-    /**
-     * Button size, available sizes:
-     * `tiny`, `small`, `medium`, `large`, `giant`
-     */
-    size?: NbComponentSize | 'medium';
-    /**
-     * Button status (adds specific styles):
-     * `basic`, `primary`, `info`, `success`, `warning`, `danger`, `control`.
-     */
-    status?: NbComponentStatus | 'basic';
-    /**
-     * Button shapes: `rectangle`, `round`, `semi-round`
-     */
-    shape?: NbComponentShape | 'rectangle';
-    /**
-     * Sets `filled` appearance
-     */
-    filled?: boolean | false;
-    /**
-     * Sets `outline` appearance
-     */
-    outline?: boolean | false;
-    /**
-     * Sets `ghost` appearance
-     */
-    ghost?: boolean | false;
-    /**
-     * Sets `hero` appearance
-     */
-    hero?: boolean | true;
-    /**
-     * If set element will fill its container
-     */
-    fullWidth?: boolean | true;
-    /**
-     * Disables the button
-     */
-    disabled?: boolean | false;
-}
+import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -161,7 +98,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * Get the form actions configuration
      * @return the form actions configuration
      */
-    public getActions(): IFormActionsConfig[] {
+    public getActions(): IToolbarActionsConfig[] {
         return this.actions;
     }
 
@@ -169,7 +106,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * Set the form actions configuration
      * @param actions to apply
      */
-    protected setActions(actions: IFormActionsConfig[]) {
+    protected setActions(actions: IToolbarActionsConfig[]) {
         this.actions = actions;
     }
 
@@ -221,7 +158,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           private config?: FormlyConfig,
                           private fields?: FormlyFieldConfig[] | [],
                           private options?: FormlyFormOptions,
-                          private actions?: IFormActionsConfig[] | []) {
+                          private actions?: IToolbarActionsConfig[] | []) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);

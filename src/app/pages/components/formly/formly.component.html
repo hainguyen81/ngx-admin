@@ -4,7 +4,7 @@
                  [fields]="getFields()"
                  [options]="getOptions()"
                  [form]="getFormGroup()">
-        <div class="d-flex w-100 justify-content-center">
+        <div class="d-flex w-100 justify-content-center" *ngIf="getActions() && getActions().length > 0">
             <div class="btn-group btn-group-justified d-lg-table pt-md-5 pb-md-3">
                 <div class="btn-group pl-3 pr-3 d-table-cell" *ngFor="let action of getActions()">
                     <!-- disabled && not full width -->
