@@ -32,7 +32,7 @@ import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {AppMaterialModule} from '../../../../../app.material.module';
-import {OrganizationToolbarComponent} from "./organization.toolbar.component";
+import {OrganizationToolbarComponent} from './organization.toolbar.component';
 
 @NgModule({
     imports: [
@@ -91,6 +91,7 @@ import {OrganizationToolbarComponent} from "./organization.toolbar.component";
     entryComponents: [
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
+        OrganizationToolbarComponent,
     ],
     declarations: [
         OrganizationTreeviewComponent,
