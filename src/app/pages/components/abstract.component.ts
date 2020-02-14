@@ -774,7 +774,7 @@ export class AbstractComponent
      * Show error notification toast about saving data
      */
     protected showSaveDataError(): void {
-        this.showSuccess('common.toast.save.error.title', 'common.toast.save.error.body');
+        this.showError('common.toast.save.error.title', 'common.toast.save.error.body');
     }
 
     /**
@@ -787,6 +787,6 @@ export class AbstractComponent
      * Show success notification toast about saving data
      */
     protected showDeleteDataError(): void {
-        this.showSuccess('common.toast.delete.error.title', 'common.toast.delete.error.body');
+        this.showError('common.toast.delete.error.title', 'common.toast.delete.error.body');
     }
 }
