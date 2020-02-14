@@ -55,6 +55,14 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {TreeviewModule} from 'ngx-treeview';
 /* Angular material modules */
 import {AppMaterialModule} from './app.material.module';
+/* Device Detector */
+import {DeviceDetectorModule} from 'ngx-device-detector';
+/* Pipes */
+import {NgPipesModule} from 'ngx-pipes';
+/* Lightbox */
+import {LightboxModule} from 'ngx-lightbox';
+/* Infinite Scroll */
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
     declarations: [AppComponent],
@@ -72,6 +80,18 @@ import {AppMaterialModule} from './app.material.module';
 
         /* Mock Data Module */
         MockDataModule.forRoot(),
+
+        /* Device Detector */
+        DeviceDetectorModule.forRoot(),
+
+        /* Pipes */
+        NgPipesModule,
+
+        /* Lightbox */
+        LightboxModule,
+
+        /* Infinite Scroll */
+        InfiniteScrollModule,
 
         /* Theme */
         ThemeModule.forRoot(),

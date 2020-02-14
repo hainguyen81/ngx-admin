@@ -43,18 +43,6 @@ export class UserDbService extends AbstractDbService<IUser> {
             }
         } else resolve(0);
     }
-
-    updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
-                      reject: (reason?: any) => void, ...args: IUser[]) => {
-        if (args && args.length) {
-            this.getLogger().debug('Update data', args, 'First data', args[0]);
-            this.getDbService().update(this.getDbStore(), args[0])
-                .then(() => resolve(1), (errors) => {
-                    this.getLogger().error('Could not update data', errors);
-                    reject(errors);
-                });
-        } else resolve(0);
-    }
 }
 
 @Injectable()
