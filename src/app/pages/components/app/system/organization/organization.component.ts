@@ -20,7 +20,6 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/organization';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../../../utils/component.utils';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';
@@ -32,6 +31,7 @@ import {
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
 import {DeepCloner} from '../../../../../utils/object.utils';
+import {ToastrService} from 'ngx-toastr';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -118,7 +118,7 @@ export class OrganizationSplitPaneComponent
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,

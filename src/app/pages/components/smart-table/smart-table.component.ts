@@ -12,7 +12,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractSmartTableComponent} from './abstract.smart-table.comonent';
-import {ToasterService} from 'angular2-toaster';
+import {ToastrService} from 'ngx-toastr';
 
 /**
  * Smart table base on {Ng2SmartTableComponent}
@@ -42,7 +42,7 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,

@@ -18,7 +18,7 @@ import Organization, {
     ORGANIZTAION_TYPE,
 } from '../../../../../@core/data/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
-import {ToasterService} from 'angular2-toaster';
+import {ToastrService} from 'ngx-toastr';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -324,7 +324,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,

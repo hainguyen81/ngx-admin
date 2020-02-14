@@ -15,7 +15,7 @@ import KeyboardUtils from '../../../utils/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
 import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu, IEvent} from '../abstract.component';
-import {ToasterService} from 'angular2-toaster';
+import {ToastrService} from 'ngx-toastr';
 
 /**
  * Base smart table component base on {Ng2SmartTableComponent}
@@ -48,7 +48,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,

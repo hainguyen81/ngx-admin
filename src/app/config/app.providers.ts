@@ -17,7 +17,6 @@ import {
 } from '../auth/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
-import {ToastrService} from 'ngx-toastr';
 import {COMMON} from './common.config';
 import {ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/user/user.service';
@@ -38,7 +37,6 @@ import {
 import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
-import {ToasterService} from 'angular2-toaster';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -55,8 +53,6 @@ export const CommonProviders: StaticProvider[] = [
     {provide: NGXMapperService, useClass: NGXMapperService, deps: [HttpBackend]},
     {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpBackend]},
     {provide: HttpClient, useClass: HttpClient, deps: [HttpBackend]},
-    {provide: ToastrService, useClass: ToastrService, deps: []},
-    {provide: ToasterService, useClass: ToasterService, deps: []},
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},

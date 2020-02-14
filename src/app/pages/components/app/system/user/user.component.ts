@@ -15,7 +15,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
 import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
-import {ToasterService} from 'angular2-toaster';
+import {ToastrService} from 'ngx-toastr';
 
 export const UserTableSettings = {
     hideSubHeader: true,
@@ -121,7 +121,7 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
      */
     constructor(@Inject(UserDataSource) dataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,

@@ -16,9 +16,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
 import {FormGroup} from '@angular/forms';
 import {isArray} from 'util';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
 import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
+import {ToastrService} from 'ngx-toastr';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -148,7 +148,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,

@@ -41,8 +41,7 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* i18n */
 import {TranslateModule} from '@ngx-translate/core';
 /* Toaster */
-import {ToasterModule} from 'angular2-toaster';
-import {ToastrModule} from 'ngx-toastr';
+import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 /* Mock data */
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* SplitPane */
@@ -110,8 +109,8 @@ import {LightboxModule} from 'ngx-lightbox';
         TranslateModule.forRoot(),
 
         /* Toaster */
-        ToasterModule.forRoot(),
         ToastrModule.forRoot(AppConfig.TOASTER),
+        ToastContainerModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

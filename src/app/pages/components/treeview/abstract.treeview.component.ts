@@ -18,17 +18,16 @@ import {
     CONTEXT_MENU_ADD,
     CONTEXT_MENU_DELETE,
     CONTEXT_MENU_EDIT,
-    IContextMenu,
     IEvent,
 } from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
-import {ToasterService} from 'angular2-toaster';
 import ObjectUtils from '../../../utils/object.utils';
 import {throwError} from 'rxjs';
 import ComponentUtils from '../../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -163,7 +162,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,

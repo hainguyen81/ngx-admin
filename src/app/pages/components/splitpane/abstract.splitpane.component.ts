@@ -15,8 +15,8 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -124,7 +124,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,

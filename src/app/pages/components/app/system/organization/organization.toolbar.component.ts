@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
-import {ToasterService} from 'angular2-toaster';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {BaseNgxToolbarComponent} from '../../../toolbar/base.toolbar.component';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {COMMON} from '../../../../../config/common.config';
+import {ToastrService} from 'ngx-toastr';
 
 /* default organization toolbar header config */
 export const OrganizationToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -53,7 +53,7 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
      */
     constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,

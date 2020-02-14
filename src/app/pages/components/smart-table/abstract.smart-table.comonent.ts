@@ -21,8 +21,8 @@ import {isArray, isNumber} from 'util';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -113,7 +113,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,

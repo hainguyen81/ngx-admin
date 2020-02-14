@@ -29,8 +29,8 @@ import {
 } from '../../services/implementation/document.keyboard.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -179,10 +179,10 @@ export class AbstractComponent
     }
 
     /**
-     * Get the {ToasterService} instance for showing notification popup
-     * @return the {ToasterService} instance
+     * Get the {ToastrService} instance for showing notification popup
+     * @return the {ToastrService} instance
      */
-    protected getToasterService(): ToasterService {
+    protected getToasterService(): ToastrService {
         return this.toasterService;
     }
 
@@ -237,7 +237,7 @@ export class AbstractComponent
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) private toasterService: ToasterService,
+                          @Inject(ToastrService) private toasterService: ToastrService,
                           @Inject(NGXLogger) private logger: NGXLogger,
                           @Inject(Renderer2) private renderer: Renderer2,
                           @Inject(TranslateService) private translateService: TranslateService,
@@ -738,7 +738,23 @@ export class AbstractComponent
     }
 
     /**
-     * Show success notification toast
+     * Show message notification toast
+     * @param title toast title
+     * @param body toast message
+     * @param type toast type
+     */
+    protected showMessage(title?: string, body?: string, type?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().show(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title),
+            undefined, type);
+    }
+
+    /**
+     * Show success message notification toast
      * @param title toast title
      * @param body toast message
      */
@@ -746,12 +762,13 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().popAsync('info',
-            this.getTranslateService().instant(title),
-            this.getTranslateService().instant(body));
+        this.getToasterService().success(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
     }
+
     /**
-     * Show error notification toast
+     * Show error message notification toast
      * @param title toast title
      * @param body toast message
      */
@@ -759,9 +776,37 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().pop('error',
-            this.getTranslateService().instant(title),
-            this.getTranslateService().instant(body));
+        this.getToasterService().error(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
+    }
+
+    /**
+     * Show info message notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showInfo(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().info(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
+    }
+
+    /**
+     * Show warning message notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showWarning(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().warning(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
     }
 
     /**
@@ -770,6 +815,7 @@ export class AbstractComponent
     protected showSaveDataSuccess(): void {
         this.showSuccess('common.toast.save.success.title', 'common.toast.save.success.body');
     }
+
     /**
      * Show error notification toast about saving data
      */
