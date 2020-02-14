@@ -61,10 +61,6 @@ import {DeviceDetectorModule} from 'ngx-device-detector';
 import {NgPipesModule} from 'ngx-pipes';
 /* Lightbox */
 import {LightboxModule} from 'ngx-lightbox';
-/* Infinite Scroll */
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
-/* Support for Infinite Scroll Module */
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 @NgModule({
     declarations: [AppComponent],
@@ -91,9 +87,6 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
         /* Lightbox */
         LightboxModule,
-
-        /* Infinite Scroll */
-        InfiniteScrollModule,
 
         /* Theme */
         ThemeModule.forRoot(),
@@ -202,6 +195,5 @@ export class AppModule {
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
-        platformBrowserDynamic().bootstrapModule(AppModule);
    }
 }

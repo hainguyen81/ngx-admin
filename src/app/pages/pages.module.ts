@@ -11,7 +11,6 @@ import {OrganizationModule} from './components/app/system/organization/organizat
 import {AppMaterialModule} from '../app.material.module';
 import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {DeviceDetectorModule} from 'ngx-device-detector';
 
 @NgModule({
@@ -34,9 +33,6 @@ import {DeviceDetectorModule} from 'ngx-device-detector';
 
         /* Lightbox */
         LightboxModule,
-
-        /* Infinite Scroll */
-        InfiniteScrollModule,
 
         /* System module */
         OrganizationModule,
