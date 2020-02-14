@@ -750,6 +750,19 @@ export class AbstractComponent
             this.getTranslateService().instant(title),
             this.getTranslateService().instant(body));
     }
+    /**
+     * Show error notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showError(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().popAsync('error',
+            this.getTranslateService().instant(title),
+            this.getTranslateService().instant(body));
+    }
 
     /**
      * Show success notification toast about saving data
@@ -757,11 +770,23 @@ export class AbstractComponent
     protected showSaveDataSuccess(): void {
         this.showSuccess('common.toast.save.success.title', 'common.toast.save.success.body');
     }
+    /**
+     * Show error notification toast about saving data
+     */
+    protected showSaveDataError(): void {
+        this.showSuccess('common.toast.save.error.title', 'common.toast.save.error.body');
+    }
 
     /**
      * Show success notification toast about saving data
      */
     protected showDeleteDataSuccess(): void {
         this.showSuccess('common.toast.delete.success.title', 'common.toast.delete.success.body');
+    }
+    /**
+     * Show success notification toast about saving data
+     */
+    protected showDeleteDataError(): void {
+        this.showSuccess('common.toast.delete.error.title', 'common.toast.delete.error.body');
     }
 }

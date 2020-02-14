@@ -46,7 +46,8 @@ export function organizationGenerate(): IOrganization[] {
             mockOrgBranch.code = 'BRANCH-'.concat((j + 1).toString());
             mockOrgBranch.name = 'Branch '.concat((j + 1).toString());
             mockOrgBranch.parentId = mockOrgHead.id;
-            mockOrgBranch.parent = mockOrgHead;
+            // TODO Be careful with recursively forever (stack overflow)
+            // mockOrgBranch.parent = mockOrgHead;
             mockOrgBranch.children = [];
             mockOrgHead.children.push(mockOrgBranch);
 
@@ -57,7 +58,8 @@ export function organizationGenerate(): IOrganization[] {
                 mockOrgDept.code = 'DEPT-'.concat((k + 1).toString());
                 mockOrgDept.name = 'Department '.concat((k + 1).toString());
                 mockOrgDept.parentId = mockOrgBranch.id;
-                mockOrgDept.parent = mockOrgBranch;
+                // TODO Be careful with recursively forever (stack overflow)
+                // mockOrgDept.parent = mockOrgBranch;
                 mockOrgBranch.children.push(mockOrgDept);
             }
         }
