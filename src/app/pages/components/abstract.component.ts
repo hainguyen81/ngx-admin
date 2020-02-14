@@ -759,7 +759,7 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().popAsync('error',
+        this.getToasterService().pop('error',
             this.getTranslateService().instant(title),
             this.getTranslateService().instant(body));
     }
