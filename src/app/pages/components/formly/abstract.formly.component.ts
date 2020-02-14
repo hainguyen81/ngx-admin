@@ -35,7 +35,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     private formlyForm: FormlyForm;
 
     /* whole form group */
-    private readonly formGroup: FormGroup = new FormGroup({});
+    private formGroup: FormGroup = new FormGroup({});
     private renderForm?: boolean | true;
 
     // -------------------------------------------------

@@ -216,20 +216,21 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         return (!data || !(data['id'] || '').length);
     }
 
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
     /**
-     * Perform action on menu item has been clicked
+     * Perform action on menu item
      * @param event {IEvent} that contains {$data} as Object, consist of:
      *      menu: menu item
      *      item: menu item data
      * and {$event} as action event
+     * @param menuId menu item identity
+     * @param data menu data
      */
-    onMenuEvent(event) {
-        let menuItem: IContextMenu;
-        menuItem = (event && event.$data && event.$data['menu']
-            ? event.$data['menu'] as IContextMenu : undefined);
-        let mnuId: string;
-        mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
-        switch (mnuId) {
+    protected doMenuAction(event: IEvent, menuId?: string | null, data?: any | null) {
+        switch (menuId || '') {
             case CONTEXT_MENU_ADD:
                 this.newRow();
                 break;

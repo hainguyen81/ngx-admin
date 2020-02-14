@@ -449,9 +449,16 @@ export class AbstractComponent
     onMenuEvent(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMenuEvent', event);
-        if (event && event.$data && event.$data['menu']
-            && typeof event.$data['menu']['click'] === 'function') {
-            event.$data['menu']['click']['apply'](this, [event.$data['item']]);
+        if (event && event.$data && event.$data['menu']) {
+            if (typeof event.$data['menu']['click'] === 'function') {
+                event.$data['menu']['click']['apply'](this, [event.$data['item']]);
+            } else {
+                let menuItem: IContextMenu;
+                menuItem = event.$data['menu'] as IContextMenu;
+                let mnuId: string;
+                mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
+                this.doMenuAction(event, mnuId, event.$data['item']);
+            }
         }
     }
 
@@ -618,6 +625,20 @@ export class AbstractComponent
      */
     protected preventEvent(event: Event): boolean {
         return HtmlUtils.preventEvent(event);
+    }
+
+    /**
+     * Perform action on menu item
+     * @param event {IEvent} that contains {$data} as Object, consist of:
+     *      menu: menu item
+     *      item: menu item data
+     * and {$event} as action event
+     * @param menuId menu item identity
+     * @param data menu data
+     */
+    protected doMenuAction(event: IEvent, menuId?: string | null, data?: any | null) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('doMenuAction', menuId, data);
     }
 
     /**

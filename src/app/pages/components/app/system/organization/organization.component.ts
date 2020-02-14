@@ -69,10 +69,19 @@ export class OrganizationSplitPaneComponent
     private organizationToolbarComponent: OrganizationToolbarComponent;
     private organizationTreeviewComponent: OrganizationTreeviewComponent;
     private organizationFormlyComponent: OrganizationFormlyComponent;
+    private selectedOrganization: IOrganization | null;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the selected {IOrganization} instance
+     * @return the selected {IOrganization} instance
+     */
+    protected getSelectedOrganization(): IOrganization {
+        return this.selectedOrganization;
+    }
 
     /**
      * Get the {OrganizationTreeviewComponent} instance
@@ -234,10 +243,13 @@ export class OrganizationSplitPaneComponent
                 let organization: IOrganization;
                 organization = it.value as IOrganization;
                 if (organization) {
+                    this.selectedOrganization = organization;
+                    this.selectedOrganization.parent = null;
+                    this.selectedOrganization.children = null;
                     // create formly form component
                     this.organizationFormlyComponent = this.createOrganizationFormlyComponent(
                         componentFactoryResolver, viewContainerRefs[1]);
-                    this.organizationFormlyComponent.getFormGroup().reset(organization);
+                    this.organizationFormlyComponent.setModel(this.selectedOrganization);
                 }
             }
         });
@@ -251,6 +263,7 @@ export class OrganizationSplitPaneComponent
      * Perform saving data
      */
     private doSave(): void {
+        this.getFormlyComponent().getFormGroup().updateValueAndValidity();
         this.getDataSource().update(
             this.getFormlyComponent().getModel(),
             this.getFormlyComponent().getModel())
