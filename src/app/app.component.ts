@@ -17,12 +17,9 @@ import {isArray} from 'util';
 @Component({
     selector: 'ngx-app',
     template: `
-        <router-outlet></router-outlet>
-        <toaster-container [toasterconfig]="toasterConfig"></toaster-container>`,
+        <router-outlet></router-outlet>`,
 })
 export class AppComponent implements OnInit {
-
-    private readonly toasterConfig = AppConfig.TOASTER;
 
     constructor(@Inject(AnalyticsService) private analytics: AnalyticsService,
                 @Inject(SeoService) private seoService: SeoService,
