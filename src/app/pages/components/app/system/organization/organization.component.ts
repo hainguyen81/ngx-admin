@@ -31,7 +31,7 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
-import ObjectUtils, {DeepCloner} from '../../../../../utils/object.utils';
+import {DeepCloner} from '../../../../../utils/object.utils';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -245,10 +245,13 @@ export class OrganizationSplitPaneComponent
                 organization = it.value as IOrganization;
                 if (organization) {
                     this.selectedOrganization = organization;
+                    let clonedOrg: IOrganization;
+                    clonedOrg = DeepCloner(organization);
+                    delete clonedOrg.parent, clonedOrg.children;
                     // create formly form component
                     this.organizationFormlyComponent = this.createOrganizationFormlyComponent(
                         componentFactoryResolver, viewContainerRefs[1]);
-                    this.organizationFormlyComponent.setModel(DeepCloner(this.selectedOrganization));
+                    this.organizationFormlyComponent.setModel(clonedOrg);
                 }
             }
         });
