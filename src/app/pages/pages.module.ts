@@ -12,6 +12,8 @@ import {AppMaterialModule} from '../app.material.module';
 import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
 import {DeviceDetectorModule} from 'ngx-device-detector';
+import {ToasterModule} from 'angular2-toaster';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
     imports: [
@@ -33,6 +35,10 @@ import {DeviceDetectorModule} from 'ngx-device-detector';
 
         /* Lightbox */
         LightboxModule,
+
+        /* Toaster */
+        ToasterModule,
+        ToastrModule,
 
         /* System module */
         OrganizationModule,
