@@ -63,6 +63,8 @@ import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
 /* Infinite Scroll */
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+/* Support for Infinite Scroll Module */
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 @NgModule({
     declarations: [AppComponent],
@@ -200,5 +202,6 @@ export class AppModule {
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
+        platformBrowserDynamic().bootstrapModule(AppModule);
    }
 }
