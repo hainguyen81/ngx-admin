@@ -3,6 +3,7 @@ import {Type} from '@angular/core';
 
 export type NoParamConstructor<T> = new() => T;
 export type Constructor<T> = new(...args: any[]) => T;
+export const DeepCloner = require('clone-deep');
 
 /**
  * Object utilities

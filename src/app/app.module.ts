@@ -41,8 +41,7 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* i18n */
 import {TranslateModule} from '@ngx-translate/core';
 /* Toaster */
-import {ToasterModule} from 'angular2-toaster';
-import {ToastrModule} from 'ngx-toastr';
+import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 /* Mock data */
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* SplitPane */
@@ -55,6 +54,12 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {TreeviewModule} from 'ngx-treeview';
 /* Angular material modules */
 import {AppMaterialModule} from './app.material.module';
+/* Device Detector */
+import {DeviceDetectorModule} from 'ngx-device-detector';
+/* Pipes */
+import {NgPipesModule} from 'ngx-pipes';
+/* Lightbox */
+import {LightboxModule} from 'ngx-lightbox';
 
 @NgModule({
     declarations: [AppComponent],
@@ -72,6 +77,15 @@ import {AppMaterialModule} from './app.material.module';
 
         /* Mock Data Module */
         MockDataModule.forRoot(),
+
+        /* Device Detector */
+        DeviceDetectorModule.forRoot(),
+
+        /* Pipes */
+        NgPipesModule,
+
+        /* Lightbox */
+        LightboxModule,
 
         /* Theme */
         ThemeModule.forRoot(),
@@ -95,8 +109,8 @@ import {AppMaterialModule} from './app.material.module';
         TranslateModule.forRoot(),
 
         /* Toaster */
-        ToasterModule.forRoot(),
         ToastrModule.forRoot(AppConfig.TOASTER),
+        ToastContainerModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

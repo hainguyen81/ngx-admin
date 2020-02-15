@@ -16,13 +16,13 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
 import {MatToolbar} from '@angular/material/toolbar';
 import {NbComponentSize} from '@nebular/theme/components/component-size';
 import {NbComponentStatus} from '@nebular/theme/components/component-status';
 import {NbComponentShape} from '@nebular/theme/components/component-shape';
 import {NbButtonComponent} from '@nebular/theme';
+import {ToastrService} from 'ngx-toastr';
 
 export const ACTION_SAVE: string = 'ACTION_SAVE';
 export const ACTION_RESET: string = 'ACTION_RESET';
@@ -194,7 +194,7 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,

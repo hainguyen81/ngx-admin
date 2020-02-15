@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -20,7 +19,6 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/organization';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../../../utils/component.utils';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';
@@ -31,6 +29,8 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
+import {DeepCloner} from '../../../../../utils/object.utils';
+import {ToastrService} from 'ngx-toastr';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -69,10 +69,19 @@ export class OrganizationSplitPaneComponent
     private organizationToolbarComponent: OrganizationToolbarComponent;
     private organizationTreeviewComponent: OrganizationTreeviewComponent;
     private organizationFormlyComponent: OrganizationFormlyComponent;
+    private selectedOrganization: IOrganization | null;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the selected {IOrganization} instance
+     * @return the selected {IOrganization} instance
+     */
+    protected getSelectedOrganization(): IOrganization {
+        return this.selectedOrganization;
+    }
 
     /**
      * Get the {OrganizationTreeviewComponent} instance
@@ -96,7 +105,7 @@ export class OrganizationSplitPaneComponent
 
     /**
      * Create a new instance of {OrganizationSplitPaneComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
@@ -106,9 +115,9 @@ export class OrganizationSplitPaneComponent
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
      */
-    constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
+    constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
@@ -234,10 +243,11 @@ export class OrganizationSplitPaneComponent
                 let organization: IOrganization;
                 organization = it.value as IOrganization;
                 if (organization) {
+                    this.selectedOrganization = organization;
                     // create formly form component
                     this.organizationFormlyComponent = this.createOrganizationFormlyComponent(
                         componentFactoryResolver, viewContainerRefs[1]);
-                    this.organizationFormlyComponent.getFormGroup().reset(organization);
+                    this.doReset();
                 }
             }
         });
@@ -251,17 +261,22 @@ export class OrganizationSplitPaneComponent
      * Perform saving data
      */
     private doSave(): void {
+        this.getFormlyComponent().getFormGroup().updateValueAndValidity();
         this.getDataSource().update(
-            this.getFormlyComponent().getModel(),
+            this.getSelectedOrganization(),
             this.getFormlyComponent().getModel())
-            .then(() => this.showSaveDataSuccess());
+            .then(() => this.showSaveDataSuccess())
+            .catch(() => this.showSaveDataError());
     }
 
     /**
      * Perform resetting data
      */
     private doReset(): void {
-        this.organizationFormlyComponent.getFormGroup().reset();
+        let clonedOrg: IOrganization;
+        clonedOrg = DeepCloner(this.selectedOrganization);
+        delete clonedOrg.parent, clonedOrg.children;
+        this.organizationFormlyComponent.setModel(clonedOrg);
     }
 
     /**
@@ -269,6 +284,7 @@ export class OrganizationSplitPaneComponent
      */
     private doDelete(): void {
         this.getDataSource().remove(this.getFormlyComponent().getModel())
-            .then(() => this.showDeleteDataSuccess());
+            .then(() => this.showDeleteDataSuccess())
+            .catch(() => this.showSaveDataError());
     }
 }

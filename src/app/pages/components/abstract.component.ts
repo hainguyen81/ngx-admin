@@ -29,8 +29,8 @@ import {
 } from '../../services/implementation/document.keyboard.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -179,10 +179,10 @@ export class AbstractComponent
     }
 
     /**
-     * Get the {ToasterService} instance for showing notification popup
-     * @return the {ToasterService} instance
+     * Get the {ToastrService} instance for showing notification popup
+     * @return the {ToastrService} instance
      */
-    protected getToasterService(): ToasterService {
+    protected getToasterService(): ToastrService {
         return this.toasterService;
     }
 
@@ -237,7 +237,7 @@ export class AbstractComponent
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) private toasterService: ToasterService,
+                          @Inject(ToastrService) private toasterService: ToastrService,
                           @Inject(NGXLogger) private logger: NGXLogger,
                           @Inject(Renderer2) private renderer: Renderer2,
                           @Inject(TranslateService) private translateService: TranslateService,
@@ -449,9 +449,16 @@ export class AbstractComponent
     onMenuEvent(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMenuEvent', event);
-        if (event && event.$data && event.$data['menu']
-            && typeof event.$data['menu']['click'] === 'function') {
-            event.$data['menu']['click']['apply'](this, [event.$data['item']]);
+        if (event && event.$data && event.$data['menu']) {
+            if (typeof event.$data['menu']['click'] === 'function') {
+                event.$data['menu']['click']['apply'](this, [event.$data['item']]);
+            } else {
+                let menuItem: IContextMenu;
+                menuItem = event.$data['menu'] as IContextMenu;
+                let mnuId: string;
+                mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
+                this.doMenuAction(event, mnuId, event.$data['item']);
+            }
         }
     }
 
@@ -621,6 +628,20 @@ export class AbstractComponent
     }
 
     /**
+     * Perform action on menu item
+     * @param event {IEvent} that contains {$data} as Object, consist of:
+     *      menu: menu item
+     *      item: menu item data
+     * and {$event} as action event
+     * @param menuId menu item identity
+     * @param data menu data
+     */
+    protected doMenuAction(event: IEvent, menuId?: string | null, data?: any | null) {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('doMenuAction', menuId, data);
+    }
+
+    /**
      * Show/Hide context menu base on the specified Row
      * @param event current event
      * @param target element target to show context menu if event is invalid
@@ -717,7 +738,23 @@ export class AbstractComponent
     }
 
     /**
-     * Show success notification toast
+     * Show message notification toast
+     * @param title toast title
+     * @param body toast message
+     * @param type toast type
+     */
+    protected showMessage(title?: string, body?: string, type?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().show(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title),
+            undefined, type);
+    }
+
+    /**
+     * Show success message notification toast
      * @param title toast title
      * @param body toast message
      */
@@ -725,9 +762,51 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().popAsync('info',
-            this.getTranslateService().instant(title),
-            this.getTranslateService().instant(body));
+        this.getToasterService().success(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
+    }
+
+    /**
+     * Show error message notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showError(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().error(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
+    }
+
+    /**
+     * Show info message notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showInfo(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().info(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
+    }
+
+    /**
+     * Show warning message notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showWarning(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().warning(
+            this.getTranslateService().instant(body),
+            this.getTranslateService().instant(title));
     }
 
     /**
@@ -738,9 +817,22 @@ export class AbstractComponent
     }
 
     /**
+     * Show error notification toast about saving data
+     */
+    protected showSaveDataError(): void {
+        this.showError('common.toast.save.error.title', 'common.toast.save.error.body');
+    }
+
+    /**
      * Show success notification toast about saving data
      */
     protected showDeleteDataSuccess(): void {
         this.showSuccess('common.toast.delete.success.title', 'common.toast.delete.success.body');
+    }
+    /**
+     * Show success notification toast about saving data
+     */
+    protected showDeleteDataError(): void {
+        this.showError('common.toast.delete.error.title', 'common.toast.delete.error.body');
     }
 }

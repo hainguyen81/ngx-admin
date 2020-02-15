@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {ICustomer, CUSTOMER_STATUS} from '../../../@core/data/customer';
+import {CUSTOMER_STATUS, ICustomer} from '../../../@core/data/customer';
 import {AbstractHttpService} from '../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../response.service';
@@ -30,18 +30,6 @@ export class CustomerDbService extends AbstractDbService<ICustomer> {
             this.getLogger().debug('Delete data', args, 'First data', args[0]);
             args[0].status = CUSTOMER_STATUS.LOCKED;
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
-        } else resolve(0);
-    }
-
-    updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
-                      reject: (reason?: any) => void, ...args: ICustomer[]) => {
-        if (args && args.length) {
-            this.getLogger().debug('Update data', args, 'First data', args[0]);
-            this.getDbService().update(this.getDbStore(), args[0])
-                .then(() => resolve(1), (errors) => {
-                    this.getLogger().error('Could not update data', errors);
-                    reject(errors);
-                });
         } else resolve(0);
     }
 }

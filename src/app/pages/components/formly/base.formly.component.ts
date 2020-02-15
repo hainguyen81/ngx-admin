@@ -12,8 +12,8 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
-import {ToasterService} from 'angular2-toaster';
 import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
+import {ToastrService} from 'ngx-toastr';
 
 /**
  * Base form component base on {FormlyModule}
@@ -59,7 +59,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,

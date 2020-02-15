@@ -9,9 +9,9 @@ import {
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractToolbarComponent, IToolbarActionsConfig} from './abstract.toolbar.component';
 import {ContextMenuService} from 'ngx-contextmenu';
-import {ToasterService} from 'angular2-toaster';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
+import {ToastrService} from 'ngx-toastr';
 
 /**
  * Toolbar component base on {MatToolbar}
@@ -42,7 +42,7 @@ export class NgxToolbarComponent extends AbstractToolbarComponent<DataSource> {
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,

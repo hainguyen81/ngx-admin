@@ -18,17 +18,16 @@ import {
     CONTEXT_MENU_ADD,
     CONTEXT_MENU_DELETE,
     CONTEXT_MENU_EDIT,
-    IContextMenu,
     IEvent,
 } from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
-import {ToasterService} from 'angular2-toaster';
 import ObjectUtils from '../../../utils/object.utils';
 import {throwError} from 'rxjs';
 import ComponentUtils from '../../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -163,7 +162,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
@@ -308,20 +307,21 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         this.preventEvent(event.$event);
     }
 
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
     /**
-     * Perform action on menu item has been clicked
+     * Perform action on menu item
      * @param event {IEvent} that contains {$data} as Object, consist of:
      *      menu: menu item
      *      item: menu item data
      * and {$event} as action event
+     * @param menuId menu item identity
+     * @param data menu data
      */
-    onMenuEvent(event) {
-        let menuItem: IContextMenu;
-        menuItem = (event && event.$data && event.$data['menu']
-            ? event.$data['menu'] as IContextMenu : undefined);
-        let mnuId: string;
-        mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
-        switch (mnuId) {
+    protected doMenuAction(event: IEvent, menuId?: string | null, data?: any | null) {
+        switch (menuId || '') {
             case CONTEXT_MENU_ADD:
                 let newItem: TreeviewItem;
                 newItem = this.newItem(event.$data['item']);
@@ -336,10 +336,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 break;
         }
     }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
 
     /**
      * Create new tree-view item node with the specified node data and the parent node

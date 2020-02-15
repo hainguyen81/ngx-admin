@@ -55,7 +55,18 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     }
 
     abstract deleteExecutor: PromiseExecutor<number, T>;
-    abstract updateExecutor: PromiseExecutor<number, T>;
+
+    updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
+                      reject: (reason?: any) => void, ...args: T[]) => {
+        if (args && args.length) {
+            this.getLogger().debug('Update data', args, 'First data', args[0]);
+            this.getDbService().update(this.getDbStore(), args[0])
+                .then(() => resolve(1), (errors) => {
+                    this.getLogger().error('Could not update data', errors);
+                    reject(errors);
+                });
+        } else resolve(0);
+    }
 
     delete(entity: T): Promise<number> {
         const _this: AbstractDbService<T> = this;

@@ -30,14 +30,26 @@
             }
         },
         "toast": {
-            "save.success": {
-                "title": "Lưu",
-                "body": "Dữ liệu đã lưu thành công!"
-            },
-            "delete.success": {
-                "title": "Xóa",
-                "body": "Đã xóa dữ liệu!"
-            }
+            "save": {
+				"success": {
+					"title": "Lưu",
+					"body": "Dữ liệu đã lưu thành công!"
+				},
+				"error": {
+					"title": "Lỗi",
+					"body": "Không thể lưu dữ liệu vì có lỗi!"
+				}
+			},
+            "delete": {
+				"success": {
+					"title": "Xóa",
+					"body": "Đã xóa dữ liệu!"
+				},
+				"error": {
+					"title": "Lỗi",
+					"body": "Không thể xoá dữ liệu vì có lỗi!"
+				}
+			}
         },
         "form": {
             "action": {

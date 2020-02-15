@@ -6,7 +6,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -18,7 +17,7 @@ import Organization, {IOrganization} from '../../../../../@core/data/organizatio
 import OrganizationUtils from '../../../../../utils/organization.utils';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
-import {ToasterService} from 'angular2-toaster';
+import {ToastrService} from 'ngx-toastr';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -65,7 +64,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
 
     /**
      * Create a new instance of {OrganizationTreeviewComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
@@ -77,7 +76,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
