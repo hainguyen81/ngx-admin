@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -38,7 +39,8 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
-export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource> {
+export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -111,6 +113,11 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
         setTimeout(() => this.focus(), 300);
+    }
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+        this.getDataSource().refresh();
     }
 
     // -------------------------------------------------

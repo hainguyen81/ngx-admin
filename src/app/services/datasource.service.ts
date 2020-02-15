@@ -45,7 +45,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         logger.updateConfig(LogConfig);
     }
 
-    reset(silent = false) {
+    reset(silent = false): void {
         if (silent) {
             this.filterCfg = {
                 filters: [],

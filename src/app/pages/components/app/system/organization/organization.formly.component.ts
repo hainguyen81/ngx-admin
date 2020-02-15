@@ -352,6 +352,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * @return {Observable}
      */
     private getAllUsers(): Observable<{ value: string, label: string }[]> {
+        this.userDataSource.setPaging(1, undefined, false);
         return PromiseUtils.promiseToObservable(
             this.userDataSource.getAll().then(userValues => {
                 let options: { value: string, label: string }[];
