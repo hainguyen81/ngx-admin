@@ -47,6 +47,7 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
      */
     public setModel(model: any) {
         this.model = model || {};
+        this.getFormGroup().reset(this.model);
     }
 
     // -------------------------------------------------
