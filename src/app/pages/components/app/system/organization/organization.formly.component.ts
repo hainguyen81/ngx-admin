@@ -18,11 +18,13 @@ import Organization, {
 } from '../../../../../@core/data/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {isArray} from 'util';
 import {UserDataSource} from '../../../../../services/implementation/user/user.datasource';
 import {IUser} from '../../../../../@core/data/user';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -320,6 +322,8 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -330,12 +334,14 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                @Inject(UserDataSource) private userDataSource: UserDataSource) {
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(UserDataSource) private userDataSource?: UserDataSource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
-        userDataSource || throwError('Could not inject UserDataSource');
         // parent selection settings
         super.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
         // manager selection settings
@@ -352,6 +358,10 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * @return {Observable}
      */
     private getAllUsers(): Observable<{ value: string, label: string }[]> {
+        if (!this.userDataSource) {
+            return new Observable<{ value: string, label: string }[]>();
+        }
+
         this.userDataSource.setPaging(1, undefined, false);
         return PromiseUtils.promiseToObservable(
             this.userDataSource.getAll().then(userValues => {

@@ -31,6 +31,8 @@ import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 import ComponentUtils from '../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {ModalDialogService} from 'ngx-modal-dialog';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -187,6 +189,24 @@ export class AbstractComponent
     }
 
     /**
+     * Get the {ModalDialogService} instance for showing modal dialog if necessary
+     * @return the {ModalDialogService} instance
+     */
+    protected getModalDialogService(): ModalDialogService {
+        this.modalDialogService || throwError('Could not inject ModalDialogService');
+        return this.modalDialogService;
+    }
+
+    /**
+     * Get the {ConfirmPopup} instance for showing confirmation popup if necessary
+     * @return the {ConfirmPopup} instance
+     */
+    protected getConfirmPopup(): ConfirmPopup {
+        this.confirmPopup || throwError('Could not inject ConfirmPopup');
+        return this.confirmPopup;
+    }
+
+    /**
      * Get the {ContextMenuService} instance for handling context menu
      * @return the {ContextMenuService} instance
      */
@@ -234,6 +254,8 @@ export class AbstractComponent
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
@@ -243,7 +265,9 @@ export class AbstractComponent
                           @Inject(TranslateService) private translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef) {
+                          @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) private modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup) {
         contextMenuService || throwError('Could not inject ContextMenuService');
         toasterService || throwError('Could not inject ToasterService');
         logger || throwError('Could not inject NGXLogger');

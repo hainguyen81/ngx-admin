@@ -31,6 +31,9 @@ import {
 } from '../../../toolbar/abstract.toolbar.component';
 import {DeepCloner} from '../../../../../utils/object.utils';
 import {ToastrService} from 'ngx-toastr';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {throwError} from 'rxjs';
+import {ModalDialogService} from 'ngx-modal-dialog';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -114,6 +117,8 @@ export class OrganizationSplitPaneComponent
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -123,10 +128,14 @@ export class OrganizationSplitPaneComponent
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
+        confirmPopup || throwError('Could not inject ConfirmPopup');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);
     }
@@ -289,8 +298,15 @@ export class OrganizationSplitPaneComponent
      * Perform deleting data
      */
     private doDelete(): void {
-        this.getDataSource().remove(this.getFormlyComponent().getModel())
-            .then(() => this.showDeleteDataSuccess())
-            .catch(() => this.showSaveDataError());
+        this.getConfirmPopup().show({
+            cancelButton: 'common.toast.confirm.delete.cancel',
+            color: 'warn',
+            content: 'common.toast.confirm.delete.message',
+            okButton: 'common.toast.confirm.delete.ok',
+            title: this.organizationToolbarComponent.getToolbarHeader().title,
+        }).toPromise().then(value => this.getLogger().debug('Confirm Result', value));
+        // this.getDataSource().remove(this.getFormlyComponent().getModel())
+        //     .then(() => this.showDeleteDataSuccess())
+        //     .catch(() => this.showSaveDataError());
     }
 }

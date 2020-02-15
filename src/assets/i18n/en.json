@@ -39,17 +39,24 @@
 					"title": "Error",
 					"body": "Could not save data because error has been occurred!"
 				}
-			},
+            },
             "delete": {
-				"success": {
-					"title": "Deletion",
-					"body": "Data has been deleted successfully!"
-				},
-				"error": {
-					"title": "Error",
-					"body": "Could not delete data because error has been occurred!"
-				}
-			}
+                "success": {
+                    "title": "Deletion",
+                    "body": "Data has been deleted successfully!"
+                },
+                "error": {
+                    "title": "Error",
+                    "body": "Could not delete data because error has been occurred!"
+                }
+            },
+            "confirm": {
+                "delete": {
+                    "message": "Do you really want to delete data?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
+                }
+            }
         },
         "form": {
             "invalid_data": "Please correct data before performing action!",

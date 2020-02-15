@@ -39,17 +39,24 @@
 					"title": "Lỗi",
 					"body": "Không thể lưu dữ liệu vì có lỗi!"
 				}
-			},
+            },
             "delete": {
-				"success": {
-					"title": "Xóa",
-					"body": "Đã xóa dữ liệu!"
-				},
-				"error": {
-					"title": "Lỗi",
-					"body": "Không thể xoá dữ liệu vì có lỗi!"
-				}
-			}
+                "success": {
+                    "title": "Xóa",
+                    "body": "Đã xóa dữ liệu!"
+                },
+                "error": {
+                    "title": "Lỗi",
+                    "body": "Không thể xoá dữ liệu vì có lỗi!"
+                }
+            },
+            "confirm": {
+                "delete": {
+                    "message": "Bạn thật sự muốn xóa dữ liệu?",
+                    "cancel": "Bỏ qua",
+                    "ok": "Đồng ý"
+                }
+            }
         },
         "form": {
             "invalid_data": "Vui lòng nhập đầy đủ thông tin yêu cầu trước khi tiếp tục!",

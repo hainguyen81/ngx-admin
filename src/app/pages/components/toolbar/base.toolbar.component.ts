@@ -13,6 +13,8 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from './abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /**
  * Toolbar component base on {MatToolbar}
@@ -39,6 +41,8 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      * @param toolbarHeader toolbar header
      * @param actions {IToolbarActionsConfig}
      */
@@ -51,10 +55,13 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           toolbarHeader?: IToolbarHeaderConfig, actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
         this.setToolbarHeader(toolbarHeader);
         this.setActions(actions);
     }
