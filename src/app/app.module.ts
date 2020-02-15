@@ -60,6 +60,9 @@ import {DeviceDetectorModule} from 'ngx-device-detector';
 import {NgPipesModule} from 'ngx-pipes';
 /* Lightbox */
 import {LightboxModule} from 'ngx-lightbox';
+/* Popup, Dialogs */
+import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
+import {ModalDialogModule} from 'ngx-modal-dialog';
 
 @NgModule({
     declarations: [AppComponent],
@@ -71,6 +74,12 @@ import {LightboxModule} from 'ngx-lightbox';
 
         /* Angular material modules */
         AppMaterialModule,
+
+        /* Popup, Dialogs */
+        AlertPopupModule,
+        ConfirmPopupModule,
+        PromptPopupModule,
+        ModalDialogModule.forRoot(),
 
         /* Core Module for layout */
         CoreModule.forRoot(),

@@ -13,6 +13,8 @@ import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
 import {DeviceDetectorModule} from 'ngx-device-detector';
 import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
+import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
+import {ModalDialogModule} from 'ngx-modal-dialog';
 
 @NgModule({
     imports: [
@@ -25,6 +27,12 @@ import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 
         /* Angular material modules */
         AppMaterialModule,
+
+        /* Popup, Dialogs */
+        AlertPopupModule,
+        ConfirmPopupModule,
+        PromptPopupModule,
+        ModalDialogModule.forRoot(),
 
         /* Device Detector */
         DeviceDetectorModule,

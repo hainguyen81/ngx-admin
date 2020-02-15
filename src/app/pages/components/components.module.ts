@@ -33,6 +33,8 @@ import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
+import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
+import {ModalDialogModule} from 'ngx-modal-dialog';
 
 @NgModule({
     imports: [
@@ -51,6 +53,12 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
 
         /* Angular material modules */
         AppMaterialModule,
+
+        /* Popup, Dialogs */
+        AlertPopupModule,
+        ConfirmPopupModule,
+        PromptPopupModule,
+        ModalDialogModule.forRoot(),
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
