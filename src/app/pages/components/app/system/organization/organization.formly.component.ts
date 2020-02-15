@@ -25,6 +25,7 @@ import {UserDataSource} from '../../../../../services/implementation/user/user.d
 import {IUser} from '../../../../../@core/data/user';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {EmailValidators} from 'ngx-validators';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -171,6 +172,9 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'system.organization.form.email.label',
                     placeholder: 'system.organization.form.email.placeholder',
+                },
+                validators: {
+                    validation: [EmailValidators.normal],
                 },
             },
             {
