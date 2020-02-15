@@ -63,6 +63,7 @@ import {LightboxModule} from 'ngx-lightbox';
 /* Popup, Dialogs */
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
 @NgModule({
     declarations: [AppComponent],
@@ -191,6 +192,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
     ],
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],

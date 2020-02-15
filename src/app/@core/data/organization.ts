@@ -44,8 +44,8 @@ export interface IOrganization extends IModel {
     legal_representative?: string | null;
     tel_representative?: string | null;
     business_license?: string | null;
-    business_license_dt?: number | string | null;
-    date_incorporation?: number | string | null;
+    business_license_dt?: string | Date | null;
+    date_incorporation?: string | Date | null;
     bank_company?: string | null;
     bank_company_at?: string | null;
     bank_company_account?: string | null;
@@ -62,8 +62,8 @@ export default class Organization implements IOrganization {
                 public managerId?: string | null, public manager?: any,
                 public image?: string | { icon: string, pack: string } | null,
                 public legal_representative?: string | null, public tel_representative?: string | null,
-                public business_license?: string | null, public business_license_dt?: number | string | null,
-                public date_incorporation?: number | string | null,
+                public business_license?: string | null, public business_license_dt?: string | Date | null,
+                public date_incorporation?: string | Date | null,
                 public bank_company?: string | null, public bank_company_at?: string | null,
                 public bank_company_account?: string | null,
                 public children?: IOrganization[] | null) {

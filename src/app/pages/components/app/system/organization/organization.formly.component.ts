@@ -222,7 +222,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'business_license_dt',
-                type: 'input',
+                type: 'datepicker',
                 templateOptions: {
                     label: 'system.organization.form.business_license_dt.label',
                     placeholder: 'system.organization.form.business_license_dt.placeholder',
@@ -236,7 +236,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'date_incorporation',
-                type: 'input',
+                type: 'datepicker',
                 templateOptions: {
                     label: 'system.organization.form.date_incorporation.label',
                     placeholder: 'system.organization.form.date_incorporation.placeholder',

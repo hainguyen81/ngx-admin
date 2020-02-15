@@ -35,6 +35,7 @@ import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
 @NgModule({
     imports: [
@@ -99,6 +100,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
