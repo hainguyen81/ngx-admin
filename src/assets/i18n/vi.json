@@ -52,6 +52,7 @@
 			}
         },
         "form": {
+            "invalid_data": "Vui lòng nhập đầy đủ thông tin yêu cầu trước khi tiếp tục!",
             "action": {
                 "save": "Lưu",
                 "reset": "Reset",

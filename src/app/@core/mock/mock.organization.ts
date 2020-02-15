@@ -1,6 +1,7 @@
 import ObjectUtils from '../../utils/object.utils';
 import {IdGenerators} from '../../config/generator.config';
 import {IOrganization, ORGANIZTAION_TYPE} from '../data/organization';
+import {MockUserAdmin} from './mock.user';
 
 export const MAXIMUM_MOCK_ORGANIZATION_HEAD: number = 10;
 export const MAXIMUM_MOCK_ORGANIZATION_BRANCH: number = 10;
@@ -36,6 +37,10 @@ export function organizationGenerate(): IOrganization[] {
         mockOrgHead.id = IdGenerators.oid.generate();
         mockOrgHead.code = 'HEAD-'.concat((i + 1).toString());
         mockOrgHead.name = 'Head '.concat((i + 1).toString());
+        mockOrgHead.managerId = MockUserAdmin.id;
+        mockOrgHead.manager = MockUserAdmin;
+        // TODO Be careful with recursively forever (stack overflow)
+        // mockOrgHead.parent = undefined;
         mockOrgHead.children = [];
         mockOrganization.push(mockOrgHead);
 
@@ -45,6 +50,8 @@ export function organizationGenerate(): IOrganization[] {
             mockOrgBranch.id = IdGenerators.oid.generate();
             mockOrgBranch.code = 'BRANCH-'.concat((j + 1).toString());
             mockOrgBranch.name = 'Branch '.concat((j + 1).toString());
+            mockOrgBranch.managerId = MockUserAdmin.id;
+            mockOrgBranch.manager = MockUserAdmin;
             mockOrgBranch.parentId = mockOrgHead.id;
             // TODO Be careful with recursively forever (stack overflow)
             // mockOrgBranch.parent = mockOrgHead;
@@ -57,6 +64,8 @@ export function organizationGenerate(): IOrganization[] {
                 mockOrgDept.id = IdGenerators.oid.generate();
                 mockOrgDept.code = 'DEPT-'.concat((k + 1).toString());
                 mockOrgDept.name = 'Department '.concat((k + 1).toString());
+                mockOrgDept.managerId = MockUserAdmin.id;
+                mockOrgDept.manager = MockUserAdmin;
                 mockOrgDept.parentId = mockOrgBranch.id;
                 // TODO Be careful with recursively forever (stack overflow)
                 // mockOrgDept.parent = mockOrgBranch;

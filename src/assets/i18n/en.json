@@ -52,6 +52,7 @@
 			}
         },
         "form": {
+            "invalid_data": "Please correct data before performing action!",
             "action": {
                 "save": "Save",
                 "reset": "Reset",

@@ -18,6 +18,11 @@ import Organization, {
 } from '../../../../../@core/data/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
+import {Observable, throwError} from 'rxjs';
+import PromiseUtils from '../../../../../utils/promise.utils';
+import {isArray} from 'util';
+import {UserDataSource} from '../../../../../services/implementation/user/user.datasource';
+import {IUser} from '../../../../../@core/data/user';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -34,12 +39,9 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'system.organization.form.belongTo.label',
                     placeholder: 'system.organization.form.belongTo.placeholder',
-                    options: [
-                        {value: 1, label: 'Parent 1'},
-                        {value: 2, label: 'Parent 2'},
-                        {value: 3, label: 'Parent 3'},
-                        {value: 4, label: 'Parent 4'},
-                    ],
+                    options: [],
+                    disabled: true,
+                    required: true,
                 },
             },
         ],
@@ -80,6 +82,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                             label: convertOrganizationTypeToDisplay(ORGANIZTAION_TYPE.TEAM_GROUP),
                         },
                     ],
+                    required: true,
                 },
             },
             {
@@ -89,12 +92,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'system.organization.form.manager.label',
                     placeholder: 'system.organization.form.manager.placeholder',
-                    options: [
-                        {value: 1, label: 'Manager 1'},
-                        {value: 2, label: 'Manager 2'},
-                        {value: 3, label: 'Manager 3'},
-                        {value: 4, label: 'Manager 4'},
-                    ],
+                    options: [],
                 },
             },
         ],
@@ -109,6 +107,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'system.organization.form.code.label',
                     placeholder: 'system.organization.form.code.placeholder',
+                    required: true,
                 },
             },
             {
@@ -118,6 +117,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'system.organization.form.name.label',
                     placeholder: 'system.organization.form.name.placeholder',
+                    required: true,
                 },
             },
         ],
@@ -329,11 +329,98 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(UserDataSource) private userDataSource: UserDataSource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
+        userDataSource || throwError('Could not inject UserDataSource');
+        // parent selection settings
+        super.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
+        // manager selection settings
+        super.getFields()[1].fieldGroup[1].templateOptions.options = this.getAllUsers();
         super.setModel(new Organization(undefined, undefined, undefined, undefined));
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Get the organization list for options selection
+     * @return {Observable}
+     */
+    private getAllUsers(): Observable<{ value: string, label: string }[]> {
+        return PromiseUtils.promiseToObservable(
+            this.userDataSource.getAll().then(userValues => {
+                let options: { value: string, label: string }[];
+                options = [];
+                Array.from(userValues).forEach((userValue: IUser) => {
+                    this.mapUserAsOptions(userValue, options);
+                });
+                return options;
+            }));
+    }
+
+    /**
+     * Get the organization list for options selection
+     * @return {Observable}
+     */
+    private getAllOrganization(): Observable<{ value: string, label: string }[]> {
+        return PromiseUtils.promiseToObservable(
+            this.getDataSource().getAll().then(orgValues => {
+                if (!isArray(orgValues)) {
+                    orgValues = [].push(orgValues);
+                }
+                let options: { value: string, label: string }[];
+                options = [];
+                Array.from(orgValues).forEach((orgValue: IOrganization) => {
+                    this.mapOrganizationAsOptions(orgValue, options);
+                });
+                return options;
+            }));
+    }
+
+    /**
+     * Map the specified {IOrganization} into the return options array recursively
+     * @param orgValue to map
+     * @param retValues to push returned values
+     */
+    private mapOrganizationAsOptions(orgValue: IOrganization, retValues: { value: string, label: string }[]): void {
+        if (!orgValue) {
+            return;
+        }
+
+        if (!retValues) {
+            retValues = [];
+        }
+        retValues.push({value: orgValue.id, label: orgValue.name});
+        if (orgValue.children && orgValue.children.length) {
+            for (const orgChild of orgValue.children) {
+                this.mapOrganizationAsOptions(orgChild, retValues);
+            }
+        }
+    }
+
+    /**
+     * Map the specified {IUser} into the return options array recursively
+     * @param userValue to map
+     * @param retValues to push returned values
+     */
+    private mapUserAsOptions(userValue: IUser, retValues: { value: string, label: string }[]): void {
+        if (!userValue) {
+            return;
+        }
+
+        if (!retValues) {
+            retValues = [];
+        }
+        let userName: string;
+        userName = userValue.username;
+        if ((userValue.firstName || '').length || (userValue.lastName || '')) {
+            userName = [(userValue.firstName || ''), (userValue.lastName || '')].join(' ').trim();
+        }
+        retValues.push({value: userValue.id, label: userName});
     }
 }

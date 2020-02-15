@@ -262,6 +262,12 @@ export class OrganizationSplitPaneComponent
      */
     private doSave(): void {
         this.getFormlyComponent().getFormGroup().updateValueAndValidity();
+        if (this.getFormlyComponent().getFormGroup().invalid) {
+            this.showError(this.organizationToolbarComponent.getToolbarHeader().title,
+                'common.form.invalid_data');
+            return;
+        }
+
         this.getDataSource().update(
             this.getSelectedOrganization(),
             this.getFormlyComponent().getModel())
