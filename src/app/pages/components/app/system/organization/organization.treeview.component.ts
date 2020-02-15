@@ -141,7 +141,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         let newItem: TreeviewItem;
         newItem = super.newItem(parent, treeItem);
         if (newItem) {
-            newItem.text = this.getTranslateService().instant('system.organization.new');
+            newItem.text = this.translate('system.organization.new');
             newItem.value = new Organization(
                 undefined, undefined, undefined, undefined);
         }

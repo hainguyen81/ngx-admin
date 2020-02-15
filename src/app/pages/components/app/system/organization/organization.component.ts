@@ -299,14 +299,15 @@ export class OrganizationSplitPaneComponent
      */
     private doDelete(): void {
         this.getConfirmPopup().show({
-            cancelButton: 'common.toast.confirm.delete.cancel',
+            cancelButton: this.translate('common.toast.confirm.delete.cancel'),
             color: 'warn',
-            content: 'common.toast.confirm.delete.message',
-            okButton: 'common.toast.confirm.delete.ok',
-            title: this.organizationToolbarComponent.getToolbarHeader().title,
-        }).toPromise().then(value => this.getLogger().debug('Confirm Result', value));
-        // this.getDataSource().remove(this.getFormlyComponent().getModel())
-        //     .then(() => this.showDeleteDataSuccess())
-        //     .catch(() => this.showSaveDataError());
+            content: this.translate('common.toast.confirm.delete.message'),
+            okButton: this.translate('common.toast.confirm.delete.ok'),
+            title: this.translate(this.organizationToolbarComponent.getToolbarHeader().title),
+        }).toPromise().then(value => {
+            value && this.getDataSource().remove(this.getFormlyComponent().getModel())
+                .then(() => this.showDeleteDataSuccess())
+                .catch(() => this.showSaveDataError());
+        });
     }
 }

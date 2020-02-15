@@ -771,10 +771,7 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().show(
-            this.getTranslateService().instant(body),
-            this.getTranslateService().instant(title),
-            undefined, type);
+        this.getToasterService().show(this.translate(body), this.translate(title), undefined, type);
     }
 
     /**
@@ -786,9 +783,7 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().success(
-            this.getTranslateService().instant(body),
-            this.getTranslateService().instant(title));
+        this.getToasterService().success(this.translate(body), this.translate(title));
     }
 
     /**
@@ -800,9 +795,7 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().error(
-            this.getTranslateService().instant(body),
-            this.getTranslateService().instant(title));
+        this.getToasterService().error(this.translate(body), this.translate(title));
     }
 
     /**
@@ -814,9 +807,7 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().info(
-            this.getTranslateService().instant(body),
-            this.getTranslateService().instant(title));
+        this.getToasterService().info(this.translate(body), this.translate(title));
     }
 
     /**
@@ -828,9 +819,7 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().warning(
-            this.getTranslateService().instant(body),
-            this.getTranslateService().instant(title));
+        this.getToasterService().warning(this.translate(body), this.translate(title));
     }
 
     /**
@@ -853,10 +842,23 @@ export class AbstractComponent
     protected showDeleteDataSuccess(): void {
         this.showSuccess('common.toast.delete.success.title', 'common.toast.delete.success.body');
     }
+
     /**
      * Show success notification toast about saving data
      */
     protected showDeleteDataError(): void {
         this.showError('common.toast.delete.error.title', 'common.toast.delete.error.body');
+    }
+
+    /**
+     * Translate the specified value
+     * @param value to translate
+     * @return translated value or itself
+     */
+    public translate(value?: string): string {
+        if (!(value || '').length || !this.getTranslateService()) {
+            return value;
+        }
+        return this.getTranslateService().instant(value);
     }
 }
