@@ -7,7 +7,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -40,7 +39,7 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
 
     /**
      * Create a new instance of {OrganizationToolbarComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
@@ -51,7 +50,7 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
      * @param changeDetectorRef {ChangeDetectorRef}
      * @param actions {IToolbarActionsConfig}
      */
-    constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
+    constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,

@@ -6,7 +6,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -65,7 +64,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
 
     /**
      * Create a new instance of {OrganizationTreeviewComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
