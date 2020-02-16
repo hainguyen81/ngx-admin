@@ -93,31 +93,6 @@ export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 export class CustomerSmartTableComponent extends BaseSmartTableComponent<CustomerDatasource> {
 
     // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    protected setTableSettings(settings: any) {
-        // translate
-        settings['noDataMessage'] = this.translate(settings['noDataMessage']);
-        settings['columns']['status']['valuePrepareFunction'] = value => this.convertCustomerStatusToDisplay(value);
-        settings['columns']['status']['editor']['config']['list'] = [
-            {
-                value: CUSTOMER_STATUS.NOT_ACTIVATED,
-                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.NOT_ACTIVATED),
-            },
-            {
-                value: CUSTOMER_STATUS.ACTIVATED,
-                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.ACTIVATED),
-            },
-            {
-                value: CUSTOMER_STATUS.LOCKED,
-                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.LOCKED),
-            },
-        ];
-        super.setTableSettings(settings);
-    }
-
-    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -175,5 +150,29 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
      */
     private convertCustomerStatusToDisplay(value: CUSTOMER_STATUS): string {
         return this.translate(convertCustomerStatusToDisplay(value));
+    }
+
+    /**
+     * Translate table settings
+     */
+    protected translateSettings(): void {
+        super.translateSettings();
+
+        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
+            value => this.convertCustomerStatusToDisplay(value);
+        this.translatedSettings['columns']['status']['editor']['config']['list'] = [
+            {
+                value: CUSTOMER_STATUS.NOT_ACTIVATED,
+                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.NOT_ACTIVATED),
+            },
+            {
+                value: CUSTOMER_STATUS.ACTIVATED,
+                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.ACTIVATED),
+            },
+            {
+                value: CUSTOMER_STATUS.LOCKED,
+                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.LOCKED),
+            },
+        ];
     }
 }

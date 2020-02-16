@@ -90,7 +90,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
     private tableHeader: string;
     private settings: any = DefaultTableSettings;
-    private translatedSettings: any = DefaultTableSettings;
+    protected translatedSettings: any = DefaultTableSettings;
 
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
@@ -1334,7 +1334,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     /**
      * Translate table settings
      */
-    private translateSettings(): void {
+    protected translateSettings(): void {
         // apply translate
         this.translatedSettings = DeepCloner(this.settings);
         if (this.translatedSettings && Object.keys(this.translatedSettings).length) {

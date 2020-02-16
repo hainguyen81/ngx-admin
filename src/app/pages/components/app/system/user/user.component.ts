@@ -94,31 +94,6 @@ export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSource> {
 
     // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    protected setTableSettings(settings: any) {
-        // translate
-        settings['noDataMessage'] = this.translate(settings['noDataMessage']);
-        settings['columns']['status']['valuePrepareFunction'] = value => this.convertUserStatusToDisplay(value);
-        settings['columns']['status']['editor']['config']['list'] = [
-            {
-                value: USER_STATUS.NOT_ACTIVATED,
-                title: this.convertUserStatusToDisplay(USER_STATUS.NOT_ACTIVATED),
-            },
-            {
-                value: USER_STATUS.ACTIVATED,
-                title: this.convertUserStatusToDisplay(USER_STATUS.ACTIVATED),
-            },
-            {
-                value: USER_STATUS.LOCKED,
-                title: this.convertUserStatusToDisplay(USER_STATUS.LOCKED),
-            },
-        ];
-        super.setTableSettings(settings);
-    }
-
-    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -175,5 +150,30 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
      */
     private convertUserStatusToDisplay(value: USER_STATUS): string {
         return this.translate(convertUserStatusToDisplay(value));
+    }
+
+    /**
+     * Translate table settings
+     */
+    protected translateSettings(): void {
+        super.translateSettings();
+
+        // translate
+        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
+            value => this.convertUserStatusToDisplay(value);
+        this.translatedSettings['columns']['status']['editor']['config']['list'] = [
+            {
+                value: USER_STATUS.NOT_ACTIVATED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.NOT_ACTIVATED),
+            },
+            {
+                value: USER_STATUS.ACTIVATED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.ACTIVATED),
+            },
+            {
+                value: USER_STATUS.LOCKED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.LOCKED),
+            },
+        ];
     }
 }

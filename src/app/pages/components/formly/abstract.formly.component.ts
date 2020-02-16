@@ -40,7 +40,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     /* whole form group */
     private formGroup: FormGroup = new FormGroup({});
     private renderForm?: boolean | true;
-    private translatedFields: FormlyFieldConfig[];
+    protected translatedFields: FormlyFieldConfig[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS

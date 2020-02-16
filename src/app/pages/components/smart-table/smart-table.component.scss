@@ -23,6 +23,10 @@
                             color: nb-theme(color-basic-800) !important;
                             height: inherit;
                         }
+
+                        .form-control {
+                            padding: 0.25em !important;
+                        }
                     }
                 }
 
