@@ -18,7 +18,6 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -66,18 +65,6 @@ export const CustomerTableSettings = {
             editor: {
                 type: 'list',
                 config: {list: []},
-            },
-        },
-        enterprise: {
-            title: 'system.customer.table.enterprise',
-            type: 'custom',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: CheckboxCellComponent,
-            editor: {
-                type: 'custom',
-                component: CheckboxCellComponent,
             },
         },
     },
