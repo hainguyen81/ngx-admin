@@ -37,6 +37,8 @@ import {
 import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
+import {PagesGuard} from '../pages/pages.guard.service';
+import {ToastrService} from 'ngx-toastr';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -151,6 +153,10 @@ export const MenuProviders: StaticProvider[] = [
     {
         provide: MenuService, useClass: MenuService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: PagesGuard, useClass: PagesGuard,
+        deps: [ModuleService, Router, ToastrService, TranslateService, NGXLogger],
     },
 ];
 

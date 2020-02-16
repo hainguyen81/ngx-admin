@@ -56,7 +56,8 @@
                     "cancel": "Cancel",
                     "ok": "OK"
                 }
-            }
+            },
+            "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
         },
         "form": {
             "invalid_data": "Please correct data before performing action!",

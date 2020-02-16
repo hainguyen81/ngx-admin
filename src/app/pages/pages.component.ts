@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject} from '@angular/core';
 import {MenuService} from '../services/implementation/menu.service';
 import {NbMenuItem} from '@nebular/theme';
 import {NGXLogger} from 'ngx-logger';
@@ -15,7 +15,7 @@ import {throwError} from 'rxjs';
         </ngx-one-column-layout>
     `,
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent implements AfterViewInit {
 
     private menu: NbMenuItem[];
 
@@ -44,7 +44,7 @@ export class PagesComponent implements OnInit {
         this.menu = [];
     }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         this.getMenuService().buildMenu().then(
             (menuItems: NbMenuItem[]) => {
                 this.getLogger().debug('Menu', menuItems);
