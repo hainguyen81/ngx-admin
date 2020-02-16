@@ -3,10 +3,11 @@ import {NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServi
 import {map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 /* Authentication */
-import {NbAuthOAuth2Token, NbAuthService} from '@nebular/auth';
+import {NbAuthOAuth2Token, NbAuthService, NbAuthToken} from '@nebular/auth';
 import {AppConfig} from '../../../config/app.config';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
+import {NbxOAuth2AuthDbService} from '../../../auth/auth.oauth2.service';
 
 @Component({
     selector: 'ngx-header',
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     userPictureOnly: boolean = false;
 
     /* Authentication */
+    token: NbAuthToken;
     user: any;
 
     languages = AppConfig.i18n.languages;
@@ -52,6 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 private themeService: NbThemeService,
                 private breakpointService: NbMediaBreakpointsService,
                 private authService: NbAuthService,
+                private authDbService: NbxOAuth2AuthDbService<NbAuthToken>,
                 private translateService: TranslateService,
                 private logger: NGXLogger) {
         /* Authentication */
@@ -60,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
                 if (token.isValid()) {
                     // here we receive a payload from the token and assigns it to our `user` variable
+                    this.token = token;
                     this.user = token.getPayload();
                     this.currentLang = this.user['lang'] || this.languages[0];
                     this.user['lang'] = this.currentLang;
@@ -117,6 +121,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     changeLanguage(language: string) {
         this.translateService.use(language);
+        this.user['lang'] = language;
+        this.authDbService.update(this.token);
     }
 
     toggleSidebar(): boolean {
