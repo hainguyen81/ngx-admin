@@ -163,23 +163,24 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     protected setTableSettings(settings: any) {
         // apply translate
         if (settings && Object.keys(settings).length) {
-            let translate: TranslateService;
-            translate = this.getTranslateService();
             if (settings.hasOwnProperty('noDataMessage') && (settings['noDataMessage'] || '').length) {
-                settings['noDataMessage'] = translate.instant(settings['noDataMessage'] || '');
+                settings['noDataMessage'] = this.translate(settings['noDataMessage'] || '');
             }
             if (settings.hasOwnProperty('columns')) {
                 Object.values(settings['columns']).forEach(column => {
                     if (column) {
                         if (column.hasOwnProperty('title') && (column['title'] || '').length) {
-                            column['title'] = translate.instant(column['title']);
+                            column['title'] = this.translate(column['title']);
+                        }
+                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
+                            column['title'] = this.translate(column['title']);
                         }
                         if (column['editor'] && column['editor']['config']
                             && isArray(column['editor']['config']['list'])) {
                             Array.from(column['editor']['config']['list']).forEach(item => {
                                 if (item && item.hasOwnProperty('title')
                                     && (item['title'] || '').length) {
-                                    item['title'] = translate.instant(item['title'] || '');
+                                    item['title'] = this.translate(item['title'] || '');
                                 }
                             });
                         }

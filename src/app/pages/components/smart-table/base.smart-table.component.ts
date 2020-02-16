@@ -67,9 +67,9 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             modalDialogService, confirmPopup);
-        super.setTableHeader(tableHeader || '');
-        super.setTableSettings(tableSettings);
-        super.setContextMenu(contextMenu || []);
+        this.setTableHeader(tableHeader || '');
+        this.setTableSettings(tableSettings);
+        this.setContextMenu(contextMenu || []);
     }
 
     /**

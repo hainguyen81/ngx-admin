@@ -71,6 +71,6 @@ export abstract class BaseNgxDropdownTreeviewComponent<T extends DataSource> ext
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             modalDialogService, confirmPopup);
-        super.setDropDown(true);
+        this.setDropDown(true);
     }
 }

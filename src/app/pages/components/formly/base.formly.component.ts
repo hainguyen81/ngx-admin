@@ -80,9 +80,9 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             modalDialogService, confirmPopup);
-        super.setConfig(config);
-        super.setFields(fields);
-        super.setOptions(options);
-        super.setActions(actions);
+        this.setConfig(config);
+        this.setFields(fields);
+        this.setOptions(options);
+        this.setActions(actions);
     }
 }

@@ -19,6 +19,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 
+/* users table settings */
 export const UserTableSettings = {
     hideSubHeader: true,
     noDataMessage: 'system.user.table.noData',
@@ -60,27 +61,11 @@ export const UserTableSettings = {
         status: {
             title: 'system.user.table.status',
             type: 'string',
-            valuePrepareFunction: convertUserStatusToDisplay,
             sort: false,
             filter: false,
             editor: {
                 type: 'list',
-                config: {
-                    list: [
-                        {
-                            value: USER_STATUS.NOT_ACTIVATED,
-                            title: convertUserStatusToDisplay(USER_STATUS.NOT_ACTIVATED),
-                        },
-                        {
-                            value: USER_STATUS.ACTIVATED,
-                            title: convertUserStatusToDisplay(USER_STATUS.ACTIVATED),
-                        },
-                        {
-                            value: USER_STATUS.LOCKED,
-                            title: convertUserStatusToDisplay(USER_STATUS.LOCKED),
-                        },
-                    ],
-                },
+                config: {list: []},
             },
         },
         enterprise: {
@@ -104,6 +89,31 @@ export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSource> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected setTableSettings(settings: any) {
+        // translate
+        settings['noDataMessage'] = this.translate(settings['noDataMessage']);
+        settings['columns']['status']['valuePrepareFunction'] = value => this.convertUserStatusToDisplay(value);
+        settings['columns']['status']['editor']['config']['list'] = [
+            {
+                value: USER_STATUS.NOT_ACTIVATED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.NOT_ACTIVATED),
+            },
+            {
+                value: USER_STATUS.ACTIVATED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.ACTIVATED),
+            },
+            {
+                value: USER_STATUS.LOCKED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.LOCKED),
+            },
+        ];
+        super.setTableSettings(settings);
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -143,11 +153,24 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
-            { field: 'username', search: keyword },
-            { field: 'firstName', search: keyword },
-            { field: 'lastName', search: keyword },
-            { field: 'email', search: keyword },
+            {field: 'username', search: keyword},
+            {field: 'firstName', search: keyword},
+            {field: 'lastName', search: keyword},
+            {field: 'email', search: keyword},
         ], false);
         this.getDataSource().refresh();
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Convert {USER_STATUS} to the showed translated value
+     * @param value to convert
+     * @return converted value
+     */
+    private convertUserStatusToDisplay(value: USER_STATUS): string {
+        return this.translate(convertUserStatusToDisplay(value));
     }
 }

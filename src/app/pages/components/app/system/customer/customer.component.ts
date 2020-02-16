@@ -19,6 +19,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 
+/* customers table settings */
 export const CustomerTableSettings = {
     hideSubHeader: true,
     noDataMessage: 'system.customer.table.noData',
@@ -59,27 +60,11 @@ export const CustomerTableSettings = {
         status: {
             title: 'system.customer.table.status',
             type: 'string',
-            valuePrepareFunction: convertCustomerStatusToDisplay,
             sort: false,
             filter: false,
             editor: {
                 type: 'list',
-                config: {
-                    list: [
-                        {
-                            value: CUSTOMER_STATUS.NOT_ACTIVATED,
-                            title: convertCustomerStatusToDisplay(CUSTOMER_STATUS.NOT_ACTIVATED),
-                        },
-                        {
-                            value: CUSTOMER_STATUS.ACTIVATED,
-                            title: convertCustomerStatusToDisplay(CUSTOMER_STATUS.ACTIVATED),
-                        },
-                        {
-                            value: CUSTOMER_STATUS.LOCKED,
-                            title: convertCustomerStatusToDisplay(CUSTOMER_STATUS.LOCKED),
-                        },
-                    ],
-                },
+                config: {list: []},
             },
         },
         enterprise: {
@@ -103,6 +88,31 @@ export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class CustomerSmartTableComponent extends BaseSmartTableComponent<CustomerDatasource> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected setTableSettings(settings: any) {
+        // translate
+        settings['noDataMessage'] = this.translate(settings['noDataMessage']);
+        settings['columns']['status']['valuePrepareFunction'] = value => this.convertCustomerStatusToDisplay(value);
+        settings['columns']['status']['editor']['config']['list'] = [
+            {
+                value: CUSTOMER_STATUS.NOT_ACTIVATED,
+                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.NOT_ACTIVATED),
+            },
+            {
+                value: CUSTOMER_STATUS.ACTIVATED,
+                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.ACTIVATED),
+            },
+            {
+                value: CUSTOMER_STATUS.LOCKED,
+                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.LOCKED),
+            },
+        ];
+        super.setTableSettings(settings);
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -149,5 +159,18 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
             {field: 'address', search: keyword},
         ], false);
         this.getDataSource().refresh();
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Convert {CUSTOMER_STATUS} to the showed translated value
+     * @param value to convert
+     * @return converted value
+     */
+    private convertCustomerStatusToDisplay(value: CUSTOMER_STATUS): string {
+        return this.translate(convertCustomerStatusToDisplay(value));
     }
 }
