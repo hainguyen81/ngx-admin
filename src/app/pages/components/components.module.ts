@@ -36,8 +36,8 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
-import {CheckboxViewcellComponent} from './smart-table/checkbox.viewcell.component';
 import {CellModule} from 'ng2-smart-table/components/cell/cell.module';
+import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 
 @NgModule({
     imports: [
@@ -109,11 +109,11 @@ import {CellModule} from 'ng2-smart-table/components/cell/cell.module';
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
-        CheckboxViewcellComponent,
+        CheckboxCellComponent,
     ],
     declarations: [
         SmartTableComponent,
-        CheckboxViewcellComponent,
+        CheckboxCellComponent,
         NgxToolbarComponent,
         NgxTreeviewComponent,
         NgxFormlyComponent,

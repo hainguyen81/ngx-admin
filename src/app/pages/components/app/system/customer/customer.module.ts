@@ -1,5 +1,12 @@
 import {NgModule} from '@angular/core';
-import {NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbSelectModule} from '@nebular/theme';
+import {
+    NbCardModule,
+    NbCheckboxModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbInputModule,
+    NbSelectModule
+} from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';

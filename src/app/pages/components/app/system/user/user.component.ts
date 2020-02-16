@@ -18,7 +18,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {CheckboxViewcellComponent} from '../../../smart-table/checkbox.viewcell.component';
+import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -75,9 +75,10 @@ export const UserTableSettings = {
             sort: false,
             filter: false,
             editable: false,
-            renderComponent: CheckboxViewcellComponent,
+            renderComponent: CheckboxCellComponent,
             editor: {
-                type: 'checkbox',
+                type: 'custom',
+                component: CheckboxCellComponent,
             },
         },
     },
