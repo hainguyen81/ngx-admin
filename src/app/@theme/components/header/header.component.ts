@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
+import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
 import {map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 /* Authentication */
@@ -17,15 +17,15 @@ import {NbxOAuth2AuthDbService} from '../../../auth/auth.oauth2.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
     private destroy$: Subject<void> = new Subject<void>();
-    userPictureOnly: boolean = false;
+    private userPictureOnly: boolean = false;
 
     /* Authentication */
-    token: NbAuthToken;
-    user: any;
+    private token: NbAuthToken;
+    private user: any;
 
-    languages = AppConfig.i18n.languages;
+    private languages = AppConfig.i18n.languages;
 
-    themes = [
+    private themes = [
         {
             value: 'default',
             name: 'Light',
@@ -44,10 +44,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         },
     ];
 
-    currentTheme = 'default';
-    currentLang = 'en';
+    private currentTheme = 'default';
+    private currentLang = 'en';
 
-    userMenu = [{title: 'Profile'}, {title: 'Log out'}];
+    // private userMenu: NbMenuItem[] = [{title: 'Profile'}, {title: 'Log out'}];
+    private userMenu: NbMenuItem[] = [{title: 'common.logout.title'}];
 
     constructor(private sidebarService: NbSidebarService,
                 private menuService: NbMenuService,
@@ -123,6 +124,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.translateService.use(language);
         this.user['lang'] = language;
         this.authDbService.update(this.token);
+    }
+
+    getUserMenu(): NbMenuItem[] {
+        this.userMenu.forEach(item => item.title = this.translateService.instant(item.title));
+        return this.userMenu;
     }
 
     toggleSidebar(): boolean {

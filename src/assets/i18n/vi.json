@@ -73,6 +73,9 @@
         },
         "login": {
             "title": "Đăng nhập"
+        },
+        "logout": {
+            "title": "Đăng xuất"
         }
     },
 	"system": {

@@ -73,6 +73,9 @@
         },
         "login": {
             "title": "Login"
+        },
+        "logout": {
+            "title": "Log out"
         }
     },
 	"system": {
