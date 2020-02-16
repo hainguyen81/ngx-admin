@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot, UrlTree,} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {ModuleService} from '../services/implementation/module.service';
 import {Observable, throwError} from 'rxjs';
 import PromiseUtils from '../utils/promise.utils';
@@ -52,9 +52,8 @@ export class PagesGuard implements CanActivateChild {
                         this.getTranslateService().instant('app'));
                 }
                 return (modulesCount && modulesCount > 0);
-            })
-            .catch(errors => {
-                this.getLogger().error('ERROR', errors);
+            }, (errors) => {
+                this.getLogger().error('ERROR - Check child route activate', state, errors);
                 return false;
             }));
     }
