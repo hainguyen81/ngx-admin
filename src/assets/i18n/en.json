@@ -1,6 +1,10 @@
 {
     "app": "Hi! System",
     "common": {
+        "languages": {
+            "vi": "Vietnamese",
+            "en": "English"
+        },
         "search": {
             "placeholder": "Search"
         },
@@ -10,7 +14,7 @@
             "delete": "Delete"
         },
         "enum": {
-			"userStatus": {
+            "userStatus": {
 				"activated": "Activated",
 				"locked": "Locked",
 				"notActivated": "Not activated"

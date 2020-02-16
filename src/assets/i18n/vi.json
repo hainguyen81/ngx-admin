@@ -1,6 +1,10 @@
 {
     "app": "Hi! System",
     "common": {
+        "languages": {
+            "vi": "Tiếng Việt",
+            "en": "Tiếng Anh"
+        },
         "search": {
             "placeholder": "Tìm kiếm"
         },
@@ -10,7 +14,7 @@
             "delete": "Xoá"
         },
         "enum": {
-			"userStatus": {
+            "userStatus": {
 				"activated": "Đã kích hoạt",
 				"locked": "Khoá",
 				"notActivated": "Chưa kích hoạt"
