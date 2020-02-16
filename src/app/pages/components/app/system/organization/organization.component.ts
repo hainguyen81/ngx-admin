@@ -57,7 +57,7 @@ export const OrganizationFormAreaConfig: ISplitAreaConfig = {
  * Organization split-pane component base on {AngularSplitModule}
  */
 @Component({
-    selector: 'ngx-split-pane',
+    selector: 'ngx-split-pane-organization',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })

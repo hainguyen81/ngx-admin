@@ -1,7 +1,39 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
-    nb-card {
+    ::ng-deep nb-card {
         transform: translate3d(0, 0, 0);
+    }
+
+    ::ng-deep nb-card-body {
+        ng2-smart-table {
+            table-cell-edit-mode {
+                margin: 0 !important;
+            }
+
+            table {
+                tr {
+                    cursor: pointer;
+
+                    th, td {
+                        padding: 0.5rem 1rem;
+                        cursor: pointer;
+
+                        button, input, optgroup, select, textarea {
+                            color: nb-theme(color-basic-800) !important;
+                            height: inherit;
+                        }
+                    }
+                }
+
+                tr.ng2-smart-titles th {
+                    padding: 0.5rem 1rem;
+                }
+
+                tr.selected, tr.hover {
+                    background-color: nb-theme(color-primary-focus);
+                }
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view',
+    selector: 'ngx-tree-view-organization',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })

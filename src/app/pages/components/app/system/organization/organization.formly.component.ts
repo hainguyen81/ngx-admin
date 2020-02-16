@@ -305,7 +305,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    selector: 'ngx-formly-form',
+    selector: 'ngx-formly-form-organization',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss'],
 })

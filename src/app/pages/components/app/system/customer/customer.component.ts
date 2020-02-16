@@ -86,7 +86,7 @@ export const CustomerTableSettings = {
 export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    selector: 'ngx-smart-table',
+    selector: 'ngx-smart-table-customers',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })

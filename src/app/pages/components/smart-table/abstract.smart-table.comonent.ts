@@ -579,12 +579,12 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             let cell: Cell;
             cell = this.getCellByEvent(event.$event);
             this.getLogger().debug('onDoubleClick', event, cell);
-            if (cell) {
+            if (cell && !this.isInEditMode()) {
                 this.editCell(cell);
             }
             this.preventEvent(event.$event);
 
-        } else if (event && event.$data && event.$data['data']) {
+        } else if (event && event.$data && event.$data['data'] && !this.isInEditMode()) {
             this.getLogger().debug('onDoubleClick', event);
             this.editRow(event.$data['data']);
         }
