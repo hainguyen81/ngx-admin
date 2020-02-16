@@ -36,6 +36,8 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {CheckboxViewcellComponent} from './smart-table/checkbox.viewcell.component';
+import {CellModule} from 'ng2-smart-table/components/cell/cell.module';
 
 @NgModule({
     imports: [
@@ -73,6 +75,7 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
         /* Table */
         Ng2SmartTableModule,
+        CellModule,
 
         /* Context Menu */
         NbContextMenuModule,
@@ -105,8 +108,12 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
+    entryComponents: [
+        CheckboxViewcellComponent,
+    ],
     declarations: [
         SmartTableComponent,
+        CheckboxViewcellComponent,
         NgxToolbarComponent,
         NgxTreeviewComponent,
         NgxFormlyComponent,
