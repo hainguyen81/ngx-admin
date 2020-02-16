@@ -25,6 +25,7 @@ import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {DeepCloner} from '../../../utils/object.utils';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -89,6 +90,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
     private tableHeader: string;
     private settings: any = DefaultTableSettings;
+    private translatedSettings: any = DefaultTableSettings;
 
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
@@ -161,34 +163,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     }
 
     protected setTableSettings(settings: any) {
-        // apply translate
-        if (settings && Object.keys(settings).length) {
-            if (settings.hasOwnProperty('noDataMessage') && (settings['noDataMessage'] || '').length) {
-                settings['noDataMessage'] = this.translate(settings['noDataMessage'] || '');
-            }
-            if (settings.hasOwnProperty('columns')) {
-                Object.values(settings['columns']).forEach(column => {
-                    if (column) {
-                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
-                            column['title'] = this.translate(column['title']);
-                        }
-                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
-                            column['title'] = this.translate(column['title']);
-                        }
-                        if (column['editor'] && column['editor']['config']
-                            && isArray(column['editor']['config']['list'])) {
-                            Array.from(column['editor']['config']['list']).forEach(item => {
-                                if (item && item.hasOwnProperty('title')
-                                    && (item['title'] || '').length) {
-                                    item['title'] = this.translate(item['title'] || '');
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }
         this.settings = settings;
+        this.translateSettings();
     }
 
     protected setTableHeader(header: string) {
@@ -830,6 +806,17 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         }
     }
 
+    /**
+     * Triggered `languageChange` event
+     * @param event {IEvent} that contains {$event} as LangChangeEvent
+     */
+    onLangChange(event: IEvent): void {
+        super.onLangChange(event);
+
+        // apply translate
+        this.translateSettings();
+    }
+
     // -------------------------------------------------
     // ACTIONS
     // -------------------------------------------------
@@ -1342,5 +1329,38 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             this.closeContextMenu();
         }
         return false;
+    }
+
+    /**
+     * Translate table settings
+     */
+    private translateSettings(): void {
+        // apply translate
+        this.translatedSettings = DeepCloner(this.settings);
+        if (this.translatedSettings && Object.keys(this.translatedSettings).length) {
+            if (this.translatedSettings.hasOwnProperty('noDataMessage')
+                && (this.translatedSettings['noDataMessage'] || '').length) {
+                this.translatedSettings['noDataMessage'] =
+                    this.translate(this.translatedSettings['noDataMessage'] || '');
+            }
+            if (this.translatedSettings.hasOwnProperty('columns')) {
+                Object.values(this.translatedSettings['columns']).forEach(column => {
+                    if (column) {
+                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
+                            column['title'] = this.translate(column['title']);
+                        }
+                        if (column['editor'] && column['editor']['config']
+                            && isArray(column['editor']['config']['list'])) {
+                            Array.from(column['editor']['config']['list']).forEach(item => {
+                                if (item && item.hasOwnProperty('title')
+                                    && (item['title'] || '').length) {
+                                    item['title'] = this.translate(item['title'] || '');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
     }
 }

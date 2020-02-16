@@ -21,6 +21,7 @@ import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {DeepCloner} from '../../../utils/object.utils';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -39,6 +40,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     /* whole form group */
     private formGroup: FormGroup = new FormGroup({});
     private renderForm?: boolean | true;
+    private translatedFields: FormlyFieldConfig[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -87,13 +89,9 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param fields to apply
      */
     protected setFields(fields: FormlyFieldConfig[]) {
-        // apply translate
-        if (fields && fields.length) {
-            let translate: TranslateService;
-            translate = this.getTranslateService();
-            fields.forEach(field => this.translateFormFieldConfig(translate, field));
-        }
         this.fields = fields;
+        // translate form fields
+        this.translateFormFields();
     }
 
     /**
@@ -192,9 +190,32 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         this.getLogger().debug('onSubmit', event);
     }
 
+    /**
+     * Triggered `languageChange` event
+     * @param event {IEvent} that contains {$event} as LangChangeEvent
+     */
+    onLangChange(event: IEvent): void {
+        super.onLangChange(event);
+
+        // translate form fields
+        this.translateFormFields();
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Translate form fields configuration
+     */
+    private translateFormFields(): void {
+        this.translatedFields = DeepCloner(this.fields);
+        if (this.translatedFields && this.translatedFields.length) {
+            let translate: TranslateService;
+            translate = this.getTranslateService();
+            this.translatedFields.forEach(field => this.translateFormFieldConfig(translate, field));
+        }
+    }
 
     /**
      * Translate the specified {FormlyFieldConfig}

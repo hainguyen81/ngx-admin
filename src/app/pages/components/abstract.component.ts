@@ -276,6 +276,7 @@ export class AbstractComponent
         factoryResolver || throwError('Could not inject ComponentFactoryResolver');
         dataSource = dataSource || new LocalDataSource();
         dataSource.onChanged().subscribe(value => this.onDataSourceChanged({$data: value}));
+        translateService.onLangChange.subscribe(value => this.onLangChange({$event: value}));
     }
 
     // -------------------------------------------------
@@ -637,6 +638,15 @@ export class AbstractComponent
     onBlur(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onBlur', event);
+    }
+
+    /**
+     * Triggered `languageChange` event
+     * @param event {IEvent} that contains {$event} as LangChangeEvent
+     */
+    onLangChange(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onLangChange', event);
     }
 
     // -------------------------------------------------
