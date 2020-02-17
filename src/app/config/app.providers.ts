@@ -1,4 +1,4 @@
-import {Injector, LOCALE_ID, StaticProvider} from '@angular/core';
+import {ErrorHandler, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
@@ -39,6 +39,7 @@ import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
 import {PagesGuard} from '../pages/pages.guard.service';
 import {ToastrService} from 'ngx-toastr';
+import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -58,6 +59,10 @@ export const CommonProviders: StaticProvider[] = [
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
+    {
+        provide: ErrorHandler, useClass: GlobalErrorsHandler,
+        deps: [TranslateService, ToastrService, NGXLogger, Injector]
+    },
 ];
 
 export const I18NProviders: StaticProvider[] = [
