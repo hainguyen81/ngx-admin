@@ -79,6 +79,7 @@ export const DefaultTableSettings = {
 export abstract class AbstractSmartTableComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit {
 
+    protected static SMART_TABLE_SELETOR: string = 'ng2-smart-table table';
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
     protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
@@ -542,6 +543,23 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     // -------------------------------------------------
 
     /**
+     * Perform action on data-source changed event
+     * @param value {IEvent} that contains {$data} as changed value
+     */
+    onDataSourceChanged(value: IEvent) {
+        // apply table tabIndex to focus and handle keyboard event
+        setTimeout(() => {
+            let tableEls: NodeListOf<HTMLElement>;
+            tableEls = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_SELETOR);
+            if (tableEls && tableEls.length) {
+                tableEls.item(0).tabIndex = 1;
+                this.getRenderer().setAttribute(tableEls.item(0), 'tabIndex', '1');
+                tableEls.item(0).focus({preventScroll: true});
+            }
+        }, 100);
+    }
+
+    /**
      * Triggered once a row is selected (either clicked or selected automatically
      * (after page is changed, after some row is deleted, etc)).
      * @param event {IEvent} that contains {$data} as Object, consist of:
@@ -815,6 +833,42 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
         // apply translate
         this.translateSettings();
+    }
+
+    /**
+     * Perform keydown action
+     * @param event KeyboardEvent
+     */
+    onKeyDown(event: IEvent): void {
+        if (event && event.$event
+            && (event.$event.target as Element)
+            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            super.onKeyDown(event);
+        }
+    }
+
+    /**
+     * Perform keyup action
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
+     */
+    onKeyUp(event: IEvent): void {
+        if (event && event.$event
+            && (event.$event.target as Element)
+            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            super.onKeyUp(event);
+        }
+    }
+
+    /**
+     * Perform keypress action
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
+     */
+    onKeyPress(event: IEvent): void {
+        if (event && event.$event
+            && (event.$event.target as Element)
+            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            super.onKeyPress(event);
+        }
     }
 
     // -------------------------------------------------

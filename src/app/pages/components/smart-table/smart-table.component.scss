@@ -11,6 +11,10 @@
                 margin: 0 !important;
             }
 
+            table:focus {
+                outline: none;
+            }
+
             table {
                 tr {
                     cursor: pointer;
@@ -34,8 +38,10 @@
                     padding: 0.5rem 1rem;
                 }
 
-                tr.selected, tr.hover {
-                    background-color: nb-theme(color-primary-focus);
+                tbody {
+                    tr.selected, tr.hover, tr:hover, tr:active, tr:focus {
+                        background-color: nb-theme(color-primary-focus) !important;
+                    }
                 }
             }
         }
