@@ -30,6 +30,7 @@ export interface IUser extends IModel {
     firstName: string;
     lastName: string;
     email: string;
+    lang?: string | 'en';
     status: USER_STATUS;
     rolesGroupId?: string | null;
     rolesGroup?: IRolesGroup | null;
@@ -43,6 +44,7 @@ export default class User implements IUser {
                 public company: string, public username: string, public password: string,
                 public firstName: string, public lastName: string,
                 public email: string, public status: USER_STATUS,
+                public lang?: string | 'en',
                 public rolesGroupId?: string | null, public rolesGroup?: IRolesGroup | null,
                 public enterprise?: boolean | false) {
     }

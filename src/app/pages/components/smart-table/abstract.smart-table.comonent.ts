@@ -23,6 +23,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {DeepCloner} from '../../../utils/object.utils';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -76,6 +79,7 @@ export const DefaultTableSettings = {
 export abstract class AbstractSmartTableComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit {
 
+    protected static SMART_TABLE_SELETOR: string = 'ng2-smart-table table';
     protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
     protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
@@ -87,6 +91,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
     private tableHeader: string;
     private settings: any = DefaultTableSettings;
+    protected translatedSettings: any = DefaultTableSettings;
 
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
@@ -110,6 +115,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -119,10 +126,13 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
     }
 
     ngAfterViewInit(): void {
@@ -154,33 +164,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     }
 
     protected setTableSettings(settings: any) {
-        // apply translate
-        if (settings && Object.keys(settings).length) {
-            let translate: TranslateService;
-            translate = this.getTranslateService();
-            if (settings.hasOwnProperty('noDataMessage') && (settings['noDataMessage'] || '').length) {
-                settings['noDataMessage'] = translate.instant(settings['noDataMessage'] || '');
-            }
-            if (settings.hasOwnProperty('columns')) {
-                Object.values(settings['columns']).forEach(column => {
-                    if (column) {
-                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
-                            column['title'] = translate.instant(column['title']);
-                        }
-                        if (column['editor'] && column['editor']['config']
-                            && isArray(column['editor']['config']['list'])) {
-                            Array.from(column['editor']['config']['list']).forEach(item => {
-                                if (item && item.hasOwnProperty('title')
-                                    && (item['title'] || '').length) {
-                                    item['title'] = translate.instant(item['title'] || '');
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }
         this.settings = settings;
+        this.translateSettings();
     }
 
     protected setTableHeader(header: string) {
@@ -558,6 +543,23 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     // -------------------------------------------------
 
     /**
+     * Perform action on data-source changed event
+     * @param value {IEvent} that contains {$data} as changed value
+     */
+    onDataSourceChanged(value: IEvent) {
+        // apply table tabIndex to focus and handle keyboard event
+        setTimeout(() => {
+            let tableEls: NodeListOf<HTMLElement>;
+            tableEls = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_SELETOR);
+            if (tableEls && tableEls.length) {
+                tableEls.item(0).tabIndex = 1;
+                this.getRenderer().setAttribute(tableEls.item(0), 'tabIndex', '1');
+                tableEls.item(0).focus({preventScroll: true});
+            }
+        }, 100);
+    }
+
+    /**
      * Triggered once a row is selected (either clicked or selected automatically
      * (after page is changed, after some row is deleted, etc)).
      * @param event {IEvent} that contains {$data} as Object, consist of:
@@ -595,12 +597,12 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             let cell: Cell;
             cell = this.getCellByEvent(event.$event);
             this.getLogger().debug('onDoubleClick', event, cell);
-            if (cell) {
+            if (cell && !this.isInEditMode()) {
                 this.editCell(cell);
             }
             this.preventEvent(event.$event);
 
-        } else if (event && event.$data && event.$data['data']) {
+        } else if (event && event.$data && event.$data['data'] && !this.isInEditMode()) {
             this.getLogger().debug('onDoubleClick', event);
             this.editRow(event.$data['data']);
         }
@@ -819,6 +821,53 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         if (this.showHideContextMenuOnRow(row, event.$event)) {
             // stop firing event
             this.preventEvent(event.$event);
+        }
+    }
+
+    /**
+     * Triggered `languageChange` event
+     * @param event {IEvent} that contains {$event} as LangChangeEvent
+     */
+    onLangChange(event: IEvent): void {
+        super.onLangChange(event);
+
+        // apply translate
+        this.translateSettings();
+    }
+
+    /**
+     * Perform keydown action
+     * @param event KeyboardEvent
+     */
+    onKeyDown(event: IEvent): void {
+        if (event && event.$event
+            && (event.$event.target as Element)
+            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            super.onKeyDown(event);
+        }
+    }
+
+    /**
+     * Perform keyup action
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
+     */
+    onKeyUp(event: IEvent): void {
+        if (event && event.$event
+            && (event.$event.target as Element)
+            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            super.onKeyUp(event);
+        }
+    }
+
+    /**
+     * Perform keypress action
+     * @param event {IEvent} that contains {$event} as KeyboardEvent
+     */
+    onKeyPress(event: IEvent): void {
+        if (event && event.$event
+            && (event.$event.target as Element)
+            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            super.onKeyPress(event);
         }
     }
 
@@ -1334,5 +1383,38 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             this.closeContextMenu();
         }
         return false;
+    }
+
+    /**
+     * Translate table settings
+     */
+    protected translateSettings(): void {
+        // apply translate
+        this.translatedSettings = DeepCloner(this.settings);
+        if (this.translatedSettings && Object.keys(this.translatedSettings).length) {
+            if (this.translatedSettings.hasOwnProperty('noDataMessage')
+                && (this.translatedSettings['noDataMessage'] || '').length) {
+                this.translatedSettings['noDataMessage'] =
+                    this.translate(this.translatedSettings['noDataMessage'] || '');
+            }
+            if (this.translatedSettings.hasOwnProperty('columns')) {
+                Object.values(this.translatedSettings['columns']).forEach(column => {
+                    if (column) {
+                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
+                            column['title'] = this.translate(column['title']);
+                        }
+                        if (column['editor'] && column['editor']['config']
+                            && isArray(column['editor']['config']['list'])) {
+                            Array.from(column['editor']['config']['list']).forEach(item => {
+                                if (item && item.hasOwnProperty('title')
+                                    && (item['title'] || '').length) {
+                                    item['title'] = this.translate(item['title'] || '');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
     }
 }

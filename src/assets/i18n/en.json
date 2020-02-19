@@ -1,6 +1,10 @@
 {
     "app": "Hi! System",
     "common": {
+        "languages": {
+            "vi": "Vietnamese",
+            "en": "English"
+        },
         "search": {
             "placeholder": "Search"
         },
@@ -10,7 +14,7 @@
             "delete": "Delete"
         },
         "enum": {
-			"userStatus": {
+            "userStatus": {
 				"activated": "Activated",
 				"locked": "Locked",
 				"notActivated": "Not activated"
@@ -39,19 +43,28 @@
 					"title": "Error",
 					"body": "Could not save data because error has been occurred!"
 				}
-			},
+            },
             "delete": {
-				"success": {
-					"title": "Deletion",
-					"body": "Data has been deleted successfully!"
-				},
-				"error": {
-					"title": "Error",
-					"body": "Could not delete data because error has been occurred!"
-				}
-			}
+                "success": {
+                    "title": "Deletion",
+                    "body": "Data has been deleted successfully!"
+                },
+                "error": {
+                    "title": "Error",
+                    "body": "Could not delete data because error has been occurred!"
+                }
+            },
+            "confirm": {
+                "delete": {
+                    "message": "Do you really want to delete data?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
+                }
+            },
+            "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
         },
         "form": {
+            "invalid_data": "Please correct data before performing action!",
             "action": {
                 "save": "Save",
                 "reset": "Reset",
@@ -60,6 +73,9 @@
         },
         "login": {
             "title": "Login"
+        },
+        "logout": {
+            "title": "Log out"
         }
     },
 	"system": {

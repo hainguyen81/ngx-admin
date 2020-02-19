@@ -16,8 +16,8 @@
     <nb-card-body>
         <ng2-smart-table
             #smartTableComponent
-            [settings]="settings"
-            [source]="dataSource"
+            [settings]="translatedSettings"
+            [source]="getDataSource()"
             (rowSelect)="onRowSelect({ $data: $event })"
             (userRowSelect)="onUserRowSelect( { $data: $event })"
             (create)="onCreate({ $data: $event })"

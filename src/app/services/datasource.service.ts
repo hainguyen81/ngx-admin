@@ -4,7 +4,6 @@ import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../config/log.config';
-import {COMMON} from '../config/common.config';
 import {LocalPager} from 'ng2-smart-table/lib/data-source/local/local.pager';
 import {LocalFilter} from 'ng2-smart-table/lib/data-source/local/local.filter';
 import {LocalSorter} from 'ng2-smart-table/lib/data-source/local/local.sorter';
@@ -21,10 +20,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         filters: [],
         andOperator: true,
     };
-    private pagingCfg: any = {
-        page: 1,
-        perPage: COMMON.itemsPerPage,
-    };
+    private pagingCfg: any = {page: 1};
     private sortCfg: Array<any> = [];
 
     protected getHttpService(): H {
@@ -49,7 +45,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         logger.updateConfig(LogConfig);
     }
 
-    reset(silent = false) {
+    reset(silent = false): void {
         if (silent) {
             this.filterCfg = {
                 filters: [],

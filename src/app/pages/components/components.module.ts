@@ -33,6 +33,11 @@ import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
+import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
+import {ModalDialogModule} from 'ngx-modal-dialog';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {CellModule} from 'ng2-smart-table/components/cell/cell.module';
+import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 
 @NgModule({
     imports: [
@@ -52,6 +57,12 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
         /* Angular material modules */
         AppMaterialModule,
 
+        /* Popup, Dialogs */
+        AlertPopupModule,
+        ConfirmPopupModule,
+        PromptPopupModule,
+        ModalDialogModule.forRoot(),
+
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
 
@@ -64,6 +75,7 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
 
         /* Table */
         Ng2SmartTableModule,
+        CellModule,
 
         /* Context Menu */
         NbContextMenuModule,
@@ -91,12 +103,17 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
+    entryComponents: [
+        CheckboxCellComponent,
+    ],
     declarations: [
         SmartTableComponent,
+        CheckboxCellComponent,
         NgxToolbarComponent,
         NgxTreeviewComponent,
         NgxFormlyComponent,

@@ -16,7 +16,11 @@ import {AppConfig} from '../../../../../config/app.config';
 import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 
+/* users table settings */
 export const UserTableSettings = {
     hideSubHeader: true,
     noDataMessage: 'system.user.table.noData',
@@ -58,37 +62,23 @@ export const UserTableSettings = {
         status: {
             title: 'system.user.table.status',
             type: 'string',
-            valuePrepareFunction: convertUserStatusToDisplay,
             sort: false,
             filter: false,
             editor: {
                 type: 'list',
-                config: {
-                    list: [
-                        {
-                            value: USER_STATUS.NOT_ACTIVATED,
-                            title: convertUserStatusToDisplay(USER_STATUS.NOT_ACTIVATED),
-                        },
-                        {
-                            value: USER_STATUS.ACTIVATED,
-                            title: convertUserStatusToDisplay(USER_STATUS.ACTIVATED),
-                        },
-                        {
-                            value: USER_STATUS.LOCKED,
-                            title: convertUserStatusToDisplay(USER_STATUS.LOCKED),
-                        },
-                    ],
-                },
+                config: {list: []},
             },
         },
         enterprise: {
             title: 'system.user.table.enterprise',
-            type: 'boolean',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
+            renderComponent: CheckboxCellComponent,
             editor: {
-                type: 'checkbox',
+                type: 'custom',
+                component: CheckboxCellComponent,
             },
         },
     },
@@ -97,7 +87,7 @@ export const UserTableSettings = {
 export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    selector: 'ngx-smart-table',
+    selector: 'ngx-smart-table-users',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
@@ -118,6 +108,8 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(UserDataSource) dataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -127,20 +119,61 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup,
             'system.user.title', UserTableSettings, UserContextMenu);
     }
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
-            { field: 'username', search: keyword },
-            { field: 'firstName', search: keyword },
-            { field: 'lastName', search: keyword },
-            { field: 'email', search: keyword },
+            {field: 'username', search: keyword},
+            {field: 'firstName', search: keyword},
+            {field: 'lastName', search: keyword},
+            {field: 'email', search: keyword},
         ], false);
         this.getDataSource().refresh();
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Convert {USER_STATUS} to the showed translated value
+     * @param value to convert
+     * @return converted value
+     */
+    private convertUserStatusToDisplay(value: USER_STATUS): string {
+        return this.translate(convertUserStatusToDisplay(value));
+    }
+
+    /**
+     * Translate table settings
+     */
+    protected translateSettings(): void {
+        super.translateSettings();
+
+        // translate
+        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
+            value => this.convertUserStatusToDisplay(value);
+        this.translatedSettings['columns']['status']['editor']['config']['list'] = [
+            {
+                value: USER_STATUS.NOT_ACTIVATED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.NOT_ACTIVATED),
+            },
+            {
+                value: USER_STATUS.ACTIVATED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.ACTIVATED),
+            },
+            {
+                value: USER_STATUS.LOCKED,
+                title: this.convertUserStatusToDisplay(USER_STATUS.LOCKED),
+            },
+        ];
     }
 }

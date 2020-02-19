@@ -61,6 +61,7 @@ export function usersGenerate(): IUser[] {
         mockUser.password = EncryptionUtils.md5Encode(':', mockUser.password);
         mockUser.firstName = 'User'.concat((i + 1).toString(), ' First Name');
         mockUser.lastName = 'User'.concat((i + 1).toString(), ' Last Name');
+        mockUser.enterprise = false;
         mockUsers.push(mockUser);
     }
     mockUsers[0].password = EncryptionUtils.md5Encode(':', mockUsers[0].password);

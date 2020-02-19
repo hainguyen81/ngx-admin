@@ -16,7 +16,7 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         super.setSort([{field: 'uid', direction: 'desc'}]);
     }
 
-    getAll(): Promise<IUser | IUser[]> {
+    getAll(): Promise<IUser[]> {
         // sort by uid desc
         return super.getDbService().getAll().then((users) => {
             users = this.filter(users);
@@ -27,7 +27,7 @@ export class UserDataSource extends AbstractDataSource<IUser, UserHttpService, U
         });
     }
 
-    getElements(): Promise<IUser | IUser[]> {
+    getElements(): Promise<IUser[]> {
         return this.getAll();
     }
 

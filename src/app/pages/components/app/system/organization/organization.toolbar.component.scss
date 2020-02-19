@@ -1,7 +1,7 @@
 @import '../../../../../@theme/styles/themes';
 
 @include nb-install-component() {
-    .mat-toolbar {
+    ::ng-deep .mat-toolbar {
         background: transparent !important;
 
         .mat-toolbar-row {
@@ -12,7 +12,7 @@
             }
         }
     }
-    .mat-toolbar.mat-toolbar-multiple-rows {
+    ::ng-deep .mat-toolbar.mat-toolbar-multiple-rows {
         min-height: 32px !important;
         height: 32px !important;
     }

@@ -2,43 +2,29 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     NbActionsModule,
+    NbButtonModule,
+    NbContextMenuModule,
+    NbIconModule,
     NbLayoutModule,
     NbMenuModule,
     NbSearchModule,
-    NbSidebarModule,
-    NbUserModule,
-    NbContextMenuModule,
-    NbButtonModule,
     NbSelectModule,
-    NbIconModule,
+    NbSidebarModule,
     NbThemeModule,
+    NbUserModule,
 } from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {NbSecurityModule} from '@nebular/security';
 
-import {
-    FooterComponent,
-    HeaderComponent,
-    SearchInputComponent,
-    TinyMCEComponent,
-} from './components';
-import {
-    CapitalizePipe,
-    PluralPipe,
-    RoundPipe,
-    TimingPipe,
-    NumberWithCommasPipe,
-} from './pipes';
-import {
-    OneColumnLayoutComponent,
-    ThreeColumnsLayoutComponent,
-    TwoColumnsLayoutComponent,
-} from './layouts';
+import {FooterComponent, HeaderComponent, SearchInputComponent, TinyMCEComponent,} from './components';
+import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe,} from './pipes';
+import {OneColumnLayoutComponent, ThreeColumnsLayoutComponent, TwoColumnsLayoutComponent,} from './layouts';
 import {DEFAULT_THEME} from './styles/theme.default';
 import {COSMIC_THEME} from './styles/theme.cosmic';
 import {CORPORATE_THEME} from './styles/theme.corporate';
 import {DARK_THEME} from './styles/theme.dark';
 import {ArrayOfNumbersPipe} from './pipes/loop.number.pipe';
+import {TranslateModule} from "@ngx-translate/core";
 
 const NB_MODULES = [
     NbLayoutModule,
@@ -53,6 +39,9 @@ const NB_MODULES = [
     NbSelectModule,
     NbIconModule,
     NbEvaIconsModule,
+];
+const SUPPORTED_MODULES = [
+    TranslateModule,
 ];
 const COMPONENTS = [
     HeaderComponent,
@@ -73,7 +62,7 @@ const PIPES = [
 ];
 
 @NgModule({
-    imports: [CommonModule, ...NB_MODULES],
+    imports: [CommonModule, ...NB_MODULES, ...SUPPORTED_MODULES],
     exports: [CommonModule, ...PIPES, ...COMPONENTS],
     declarations: [...COMPONENTS, ...PIPES],
 })

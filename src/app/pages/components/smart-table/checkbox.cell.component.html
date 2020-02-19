@@ -1,0 +1,3 @@
+<nb-checkbox status="basic"
+             [disabled]="cell ? !cell.isEditable() || !cell.getRow() || !cell.getRow().isInEditing : true"
+             [checked]="cell ? cell.getValue() : value ? value : false"></nb-checkbox>
