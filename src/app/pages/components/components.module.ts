@@ -36,6 +36,7 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {NgxFlipCardComponent} from './flipcard/flipcard.component';
 import {NgxRevealCardComponent} from './revealcard/revealcard.component';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
 @NgModule({
     imports: [
@@ -96,6 +97,7 @@ import {NgxRevealCardComponent} from './revealcard/revealcard.component';
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
