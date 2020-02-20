@@ -1,3 +1,4 @@
+import { CategoriesModule } from './components/app/system/catelogies/categories.module';
 import {NgModule} from '@angular/core';
 import {ThemeModule} from '../@theme/theme.module';
 import {PagesComponent} from './pages.component';
@@ -51,6 +52,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
         OrganizationModule,
         UserModule,
         CustomerModule,
+        CategoriesModule
     ],
     declarations: [
         PagesComponent,

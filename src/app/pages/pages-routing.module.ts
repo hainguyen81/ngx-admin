@@ -1,3 +1,4 @@
+import { CategoriesSplitPanelComponent } from './components/app/system/catelogies/categories.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {PagesComponent} from './pages.component';
@@ -26,6 +27,10 @@ const routes: Routes = [{
         {
             path: 'customer',
             component: CustomerSmartTableComponent,
+        },
+        {
+            path: 'categories',
+            component: CategoriesSplitPanelComponent,
         },
         // {
         //   path: 'layout',

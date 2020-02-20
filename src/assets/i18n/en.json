@@ -208,6 +208,43 @@
 				"status": "Status",
 				"enterprise": "Enterprise"
 			}
-		}
+        },
+        "categories": {
+            "title": "Categories management",
+            "menu": "Categories",
+            "new": "New Categories",
+            "form": {
+                "category": {
+                    "label": "Categories",
+                    "placeholder": "Categories",
+                    "description": "Categories"
+                },
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type",
+                    "description": "Type"
+				},
+				"id": {
+					"label": "Categories ID",
+					"placeholder": "Categories ID",
+					"description": "Categories ID"
+				},
+				"name": {
+					"label": "Name",
+					"placeholder": "Name",
+					"description": "Name"
+                },
+                "image": {
+                    "label": "Image",
+					"placeholder": "Image",
+					"description": "Image"
+                },
+				"remark": {
+					"label": "Remark",
+					"placeholder": "Remark",
+					"description": "Remark"
+				}
+			}
+        }
 	}
 }

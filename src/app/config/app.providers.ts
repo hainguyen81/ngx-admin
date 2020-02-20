@@ -17,6 +17,7 @@ import {
 } from '../auth/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
+import {ToastrService} from 'ngx-toastr';
 import {COMMON} from './common.config';
 import {ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/user/user.service';
@@ -37,8 +38,10 @@ import {
 import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
+import {ToasterService} from 'angular2-toaster';
+import { CategoriesDbService, CategoriesHttpService } from '../services/implementation/categories/categories.service';
+import { CategoriesDataSource } from '../services/implementation/categories/categories.datasource';
 import {PagesGuard} from '../pages/pages.guard.service';
-import {ToastrService} from 'ngx-toastr';
 import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
 
 // required for AOT compilation
@@ -56,6 +59,8 @@ export const CommonProviders: StaticProvider[] = [
     {provide: NGXMapperService, useClass: NGXMapperService, deps: [HttpBackend]},
     {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpBackend]},
     {provide: HttpClient, useClass: HttpClient, deps: [HttpBackend]},
+    {provide: ToastrService, useClass: ToastrService, deps: []},
+    {provide: ToasterService, useClass: ToasterService, deps: []},
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
@@ -121,6 +126,21 @@ export const OrganizationProviders: StaticProvider[] = [
     },
 ];
 
+export const CategoriesProviders: StaticProvider[] = [
+    {
+        provide: CategoriesDbService, useClass: CategoriesDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: CategoriesHttpService, useClass: CategoriesHttpService,
+        deps: [HttpClient, NGXLogger, CategoriesDbService],
+    },
+    {
+        provide: CategoriesDataSource, useClass: CategoriesDataSource,
+        deps: [CategoriesHttpService, CategoriesDbService, NGXLogger],
+    },
+];
+
 export const InterceptorProviders = [
     {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization'},
     {provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company'},
@@ -174,6 +194,7 @@ export const Providers: StaticProvider[] = CommonProviders
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
+    .concat(CategoriesProviders)
     .concat(InterceptorProviders)
     .concat(AuthenticationProviders)
     .concat(MenuProviders)

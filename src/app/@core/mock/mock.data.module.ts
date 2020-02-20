@@ -1,3 +1,6 @@
+import { CategoriesProviders } from './../../config/app.providers';
+import { CategoriesDbService } from './../../services/implementation/categories/categories.service';
+import { MockCategoriesService } from './categories.service';
 import {InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CommonProviders, CustomerProviders, OrganizationProviders, UserProviders} from '../../config/app.providers';
@@ -25,12 +28,17 @@ export const MOCK_DATA_PROVIDERS = [
         provide: MockOrganizationService, useClass: MockOrganizationService,
         deps: [OrganizationDbService, NGXLogger],
     },
+    {
+        provide: MockCategoriesService, useClass: MockCategoriesService,
+        deps: [CategoriesDbService, NGXLogger],
+    },
 ];
 
 export const MOCK_PROVIDERS = CommonProviders
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
+    .concat(CategoriesProviders)
     .concat(MOCK_DATA_PROVIDERS);
 
 @NgModule({

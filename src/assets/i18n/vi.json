@@ -208,6 +208,43 @@
 				"status": "Trạng thái",
 				"enterprise": "Enterprise"
 			}
-		}
+        },
+        "categories": {
+            "title": "Quản lý trang thiết bị",
+            "menu": "Trang thiết bị",
+            "new": "Bộ phận mới",
+            "form": {
+                "category": {
+                    "label": "Danh mục",
+                    "placeholder": "Danh mục",
+                    "description": "Danh mục"
+                },
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại",
+                    "description": "Loại"
+				},
+				"id": {
+					"label": "ID Danh mục",
+					"placeholder": "ID Danh mục",
+					"description": "ID Danh mục"
+				},
+				"name": {
+					"label": "Tên",
+					"placeholder": "Tên",
+					"description": "Tên"
+                },
+                "image": {
+                    "label": "Hình Ảnh",
+					"placeholder": "Hình Ảnh",
+					"description": "Hình Ảnh"
+                },
+				"remark": {
+					"label": "Ghi chú",
+					"placeholder": "Ghi chú",
+					"description": "Ghi chú"
+				}
+			}
+        }
 	}
 }
