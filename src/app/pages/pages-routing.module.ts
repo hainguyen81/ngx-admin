@@ -5,7 +5,7 @@ import {NotFoundComponent} from './components/not-found.component';
 import {CustomerSmartTableComponent} from './components/app/system/customer/customer.component';
 import {UserSmartTableComponent} from './components/app/system/user/user.component';
 import {OrganizationSplitPaneComponent} from './components/app/system/organization/organization.component';
-import {PagesGuard} from "./pages.guard.service";
+import {PagesGuard} from './pages.guard.service';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';

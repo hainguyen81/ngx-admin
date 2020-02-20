@@ -33,6 +33,7 @@ import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
+import {SelectDropDownModule} from 'ngx-select-dropdown';
 
 @NgModule({
     imports: [
@@ -76,6 +77,9 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
 
         /* SplitPane */
         AngularSplitModule.forRoot(),
+
+        /* Selection Dropdown */
+        SelectDropDownModule,
 
         /* Formly for form builder */
         ReactiveFormsModule,

@@ -15,6 +15,7 @@ import {DeviceDetectorModule} from 'ngx-device-detector';
 import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
+import {SelectDropDownModule} from 'ngx-select-dropdown';
 
 @NgModule({
     imports: [
@@ -46,6 +47,9 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
         /* Toaster */
         ToastrModule,
         ToastContainerModule,
+
+        /* Selection Dropdown */
+        SelectDropDownModule,
 
         /* System module */
         OrganizationModule,
