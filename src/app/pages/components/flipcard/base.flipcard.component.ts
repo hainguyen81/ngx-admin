@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     Inject,
-    Renderer2,
+    Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -13,6 +13,9 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';
+import {IComponentService} from '../../../services/interface.service';
+import {AbstractComponentService, BaseComponentService} from '../../../services/component.service';
+import ComponentUtils from '../../../utils/component.utils';
 
 /**
  * Base flip-card base on {NbFlipCardComponent}
@@ -53,5 +56,31 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);
+    }
+
+    /**
+     * Create the front component dynamically
+     * @param componentType front component type
+     * @return created component
+     */
+    protected setFrontComponent(componentType: Type<any>): any {
+        let compServ: IComponentService<any>;
+        compServ = new BaseComponentService(this.getFactoryResolver(),
+            this.getFrontComponentViewContainerRef(), this.getLogger(), componentType);
+        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
+            this.getFrontComponentViewContainerRef(), true);
+    }
+
+    /**
+     * Create the back component dynamically
+     * @param componentType back component type
+     * @return created component
+     */
+    protected setBackComponent(componentType: Type<any>): any {
+        let compServ: IComponentService<any>;
+        compServ = new BaseComponentService(this.getFactoryResolver(),
+            this.getBackComponentViewContainerRef(), this.getLogger(), componentType);
+        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
+            this.getBackComponentViewContainerRef(), true);
     }
 }

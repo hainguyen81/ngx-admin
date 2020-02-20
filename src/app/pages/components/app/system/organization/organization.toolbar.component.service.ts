@@ -1,4 +1,4 @@
-import {AbstractComponentService} from '../../../../../services/component.service';
+import {BaseComponentService} from '../../../../../services/component.service';
 import {ComponentFactoryResolver, Inject, Injectable, ViewContainerRef} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
@@ -8,14 +8,14 @@ import {OrganizationToolbarComponent} from './organization.toolbar.component';
  */
 @Injectable()
 export class OrganizationToolbarComponentService
-    extends AbstractComponentService<OrganizationToolbarComponent> {
+    extends BaseComponentService<OrganizationToolbarComponent> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponentService} class
+     * Create a new instance of {OrganizationToolbarComponentService} class
      * @param componentFactoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param logger {NGXLogger}

@@ -42,6 +42,26 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
     private backComponentHolderViewContainerRef: ViewContainerRef;
 
     // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {ViewContainerRef} instance of the front component
+     * @return the {ViewContainerRef} instance of the front component
+     */
+    protected getFrontComponentViewContainerRef(): ViewContainerRef {
+        return this.frontComponentHolderViewContainerRef;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance of the back component
+     * @return the {ViewContainerRef} instance of the back component
+     */
+    protected getBackComponentViewContainerRef(): ViewContainerRef {
+        return this.backComponentHolderViewContainerRef;
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
