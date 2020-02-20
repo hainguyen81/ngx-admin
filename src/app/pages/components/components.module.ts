@@ -32,7 +32,6 @@ import {AppMaterialModule} from '../../app.material.module';
 import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
-import {ToasterModule} from 'angular2-toaster';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
 
 @NgModule({
@@ -61,7 +60,6 @@ import {NgxToolbarComponent} from './toolbar/toolbar.component';
 
         /* Toaster */
         ToastrModule,
-        ToasterModule,
 
         /* Table */
         Ng2SmartTableModule,
