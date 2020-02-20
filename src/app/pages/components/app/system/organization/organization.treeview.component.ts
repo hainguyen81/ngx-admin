@@ -70,7 +70,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      * Create a new instance of {OrganizationTreeviewComponent} class
      * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}

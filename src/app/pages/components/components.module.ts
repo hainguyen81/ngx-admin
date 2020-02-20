@@ -31,12 +31,12 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AppMaterialModule} from '../../app.material.module';
 import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
+import {ToastrModule} from 'ngx-toastr';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
-import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
-import {ModalDialogModule} from 'ngx-modal-dialog';
+import {SelectDropDownModule} from 'ngx-select-dropdown';
+import {NgxFlipCardComponent} from './flipcard/flipcard.component';
+import {NgxRevealCardComponent} from './revealcard/revealcard.component';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
-import {CellModule} from 'ng2-smart-table/components/cell/cell.module';
 import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 
 @NgModule({
@@ -57,12 +57,6 @@ import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
         /* Angular material modules */
         AppMaterialModule,
 
-        /* Popup, Dialogs */
-        AlertPopupModule,
-        ConfirmPopupModule,
-        PromptPopupModule,
-        ModalDialogModule.forRoot(),
-
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
 
@@ -71,11 +65,9 @@ import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 
         /* Toaster */
         ToastrModule,
-        ToastContainerModule,
 
         /* Table */
         Ng2SmartTableModule,
-        CellModule,
 
         /* Context Menu */
         NbContextMenuModule,
@@ -89,6 +81,9 @@ import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 
         /* SplitPane */
         AngularSplitModule.forRoot(),
+
+        /* Selection Dropdown */
+        SelectDropDownModule,
 
         /* Formly for form builder */
         ReactiveFormsModule,
@@ -113,11 +108,13 @@ import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
     ],
     declarations: [
         SmartTableComponent,
-        CheckboxCellComponent,
         NgxToolbarComponent,
         NgxTreeviewComponent,
         NgxFormlyComponent,
+        CheckboxCellComponent,
         NgxSplitPaneComponent,
+        NgxFlipCardComponent,
+        NgxRevealCardComponent,
         NotFoundComponent,
     ],
     providers: [

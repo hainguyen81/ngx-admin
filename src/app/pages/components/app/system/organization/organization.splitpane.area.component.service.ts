@@ -1,4 +1,4 @@
-import {AbstractComponentService} from '../../../../../services/component.service';
+import {BaseComponentService} from '../../../../../services/component.service';
 import {ComponentFactoryResolver, Inject, Injectable, ViewContainerRef} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {SplitAreaDirective} from 'angular-split';
@@ -8,14 +8,14 @@ import {SplitAreaDirective} from 'angular-split';
  */
 @Injectable()
 export class OrganizationSplitPaneAreaComponentService
-    extends AbstractComponentService<SplitAreaDirective> {
+    extends BaseComponentService<SplitAreaDirective> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponentService} class
+     * Create a new instance of {OrganizationSplitPaneAreaComponentService} class
      * @param componentFactoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param logger {NGXLogger}

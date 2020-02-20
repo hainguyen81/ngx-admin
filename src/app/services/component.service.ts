@@ -92,3 +92,29 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
         return componentRef;
     }
 }
+
+/**
+ * Abstract component service support for rendering/loading component dynamically, etc.
+ * @param <T> component type
+ */
+@Injectable()
+export class BaseComponentService<T> extends AbstractComponentService<T> {
+
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {AbstractComponentService} class
+     * @param componentFactoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     * @param logger {NGXLogger}
+     * @param componentType component type
+     */
+    constructor(@Inject(ComponentFactoryResolver) componentFactoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(NGXLogger) logger: NGXLogger,
+                componentType: Type<T>) {
+        super(componentFactoryResolver, viewContainerRef, logger, componentType);
+    }
+}

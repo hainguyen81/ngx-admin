@@ -34,7 +34,7 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
      * Create a new instance of {BaseNgxToolbarComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}

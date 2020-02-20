@@ -247,7 +247,7 @@ export class AbstractComponent
      * Create a new instance of {AbstractComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -269,7 +269,7 @@ export class AbstractComponent
                           @Inject(ModalDialogService) private modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup) {
         contextMenuService || throwError('Could not inject ContextMenuService');
-        toasterService || throwError('Could not inject ToasterService');
+        toasterService || throwError('Could not inject ToastrService');
         logger || throwError('Could not inject NGXLogger');
         renderer || throwError('Could not inject Renderer2');
         translateService || throwError('Could not inject TranslateService');

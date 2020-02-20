@@ -1,5 +1,6 @@
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -10,55 +11,54 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractSplitpaneComponent} from './abstract.splitpane.component';
+import {AbstractFlipcardComponent} from './abstract.flipcard.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
-import {ModalDialogService} from 'ngx-modal-dialog';
-import {ConfirmPopup} from 'ngx-material-popup';
 
 /**
- * SplitPane component base on {AngularSplitModule}
+ * Flip-card base on {NbFlipCardComponent}
  */
 @Component({
-    selector: 'ngx-split-pane',
-    templateUrl: './splitpane.component.html',
-    styleUrls: ['./splitpane.component.scss'],
+    selector: 'ngx-flip-card',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './flipcard.component.html',
+    styleUrls: ['./flipcard.component.scss'],
 })
-export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource> implements AfterViewInit {
+export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren('splitAreaHolder', {read: ViewContainerRef})
-    private readonly querySplitAreaHolderViewContainerRefs: QueryList<ViewContainerRef>;
-    private splitAreaHolderViewContainerRefs: ViewContainerRef[];
+    @ViewChildren('frontComponent', {read: ViewContainerRef})
+    private readonly queryFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
+    private frontComponentHolderViewContainerRef: ViewContainerRef;
 
-    @ViewChildren('headerHolder', {read: ViewContainerRef})
-    private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
-    private headerViewContainerRef: ViewContainerRef;
+    @ViewChildren('backComponent', {read: ViewContainerRef})
+    private readonly queryBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
+    private backComponentHolderViewContainerRef: ViewContainerRef;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
     /**
-     * Get the {ViewContainerRef} instance of header panel
-     * @return the {ViewContainerRef} instance of header panel
+     * Get the {ViewContainerRef} instance of the front component
+     * @return the {ViewContainerRef} instance of the front component
      */
-    protected getHeaderViewContainerComponent(): ViewContainerRef {
-        return this.headerViewContainerRef;
+    protected getFrontComponentViewContainerRef(): ViewContainerRef {
+        return this.frontComponentHolderViewContainerRef;
     }
 
     /**
-     * Get the {ViewContainerRef} instances array of {SplitAreaDirective}
-     * @return the {ViewContainerRef} instances array of {SplitAreaDirective}
+     * Get the {ViewContainerRef} instance of the back component
+     * @return the {ViewContainerRef} instance of the back component
      */
-    protected getSplitAreaHolderViewContainerComponents(): ViewContainerRef[] {
-        return this.splitAreaHolderViewContainerRefs;
+    protected getBackComponentViewContainerRef(): ViewContainerRef {
+        return this.backComponentHolderViewContainerRef;
     }
 
     // -------------------------------------------------
@@ -66,7 +66,7 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponent} class
+     * Create a new instance of {NgxFlipCardComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -76,8 +76,6 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
-     * @param modalDialogService {ModalDialogService}
-     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -87,26 +85,23 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
-            modalDialogService, confirmPopup,
-            1, false);
+            false, false);
     }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.headerViewContainerRef) {
-            this.headerViewContainerRef =
-                ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
+        if (!this.frontComponentHolderViewContainerRef) {
+            this.frontComponentHolderViewContainerRef =
+                ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef);
         }
-        if (!this.splitAreaHolderViewContainerRefs || !this.splitAreaHolderViewContainerRefs.length) {
-            this.splitAreaHolderViewContainerRefs =
-                ComponentUtils.queryComponents(this.querySplitAreaHolderViewContainerRefs);
+        if (!this.backComponentHolderViewContainerRef) {
+            this.backComponentHolderViewContainerRef =
+                ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
         }
     }
 }

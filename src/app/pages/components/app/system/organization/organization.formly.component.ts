@@ -319,7 +319,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * Create a new instance of {OrganizationFormlyComponent} class
      * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -328,6 +328,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * @param changeDetectorRef {ChangeDetectorRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param userDataSource to searching all organization managers
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,

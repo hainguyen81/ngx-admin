@@ -34,7 +34,7 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      * Create a new instance of {SmartTableComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}

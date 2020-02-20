@@ -37,7 +37,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      * Create a new instance of {BaseSmartTableComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}

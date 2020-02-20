@@ -110,7 +110,7 @@ export class OrganizationSplitPaneComponent
      * Create a new instance of {OrganizationSplitPaneComponent} class
      * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}

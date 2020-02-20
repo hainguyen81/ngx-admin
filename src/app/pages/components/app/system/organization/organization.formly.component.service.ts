@@ -1,4 +1,4 @@
-import {AbstractComponentService} from '../../../../../services/component.service';
+import {BaseComponentService} from '../../../../../services/component.service';
 import {ComponentFactoryResolver, Inject, Injectable, ViewContainerRef} from '@angular/core';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {NGXLogger} from 'ngx-logger';
@@ -8,14 +8,14 @@ import {NGXLogger} from 'ngx-logger';
  */
 @Injectable()
 export class OrganizationFormlyComponentService
-    extends AbstractComponentService<OrganizationFormlyComponent> {
+    extends BaseComponentService<OrganizationFormlyComponent> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponentService} class
+     * Create a new instance of {OrganizationFormlyComponentService} class
      * @param componentFactoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param logger {NGXLogger}

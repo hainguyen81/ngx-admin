@@ -1,4 +1,4 @@
-import {AbstractComponentService} from '../../../../../services/component.service';
+import {BaseComponentService} from '../../../../../services/component.service';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {ComponentFactoryResolver, Inject, Injectable, ViewContainerRef} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
@@ -8,14 +8,14 @@ import {NGXLogger} from 'ngx-logger';
  */
 @Injectable()
 export class OrganizationTreeviewComponentService
-    extends AbstractComponentService<OrganizationTreeviewComponent> {
+    extends BaseComponentService<OrganizationTreeviewComponent> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractComponentService} class
+     * Create a new instance of {OrganizationTreeviewComponentService} class
      * @param componentFactoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param logger {NGXLogger}
