@@ -14,7 +14,6 @@ export default class PromiseUtils {
         if (!promise || !isPromise(promise)) {
             return of(null);
         }
-        const _this = this;
         return from(promise.then(value => value));
     }
 }

@@ -89,7 +89,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     // DECLARATION
     // -------------------------------------------------
 
-    private tableHeader: string;
+    tableHeader: string;
     private settings: any = DefaultTableSettings;
     protected translatedSettings: any = DefaultTableSettings;
 

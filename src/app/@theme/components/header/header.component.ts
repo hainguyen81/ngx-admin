@@ -17,34 +17,14 @@ import {NbxOAuth2AuthDbService} from '../../../auth/auth.oauth2.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
     private destroy$: Subject<void> = new Subject<void>();
-    private userPictureOnly: boolean = false;
+    userPictureOnly: boolean = false;
 
     /* Authentication */
     private token: NbAuthToken;
     private user: any;
 
     private languages = AppConfig.i18n.languages;
-
-    private themes = [
-        {
-            value: 'default',
-            name: 'Light',
-        },
-        {
-            value: 'dark',
-            name: 'Dark',
-        },
-        {
-            value: 'cosmic',
-            name: 'Cosmic',
-        },
-        {
-            value: 'corporate',
-            name: 'Corporate',
-        },
-    ];
-
-    private currentTheme = 'default';
+    currentTheme = 'default';
     private currentLang = 'en';
 
     // private userMenu: NbMenuItem[] = [{title: 'Profile'}, {title: 'Log out'}];

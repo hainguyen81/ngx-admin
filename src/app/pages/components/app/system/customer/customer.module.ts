@@ -5,7 +5,7 @@ import {
     NbContextMenuModule,
     NbIconModule,
     NbInputModule,
-    NbSelectModule
+    NbSelectModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';

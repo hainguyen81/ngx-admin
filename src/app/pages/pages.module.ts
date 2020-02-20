@@ -56,7 +56,7 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
         OrganizationModule,
         UserModule,
         CustomerModule,
-        CategoriesModule
+        CategoriesModule,
     ],
     declarations: [
         PagesComponent,

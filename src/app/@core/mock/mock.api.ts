@@ -44,5 +44,5 @@ export const MockApi = {
     user: MockApiUser,
     customer: MockApiCustomer,
     organization: MockApiOrganization,
-    categories: MockApiCategories
+    categories: MockApiCategories,
 };

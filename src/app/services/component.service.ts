@@ -68,7 +68,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
      */
     protected constructor(@Inject(ComponentFactoryResolver) private componentFactoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
-                          @Inject(NGXLogger) private logger: NGXLogger,
+                          @Inject(NGXLogger) logger: NGXLogger,
                           private componentType: Type<T>) {
         componentFactoryResolver || throwError('Could not inject ComponentFactoryResolver');
         viewContainerRef || throwError('Could not inject ViewContainerRef');

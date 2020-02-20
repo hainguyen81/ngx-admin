@@ -17,7 +17,6 @@ import {CategoriesDataSource} from '../../../../../services/implementation/categ
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import Organization from '../../../../../@core/data/organization';
 import {OrganizationFormConfig, OrganizationFormFieldsConfig} from '../organization/organization.formly.component';
 
 /* default categories formly config */

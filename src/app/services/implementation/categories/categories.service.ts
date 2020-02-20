@@ -1,4 +1,4 @@
-import {AbstractDbService, PromiseExecutor} from '../../database.service';
+import {AbstractDbService} from '../../database.service';
 import {ICategories} from '../../../@core/data/warehouse_catelogies';
 import {Inject, Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';

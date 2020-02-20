@@ -1,5 +1,4 @@
 import {IModel} from './base';
-import {IOrganization, ORGANIZTAION_TYPE} from './organization';
 
 export const enum CATEGORIES_TYPE {
     UPPER_CATEGORIES,
