@@ -46,7 +46,7 @@ export abstract class BaseNgxTreeviewComponent<T extends DataSource> extends Ngx
      * Create a new instance of {BaseNgxTreeviewComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}

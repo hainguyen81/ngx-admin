@@ -46,7 +46,7 @@ export abstract class BaseNgxDropdownTreeviewComponent<T extends DataSource> ext
      * Create a new instance of {BaseNgxDropdownTreeviewComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}

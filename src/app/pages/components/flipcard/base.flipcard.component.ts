@@ -10,9 +10,9 @@ import {
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NgxFlipCardComponent} from './flipcard.component';
 import {ContextMenuService} from 'ngx-contextmenu';
-import {ToasterService} from 'angular2-toaster';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
+import {ToastrService} from 'ngx-toastr';
 
 /**
  * Base flip-card base on {NbFlipCardComponent}
@@ -33,7 +33,7 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      * Create a new instance of {AbstractComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -43,7 +43,7 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
