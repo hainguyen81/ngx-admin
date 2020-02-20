@@ -34,7 +34,6 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
 import {ToasterModule} from 'angular2-toaster';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
-import {NgxFlipCardComponent} from './flipcard/flipcard.component';
 
 @NgModule({
     imports: [
@@ -103,7 +102,6 @@ import {NgxFlipCardComponent} from './flipcard/flipcard.component';
         NgxTreeviewComponent,
         NgxFormlyComponent,
         NgxSplitPaneComponent,
-        NgxFlipCardComponent,
         NotFoundComponent,
     ],
     providers: [

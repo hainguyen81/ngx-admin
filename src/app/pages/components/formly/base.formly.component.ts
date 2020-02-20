@@ -12,8 +12,10 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
-import {ToasterService} from 'angular2-toaster';
 import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /**
  * Base form component base on {FormlyModule}
@@ -52,6 +54,8 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
@@ -59,23 +63,26 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           config?: FormlyConfig,
                           fields?: FormlyFieldConfig[],
                           options?: FormlyFormOptions,
                           actions?: IToolbarActionsConfig[] | []) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
-        super.setConfig(config);
-        super.setFields(fields);
-        super.setOptions(options);
-        super.setActions(actions);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
+        this.setConfig(config);
+        this.setFields(fields);
+        this.setOptions(options);
+        this.setActions(actions);
     }
 }

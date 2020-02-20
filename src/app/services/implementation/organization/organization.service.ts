@@ -28,17 +28,9 @@ export class OrganizationDbService extends AbstractDbService<IOrganization> {
                       reject: (reason?: any) => void, ...args: IOrganization[]) => {
         if (args && args.length) {
             this.getLogger().debug('Delete data', args, 'First data', args[0]);
-            // TODO Wait for deleting
-        } else resolve(0);
-    }
-
-    updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
-                      reject: (reason?: any) => void, ...args: IOrganization[]) => {
-        if (args && args.length) {
-            this.getLogger().debug('Update data', args, 'First data', args[0]);
-            this.getDbService().update(this.getDbStore(), args[0])
+            this.getDbService().deleteRecord(this.getDbStore(), args[0]['uid'])
                 .then(() => resolve(1), (errors) => {
-                    this.getLogger().error('Could not update data', errors);
+                    this.getLogger().error('Could not delete data', errors);
                     reject(errors);
                 });
         } else resolve(0);

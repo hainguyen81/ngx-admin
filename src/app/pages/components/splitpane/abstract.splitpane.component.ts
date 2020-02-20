@@ -15,8 +15,10 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -119,23 +121,28 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      * @param numberOfAreas the number of split-area
      * @param horizontal true for horizontal; else vertical
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          private numberOfAreas: number,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          private numberOfAreas?: number | 1,
                           private horizontal?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
         (numberOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
     }
 

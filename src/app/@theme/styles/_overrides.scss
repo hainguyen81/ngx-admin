@@ -44,34 +44,6 @@
         display: none;
     }
 
-    nb-card-body {
-        ng2-smart-table {
-            table {
-                tr {
-                    cursor: pointer;
-
-                    th, td {
-                        padding: 0.5rem 1rem;
-                        cursor: pointer;
-
-                        button, input, optgroup, select, textarea {
-                            color: nb-theme(color-basic-800);
-                            height: inherit;
-                        }
-                    }
-                }
-
-                tr.ng2-smart-titles th {
-                    padding: 0.5rem 1rem;
-                }
-
-                tr.selected, tr.hover {
-                    background-color: nb-theme(color-primary-focus);
-                }
-            }
-        }
-    }
-
     /* Bootstrap 4 text input with search icon */
     .has-search .form-control {
         padding-left: 2.375rem;
@@ -117,4 +89,7 @@
             background-color: nb-theme(color-primary-focus);
         }
     }
+
+    /* Toaster */
+
 }

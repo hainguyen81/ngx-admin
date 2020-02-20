@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -20,7 +19,6 @@ import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/organization';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../../../utils/component.utils';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';
@@ -31,7 +29,11 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
-import ObjectUtils, {DeepCloner} from '../../../../../utils/object.utils';
+import {DeepCloner} from '../../../../../utils/object.utils';
+import {ToastrService} from 'ngx-toastr';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {throwError} from 'rxjs';
+import {ModalDialogService} from 'ngx-modal-dialog';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -55,7 +57,7 @@ export const OrganizationFormAreaConfig: ISplitAreaConfig = {
  * Organization split-pane component base on {AngularSplitModule}
  */
 @Component({
-    selector: 'ngx-split-pane',
+    selector: 'ngx-split-pane-organization',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })
@@ -106,7 +108,7 @@ export class OrganizationSplitPaneComponent
 
     /**
      * Create a new instance of {OrganizationSplitPaneComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
@@ -115,19 +117,25 @@ export class OrganizationSplitPaneComponent
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
-    constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
+    constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
+        confirmPopup || throwError('Could not inject ConfirmPopup');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);
     }
@@ -248,7 +256,7 @@ export class OrganizationSplitPaneComponent
                     // create formly form component
                     this.organizationFormlyComponent = this.createOrganizationFormlyComponent(
                         componentFactoryResolver, viewContainerRefs[1]);
-                    this.organizationFormlyComponent.setModel(DeepCloner(this.selectedOrganization));
+                    this.doReset();
                 }
             }
         });
@@ -263,9 +271,15 @@ export class OrganizationSplitPaneComponent
      */
     private doSave(): void {
         this.getFormlyComponent().getFormGroup().updateValueAndValidity();
+        if (this.getFormlyComponent().getFormGroup().invalid) {
+            this.showError(this.organizationToolbarComponent.getToolbarHeader().title,
+                'common.form.invalid_data');
+            return;
+        }
+
         this.getDataSource().update(
-            this.getFormlyComponent().getModel(),
-            this.getSelectedOrganization())
+            this.getSelectedOrganization(),
+            this.getFormlyComponent().getModel())
             .then(() => this.showSaveDataSuccess())
             .catch(() => this.showSaveDataError());
     }
@@ -274,15 +288,26 @@ export class OrganizationSplitPaneComponent
      * Perform resetting data
      */
     private doReset(): void {
-        this.organizationFormlyComponent.getFormGroup().reset();
+        let clonedOrg: IOrganization;
+        clonedOrg = DeepCloner(this.selectedOrganization);
+        delete clonedOrg.parent, clonedOrg.children;
+        this.organizationFormlyComponent.setModel(clonedOrg);
     }
 
     /**
      * Perform deleting data
      */
     private doDelete(): void {
-        this.getDataSource().remove(this.getFormlyComponent().getModel())
-            .then(() => this.showDeleteDataSuccess())
-            .catch(() => this.showSaveDataError());
+        this.getConfirmPopup().show({
+            cancelButton: this.translate('common.toast.confirm.delete.cancel'),
+            color: 'warn',
+            content: this.translate('common.toast.confirm.delete.message'),
+            okButton: this.translate('common.toast.confirm.delete.ok'),
+            title: this.translate(this.organizationToolbarComponent.getToolbarHeader().title),
+        }).toPromise().then(value => {
+            value && this.getDataSource().remove(this.getFormlyComponent().getModel())
+                .then(() => this.showDeleteDataSuccess())
+                .catch(() => this.showSaveDataError());
+        });
     }
 }

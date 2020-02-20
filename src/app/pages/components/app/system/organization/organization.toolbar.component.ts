@@ -7,14 +7,15 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
-import {ToasterService} from 'angular2-toaster';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {BaseNgxToolbarComponent} from '../../../toolbar/base.toolbar.component';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {COMMON} from '../../../../../config/common.config';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /* default organization toolbar header config */
 export const OrganizationToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -29,7 +30,7 @@ export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].conc
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    selector: 'ngx-org-toolbar',
+    selector: 'ngx-org-toolbar-organization',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss', './organization.toolbar.component.scss'],
 })
@@ -40,7 +41,7 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
 
     /**
      * Create a new instance of {OrganizationToolbarComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
@@ -49,20 +50,24 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
-     * @param actions {IToolbarActionsConfig}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
-    constructor(@Inject(DataSource) dataSource: OrganizationDataSource,
+    constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup,
             OrganizationToolbarHeaderConfig, OrganizationToolbarActionsConfig);
     }
 }

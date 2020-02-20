@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -6,7 +7,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -18,7 +18,9 @@ import Organization, {IOrganization} from '../../../../../@core/data/organizatio
 import OrganizationUtils from '../../../../../utils/organization.utils';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
-import {ToasterService} from 'angular2-toaster';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -35,11 +37,12 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view',
+    selector: 'ngx-tree-view-organization',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
-export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource> {
+export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -65,7 +68,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
 
     /**
      * Create a new instance of {OrganizationTreeviewComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {OrganizationDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToasterService}
      * @param logger {NGXLogger}
@@ -74,19 +77,24 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
     }
@@ -114,6 +122,11 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         setTimeout(() => this.focus(), 300);
     }
 
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+        this.getDataSource().refresh();
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -128,7 +141,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         let newItem: TreeviewItem;
         newItem = super.newItem(parent, treeItem);
         if (newItem) {
-            newItem.text = this.getTranslateService().instant('system.organization.new');
+            newItem.text = this.translate('system.organization.new');
             newItem.value = new Organization(
                 undefined, undefined, undefined, undefined);
         }

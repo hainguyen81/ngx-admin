@@ -7,6 +7,7 @@ import {IDbService, IHttpService} from './interface.service';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
 import {isArray} from 'util';
+import {Cacheable} from 'ngx-cacheable';
 
 /**
  * Abstract HTTP service
@@ -132,6 +133,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         return of(this.parseResponse(new ServiceResponse(false, res, options.redirectFailure, errors, [])));
     }
 
+    @Cacheable()
     public post(url: string, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
@@ -148,6 +150,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         return this.request(url, 'POST', options);
     }
 
+    @Cacheable()
     public get(url: string, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
@@ -164,6 +167,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         return this.request(url, 'GET', options);
     }
 
+    @Cacheable()
     public del(url: string, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
@@ -180,6 +184,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         return this.request(url, 'DELETE', options);
     }
 
+    @Cacheable()
     public head(url: string, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
@@ -196,6 +201,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         return this.request(url, 'HEAD', options);
     }
 
+    @Cacheable()
     public path(url: string, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
@@ -212,6 +218,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         return this.request(url, 'PATH', options);
     }
 
+    @Cacheable()
     public request(url: string, method?: string, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };

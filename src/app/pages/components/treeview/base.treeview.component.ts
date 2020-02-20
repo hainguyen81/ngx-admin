@@ -12,7 +12,9 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
-import {ToasterService} from 'angular2-toaster';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /**
  * Base tree-view component base on {TreeviewComponent}
@@ -51,18 +53,23 @@ export abstract class BaseNgxTreeviewComponent<T extends DataSource> extends Ngx
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
     }
 }

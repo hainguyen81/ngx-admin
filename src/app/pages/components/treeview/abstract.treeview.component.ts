@@ -18,17 +18,18 @@ import {
     CONTEXT_MENU_ADD,
     CONTEXT_MENU_DELETE,
     CONTEXT_MENU_EDIT,
-    IContextMenu,
     IEvent,
 } from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
-import {ToasterService} from 'angular2-toaster';
 import ObjectUtils from '../../../utils/object.utils';
 import {throwError} from 'rxjs';
 import ComponentUtils from '../../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -158,23 +159,28 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      * @param treeviewConfig {TreeviewConfig}
      * @param dropdown specify using drop-down tree-view or normal tree-view
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           private treeviewConfig?: TreeviewConfig,
                           private dropdown?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
         this.setConfig(treeviewConfig);
     }
 

@@ -41,8 +41,7 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* i18n */
 import {TranslateModule} from '@ngx-translate/core';
 /* Toaster */
-import {ToasterModule} from 'angular2-toaster';
-import {ToastrModule} from 'ngx-toastr';
+import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 /* Mock data */
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* SplitPane */
@@ -55,6 +54,16 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {TreeviewModule} from 'ngx-treeview';
 /* Angular material modules */
 import {AppMaterialModule} from './app.material.module';
+/* Device Detector */
+import {DeviceDetectorModule} from 'ngx-device-detector';
+/* Pipes */
+import {NgPipesModule} from 'ngx-pipes';
+/* Lightbox */
+import {LightboxModule} from 'ngx-lightbox';
+/* Popup, Dialogs */
+import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
+import {ModalDialogModule} from 'ngx-modal-dialog';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
 @NgModule({
     declarations: [AppComponent],
@@ -67,11 +76,26 @@ import {AppMaterialModule} from './app.material.module';
         /* Angular material modules */
         AppMaterialModule,
 
+        /* Popup, Dialogs */
+        AlertPopupModule,
+        ConfirmPopupModule,
+        PromptPopupModule,
+        ModalDialogModule.forRoot(),
+
         /* Core Module for layout */
         CoreModule.forRoot(),
 
         /* Mock Data Module */
         MockDataModule.forRoot(),
+
+        /* Device Detector */
+        DeviceDetectorModule.forRoot(),
+
+        /* Pipes */
+        NgPipesModule,
+
+        /* Lightbox */
+        LightboxModule,
 
         /* Theme */
         ThemeModule.forRoot(),
@@ -95,8 +119,8 @@ import {AppMaterialModule} from './app.material.module';
         TranslateModule.forRoot(),
 
         /* Toaster */
-        ToasterModule.forRoot(),
         ToastrModule.forRoot(AppConfig.TOASTER),
+        ToastContainerModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
@@ -168,6 +192,7 @@ import {AppMaterialModule} from './app.material.module';
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
     ],
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],

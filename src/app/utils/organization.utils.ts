@@ -28,7 +28,7 @@ export default class OrganizationUtils {
             return item;
         };
         return HierarchyUtils.buildHierarchyTree(
-            organization, null, parent, 'children',
-            'parent', 'children', treeItemMapper);
+            organization, undefined, parent, 'children',
+            undefined, 'children', treeItemMapper);
     }
 }

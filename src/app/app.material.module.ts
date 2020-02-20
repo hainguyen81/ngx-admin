@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {MatButtonModule} from '@angular/material/button';
         MatPaginatorModule,
         MatCardModule,
         MatToolbarModule,
+        MatDialogModule,
     ],
     exports: [
         MatButtonModule,
@@ -62,6 +64,7 @@ import {MatButtonModule} from '@angular/material/button';
         MatPaginatorModule,
         MatCardModule,
         MatToolbarModule,
+        MatDialogModule,
     ],
     providers: [
         MatDatepickerModule,

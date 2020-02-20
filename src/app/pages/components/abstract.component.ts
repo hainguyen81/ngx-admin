@@ -29,8 +29,10 @@ import {
 } from '../../services/implementation/document.keyboard.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../utils/component.utils';
+import {ToastrService} from 'ngx-toastr';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {ModalDialogService} from 'ngx-modal-dialog';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -179,11 +181,29 @@ export class AbstractComponent
     }
 
     /**
-     * Get the {ToasterService} instance for showing notification popup
-     * @return the {ToasterService} instance
+     * Get the {ToastrService} instance for showing notification popup
+     * @return the {ToastrService} instance
      */
-    protected getToasterService(): ToasterService {
+    protected getToasterService(): ToastrService {
         return this.toasterService;
+    }
+
+    /**
+     * Get the {ModalDialogService} instance for showing modal dialog if necessary
+     * @return the {ModalDialogService} instance
+     */
+    protected getModalDialogService(): ModalDialogService {
+        this.modalDialogService || throwError('Could not inject ModalDialogService');
+        return this.modalDialogService;
+    }
+
+    /**
+     * Get the {ConfirmPopup} instance for showing confirmation popup if necessary
+     * @return the {ConfirmPopup} instance
+     */
+    protected getConfirmPopup(): ConfirmPopup {
+        this.confirmPopup || throwError('Could not inject ConfirmPopup');
+        return this.confirmPopup;
     }
 
     /**
@@ -234,16 +254,20 @@ export class AbstractComponent
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) private toasterService: ToasterService,
+                          @Inject(ToastrService) private toasterService: ToastrService,
                           @Inject(NGXLogger) private logger: NGXLogger,
                           @Inject(Renderer2) private renderer: Renderer2,
                           @Inject(TranslateService) private translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef) {
+                          @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) private modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup) {
         contextMenuService || throwError('Could not inject ContextMenuService');
         toasterService || throwError('Could not inject ToasterService');
         logger || throwError('Could not inject NGXLogger');
@@ -252,6 +276,7 @@ export class AbstractComponent
         factoryResolver || throwError('Could not inject ComponentFactoryResolver');
         dataSource = dataSource || new LocalDataSource();
         dataSource.onChanged().subscribe(value => this.onDataSourceChanged({$data: value}));
+        translateService.onLangChange.subscribe(value => this.onLangChange({$event: value}));
     }
 
     // -------------------------------------------------
@@ -334,7 +359,7 @@ export class AbstractComponent
      */
     onKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyDown', event);
+        this.getLogger().debug('onKeyDown', event, '[', this.constructor.name, ']');
 
         // check whether navigating on context menu
         let isOnContextMenu: boolean;
@@ -371,7 +396,7 @@ export class AbstractComponent
      */
     onNavigateKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onNavigateKeyDown', event);
+        this.getLogger().debug('onNavigateKeyDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -380,7 +405,7 @@ export class AbstractComponent
      */
     onContextMenuKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenuKeyDown', event);
+        this.getLogger().debug('onContextMenuKeyDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -389,7 +414,7 @@ export class AbstractComponent
      */
     onActionKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenuKeyDown', event);
+        this.getLogger().debug('onContextMenuKeyDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -398,7 +423,7 @@ export class AbstractComponent
      */
     onKeyUp(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyUp', event);
+        this.getLogger().debug('onKeyUp', event, '[', this.constructor.name, ']');
         if (event && event.$event instanceof KeyboardEvent
             && (KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent)
                 || KeyboardUtils.isContextMenuKey(event.$event as KeyboardEvent))) {
@@ -413,7 +438,7 @@ export class AbstractComponent
      */
     onKeyPress(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyPress', event);
+        this.getLogger().debug('onKeyPress', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -422,7 +447,7 @@ export class AbstractComponent
      */
     onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenu', event);
+        this.getLogger().debug('onContextMenu', event, '[', this.constructor.name, ']');
         if (event && event.$event instanceof MouseEvent
             && ((!this.getContextMenu() || !this.getContextMenu().length)
                 || this.showHideContextMenu(event.$event, event.$event.target, event.$data))) {
@@ -436,7 +461,7 @@ export class AbstractComponent
      */
     onContextMenuClose(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenuClose');
+        this.getLogger().debug('onContextMenuClose', '[', this.constructor.name, ']');
     }
 
     /**
@@ -448,7 +473,7 @@ export class AbstractComponent
      */
     onMenuEvent(event: IEvent) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMenuEvent', event);
+        this.getLogger().debug('onMenuEvent', event, '[', this.constructor.name, ']');
         if (event && event.$data && event.$data['menu']) {
             if (typeof event.$data['menu']['click'] === 'function') {
                 event.$data['menu']['click']['apply'](this, [event.$data['item']]);
@@ -468,7 +493,7 @@ export class AbstractComponent
      */
     onResize(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onResize', event);
+        this.getLogger().debug('onResize', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -477,7 +502,7 @@ export class AbstractComponent
      */
     onResized(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onResized', event);
+        this.getLogger().debug('onResized', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -486,7 +511,7 @@ export class AbstractComponent
      */
     onDataSourceChanged(value: IEvent) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onDataSourceChanged', value);
+        this.getLogger().debug('onDataSourceChanged', value, '[', this.constructor.name, ']');
     }
 
     /**
@@ -495,7 +520,7 @@ export class AbstractComponent
      */
     onClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onClick', event);
+        this.getLogger().debug('onClick', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -504,7 +529,7 @@ export class AbstractComponent
      */
     onDoubleClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onDoubleClick', event);
+        this.getLogger().debug('onDoubleClick', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -513,7 +538,7 @@ export class AbstractComponent
      */
     onMouseDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseDown', event);
+        this.getLogger().debug('onMouseDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -522,7 +547,7 @@ export class AbstractComponent
      */
     onMouseEnter(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseEnter', event);
+        this.getLogger().debug('onMouseEnter', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -531,7 +556,7 @@ export class AbstractComponent
      */
     onMouseLeave(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseLeave', event);
+        this.getLogger().debug('onMouseLeave', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -540,7 +565,7 @@ export class AbstractComponent
      */
     onMouseMove(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseMove', event);
+        this.getLogger().debug('onMouseMove', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -549,7 +574,7 @@ export class AbstractComponent
      */
     onMouseOut(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseOut', event);
+        this.getLogger().debug('onMouseOut', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -558,7 +583,7 @@ export class AbstractComponent
      */
     onMouseOver(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseOver', event);
+        this.getLogger().debug('onMouseOver', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -567,7 +592,7 @@ export class AbstractComponent
      */
     onMouseUp(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseUp', event);
+        this.getLogger().debug('onMouseUp', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -576,7 +601,7 @@ export class AbstractComponent
      */
     onMouseWheel(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseWheel', event);
+        this.getLogger().debug('onMouseWheel', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -585,7 +610,7 @@ export class AbstractComponent
      */
     onFocus(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFocus', event);
+        this.getLogger().debug('onFocus', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -594,7 +619,7 @@ export class AbstractComponent
      */
     onFocusIn(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFocusIn', event);
+        this.getLogger().debug('onFocusIn', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -603,7 +628,7 @@ export class AbstractComponent
      */
     onFocusOut(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFocusOut', event);
+        this.getLogger().debug('onFocusOut', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -612,7 +637,16 @@ export class AbstractComponent
      */
     onBlur(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onBlur', event);
+        this.getLogger().debug('onBlur', event, '[', this.constructor.name, ']');
+    }
+
+    /**
+     * Triggered `languageChange` event
+     * @param event {IEvent} that contains {$event} as LangChangeEvent
+     */
+    onLangChange(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onLangChange', event, '[', this.constructor.name, ']');
     }
 
     // -------------------------------------------------
@@ -738,7 +772,20 @@ export class AbstractComponent
     }
 
     /**
-     * Show success notification toast
+     * Show message notification toast
+     * @param title toast title
+     * @param body toast message
+     * @param type toast type
+     */
+    protected showMessage(title?: string, body?: string, type?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().show(this.translate(body), this.translate(title), undefined, type);
+    }
+
+    /**
+     * Show success message notification toast
      * @param title toast title
      * @param body toast message
      */
@@ -746,12 +793,11 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().popAsync('info',
-            this.getTranslateService().instant(title),
-            this.getTranslateService().instant(body));
+        this.getToasterService().success(this.translate(body), this.translate(title));
     }
+
     /**
-     * Show error notification toast
+     * Show error message notification toast
      * @param title toast title
      * @param body toast message
      */
@@ -759,9 +805,31 @@ export class AbstractComponent
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().pop('error',
-            this.getTranslateService().instant(title),
-            this.getTranslateService().instant(body));
+        this.getToasterService().error(this.translate(body), this.translate(title));
+    }
+
+    /**
+     * Show info message notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showInfo(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().info(this.translate(body), this.translate(title));
+    }
+
+    /**
+     * Show warning message notification toast
+     * @param title toast title
+     * @param body toast message
+     */
+    protected showWarning(title?: string, body?: string): void {
+        if (!(title || '').length || !(body || '').length) {
+            return;
+        }
+        this.getToasterService().warning(this.translate(body), this.translate(title));
     }
 
     /**
@@ -770,6 +838,7 @@ export class AbstractComponent
     protected showSaveDataSuccess(): void {
         this.showSuccess('common.toast.save.success.title', 'common.toast.save.success.body');
     }
+
     /**
      * Show error notification toast about saving data
      */
@@ -783,10 +852,23 @@ export class AbstractComponent
     protected showDeleteDataSuccess(): void {
         this.showSuccess('common.toast.delete.success.title', 'common.toast.delete.success.body');
     }
+
     /**
      * Show success notification toast about saving data
      */
     protected showDeleteDataError(): void {
         this.showError('common.toast.delete.error.title', 'common.toast.delete.error.body');
+    }
+
+    /**
+     * Translate the specified value
+     * @param value to translate
+     * @return translated value or itself
+     */
+    public translate(value?: string): string {
+        if (!(value || '').length || !this.getTranslateService()) {
+            return value;
+        }
+        return this.getTranslateService().instant(value);
     }
 }

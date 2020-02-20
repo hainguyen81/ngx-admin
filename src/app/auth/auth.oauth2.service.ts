@@ -8,12 +8,7 @@ import {AbstractHttpService} from '../services/http.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../services/response.service';
 import {ConnectionService} from 'ng-connection-service';
-import {
-    NBX_AUTH_ACCESS_TOKEN_PARAM,
-    NBX_AUTH_AUTHORIZATION_HEADER,
-    NBX_AUTH_AUTHORIZATION_TYPE,
-    NBX_AUTH_REFRESH_TOKEN_PARAM,
-} from './auth.interceptor';
+import {NBX_AUTH_AUTHORIZATION_HEADER, NBX_AUTH_AUTHORIZATION_TYPE,} from './auth.interceptor';
 import {Observable, of, throwError} from 'rxjs';
 import EncryptionUtils from '../utils/encryption.utils';
 import PromiseUtils from '../utils/promise.utils';
@@ -34,22 +29,6 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbSer
                       reject: (reason?: any) => void, ...args: T[]) => {
         if (args && args.length) {
             this.getDbService().delete(this.getDbStore(), {'id': (args[0].getPayload() || {}).id})
-                .then(() => resolve(1), (errors) => {
-                    this.getLogger().error(errors);
-                    reject(errors);
-                });
-        }
-    }
-
-    updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
-                      reject: (reason?: any) => void, ...args: T[]) => {
-        if (args && args.length) {
-            let updatorMap: Map<string, any>;
-            updatorMap = new Map<string, any>();
-            updatorMap.set(NBX_AUTH_ACCESS_TOKEN_PARAM, (args[0].getPayload() || {})[NBX_AUTH_ACCESS_TOKEN_PARAM]);
-            updatorMap.set(NBX_AUTH_REFRESH_TOKEN_PARAM, (args[0].getPayload() || {})[NBX_AUTH_REFRESH_TOKEN_PARAM]);
-            this.getDbService().update(this.getDbStore(),
-                updatorMap, {'id': (args[0].getPayload() || {}).id})
                 .then(() => resolve(1), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);

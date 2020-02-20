@@ -16,7 +16,8 @@ import {isArray} from 'util';
 
 @Component({
     selector: 'ngx-app',
-    template: `<router-outlet></router-outlet><toaster-container></toaster-container>`,
+    template: `
+        <router-outlet></router-outlet>`,
 })
 export class AppComponent implements OnInit {
 

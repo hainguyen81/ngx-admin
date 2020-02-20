@@ -16,13 +16,15 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../utils/component.utils';
 import {MatToolbar} from '@angular/material/toolbar';
 import {NbComponentSize} from '@nebular/theme/components/component-size';
 import {NbComponentStatus} from '@nebular/theme/components/component-status';
 import {NbComponentShape} from '@nebular/theme/components/component-shape';
 import {NbButtonComponent} from '@nebular/theme';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 export const ACTION_SAVE: string = 'ACTION_SAVE';
 export const ACTION_RESET: string = 'ACTION_RESET';
@@ -30,6 +32,7 @@ export const ACTION_DELETE: string = 'ACTION_DELETE';
 
 /* toolbar actions configuration */
 export declare type ToolbarActionType = 'button' | 'submit' | 'reset';
+
 export interface IToolbarActionsConfig {
     id: string;
     label: string;
@@ -190,22 +193,28 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
+     * @param header {IToolbarHeaderConfig}
      * @param actions {IToolbarActionsConfig}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToasterService) toasterService: ToasterService,
+                          @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(Renderer2) renderer: Renderer2,
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           private header?: IToolbarHeaderConfig,
                           private actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
     }
 
     ngAfterViewInit(): void {
