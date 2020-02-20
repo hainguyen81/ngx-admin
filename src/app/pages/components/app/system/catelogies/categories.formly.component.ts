@@ -12,12 +12,15 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
-import {ICategories} from '../../../../../@core/data/warehouse_catelogies';
+import {
+    CATEGORIES_TYPE,
+    convertCategoriesTypeToDisplay,
+    ICategories,
+} from '../../../../../@core/data/warehouse_catelogies';
 import {CategoriesDataSource} from '../../../../../services/implementation/categories/categories.datasource';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {OrganizationFormConfig, OrganizationFormFieldsConfig} from '../organization/organization.formly.component';
 
 /* default categories formly config */
 export const CategoriesFormConfig: FormlyConfig = new FormlyConfig();
@@ -46,28 +49,16 @@ export const CategoriesFormFieldsConfig: FormlyFieldConfig[] = [
             placeholder: 'system.categories.form.type.placeholder',
             options: [
                 {
-                    value: 'ORGANIZTAION_TYPE.HEAD_CENTER',
-                    label: 'convertcategoriesTypeToDisplay(ORGANIZTAION_TYPE.HEAD_CENTER)',
+                    value: CATEGORIES_TYPE.UPPER_CATEGORIES,
+                    label: convertCategoriesTypeToDisplay(CATEGORIES_TYPE.UPPER_CATEGORIES),
                 },
                 {
-                    value: 'ORGANIZTAION_TYPE.BRANCH',
-                    label: 'convertcategoriesTypeToDisplay(ORGANIZTAION_TYPE.BRANCH)',
+                    value: CATEGORIES_TYPE.TYPE,
+                    label: convertCategoriesTypeToDisplay(CATEGORIES_TYPE.UPPER_CATEGORIES),
                 },
                 {
-                    value: 'ORGANIZTAION_TYPE.DIVISION',
-                    label: 'convertcategoriesTypeToDisplay(ORGANIZTAION_TYPE.DIVISION)',
-                },
-                {
-                    value: 'ORGANIZTAION_TYPE.UNIT',
-                    label: 'convertcategoriesTypeToDisplay(ORGANIZTAION_TYPE.UNIT)',
-                },
-                {
-                    value: 'ORGANIZTAION_TYPE.DEPARTMENT',
-                    label: 'convertcategoriesTypeToDisplay(ORGANIZTAION_TYPE.DEPARTMENT)',
-                },
-                {
-                    value: 'ORGANIZTAION_TYPE.TEAM_GROUP',
-                    label: 'convertcategoriesTypeToDisplay(ORGANIZTAION_TYPE.TEAM_GROUP)',
+                    value: CATEGORIES_TYPE.BRAND,
+                    label: convertCategoriesTypeToDisplay(CATEGORIES_TYPE.UPPER_CATEGORIES),
                 },
             ],
         },
@@ -149,7 +140,7 @@ export class CategoriesFormlyComponent extends BaseFormlyComponent<ICategories, 
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             modalDialogService, confirmPopup,
-            OrganizationFormConfig, OrganizationFormFieldsConfig);
+            CategoriesFormConfig, CategoriesFormFieldsConfig);
         // parent selection settings
         // super.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
         // // manager selection settings

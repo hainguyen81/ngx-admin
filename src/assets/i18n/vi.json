@@ -31,6 +31,11 @@
                 "unit": "Đơn vị",
                 "department": "Phòng ban",
                 "team_group": "Đội / Nhóm"
+            },
+            "categoriesType": {
+                "upper_categories": "Categories Level 1",
+                "type": "Categories Level 2",
+                "branch": "Categories Level 3"
             }
         },
         "toast": {

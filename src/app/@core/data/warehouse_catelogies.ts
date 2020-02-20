@@ -17,6 +17,19 @@ export interface ICategories extends IModel {
     children?: ICategories[] | null;
 }
 
+export function convertCategoriesTypeToDisplay(value: CATEGORIES_TYPE): string {
+    switch (value) {
+        case CATEGORIES_TYPE.UPPER_CATEGORIES:
+            return 'common.enum.categoriesType.upper_categories';
+        case CATEGORIES_TYPE.TYPE:
+            return 'common.enum.categoriesType.type';
+        case CATEGORIES_TYPE.BRAND:
+            return 'common.enum.categoriesType.brand';
+        default:
+            return 'common.enum.categoriesType.upper_categories';
+    }
+}
+
 export default class Categories implements ICategories {
     constructor(public id: string, public code: string, public name: string,
                 public type: CATEGORIES_TYPE,
