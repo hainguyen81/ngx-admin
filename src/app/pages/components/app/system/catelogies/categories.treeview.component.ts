@@ -14,10 +14,10 @@ import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeItem, TreeviewItem} from 'ngx-treeview';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
-import {ToasterService} from 'angular2-toaster';
 import { CategoriesDataSource } from '../../../../../services/implementation/categories/categories.datasource';
 import Categories, { ICategories } from '../../../../../@core/data/warehouse_catelogies';
 import CategoriesUtils from '../../../../../utils/categories.utils';
+import {ToastrService} from 'ngx-toastr';
 
 export const CategoriesTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -66,7 +66,7 @@ export class CategoriesTreeviewComponent extends BaseNgxTreeviewComponent<Catego
      * Create a new instance of {OrganizationTreeviewComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toastrService
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
@@ -76,14 +76,14 @@ export class CategoriesTreeviewComponent extends BaseNgxTreeviewComponent<Catego
      */
     constructor(@Inject(CategoriesDataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toastrService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
-        super(dataSource, contextMenuService, toasterService, logger,
+        super(dataSource, contextMenuService, toastrService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef);
         super.setConfig(CategoriesTreeviewConfig);

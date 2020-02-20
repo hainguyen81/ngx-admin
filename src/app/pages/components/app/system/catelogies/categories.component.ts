@@ -14,7 +14,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {SplitAreaDirective} from 'angular-split';
-import {ToasterService} from 'angular2-toaster';
 import ComponentUtils from '../../../../../utils/component.utils';
 import { CategoriesDataSource } from '../../../../../services/implementation/categories/categories.datasource';
 import { CategoriesTreeviewComponent } from './categories.treeview.component';
@@ -22,6 +21,9 @@ import { CategoriesFormlyComponent } from './categories.formly.component';
 import { ICategories } from '../../../../../@core/data/warehouse_catelogies';
 import { CategoriesTreeviewComponentService } from './categories.treeview.component.service';
 import { CategoriesFormlyComponentService } from './categories.formly.component.service';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /* Categories left area configuration */
 export const CategoriesTreeAreaConfig: ISplitAreaConfig = {
@@ -88,27 +90,30 @@ export class CategoriesSplitPanelComponent
      * Create a new instance of {OrganizationSplitPaneComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toastrService
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService
+     * @param confirmPopup
      */
     constructor(@Inject(DataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toastrService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
-        super(dataSource, contextMenuService, toasterService, logger,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+        super(dataSource, contextMenuService, toastrService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
-        super.setPaneHeader('system.categories.title');
+            viewContainerRef, changeDetectorRef, modalDialogService, confirmPopup);
         super.setHorizontal(true);
         super.setNumberOfAreas(2);
     }

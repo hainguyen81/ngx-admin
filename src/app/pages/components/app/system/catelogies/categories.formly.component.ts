@@ -12,11 +12,13 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
-import {ToasterService} from 'angular2-toaster';
-import {COMMON} from '../../../../../config/common.config';
-import {IFormActionsConfig} from '../../../formly/abstract.formly.component';
-import Categories, { ICategories } from '../../../../../@core/data/warehouse_catelogies';
-import { CategoriesDataSource } from '../../../../../services/implementation/categories/categories.datasource';
+import {ICategories} from '../../../../../@core/data/warehouse_catelogies';
+import {CategoriesDataSource} from '../../../../../services/implementation/categories/categories.datasource';
+import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
+import Organization from '../../../../../@core/data/organization';
+import {OrganizationFormConfig, OrganizationFormFieldsConfig} from '../organization/organization.formly.component';
 
 /* default categories formly config */
 export const CategoriesFormConfig: FormlyConfig = new FormlyConfig();
@@ -105,9 +107,6 @@ export const CategoriesFormFieldsConfig: FormlyFieldConfig[] = [
     },
 ];
 
-/* formly actions */
-export const CategoriesFormlyActions: IFormActionsConfig[] = [].concat(COMMON.baseFormActions);
-
 /**
  * Form component base on {FormlyModule}
  */
@@ -126,27 +125,36 @@ export class CategoriesFormlyComponent extends BaseFormlyComponent<ICategories, 
      * Create a new instance of {CategoriesFormlyComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
-     * @param toasterService {ToasterService}
+     * @param toastrService
      * @param logger {NGXLogger}
      * @param renderer {Renderer2}
      * @param translateService {TranslateService}
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService
+     * @param confirmPopup
      */
     constructor(@Inject(DataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToasterService) toasterService: ToasterService,
+                @Inject(ToastrService) toastrService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(Renderer2) renderer: Renderer2,
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
-        super(dataSource, contextMenuService, toasterService, logger,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+        super(dataSource, contextMenuService, toastrService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
-            CategoriesFormConfig, CategoriesFormFieldsConfig, null, CategoriesFormlyActions);
-        super.setModel(new Categories(undefined, undefined, undefined, undefined));
+            modalDialogService, confirmPopup,
+            OrganizationFormConfig, OrganizationFormFieldsConfig);
+        // parent selection settings
+        // super.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
+        // // manager selection settings
+        // super.getFields()[1].fieldGroup[1].templateOptions.options = this.getAllUsers();
+        // super.setModel(new Organization(undefined, undefined, undefined, undefined));
     }
 }
