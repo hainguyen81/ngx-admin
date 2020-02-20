@@ -8,7 +8,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {NgxFlipCardComponent} from './flipcard.component';
+import {NgxRevealCardComponent} from './revealcard.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -18,22 +18,22 @@ import {AbstractComponentService, BaseComponentService} from '../../../services/
 import ComponentUtils from '../../../utils/component.utils';
 
 /**
- * Base flip-card base on {NbFlipCardComponent}
+ * Base reveal-card base on {NbRevealCardComponent}
  */
 @Component({
-    selector: 'ngx-flip-card',
+    selector: 'ngx-reveal-card',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './flipcard.component.html',
-    styleUrls: ['./flipcard.component.scss'],
+    templateUrl: './revealcard.component.html',
+    styleUrls: ['./revealcard.component.scss'],
 })
-export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFlipCardComponent {
+export abstract class BaseRevealcardComponent<T extends DataSource> extends NgxRevealCardComponent {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {BaseFlipcardComponent} class
+     * Create a new instance of {BaseRevealcardComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}

@@ -14,82 +14,82 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
-import {NbCardBackComponent, NbCardFrontComponent, NbFlipCardComponent} from '@nebular/theme';
+import {NbCardBackComponent, NbCardFrontComponent, NbRevealCardComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
 
 /**
- * Abstract FlipCard component base on {NbFlipCardComponent}
+ * Abstract RevealCard component base on {NbRevealCardComponent}
  */
-export abstract class AbstractFlipcardComponent<T extends DataSource>
+export abstract class AbstractRevealcardComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit {
 
-    protected static FLIPCARD_ELEMENT_SELECTOR: string = 'nb-flip-card';
-    protected static FLIPCARD_FRONT_ELEMENT_SELECTOR: string = 'nb-card-front';
-    protected static FLIPCARD_BACK_ELEMENT_SELECTOR: string = 'nb-card-back';
+    protected static REVEALCARD_ELEMENT_SELECTOR: string = 'nb-reveal-card';
+    protected static REVEALCARD_FRONT_ELEMENT_SELECTOR: string = 'nb-card-front';
+    protected static REVEALCARD_BACK_ELEMENT_SELECTOR: string = 'nb-card-back';
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren(NbFlipCardComponent)
-    private readonly queryFlipcardComponent: QueryList<NbFlipCardComponent>;
-    private flipcardComponent: NbFlipCardComponent;
+    @ViewChildren(NbRevealCardComponent)
+    private readonly queryRevealcardComponent: QueryList<NbRevealCardComponent>;
+    private revealcardComponent: NbRevealCardComponent;
 
     @ViewChildren(NbCardFrontComponent)
-    private readonly queryFlipcardFrontComponent: QueryList<NbCardFrontComponent>;
-    private flipcardFontComponent: NbCardFrontComponent;
+    private readonly queryRevealcardFrontComponent: QueryList<NbCardFrontComponent>;
+    private revealcardFontComponent: NbCardFrontComponent;
 
     @ViewChildren(NbCardBackComponent)
-    private readonly queryFlipcardBackComponent: QueryList<NbCardBackComponent>;
-    private flipcardBackComponent: NbCardBackComponent;
+    private readonly queryRevealcardBackComponent: QueryList<NbCardBackComponent>;
+    private revealcardBackComponent: NbCardBackComponent;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
     /**
-     * Get the {NbFlipCardComponent} instance
-     * @return the {NbFlipCardComponent} instance
+     * Get the {NbRevealCardComponent} instance
+     * @return the {NbRevealCardComponent} instance
      */
-    protected getFlipcardComponent(): NbFlipCardComponent {
-        return this.flipcardComponent;
+    protected getRevealcardComponent(): NbRevealCardComponent {
+        return this.revealcardComponent;
     }
 
     /**
      * Get the {NbCardFrontComponent} instance
      * @return the {NbCardFrontComponent} instance
      */
-    protected getFlipcardFrontComponent(): NbCardFrontComponent {
-        return this.flipcardFontComponent;
+    protected getRevealcardFrontComponent(): NbCardFrontComponent {
+        return this.revealcardFontComponent;
     }
 
     /**
      * Get the {NbCardBackComponent} instance
      * @return the {NbCardBackComponent} instance
      */
-    protected getFlipcardBackComponent(): NbCardBackComponent {
-        return this.flipcardBackComponent;
+    protected getRevealcardBackComponent(): NbCardBackComponent {
+        return this.revealcardBackComponent;
     }
 
     /**
-     * Set a boolean value indicating this component whether is flipped
-     * @param flipped true for flipped; else false
+     * Set a boolean value indicating this component whether is revealed
+     * @param revealed true for revealed; else false
      */
-    public setFlipped(flipped?: boolean): void {
-        this.flipped = flipped || false;
-        if (this.getFlipcardComponent()) {
-            this.getFlipcardComponent().flipped = this.flipped;
+    public setRevealed(revealed?: boolean): void {
+        this.revealed = revealed || false;
+        if (this.getRevealcardComponent()) {
+            this.getRevealcardComponent().revealed = this.revealed;
         }
     }
 
     /**
-     * Set a boolean value indicating this component whether shows the toggle button to flip
+     * Set a boolean value indicating this component whether shows the toggle button to reveal
      * @param showToggleButton true for shown; else false
      */
     public setShowToggleButton(showToggleButton?: boolean): void {
         this.showToggleButton = showToggleButton || false;
-        if (this.getFlipcardComponent()) {
-            this.getFlipcardComponent().showToggleButton = this.showToggleButton;
+        if (this.getRevealcardComponent()) {
+            this.getRevealcardComponent().showToggleButton = this.showToggleButton;
         }
     }
 
@@ -98,7 +98,7 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractFlipcardComponent} class
+     * Create a new instance of {AbstractRevealcardComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -108,8 +108,8 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
-     * @param flipped specify the component whether had been flipped
-     * @param showToggleButton specify whether showing toggle button to flip
+     * @param revealed specify the component whether had been revealed
+     * @param showToggleButton specify whether showing toggle button to reveal
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -120,7 +120,7 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          private flipped?: boolean | false,
+                          private revealed?: boolean | false,
                           private showToggleButton?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
@@ -130,14 +130,14 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.flipcardComponent) {
-            this.flipcardComponent = ComponentUtils.queryComponent(this.queryFlipcardComponent);
+        if (!this.revealcardComponent) {
+            this.revealcardComponent = ComponentUtils.queryComponent(this.queryRevealcardComponent);
         }
-        if (!this.flipcardFontComponent) {
-            this.flipcardFontComponent = ComponentUtils.queryComponent(this.queryFlipcardFrontComponent);
+        if (!this.revealcardFontComponent) {
+            this.revealcardFontComponent = ComponentUtils.queryComponent(this.queryRevealcardFrontComponent);
         }
-        if (!this.flipcardBackComponent) {
-            this.flipcardBackComponent = ComponentUtils.queryComponent(this.queryFlipcardBackComponent);
+        if (!this.revealcardBackComponent) {
+            this.revealcardBackComponent = ComponentUtils.queryComponent(this.queryRevealcardBackComponent);
         }
     }
 }

@@ -34,6 +34,8 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
 import {NgxToolbarComponent} from './toolbar/toolbar.component';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
+import {NgxFlipCardComponent} from './flipcard/flipcard.component';
+import {NgxRevealCardComponent} from './revealcard/revealcard.component';
 
 @NgModule({
     imports: [
@@ -104,6 +106,8 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
         NgxTreeviewComponent,
         NgxFormlyComponent,
         NgxSplitPaneComponent,
+        NgxFlipCardComponent,
+        NgxRevealCardComponent,
         NotFoundComponent,
     ],
     providers: [
