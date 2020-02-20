@@ -37,6 +37,7 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {NgxFlipCardComponent} from './flipcard/flipcard.component';
 import {NgxRevealCardComponent} from './revealcard/revealcard.component';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 
 @NgModule({
     imports: [
@@ -102,11 +103,15 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
+    entryComponents: [
+        CheckboxCellComponent,
+    ],
     declarations: [
         SmartTableComponent,
         NgxToolbarComponent,
         NgxTreeviewComponent,
         NgxFormlyComponent,
+        CheckboxCellComponent,
         NgxSplitPaneComponent,
         NgxFlipCardComponent,
         NgxRevealCardComponent,
