@@ -101,7 +101,7 @@ export const CategoriesFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    selector: 'ngx-formly-form',
+    selector: 'ngx-formly-form-category',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss'],
 })
@@ -113,7 +113,7 @@ export class CategoriesFormlyComponent extends BaseFormlyComponent<ICategories, 
 
     /**
      * Create a new instance of {CategoriesFormlyComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {CategoriesDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toastrService
      * @param logger {NGXLogger}
@@ -125,7 +125,7 @@ export class CategoriesFormlyComponent extends BaseFormlyComponent<ICategories, 
      * @param modalDialogService
      * @param confirmPopup
      */
-    constructor(@Inject(DataSource) dataSource: CategoriesDataSource,
+    constructor(@Inject(CategoriesDataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toastrService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,

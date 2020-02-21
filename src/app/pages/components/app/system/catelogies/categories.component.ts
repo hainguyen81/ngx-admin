@@ -47,7 +47,7 @@ export const CategoriesFormAreaConfig: ISplitAreaConfig = {
  * Organization split-pane component base on {AngularSplitModule}
  */
 @Component({
-    selector: 'ngx-split-pane',
+    selector: 'ngx-split-pane-category',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })
@@ -87,8 +87,8 @@ export class CategoriesSplitPanelComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {OrganizationSplitPaneComponent} class
-     * @param dataSource {DataSource}
+     * Create a new instance of {CategoriesSplitPanelComponent} class
+     * @param dataSource {CategoriesDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toastrService
      * @param logger {NGXLogger}
@@ -100,7 +100,7 @@ export class CategoriesSplitPanelComponent
      * @param modalDialogService
      * @param confirmPopup
      */
-    constructor(@Inject(DataSource) dataSource: CategoriesDataSource,
+    constructor(@Inject(CategoriesDataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toastrService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,

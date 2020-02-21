@@ -30,7 +30,7 @@ export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].conc
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    selector: 'ngx-org-toolbar-organization',
+    selector: 'ngx-toolbar-organization',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss', './organization.toolbar.component.scss'],
 })

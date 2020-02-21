@@ -34,7 +34,7 @@ export const CategoriesContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view',
+    selector: 'ngx-tree-view-category',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
@@ -63,8 +63,8 @@ export class CategoriesTreeviewComponent extends BaseNgxTreeviewComponent<Catego
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {OrganizationTreeviewComponent} class
-     * @param dataSource {DataSource}
+     * Create a new instance of {CategoriesTreeviewComponent} class
+     * @param dataSource {CategoriesDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toastrService
      * @param logger {NGXLogger}
