@@ -8,7 +8,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -24,6 +23,11 @@ import {CategoriesFormlyComponentService} from './categories.formly.component.se
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {CategoryToolbarComponent} from './category.toolbar.component';
+import {CategoryToolbarComponentService} from './category.toolbar.component.service';
+import {IEvent} from '../../../abstract.component';
+import {DeepCloner} from '../../../../../utils/object.utils';
+import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../toolbar/abstract.toolbar.component';
 
 /* Categories left area configuration */
 export const CategoriesTreeAreaConfig: ISplitAreaConfig = {
@@ -59,12 +63,22 @@ export class CategoriesSplitPanelComponent
     // DECLARATION
     // -------------------------------------------------
 
+    private CategoryToolbarComponent: CategoryToolbarComponent;
     private CategoriesTreeviewComponent: CategoriesTreeviewComponent;
     private CategoriesFormlyComponent: CategoriesFormlyComponent;
+    private selectedCategory: ICategories | null;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the selected {ICategories} instance
+     * @return the selected {ICategories} instance
+     */
+    protected getSelectedCategory(): ICategories {
+        return this.selectedCategory;
+    }
 
     /**
      * Get the {CategoriesTreeviewComponent} instance
@@ -129,9 +143,47 @@ export class CategoriesSplitPanelComponent
         this.createPaneComponents();
     }
 
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
+     */
+    onClickAction(event: IEvent) {
+        if (!event || !event.$data || !(event.$data as IToolbarActionsConfig)) {
+            return;
+        }
+        let action: IToolbarActionsConfig;
+        action = event.$data as IToolbarActionsConfig;
+        switch (action.id) {
+            case ACTION_SAVE:
+                this.doSave();
+                break;
+            case ACTION_RESET:
+                this.doReset();
+                break;
+            case ACTION_DELETE:
+                this.doDelete();
+                break;
+        }
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Create organization toolbar component {CategoryToolbarComponent}
+     * @param componentFactoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     * @return {CategoryToolbarComponent}
+     */
+    private createCategoryToolbarComponent(
+        componentFactoryResolver: ComponentFactoryResolver,
+        viewContainerRef: ViewContainerRef): CategoryToolbarComponent {
+        let toolbarComponentService: CategoryToolbarComponentService;
+        toolbarComponentService = new CategoryToolbarComponentService(
+            componentFactoryResolver, viewContainerRef, this.getLogger());
+        return ComponentUtils.createComponent(toolbarComponentService, viewContainerRef);
+    }
 
     /**
      * Create Categories tree-view component {CategoriesTreeviewComponent}
@@ -169,11 +221,18 @@ export class CategoriesSplitPanelComponent
     private createPaneComponents() {
         const componentFactoryResolver: ComponentFactoryResolver = this.getFactoryResolver();
         const viewContainerRefs: ViewContainerRef[] = this.getSplitAreaHolderViewContainerComponents();
+        const headerViewContainer = this.getHeaderViewContainerComponent();
         const splitAreas: SplitAreaDirective[] = this.getSplitAreaComponents();
 
         // configure areas
         this.configArea(splitAreas[0], CategoriesTreeAreaConfig);
         this.configArea(splitAreas[1], CategoriesFormAreaConfig);
+
+        // create toolbar component
+        this.CategoryToolbarComponent = this.createCategoryToolbarComponent(
+            componentFactoryResolver, headerViewContainer);
+        this.CategoryToolbarComponent.actionListener()
+            .subscribe((e: IEvent) => this.onClickAction(e));
 
         // create tree-view component
         this.CategoriesTreeviewComponent = this.createCategoriesTreeviewComponent(
@@ -185,12 +244,62 @@ export class CategoriesSplitPanelComponent
                 let Categories: ICategories;
                 Categories = it.value as ICategories;
                 if (Categories) {
+                    this.selectedCategory = Categories;
                     // create formly form component
                     this.CategoriesFormlyComponent = this.createCategoriesFormlyComponent(
                         componentFactoryResolver, viewContainerRefs[1]);
-                    this.CategoriesFormlyComponent.getFormGroup().reset(Categories);
+                    this.doReset();
                 }
             }
+        });
+    }
+
+    // -------------------------------------------------
+    // MAIN FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Perform saving data
+     */
+    private doSave(): void {
+        this.getFormlyComponent().getFormGroup().updateValueAndValidity();
+        if (this.getFormlyComponent().getFormGroup().invalid) {
+            this.showError(this.CategoryToolbarComponent.getToolbarHeader().title,
+                'common.form.invalid_data');
+            return;
+        }
+
+        this.getDataSource().update(
+            this.getSelectedCategory(),
+            this.getFormlyComponent().getModel())
+            .then(() => this.showSaveDataSuccess())
+            .catch(() => this.showSaveDataError());
+    }
+
+    /**
+     * Perform resetting data
+     */
+    private doReset(): void {
+        let clonedOrg: ICategories;
+        clonedOrg = DeepCloner(this.selectedCategory);
+        delete clonedOrg.parent, clonedOrg.children;
+        this.CategoriesFormlyComponent.setModel(clonedOrg);
+    }
+
+    /**
+     * Perform deleting data
+     */
+    private doDelete(): void {
+        this.getConfirmPopup().show({
+            cancelButton: this.translate('common.toast.confirm.delete.cancel'),
+            color: 'warn',
+            content: this.translate('common.toast.confirm.delete.message'),
+            okButton: this.translate('common.toast.confirm.delete.ok'),
+            title: this.translate(this.CategoryToolbarComponent.getToolbarHeader().title),
+        }).toPromise().then(value => {
+            value && this.getDataSource().remove(this.getFormlyComponent().getModel())
+                .then(() => this.showDeleteDataSuccess())
+                .catch(() => this.showSaveDataError());
         });
     }
 }

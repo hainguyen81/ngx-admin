@@ -27,6 +27,7 @@ import { CategoriesFormlyComponent } from './categories.formly.component';
 import { CategoriesDataSource } from '../../../../../services/implementation/categories/categories.datasource';
 import { CategoriesHttpService, CategoriesDbService } from '../../../../../services/implementation/categories/categories.service';
 import { CategoriesSplitPanelComponent } from './categories.component';
+import {CategoryToolbarComponent} from './category.toolbar.component';
 
 @NgModule({
     imports: [
@@ -85,10 +86,12 @@ import { CategoriesSplitPanelComponent } from './categories.component';
     entryComponents: [
         CategoriesTreeviewComponent,
         CategoriesFormlyComponent,
+        CategoryToolbarComponent,
     ],
     declarations: [
         CategoriesTreeviewComponent,
         CategoriesFormlyComponent,
+        CategoryToolbarComponent,
         CategoriesSplitPanelComponent,
     ],
     providers: [
