@@ -1,6 +1,25 @@
-<nb-reveal-card [revealed]="revealed"
+<nb-reveal-card #revealCard
+                [revealed]="revealed"
                 [showToggleButton]="showToggleButton"
                 [contextMenu]="revealCardContextMenuComponent"
+                (contextmenu)="onContextMenu({ $event: $event, $data: revealCard })"
+                (keydown)="onKeyDown({ $event: $event, $data: revealCard })"
+                (keypress)="onKeyPress({ $event: $event, $data: revealCard })"
+                (keyup)="onKeyUp({ $event: $event, $data: revealCard })"
+                (click)="onClick({ $event: $event, $data: revealCard })"
+                (dblclick)="onDoubleClick( { $event: $event, $data: revealCard })"
+                (mousedown)="onMouseDown({ $event: $event, $data: revealCard })"
+                (mouseenter)="onMouseEnter({ $event: $event, $data: revealCard })"
+                (mouseleave)="onMouseLeave({ $event: $event, $data: revealCard })"
+                (mousemove)="onMouseMove({ $event: $event, $data: revealCard })"
+                (mouseout)="onMouseOut({ $event: $event, $data: revealCard })"
+                (mouseover)="onMouseOver({ $event: $event, $data: revealCard })"
+                (mouseup)="onMouseUp({ $event: $event, $data: revealCard })"
+                (mousewheel)="onMouseWheel({ $event: $event, $data: revealCard })"
+                (focus)="onFocus({ $event: $event, $data: revealCard })"
+                (focusin)="onFocusIn({ $event: $event, $data: revealCard })"
+                (focusout)="onFocusOut({ $event: $event, $data: revealCard })"
+                (blur)="onBlur({ $event: $event, $data: revealCard })"
 >
     <nb-card-front>
         <ng-template #frontComponent></ng-template>

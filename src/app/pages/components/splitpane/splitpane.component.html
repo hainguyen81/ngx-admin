@@ -15,7 +15,7 @@
                 #area{{index}}
                 *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers">
                 <!-- Split area {{index}} content placeholder -->
-                <div class="area-content p-sm-1" (resized)="onResized($event)">
+                <div class="area-content p-sm-1" (resized)="onResized({ $data: $event })">
                     <ng-template #splitAreaHolder></ng-template>
                 </div>
             </as-split-area>
