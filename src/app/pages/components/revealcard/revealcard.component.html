@@ -1,4 +1,26 @@
-<nb-reveal-card [revealed]="revealed" [showToggleButton]="showToggleButton">
+<nb-reveal-card #revealCard
+                [revealed]="revealed"
+                [showToggleButton]="showToggleButton"
+                [contextMenu]="revealCardContextMenuComponent"
+                (contextmenu)="onContextMenu({ $event: $event, $data: revealCard })"
+                (keydown)="onKeyDown({ $event: $event, $data: revealCard })"
+                (keypress)="onKeyPress({ $event: $event, $data: revealCard })"
+                (keyup)="onKeyUp({ $event: $event, $data: revealCard })"
+                (click)="onClick({ $event: $event, $data: revealCard })"
+                (dblclick)="onDoubleClick( { $event: $event, $data: revealCard })"
+                (mousedown)="onMouseDown({ $event: $event, $data: revealCard })"
+                (mouseenter)="onMouseEnter({ $event: $event, $data: revealCard })"
+                (mouseleave)="onMouseLeave({ $event: $event, $data: revealCard })"
+                (mousemove)="onMouseMove({ $event: $event, $data: revealCard })"
+                (mouseout)="onMouseOut({ $event: $event, $data: revealCard })"
+                (mouseover)="onMouseOver({ $event: $event, $data: revealCard })"
+                (mouseup)="onMouseUp({ $event: $event, $data: revealCard })"
+                (mousewheel)="onMouseWheel({ $event: $event, $data: revealCard })"
+                (focus)="onFocus({ $event: $event, $data: revealCard })"
+                (focusin)="onFocusIn({ $event: $event, $data: revealCard })"
+                (focusout)="onFocusOut({ $event: $event, $data: revealCard })"
+                (blur)="onBlur({ $event: $event, $data: revealCard })"
+>
     <nb-card-front>
         <ng-template #frontComponent></ng-template>
     </nb-card-front>
@@ -6,3 +28,16 @@
         <ng-template #backComponent></ng-template>
     </nb-card-back>
 </nb-reveal-card>
+<context-menu #revealCardContextMenuComponent
+              [disabled]="!contextMenu || !contextMenu.length"
+              (close)="onContextMenuClose()">
+    <ng-template
+        contextMenuItem
+        *ngFor="let item of contextMenu"
+        [visible]="item?.visible?.apply(this, [ item ])"
+        [enabled]="item?.enabled?.apply(this, [ item ])"
+        [divider]="item?.divider?.apply(this, [ item ])"
+        (execute)="onMenuEvent({ $event: $event.event, $data: { item: $event.item, menu: item } })"
+    ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+        {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
+</context-menu>

@@ -1,0 +1,45 @@
+<nb-tabset #tabset
+           [fullWidth]="isFullWidth()"
+           [routeParam]="getRouteParam()"
+           [contextMenu]="tabContextMenuComponent"
+           (contextmenu)="onContextMenu({ $event: $event, $data: tabset })"
+           (keydown)="onKeyDown({ $event: $event, $data: tabset })"
+           (keypress)="onKeyPress({ $event: $event, $data: tabset })"
+           (keyup)="onKeyUp({ $event: $event, $data: tabset })"
+           (click)="onClick({ $event: $event, $data: tabset })"
+           (dblclick)="onDoubleClick( { $event: $event, $data: tabset })"
+           (mousedown)="onMouseDown({ $event: $event, $data: tabset })"
+           (mouseenter)="onMouseEnter({ $event: $event, $data: tabset })"
+           (mouseleave)="onMouseLeave({ $event: $event, $data: tabset })"
+           (mousemove)="onMouseMove({ $event: $event, $data: tabset })"
+           (mouseout)="onMouseOut({ $event: $event, $data: tabset })"
+           (mouseover)="onMouseOver({ $event: $event, $data: tabset })"
+           (mouseup)="onMouseUp({ $event: $event, $data: tabset })"
+           (mousewheel)="onMouseWheel({ $event: $event, $data: tabset })"
+           (focus)="onFocus({ $event: $event, $data: tabset })"
+           (focusin)="onFocusIn({ $event: $event, $data: tabset })"
+           (focusout)="onFocusOut({ $event: $event, $data: tabset })"
+           (blur)="onBlur({ $event: $event, $data: tabset })"
+>
+    <nb-tab
+        #tab{{index}}
+        *ngFor="let index of getNumberOfTabs() | ngxArrayOfNumbers">
+        <!-- Tab area {{index}} content placeholder -->
+        <div class="tab-content" (resize)="onResized({ $data: $event })">
+            <ng-template #tabContentHolder></ng-template>
+        </div>
+    </nb-tab>
+</nb-tabset>
+<context-menu #tabContextMenuComponent
+              [disabled]="!contextMenu || !contextMenu.length"
+              (close)="onContextMenuClose()">
+    <ng-template
+        contextMenuItem
+        *ngFor="let item of contextMenu"
+        [visible]="item?.visible?.apply(this, [ item ])"
+        [enabled]="item?.enabled?.apply(this, [ item ])"
+        [divider]="item?.divider?.apply(this, [ item ])"
+        (execute)="onMenuEvent({ $event: $event.event, $data: { item: $event.item, menu: item } })"
+    ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+        {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
+</context-menu>

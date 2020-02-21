@@ -1,4 +1,26 @@
-<nb-flip-card [flipped]="flipped" [showToggleButton]="showToggleButton">
+<nb-flip-card #flipCard
+              [flipped]="flipped"
+              [showToggleButton]="showToggleButton"
+              [contextMenu]="flipCardContextMenuComponent"
+              (contextmenu)="onContextMenu({ $event: $event, $data: flipCard })"
+              (keydown)="onKeyDown({ $event: $event, $data: flipCard })"
+              (keypress)="onKeyPress({ $event: $event, $data: flipCard })"
+              (keyup)="onKeyUp({ $event: $event, $data: flipCard })"
+              (click)="onClick({ $event: $event, $data: flipCard })"
+              (dblclick)="onDoubleClick( { $event: $event, $data: flipCard })"
+              (mousedown)="onMouseDown({ $event: $event, $data: flipCard })"
+              (mouseenter)="onMouseEnter({ $event: $event, $data: flipCard })"
+              (mouseleave)="onMouseLeave({ $event: $event, $data: flipCard })"
+              (mousemove)="onMouseMove({ $event: $event, $data: flipCard })"
+              (mouseout)="onMouseOut({ $event: $event, $data: flipCard })"
+              (mouseover)="onMouseOver({ $event: $event, $data: flipCard })"
+              (mouseup)="onMouseUp({ $event: $event, $data: flipCard })"
+              (mousewheel)="onMouseWheel({ $event: $event, $data: flipCard })"
+              (focus)="onFocus({ $event: $event, $data: flipCard })"
+              (focusin)="onFocusIn({ $event: $event, $data: flipCard })"
+              (focusout)="onFocusOut({ $event: $event, $data: flipCard })"
+              (blur)="onBlur({ $event: $event, $data: flipCard })"
+>
     <nb-card-front>
         <ng-template #frontComponent></ng-template>
     </nb-card-front>
@@ -6,3 +28,16 @@
         <ng-template #backComponent></ng-template>
     </nb-card-back>
 </nb-flip-card>
+<context-menu #flipCardContextMenuComponent
+              [disabled]="!contextMenu || !contextMenu.length"
+              (close)="onContextMenuClose()">
+    <ng-template
+        contextMenuItem
+        *ngFor="let item of contextMenu"
+        [visible]="item?.visible?.apply(this, [ item ])"
+        [enabled]="item?.enabled?.apply(this, [ item ])"
+        [divider]="item?.divider?.apply(this, [ item ])"
+        (execute)="onMenuEvent({ $event: $event.event, $data: { item: $event.item, menu: item } })"
+    ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+        {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
+</context-menu>

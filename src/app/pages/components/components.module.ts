@@ -10,6 +10,7 @@ import {
     NbLayoutModule,
     NbSearchModule,
     NbSelectModule,
+    NbTabsetModule,
     NbThemeModule,
 } from '@nebular/theme';
 import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
@@ -38,6 +39,7 @@ import {NgxFlipCardComponent} from './flipcard/flipcard.component';
 import {NgxRevealCardComponent} from './revealcard/revealcard.component';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
+import {NgxTabsetComponent} from './tab/tab.component';
 
 @NgModule({
     imports: [
@@ -52,6 +54,7 @@ import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
         NbButtonModule,
         NbCardModule,
         NbSearchModule,
+        NbTabsetModule,
         FormsModule,
 
         /* Angular material modules */
@@ -115,6 +118,7 @@ import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
         NgxSplitPaneComponent,
         NgxFlipCardComponent,
         NgxRevealCardComponent,
+        NgxTabsetComponent,
         NotFoundComponent,
     ],
     providers: [

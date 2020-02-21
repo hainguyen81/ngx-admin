@@ -1,6 +1,5 @@
 import {
     AfterViewInit,
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -11,7 +10,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractFlipcardComponent} from './abstract.flipcard.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -19,48 +17,36 @@ import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {AbstractTabComponent} from './abstract.tab.component';
 
 /**
- * Flip-card base on {NbFlipCardComponent}
+ * SplitPane component base on {NbTabsetModule}
  */
 @Component({
-    selector: 'ngx-flip-card',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './flipcard.component.html',
-    styleUrls: ['./flipcard.component.scss'],
+    selector: 'ngx-tabset',
+    templateUrl: './tab.component.html',
+    styleUrls: ['./tab.component.scss'],
 })
-export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> implements AfterViewInit {
+export class NgxTabsetComponent extends AbstractTabComponent<DataSource> implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren('frontComponent', {read: ViewContainerRef})
-    private readonly queryFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
-    private frontComponentHolderViewContainerRef: ViewContainerRef;
-
-    @ViewChildren('backComponent', {read: ViewContainerRef})
-    private readonly queryBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
-    private backComponentHolderViewContainerRef: ViewContainerRef;
+    @ViewChildren('tabContentHolder', {read: ViewContainerRef})
+    private readonly queryTabContentHolderViewContainerRefs: QueryList<ViewContainerRef>;
+    private tabContentHolderViewContainerRefs: ViewContainerRef[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
     /**
-     * Get the {ViewContainerRef} instance of the front component
-     * @return the {ViewContainerRef} instance of the front component
+     * Get the {ViewContainerRef} instances array of {NbTabComponent}
+     * @return the {ViewContainerRef} instances array of {NbTabComponent}
      */
-    protected getFrontComponentViewContainerRef(): ViewContainerRef {
-        return this.frontComponentHolderViewContainerRef;
-    }
-
-    /**
-     * Get the {ViewContainerRef} instance of the back component
-     * @return the {ViewContainerRef} instance of the back component
-     */
-    protected getBackComponentViewContainerRef(): ViewContainerRef {
-        return this.backComponentHolderViewContainerRef;
+    protected getTabContentHolderViewContainerComponents(): ViewContainerRef[] {
+        return this.tabContentHolderViewContainerRefs;
     }
 
     // -------------------------------------------------
@@ -68,7 +54,7 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {NgxFlipCardComponent} class
+     * Create a new instance of {NgxTabsetComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -96,19 +82,15 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             modalDialogService, confirmPopup,
-            false, false);
+            1, true, true);
     }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.frontComponentHolderViewContainerRef) {
-            this.frontComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef);
-        }
-        if (!this.backComponentHolderViewContainerRef) {
-            this.backComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
+        if (!this.tabContentHolderViewContainerRefs || !this.tabContentHolderViewContainerRefs.length) {
+            this.tabContentHolderViewContainerRefs =
+                ComponentUtils.queryComponents(this.queryTabContentHolderViewContainerRefs);
         }
     }
 }

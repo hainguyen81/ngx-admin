@@ -16,6 +16,8 @@ import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
 import {NbCardBackComponent, NbCardFrontComponent, NbFlipCardComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /**
  * Abstract FlipCard component base on {NbFlipCardComponent}
@@ -108,6 +110,8 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      * @param flipped specify the component whether had been flipped
      * @param showToggleButton specify whether showing toggle button to flip
      */
@@ -120,11 +124,14 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           private flipped?: boolean | false,
                           private showToggleButton?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
     }
 
     ngAfterViewInit(): void {
