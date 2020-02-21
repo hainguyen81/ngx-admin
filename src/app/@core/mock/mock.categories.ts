@@ -45,7 +45,8 @@ export function categoriesGenerate(): ICategories[] {
             mockCategoriesType.code = 'TYPE-'.concat((j + 1).toString());
             mockCategoriesType.name = 'Type '.concat((j + 1).toString());
             mockCategoriesType.parentId = mockCategoriesUpper.id;
-            mockCategoriesType.parent = mockCategoriesUpper;
+            // TODO Be careful with recursively forever (stack overflow)
+            // mockCategoriesType.parent = mockCategoriesUpper;
             mockCategoriesType.children = [];
             mockCategoriesUpper.children.push(mockCategoriesType);
 
@@ -56,7 +57,8 @@ export function categoriesGenerate(): ICategories[] {
                 mockCategoriesBrand.code = 'BRAND-'.concat((k + 1).toString());
                 mockCategoriesBrand.name = 'Brand '.concat((k + 1).toString());
                 mockCategoriesBrand.parentId = mockCategoriesType.id;
-                mockCategoriesBrand.parent = mockCategoriesType;
+                // TODO Be careful with recursively forever (stack overflow)
+                // mockCategoriesBrand.parent = mockCategoriesType;
                 mockCategoriesType.children.push(mockCategoriesBrand);
             }
         }

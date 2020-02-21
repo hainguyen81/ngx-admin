@@ -38,7 +38,6 @@ import {
 import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
-import {ToasterService} from 'angular2-toaster';
 import { CategoriesDbService, CategoriesHttpService } from '../services/implementation/categories/categories.service';
 import { CategoriesDataSource } from '../services/implementation/categories/categories.datasource';
 import {PagesGuard} from '../pages/pages.guard.service';
@@ -59,14 +58,12 @@ export const CommonProviders: StaticProvider[] = [
     {provide: NGXMapperService, useClass: NGXMapperService, deps: [HttpBackend]},
     {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpBackend]},
     {provide: HttpClient, useClass: HttpClient, deps: [HttpBackend]},
-    {provide: ToastrService, useClass: ToastrService, deps: []},
-    {provide: ToasterService, useClass: ToasterService, deps: []},
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
     {
         provide: ErrorHandler, useClass: GlobalErrorsHandler,
-        deps: [TranslateService, ToastrService, NGXLogger, Injector]
+        deps: [TranslateService, ToastrService, NGXLogger, Injector],
     },
 ];
 

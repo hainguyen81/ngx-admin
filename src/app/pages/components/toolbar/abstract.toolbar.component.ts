@@ -209,7 +209,7 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          private header?: IToolbarHeaderConfig,
+                          header?: IToolbarHeaderConfig,
                           private actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,

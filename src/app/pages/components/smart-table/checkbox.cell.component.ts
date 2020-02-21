@@ -10,6 +10,5 @@ import {DefaultEditor} from 'ng2-smart-table';
     styleUrls: ['./checkbox.cell.component.scss'],
 })
 export class CheckboxCellComponent extends DefaultEditor {
-    private value?: boolean | false;
-    private rowData?: any | null;
+    value?: boolean | false;
 }

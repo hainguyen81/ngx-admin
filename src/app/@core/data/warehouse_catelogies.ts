@@ -1,5 +1,4 @@
 import {IModel} from './base';
-import {IOrganization, ORGANIZTAION_TYPE} from './organization';
 
 export const enum CATEGORIES_TYPE {
     UPPER_CATEGORIES,
@@ -16,6 +15,19 @@ export interface ICategories extends IModel {
     img?: string | { icon: string, pack: string } | null;
     remark?: string | null;
     children?: ICategories[] | null;
+}
+
+export function convertCategoriesTypeToDisplay(value: CATEGORIES_TYPE): string {
+    switch (value) {
+        case CATEGORIES_TYPE.UPPER_CATEGORIES:
+            return 'common.enum.categoriesType.upper_categories';
+        case CATEGORIES_TYPE.TYPE:
+            return 'common.enum.categoriesType.type';
+        case CATEGORIES_TYPE.BRAND:
+            return 'common.enum.categoriesType.brand';
+        default:
+            return 'common.enum.categoriesType.upper_categories';
+    }
 }
 
 export default class Categories implements ICategories {

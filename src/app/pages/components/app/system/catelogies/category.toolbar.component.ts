@@ -1,4 +1,3 @@
-import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
 import {
     ChangeDetectorRef,
     Component,
@@ -16,32 +15,33 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {CategoriesDataSource} from '../../../../../services/implementation/categories/categories.datasource';
 
-/* default organization toolbar header config */
-export const OrganizationToolbarHeaderConfig: IToolbarHeaderConfig = {
-    title: 'system.organization.title',
+/* default category toolbar header config */
+export const CategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
+    title: 'system.categories.title',
     icon: {icon: 'sitemap', pack: 'fa'},
 };
 
-/* default organization toolbar actions config */
-export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
+/* default category toolbar actions config */
+export const CategoryToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
 
 /**
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    selector: 'ngx-toolbar-organization',
+    selector: 'ngx-toolbar-category',
     templateUrl: '../../../toolbar/toolbar.component.html',
-    styleUrls: ['../../../toolbar/toolbar.component.scss', './organization.toolbar.component.scss'],
+    styleUrls: ['../../../toolbar/toolbar.component.scss', './category.toolbar.component.scss'],
 })
-export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<OrganizationDataSource> {
+export class CategoryToolbarComponent extends BaseNgxToolbarComponent<CategoriesDataSource> {
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {OrganizationToolbarComponent} class
-     * @param dataSource {OrganizationDataSource}
+     * Create a new instance of {CategoryToolbarComponent} class
+     * @param dataSource {CategoriesDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -53,7 +53,7 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      */
-    constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
+    constructor(@Inject(CategoriesDataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -68,6 +68,6 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             modalDialogService, confirmPopup,
-            OrganizationToolbarHeaderConfig, OrganizationToolbarActionsConfig);
+            CategoryToolbarHeaderConfig, CategoryToolbarActionsConfig);
     }
 }

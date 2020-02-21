@@ -48,7 +48,7 @@ export const MockModuleSystem: IModule = {
         MockModuleOrganization,
         MockModuleUser,
         MockModuleCustomer,
-        MockModuleCategories
+        MockModuleCategories,
     ],
 };
 

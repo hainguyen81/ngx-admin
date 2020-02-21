@@ -6,7 +6,7 @@ export const DB_STORE: any = {
     user: 'user',
     customer: 'customer',
     organization: 'organization',
-    warehouse_categories: 'warehouse_categories'
+    warehouse_categories: 'warehouse_categories',
 };
 
 export const dbConfig: DBConfig = {
@@ -101,7 +101,7 @@ export const dbConfig: DBConfig = {
             {name: 'node_id', keypath: 'node_id', options: {unique: false}},
             {name: 'type', keypath: 'type', options: {unique: false}},
             {name: 'img', keypath: 'type', options: {unique: false}},
-            {name: 'remark', keypath: 'tax', options: {unique: false}}
+            {name: 'remark', keypath: 'tax', options: {unique: false}},
         ],
     }],
 };
