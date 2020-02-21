@@ -1,4 +1,7 @@
-<nb-flip-card [flipped]="flipped" [showToggleButton]="showToggleButton">
+<nb-flip-card [flipped]="flipped"
+              [showToggleButton]="showToggleButton"
+              [contextMenu]="flipCardContextMenuComponent"
+>
     <nb-card-front>
         <ng-template #frontComponent></ng-template>
     </nb-card-front>
@@ -6,3 +9,16 @@
         <ng-template #backComponent></ng-template>
     </nb-card-back>
 </nb-flip-card>
+<context-menu #flipCardContextMenuComponent
+              [disabled]="!contextMenu || !contextMenu.length"
+              (close)="onContextMenuClose()">
+    <ng-template
+        contextMenuItem
+        *ngFor="let item of contextMenu"
+        [visible]="item?.visible?.apply(this, [ item ])"
+        [enabled]="item?.enabled?.apply(this, [ item ])"
+        [divider]="item?.divider?.apply(this, [ item ])"
+        (execute)="onMenuEvent({ $event: $event.event, $data: { item: $event.item, menu: item } })"
+    ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+        {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
+</context-menu>

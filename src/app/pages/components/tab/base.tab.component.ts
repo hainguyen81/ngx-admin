@@ -1,42 +1,36 @@
 import {
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     Inject,
     Renderer2,
-    Type,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {NgxRevealCardComponent} from './revealcard.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';
-import {IComponentService} from '../../../services/interface.service';
-import {AbstractComponentService, BaseComponentService} from '../../../services/component.service';
-import ComponentUtils from '../../../utils/component.utils';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {NgxTabsetComponent} from './tab.component';
 
 /**
- * Base reveal-card base on {NbRevealCardComponent}
+ * Base horizontal split-pane component base on {NbTabsetModule}
  */
 @Component({
-    selector: 'ngx-reveal-card',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './revealcard.component.html',
-    styleUrls: ['./revealcard.component.scss'],
+    selector: 'ngx-tabset',
+    templateUrl: './tab.component.html',
+    styleUrls: ['./tab.component.scss'],
 })
-export abstract class BaseRevealcardComponent<T extends DataSource> extends NgxRevealCardComponent {
+export abstract class BaseTabsetComponent<T extends DataSource> extends NgxTabsetComponent {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {BaseRevealcardComponent} class
+     * Create a new instance of {BaseTabsetComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -64,31 +58,5 @@ export abstract class BaseRevealcardComponent<T extends DataSource> extends NgxR
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef,
             modalDialogService, confirmPopup);
-    }
-
-    /**
-     * Create the front component dynamically
-     * @param componentType front component type
-     * @return created component
-     */
-    protected setFrontComponent(componentType: Type<any>): any {
-        let compServ: IComponentService<any>;
-        compServ = new BaseComponentService(this.getFactoryResolver(),
-            this.getFrontComponentViewContainerRef(), this.getLogger(), componentType);
-        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
-            this.getFrontComponentViewContainerRef(), true);
-    }
-
-    /**
-     * Create the back component dynamically
-     * @param componentType back component type
-     * @return created component
-     */
-    protected setBackComponent(componentType: Type<any>): any {
-        let compServ: IComponentService<any>;
-        compServ = new BaseComponentService(this.getFactoryResolver(),
-            this.getBackComponentViewContainerRef(), this.getLogger(), componentType);
-        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
-            this.getBackComponentViewContainerRef(), true);
     }
 }

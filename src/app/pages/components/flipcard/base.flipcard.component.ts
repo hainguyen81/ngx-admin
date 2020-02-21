@@ -4,7 +4,8 @@ import {
     Component,
     ComponentFactoryResolver,
     Inject,
-    Renderer2, Type,
+    Renderer2,
+    Type,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -16,6 +17,8 @@ import {ToastrService} from 'ngx-toastr';
 import {IComponentService} from '../../../services/interface.service';
 import {AbstractComponentService, BaseComponentService} from '../../../services/component.service';
 import ComponentUtils from '../../../utils/component.utils';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 /**
  * Base flip-card base on {NbFlipCardComponent}
@@ -43,6 +46,8 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -52,10 +57,13 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
                           @Inject(TranslateService) translateService: TranslateService,
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef,
+            modalDialogService, confirmPopup);
     }
 
     /**
