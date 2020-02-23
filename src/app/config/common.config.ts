@@ -64,7 +64,7 @@ export const BaseToolbarActions: IToolbarActionsConfig[] = [{
 }];
 
 export const COMMON = {
-    theme: 'dark',
+    theme: 'default',
     logConfig: LogConfig,
     sw: {
         vapid_public_key: '',
