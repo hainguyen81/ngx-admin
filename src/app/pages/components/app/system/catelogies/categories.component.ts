@@ -32,7 +32,7 @@ import {
     ACTION_DELETE,
     ACTION_RESET,
     ACTION_SAVE,
-    IToolbarActionsConfig
+    IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
 
 /* Categories left area configuration */
