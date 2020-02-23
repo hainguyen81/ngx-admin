@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     OnInit,
     QueryList,
@@ -159,6 +160,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param treeviewConfig {TreeviewConfig}
@@ -173,13 +175,14 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           private treeviewConfig?: TreeviewConfig,
                           private dropdown?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
         this.setConfig(treeviewConfig);
     }

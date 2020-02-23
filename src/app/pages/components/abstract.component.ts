@@ -6,6 +6,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     DoCheck,
+    ElementRef,
     Inject,
     OnChanges,
     OnDestroy,
@@ -110,6 +111,32 @@ export class AbstractComponent
      */
     protected getChangeDetectorRef(): ChangeDetectorRef {
         return this.changeDetectorRef;
+    }
+
+    /**
+     * Get the {ElementRef} instance
+     * @return the {ElementRef} instance
+     */
+    protected getElementRef(): ElementRef {
+        return this.elementRef;
+    }
+
+    /**
+     * Get the native {ElementRef} instance
+     * @return the native {ElementRef} instance
+     */
+    protected getNativeElement(): any {
+        return (this.getElementRef() == null ? null : this.getElementRef().nativeElement);
+    }
+
+    /**
+     * Get the native {ElementRef} tag name
+     * @return the native {ElementRef} tag name
+     */
+    protected getNativeElementTagName(): any {
+        let element: Element;
+        element = this.getNativeElement() as Element;
+        return (element == null ? null : element.tagName);
     }
 
     /**
@@ -254,6 +281,7 @@ export class AbstractComponent
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      */
@@ -266,6 +294,7 @@ export class AbstractComponent
                           @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) private elementRef: ElementRef,
                           @Inject(ModalDialogService) private modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup) {
         contextMenuService || throwError('Could not inject ContextMenuService');
