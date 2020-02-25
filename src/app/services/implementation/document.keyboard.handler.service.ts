@@ -10,7 +10,7 @@ import {
 /**
  * `Document` `keypress` event handler service
  */
-export class DocumentKeypressHandlerService extends BaseElementKeypressHandlerService<Document> {
+export class DocumentKeypressHandlerService extends BaseElementKeypressHandlerService<Node> {
 
     constructor(eventHandlerDelegate: SubscribeHandler<KeyboardEvent>,
                 @Inject(NGXLogger) logger: NGXLogger) {
@@ -21,7 +21,7 @@ export class DocumentKeypressHandlerService extends BaseElementKeypressHandlerSe
 /**
  * `Document` `keyup` event handler service
  */
-export class DocumentKeyupHandlerService extends BaseElementKeyupHandlerService<Document> {
+export class DocumentKeyupHandlerService extends BaseElementKeyupHandlerService<Node> {
 
     constructor(eventHandlerDelegate: SubscribeHandler<KeyboardEvent>,
                 @Inject(NGXLogger) logger: NGXLogger) {
@@ -32,7 +32,7 @@ export class DocumentKeyupHandlerService extends BaseElementKeyupHandlerService<
 /**
  * `Document` `keydown` event handler service
  */
-export class DocumentKeydownHandlerService extends BaseElementKeydownHandlerService<Document> {
+export class DocumentKeydownHandlerService extends BaseElementKeydownHandlerService<Node> {
 
     constructor(eventHandlerDelegate: SubscribeHandler<KeyboardEvent>,
                 @Inject(NGXLogger) logger: NGXLogger) {
