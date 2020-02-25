@@ -29,8 +29,17 @@ import ComponentUtils from '../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {BaseElementKeydownHandlerService, BaseElementKeypressHandlerService, BaseElementKeyupHandlerService} from '../../services/implementation/base.keyboard.handler';
-import {AbstractKeydownEventHandlerService, AbstractKeypressEventHandlerService, AbstractKeyupEventHandlerService} from '../../services/event.handler.service';
+import {
+    BaseElementKeydownHandlerService,
+    BaseElementKeypressHandlerService,
+    BaseElementKeyupHandlerService
+} from '../../services/implementation/base.keyboard.handler';
+import {
+    AbstractKeydownEventHandlerService,
+    AbstractKeypressEventHandlerService,
+    AbstractKeyupEventHandlerService
+} from '../../services/event.handler.service';
+import Timer = NodeJS.Timer;
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -738,12 +747,14 @@ export class AbstractComponent
         });
         // wait for showing context menu and focus on it
         if (eventTarget) {
-            setTimeout(() => {
+            let timer: Timer;
+            timer = setTimeout(() => {
                 let ctxMnuEls: NodeListOf<HTMLElement>;
                 ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
                 if (ctxMnuEls && ctxMnuEls.length) {
                     ctxMnuEls[0].focus({preventScroll: true});
                 }
+                clearTimeout(timer);
             }, 300);
             return true;
         }
