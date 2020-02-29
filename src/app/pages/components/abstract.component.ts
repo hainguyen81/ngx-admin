@@ -6,6 +6,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     DoCheck,
+    ElementRef,
     Inject,
     OnChanges,
     OnDestroy,
@@ -22,17 +23,23 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {LocalDataSource} from 'ng2-smart-table';
-import {
-    DocumentKeydownHandlerService,
-    DocumentKeypressHandlerService,
-    DocumentKeyupHandlerService,
-} from '../../services/implementation/document.keyboard.handler.service';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 import ComponentUtils from '../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
+import {
+    BaseElementKeydownHandlerService,
+    BaseElementKeypressHandlerService,
+    BaseElementKeyupHandlerService
+} from '../../services/implementation/base.keyboard.handler';
+import {
+    AbstractKeydownEventHandlerService,
+    AbstractKeypressEventHandlerService,
+    AbstractKeyupEventHandlerService
+} from '../../services/event.handler.service';
+import Timer = NodeJS.Timer;
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -80,9 +87,9 @@ export class AbstractComponent
     private contextMenuComponent: ContextMenuComponent;
     private contextMenu: IContextMenu[];
 
-    private documentKeyDownHandlerService: DocumentKeydownHandlerService;
-    private documentKeyUpHandlerService: DocumentKeyupHandlerService;
-    private documentKeyPressHandlerService: DocumentKeypressHandlerService;
+    private componentKeyDownHandlerService: AbstractKeydownEventHandlerService<Element>;
+    private componentKeyUpHandlerService: AbstractKeyupEventHandlerService<Element>;
+    private componentKeyPressHandlerService: AbstractKeypressEventHandlerService<Element>;
 
     // -------------------------------------------------
     // GETTER/SETTER
@@ -113,6 +120,32 @@ export class AbstractComponent
     }
 
     /**
+     * Get the {ElementRef} instance
+     * @return the {ElementRef} instance
+     */
+    protected getElementRef(): ElementRef {
+        return this.elementRef;
+    }
+
+    /**
+     * Get the native {ElementRef} instance
+     * @return the native {ElementRef} instance
+     */
+    protected getNativeElement(): any {
+        return (this.getElementRef() == null ? null : this.getElementRef().nativeElement);
+    }
+
+    /**
+     * Get the native {ElementRef} tag name
+     * @return the native {ElementRef} tag name
+     */
+    protected getNativeElementTagName(): any {
+        let element: Element;
+        element = this.getNativeElement() as Element;
+        return (element == null ? null : element.tagName);
+    }
+
+    /**
      * Get the {Renderer2} instance for applying HTML element attributes
      * @return the {Renderer2} instance
      */
@@ -129,30 +162,30 @@ export class AbstractComponent
     }
 
     /**
-     * Get the {DocumentKeydownHandlerService} instance for handling document `keydown` event
-     * @return the {DocumentKeydownHandlerService} instance
+     * Get the {AbstractKeydownEventHandlerService} instance for handling component/document `keydown` event
+     * @return the {AbstractKeydownEventHandlerService} instance
      */
-    protected getDocumentKeyDownHandlerService(): DocumentKeydownHandlerService {
-        this.documentKeyDownHandlerService || throwError('Could not handle document keydown');
-        return this.documentKeyDownHandlerService;
+    protected getComponentKeyDownHandlerService(): AbstractKeydownEventHandlerService<Element> {
+        this.componentKeyDownHandlerService || throwError('Could not handle component/document `keydown`');
+        return this.componentKeyDownHandlerService;
     }
 
     /**
-     * Get the {DocumentKeyupHandlerService} instance for handling document `keyup` event
-     * @return the {DocumentKeyupHandlerService} instance
+     * Get the {AbstractKeyupEventHandlerService} instance for handling component/document `keyup` event
+     * @return the {AbstractKeyupEventHandlerService} instance
      */
-    protected getDocumentKeyUpHandlerService(): DocumentKeyupHandlerService {
-        this.documentKeyUpHandlerService || throwError('Could not handle document keyup');
-        return this.documentKeyUpHandlerService;
+    protected getComponentKeyUpHandlerService(): AbstractKeyupEventHandlerService<Element> {
+        this.componentKeyUpHandlerService || throwError('Could not handle component/document `keyup`');
+        return this.componentKeyUpHandlerService;
     }
 
     /**
-     * Get the {DocumentKeypressHandlerService} instance for handling document `keypress` event
-     * @return the {DocumentKeypressHandlerService} instance
+     * Get the {AbstractKeypressEventHandlerService} instance for handling component/document `keypress` event
+     * @return the {AbstractKeypressEventHandlerService} instance
      */
-    protected getDocumentKeyPressHandlerService(): DocumentKeypressHandlerService {
-        this.documentKeyPressHandlerService || throwError('Could not handle document keypress');
-        return this.documentKeyPressHandlerService;
+    protected getComponentKeyPressHandlerService(): AbstractKeypressEventHandlerService<Element> {
+        this.componentKeyPressHandlerService || throwError('Could not handle component/document `keypress`');
+        return this.componentKeyPressHandlerService;
     }
 
     /**
@@ -254,6 +287,7 @@ export class AbstractComponent
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      */
@@ -266,6 +300,7 @@ export class AbstractComponent
                           @Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) private elementRef: ElementRef,
                           @Inject(ModalDialogService) private modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup) {
         contextMenuService || throwError('Could not inject ContextMenuService');
@@ -331,12 +366,8 @@ export class AbstractComponent
             this.contextMenuComponent = ComponentUtils.queryComponent(this.queryContextMenuComponent);
         }
 
-        this.documentKeyDownHandlerService = new DocumentKeydownHandlerService(
-            (e: KeyboardEvent) => this.onKeyDown({$event: e}), this.getLogger());
-        this.documentKeyUpHandlerService = new DocumentKeyupHandlerService(
-            (e: KeyboardEvent) => this.onKeyUp({$event: e}), this.getLogger());
-        this.documentKeyPressHandlerService = new DocumentKeypressHandlerService(
-            (e: KeyboardEvent) => this.onKeyPress({$event: e}), this.getLogger());
+        // initialize keyboard handlers
+        this.initializeKeyboardHandlers();
     }
 
     ngAfterViewChecked(): void {
@@ -654,6 +685,23 @@ export class AbstractComponent
     // -------------------------------------------------
 
     /**
+     * Initialize keyboard handlers for component or document
+     */
+    protected initializeKeyboardHandlers(): void {
+        let componentElement: Element;
+        componentElement = this.getNativeElement() as Element;
+        this.componentKeyDownHandlerService = new BaseElementKeydownHandlerService<Element>(
+            (componentElement ? componentElement : document),
+            (e: KeyboardEvent) => this.onKeyDown({$event: e}), this.getLogger());
+        this.componentKeyUpHandlerService = new BaseElementKeyupHandlerService<Element>(
+            (componentElement ? componentElement : document),
+            (e: KeyboardEvent) => this.onKeyUp({$event: e}), this.getLogger());
+        this.componentKeyPressHandlerService = new BaseElementKeypressHandlerService<Element>(
+            (componentElement ? componentElement : document),
+            (e: KeyboardEvent) => this.onKeyPress({$event: e}), this.getLogger());
+    }
+
+    /**
      * Prevent the specified event
      * @param event to prevent
      */
@@ -699,12 +747,14 @@ export class AbstractComponent
         });
         // wait for showing context menu and focus on it
         if (eventTarget) {
-            setTimeout(() => {
+            let timer: Timer;
+            timer = setTimeout(() => {
                 let ctxMnuEls: NodeListOf<HTMLElement>;
                 ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
                 if (ctxMnuEls && ctxMnuEls.length) {
                     ctxMnuEls[0].focus({preventScroll: true});
                 }
+                clearTimeout(timer);
             }, 300);
             return true;
         }

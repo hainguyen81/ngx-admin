@@ -2,6 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -54,6 +55,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param config {FormlyConfig}
@@ -70,6 +72,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           config?: FormlyConfig,
@@ -78,7 +81,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           actions?: IToolbarActionsConfig[] | []) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
         this.setConfig(config);
         this.setFields(fields);

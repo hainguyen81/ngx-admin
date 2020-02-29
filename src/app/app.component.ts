@@ -13,6 +13,7 @@ import PageHeaderService, {IPageHeaderConfig} from './services/header.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {isArray} from 'util';
+import Timer = NodeJS.Timer;
 
 @Component({
     selector: 'ngx-app',
@@ -82,8 +83,13 @@ export class AppComponent implements OnInit {
             }),
         ).subscribe((headerConfig: IPageHeaderConfig) => {
             // wait for translation service configuration
-            headerConfig
-            && setTimeout(() => this.pageHeaderService.setConfig(headerConfig), 300);
+            if (headerConfig) {
+                let timer: Timer;
+                timer = setTimeout(() => {
+                    this.pageHeaderService.setConfig(headerConfig);
+                    clearTimeout(timer);
+                }, 300);
+            }
         });
     }
 }

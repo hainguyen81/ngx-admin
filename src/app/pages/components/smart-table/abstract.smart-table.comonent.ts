@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
+    ElementRef,
     EventEmitter,
     Inject,
     QueryList,
@@ -26,6 +27,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {DeepCloner} from '../../../utils/object.utils';
+import Timer = NodeJS.Timer;
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -115,6 +117,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      */
@@ -127,11 +130,12 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
     }
 
@@ -548,7 +552,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     onDataSourceChanged(value: IEvent) {
         // apply table tabIndex to focus and handle keyboard event
-        setTimeout(() => {
+        let timer: Timer;
+        timer = setTimeout(() => {
             let tableEls: NodeListOf<HTMLElement>;
             tableEls = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_SELETOR);
             if (tableEls && tableEls.length) {
@@ -556,6 +561,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 this.getRenderer().setAttribute(tableEls.item(0), 'tabIndex', '1');
                 tableEls.item(0).focus({preventScroll: true});
             }
+            clearTimeout(timer);
         }, 100);
     }
 
@@ -930,7 +936,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         this.getGridComponent().edit(row);
 
         // wait for showing editor
-        setTimeout(() => {
+        let timer: Timer;
+        timer = setTimeout(() => {
             let cellEditor: HTMLElement;
             if (!cell || !cell.isEditable()) {
                 for (let i = 0; i < row.cells.length; i++) {
@@ -951,6 +958,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 cellEditor.focus({preventScroll: false});
                 (typeof cellEditor['select'] === 'function') && cellEditor['select'].apply(cellEditor);
             }
+            clearTimeout(timer);
         }, 300);
     }
 
@@ -1107,9 +1115,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             this.getSmartTableComponent().createConfirm || new EventEmitter<any>());
 
         // wait for editing this row
-        setTimeout(() => {
+        let timer: Timer;
+        timer = setTimeout(() => {
             newRow.isInEditing = false;
             this.editRow(newRow);
+            clearTimeout(timer);
         }, 100);
     }
 

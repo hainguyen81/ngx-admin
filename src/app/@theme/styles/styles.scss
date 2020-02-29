@@ -22,17 +22,13 @@
 @import '~@nebular/auth/styles/globals';
 
 // angular material theme
-@import '~@angular/material/theming';
+@import './material';
 
 // install the framework and custom global styles
 @include nb-install() {
 
-    // angular material theme
-    @include mat-core();
-    $mix-material-primary: mat-palette($mat-teal, 50, 50, 50);
-    $mix-material-accent: mat-palette($mat-teal, 50, 50, 50);
-    $mix-material-theme: mat-dark-theme($mix-material-primary, $mix-material-accent);
-    @include angular-material-theme($mix-material-theme);
+    // mix angular material theme
+    @include nb-angular-material();
 
     // framework global styles
     @include nb-theme-global();

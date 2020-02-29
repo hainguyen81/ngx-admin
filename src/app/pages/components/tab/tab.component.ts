@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     QueryList,
     Renderer2,
@@ -64,6 +65,7 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource> impleme
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      */
@@ -76,11 +78,12 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource> impleme
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup,
             1, true, true);
     }

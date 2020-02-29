@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -21,6 +22,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import Timer = NodeJS.Timer;
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -77,6 +79,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      */
@@ -89,11 +92,12 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
@@ -119,7 +123,11 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      */
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
-        setTimeout(() => this.focus(), 300);
+        let timer: Timer;
+        timer = setTimeout(() => {
+            this.focus();
+            clearTimeout(timer);
+        }, 300);
     }
 
     ngAfterViewInit(): void {

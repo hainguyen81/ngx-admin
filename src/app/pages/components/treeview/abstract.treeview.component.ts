@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     OnInit,
     QueryList,
@@ -30,6 +31,7 @@ import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import Timer = NodeJS.Timer;
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -159,6 +161,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param treeviewConfig {TreeviewConfig}
@@ -173,13 +176,14 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           private treeviewConfig?: TreeviewConfig,
                           private dropdown?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
         this.setConfig(treeviewConfig);
     }
@@ -333,7 +337,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 let newItem: TreeviewItem;
                 newItem = this.newItem(event.$data['item']);
                 // wait for rendering new item
-                setTimeout(() => this.toggleTreeviewItem(newItem), 300);
+                let timer: Timer;
+                timer = setTimeout(() => {
+                    this.toggleTreeviewItem(newItem);
+                    clearTimeout(timer);
+                }, 300);
                 break;
             case CONTEXT_MENU_EDIT:
                 this.toggleTreeviewItem(event.$data['item']);

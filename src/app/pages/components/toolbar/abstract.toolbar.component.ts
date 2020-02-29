@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
+    ElementRef,
     EventEmitter,
     Inject,
     OnInit,
@@ -193,6 +194,7 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param header {IToolbarHeaderConfig}
@@ -207,13 +209,14 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           header?: IToolbarHeaderConfig,
                           private actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
     }
 

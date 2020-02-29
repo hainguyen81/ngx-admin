@@ -2,6 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -41,6 +42,7 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param toolbarHeader toolbar header
@@ -55,12 +57,13 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
                           @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           toolbarHeader?: IToolbarHeaderConfig, actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
         this.setToolbarHeader(toolbarHeader);
         this.setActions(actions);
