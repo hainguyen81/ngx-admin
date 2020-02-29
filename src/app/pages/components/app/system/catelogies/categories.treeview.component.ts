@@ -2,6 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -14,10 +15,12 @@ import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeItem, TreeviewItem} from 'ngx-treeview';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
-import { CategoriesDataSource } from '../../../../../services/implementation/categories/categories.datasource';
-import Categories, { ICategories } from '../../../../../@core/data/warehouse_catelogies';
+import {CategoriesDataSource} from '../../../../../services/implementation/categories/categories.datasource';
+import Categories, {ICategories} from '../../../../../@core/data/warehouse_catelogies';
 import CategoriesUtils from '../../../../../utils/categories.utils';
 import {ToastrService} from 'ngx-toastr';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 
 export const CategoriesTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -73,6 +76,9 @@ export class CategoriesTreeviewComponent extends BaseNgxTreeviewComponent<Catego
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(CategoriesDataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -82,10 +88,14 @@ export class CategoriesTreeviewComponent extends BaseNgxTreeviewComponent<Catego
                 @Inject(TranslateService) translateService: TranslateService,
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef) {
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toastrService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef);
+            viewContainerRef, changeDetectorRef, elementRef,
+            modalDialogService, confirmPopup);
         super.setConfig(CategoriesTreeviewConfig);
         super.setContextMenu(CategoriesContextMenu);
     }

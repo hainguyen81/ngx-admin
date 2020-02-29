@@ -2,12 +2,12 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {BaseFormlyComponent} from '../../../formly/base.formly.component';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -122,8 +122,9 @@ export class CategoriesFormlyComponent extends BaseFormlyComponent<ICategories, 
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
-     * @param modalDialogService
-     * @param confirmPopup
+     * @param elementRef {ElementRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(CategoriesDataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -134,11 +135,12 @@ export class CategoriesFormlyComponent extends BaseFormlyComponent<ICategories, 
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toastrService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef,
+            viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup,
             CategoriesFormConfig, CategoriesFormFieldsConfig);
         // parent selection settings

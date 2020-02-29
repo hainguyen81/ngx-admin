@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -27,7 +28,12 @@ import {CategoryToolbarComponent} from './category.toolbar.component';
 import {CategoryToolbarComponentService} from './category.toolbar.component.service';
 import {IEvent} from '../../../abstract.component';
 import {DeepCloner} from '../../../../../utils/object.utils';
-import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../toolbar/abstract.toolbar.component';
+import {
+    ACTION_DELETE,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IToolbarActionsConfig,
+} from '../../../toolbar/abstract.toolbar.component';
 
 /* Categories left area configuration */
 export const CategoriesTreeAreaConfig: ISplitAreaConfig = {
@@ -111,8 +117,9 @@ export class CategoriesSplitPanelComponent
      * @param factoryResolver {ComponentFactoryResolver}
      * @param viewContainerRef {ViewContainerRef}
      * @param changeDetectorRef {ChangeDetectorRef}
-     * @param modalDialogService
-     * @param confirmPopup
+     * @param elementRef {ElementRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
      */
     constructor(@Inject(CategoriesDataSource) dataSource: CategoriesDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -123,11 +130,13 @@ export class CategoriesSplitPanelComponent
                 @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
         super(dataSource, contextMenuService, toastrService, logger,
             renderer, translateService, factoryResolver,
-            viewContainerRef, changeDetectorRef, modalDialogService, confirmPopup);
+            viewContainerRef, changeDetectorRef, elementRef,
+            modalDialogService, confirmPopup);
         super.setHorizontal(true);
         super.setNumberOfAreas(2);
     }
