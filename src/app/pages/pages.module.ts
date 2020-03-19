@@ -17,7 +17,7 @@ import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
-import {WarehouseItemModule} from './components/app/system/warehouse-item/warehouse-item.module';
+import {WarehouseItemFlipcardModule} from './components/app/system/warehouse-item/warehouse-item.flipcard.module';
 
 @NgModule({
     imports: [
@@ -58,7 +58,7 @@ import {WarehouseItemModule} from './components/app/system/warehouse-item/wareho
         UserModule,
         CustomerModule,
         CategoriesModule,
-        WarehouseItemModule,
+        WarehouseItemFlipcardModule,
     ],
     declarations: [
         PagesComponent,
