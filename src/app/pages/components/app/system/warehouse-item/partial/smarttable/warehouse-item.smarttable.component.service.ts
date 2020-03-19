@@ -1,4 +1,4 @@
-import {AbstractComponentService} from '../../../../../services/component.service';
+import {AbstractComponentService} from '../../../../../../../services/component.service';
 import {WarehouseItemSmartTableComponent} from './warehouse-item.smarttable.component';
 import {ComponentFactoryResolver, Inject, Injectable, ViewContainerRef} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';

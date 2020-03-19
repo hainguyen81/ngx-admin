@@ -12,16 +12,16 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {WarehouseItemTabsetComponent} from './warehouse-item.tabset.component';
+import {WarehouseItemTabsetComponent} from './partial/tabset/warehouse-item.tabset.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {BaseFlipcardComponent} from '../../../flipcard/base.flipcard.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {TranslateService} from '@ngx-translate/core';
-import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse-item/warehouse-item.datasource';
+import {WarehouseItemFlipcardDatasource} from '../../../../../services/implementation/warehouse-item/warehouse-item.flipcard.datasource';
 import WarehouseItemSmartTable from '../../../../../@core/data/warehouse-item.smarttable';
-import {WarehouseItemSmartTableComponent} from './warehouse-item.smarttable.component';
+import {WarehouseItemSmartTableComponent} from './partial/smarttable/warehouse-item.smarttable.component';
 
 @Component({
     selector: 'ngx-flip-card-warehouse-item',
@@ -29,7 +29,7 @@ import {WarehouseItemSmartTableComponent} from './warehouse-item.smarttable.comp
     styleUrls: ['../../../flipcard/flipcard.component.scss'],
 })
 export class WarehouseItemFlipcardComponent
-    extends BaseFlipcardComponent<WarehouseItemDatasource>
+    extends BaseFlipcardComponent<WarehouseItemFlipcardDatasource>
     implements AfterViewInit {
 
     // -------------------------------------------------
@@ -75,7 +75,7 @@ export class WarehouseItemFlipcardComponent
 
     /**
      * Create a new instance of {BaseFlipcardComponent} class
-     * @param dataSource {WarehouseItemDatasource}
+     * @param dataSource {WarehouseItemFlipcardDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -88,7 +88,7 @@ export class WarehouseItemFlipcardComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      */
-    public constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
+    public constructor(@Inject(WarehouseItemFlipcardDatasource) dataSource: WarehouseItemFlipcardDatasource,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                           @Inject(ToastrService) toasterService: ToastrService,
                           @Inject(NGXLogger) logger: NGXLogger,
@@ -122,6 +122,6 @@ export class WarehouseItemFlipcardComponent
      */
     private createFlipsComponents() {
         super.setFrontComponent(WarehouseItemSmartTableComponent);
-        super.setBackComponent(WarehouseItemTabsetComponent);
+        // super.setBackComponent(WarehouseItemTabsetComponent);
     }
 }

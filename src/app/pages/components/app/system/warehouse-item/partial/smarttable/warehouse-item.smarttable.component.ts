@@ -8,17 +8,17 @@ import {
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
-import {convertWarehouseItemSmartTableStatusToDisplay, WarehouseItemSmartTable_STATUS} from '../../../../../@core/data/warehouse-item.smarttable';
+import {BaseSmartTableComponent} from '../../../../../smart-table/base.smart-table.component';
+import {convertWarehouseItemSmartTableStatusToDisplay, WarehouseItemSmartTable_STATUS} from '../../../../../../../@core/data/warehouse-item.smarttable';
 import {TranslateService} from '@ngx-translate/core';
-import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu, IEvent} from '../../../abstract.component';
-import {COMMON} from '../../../../../config/common.config';
+import {AppConfig} from '../../../../../../../config/app.config';
+import {IContextMenu, IEvent} from '../../../../../abstract.component';
+import {COMMON} from '../../../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {TreeviewItem} from 'ngx-treeview';
-import {WarehouseItemSmartTableDatasource} from '../../../../../services/implementation/warehouse-item/warehouse-item.smarttable.datasource';
+import {WarehouseItemSmartTableDatasource} from '../../../../../../../services/implementation/warehouse-item/partial/smarttable/warehouse-item.smarttable.datasource';
 
 /* WarehouseItemSmartTables table settings */
 export const WarehouseItemSmartTableTableSettings = {
@@ -75,8 +75,8 @@ export const WarehouseItemSmartTableContextMenu: IContextMenu[] = [].concat(COMM
 
 @Component({
     selector: 'ngx-smart-table-warehouse-items',
-    templateUrl: '../../../smart-table/smart-table.component.html',
-    styleUrls: ['../../../smart-table/smart-table.component.scss'],
+    templateUrl: '../../../../../smart-table/smart-table.component.html',
+    styleUrls: ['../../../../../smart-table/smart-table.component.scss'],
 })
 export class WarehouseItemSmartTableComponent extends
     BaseSmartTableComponent<WarehouseItemSmartTableDatasource> {

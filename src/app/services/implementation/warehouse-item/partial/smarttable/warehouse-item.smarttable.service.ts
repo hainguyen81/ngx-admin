@@ -1,14 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
 import {ConnectionService} from 'ng-connection-service';
-import {DB_STORE} from '../../../config/db.config';
+import {DB_STORE} from '../../../../../config/db.config';
 import {NGXLogger} from 'ngx-logger';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {AbstractHttpService} from '../../http.service';
-import {IWarehouseItemSmartTable, WarehouseItemSmartTable_STATUS} from '../../../@core/data/warehouse-item.smarttable';
+import {AbstractHttpService} from '../../../../http.service';
+import {IWarehouseItemSmartTable, WarehouseItemSmartTable_STATUS} from '../../../../../@core/data/warehouse-item.smarttable';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {ServiceResponse} from '../../response.service';
-import {AbstractDbService} from '../../database.service';
-import JsonUtils from '../../../utils/json.utils';
+import {ServiceResponse} from '../../../../response.service';
+import {AbstractDbService} from '../../../../database.service';
+import JsonUtils from '../../../../../utils/json.utils';
 import {Observable, throwError} from 'rxjs';
 
 @Injectable({

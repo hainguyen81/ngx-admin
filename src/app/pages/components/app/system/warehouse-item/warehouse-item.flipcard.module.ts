@@ -12,15 +12,15 @@ import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
-import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse-item/warehouse-item.datasource';
+import {WarehouseItemFlipcardDatasource} from '../../../../../services/implementation/warehouse-item/warehouse-item.flipcard.datasource';
 import {TranslateModule} from '@ngx-translate/core';
 import {
-    WarehouseItemDbService,
-    WarehouseItemHttpService,
-} from '../../../../../services/implementation/warehouse-item/warehouse-item.service';
-import {WarehouseItemFlipcardComponent} from './warehouse-item.component';
-import {WarehouseItemTabsetComponent} from './warehouse-item.tabset.component';
-import {WarehouseItemSmartTableComponent} from './warehouse-item.smarttable.component';
+    WarehouseItemFlipcardDbService,
+    WarehouseItemFlipcardHttpService,
+} from '../../../../../services/implementation/warehouse-item/warehouse-item.flipcard.service';
+import {WarehouseItemFlipcardComponent} from './warehouse-item.flipcard.component';
+import {WarehouseItemTabsetComponent} from './partial/tabset/warehouse-item.tabset.component';
+import {WarehouseItemSmartTableComponent} from './partial/smarttable/warehouse-item.smarttable.component';
 
 @NgModule({
     imports: [
@@ -54,11 +54,11 @@ import {WarehouseItemSmartTableComponent} from './warehouse-item.smarttable.comp
     ],
     providers: [
         {
-            provide: WarehouseItemDatasource, useClass: WarehouseItemDatasource,
-            deps: [WarehouseItemHttpService, WarehouseItemDbService, NGXLogger],
+            provide: WarehouseItemFlipcardDatasource, useClass: WarehouseItemFlipcardDatasource,
+            deps: [WarehouseItemFlipcardHttpService, WarehouseItemFlipcardDbService, NGXLogger],
         },
         { provide: WarehouseItemSmartTableComponent, useClass: WarehouseItemSmartTableComponent },
     ],
 })
-export class WarehouseItemModule {
+export class WarehouseItemFlipcardModule {
 }

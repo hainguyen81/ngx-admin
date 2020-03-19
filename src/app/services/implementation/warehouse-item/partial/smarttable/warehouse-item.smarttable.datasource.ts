@@ -1,28 +1,34 @@
 import {Inject, Injectable} from '@angular/core';
-import {WarehouseItemDbService, WarehouseItemHttpService} from './warehouse-item.service';
-import {AbstractDataSource} from '../../datasource.service';
-import {IWarehouseItemSmartTable} from '../../../@core/data/warehouse-item.smarttable';
 import {NGXLogger} from 'ngx-logger';
+import {AbstractDataSource} from '../../../../datasource.service';
+import {IWarehouseItemSmartTable} from '../../../../../@core/data/warehouse-item.smarttable';
+import {
+    WarehouseItemSmartTableDbService,
+    WarehouseItemSmartTableHttpService,
+} from './warehouse-item.smarttable.service';
 
-@Injectable()
-// tslint:disable-next-line: max-line-length
-export class WarehouseItemTabsetDatasource extends AbstractDataSource<IWarehouseItemSmartTable, WarehouseItemHttpService, WarehouseItemDbService> {
+
+@Injectable({
+    providedIn: 'root',
+})
+export class WarehouseItemSmartTableDatasource extends
+    AbstractDataSource<IWarehouseItemSmartTable, WarehouseItemSmartTableHttpService, WarehouseItemSmartTableDbService> {
 
     private latestCount: number = 0;
 
-    constructor(@Inject(WarehouseItemHttpService) httpService: WarehouseItemHttpService,
-                @Inject(WarehouseItemDbService) dbService: WarehouseItemDbService,
+    constructor(@Inject(WarehouseItemSmartTableHttpService) httpService: WarehouseItemSmartTableHttpService,
+                @Inject(WarehouseItemSmartTableDbService) dbService: WarehouseItemSmartTableDbService,
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
     }
 
     getAll(): Promise<IWarehouseItemSmartTable | IWarehouseItemSmartTable[]> {
-        return super.getDbService().getAll().then((WarehouseItems: IWarehouseItemSmartTable[]) => {
-            WarehouseItems = this.filter(WarehouseItems);
-            WarehouseItems = this.sort(WarehouseItems);
-            this.latestCount = (WarehouseItems || []).length;
-            WarehouseItems = this.paginate(WarehouseItems);
-            return WarehouseItems;
+        return super.getDbService().getAll().then((WarehouseItemSmartTables: IWarehouseItemSmartTable[]) => {
+            WarehouseItemSmartTables = this.filter(WarehouseItemSmartTables);
+            WarehouseItemSmartTables = this.sort(WarehouseItemSmartTables);
+            this.latestCount = (WarehouseItemSmartTables || []).length;
+            WarehouseItemSmartTables = this.paginate(WarehouseItemSmartTables);
+            return WarehouseItemSmartTables;
         });
     }
 
