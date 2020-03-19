@@ -215,8 +215,8 @@
 			}
         },
         "categories": {
-            "title": "Quản lý trang thiết bị",
-            "menu": "Trang thiết bị",
+            "title": "Quản lý danh mục kho",
+            "menu": "Danh mục kho",
             "new": "Bộ phận mới",
             "form": {
                 "category": {
@@ -250,6 +250,10 @@
 					"description": "Ghi chú"
 				}
 			}
+        },
+        "warehouse-item": {
+            "title": "Quản lý trang thiết bị kho",
+            "menu": "Trang thiết bị kho"
         }
 	}
 }

@@ -33,9 +33,19 @@ export const MockApiOrganization: IApi = {
 export const MockApiCategories: IApi = {
     code: 'CATEGORIES_API',
     name: 'system.categories.menu',
-    regexUrl: 'organization/**',
+    regexUrl: 'categories/**',
     baseUrl: 'http://localhost:8082/api-rest-categories/service',
-    icon: {icon: 'sitemap', pack: 'fa'},
+    icon: {icon: 'warehouse', pack: 'fa'},
+    version: '1.0.0',
+    id: '5d7660cd738fbc23b43a857h',
+};
+
+export const MockApiWarehouseItem: IApi = {
+    code: 'WAREHOUSE_ITEM_API',
+    name: 'system.warehouse-item.menu',
+    regexUrl: 'warehouse-item/**',
+    baseUrl: 'http://localhost:8082/api-rest-warehouse-item/service',
+    icon: {icon: 'boxes', pack: 'fa'},
     version: '1.0.0',
     id: '5d7660cd738fbc23b43a857h',
 };
@@ -45,4 +55,5 @@ export const MockApi = {
     customer: MockApiCustomer,
     organization: MockApiOrganization,
     categories: MockApiCategories,
+    warehouseItem: MockApiWarehouseItem,
 };

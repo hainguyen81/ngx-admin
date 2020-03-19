@@ -218,6 +218,7 @@ export abstract class AbstractTabComponent<T extends DataSource>
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param numberOfTabs
      * @param fullWidthValue take full width of value
      * @param fullWidth take full width of a parent
      * @param routeParam if specified - tabset listens to this parameter and selects corresponding tab.

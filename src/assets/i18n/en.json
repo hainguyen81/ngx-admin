@@ -250,6 +250,10 @@
 					"description": "Remark"
 				}
 			}
+        },
+        "warehouse-item": {
+            "title": "Warehouse item management",
+            "menu": "Warehouse item"
         }
 	}
 }
