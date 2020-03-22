@@ -29,8 +29,6 @@ export function convertOrganizationTypeToDisplay(value: ORGANIZTAION_TYPE): stri
 export interface IOrganization extends IModel {
     code: string;
     name: string;
-    parentId?: string | null;
-    parent?: IOrganization | null;
     type: ORGANIZTAION_TYPE;
     tax?: string | null;
     address?: string | null;
@@ -49,13 +47,14 @@ export interface IOrganization extends IModel {
     bank_company?: string | null;
     bank_company_at?: string | null;
     bank_company_account?: string | null;
+    parentId?: string | null;
+    parent?: IOrganization | null;
     children?: IOrganization[] | null;
 }
 
 export default class Organization implements IOrganization {
     constructor(public id: string, public code: string, public name: string,
                 public type: ORGANIZTAION_TYPE,
-                public parentId?: string | null, public parent?: IOrganization | null,
                 public tax?: string | null, public address?: string | null,
                 public tel?: string | null, public fax?: string | null,
                 public email?: string | null, public remark?: string | null,
@@ -66,6 +65,7 @@ export default class Organization implements IOrganization {
                 public date_incorporation?: string | Date | null,
                 public bank_company?: string | null, public bank_company_at?: string | null,
                 public bank_company_account?: string | null,
+                public parentId?: string | null, public parent?: IOrganization | null,
                 public children?: IOrganization[] | null) {
     }
 }
