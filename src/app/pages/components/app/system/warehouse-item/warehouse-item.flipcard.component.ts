@@ -20,7 +20,7 @@ import {BaseFlipcardComponent} from '../../../flipcard/base.flipcard.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {TranslateService} from '@ngx-translate/core';
 import {WarehouseItemFlipcardDatasource} from '../../../../../services/implementation/warehouse-item/warehouse-item.flipcard.datasource';
-import WarehouseItemSmartTable from '../../../../../@core/data/warehouse-item.smarttable';
+import WarehouseItem from '../../../../../@core/data/warehouse-item.smarttable';
 import {WarehouseItemSmartTableComponent} from './partial/smarttable/warehouse-item.smarttable.component';
 
 @Component({
@@ -39,7 +39,7 @@ export class WarehouseItemFlipcardComponent
     // private warehouseItemToolbarComponent: WarehouseItemToolbarComponent;
     private WarehouseItemSmartTableComponent: WarehouseItemSmartTableComponent;
     private warehouseItemTabsetComponent: WarehouseItemTabsetComponent;
-    private selectedWarehouseItem: WarehouseItemSmartTable | null;
+    private selectedWarehouseItem: WarehouseItem | null;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -49,7 +49,7 @@ export class WarehouseItemFlipcardComponent
      * Get the selected {IWarehouseItem} instance
      * @return the selected {IWarehouseItem} instance
      */
-    protected getSelectedWarehouseItem(): WarehouseItemSmartTable {
+    protected getSelectedWarehouseItem(): WarehouseItem {
         return this.selectedWarehouseItem;
     }
 

@@ -11,7 +11,12 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
 import {CustomerDatasource} from '../../../../../services/implementation/customer/customer.datasource';
-import {convertCustomerStatusToDisplay, CUSTOMER_STATUS} from '../../../../../@core/data/customer';
+import {
+    convertCustomerLevelToDisplay,
+    convertCustomerStatusToDisplay,
+    CUSTOMER_LEVEL,
+    CUSTOMER_STATUS,
+} from '../../../../../@core/data/customer';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
 import {IContextMenu} from '../../../abstract.component';
@@ -34,11 +39,27 @@ export const CustomerTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
-        customerName: {
-            title: 'system.customer.table.customerName',
+        code: {
+            title: 'system.customer.table.code',
             type: 'string',
             sort: false,
             filter: false,
+        },
+        name: {
+            title: 'system.customer.table.name',
+            type: 'string',
+            sort: false,
+            filter: false,
+        },
+        level: {
+            title: 'system.customer.table.level',
+            type: 'string',
+            sort: false,
+            filter: false,
+            editor: {
+                type: 'list',
+                config: {list: []},
+            },
         },
         email: {
             title: 'system.customer.table.email',
@@ -120,7 +141,8 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
-            {field: 'customerName', search: keyword},
+            {field: 'code', search: keyword},
+            {field: 'name', search: keyword},
             {field: 'email', search: keyword},
             {field: 'title', search: keyword},
             {field: 'tel', search: keyword},
@@ -143,6 +165,15 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
     }
 
     /**
+     * Convert {CUSTOMER_LEVEL} to the showed translated value
+     * @param value to convert
+     * @return converted value
+     */
+    private convertCustomerLevelToDisplay(value: CUSTOMER_LEVEL): string {
+        return this.translate(convertCustomerLevelToDisplay(value));
+    }
+
+    /**
      * Translate table settings
      */
     protected translateSettings(): void {
@@ -162,6 +193,30 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
             {
                 value: CUSTOMER_STATUS.LOCKED,
                 title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.LOCKED),
+            },
+        ];
+        this.translatedSettings['columns']['level']['valuePrepareFunction'] =
+            value => this.convertCustomerStatusToDisplay(value);
+        this.translatedSettings['columns']['level']['editor']['config']['list'] = [
+            {
+                value: CUSTOMER_LEVEL.NEW,
+                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.NEW),
+            },
+            {
+                value: CUSTOMER_LEVEL.BRONZE,
+                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.BRONZE),
+            },
+            {
+                value: CUSTOMER_LEVEL.SILVER,
+                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.SILVER),
+            },
+            {
+                value: CUSTOMER_LEVEL.GOLD,
+                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.GOLD),
+            },
+            {
+                value: CUSTOMER_LEVEL.PLATINUM,
+                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.PLATINUM),
             },
         ];
     }

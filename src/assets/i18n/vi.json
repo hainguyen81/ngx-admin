@@ -15,14 +15,26 @@
         },
         "enum": {
             "userStatus": {
-				"activated": "Đã kích hoạt",
-				"locked": "Khoá",
-				"notActivated": "Chưa kích hoạt"
-			},
-			"customerStatus": {
-				"activated": "Đã kích hoạt",
-				"locked": "Khoá",
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
                 "notActivated": "Chưa kích hoạt"
+            },
+            "customerStatus": {
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
+                "notActivated": "Chưa kích hoạt"
+            },
+            "customerType": {
+                "customer": "Khách hàng",
+                "vendor": "Nhà cung cấp",
+                "all": "Khách hàng/Nhà cung cấp"
+            },
+            "customerLevel": {
+                "new": "Mới",
+                "bronze": "Hạng đồng",
+                "silver": "Hạng bạc",
+                "gold": "Hạng vàng",
+                "platinum": "Hạng bạch kim"
             },
             "organizationType": {
                 "head": "Hội sở",
@@ -32,10 +44,34 @@
                 "department": "Phòng ban",
                 "team_group": "Đội / Nhóm"
             },
-            "categoriesType": {
-                "upper_categories": "Categories Level 1",
-                "type": "Categories Level 2",
-                "branch": "Categories Level 3"
+            "warehouseType": {
+                "category": "Chủng loại",
+                "type": "Loại",
+                "brand": "Hãng sản xuất"
+            },
+            "warehouseItemStatus": {
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
+                "notActivated": "Chưa kích hoạt"
+            },
+            "warehouseInventoryType": {
+                "in": "Nhập",
+                "out": "Xuất"
+            },
+            "warehouseInventoryStatus": {
+                "finished": "Hoàn thành",
+                "unfinished": "Chưa hoàn thành"
+            },
+            "warehouseOrderStatus": {
+                "draft": "Đang xác nhận",
+                "confirmed": "Đã xác nhận",
+                "shipped": "Đã nhận hàng",
+                "delivered": "Đã giao hàng",
+                "closed": "Đóng"
+            },
+            "warehouseOrderType": {
+                "purchase": "Mua",
+                "sale": "Bán"
             }
         },
         "toast": {
@@ -205,14 +241,16 @@
 			"title": "Quản lý khách hàng",
 			"menu": "Khách hàng",
 			"table": {
-				"noData": "Không có bất kỳ khách hàng nào",
-				"customerName": "Tên khách hàng",
-				"email": "Thư điện tử",
-				"tel": "ĐT",
-				"address": "Địa chỉ",
-				"status": "Trạng thái",
-				"enterprise": "Enterprise"
-			}
+                "noData": "Không có bất kỳ khách hàng nào",
+                "code": "Mã",
+                "name": "Tên",
+                "level": "Cấp bậc",
+                "email": "Thư điện tử",
+                "tel": "ĐT",
+                "address": "Địa chỉ",
+                "status": "Trạng thái",
+                "enterprise": "Enterprise"
+            }
         },
         "categories": {
             "title": "Quản lý danh mục kho",

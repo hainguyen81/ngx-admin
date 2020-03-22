@@ -15,14 +15,26 @@
         },
         "enum": {
             "userStatus": {
-				"activated": "Activated",
-				"locked": "Locked",
-				"notActivated": "Not activated"
-			},
-			"customerStatus": {
-				"activated": "Activated",
-				"locked": "Locked",
+                "activated": "Activated",
+                "locked": "Locked",
                 "notActivated": "Not activated"
+            },
+            "customerStatus": {
+                "activated": "Activated",
+                "locked": "Locked",
+                "notActivated": "Not activated"
+            },
+            "customerType": {
+                "customer": "Customer",
+                "vendor": "Vendor",
+                "all": "Customer/Vendor"
+            },
+            "customerLevel": {
+                "new": "New",
+                "bronze": "Bronze",
+                "silver": "Silver",
+                "gold": "Gold",
+                "platinum": "Platinum"
             },
             "organizationType": {
                 "head": "Head Center",
@@ -32,10 +44,34 @@
                 "department": "Department",
                 "team_group": "Team/Group"
             },
-            "categoriesType": {
-                "upper_categories": "Categories Level 1",
-                "type": "Categories Level 2",
-                "branch": "Categories Level 3"
+            "warehouseType": {
+                "category": "Category",
+                "type": "Type",
+                "brand": "Brand"
+            },
+            "warehouseItemStatus": {
+                "activated": "Activated",
+                "locked": "Locked",
+                "notActivated": "Not activated"
+            },
+            "warehouseInventoryType": {
+                "in": "In",
+                "out": "Out"
+            },
+            "warehouseInventoryStatus": {
+                "finished": "Finished",
+                "unfinished": "Unfinished"
+            },
+            "warehouseOrderStatus": {
+                "draft": "Draft",
+                "confirmed": "Confirmed",
+                "shipped": "Shipped",
+                "delivered": "Delivered",
+                "closed": "Closed"
+            },
+            "warehouseOrderType": {
+                "purchase": "Purchase",
+                "sale": "Sale"
             }
         },
         "toast": {
@@ -205,14 +241,16 @@
 			"title": "Customers Management",
 			"menu": "Customers Management",
 			"table": {
-				"noData": "Not found any customers",
-				"customerName": "Customer Name",
-				"email": "Email",
-				"tel": "Tel.",
-				"address": "Address",
-				"status": "Status",
-				"enterprise": "Enterprise"
-			}
+                "noData": "Not found any customers",
+                "code": "Code",
+                "name": "Name",
+                "level": "Level",
+                "email": "Email",
+                "tel": "Tel.",
+                "address": "Address",
+                "status": "Status",
+                "enterprise": "Enterprise"
+            }
         },
         "categories": {
             "title": "Categories management",
