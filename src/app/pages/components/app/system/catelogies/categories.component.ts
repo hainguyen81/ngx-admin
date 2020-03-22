@@ -69,9 +69,9 @@ export class CategoriesSplitPanelComponent
     // DECLARATION
     // -------------------------------------------------
 
-    private CategoryToolbarComponent: CategoryToolbarComponent;
-    private CategoriesTreeviewComponent: CategoriesTreeviewComponent;
-    private CategoriesFormlyComponent: CategoriesFormlyComponent;
+    private categoryToolbarComponent: CategoryToolbarComponent;
+    private categoriesTreeviewComponent: CategoriesTreeviewComponent;
+    private categoriesFormlyComponent: CategoriesFormlyComponent;
     private selectedCategory: ICategories | null;
 
     // -------------------------------------------------
@@ -91,7 +91,7 @@ export class CategoriesSplitPanelComponent
      * @return the {CategoriesTreeviewComponent} instance
      */
     protected getTreeviewComponent(): CategoriesTreeviewComponent {
-        return this.CategoriesTreeviewComponent;
+        return this.categoriesTreeviewComponent;
     }
 
     /**
@@ -99,7 +99,7 @@ export class CategoriesSplitPanelComponent
      * @return the {OrganizationFormlyComponent} instance
      */
     protected getFormlyComponent(): CategoriesFormlyComponent {
-        return this.CategoriesFormlyComponent;
+        return this.categoriesFormlyComponent;
     }
 
     // -------------------------------------------------
@@ -238,24 +238,24 @@ export class CategoriesSplitPanelComponent
         this.configArea(splitAreas[1], CategoriesFormAreaConfig);
 
         // create toolbar component
-        this.CategoryToolbarComponent = this.createCategoryToolbarComponent(
+        this.categoryToolbarComponent = this.createCategoryToolbarComponent(
             componentFactoryResolver, headerViewContainer);
-        this.CategoryToolbarComponent.actionListener()
+        this.categoryToolbarComponent.actionListener()
             .subscribe((e: IEvent) => this.onClickAction(e));
 
         // create tree-view component
-        this.CategoriesTreeviewComponent = this.createCategoriesTreeviewComponent(
+        this.categoriesTreeviewComponent = this.createCategoriesTreeviewComponent(
             componentFactoryResolver, viewContainerRefs[0]);
 
         // handle click tree-view item to show form
-        this.CategoriesTreeviewComponent.setClickItemListener((e, it) => {
+        this.categoriesTreeviewComponent.setClickItemListener((e, it) => {
             if (it && it.value) {
                 let Categories: ICategories;
                 Categories = it.value as ICategories;
                 if (Categories) {
                     this.selectedCategory = Categories;
                     // create formly form component
-                    this.CategoriesFormlyComponent = this.createCategoriesFormlyComponent(
+                    this.categoriesFormlyComponent = this.createCategoriesFormlyComponent(
                         componentFactoryResolver, viewContainerRefs[1]);
                     this.doReset();
                 }
@@ -273,7 +273,7 @@ export class CategoriesSplitPanelComponent
     private doSave(): void {
         this.getFormlyComponent().getFormGroup().updateValueAndValidity();
         if (this.getFormlyComponent().getFormGroup().invalid) {
-            this.showError(this.CategoryToolbarComponent.getToolbarHeader().title,
+            this.showError(this.categoryToolbarComponent.getToolbarHeader().title,
                 'common.form.invalid_data');
             return;
         }
@@ -292,7 +292,7 @@ export class CategoriesSplitPanelComponent
         let clonedOrg: ICategories;
         clonedOrg = DeepCloner(this.selectedCategory);
         delete clonedOrg.parent, clonedOrg.children;
-        this.CategoriesFormlyComponent.setModel(clonedOrg);
+        this.categoriesFormlyComponent.setModel(clonedOrg);
     }
 
     /**
@@ -304,7 +304,7 @@ export class CategoriesSplitPanelComponent
             color: 'warn',
             content: this.translate('common.toast.confirm.delete.message'),
             okButton: this.translate('common.toast.confirm.delete.ok'),
-            title: this.translate(this.CategoryToolbarComponent.getToolbarHeader().title),
+            title: this.translate(this.categoryToolbarComponent.getToolbarHeader().title),
         }).toPromise().then(value => {
             value && this.getDataSource().remove(this.getFormlyComponent().getModel())
                 .then(() => this.showDeleteDataSuccess())
