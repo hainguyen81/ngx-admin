@@ -22,6 +22,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import Timer = NodeJS.Timer;
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -122,7 +123,11 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      */
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
-        setTimeout(() => this.focus(), 300);
+        let timer: Timer;
+        timer = setTimeout(() => {
+            this.focus();
+            clearTimeout(timer);
+        }, 300);
     }
 
     ngAfterViewInit(): void {
