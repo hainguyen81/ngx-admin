@@ -38,10 +38,50 @@ import {
 import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
-import { CategoriesDbService, CategoriesHttpService } from '../services/implementation/categories/categories.service';
-import { CategoriesDataSource } from '../services/implementation/categories/categories.datasource';
 import {PagesGuard} from '../pages/pages.guard.service';
 import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
+import {WarehouseDbService, WarehouseHttpService} from '../services/implementation/warehouse/warehouse.service';
+import {WarehouseDatasource} from '../services/implementation/warehouse/warehouse.datasource';
+import {
+    WarehouseOrderDbService,
+    WarehouseOrderHttpService,
+} from '../services/implementation/warehouse.order/warehouse.order.service';
+import {WarehouseOrderDatasource} from '../services/implementation/warehouse.order/warehouse.order.datasource';
+import {
+    WarehouseOrderDetailDbService,
+    WarehouseOrderDetailHttpService,
+} from '../services/implementation/warehouse.order.detail/warehouse.order.detail.service';
+import {WarehouseOrderDetailDatasource} from '../services/implementation/warehouse.order.detail/warehouse.order.detail.datasource';
+import {
+    WarehouseItemDbService,
+    WarehouseItemHttpService,
+} from '../services/implementation/warehouse.item/warehouse.item.service';
+import {WarehouseItemDatasource} from '../services/implementation/warehouse.item/warehouse.item.datasource';
+import {
+    WarehouseInventoryDbService,
+    WarehouseInventoryHttpService,
+} from '../services/implementation/warehouse.inventory/warehouse.inventory.service';
+import {WarehouseInventoryDatasource} from '../services/implementation/warehouse.inventory/warehouse.inventory.datasource';
+import {
+    WarehouseInventoryDetailDbService,
+    WarehouseInventoryDetailHttpService,
+} from '../services/implementation/warehouse.inventory.detail/warehouse.inventory.detail.service';
+import {WarehouseInventoryDetailDatasource} from '../services/implementation/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {
+    WarehouseCategoryDbService,
+    WarehouseCategoryHttpService,
+} from '../services/implementation/warehouse.category/warehouse.category.service';
+import {WarehouseCategoryDatasource} from '../services/implementation/warehouse.category/warehouse.category.datasource';
+import {
+    WarehouseAdjustDbService,
+    WarehouseAdjustHttpService,
+} from '../services/implementation/warehouse.adjust/warehouse.adjust.service';
+import {WarehouseAdjustDatasource} from '../services/implementation/warehouse.adjust/warehouse.adjust.datasource';
+import {
+    WarehouseAdjustDetailDbService,
+    WarehouseAdjustDetailHttpService,
+} from '../services/implementation/warehouse.adjust.detail/warehouse.adjust.detail.service';
+import {WarehouseAdjustDetailDatasource} from '../services/implementation/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -123,18 +163,131 @@ export const OrganizationProviders: StaticProvider[] = [
     },
 ];
 
-export const CategoriesProviders: StaticProvider[] = [
+export const WarehouseProviders: StaticProvider[] = [
+    // Warehouse
     {
-        provide: CategoriesDbService, useClass: CategoriesDbService,
+        provide: WarehouseDbService, useClass: WarehouseDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
     {
-        provide: CategoriesHttpService, useClass: CategoriesHttpService,
-        deps: [HttpClient, NGXLogger, CategoriesDbService],
+        provide: WarehouseHttpService, useClass: WarehouseHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
     },
     {
-        provide: CategoriesDataSource, useClass: CategoriesDataSource,
-        deps: [CategoriesHttpService, CategoriesDbService, NGXLogger],
+        provide: WarehouseDatasource, useClass: WarehouseDatasource,
+        deps: [WarehouseHttpService, WarehouseDbService, NGXLogger],
+    },
+
+    // Warehouse Order
+    {
+        provide: WarehouseOrderDbService, useClass: WarehouseOrderDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseOrderHttpService, useClass: WarehouseOrderHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseOrderDatasource, useClass: WarehouseOrderDatasource,
+        deps: [WarehouseOrderHttpService, WarehouseOrderDbService, NGXLogger],
+    },
+
+    // Warehouse Order Detail
+    {
+        provide: WarehouseOrderDetailDbService, useClass: WarehouseOrderDetailDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseOrderDetailHttpService, useClass: WarehouseOrderDetailHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseOrderDetailDatasource, useClass: WarehouseOrderDetailDatasource,
+        deps: [WarehouseOrderDetailHttpService, WarehouseOrderDetailDbService, NGXLogger],
+    },
+
+    // Warehouse Item
+    {
+        provide: WarehouseItemDbService, useClass: WarehouseItemDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseItemHttpService, useClass: WarehouseItemHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseItemDatasource, useClass: WarehouseItemDatasource,
+        deps: [WarehouseItemHttpService, WarehouseItemDbService, NGXLogger],
+    },
+
+    // Warehouse Inventory
+    {
+        provide: WarehouseInventoryDbService, useClass: WarehouseInventoryDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseInventoryHttpService, useClass: WarehouseInventoryHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseInventoryDatasource, useClass: WarehouseInventoryDatasource,
+        deps: [WarehouseInventoryHttpService, WarehouseInventoryDbService, NGXLogger],
+    },
+
+    // Warehouse Inventory Detail
+    {
+        provide: WarehouseInventoryDetailDbService, useClass: WarehouseInventoryDetailDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseInventoryDetailHttpService, useClass: WarehouseInventoryDetailHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseInventoryDetailDatasource, useClass: WarehouseInventoryDetailDatasource,
+        deps: [WarehouseInventoryDetailHttpService, WarehouseInventoryDetailDbService, NGXLogger],
+    },
+
+    // Warehouse Category
+    {
+        provide: WarehouseCategoryDbService, useClass: WarehouseCategoryDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseCategoryHttpService, useClass: WarehouseCategoryHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseCategoryDatasource, useClass: WarehouseCategoryDatasource,
+        deps: [WarehouseCategoryHttpService, WarehouseCategoryDbService, NGXLogger],
+    },
+
+    // Warehouse Adjust
+    {
+        provide: WarehouseAdjustDbService, useClass: WarehouseAdjustDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseAdjustHttpService, useClass: WarehouseAdjustHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseAdjustDatasource, useClass: WarehouseAdjustDatasource,
+        deps: [WarehouseAdjustHttpService, WarehouseAdjustDbService, NGXLogger],
+    },
+
+    // Warehouse Adjust Detail
+    {
+        provide: WarehouseAdjustDetailDbService, useClass: WarehouseAdjustDetailDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseAdjustDetailHttpService, useClass: WarehouseAdjustDetailHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseDbService],
+    },
+    {
+        provide: WarehouseAdjustDetailDatasource, useClass: WarehouseAdjustDetailDatasource,
+        deps: [WarehouseAdjustDetailHttpService, WarehouseAdjustDetailDbService, NGXLogger],
     },
 ];
 
@@ -191,7 +344,7 @@ export const Providers: StaticProvider[] = CommonProviders
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
-    .concat(CategoriesProviders)
+    .concat(WarehouseProviders)
     .concat(InterceptorProviders)
     .concat(AuthenticationProviders)
     .concat(MenuProviders)

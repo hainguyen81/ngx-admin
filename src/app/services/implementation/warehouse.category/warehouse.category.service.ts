@@ -1,60 +1,55 @@
 import {Inject, Injectable} from '@angular/core';
-import {ConnectionService} from 'ng-connection-service';
-import {DB_STORE} from '../../../../../config/db.config';
 import {NGXLogger} from 'ngx-logger';
+import {AbstractHttpService} from '../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {AbstractHttpService} from '../../../../http.service';
-import {IWarehouseItemSmartTable, WarehouseItemSmartTable_STATUS} from '../../../../../@core/data/warehouse-item.smarttable';
+import {ServiceResponse} from '../../response.service';
+import JsonUtils from '../../../utils/json.utils';
+import {AbstractDbService} from '../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {ServiceResponse} from '../../../../response.service';
-import {AbstractDbService} from '../../../../database.service';
-import JsonUtils from '../../../../../utils/json.utils';
+import {DB_STORE} from '../../../config/db.config';
+import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
+import {IWarehouseCategory} from '../../../@core/data/warehouse.category';
 
-@Injectable({
-    providedIn: 'root',
-})
-export class WarehouseItemSmartTableDbService extends AbstractDbService<IWarehouseItemSmartTable> {
+@Injectable()
+export class WarehouseCategoryDbService extends AbstractDbService<IWarehouseCategory> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService) {
-        super(dbService, logger, connectionService, DB_STORE.WarehouseItemSmartTable);
+        super(dbService, logger, connectionService, DB_STORE.warehouse);
     }
 
-    getAll(): Promise<IWarehouseItemSmartTable[]> {
+    getAll(): Promise<IWarehouseCategory[]> {
         return super.getAll();
     }
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
-                      reject: (reason?: any) => void, ...args: IWarehouseItemSmartTable[]) => {
+                      reject: (reason?: any) => void, ...args: IWarehouseCategory[]) => {
         if (args && args.length) {
             this.getLogger().debug('Delete data', args, 'First data', args[0]);
-            args[0].status = WarehouseItemSmartTable_STATUS.LOCKED;
+            args[0].deletedAt = (new Date()).getTime();
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
     }
 }
 
-@Injectable({
-    providedIn: 'root',
-})
-export class WarehouseItemSmartTableHttpService extends
-    AbstractHttpService<IWarehouseItemSmartTable, IWarehouseItemSmartTable> {
+@Injectable()
+export class WarehouseCategoryHttpService extends AbstractHttpService<IWarehouseCategory, IWarehouseCategory> {
 
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(WarehouseItemSmartTableDbService) dbService: WarehouseItemSmartTableDbService) {
+                @Inject(WarehouseCategoryDbService) dbService: WarehouseCategoryDbService) {
         super(http, logger, dbService);
         dbService || throwError('Could not inject user database service for offline mode');
     }
 
-    parseResponse(serviceResponse?: ServiceResponse): IWarehouseItemSmartTable {
+    parseResponse(serviceResponse?: ServiceResponse): IWarehouseCategory {
         if (!serviceResponse || !serviceResponse.getResponse()
             || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
             return undefined;
         }
-        return JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as IWarehouseItemSmartTable;
+        return JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as IWarehouseCategory;
     }
 
     handleOfflineMode(url: string, method?: string, res?: any, options?: {
@@ -69,7 +64,7 @@ export class WarehouseItemSmartTableHttpService extends
         redirectFailure?: any;
         errors?: any;
         messages?: any;
-    }): Observable<IWarehouseItemSmartTable[] | IWarehouseItemSmartTable> {
+    }): Observable<IWarehouseCategory[] | IWarehouseCategory> {
         return undefined;
     }
 }

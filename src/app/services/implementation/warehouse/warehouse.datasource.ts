@@ -1,31 +1,31 @@
+import {Inject, Injectable} from '@angular/core';
 import {AbstractDataSource} from '../../datasource.service';
-import {ICategories} from '../../../@core/data/warehouse_catelogies';
-import {CategoriesDbService, CategoriesHttpService} from './categories.service';
-import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
+import {IWarehouse} from '../../../@core/data/warehouse';
+import {WarehouseDbService, WarehouseHttpService} from './warehouse.service';
 
-export class CategoriesDataSource extends AbstractDataSource<ICategories, CategoriesHttpService, CategoriesDbService> {
+@Injectable()
+export class WarehouseDatasource extends AbstractDataSource<IWarehouse, WarehouseHttpService, WarehouseDbService> {
+
     private latestCount: number = 0;
 
-    constructor(@Inject(CategoriesHttpService) httpService: CategoriesHttpService,
-                @Inject(CategoriesDbService) dbService: CategoriesDbService,
+    constructor(@Inject(WarehouseHttpService) httpService: WarehouseHttpService,
+                @Inject(WarehouseDbService) dbService: WarehouseDbService,
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
-        super.setSort([{field: 'uid', direction: 'desc'}]);
     }
 
-    getAll(): Promise<ICategories | ICategories[]> {
-        // sort by uid desc
-        return super.getDbService().getAll().then((data) => {
-            data = this.filter(data);
-            data = this.sort(data);
-            this.latestCount = (data || []).length;
-            data = this.paginate(data);
-            return data;
+    getAll(): Promise<IWarehouse | IWarehouse[]> {
+        return super.getDbService().getAll().then((customers: IWarehouse[]) => {
+            customers = this.filter(customers);
+            customers = this.sort(customers);
+            this.latestCount = (customers || []).length;
+            customers = this.paginate(customers);
+            return customers;
         });
     }
 
-    getElements(): Promise<ICategories | ICategories[]> {
+    getElements(): Promise<IWarehouse | IWarehouse[]> {
         return this.getAll();
     }
 
@@ -39,7 +39,7 @@ export class CategoriesDataSource extends AbstractDataSource<ICategories, Catego
      * @param oldData to filter for updating and returning to update view value
      * @param newData to update into data source
      */
-    update(oldData: ICategories, newData: ICategories): Promise<ICategories> {
+    update(oldData: IWarehouse, newData: IWarehouse): Promise<IWarehouse> {
         return this.getDbService().update(newData).then(() => {
             this.refresh();
             return oldData;
@@ -51,30 +51,32 @@ export class CategoriesDataSource extends AbstractDataSource<ICategories, Catego
      * @param data to remove
      * @return effected records number
      */
-    remove(data: ICategories): Promise<number> {
+    remove(data: IWarehouse): Promise<number> {
         return this.getDbService().delete(data).then(() => {
             this.refresh();
             return 1;
         });
     }
 
+    refresh(): void {
+        this.getLogger().debug('Refresh data source');
+        super.refresh();
+    }
+
     load(data: Array<any>): Promise<any> {
         this.getLogger().debug('Load data', data);
-        data = this.filter(data);
-        data = this.sort(data);
         return super.load(data);
     }
 
-    prepend(data: ICategories): Promise<number> {
+    prepend(data: IWarehouse): Promise<number> {
         return this.append(data);
     }
 
-    append(data: ICategories): Promise<any> {
+    append(data: IWarehouse): Promise<any> {
         this.getLogger().debug('New data', data);
         return this.getDbService().insert(data).then(() => {
             this.refresh();
             return 1;
         });
     }
-
 }
