@@ -32,12 +32,12 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {
     BaseElementKeydownHandlerService,
     BaseElementKeypressHandlerService,
-    BaseElementKeyupHandlerService
+    BaseElementKeyupHandlerService,
 } from '../../services/implementation/base.keyboard.handler';
 import {
     AbstractKeydownEventHandlerService,
     AbstractKeypressEventHandlerService,
-    AbstractKeyupEventHandlerService
+    AbstractKeyupEventHandlerService,
 } from '../../services/event.handler.service';
 import Timer = NodeJS.Timer;
 
