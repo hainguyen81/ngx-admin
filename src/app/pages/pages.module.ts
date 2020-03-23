@@ -1,4 +1,4 @@
-import { CategoriesModule } from './components/app/system/catelogies/categories.module';
+import {CategoriesModule} from './components/app/system/catelogies/categories.module';
 import {NgModule} from '@angular/core';
 import {ThemeModule} from '../@theme/theme.module';
 import {PagesComponent} from './pages.component';
@@ -17,7 +17,6 @@ import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
-import {WarehouseItemFlipcardModule} from './components/app/system/warehouse-item/warehouse-item.flipcard.module';
 
 @NgModule({
     imports: [
@@ -58,7 +57,6 @@ import {WarehouseItemFlipcardModule} from './components/app/system/warehouse-ite
         UserModule,
         CustomerModule,
         CategoriesModule,
-        WarehouseItemFlipcardModule,
     ],
     declarations: [
         PagesComponent,
