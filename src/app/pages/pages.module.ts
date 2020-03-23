@@ -9,6 +9,7 @@ import {UserModule} from './components/app/system/user/user.module';
 import {CustomerModule} from './components/app/system/customer/customer.module';
 import {OrganizationModule} from './components/app/system/organization/organization.module';
 import {AppMaterialModule} from '../app.material.module';
+// @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
 import {DeviceDetectorModule} from 'ngx-device-detector';
