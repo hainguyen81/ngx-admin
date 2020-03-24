@@ -1,5 +1,5 @@
 import {IModule} from '../data/module';
-import {MockApiCustomer, MockApiOrganization, MockApiUser, MockApiCategories, MockApiWarehouseItem} from './mock.api';
+import {MockApiCustomer, MockApiOrganization, MockApiUser, MockApiWarehouseItem} from './mock.api';
 
 export const MockModuleUser: IModule = {
     code: 'USER_MODULE',
@@ -28,15 +28,6 @@ export const MockModuleOrganization: IModule = {
     children: [],
 };
 
-export const MockModuleCategories: IModule = {
-    code: 'CATEGORIES_MODULE',
-    name: 'system.categories.menu',
-    apiId: '',
-    api: MockApiCategories,
-    id: '',
-    children: [],
-};
-
 export const MockModuleWarehouseItem: IModule = {
     code: 'WAREHOUSE_ITEM_MODULE',
     name: 'system.warehouse-item.menu',
@@ -57,7 +48,6 @@ export const MockModuleSystem: IModule = {
         MockModuleOrganization,
         MockModuleUser,
         MockModuleCustomer,
-        MockModuleCategories,
         MockModuleWarehouseItem,
     ],
 };
