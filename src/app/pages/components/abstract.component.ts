@@ -17,7 +17,7 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -39,7 +39,6 @@ import {
     AbstractKeypressEventHandlerService,
     AbstractKeyupEventHandlerService,
 } from '../../services/event.handler.service';
-import Timer = NodeJS.Timer;
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -747,8 +746,8 @@ export class AbstractComponent
         });
         // wait for showing context menu and focus on it
         if (eventTarget) {
-            let timer: Timer;
-            timer = setTimeout(() => {
+            let timer: number;
+            timer = window.setTimeout(() => {
                 let ctxMnuEls: NodeListOf<HTMLElement>;
                 ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
                 if (ctxMnuEls && ctxMnuEls.length) {

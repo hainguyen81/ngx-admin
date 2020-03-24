@@ -10,7 +10,7 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -337,8 +337,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 let newItem: TreeviewItem;
                 newItem = this.newItem(event.$data['item']);
                 // wait for rendering new item
-                let timer: Timer;
-                timer = setTimeout(() => {
+                let timer: number;
+                timer = window.setTimeout(() => {
                     this.toggleTreeviewItem(newItem);
                     clearTimeout(timer);
                 }, 300);

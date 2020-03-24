@@ -1,4 +1,4 @@
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {AbstractComponent} from '../abstract.component';
 import {
     AfterViewInit,

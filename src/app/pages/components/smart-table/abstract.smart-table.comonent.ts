@@ -11,13 +11,13 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {Cell} from 'ng2-smart-table';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {MouseEventGuard} from '../customization/mouse.event.guard';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
-import {Grid} from 'ng2-smart-table/lib/grid';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {Ng2SmartTableComponent} from 'ng2-smart-table/lib/ng2-smart-table.component';
+import {Grid} from 'ng2-smart-table/lib/lib/grid';
+import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {isArray, isNumber} from 'util';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
@@ -552,8 +552,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     onDataSourceChanged(value: IEvent) {
         // apply table tabIndex to focus and handle keyboard event
-        let timer: Timer;
-        timer = setTimeout(() => {
+        let timer: number;
+        timer = window.setTimeout(() => {
             let tableEls: NodeListOf<HTMLElement>;
             tableEls = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_SELETOR);
             if (tableEls && tableEls.length) {
@@ -936,8 +936,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         this.getGridComponent().edit(row);
 
         // wait for showing editor
-        let timer: Timer;
-        timer = setTimeout(() => {
+        let timer: number;
+        timer = window.setTimeout(() => {
             let cellEditor: HTMLElement;
             if (!cell || !cell.isEditable()) {
                 for (let i = 0; i < row.cells.length; i++) {
@@ -1115,8 +1115,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             this.getSmartTableComponent().createConfirm || new EventEmitter<any>());
 
         // wait for editing this row
-        let timer: Timer;
-        timer = setTimeout(() => {
+        let timer: number;
+        timer = window.setTimeout(() => {
             newRow.isInEditing = false;
             this.editRow(newRow);
             clearTimeout(timer);

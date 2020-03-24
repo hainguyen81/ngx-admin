@@ -8,7 +8,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {NgxTreeviewComponent} from './treeview.component';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
