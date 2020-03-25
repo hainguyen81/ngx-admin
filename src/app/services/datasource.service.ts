@@ -1,12 +1,12 @@
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {IDbService, IHttpService} from './interface.service';
 import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../config/log.config';
-import {LocalPager} from 'ng2-smart-table/lib/lib/data-source/local/local.pager';
-import {LocalFilter} from 'ng2-smart-table/lib/lib/data-source/local/local.filter';
-import {LocalSorter} from 'ng2-smart-table/lib/lib/data-source/local/local.sorter';
+import {LocalPager} from 'ng2-smart-table/lib/data-source/local/local.pager';
+import {LocalFilter} from 'ng2-smart-table/lib/data-source/local/local.filter';
+import {LocalSorter} from 'ng2-smart-table/lib/data-source/local/local.sorter';
 
 /**
  * Abstract data source for table service

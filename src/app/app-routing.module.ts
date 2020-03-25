@@ -16,7 +16,7 @@ const routes: Routes = [
         path: 'dashboard',
         // here we tell Angular to check the access with our AuthGuard
         canActivate: [AuthGuard],
-        loadChildren: () => import('app/pages/pages.module').then(m => m.PagesModule),
+        loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
     },
     {
         path: 'auth',

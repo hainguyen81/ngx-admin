@@ -11,13 +11,13 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {Cell} from 'ng2-smart-table';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {MouseEventGuard} from '../customization/mouse.event.guard';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {Ng2SmartTableComponent} from 'ng2-smart-table/lib/ng2-smart-table.component';
-import {Grid} from 'ng2-smart-table/lib/lib/grid';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
+import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
+import {Grid} from 'ng2-smart-table/lib/grid';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isArray, isNumber} from 'util';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
@@ -27,7 +27,6 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {DeepCloner} from '../../../utils/object.utils';
-import Timer = NodeJS.Timer;
 
 /* default smart table settings */
 export const DefaultTableSettings = {

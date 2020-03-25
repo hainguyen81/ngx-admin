@@ -17,7 +17,7 @@ import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
 import {NotFoundComponent} from './not-found.component';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../config/app.config';
 import {TreeviewModule} from 'ngx-treeview';
