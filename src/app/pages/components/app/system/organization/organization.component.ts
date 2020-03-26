@@ -9,7 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
-import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
+import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {SplitAreaDirective} from 'angular-split';
-import {IOrganization} from '../../../../../@core/data/organization';
+import {IOrganization} from '../../../../../@core/data/system/organization';
 import ComponentUtils from '../../../../../utils/component.utils';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';

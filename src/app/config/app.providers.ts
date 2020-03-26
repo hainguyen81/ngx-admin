@@ -20,68 +20,68 @@ import {MenuService} from '../services/implementation/menu.service';
 import {ToastrService} from 'ngx-toastr';
 import {COMMON} from './common.config';
 import {ModuleService} from '../services/implementation/module.service';
-import {UserDbService, UserHttpService} from '../services/implementation/user/user.service';
-import {UserDataSource} from '../services/implementation/user/user.datasource';
+import {UserDbService, UserHttpService} from '../services/implementation/system/user/user.service';
+import {UserDataSource} from '../services/implementation/system/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {LocalDataSource} from 'ng2-smart-table';
 import {ConnectionService} from 'ng-connection-service';
-import {CustomerDbService, CustomerHttpService} from '../services/implementation/customer/customer.service';
-import {CustomerDatasource} from '../services/implementation/customer/customer.datasource';
+import {CustomerDbService, CustomerHttpService} from '../services/implementation/system/customer/customer.service';
+import {CustomerDatasource} from '../services/implementation/system/customer/customer.datasource';
 import {TranslateLoader, TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {
     OrganizationDbService,
     OrganizationHttpService,
-} from '../services/implementation/organization/organization.service';
-import {OrganizationDataSource} from '../services/implementation/organization/organization.datasource';
+} from '../services/implementation/system/organization/organization.service';
+import {OrganizationDataSource} from '../services/implementation/system/organization/organization.datasource';
 import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
 import {PagesGuard} from '../pages/pages.guard.service';
 import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
-import {WarehouseDbService, WarehouseHttpService} from '../services/implementation/warehouse/warehouse.service';
-import {WarehouseDatasource} from '../services/implementation/warehouse/warehouse.datasource';
+import {WarehouseDbService, WarehouseHttpService} from '../services/implementation/warehouse/warehouse/warehouse.service';
+import {WarehouseDatasource} from '../services/implementation/warehouse/warehouse/warehouse.datasource';
 import {
     WarehouseOrderDbService,
     WarehouseOrderHttpService,
-} from '../services/implementation/warehouse.order/warehouse.order.service';
-import {WarehouseOrderDatasource} from '../services/implementation/warehouse.order/warehouse.order.datasource';
+} from '../services/implementation/warehouse/warehouse.order/warehouse.order.service';
+import {WarehouseOrderDatasource} from '../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {
     WarehouseOrderDetailDbService,
     WarehouseOrderDetailHttpService,
-} from '../services/implementation/warehouse.order.detail/warehouse.order.detail.service';
-import {WarehouseOrderDetailDatasource} from '../services/implementation/warehouse.order.detail/warehouse.order.detail.datasource';
+} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service';
+import {WarehouseOrderDetailDatasource} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource';
 import {
     WarehouseItemDbService,
     WarehouseItemHttpService,
-} from '../services/implementation/warehouse.item/warehouse.item.service';
-import {WarehouseItemDatasource} from '../services/implementation/warehouse.item/warehouse.item.datasource';
+} from '../services/implementation/warehouse/warehouse.item/warehouse.item.service';
+import {WarehouseItemDatasource} from '../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {
     WarehouseInventoryDbService,
     WarehouseInventoryHttpService,
-} from '../services/implementation/warehouse.inventory/warehouse.inventory.service';
-import {WarehouseInventoryDatasource} from '../services/implementation/warehouse.inventory/warehouse.inventory.datasource';
+} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
+import {WarehouseInventoryDatasource} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {
     WarehouseInventoryDetailDbService,
     WarehouseInventoryDetailHttpService,
-} from '../services/implementation/warehouse.inventory.detail/warehouse.inventory.detail.service';
-import {WarehouseInventoryDetailDatasource} from '../services/implementation/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+} from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service';
+import {WarehouseInventoryDetailDatasource} from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {
     WarehouseCategoryDbService,
     WarehouseCategoryHttpService,
-} from '../services/implementation/warehouse.category/warehouse.category.service';
-import {WarehouseCategoryDatasource} from '../services/implementation/warehouse.category/warehouse.category.datasource';
+} from '../services/implementation/warehouse/warehouse.category/warehouse.category.service';
+import {WarehouseCategoryDatasource} from '../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {
     WarehouseAdjustDbService,
     WarehouseAdjustHttpService,
-} from '../services/implementation/warehouse.adjust/warehouse.adjust.service';
-import {WarehouseAdjustDatasource} from '../services/implementation/warehouse.adjust/warehouse.adjust.datasource';
+} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service';
+import {WarehouseAdjustDatasource} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
 import {
     WarehouseAdjustDetailDbService,
     WarehouseAdjustDetailHttpService,
-} from '../services/implementation/warehouse.adjust.detail/warehouse.adjust.detail.service';
-import {WarehouseAdjustDetailDatasource} from '../services/implementation/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
+} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service';
+import {WarehouseAdjustDetailDatasource} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {

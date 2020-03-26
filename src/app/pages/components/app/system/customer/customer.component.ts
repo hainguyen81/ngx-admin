@@ -10,13 +10,13 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
-import {CustomerDatasource} from '../../../../../services/implementation/customer/customer.datasource';
+import {CustomerDatasource} from '../../../../../services/implementation/system/customer/customer.datasource';
 import {
     convertCustomerLevelToDisplay,
     convertCustomerStatusToDisplay,
     CUSTOMER_LEVEL,
     CUSTOMER_STATUS,
-} from '../../../../../@core/data/customer';
+} from '../../../../../@core/data/system/customer';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
 import {IContextMenu} from '../../../abstract.component';

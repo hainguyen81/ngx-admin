@@ -8,7 +8,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {BaseFormlyComponent} from '../../../formly/base.formly.component';
-import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
+import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,14 +16,14 @@ import Organization, {
     convertOrganizationTypeToDisplay,
     IOrganization,
     ORGANIZTAION_TYPE,
-} from '../../../../../@core/data/organization';
+} from '../../../../../@core/data/system/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {isArray} from 'util';
-import {UserDataSource} from '../../../../../services/implementation/user/user.datasource';
-import {IUser} from '../../../../../@core/data/user';
+import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
+import {IUser} from '../../../../../@core/data/system/user';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {EmailValidators} from 'ngx-validators';

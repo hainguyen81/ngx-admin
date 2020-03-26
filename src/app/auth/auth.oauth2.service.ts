@@ -12,8 +12,8 @@ import {NBX_AUTH_AUTHORIZATION_HEADER, NBX_AUTH_AUTHORIZATION_TYPE} from './auth
 import {Observable, of, throwError} from 'rxjs';
 import EncryptionUtils from '../utils/encryption.utils';
 import PromiseUtils from '../utils/promise.utils';
-import {IUser} from '../@core/data/user';
-import {UserDbService} from '../services/implementation/user/user.service';
+import {IUser} from '../@core/data/system/user';
+import {UserDbService} from '../services/implementation/system/user/user.service';
 import JsonUtils from '../utils/json.utils';
 
 @Injectable()

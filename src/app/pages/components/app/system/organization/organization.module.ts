@@ -17,11 +17,11 @@ import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
-import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
+import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {
     OrganizationDbService,
     OrganizationHttpService,
-} from '../../../../../services/implementation/organization/organization.service';
+} from '../../../../../services/implementation/system/organization/organization.service';
 import {TreeviewModule} from 'ngx-treeview';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';

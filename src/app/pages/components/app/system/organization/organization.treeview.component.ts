@@ -9,14 +9,14 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
-import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
+import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeItem, TreeviewItem} from 'ngx-treeview';
-import Organization, {IOrganization} from '../../../../../@core/data/organization';
-import OrganizationUtils from '../../../../../utils/organization.utils';
+import Organization, {IOrganization} from '../../../../../@core/data/system/organization';
+import OrganizationUtils from '../../../../../utils/system/organization.utils';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';

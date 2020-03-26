@@ -1,16 +1,16 @@
 import {InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CommonProviders, CustomerProviders, OrganizationProviders, UserProviders} from '../../config/app.providers';
-import {MockUserService} from './users.service';
-import {UserDbService} from '../../services/implementation/user/user.service';
+import {MockUserService} from './system/users.service';
+import {UserDbService} from '../../services/implementation/system/user/user.service';
 import {NGXLogger} from 'ngx-logger';
 import {throwIfAlreadyLoaded} from '../core.module';
 import {AppConfig} from '../../config/app.config';
 import {throwError} from 'rxjs';
-import {MockCustomerService} from './customers.service';
-import {CustomerDbService} from '../../services/implementation/customer/customer.service';
-import {MockOrganizationService} from './organization.service';
-import {OrganizationDbService} from '../../services/implementation/organization/organization.service';
+import {MockCustomerService} from './system/customers.service';
+import {CustomerDbService} from '../../services/implementation/system/customer/customer.service';
+import {MockOrganizationService} from './system/organization.service';
+import {OrganizationDbService} from '../../services/implementation/system/organization/organization.service';
 
 export const MOCK_DATA_PROVIDERS = [
     {

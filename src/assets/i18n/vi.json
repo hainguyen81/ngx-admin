@@ -252,11 +252,11 @@
                 "enterprise": "Enterprise"
             }
         },
-        "warehouse": {
-            "item": {
-                "title": "Quản lý trang thiết bị kho",
-                "menu": "Trang thiết bị kho"
-            }
+    },
+    "warehouse": {
+        "item": {
+            "title": "Quản lý trang thiết bị kho",
+            "menu": "Trang thiết bị kho"
         }
     }
 }

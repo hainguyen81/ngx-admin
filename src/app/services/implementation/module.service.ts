@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {AbstractDbService} from '../database.service';
-import {IModule} from '../../@core/data/module';
+import {IModule} from '../../@core/data/system/module';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {DB_STORE} from '../../config/db.config';

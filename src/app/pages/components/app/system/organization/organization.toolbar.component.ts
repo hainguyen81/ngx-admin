@@ -1,4 +1,4 @@
-import {OrganizationDataSource} from '../../../../../services/implementation/organization/organization.datasource';
+import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {
     ChangeDetectorRef,
     Component,

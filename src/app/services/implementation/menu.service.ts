@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {NbMenuItem} from '@nebular/theme';
-import MenuUtils from '../../utils/menu.utils';
+import MenuUtils from '../../utils/system/menu.utils';
 import {ModuleService} from './module.service';
 import {ConnectionService} from 'ng-connection-service';
 

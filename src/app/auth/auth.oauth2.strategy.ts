@@ -10,9 +10,9 @@ import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.se
 import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 import {LogConfig} from '../config/log.config';
 import {ModuleService} from '../services/implementation/module.service';
-import {IModule} from '../@core/data/module';
+import {IModule} from '../@core/data/system/module';
 import {isArray} from 'util';
-import {IRole} from '../@core/data/role';
+import {IRole} from '../@core/data/system/role';
 import {isObject} from 'rxjs/internal-compatibility';
 import {map} from 'rxjs/operators';
 import EncryptionUtils from '../utils/encryption.utils';

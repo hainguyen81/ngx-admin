@@ -7,8 +7,8 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {convertUserStatusToDisplay, USER_STATUS} from '../../../../../@core/data/user';
-import {UserDataSource} from '../../../../../services/implementation/user/user.datasource';
+import {convertUserStatusToDisplay, USER_STATUS} from '../../../../../@core/data/system/user';
+import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';

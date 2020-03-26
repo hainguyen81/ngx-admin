@@ -4,8 +4,8 @@ import {NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInp
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
-import {UserDataSource} from '../../../../../services/implementation/user/user.datasource';
-import {UserDbService, UserHttpService} from '../../../../../services/implementation/user/user.service';
+import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
+import {UserDbService, UserHttpService} from '../../../../../services/implementation/system/user/user.service';
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';

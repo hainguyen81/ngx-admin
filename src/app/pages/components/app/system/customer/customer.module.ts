@@ -13,9 +13,9 @@ import {CommonModule} from '@angular/common';
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {CustomerSmartTableComponent} from './customer.component';
-import {CustomerDatasource} from '../../../../../services/implementation/customer/customer.datasource';
+import {CustomerDatasource} from '../../../../../services/implementation/system/customer/customer.datasource';
 import {TranslateModule} from '@ngx-translate/core';
-import {CustomerDbService, CustomerHttpService} from '../../../../../services/implementation/customer/customer.service';
+import {CustomerDbService, CustomerHttpService} from '../../../../../services/implementation/system/customer/customer.service';
 
 @NgModule({
     imports: [

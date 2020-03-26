@@ -252,11 +252,13 @@
                 "enterprise": "Enterprise"
             }
         },
-        "warehouse": {
-            "item": {
-                "title": "Warehouse Item Management",
-                "menu": "Warehouse Item"
-            }
+    },
+    "warehouse": {
+        "title": "Warehouse Management",
+        "menu": "Warehouse Management",
+        "item": {
+            "title": "Warehouse Item Management",
+            "menu": "Warehouse Item"
         }
     }
 }
