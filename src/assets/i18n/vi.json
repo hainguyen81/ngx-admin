@@ -251,12 +251,14 @@
                 "status": "Trạng thái",
                 "enterprise": "Enterprise"
             }
-        },
+        }
     },
     "warehouse": {
+        "title": "Quản lý kho",
+        "menu": "Quản lý kho",
         "item": {
-            "title": "Quản lý trang thiết bị kho",
-            "menu": "Trang thiết bị kho"
+            "title": "Quản lý trang thiết bị",
+            "menu": "Quản lý trang thiết bị"
         }
     }
 }

@@ -1,5 +1,5 @@
 import {IUser, USER_STATUS} from '../../data/system/user';
-import {MockRolesGroupSystem} from './mock.role';
+import {MockRolesAdmin} from './mock.role';
 import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import EncryptionUtils from '../../../utils/encryption.utils';
@@ -20,7 +20,7 @@ export const MockUserAdmin: IUser = {
     lastName: 'Administrator Last Name',
     email: 'admin@hsg.com',
     status: USER_STATUS.ACTIVATED,
-    rolesGroup: MockRolesGroupSystem,
+    rolesGroup: MockRolesAdmin,
     id: '5d5d67786249ab06b4516c45',
     rolesGroupId: '5d766194738fbc23b43a857f',
 };
@@ -38,7 +38,7 @@ export const MockUserTemplate: IUser = {
     lastName: 'User1 Last Name',
     email: 'user1@hsg.com',
     status: USER_STATUS.ACTIVATED,
-    rolesGroup: MockRolesGroupSystem,
+    rolesGroup: MockRolesAdmin,
     id: '5d5d67786249ab06b4516c46',
     rolesGroupId: '5d766194738fbc23b43a857f',
 };

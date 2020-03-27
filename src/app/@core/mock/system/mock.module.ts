@@ -1,39 +1,40 @@
 import {IModule} from '../../data/system/module';
 import {MockApiCustomer, MockApiOrganization, MockApiUser, MockApiWarehouseItem} from './mock.api';
+import {IdGenerators} from '../../../config/generator.config';
 
 export const MockModuleUser: IModule = {
     code: 'USER_MODULE',
     name: 'system.user.menu',
-    apiId: '',
+    apiId: MockApiUser.id,
     api: MockApiUser,
-    id: '',
+    id: IdGenerators.oid.generate(),
     children: [],
 };
 
 export const MockModuleCustomer: IModule = {
     code: 'CUSTOMER_MODULE',
     name: 'system.customer.menu',
-    apiId: '',
+    apiId: MockApiCustomer.id,
     api: MockApiCustomer,
-    id: '',
+    id: IdGenerators.oid.generate(),
     children: [],
 };
 
 export const MockModuleOrganization: IModule = {
     code: 'ORGANIZATION_MODULE',
     name: 'system.organization.menu',
-    apiId: '',
+    apiId: MockApiOrganization.id,
     api: MockApiOrganization,
-    id: '',
+    id: IdGenerators.oid.generate(),
     children: [],
 };
 
 export const MockModuleSystem: IModule = {
     code: 'SYSTEM',
     name: 'system.menu',
-    apiId: '',
+    apiId: null,
     api: null,
-    id: '',
+    id: IdGenerators.oid.generate(),
     icon: {icon: 'cog', pack: 'fa'},
     children: [
         MockModuleOrganization,
@@ -45,18 +46,18 @@ export const MockModuleSystem: IModule = {
 export const MockModuleWarehouseItem: IModule = {
     code: 'WAREHOUSE_ITEM_MODULE',
     name: 'warehouse.item.menu',
-    apiId: '',
+    apiId: MockApiWarehouseItem.id,
     api: MockApiWarehouseItem,
-    id: '',
+    id: IdGenerators.oid.generate(),
     children: [],
 };
 
 export const MockModuleWarehouse: IModule = {
     code: 'WAREHOUSE',
     name: 'warehouse.menu',
-    apiId: '',
+    apiId: null,
     api: null,
-    id: '',
+    id: IdGenerators.oid.generate(),
     icon: {icon: 'cog', pack: 'fa'},
     children: [
         MockModuleWarehouseItem,
@@ -65,4 +66,5 @@ export const MockModuleWarehouse: IModule = {
 
 export const MockModule = {
     system: MockModuleSystem,
+    warehouse: MockModuleWarehouse,
 };

@@ -136,22 +136,26 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     }
 
     insertEntities(entities: T[]): Promise<number> {
+        if (!(entities || []).length) {
+            return Promise.resolve(0);
+        }
+
         let promises: Promise<number>[];
         promises = [];
-        if (entities && entities.length) {
-            entities.forEach((entity: T) => promises.push(this.insert(entity)));
-        }
+        entities.forEach((entity: T) => promises.push(this.insert(entity)));
         return this.invokePromises(0,
             (result: number, value: number) => (result + (value > 0 ? 1 : 0)),
             promises);
     }
 
     deleteEntities(entities: T[]): Promise<number> {
+        if (!(entities || []).length) {
+            return Promise.resolve(0);
+        }
+
         let promises: Promise<number>[];
         promises = [];
-        if (entities && entities.length) {
-            entities.forEach((entity: T) => promises.push(this.delete(entity)));
-        }
+        entities.forEach((entity: T) => promises.push(this.delete(entity)));
         return this.invokePromises(0,
             (result: number, value: number) => (result + (value > 0 ? 1 : 0)),
             promises);
@@ -169,32 +173,38 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     /**
      * Invoke multiple promises for combining into one promise
-     * @param defValue default value if promises array is empty or error
+     * @param initialValue initial value if promises array is empty or error
      * @param calculateResult the function to combine multiple result to one.
      * The first parameter is result that will be returned (combined),
      * the second parameter is result of every promise to combine
      * @param promises promises array to invoke
      * @return the combined promise or promise of default value
      */
-    protected invokePromises<K>(defValue: K,
+    protected invokePromises<K>(initialValue: K,
                                 calculateResult: (result: K, value: K) => K,
                                 promises: Promise<K>[]): Promise<K> {
         if (!promises || !promises.length || !calculateResult) {
-            return new Promise(((resolve) => resolve(defValue)));
+            return Promise.resolve(initialValue);
         }
-        return Promise.all(promises).then((values: K[]) => {
-            let result: K;
-            result = defValue;
-            if (values && values.length) {
-                for (const value of values) {
-                    result = calculateResult(result, value);
-                }
-            }
-            return result;
-        }).catch((errors) => {
-            this.getLogger().error('Could not invoke multiple promises', errors);
-            return defValue;
-        });
+        let result: K;
+        result = initialValue;
+        return promises.reduce((previousValue, currentValue, currentIndex) => {
+            return previousValue.then((prevValue) => {
+                result = calculateResult(result, prevValue);
+                this.getLogger().debug('Invoke promises(' + currentIndex + ')', prevValue, 'Results: ', result);
+                return currentValue.then((curValue) => {
+                    return Promise.resolve(calculateResult(result, curValue));
+
+                }).catch((errors) => {
+                    this.getLogger().error('Could not invoke multiple promises', errors);
+                    return Promise.resolve(result);
+                });
+
+            }).catch((errors) => {
+                this.getLogger().error('Could not invoke multiple promises', errors);
+                return Promise.resolve(initialValue);
+            });
+        }, Promise.resolve(initialValue));
     }
 
     synchronize() {

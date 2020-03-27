@@ -251,7 +251,7 @@
                 "status": "Status",
                 "enterprise": "Enterprise"
             }
-        },
+        }
     },
     "warehouse": {
         "title": "Warehouse Management",
