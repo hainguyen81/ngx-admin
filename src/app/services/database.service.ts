@@ -5,6 +5,7 @@ import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
 import {IDbService} from './interface.service';
 import {ConnectionService} from 'ng-connection-service';
+import PromiseUtils from '../utils/promise.utils';
 
 /**
  * The delegate Promise function type for delete/update delegate function of IndexDb service
@@ -179,22 +180,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     protected invokePromises<K>(defValue: K,
                                 calculateResult: (result: K, value: K) => K,
                                 promises: Promise<K>[]): Promise<K> {
-        if (!promises || !promises.length || !calculateResult) {
-            return new Promise(((resolve) => resolve(defValue)));
-        }
-        return Promise.all(promises).then((values: K[]) => {
-            let result: K;
-            result = defValue;
-            if (values && values.length) {
-                for (const value of values) {
-                    result = calculateResult(result, value);
-                }
-            }
-            return result;
-        }).catch((errors) => {
-            this.getLogger().error('Could not invoke multiple promises', errors);
-            return defValue;
-        });
+        return PromiseUtils.sequencePromises(defValue, calculateResult, promises);
     }
 
     synchronize() {
