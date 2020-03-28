@@ -75,11 +75,13 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      * @return created component
      */
     protected setFrontComponent(componentType: Type<any>): any {
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getCardFrontComponentViewContainerRef() || this.getFrontComponentViewContainerRef();
         let compServ: IComponentService<any>;
-        compServ = new BaseComponentService(this.getFactoryResolver(),
-            this.getFrontComponentViewContainerRef(), this.getLogger(), componentType);
-        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
-            this.getFrontComponentViewContainerRef(), true);
+        compServ = new BaseComponentService(
+            this.getFactoryResolver(), viewContainerRef, this.getLogger(), componentType);
+        return ComponentUtils.createComponent(
+            (compServ as AbstractComponentService<any>), viewContainerRef, true);
     }
 
     /**
@@ -88,10 +90,12 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      * @return created component
      */
     protected setBackComponent(componentType: Type<any>): any {
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getCardBackComponentViewContainerRef() || this.getBackComponentViewContainerRef();
         let compServ: IComponentService<any>;
-        compServ = new BaseComponentService(this.getFactoryResolver(),
-            this.getBackComponentViewContainerRef(), this.getLogger(), componentType);
-        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
-            this.getBackComponentViewContainerRef(), true);
+        compServ = new BaseComponentService(
+            this.getFactoryResolver(), viewContainerRef, this.getLogger(), componentType);
+        return ComponentUtils.createComponent(
+            (compServ as AbstractComponentService<any>), viewContainerRef, true);
     }
 }

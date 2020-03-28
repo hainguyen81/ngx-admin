@@ -40,7 +40,7 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
 
     @ViewChildren(NbCardFrontComponent)
     private readonly queryFlipcardFrontComponent: QueryList<NbCardFrontComponent>;
-    private flipcardFontComponent: NbCardFrontComponent;
+    private flipcardFrontComponent: NbCardFrontComponent;
 
     @ViewChildren(NbCardBackComponent)
     private readonly queryFlipcardBackComponent: QueryList<NbCardBackComponent>;
@@ -63,7 +63,7 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * @return the {NbCardFrontComponent} instance
      */
     protected getFlipcardFrontComponent(): NbCardFrontComponent {
-        return this.flipcardFontComponent;
+        return this.flipcardFrontComponent;
     }
 
     /**
@@ -143,8 +143,8 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
         if (!this.flipcardComponent) {
             this.flipcardComponent = ComponentUtils.queryComponent(this.queryFlipcardComponent);
         }
-        if (!this.flipcardFontComponent) {
-            this.flipcardFontComponent = ComponentUtils.queryComponent(this.queryFlipcardFrontComponent);
+        if (!this.flipcardFrontComponent) {
+            this.flipcardFrontComponent = ComponentUtils.queryComponent(this.queryFlipcardFrontComponent);
         }
         if (!this.flipcardBackComponent) {
             this.flipcardBackComponent = ComponentUtils.queryComponent(this.queryFlipcardBackComponent);

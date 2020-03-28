@@ -36,9 +36,17 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
     // DECLARATION
     // -------------------------------------------------
 
+    @ViewChildren('cardFrontComponent', {read: ViewContainerRef})
+    private readonly queryCardFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
+    private cardFrontComponentHolderViewContainerRef: ViewContainerRef;
+
     @ViewChildren('frontComponent', {read: ViewContainerRef})
     private readonly queryFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
     private frontComponentHolderViewContainerRef: ViewContainerRef;
+
+    @ViewChildren('cardBackComponent', {read: ViewContainerRef})
+    private readonly queryCardBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
+    private cardBackComponentHolderViewContainerRef: ViewContainerRef;
 
     @ViewChildren('backComponent', {read: ViewContainerRef})
     private readonly queryBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
@@ -52,8 +60,24 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
      * Get the {ViewContainerRef} instance of the front component
      * @return the {ViewContainerRef} instance of the front component
      */
+    protected getCardFrontComponentViewContainerRef(): ViewContainerRef {
+        return this.cardFrontComponentHolderViewContainerRef;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance of the front component
+     * @return the {ViewContainerRef} instance of the front component
+     */
     protected getFrontComponentViewContainerRef(): ViewContainerRef {
         return this.frontComponentHolderViewContainerRef;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance of the back component
+     * @return the {ViewContainerRef} instance of the back component
+     */
+    protected getCardBackComponentViewContainerRef(): ViewContainerRef {
+        return this.cardBackComponentHolderViewContainerRef;
     }
 
     /**
@@ -104,6 +128,15 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
+
+        if (!this.cardFrontComponentHolderViewContainerRef) {
+            this.cardFrontComponentHolderViewContainerRef =
+                ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);
+        }
+        if (!this.cardBackComponentHolderViewContainerRef) {
+            this.cardBackComponentHolderViewContainerRef =
+                ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef);
+        }
 
         if (!this.frontComponentHolderViewContainerRef) {
             this.frontComponentHolderViewContainerRef =

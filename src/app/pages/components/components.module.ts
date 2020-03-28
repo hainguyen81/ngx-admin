@@ -40,6 +40,8 @@ import {NgxRevealCardComponent} from './revealcard/revealcard.component';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 import {NgxTabsetComponent} from './tab/tab.component';
+import {ComponentPlaceholderDirective} from './component.placeholder.directive';
+import {ImageCellComponent} from './smart-table/image.cell.component';
 
 @NgModule({
     imports: [
@@ -108,6 +110,7 @@ import {NgxTabsetComponent} from './tab/tab.component';
     ],
     entryComponents: [
         CheckboxCellComponent,
+        ImageCellComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -115,11 +118,13 @@ import {NgxTabsetComponent} from './tab/tab.component';
         NgxTreeviewComponent,
         NgxFormlyComponent,
         CheckboxCellComponent,
+        ImageCellComponent,
         NgxSplitPaneComponent,
         NgxFlipCardComponent,
         NgxRevealCardComponent,
         NgxTabsetComponent,
         NotFoundComponent,
+        ComponentPlaceholderDirective,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},

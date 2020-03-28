@@ -21,10 +21,12 @@
               (focusout)="onFocusOut({ $event: $event, $data: flipCard })"
               (blur)="onBlur({ $event: $event, $data: flipCard })"
 >
-    <nb-card-front>
+    <nb-card-front #cardFrontComponent>
+        <!-- Front component holder -->
         <ng-template #frontComponent></ng-template>
     </nb-card-front>
-    <nb-card-back>
+    <nb-card-back #cardBackComponent>
+        <!-- Back component holder -->
         <ng-template #backComponent></ng-template>
     </nb-card-back>
 </nb-flip-card>
