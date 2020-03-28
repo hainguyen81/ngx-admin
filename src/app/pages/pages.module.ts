@@ -4,10 +4,6 @@ import {PagesComponent} from './pages.component';
 import {PagesRoutingModule} from './pages-routing.module';
 import {ComponentsModule} from './components/components.module';
 import {NbButtonModule, NbMenuModule, NbThemeModule} from '@nebular/theme';
-/* system modules */
-import {UserModule} from './components/app/system/user/user.module';
-import {CustomerModule} from './components/app/system/customer/customer.module';
-import {OrganizationModule} from './components/app/system/organization/organization.module';
 import {AppMaterialModule} from '../app.material.module';
 // @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
@@ -17,6 +13,8 @@ import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
+import {SystemModule} from './components/app/system/system.module';
+import {WarehouseModule} from './components/app/warehouse/warehouse.module';
 
 @NgModule({
     imports: [
@@ -53,9 +51,10 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
         SelectDropDownModule,
 
         /* System module */
-        OrganizationModule,
-        UserModule,
-        CustomerModule,
+        SystemModule,
+
+        /* Warehouse module */
+        WarehouseModule,
     ],
     declarations: [
         PagesComponent,

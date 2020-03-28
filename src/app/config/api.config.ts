@@ -8,21 +8,21 @@ export const API = {
         baseUrl: 'http://localhost:8082/api-rest-organization/service',
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
-        client: '/dashboard/organization',
+        client: '/dashboard/system/organization',
     },
     user: {
         code: 'USER_API',
         baseUrl: 'http://localhost:8082/api-rest-user/service',
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
-        client: '/dashboard/user',
+        client: '/dashboard/system/user',
     },
     customer: {
         code: 'CUSTOMER_API',
         baseUrl: 'http://localhost:8082/api-rest-customer/service',
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
-        client: '/dashboard/customer',
+        client: '/dashboard/system/customer',
     },
     warehouse: {
         code: 'WAREHOUSE_API',
@@ -30,5 +30,12 @@ export const API = {
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
         client: '/dashboard/warehouse',
+    },
+    warehouseItem: {
+        code: 'WAREHOUSE_ITEM_API',
+        baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
+        login: '/oauth/token?grant_type=client_credentials',
+        method: 'POST',
+        client: '/dashboard/warehouse/item',
     },
 };
