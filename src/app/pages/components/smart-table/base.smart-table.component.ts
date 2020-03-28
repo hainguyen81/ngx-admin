@@ -82,15 +82,11 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
     onActionKeyDown(event: IEvent): void {
         super.onActionKeyDown(event);
 
-        if (!super.getRows().length) {
-            return;
-        }
-
         // detect save action
         let kbEvent: KeyboardEvent;
         kbEvent = event.$event as KeyboardEvent;
         let actionRow: Row;
-        actionRow = super.getRowByEvent(kbEvent);
+        actionRow = this.getRowByEvent(kbEvent);
         let isF2Key: boolean;
         isF2Key = KeyboardUtils.isSpecifiedKey(kbEvent, 'F2', F2);
         let isEnterKey: boolean;
@@ -107,43 +103,47 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         needToSave = ((isF2Key && kbEvent.altKey) || (isEnterKey && kbEvent.ctrlKey)
             || (isSKey && kbEvent.ctrlKey));
 
+        if (!this.getRows().length && !isInsertKey) {
+            return;
+        }
+
         // save row by [ALT + F2] or [CTRL + Enter] or [CTRL + S]
         if (needToSave) {
             this.saveData(actionRow);
 
             // stop firing event
-            super.preventEvent(event.$event);
+            this.preventEvent(event.$event);
 
             // enter edit mode by F2
         } else if (isF2Key) {
             this.enterEditMode(actionRow);
 
             // stop firing event
-            super.preventEvent(event.$event);
+            this.preventEvent(event.$event);
 
             // exit editing mode by Esc
         } else if (isEscKey) {
             this.cancelEditMode(actionRow);
 
             // close context menu if necessary
-            super.closeContextMenu();
+            this.closeContextMenu();
 
             // stop firing event
-            super.preventEvent(event.$event);
+            this.preventEvent(event.$event);
 
             // delete row by [DELETE]
         } else if (isDelKey) {
             this.deleteData(actionRow);
 
             // stop firing event
-            super.preventEvent(event.$event);
+            this.preventEvent(event.$event);
 
             // insert new row by [INSERT]
         } else if (isInsertKey) {
-            super.newRow();
+            this.newRow();
 
             // stop firing event
-            super.preventEvent(event.$event);
+            this.preventEvent(event.$event);
         }
     }
 
@@ -154,15 +154,15 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     private enterEditMode(row?: Row, columnIndex?: number) {
         let hoveredRows: NodeListOf<HTMLTableRowElement>;
-        hoveredRows = super.getRowElementsBySelector(
+        hoveredRows = this.getRowElementsBySelector(
             [SmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join(''));
         let editRow: Row;
         editRow = (row ? row : hoveredRows && hoveredRows.length
-            ? super.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
-            : super.getSelectedRows().length ? super.getSelectedRows().shift()
-                : super.getRows().shift());
+            ? this.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
+            : this.getSelectedRows().length ? this.getSelectedRows().shift()
+                : this.getRows().shift());
         if (editRow) {
-            super.editCellByIndex(editRow.index, columnIndex);
+            this.editCellByIndex(editRow.index, columnIndex);
         }
     }
 
@@ -172,10 +172,10 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     private cancelEditMode(row?: Row) {
         let cancelRows: Row[];
-        cancelRows = (row ? [row] : super.getSelectedRows().length
-            ? super.getSelectedRows() : super.getRows());
+        cancelRows = (row ? [row] : this.getSelectedRows().length
+            ? this.getSelectedRows() : this.getRows());
         if (cancelRows && cancelRows.length) {
-            super.cancelEditRows(cancelRows);
+            this.cancelEditRows(cancelRows);
             cancelRows.forEach(r => {
                 let rowData: any;
                 rowData = r.getData();
@@ -193,10 +193,10 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     private saveData(row?: Row) {
         let saveRows: Row[];
-        saveRows = (row ? [row] : super.getSelectedRows().length
-            ? super.getSelectedRows() : super.getRows());
+        saveRows = (row ? [row] : this.getSelectedRows().length
+            ? this.getSelectedRows() : this.getRows());
         if (saveRows && saveRows.length) {
-            super.saveRows(saveRows);
+            this.saveRows(saveRows);
         }
     }
 
@@ -206,14 +206,14 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     private deleteData(row?: Row) {
         let hoveredRows: NodeListOf<HTMLTableRowElement>;
-        hoveredRows = super.getRowElementsBySelector(
+        hoveredRows = this.getRowElementsBySelector(
             [SmartTableComponent.SMART_TABLE_ROW_SELETOR, '.hover'].join(''));
         let delRow: Row;
         delRow = (row ? row : hoveredRows && hoveredRows.length
-            ? super.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
-            : super.getSelectedRows().length ? super.getSelectedRows().shift() : undefined);
+            ? this.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
+            : this.getSelectedRows().length ? this.getSelectedRows().shift() : undefined);
         if (delRow) {
-            super.deleteRowByIndex(delRow.index);
+            this.deleteRowByIndex(delRow.index);
         }
     }
 

@@ -19,6 +19,7 @@ import {
     WarehouseItemDbService,
     WarehouseItemHttpService,
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
+import {WarehouseItemFlipcardComponent} from './warehouse.item.flipcard.component';
 
 @NgModule({
     imports: [
@@ -40,7 +41,12 @@ import {
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
+    entryComponents: [
+        WarehouseItemFlipcardComponent,
+        WarehouseItemSmartTableComponent,
+    ],
     declarations: [
+        WarehouseItemFlipcardComponent,
         WarehouseItemSmartTableComponent,
     ],
     providers: [

@@ -26,7 +26,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
      * Get the {ComponentFactoryResolver} instance
      * @return the {ComponentFactoryResolver} instance
      */
-    getFactoryResolver(): ComponentFactoryResolver {
+    public getFactoryResolver(): ComponentFactoryResolver {
         return this.componentFactoryResolver;
     }
 
@@ -34,15 +34,23 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
      * Get the {ViewContainerRef} instance
      * @return the {ViewContainerRef} instance
      */
-    getViewContainerRef(): ViewContainerRef {
+    public getViewContainerRef(): ViewContainerRef {
         return this.viewContainerRef;
+    }
+
+    /**
+     * Get the {NGXLogger} instance
+     * @return the {NGXLogger} instance
+     */
+    protected getLogger(): NGXLogger {
+        return this.logger;
     }
 
     /**
      * Set the {ViewContainerRef} instance
      * @param viewContainerRef to apply
      */
-    setViewContainerRef(viewContainerRef: ViewContainerRef): void {
+    public setViewContainerRef(viewContainerRef: ViewContainerRef): void {
         viewContainerRef || throwError('Could not inject ViewContainerRef');
         this.viewContainerRef = viewContainerRef;
     }
@@ -51,7 +59,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
      * Get the component type
      * @return the component type
      */
-    getComponentType(): Type<T> {
+    public getComponentType(): Type<T> {
         return this.componentType;
     }
 
@@ -68,7 +76,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
      */
     protected constructor(@Inject(ComponentFactoryResolver) private componentFactoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
-                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(NGXLogger) private logger: NGXLogger,
                           private componentType: Type<T>) {
         componentFactoryResolver || throwError('Could not inject ComponentFactoryResolver');
         viewContainerRef || throwError('Could not inject ViewContainerRef');
@@ -83,7 +91,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
     /**
      * Resolve (create) and add component to {ViewContainerRef}
      */
-    resolve(): ComponentRef<T> {
+    public resolve(): ComponentRef<T> {
         const componentFactory: ComponentFactory<T> =
             this.getFactoryResolver().resolveComponentFactory(this.getComponentType());
         const componentRef: ComponentRef<T> = componentFactory.create(this.getViewContainerRef().injector);

@@ -12,13 +12,15 @@ import {NGXLogger} from 'ngx-logger';
 import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu} from '../../../abstract.component';
+import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {convertItemStatusToDisplay, ITEM_STATUS} from '../../../../../@core/data/warehouse/warehouse.item';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 
 /* customers table settings */
 export const WarehouseItemTableSettings = {
@@ -93,6 +95,7 @@ export const WarehouseItemTableSettings = {
             type: 'string',
             sort: false,
             filter: false,
+            renderComponent: ImageCellComponent,
         },
         manufacturer: {
             title: 'warehouse.item.table.manufacturer',
@@ -227,6 +230,35 @@ export const WarehouseItemContextMenu: IContextMenu[] = [].concat(COMMON.baseMen
 export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<WarehouseItemDatasource> {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    // raise while insert new table row
+    private newItemDelegate: (event: IEvent) => void;
+    // raise while editing table row
+    private editItemDelegate: (event: IEvent) => void;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Set the item new listener
+     * @param newItemDelegate listener
+     */
+    public setNewItemListener(newItemDelegate: (event: IEvent) => void) {
+        this.newItemDelegate = newItemDelegate;
+    }
+
+    /**
+     * Set the item editing listener
+     * @param editItemDelegate listener
+     */
+    public setEditItemListener(editItemDelegate: (event: IEvent) => void) {
+        this.editItemDelegate = editItemDelegate;
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -304,5 +336,43 @@ export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<Wa
                 title: this.convertWarehouseItemStatusToDisplay(ITEM_STATUS.LOCKED),
             },
         ];
+    }
+
+    /**
+     * Create new Row
+     */
+    protected newRow() {
+        if (this.newItemDelegate && !this.isInEditMode()) {
+            this.newItemDelegate.apply(this, [{}]);
+
+        } else {
+            super.newRow();
+        }
+    }
+
+    /**
+     * Put the specified Cell into editing mode.
+     * It means whole Row will be in editing mode.
+     * @param rowIndex to edit
+     * @param columnIndex to edit. -1 for focus the first cell
+     */
+    protected editCellByIndex(rowIndex: number, columnIndex: number) {
+        if (0 > rowIndex || -1 > columnIndex) {
+            return;
+        }
+
+        let row: Row;
+        row = this.getRowByIndex(rowIndex);
+        if (!row || row.isInEditing || !row.cells || !row.cells.length
+            || columnIndex >= row.cells.length) {
+            return;
+        }
+
+        if (this.editItemDelegate) {
+            this.editItemDelegate.apply(this,
+                [{ data: { rowIndex: rowIndex, columnIndex: columnIndex, row: row } }]);
+        } else {
+            super.editCellByIndex(rowIndex, columnIndex);
+        }
     }
 }

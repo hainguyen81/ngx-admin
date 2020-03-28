@@ -58,7 +58,7 @@ export const MockModuleWarehouse: IModule = {
     apiId: null,
     api: null,
     id: IdGenerators.oid.generate(),
-    icon: {icon: 'cog', pack: 'fa'},
+    icon: {icon: 'warehouse', pack: 'fas'},
     children: [
         MockModuleWarehouseItem,
     ],

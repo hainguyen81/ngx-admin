@@ -203,6 +203,7 @@ export class AppModule {
         // @ts-ignore
         AppConfig.Injector = Injector.create({providers: AppConfig.Providers, parent: injector});
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
+        iconLibraries.registerFontPack('fas', {packClass: 'fas', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
    }

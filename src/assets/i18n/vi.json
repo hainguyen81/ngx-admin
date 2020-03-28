@@ -258,7 +258,38 @@
         "menu": "Quản lý kho",
         "item": {
             "title": "Quản lý trang thiết bị",
-            "menu": "Quản lý trang thiết bị"
+            "menu": "Quản lý trang thiết bị",
+            "table": {
+                "noData": "Không có bất kỳ sản phẩm nào trong kho",
+                "code": "Mã SP",
+                "name": "Tên SP",
+                "status": "Trạng thái",
+                "barcode": "Mã vạch",
+                "serial": "Serial No.",
+                "image": "Hình ảnh",
+                "manufacturer": "Xuất xứ",
+                "length": "Dài",
+                "width": "Rộng",
+                "height": "Cao",
+                "weight": "Trọng lượng",
+                "size": "Kích thước",
+                "unit": "ĐVT",
+                "rate_per_unit": "Tỷ lệ/ĐVT",
+                "dealer_price": "Giá sỉ",
+                "cost_price": "Giá vốn",
+                "selling_price": "Giá bán",
+                "currency": "Loại tiền tệ",
+                "stock_on_hand": "Tổng SL",
+                "committed_stock": "Tổng bán",
+                "available_stock": "Tồn kho",
+                "incoming_stock": "Tổng mua",
+                "quantity_shipped": "SL vận chuyển",
+                "quantity_received": "SL được nhận",
+                "description": "Mô tả",
+                "remark": "Ghi chú",
+                "category": "Loại SP",
+                "brand": "Hãng SX"
+            }
         }
     }
 }

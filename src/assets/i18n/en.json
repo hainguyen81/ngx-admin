@@ -258,7 +258,38 @@
         "menu": "Warehouse Management",
         "item": {
             "title": "Warehouse Item Management",
-            "menu": "Warehouse Item"
+            "menu": "Warehouse Item",
+            "table": {
+                "noData": "Not found any item in warehouse",
+                "code": "Code",
+                "name": "Name",
+                "status": "Status",
+                "barcode": "Barcode",
+                "serial": "Serial No.",
+                "image": "Image",
+                "manufacturer": "Manufacturer",
+                "length": "Length",
+                "width": "Width",
+                "height": "Height",
+                "weight": "Weight",
+                "size": "Size",
+                "unit": "Unit",
+                "rate_per_unit": "Rate/Unit",
+                "dealer_price": "Dealer Price",
+                "cost_price": "Cost Price",
+                "selling_price": "Selling Price",
+                "currency": "Currency",
+                "stock_on_hand": "Stock-on-Hand (SOH)",
+                "committed_stock": "Committed SOH",
+                "available_stock": "Avai. SOH",
+                "incoming_stock": "Incoming SOH",
+                "quantity_shipped": "Shipped Quantity",
+                "quantity_received": "Received Quantity",
+                "description": "Description",
+                "remark": "Remark",
+                "category": "Category",
+                "brand": "Brand"
+            }
         }
     }
 }

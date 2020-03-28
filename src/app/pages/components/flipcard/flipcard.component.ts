@@ -3,11 +3,11 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver,
+    ComponentFactoryResolver, ContentChildren,
     ElementRef,
     Inject,
     QueryList,
-    Renderer2,
+    Renderer2, ViewChild,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -20,6 +20,7 @@ import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {ComponentPlaceholderDirective} from '../component.placeholder.directive';
 
 /**
  * Flip-card base on {NbFlipCardComponent}
@@ -36,17 +37,45 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
     // DECLARATION
     // -------------------------------------------------
 
+    @ViewChildren('cardFrontComponent', {read: ViewContainerRef})
+    private readonly queryCardFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
+    private cardFrontComponentHolderViewContainerRef: ViewContainerRef;
+
     @ViewChildren('frontComponent', {read: ViewContainerRef})
     private readonly queryFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
     private frontComponentHolderViewContainerRef: ViewContainerRef;
+
+    @ViewChildren('cardBackComponent', {read: ViewContainerRef})
+    private readonly queryCardBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
+    private cardBackComponentHolderViewContainerRef: ViewContainerRef;
 
     @ViewChildren('backComponent', {read: ViewContainerRef})
     private readonly queryBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
     private backComponentHolderViewContainerRef: ViewContainerRef;
 
+    @ViewChildren('ngxComponentPlaceholder', {read: ComponentPlaceholderDirective})
+    private readonly queryComponentPlaceHolders: QueryList<ComponentPlaceholderDirective>;
+    private componentPlaceHolders: ComponentPlaceholderDirective[];
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {ComponentPlaceholderDirective} instance of the front/back component
+     * @return the {ComponentPlaceholderDirective} instance of the front/back component
+     */
+    protected getComponentPlaceHolders(): ComponentPlaceholderDirective[] {
+        return this.componentPlaceHolders;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance of the front component
+     * @return the {ViewContainerRef} instance of the front component
+     */
+    protected getCardFrontComponentViewContainerRef(): ViewContainerRef {
+        return this.cardFrontComponentHolderViewContainerRef;
+    }
 
     /**
      * Get the {ViewContainerRef} instance of the front component
@@ -54,6 +83,14 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
      */
     protected getFrontComponentViewContainerRef(): ViewContainerRef {
         return this.frontComponentHolderViewContainerRef;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance of the back component
+     * @return the {ViewContainerRef} instance of the back component
+     */
+    protected getCardBackComponentViewContainerRef(): ViewContainerRef {
+        return this.cardBackComponentHolderViewContainerRef;
     }
 
     /**
@@ -104,6 +141,20 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
+
+        if (!(this.componentPlaceHolders || []).length) {
+            this.componentPlaceHolders =
+                ComponentUtils.queryComponents(this.queryComponentPlaceHolders);
+        }
+
+        if (!this.cardFrontComponentHolderViewContainerRef) {
+            this.cardFrontComponentHolderViewContainerRef =
+                ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);
+        }
+        if (!this.cardBackComponentHolderViewContainerRef) {
+            this.cardBackComponentHolderViewContainerRef =
+                ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef);
+        }
 
         if (!this.frontComponentHolderViewContainerRef) {
             this.frontComponentHolderViewContainerRef =
