@@ -107,6 +107,10 @@ export abstract class AbstractTabComponent<T extends DataSource>
     private readonly queryTabsComponent: QueryList<NbTabComponent>;
     private tabsComponent: NbTabComponent[];
 
+    @ViewChildren('tabComponent', {read: ViewContainerRef})
+    private readonly queryTabComponentViewContainerRefs: QueryList<ViewContainerRef>;
+    private tabComponentViewContainerRefs: ViewContainerRef[];
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
@@ -249,6 +253,10 @@ export abstract class AbstractTabComponent<T extends DataSource>
 
         if (!this.tabsetComponent) {
             this.tabsetComponent = ComponentUtils.queryComponent(this.queryTabsetComponent);
+        }
+        if (!this.tabComponentViewContainerRefs || !this.tabComponentViewContainerRefs.length) {
+            this.tabComponentViewContainerRefs = ComponentUtils.queryComponents(
+                this.queryTabComponentViewContainerRefs);
         }
         if (!this.tabsComponent || !this.tabsComponent.length) {
             this.tabsComponent = ComponentUtils.queryComponents(this.queryTabsComponent);

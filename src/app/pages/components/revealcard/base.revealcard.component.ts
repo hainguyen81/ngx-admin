@@ -75,11 +75,9 @@ export abstract class BaseRevealcardComponent<T extends DataSource> extends NgxR
      * @return created component
      */
     protected setFrontComponent(componentType: Type<any>): any {
-        let compServ: IComponentService<any>;
-        compServ = new BaseComponentService(this.getFactoryResolver(),
-            this.getFrontComponentViewContainerRef(), this.getLogger(), componentType);
-        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
-            this.getFrontComponentViewContainerRef(), true);
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getCardFrontComponentViewContainerRef() || this.getFrontComponentViewContainerRef();
+        return super.createComponentAt(viewContainerRef, componentType);
     }
 
     /**
@@ -88,10 +86,8 @@ export abstract class BaseRevealcardComponent<T extends DataSource> extends NgxR
      * @return created component
      */
     protected setBackComponent(componentType: Type<any>): any {
-        let compServ: IComponentService<any>;
-        compServ = new BaseComponentService(this.getFactoryResolver(),
-            this.getBackComponentViewContainerRef(), this.getLogger(), componentType);
-        return ComponentUtils.createComponent((compServ as AbstractComponentService<any>),
-            this.getBackComponentViewContainerRef(), true);
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getCardBackComponentViewContainerRef() || this.getBackComponentViewContainerRef();
+        return super.createComponentAt(viewContainerRef, componentType);
     }
 }

@@ -219,4 +219,16 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
         area.lockSize = config.lockSize;
         area.visible = config.visible;
     }
+
+    /**
+     * Configure the specified area
+     * @param areaIndex to config
+     * @param config to apply
+     */
+    protected configAreaByIndex(areaIndex: number, config: ISplitAreaConfig): void {
+        let area: SplitAreaDirective;
+        area = (0 <= areaIndex && areaIndex < this.getSplitAreaComponents().length
+                ? this.getSplitAreaComponents()[areaIndex] : null);
+        this.configArea(area, config);
+    }
 }
