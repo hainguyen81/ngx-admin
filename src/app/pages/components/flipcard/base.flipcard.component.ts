@@ -75,22 +75,9 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      * @return created component
      */
     protected setFrontComponent(componentType: Type<any>): any {
-        let frontComponent: any;
-        if (super.getComponentPlaceHolders() && super.getComponentPlaceHolders().length > 0) {
-            frontComponent = super.getComponentPlaceHolders()[0].placeComponent(componentType);
-
-        } else {
-            let viewContainerRef: ViewContainerRef;
-            viewContainerRef = (super.getCardFrontComponentViewContainerRef()
-                || super.getFrontComponentViewContainerRef());
-            let compServ: IComponentService<any>;
-            compServ = new BaseComponentService(
-                this.getFactoryResolver(), viewContainerRef, this.getLogger(), componentType);
-            frontComponent = ComponentUtils.createComponent(
-                (compServ as AbstractComponentService<any>),
-                viewContainerRef, true);
-        }
-        return frontComponent;
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getCardFrontComponentViewContainerRef() || this.getFrontComponentViewContainerRef();
+        return super.createComponentAt(viewContainerRef, componentType);
     }
 
     /**
@@ -99,21 +86,8 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      * @return created component
      */
     protected setBackComponent(componentType: Type<any>): any {
-        let backComponent: any;
-        if (super.getComponentPlaceHolders() && super.getComponentPlaceHolders().length > 1) {
-            backComponent = super.getComponentPlaceHolders()[1].placeComponent(componentType);
-
-        } else {
-            let viewContainerRef: ViewContainerRef;
-            viewContainerRef = (super.getCardBackComponentViewContainerRef()
-                || super.getBackComponentViewContainerRef());
-            let compServ: IComponentService<any>;
-            compServ = new BaseComponentService(
-                this.getFactoryResolver(), viewContainerRef, this.getLogger(), componentType);
-            backComponent = ComponentUtils.createComponent(
-                (compServ as AbstractComponentService<any>),
-                viewContainerRef, true);
-        }
-        return backComponent;
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getCardBackComponentViewContainerRef() || this.getBackComponentViewContainerRef();
+        return super.createComponentAt(viewContainerRef, componentType);
     }
 }

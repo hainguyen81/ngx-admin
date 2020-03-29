@@ -13,7 +13,7 @@ import {
     OnInit,
     QueryList,
     Renderer2,
-    SimpleChanges,
+    SimpleChanges, Type,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -39,6 +39,8 @@ import {
     AbstractKeypressEventHandlerService,
     AbstractKeyupEventHandlerService,
 } from '../../services/event.handler.service';
+import {IComponentService} from '../../services/interface.service';
+import {AbstractComponentService, BaseComponentService} from '../../services/component.service';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -919,5 +921,22 @@ export class AbstractComponent
             return value;
         }
         return this.getTranslateService().instant(value);
+    }
+
+    /**
+     * Create component dynamically at the specified {ViewContainerRef}
+     * @param viewContainerRef {ViewContainerRef}
+     * @param componentType component type
+     * @return the created component
+     */
+    protected createComponentAt(viewContainerRef: ViewContainerRef, componentType: Type<any>): any {
+        !viewContainerRef && throwError('Not found view container to create component!');
+        !componentType && throwError('Not found component type to create!');
+
+        let compServ: IComponentService<any>;
+        compServ = new BaseComponentService(
+            this.getFactoryResolver(), viewContainerRef, this.getLogger(), componentType);
+        return ComponentUtils.createComponent(
+            (compServ as AbstractComponentService<any>), viewContainerRef, true);
     }
 }

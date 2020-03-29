@@ -4,7 +4,7 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     Inject,
-    Renderer2,
+    Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -15,6 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {NgxTabsetComponent} from './tab.component';
+import {throwError} from "rxjs";
 
 /**
  * Base horizontal split-pane component base on {NbTabsetModule}
@@ -61,5 +62,19 @@ export abstract class BaseTabsetComponent<T extends DataSource> extends NgxTabse
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
+    }
+
+    /**
+     * Create the tab component dynamically
+     * @param tabIndex the tab index
+     * @param componentType component type
+     * @return created component
+     */
+    protected setTabComponent(tabIndex: number, componentType: Type<any>): any {
+        (!tabIndex || this.getNumberOfTabs() <= tabIndex || tabIndex < 0)
+        && throwError('Could not create tab component at the invalid index tab (' + tabIndex + ')');
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getTabContentHolderViewContainerComponents()[tabIndex];
+        return super.createComponentAt(viewContainerRef, componentType);
     }
 }

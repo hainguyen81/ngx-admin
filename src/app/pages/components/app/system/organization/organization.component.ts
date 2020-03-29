@@ -182,73 +182,20 @@ export class OrganizationSplitPaneComponent
     // -------------------------------------------------
 
     /**
-     * Create organization toolbar component {OrganizationToolbarComponent}
-     * @param componentFactoryResolver {ComponentFactoryResolver}
-     * @param viewContainerRef {ViewContainerRef}
-     * @return {OrganizationToolbarComponent}
-     */
-    private createOrganizationToolbarComponent(
-        componentFactoryResolver: ComponentFactoryResolver,
-        viewContainerRef: ViewContainerRef): OrganizationToolbarComponent {
-        let toolbarComponentService: OrganizationToolbarComponentService;
-        toolbarComponentService = new OrganizationToolbarComponentService(
-            componentFactoryResolver, viewContainerRef, this.getLogger());
-        return ComponentUtils.createComponent(toolbarComponentService, viewContainerRef);
-    }
-
-    /**
-     * Create organization tree-view component {OrganizationTreeviewComponent}
-     * @param componentFactoryResolver {ComponentFactoryResolver}
-     * @param viewContainerRef {ViewContainerRef}
-     * @return {OrganizationTreeviewComponent}
-     */
-    private createOrganizationTreeviewComponent(
-        componentFactoryResolver: ComponentFactoryResolver,
-        viewContainerRef: ViewContainerRef): OrganizationTreeviewComponent {
-        let treeviewComponentService: OrganizationTreeviewComponentService;
-        treeviewComponentService = new OrganizationTreeviewComponentService(
-            componentFactoryResolver, viewContainerRef, this.getLogger());
-        return ComponentUtils.createComponent(treeviewComponentService, viewContainerRef);
-    }
-
-    /**
-     * Create organization formly component {OrganizationFormlyComponent}
-     * @param componentFactoryResolver {ComponentFactoryResolver}
-     * @param viewContainerRef {ViewContainerRef}
-     * @return {OrganizationFormlyComponent}
-     */
-    private createOrganizationFormlyComponent(
-        componentFactoryResolver: ComponentFactoryResolver,
-        viewContainerRef: ViewContainerRef): OrganizationFormlyComponent {
-        let formlyComponentService: OrganizationFormlyComponentService;
-        formlyComponentService = new OrganizationFormlyComponentService(
-            componentFactoryResolver, viewContainerRef, this.getLogger());
-        return ComponentUtils.createComponent(formlyComponentService, viewContainerRef, true);
-    }
-
-    /**
      * Create left/right component panes
      */
     private createPaneComponents() {
-        const componentFactoryResolver: ComponentFactoryResolver = this.getFactoryResolver();
-        const viewContainerRefs: ViewContainerRef[] = this.getSplitAreaHolderViewContainerComponents();
-        const headerViewContainer = this.getHeaderViewContainerComponent();
-        const splitAreas: SplitAreaDirective[] = this.getSplitAreaComponents();
-
         // configure areas
-        this.configArea(splitAreas[0], OrganizationTreeAreaConfig);
-        this.configArea(splitAreas[1], OrganizationFormAreaConfig);
+        this.configAreaByIndex(0, OrganizationTreeAreaConfig);
+        this.configAreaByIndex(1, OrganizationFormAreaConfig);
 
         // create toolbar component
-        this.organizationToolbarComponent = this.createOrganizationToolbarComponent(
-            componentFactoryResolver, headerViewContainer);
+        this.organizationToolbarComponent = super.setToolbarComponent(OrganizationToolbarComponent);
         this.organizationToolbarComponent.actionListener()
             .subscribe((e: IEvent) => this.onClickAction(e));
 
         // create tree-view component
-        this.organizationTreeviewComponent = this.createOrganizationTreeviewComponent(
-            componentFactoryResolver, viewContainerRefs[0]);
-
+        this.organizationTreeviewComponent = super.setAreaComponent(0, OrganizationTreeviewComponent);
         // handle click tree-view item to show form
         this.organizationTreeviewComponent.setClickItemListener((e, it) => {
             if (it && it.value) {
@@ -257,8 +204,7 @@ export class OrganizationSplitPaneComponent
                 if (organization) {
                     this.selectedOrganization = organization;
                     // create formly form component
-                    this.organizationFormlyComponent = this.createOrganizationFormlyComponent(
-                        componentFactoryResolver, viewContainerRefs[1]);
+                    this.organizationFormlyComponent = this.setAreaComponent(1, OrganizationFormlyComponent);
                     this.doReset();
                 }
             }

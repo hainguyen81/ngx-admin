@@ -3,11 +3,11 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ContentChildren,
+    ComponentFactoryResolver,
     ElementRef,
     Inject,
     QueryList,
-    Renderer2, ViewChild,
+    Renderer2,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -20,7 +20,6 @@ import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {ComponentPlaceholderDirective} from '../component.placeholder.directive';
 
 /**
  * Flip-card base on {NbFlipCardComponent}
@@ -53,21 +52,9 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
     private readonly queryBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
     private backComponentHolderViewContainerRef: ViewContainerRef;
 
-    @ViewChildren('ngxComponentPlaceholder', {read: ComponentPlaceholderDirective})
-    private readonly queryComponentPlaceHolders: QueryList<ComponentPlaceholderDirective>;
-    private componentPlaceHolders: ComponentPlaceholderDirective[];
-
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
-
-    /**
-     * Get the {ComponentPlaceholderDirective} instance of the front/back component
-     * @return the {ComponentPlaceholderDirective} instance of the front/back component
-     */
-    protected getComponentPlaceHolders(): ComponentPlaceholderDirective[] {
-        return this.componentPlaceHolders;
-    }
 
     /**
      * Get the {ViewContainerRef} instance of the front component
@@ -141,11 +128,6 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
-
-        if (!(this.componentPlaceHolders || []).length) {
-            this.componentPlaceHolders =
-                ComponentUtils.queryComponents(this.queryComponentPlaceHolders);
-        }
 
         if (!this.cardFrontComponentHolderViewContainerRef) {
             this.cardFrontComponentHolderViewContainerRef =

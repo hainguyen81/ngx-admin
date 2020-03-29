@@ -21,10 +21,10 @@
                 (focusout)="onFocusOut({ $event: $event, $data: revealCard })"
                 (blur)="onBlur({ $event: $event, $data: revealCard })"
 >
-    <nb-card-front>
+    <nb-card-front #cardFrontComponent>
         <ng-template #frontComponent></ng-template>
     </nb-card-front>
-    <nb-card-back>
+    <nb-card-back #cardBackComponent>
         <ng-template #backComponent></ng-template>
     </nb-card-back>
 </nb-reveal-card>

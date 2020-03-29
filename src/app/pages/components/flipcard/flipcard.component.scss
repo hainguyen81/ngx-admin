@@ -4,5 +4,6 @@
     nb-card {
         transform: translate3d(0, 0, 0);
     }
+
     ::ng-deep nb-flip-card .flipcard-body .front-container { margin-right: -200%; }
 }

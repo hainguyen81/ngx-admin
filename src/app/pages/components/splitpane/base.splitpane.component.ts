@@ -4,7 +4,7 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     Inject,
-    Renderer2,
+    Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -15,6 +15,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {IComponentService} from '../../../services/interface.service';
+import {AbstractComponentService, BaseComponentService} from '../../../services/component.service';
+import ComponentUtils from '../../../utils/component.utils';
+import {throwError} from 'rxjs';
 
 /**
  * Base horizontal split-pane component base on {AngularSplitModule}
@@ -61,5 +65,32 @@ export abstract class BaseSplitPaneComponent<T extends DataSource> extends NgxSp
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup);
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Create the header toolbar component dynamically
+     * @param componentType component type
+     * @return created component
+     */
+    protected setToolbarComponent(componentType: Type<any>): any {
+        return super.createComponentAt(this.getHeaderViewContainerComponent(), componentType);
+    }
+
+    /**
+     * Create the area component dynamically
+     * @param areaIndex the area index
+     * @param componentType component type
+     * @return created component
+     */
+    protected setAreaComponent(areaIndex: number, componentType: Type<any>): any {
+        (!areaIndex || this.getNumberOfAreas() <= areaIndex || areaIndex < 0)
+        && throwError('Could not create area component at the invalid index area (' + areaIndex + ')');
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getSplitAreaHolderViewContainerComponents()[areaIndex];
+        return super.createComponentAt(viewContainerRef, componentType);
     }
 }
