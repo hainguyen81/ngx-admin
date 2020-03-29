@@ -35,6 +35,7 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 
 @NgModule({
     imports: [
@@ -107,6 +108,7 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
         WarehouseItemTabsetComponent,
         WarehouseItemSplitPaneComponent,
         WarehouseItemToolbarComponent,
+        WarehouseItemSummaryComponent,
     ],
     declarations: [
         WarehouseItemFlipcardComponent,
@@ -114,6 +116,7 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
         WarehouseItemTabsetComponent,
         WarehouseItemSplitPaneComponent,
         WarehouseItemToolbarComponent,
+        WarehouseItemSummaryComponent,
     ],
     providers: [
         {

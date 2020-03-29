@@ -24,6 +24,7 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
+import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 
 @Component({
     selector: 'ngx-split-pane-warehouse-item',
@@ -38,6 +39,7 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
     // -------------------------------------------------
 
     private warehouseTabsetComponent: WarehouseItemTabsetComponent;
+    private warehouseSummaryComponent: WarehouseItemSummaryComponent;
     private warehouseToolbarComponent: WarehouseItemToolbarComponent;
 
     // -------------------------------------------------
@@ -149,7 +151,10 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
         this.warehouseToolbarComponent = super.setToolbarComponent(WarehouseItemToolbarComponent);
         this.warehouseToolbarComponent.actionListener().subscribe((e: IEvent) => this.onClickAction(e));
 
-        // create tabset component
+        // create tabset component at left side
         this.warehouseTabsetComponent = super.setAreaComponent(0, WarehouseItemTabsetComponent);
+
+        // create summary component at the right side
+        this.warehouseSummaryComponent = super.setAreaComponent(1, WarehouseItemSummaryComponent);
     }
 }

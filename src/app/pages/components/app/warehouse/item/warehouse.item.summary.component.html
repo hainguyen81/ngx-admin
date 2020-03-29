@@ -1,0 +1,52 @@
+<nb-card>
+    <nb-card-body>
+        <div [class.d-table]="true">
+            <div [class.d-table-row]="true">
+                <img [src]="getDataModelImage()" [width]="200" [height]="200">
+            </div>
+            <div [class.d-table-row]="true">
+                <img [src]="image" [width]="64" [height]="64"
+                     [class.d-table-cell]="true"
+                     *ngFor="let image of getDataModelImages()">
+                <nb-icon pack="fa" icon="plus"
+                         [class.d-table-cell]="true"
+                         (click)="file.click()">
+                    <input #file type="file" (change)="onSelectFile({ $event: $event })">
+                </nb-icon>
+            </div>
+        </div>
+        <div [class.d-table]="true" [class.pt-2]="true">
+            <table [class.border-0]="true">
+                <tbody>
+                <tr>
+                    <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.stock_on_hand' | translate}}</td>
+                    <td width="25%">{{getDataModel() ? getDataModel().stock_on_hand : ''}}</td>
+                </tr>
+                <tr>
+                    <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.committed_stock' | translate}}</td>
+                    <td width="25%">{{getDataModel() ? getDataModel().committed_stock : ''}}</td>
+                </tr>
+                <tr>
+                    <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.available_stock' | translate}}</td>
+                    <td width="25%">{{getDataModel() ? getDataModel().available_stock : ''}}</td>
+                </tr>
+                <tr>
+                    <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.incoming_stock' | translate}}</td>
+                    <td width="25%">{{getDataModel() ? getDataModel().incoming_stock : ''}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" height="1"></td>
+                </tr>
+                <tr>
+                    <td width="75%">{{'warehouse.item.table.quantity_shipped' | translate}}</td>
+                    <td width="25%">{{getDataModel() ? getDataModel().quantity_shipped : ''}}</td>
+                </tr>
+                <tr>
+                    <td width="75%">{{'warehouse.item.table.quantity_received' | translate}}</td>
+                    <td width="25%">{{getDataModel() ? getDataModel().quantity_received : ''}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </nb-card-body>
+</nb-card>

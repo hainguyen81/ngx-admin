@@ -30,7 +30,7 @@ export interface IWarehouseItem extends IModel {
     // Serial number
     serial?: string | null;
     // Hình ảnh
-    image?: string | null;
+    image?: string[] | null;
     // Nước sản xuất
     manufacturer?: string | null;
     // Chiều dài
@@ -89,7 +89,7 @@ export default class WarehouseItem implements IWarehouseItem {
         public status?: ITEM_STATUS | ITEM_STATUS.NOT_ACTIVATED,
         public barcode?: string | null,
         public serial?: string | null,
-        public image?: string | null,
+        public image?: string[] | null,
         public manufacturer?: string | null,
         public length?: number | null,
         public width?: number | null,
