@@ -15,7 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {NgxTabsetComponent} from './tab.component';
-import {throwError} from "rxjs";
+import {throwError} from 'rxjs';
 
 /**
  * Base horizontal split-pane component base on {NbTabsetModule}
