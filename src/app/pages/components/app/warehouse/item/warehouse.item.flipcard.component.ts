@@ -1,8 +1,10 @@
 import {
     AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -18,12 +20,13 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component';
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
+import WarehouseItem, {ITEM_STATUS} from '../../../../../@core/data/warehouse/warehouse.item';
 
 @Component({
     selector: 'ngx-flip-card-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',
-    styleUrls: ['../../../flipcard/flipcard.component.scss'],
+    styleUrls: ['../../../flipcard/flipcard.component.scss', './warehouse.item.flipcard.component.scss'],
 })
 export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<WarehouseItemDatasource>
     implements AfterViewInit {
@@ -34,6 +37,26 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
 
     private warehouseItemTableComponentFront: WarehouseItemSmartTableComponent;
     private warehouseItemSplitPaneComponentBack: WarehouseItemSplitPaneComponent;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {WarehouseItemSmartTableComponent} instance
+     * @return the {WarehouseItemSmartTableComponent} instance
+     */
+    protected getWarehouseItemTableComponentFront(): WarehouseItemSmartTableComponent {
+        return this.warehouseItemTableComponentFront;
+    }
+
+    /**
+     * Get the {WarehouseItemSplitPaneComponent} instance
+     * @return the {WarehouseItemSplitPaneComponent} instance
+     */
+    protected getWarehouseItemSplitPaneComponentBack(): WarehouseItemSplitPaneComponent {
+        return this.warehouseItemSplitPaneComponentBack;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -93,7 +116,13 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
     private createFlipComponents(): void {
         // create table component
         this.warehouseItemTableComponentFront = super.setFrontComponent(WarehouseItemSmartTableComponent);
-        this.warehouseItemTableComponentFront.setNewItemListener(($event) => this.setFlipped(true));
+        this.warehouseItemTableComponentFront.setNewItemListener(
+            ($event) => {
+                this.getWarehouseItemSplitPaneComponentBack().setDataModel(
+                    new WarehouseItem(null, null, null,
+                        ITEM_STATUS.NOT_ACTIVATED, null, null, []));
+                this.setFlipped(true);
+            });
         this.warehouseItemSplitPaneComponentBack = super.setBackComponent(WarehouseItemSplitPaneComponent);
     }
 }

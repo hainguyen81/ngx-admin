@@ -25,11 +25,12 @@ import {
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
+import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 
 @Component({
     selector: 'ngx-split-pane-warehouse-item',
     templateUrl: '../../../splitpane/splitpane.component.html',
-    styleUrls: ['../../../splitpane/splitpane.component.scss'],
+    styleUrls: ['../../../splitpane/splitpane.component.scss', './warehouse.item.splitpane.component.scss'],
 })
 export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<WarehouseItemDatasource>
     implements AfterViewInit {
@@ -41,10 +42,30 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
     private warehouseTabsetComponent: WarehouseItemTabsetComponent;
     private warehouseSummaryComponent: WarehouseItemSummaryComponent;
     private warehouseToolbarComponent: WarehouseItemToolbarComponent;
+    private dataModel: IWarehouseItem;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the data model
+     * @return data model
+     */
+    public getDataModel(): IWarehouseItem {
+        return this.dataModel;
+    }
+
+    /**
+     * Set the data model
+     * @param dataModel to apply
+     */
+    public setDataModel(dataModel: IWarehouseItem): void {
+        this.dataModel = dataModel;
+        if (this.getSummaryComponent()) {
+            this.getSummaryComponent().setDataModel(dataModel);
+        }
+    }
 
     /**
      * Get the {WarehouseItemTabsetComponent} instance
@@ -52,6 +73,14 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
      */
     protected getTabsetComponent(): WarehouseItemTabsetComponent {
         return this.warehouseTabsetComponent;
+    }
+
+    /**
+     * Get the {WarehouseItemSummaryComponent} instance
+     * @return the {WarehouseItemSummaryComponent} instance
+     */
+    protected getSummaryComponent(): WarehouseItemSummaryComponent {
+        return this.warehouseSummaryComponent;
     }
 
     /**

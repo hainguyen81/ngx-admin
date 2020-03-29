@@ -1,22 +1,40 @@
 <nb-card>
     <nb-card-body>
         <div [class.d-table]="true">
-            <div [class.d-table-row]="true">
-                <img [src]="getDataModelImage()" [width]="200" [height]="200">
+            <div [class.d-table-row]="true" [class.border]="true">
+                <div [class.d-table-cell]="true"
+                     [class.border]="true"
+                     [class.rounded-circle]="true"
+                     [class.overflow-hidden]="true"
+                     style="min-width: 200px; min-height: 200px; width: 200px; height: 200px; cursor: pointer;">
+                    <img #imagePreview [src]="getDataModelImage()" [width]="200" [height]="200"
+                         (error)="imagePreview.style.visibility = 'hidden'"
+                         (load)="imagePreview.style.visibility = 'visible'"
+                         style="cursor: pointer;">
+                </div>
             </div>
             <div [class.d-table-row]="true">
-                <img [src]="image" [width]="64" [height]="64"
-                     [class.d-table-cell]="true"
+                <img [src]="image" [width]="32" [height]="32"
+                     [class.pt-2]="true"
+                     [class.d-table-cell]="(image || '').length"
+                     [class.d-none]="!(image || '').length"
+                     [class.float-left]="true"
+                     [class.mr-1]="true"
+                     style="cursor: pointer;"
+                     (click)="imagePreview.src = image"
                      *ngFor="let image of getDataModelImages()">
                 <nb-icon pack="fa" icon="plus"
                          [class.d-table-cell]="true"
+                         [class.pt-2]="true"
+                         [class.float-left]="true"
+                         style="cursor: pointer;"
                          (click)="file.click()">
-                    <input #file type="file" (change)="onSelectFile({ $event: $event })">
+                    <input #file type="file" [multiple]="true" (change)="onSelectFile({ $event: $event })">
                 </nb-icon>
             </div>
         </div>
-        <div [class.d-table]="true" [class.pt-2]="true">
-            <table [class.border-0]="true">
+        <div [class.d-table]="true" [class.pt-4]="true">
+            <table [class.border-0]="true" style="min-width: 300px; width: 300px;" cellpadding="5">
                 <tbody>
                 <tr>
                     <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.stock_on_hand' | translate}}</td>
@@ -35,11 +53,8 @@
                     <td width="25%">{{getDataModel() ? getDataModel().incoming_stock : ''}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2" height="1"></td>
-                </tr>
-                <tr>
-                    <td width="75%">{{'warehouse.item.table.quantity_shipped' | translate}}</td>
-                    <td width="25%">{{getDataModel() ? getDataModel().quantity_shipped : ''}}</td>
+                    <td width="75%" [class.pt-4]="true">{{'warehouse.item.table.quantity_shipped' | translate}}</td>
+                    <td width="25%" [class.pt-4]="true">{{getDataModel() ? getDataModel().quantity_shipped : ''}}</td>
                 </tr>
                 <tr>
                     <td width="75%">{{'warehouse.item.table.quantity_received' | translate}}</td>

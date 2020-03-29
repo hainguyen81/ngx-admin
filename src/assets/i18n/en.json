@@ -260,6 +260,9 @@
         "item": {
             "title": "Warehouse Item Management",
             "menu": "Warehouse Item",
+            "summary": {
+                "not_supported_files": "Only support for image file types! Below file(s) will not be uploaded:<br/>{{files}}"
+            },
             "table": {
                 "noData": "Not found any item in warehouse",
                 "code": "Code",

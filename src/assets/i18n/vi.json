@@ -260,6 +260,9 @@
         "item": {
             "title": "Quản lý trang thiết bị",
             "menu": "Quản lý trang thiết bị",
+            "summary": {
+                "not_supported_files": "Chỉ hỗ trợ tệp hình ảnh! Các tệp bên dưới sẽ không được tải lên:<br/>{{files}}"
+            },
             "table": {
                 "noData": "Không có bất kỳ sản phẩm nào trong kho",
                 "code": "Mã SP",
