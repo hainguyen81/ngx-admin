@@ -1,0 +1,155 @@
+import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
+import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {
+    AfterViewInit,
+    ChangeDetectorRef, Component,
+    ComponentFactoryResolver, ElementRef,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
+import {ContextMenuService} from 'ngx-contextmenu';
+import {ToastrService} from 'ngx-toastr';
+import {NGXLogger} from 'ngx-logger';
+import {TranslateService} from '@ngx-translate/core';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {throwError} from 'rxjs';
+import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
+import {ACTION_BACK, WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
+import {IEvent} from '../../../abstract.component';
+import {
+    ACTION_DELETE,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IToolbarActionsConfig,
+} from '../../../toolbar/abstract.toolbar.component';
+
+@Component({
+    selector: 'ngx-split-pane-warehouse-item',
+    templateUrl: '../../../splitpane/splitpane.component.html',
+    styleUrls: ['../../../splitpane/splitpane.component.scss'],
+})
+export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<WarehouseItemDatasource>
+    implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private warehouseTabsetComponent: WarehouseItemTabsetComponent;
+    private warehouseToolbarComponent: WarehouseItemToolbarComponent;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {WarehouseItemTabsetComponent} instance
+     * @return the {WarehouseItemTabsetComponent} instance
+     */
+    protected getTabsetComponent(): WarehouseItemTabsetComponent {
+        return this.warehouseTabsetComponent;
+    }
+
+    /**
+     * Get the {WarehouseItemToolbarComponent} instance
+     * @return the {WarehouseItemToolbarComponent} instance
+     */
+    protected getToolbarComponent(): WarehouseItemToolbarComponent {
+        return this.warehouseToolbarComponent;
+    }
+
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {WarehouseItemSplitPaneComponent} class
+     * @param dataSource {WarehouseItemDatasource}
+     * @param contextMenuService {ContextMenuService}
+     * @param toasterService {ToastrService}
+     * @param logger {NGXLogger}
+     * @param renderer {Renderer2}
+     * @param translateService {TranslateService}
+     * @param factoryResolver {ComponentFactoryResolver}
+     * @param viewContainerRef {ViewContainerRef}
+     * @param changeDetectorRef {ChangeDetectorRef}
+     * @param elementRef {ElementRef}
+     * @param modalDialogService {ModalDialogService}
+     * @param confirmPopup {ConfirmPopup}
+     */
+    constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+        super(dataSource, contextMenuService, toasterService, logger,
+            renderer, translateService, factoryResolver,
+            viewContainerRef, changeDetectorRef, elementRef,
+            modalDialogService, confirmPopup);
+        confirmPopup || throwError('Could not inject ConfirmPopup');
+        super.setHorizontal(true);
+        super.setNumberOfAreas(2);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // Create left/right component panes
+        this.createPaneComponents();
+    }
+
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
+     */
+    onClickAction(event: IEvent) {
+        if (!event || !event.$data || !(event.$data as IToolbarActionsConfig)) {
+            return;
+        }
+        let action: IToolbarActionsConfig;
+        action = event.$data as IToolbarActionsConfig;
+        switch (action.id) {
+            case ACTION_SAVE:
+                // TODO Waiting for saving
+                break;
+            case ACTION_RESET:
+                // TODO Waiting for resetting
+                break;
+            case ACTION_DELETE:
+                // TODO Waiting for deleting
+                break;
+            case ACTION_BACK:
+                // TODO Waiting for backing
+                break;
+        }
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Create left/right component panes
+     */
+    private createPaneComponents() {
+        // create toolbar
+        this.warehouseToolbarComponent = super.setToolbarComponent(WarehouseItemToolbarComponent);
+        this.warehouseToolbarComponent.actionListener().subscribe((e: IEvent) => this.onClickAction(e));
+
+        // create tabset component
+        this.warehouseTabsetComponent = super.setAreaComponent(0, WarehouseItemTabsetComponent);
+    }
+}

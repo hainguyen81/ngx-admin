@@ -21,6 +21,8 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {WarehouseItemFlipcardComponent} from './warehouse.item.flipcard.component';
 import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
+import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
+import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 
 @NgModule({
     imports: [
@@ -46,11 +48,15 @@ import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
         WarehouseItemFlipcardComponent,
         WarehouseItemSmartTableComponent,
         WarehouseItemTabsetComponent,
+        WarehouseItemSplitPaneComponent,
+        WarehouseItemToolbarComponent,
     ],
     declarations: [
         WarehouseItemFlipcardComponent,
         WarehouseItemSmartTableComponent,
         WarehouseItemTabsetComponent,
+        WarehouseItemSplitPaneComponent,
+        WarehouseItemToolbarComponent,
     ],
     providers: [
         {

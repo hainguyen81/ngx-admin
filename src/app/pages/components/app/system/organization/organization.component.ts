@@ -13,16 +13,11 @@ import {OrganizationDataSource} from '../../../../../services/implementation/sys
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {OrganizationTreeviewComponentService} from './organization.treeview.component.service';
-import {OrganizationFormlyComponentService} from './organization.formly.component.service';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
-import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import ComponentUtils from '../../../../../utils/component.utils';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
-import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';
 import {IEvent} from '../../../abstract.component';
 import {
     ACTION_DELETE,

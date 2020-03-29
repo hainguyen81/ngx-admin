@@ -17,6 +17,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component';
+import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
 
 @Component({
     selector: 'ngx-flip-card-warehouse-item',
@@ -32,7 +33,7 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
     // -------------------------------------------------
 
     private warehouseItemTableComponentFront: WarehouseItemSmartTableComponent;
-    private warehouseItemTableComponentBack: WarehouseItemSmartTableComponent;
+    private warehouseItemSplitPaneComponentBack: WarehouseItemSplitPaneComponent;
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -92,12 +93,7 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
     private createFlipComponents(): void {
         // create table component
         this.warehouseItemTableComponentFront = super.setFrontComponent(WarehouseItemSmartTableComponent);
-        this.warehouseItemTableComponentFront.setNewItemListener(($event) => {
-            this.setFlipped(true);
-        });
-        this.warehouseItemTableComponentBack = super.setBackComponent(WarehouseItemSmartTableComponent);
-        this.warehouseItemTableComponentBack.setNewItemListener(($event) => {
-            this.setFlipped(false);
-        });
+        this.warehouseItemTableComponentFront.setNewItemListener(($event) => this.setFlipped(true));
+        this.warehouseItemSplitPaneComponentBack = super.setBackComponent(WarehouseItemSplitPaneComponent);
     }
 }

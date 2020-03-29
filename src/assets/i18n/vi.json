@@ -109,7 +109,8 @@
             "action": {
                 "save": "Lưu",
                 "reset": "Reset",
-                "delete": "Xóa"
+                "delete": "Xóa",
+                "back": "Quay lại"
             }
         },
         "login": {
