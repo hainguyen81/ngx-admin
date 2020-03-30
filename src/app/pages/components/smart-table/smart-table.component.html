@@ -1,5 +1,5 @@
 <nb-card>
-    <nb-card-header>
+    <nb-card-header *ngIf="isShowHeader()">
         <div class="form-group row has-search m-md-auto">
             <label for="search" class="col-form-label">{{tableHeader | translate}}</label>
             <div class="col-sm-5">

@@ -21,6 +21,8 @@ import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.co
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {ITabConfig} from '../../../tab/abstract.tab.component';
 import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
+import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
+import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 
 /** The number of tabs */
 export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
@@ -56,6 +58,68 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      * @returns {boolean}
      */
     active: true,
+}, {
+    /**
+     * Tab title
+     * @type {string}
+     */
+    tabTitle: 'warehouse.item.orders.purchase.title',
+    /**
+     * Tab id
+     * @type {string}
+     */
+    tabId: 'WAREHOUSE_ITEM_PURCHASE',
+    /**
+     * Tab icon name or icon config object
+     * @type {string | NbIconConfig}
+     */
+    tabIcon: { icon: 'shopping-cart', pack: 'fa' },
+    /**
+     * Item is disabled and cannot be opened.
+     * @type {boolean}
+     */
+    disabled: false,
+    /**
+     * Show only icons when width is smaller than `tabs-icon-only-max-width`
+     * @type {boolean}
+     */
+    responsive: true,
+    /**
+     * Specifies active tab
+     * @returns {boolean}
+     */
+    active: true,
+}, {
+    /**
+     * Tab title
+     * @type {string}
+     */
+    tabTitle: 'warehouse.item.orders.sale.title',
+    /**
+     * Tab id
+     * @type {string}
+     */
+    tabId: 'WAREHOUSE_ITEM_SALE',
+    /**
+     * Tab icon name or icon config object
+     * @type {string | NbIconConfig}
+     */
+    tabIcon: { icon: 'credit-card', pack: 'far' },
+    /**
+     * Item is disabled and cannot be opened.
+     * @type {boolean}
+     */
+    disabled: false,
+    /**
+     * Show only icons when width is smaller than `tabs-icon-only-max-width`
+     * @type {boolean}
+     */
+    responsive: true,
+    /**
+     * Specifies active tab
+     * @returns {boolean}
+     */
+    active: true,
 }];
 
 @Component({
@@ -71,6 +135,8 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
     // -------------------------------------------------
 
     private warehouseItemOverviewTabComponent: WarehouseItemOverviewFormlyComponent;
+    private warehouseItemPurchaseTabComponent: WarehouseItemPurchaseOrdersSmartTableComponent;
+    private warehouseItemSaleTabComponent: WarehouseItemSaleOrdersSmartTableComponent;
     private dataModel: IWarehouseItem;
 
     // -------------------------------------------------
@@ -91,9 +157,9 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
      */
     public setDataModel(dataModel: IWarehouseItem): void {
         this.dataModel = dataModel;
-        if (this.getOverviewTab()) {
-            this.getOverviewTab().setModel(dataModel);
-        }
+        this.getOverviewTab() && this.getOverviewTab().setModel(dataModel);
+        this.getPurchaseTab() && this.getPurchaseTab().setModel(dataModel);
+        this.getSaleTab() && this.getSaleTab().setModel(dataModel);
     }
 
     /**
@@ -102,6 +168,22 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
      */
     protected getOverviewTab(): WarehouseItemOverviewFormlyComponent {
         return this.warehouseItemOverviewTabComponent;
+    }
+
+    /**
+     * Get the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
+     * @return the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
+     */
+    protected getPurchaseTab(): WarehouseItemPurchaseOrdersSmartTableComponent {
+        return this.warehouseItemPurchaseTabComponent;
+    }
+
+    /**
+     * Get the {WarehouseItemSaleOrdersSmartTableComponent} instance
+     * @return the {WarehouseItemSaleOrdersSmartTableComponent} instance
+     */
+    protected getSaleTab(): WarehouseItemSaleOrdersSmartTableComponent {
+        return this.warehouseItemSaleTabComponent;
     }
 
     // -------------------------------------------------
@@ -163,8 +245,22 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
      * Create tab components
      */
     private createTabComponents(): void {
+        let tabIndex: number;
+        tabIndex = 0;
         // overview tab
-        this.warehouseItemOverviewTabComponent = super.setTabComponent(0, WarehouseItemOverviewFormlyComponent);
-        this.configTabByIndex(0, WAREHOUSE_ITEM_TAB_CONFIGS[0]);
+        this.warehouseItemOverviewTabComponent = this.setTabComponent(
+            tabIndex, WarehouseItemOverviewFormlyComponent);
+        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
+        tabIndex += 1;
+        // purchase tab
+        this.warehouseItemPurchaseTabComponent = this.setTabComponent(
+            tabIndex, WarehouseItemPurchaseOrdersSmartTableComponent);
+        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
+        tabIndex += 1;
+        // sale tab
+        this.warehouseItemSaleTabComponent = this.setTabComponent(
+            tabIndex, WarehouseItemSaleOrdersSmartTableComponent);
+        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
+        tabIndex += 1;
     }
 }

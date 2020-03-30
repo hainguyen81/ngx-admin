@@ -352,6 +352,24 @@
                     }
                 }
             },
+            "orders": {
+                "purchase": {
+                    "title": "Purchase Orders"
+                },
+                "sale": {
+                    "title": "Sale Orders"
+                },
+                "table": {
+                    "noData": "Not found any orders",
+                    "order_date":  "Date",
+                    "order_code":  "Order No.",
+                    "sales_person":  "Person",
+                    "quantity":  "Quantity",
+                    "unit_price":  "Price",
+                    "amount":  "Total",
+                    "status":  "Status"
+                }
+            },
             "table": {
                 "noData": "Not found any item in warehouse",
                 "code": "Code",

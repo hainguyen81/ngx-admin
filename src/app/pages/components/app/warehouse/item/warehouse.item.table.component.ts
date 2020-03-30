@@ -23,7 +23,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 
-/* customers table settings */
+/* warehouse item table settings */
 export const WarehouseItemTableSettings = {
     hideSubHeader: true,
     noDataMessage: 'warehouse.item.table.noData',

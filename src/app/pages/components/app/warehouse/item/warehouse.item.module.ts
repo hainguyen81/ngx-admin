@@ -37,6 +37,9 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.component';
+import {WarehouseItemOrdersSmartTableComponent} from './warehouse.item.orders.table.component';
+import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
+import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 
 @NgModule({
     imports: [
@@ -111,6 +114,9 @@ import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.co
         WarehouseItemToolbarComponent,
         WarehouseItemSummaryComponent,
         WarehouseItemOverviewFormlyComponent,
+        WarehouseItemOrdersSmartTableComponent,
+        WarehouseItemPurchaseOrdersSmartTableComponent,
+        WarehouseItemSaleOrdersSmartTableComponent,
     ],
     declarations: [
         WarehouseItemFlipcardComponent,
@@ -120,6 +126,9 @@ import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.co
         WarehouseItemToolbarComponent,
         WarehouseItemSummaryComponent,
         WarehouseItemOverviewFormlyComponent,
+        WarehouseItemOrdersSmartTableComponent,
+        WarehouseItemPurchaseOrdersSmartTableComponent,
+        WarehouseItemSaleOrdersSmartTableComponent,
     ],
     providers: [
         {

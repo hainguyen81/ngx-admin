@@ -352,6 +352,24 @@
                     }
                 }
             },
+            "orders": {
+                "purchase": {
+                    "title": "Đặt hàng"
+                },
+                "sale": {
+                    "title": "Bán hàng"
+                },
+                "table": {
+                    "noData": "Không có bất kỳ chứng từ nào",
+                    "order_date":  "Ngày giao dịch",
+                    "order_code":  "Mã chứng từ",
+                    "sales_person":  "Đối tượng",
+                    "quantity":  "Số lượng",
+                    "unit_price":  "Đơn giá",
+                    "amount":  "Thành tiền",
+                    "status":  "Trạng thái"
+                }
+            },
             "table": {
                 "noData": "Không có bất kỳ sản phẩm nào trong kho",
                 "code": "Mã SP",
