@@ -264,6 +264,7 @@
                 "not_supported_files": "Only support for image file types! Below file(s) will not be uploaded:<br/>{{files}}"
             },
             "overview": {
+                "title": "Overview",
                 "form": {
                     "category": {
                         "label": "Category",

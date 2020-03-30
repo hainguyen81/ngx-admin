@@ -19,9 +19,44 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import {ITabConfig} from '../../../tab/abstract.tab.component';
+import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
 
 /** The number of tabs */
 export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
+
+export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
+    /**
+     * Tab title
+     * @type {string}
+     */
+    tabTitle: 'warehouse.item.overview.title',
+    /**
+     * Tab id
+     * @type {string}
+     */
+    tabId: 'WAREHOUSE_ITEM_OVERVIEW',
+    /**
+     * Tab icon name or icon config object
+     * @type {string | NbIconConfig}
+     */
+    tabIcon: { icon: 'archive', pack: 'fa' },
+    /**
+     * Item is disabled and cannot be opened.
+     * @type {boolean}
+     */
+    disabled: false,
+    /**
+     * Show only icons when width is smaller than `tabs-icon-only-max-width`
+     * @type {boolean}
+     */
+    responsive: true,
+    /**
+     * Specifies active tab
+     * @returns {boolean}
+     */
+    active: true,
+}];
 
 @Component({
     selector: 'ngx-tabset-warehouse-item',
@@ -130,5 +165,6 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
     private createTabComponents(): void {
         // overview tab
         this.warehouseItemOverviewTabComponent = super.setTabComponent(0, WarehouseItemOverviewFormlyComponent);
+        this.configTabByIndex(0, WAREHOUSE_ITEM_TAB_CONFIGS[0]);
     }
 }

@@ -264,6 +264,7 @@
                 "not_supported_files": "Chỉ hỗ trợ tệp hình ảnh! Các tệp bên dưới sẽ không được tải lên:<br/>{{files}}"
             },
             "overview": {
+                "title": "Tổng quát",
                 "form": {
                     "category": {
                         "label": "Phân loại",
