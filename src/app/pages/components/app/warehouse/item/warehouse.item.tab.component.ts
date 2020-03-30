@@ -17,6 +17,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
+import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.component';
+import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 
 /** The number of tabs */
 export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
@@ -28,6 +30,44 @@ export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
 })
 export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseItemDatasource>
     implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private warehouseItemOverviewTabComponent: WarehouseItemOverviewFormlyComponent;
+    private dataModel: IWarehouseItem;
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Get the data model
+     * @return data model
+     */
+    public getDataModel(): IWarehouseItem {
+        return this.dataModel;
+    }
+
+    /**
+     * Set the data model
+     * @param dataModel to apply
+     */
+    public setDataModel(dataModel: IWarehouseItem): void {
+        this.dataModel = dataModel;
+        if (this.getOverviewTab()) {
+            this.getOverviewTab().setModel(dataModel);
+        }
+    }
+
+    /**
+     * Get the {WarehouseItemOverviewFormlyComponent} instance
+     * @return the {WarehouseItemOverviewFormlyComponent} instance
+     */
+    protected getOverviewTab(): WarehouseItemOverviewFormlyComponent {
+        return this.warehouseItemOverviewTabComponent;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -76,6 +116,19 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        // TODO Wait for adding tabs
+        // create tab components
+        this.createTabComponents();
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Create tab components
+     */
+    private createTabComponents(): void {
+        // overview tab
+        this.warehouseItemOverviewTabComponent = super.setTabComponent(0, WarehouseItemOverviewFormlyComponent);
     }
 }

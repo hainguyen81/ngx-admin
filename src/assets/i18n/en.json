@@ -263,6 +263,94 @@
             "summary": {
                 "not_supported_files": "Only support for image file types! Below file(s) will not be uploaded:<br/>{{files}}"
             },
+            "overview": {
+                "form": {
+                    "category": {
+                        "label": "Category",
+                        "placeholder": "Category"
+                    },
+                    "brand": {
+                        "label": "Brand",
+                        "placeholder": "Brand"
+                    },
+                    "code": {
+                        "label": "Code",
+                        "placeholder": "Item code"
+                    },
+                    "name": {
+                        "label": "Name",
+                        "placeholder": "Item name"
+                    },
+                    "barcode": {
+                        "label": "Barcode",
+                        "placeholder": "Barcode"
+                    },
+                    "number_of_prints": {
+                        "label": "Number of prints",
+                        "placeholder": "Number of prints"
+                    },
+                    "serial": {
+                        "label": "Serial No.",
+                        "placeholder": "Serial No."
+                    },
+                    "manufacturer": {
+                        "label": "Manufacturer",
+                        "placeholder": "Manufacturer"
+                    },
+                    "length": {
+                        "label": "Length",
+                        "placeholder": "Length"
+                    },
+                    "width": {
+                        "label": "Width",
+                        "placeholder": "Width"
+                    },
+                    "height": {
+                        "label": "Height",
+                        "placeholder": "Height"
+                    },
+                    "weight": {
+                        "label": "Weight",
+                        "placeholder": "Weight"
+                    },
+                    "size": {
+                        "label": "Size",
+                        "placeholder": "Size"
+                    },
+                    "unit": {
+                        "label": "Unit",
+                        "placeholder": "Unit"
+                    },
+                    "rate_per_unit": {
+                        "label": "Rate per Unit",
+                        "placeholder": "Rate per Unit"
+                    },
+                    "dealer_price": {
+                        "label": "Dealer Price",
+                        "placeholder": "Dealer Price"
+                    },
+                    "cost_price": {
+                        "label": "Cost Price",
+                        "placeholder": "Cost Price"
+                    },
+                    "selling_price": {
+                        "label": "Selling Price",
+                        "placeholder": "Selling Price"
+                    },
+                    "currency": {
+                        "label": "Currency",
+                        "placeholder": "Currency"
+                    },
+                    "remark": {
+                        "label": "Remark",
+                        "placeholder": "Remark"
+                    },
+                    "description": {
+                        "label": "Description",
+                        "placeholder": "Description"
+                    }
+                }
+            },
             "table": {
                 "noData": "Not found any item in warehouse",
                 "code": "Code",

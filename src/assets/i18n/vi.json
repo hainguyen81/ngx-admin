@@ -263,6 +263,94 @@
             "summary": {
                 "not_supported_files": "Chỉ hỗ trợ tệp hình ảnh! Các tệp bên dưới sẽ không được tải lên:<br/>{{files}}"
             },
+            "overview": {
+                "form": {
+                    "category": {
+                        "label": "Phân loại",
+                        "placeholder": "Phân loại"
+                    },
+                    "brand": {
+                        "label": "Hãng SX",
+                        "placeholder": "Hãng SX"
+                    },
+                    "code": {
+                        "label": "Mã SP",
+                        "placeholder": "Mã SP"
+                    },
+                    "name": {
+                        "label": "Tên SP",
+                        "placeholder": "Tên SP"
+                    },
+                    "barcode": {
+                        "label": "Mã vạch",
+                        "placeholder": "Mã vạch"
+                    },
+                    "number_of_prints": {
+                        "label": "Số bản in",
+                        "placeholder": "Số bản in"
+                    },
+                    "serial": {
+                        "label": "Serial No.",
+                        "placeholder": "Serial No."
+                    },
+                    "manufacturer": {
+                        "label": "Xuất xứ",
+                        "placeholder": "Xuất xứ"
+                    },
+                    "length": {
+                        "label": "Dài",
+                        "placeholder": "Dài"
+                    },
+                    "width": {
+                        "label": "Rộng",
+                        "placeholder": "Rộng"
+                    },
+                    "height": {
+                        "label": "Cao",
+                        "placeholder": "Cao"
+                    },
+                    "weight": {
+                        "label": "Trọng lượng",
+                        "placeholder": "Trọng lượng"
+                    },
+                    "size": {
+                        "label": "Kích thước",
+                        "placeholder": "Kích thước"
+                    },
+                    "unit": {
+                        "label": "ĐVT",
+                        "placeholder": "ĐVT"
+                    },
+                    "rate_per_unit": {
+                        "label": "Tỷ lệ/ĐVT",
+                        "placeholder": "Tỷ lệ/ĐVT"
+                    },
+                    "dealer_price": {
+                        "label": "Giá sỉ",
+                        "placeholder": "Giá sỉ"
+                    },
+                    "cost_price": {
+                        "label": "Giá vốn",
+                        "placeholder": "Giá vốn"
+                    },
+                    "selling_price": {
+                        "label": "Giá bán",
+                        "placeholder": "Giá bán"
+                    },
+                    "currency": {
+                        "label": "Loại tiền tệ",
+                        "placeholder": "Loại tiền tệ"
+                    },
+                    "remark": {
+                        "label": "Ghi chú",
+                        "placeholder": "Ghi chú"
+                    },
+                    "description": {
+                        "label": "Mô tả",
+                        "placeholder": "Mô tả"
+                    }
+                }
+            },
             "table": {
                 "noData": "Không có bất kỳ sản phẩm nào trong kho",
                 "code": "Mã SP",

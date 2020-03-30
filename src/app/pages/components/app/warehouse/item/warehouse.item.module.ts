@@ -36,6 +36,7 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
+import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.component';
 
 @NgModule({
     imports: [
@@ -109,6 +110,7 @@ import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component'
         WarehouseItemSplitPaneComponent,
         WarehouseItemToolbarComponent,
         WarehouseItemSummaryComponent,
+        WarehouseItemOverviewFormlyComponent,
     ],
     declarations: [
         WarehouseItemFlipcardComponent,
@@ -117,6 +119,7 @@ import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component'
         WarehouseItemSplitPaneComponent,
         WarehouseItemToolbarComponent,
         WarehouseItemSummaryComponent,
+        WarehouseItemOverviewFormlyComponent,
     ],
     providers: [
         {

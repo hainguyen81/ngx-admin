@@ -66,6 +66,9 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
         if (this.getSummaryComponent()) {
             this.getSummaryComponent().setDataModel(dataModel);
         }
+        if (this.getTabsetComponent()) {
+            this.getTabsetComponent().setDataModel(dataModel);
+        }
     }
 
     /**
