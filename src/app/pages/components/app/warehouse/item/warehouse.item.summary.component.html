@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-body>
-        <div [class.d-table]="true">
+        <div [class.d-table]="true" style="max-width: 200px;">
             <div [class.d-table-row]="true" [class.border]="true">
                 <div [class.d-table-cell]="true"
                      [class.border]="true"
@@ -10,6 +10,7 @@
                     <img #imagePreview [src]="getDataModelImage()" [width]="200" [height]="200"
                          (error)="imagePreview.style.visibility = 'hidden'"
                          (load)="imagePreview.style.visibility = 'visible'"
+                         (click)="showLightbox(imagePreview.src)"
                          style="cursor: pointer;">
                 </div>
             </div>

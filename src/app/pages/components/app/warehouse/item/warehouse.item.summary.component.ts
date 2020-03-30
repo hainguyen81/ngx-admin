@@ -16,7 +16,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {AppConfig} from '../../../../../config/app.config';
-import {Lightbox} from 'ngx-lightbox';
+import {IAlbum, Lightbox} from 'ngx-lightbox';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
@@ -165,6 +165,25 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
             };
         } catch (e) {
             this.getLogger().error('Could not read file {' + f.name + '}', e);
+        }
+    }
+
+    /**
+     * Open images lightbox
+     * @param currentImage to show
+     */
+    public showLightbox(currentImage?: string): void {
+        let images: string[];
+        images = this.getDataModelImages();
+        if ((images || []).length) {
+            let album: IAlbum[];
+            album = [];
+            Array.of(...images).forEach(image => {
+                album.push({src: image, thumb: image});
+            });
+            let imageIndex: number;
+            imageIndex = Math.max(images.indexOf(currentImage), 0);
+            super.openLightbox(album, imageIndex);
         }
     }
 }
