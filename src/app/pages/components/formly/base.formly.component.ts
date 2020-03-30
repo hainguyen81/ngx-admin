@@ -17,6 +17,7 @@ import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Base form component base on {FormlyModule}
@@ -58,6 +59,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param config {FormlyConfig}
      * @param fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
@@ -75,6 +77,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox,
                           config?: FormlyConfig,
                           fields?: FormlyFieldConfig[],
                           options?: FormlyFormOptions,
@@ -82,7 +85,7 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
         this.setConfig(config);
         this.setFields(fields);
         this.setOptions(options);

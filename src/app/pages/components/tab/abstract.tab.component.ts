@@ -22,6 +22,7 @@ import {NbComponentStatus} from '@nebular/theme/components/component-status';
 import {NbBadgePosition} from '@nebular/theme/components/badge/badge.component';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /* {NbTabComponent} tab configuration */
 export interface ITabConfig {
@@ -222,6 +223,7 @@ export abstract class AbstractTabComponent<T extends DataSource>
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param numberOfTabs
      * @param fullWidthValue take full width of value
      * @param fullWidth take full width of a parent
@@ -239,6 +241,7 @@ export abstract class AbstractTabComponent<T extends DataSource>
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox,
                           private numberOfTabs?: number | 1,
                           private fullWidthValue?: boolean | false,
                           private fullWidth?: boolean | true,
@@ -246,7 +249,7 @@ export abstract class AbstractTabComponent<T extends DataSource>
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     ngAfterViewInit(): void {

@@ -21,6 +21,7 @@ import {convertItemStatusToDisplay, ITEM_STATUS} from '../../../../../@core/data
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
+import {Lightbox} from 'ngx-lightbox';
 
 /* customers table settings */
 export const WarehouseItemTableSettings = {
@@ -276,6 +277,7 @@ export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<Wa
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -288,11 +290,12 @@ export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<Wa
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup,
+            modalDialogService, confirmPopup, lightbox,
             'warehouse.item.title', WarehouseItemTableSettings, WarehouseItemContextMenu);
     }
 

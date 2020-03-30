@@ -16,6 +16,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {AppConfig} from '../../../../../config/app.config';
+import {Lightbox} from 'ngx-lightbox';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
@@ -86,6 +87,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -98,10 +100,11 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver, viewContainerRef,
-            changeDetectorRef, elementRef, modalDialogService, confirmPopup);
+            changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox);
     }
 
     // -------------------------------------------------

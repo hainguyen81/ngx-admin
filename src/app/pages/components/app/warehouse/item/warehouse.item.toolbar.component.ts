@@ -17,6 +17,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {Lightbox} from 'ngx-lightbox';
 
 /* default warehouse item toolbar header config */
 export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -65,6 +66,7 @@ export class WarehouseItemToolbarComponent extends BaseNgxToolbarComponent<Wareh
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -77,11 +79,12 @@ export class WarehouseItemToolbarComponent extends BaseNgxToolbarComponent<Wareh
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup,
+            modalDialogService, confirmPopup, lightbox,
             WarehouseItemToolbarHeaderConfig, WarehouseItemToolbarActionsConfig);
     }
 }

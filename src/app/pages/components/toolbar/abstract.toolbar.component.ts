@@ -26,6 +26,7 @@ import {NbButtonComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 export const ACTION_SAVE: string = 'ACTION_SAVE';
 export const ACTION_RESET: string = 'ACTION_RESET';
@@ -197,6 +198,7 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param header {IToolbarHeaderConfig}
      * @param actions {IToolbarActionsConfig}
      */
@@ -212,12 +214,13 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          header?: IToolbarHeaderConfig,
+                          @Inject(Lightbox) lightbox?: Lightbox,
+                          private header?: IToolbarHeaderConfig,
                           private actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     ngAfterViewInit(): void {

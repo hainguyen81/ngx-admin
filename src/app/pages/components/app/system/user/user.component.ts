@@ -20,6 +20,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
+import {Lightbox} from 'ngx-lightbox';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -112,6 +113,7 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(UserDataSource) dataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -124,11 +126,12 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup,
+            modalDialogService, confirmPopup, lightbox,
             'system.user.title', UserTableSettings, UserContextMenu);
     }
 

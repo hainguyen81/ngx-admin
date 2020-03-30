@@ -19,6 +19,7 @@ import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu, 
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Base smart table component base on {Ng2SmartTableComponent}
@@ -48,6 +49,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param tableHeader the table caption
      * @param tableSettings the table settings
      * @param contextMenu the context menu items array
@@ -64,12 +66,13 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox,
                           tableHeader?: string, tableSettings?: any,
                           contextMenu?: IContextMenu[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
         this.setTableHeader(tableHeader || '');
         this.setTableSettings(tableSettings);
         this.setContextMenu(contextMenu || []);

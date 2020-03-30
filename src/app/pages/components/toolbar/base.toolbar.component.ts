@@ -16,6 +16,7 @@ import {IToolbarActionsConfig, IToolbarHeaderConfig} from './abstract.toolbar.co
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Toolbar component base on {MatToolbar}
@@ -45,6 +46,7 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param toolbarHeader toolbar header
      * @param actions {IToolbarActionsConfig}
      */
@@ -60,11 +62,12 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox,
                           toolbarHeader?: IToolbarHeaderConfig, actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
         this.setToolbarHeader(toolbarHeader);
         this.setActions(actions);
     }

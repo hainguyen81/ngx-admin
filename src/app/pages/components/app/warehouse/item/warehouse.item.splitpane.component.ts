@@ -26,6 +26,7 @@ import {
 } from '../../../toolbar/abstract.toolbar.component';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import {Lightbox} from 'ngx-lightbox';
 
 @Component({
     selector: 'ngx-split-pane-warehouse-item',
@@ -109,6 +110,7 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -121,11 +123,12 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
         confirmPopup || throwError('Could not inject ConfirmPopup');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);

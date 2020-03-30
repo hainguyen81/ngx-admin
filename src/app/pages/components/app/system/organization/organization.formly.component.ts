@@ -27,6 +27,7 @@ import {IUser} from '../../../../../@core/data/system/user';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {EmailValidators} from 'ngx-validators';
+import {Lightbox} from 'ngx-lightbox';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -330,6 +331,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param userDataSource to searching all organization managers
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
@@ -344,11 +346,12 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(UserDataSource) private userDataSource?: UserDataSource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup,
+            modalDialogService, confirmPopup, lightbox,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
         // parent selection settings
         super.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();

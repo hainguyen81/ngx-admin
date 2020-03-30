@@ -21,6 +21,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component';
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
 import WarehouseItem, {ITEM_STATUS} from '../../../../../@core/data/warehouse/warehouse.item';
+import {Lightbox} from 'ngx-lightbox';
 
 @Component({
     selector: 'ngx-flip-card-warehouse-item',
@@ -76,6 +77,7 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(DataSource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -88,11 +90,12 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     // -------------------------------------------------
