@@ -42,6 +42,8 @@ import {
 import Timer = NodeJS.Timer;
 import {IComponentService} from '../../services/interface.service';
 import {AbstractComponentService, BaseComponentService} from '../../services/component.service';
+import {Lightbox} from 'ngx-lightbox';
+import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -224,6 +226,14 @@ export class AbstractComponent
     }
 
     /**
+     * Get the {Lightbox} instance for showing image lightbox
+     * @return the {Lightbox} instance
+     */
+    protected getLightbox(): Lightbox {
+        return this.lightbox;
+    }
+
+    /**
      * Get the {ModalDialogService} instance for showing modal dialog if necessary
      * @return the {ModalDialogService} instance
      */
@@ -292,6 +302,7 @@ export class AbstractComponent
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
@@ -304,7 +315,8 @@ export class AbstractComponent
                           @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) private elementRef: ElementRef,
                           @Inject(ModalDialogService) private modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup) {
+                          @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) private lightbox?: Lightbox) {
         contextMenuService || throwError('Could not inject ContextMenuService');
         toasterService || throwError('Could not inject ToastrService');
         logger || throwError('Could not inject NGXLogger');
@@ -917,11 +929,12 @@ export class AbstractComponent
      * @param value to translate
      * @return translated value or itself
      */
-    public translate(value?: string): string {
+    public translate(value?: string, interpolateParams?: Object | null): string {
         if (!(value || '').length || !this.getTranslateService()) {
             return value;
         }
-        return this.getTranslateService().instant(value);
+        return (interpolateParams ? this.getTranslateService().instant(value, interpolateParams)
+            : this.getTranslateService().instant(value));
     }
 
     /**
@@ -939,5 +952,28 @@ export class AbstractComponent
             this.getFactoryResolver(), viewContainerRef, this.getLogger(), componentType);
         return ComponentUtils.createComponent(
             (compServ as AbstractComponentService<any>), viewContainerRef, true);
+    }
+
+    /**
+     * Open the specified images album at the specified image index
+     * @param album images album
+     * @param imageIndex to show
+     * @param options lightbox options
+     */
+    public openLightbox(album: Array<IAlbum>, imageIndex?: number, options?: {}): void {
+        !this.getLightbox() && throwError('Could not inject Lightbox');
+        (!album || !album.length) && throwError('Empty images album to open');
+        if (!imageIndex || album.length <= imageIndex || imageIndex < 0) {
+            imageIndex = 0;
+        }
+        this.getLightbox().open(album, imageIndex, options);
+    }
+
+    /**
+     * Close lightbox
+     */
+    public closeLightbox(): void {
+        !this.getLightbox() && throwError('Could not inject Lightbox');
+        this.getLightbox().close();
     }
 }

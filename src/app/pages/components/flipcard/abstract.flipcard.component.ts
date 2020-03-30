@@ -19,6 +19,7 @@ import {NbCardBackComponent, NbCardFrontComponent, NbFlipCardComponent} from '@n
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Abstract FlipCard component base on {NbFlipCardComponent}
@@ -114,6 +115,7 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param flipped specify the component whether had been flipped
      * @param showToggleButton specify whether showing toggle button to flip
      */
@@ -129,12 +131,13 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox,
                           private flipped?: boolean | false,
                           private showToggleButton?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     ngAfterViewInit(): void {

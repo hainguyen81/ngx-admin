@@ -19,6 +19,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -98,6 +99,7 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(CustomerDatasource) dataSource: CustomerDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -110,11 +112,12 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup,
+            modalDialogService, confirmPopup, lightbox,
             'system.customer.title', CustomerTableSettings, CustomerContextMenu);
     }
 

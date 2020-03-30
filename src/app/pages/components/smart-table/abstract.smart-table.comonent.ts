@@ -28,6 +28,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {DeepCloner} from '../../../utils/object.utils';
 import Timer = NodeJS.Timer;
+import {Lightbox} from 'ngx-lightbox';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -120,6 +121,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -132,11 +134,12 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     ngAfterViewInit(): void {

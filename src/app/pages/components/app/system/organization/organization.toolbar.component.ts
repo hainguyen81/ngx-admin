@@ -17,6 +17,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /* default organization toolbar header config */
 export const OrganizationToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -54,6 +55,7 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -66,11 +68,12 @@ export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<Organi
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup,
+            modalDialogService, confirmPopup, lightbox,
             OrganizationToolbarHeaderConfig, OrganizationToolbarActionsConfig);
     }
 }

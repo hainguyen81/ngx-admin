@@ -42,6 +42,7 @@ import {CheckboxCellComponent} from './smart-table/checkbox.cell.component';
 import {NgxTabsetComponent} from './tab/tab.component';
 import {ComponentPlaceholderDirective} from './component.placeholder.directive';
 import {ImageCellComponent} from './smart-table/image.cell.component';
+import {LightboxModule} from 'ngx-lightbox';
 
 @NgModule({
     imports: [
@@ -70,6 +71,9 @@ import {ImageCellComponent} from './smart-table/image.cell.component';
 
         /* Toaster */
         ToastrModule,
+
+        /* Lightbox */
+        LightboxModule,
 
         /* Table */
         Ng2SmartTableModule,

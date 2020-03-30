@@ -15,7 +15,8 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {NgxTabsetComponent} from './tab.component';
-import {throwError} from "rxjs";
+import {throwError} from 'rxjs';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Base horizontal split-pane component base on {NbTabsetModule}
@@ -45,6 +46,7 @@ export abstract class BaseTabsetComponent<T extends DataSource> extends NgxTabse
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -57,11 +59,12 @@ export abstract class BaseTabsetComponent<T extends DataSource> extends NgxTabse
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     /**

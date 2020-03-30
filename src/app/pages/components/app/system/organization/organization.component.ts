@@ -13,16 +13,11 @@ import {OrganizationDataSource} from '../../../../../services/implementation/org
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {OrganizationTreeviewComponentService} from './organization.treeview.component.service';
-import {OrganizationFormlyComponentService} from './organization.formly.component.service';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
-import {SplitAreaDirective} from 'angular-split';
 import {IOrganization} from '../../../../../@core/data/organization';
-import ComponentUtils from '../../../../../utils/component.utils';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
-import {OrganizationToolbarComponentService} from './organization.toolbar.component.service';
 import {IEvent} from '../../../abstract.component';
 import {
     ACTION_DELETE,
@@ -35,6 +30,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {throwError} from 'rxjs';
 import {ModalDialogService} from 'ngx-modal-dialog';
+import {Lightbox} from 'ngx-lightbox';
 
 /* Organization left area configuration */
 export const OrganizationTreeAreaConfig: ISplitAreaConfig = {
@@ -121,6 +117,7 @@ export class OrganizationSplitPaneComponent
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -133,11 +130,12 @@ export class OrganizationSplitPaneComponent
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
         confirmPopup || throwError('Could not inject ConfirmPopup');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);

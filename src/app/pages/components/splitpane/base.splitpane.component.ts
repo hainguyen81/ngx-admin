@@ -19,6 +19,7 @@ import {IComponentService} from '../../../services/interface.service';
 import {AbstractComponentService, BaseComponentService} from '../../../services/component.service';
 import ComponentUtils from '../../../utils/component.utils';
 import {throwError} from 'rxjs';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Base horizontal split-pane component base on {AngularSplitModule}
@@ -48,6 +49,7 @@ export abstract class BaseSplitPaneComponent<T extends DataSource> extends NgxSp
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -60,11 +62,12 @@ export abstract class BaseSplitPaneComponent<T extends DataSource> extends NgxSp
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     // -------------------------------------------------

@@ -1,1 +1,1 @@
-<img [src]="cell ? cell.getValue() : value ? value : false" onerror="this.style.display='none'">
+<img [src]="getImage()" onerror="this.style.display='none'" (click)="openLightbox()">

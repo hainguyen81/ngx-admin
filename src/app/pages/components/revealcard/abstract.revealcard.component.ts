@@ -19,6 +19,7 @@ import {NbCardBackComponent, NbCardFrontComponent, NbRevealCardComponent} from '
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Abstract RevealCard component base on {NbRevealCardComponent}
@@ -40,7 +41,7 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
 
     @ViewChildren(NbCardFrontComponent)
     private readonly queryRevealcardFrontComponent: QueryList<NbCardFrontComponent>;
-    private revealcardFontComponent: NbCardFrontComponent;
+    private revealcardFrontComponent: NbCardFrontComponent;
 
     @ViewChildren(NbCardBackComponent)
     private readonly queryRevealcardBackComponent: QueryList<NbCardBackComponent>;
@@ -63,7 +64,7 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
      * @return the {NbCardFrontComponent} instance
      */
     protected getRevealcardFrontComponent(): NbCardFrontComponent {
-        return this.revealcardFontComponent;
+        return this.revealcardFrontComponent;
     }
 
     /**
@@ -114,6 +115,7 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      * @param revealed specify the component whether had been revealed
      * @param showToggleButton specify whether showing toggle button to reveal
      */
@@ -129,12 +131,13 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox,
                           private revealed?: boolean | false,
                           private showToggleButton?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     ngAfterViewInit(): void {
@@ -143,8 +146,8 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
         if (!this.revealcardComponent) {
             this.revealcardComponent = ComponentUtils.queryComponent(this.queryRevealcardComponent);
         }
-        if (!this.revealcardFontComponent) {
-            this.revealcardFontComponent = ComponentUtils.queryComponent(this.queryRevealcardFrontComponent);
+        if (!this.revealcardFrontComponent) {
+            this.revealcardFrontComponent = ComponentUtils.queryComponent(this.queryRevealcardFrontComponent);
         }
         if (!this.revealcardBackComponent) {
             this.revealcardBackComponent = ComponentUtils.queryComponent(this.queryRevealcardBackComponent);

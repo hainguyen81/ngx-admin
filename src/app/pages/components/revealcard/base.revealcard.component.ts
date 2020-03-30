@@ -20,6 +20,7 @@ import {AbstractComponentService, BaseComponentService} from '../../../services/
 import ComponentUtils from '../../../utils/component.utils';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
 
 /**
  * Base reveal-card base on {NbRevealCardComponent}
@@ -50,6 +51,7 @@ export abstract class BaseRevealcardComponent<T extends DataSource> extends NgxR
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -62,11 +64,12 @@ export abstract class BaseRevealcardComponent<T extends DataSource> extends NgxR
                           @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     /**

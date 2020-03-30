@@ -23,6 +23,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import Timer = NodeJS.Timer;
+import {Lightbox} from 'ngx-lightbox';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -82,6 +83,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      * @param elementRef {ElementRef}
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
+     * @param lightbox {Lightbox}
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -94,11 +96,12 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
                 @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup) {
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup);
+            modalDialogService, confirmPopup, lightbox);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
     }
