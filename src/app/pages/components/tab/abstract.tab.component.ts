@@ -35,48 +35,48 @@ export interface ITabConfig {
      * Tab id
      * @type {string}
      */
-    tabId: string;
+    tabId?: string | null;
     /**
      * Tab icon name or icon config object
      * @type {string | NbIconConfig}
      */
-    tabIcon: string | NbIconConfig;
+    tabIcon?: string | NbIconConfig | null;
     /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
      */
-    disabled: boolean;
+    disabled?: boolean | false;
     /**
      * Show only icons when width is smaller than `tabs-icon-only-max-width`
      * @type {boolean}
      */
-    responsive: boolean;
-    route: string;
-    activeValue: boolean;
-    responsiveValue: boolean;
-    disabledValue: boolean;
+    responsive?: boolean | true;
+    route?: string | null;
+    activeValue?: boolean | false;
+    responsiveValue?: boolean | false;
+    disabledValue?: boolean | false;
     /**
      * Specifies active tab
      * @returns {boolean}
      */
-    active: boolean;
+    active?: boolean | false;
     /**
      * Lazy load content before tab selection
      * TODO: rename, as lazy is by default, and this is more `instant load`
      * @param {boolean} val
      */
-    lazyLoad: boolean;
+    lazyLoad?: boolean | false;
     /**
      * Badge text to display
      * @type string
      */
-    badgeText: string;
+    badgeText?: string | null;
     /**
      * Badge status (adds specific styles):
      * 'primary', 'info', 'success', 'warning', 'danger'
      * @param {string} val
      */
-    badgeStatus: NbComponentStatus;
+    badgeStatus?: NbComponentStatus | null;
     /**
      * Badge position.
      * Can be set to any class or to one of predefined positions:
@@ -84,7 +84,7 @@ export interface ITabConfig {
      * 'top start', 'top end', 'bottom start', 'bottom end'
      * @type string
      */
-    badgePosition: NbBadgePosition;
+    badgePosition?: NbBadgePosition | null;
 }
 
 /**
@@ -310,6 +310,17 @@ export abstract class AbstractTabComponent<T extends DataSource>
         tab.badgeStatus = config.badgeStatus;
         tab.badgePosition = config.badgePosition;
         tab['config'] = config;
+    }
+
+    /**
+     * Configure the specified tab index
+     * @param tabIndex to config
+     * @param config to apply
+     */
+    protected configTabByIndex(tabIndex: number, config: ITabConfig): void {
+        let tab: NbTabComponent;
+        tab = (0 <= tabIndex && tabIndex < this.getNumberOfTabs() ? this.getTabsComponent()[tabIndex] : null);
+        this.configTab(tab, config);
     }
 
     /**
