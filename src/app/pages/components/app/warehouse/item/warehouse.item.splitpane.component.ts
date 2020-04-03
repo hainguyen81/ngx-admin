@@ -27,6 +27,25 @@ import {
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
+import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
+
+/* Warehouse item left area configuration */
+export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {
+    size: 70,
+    /*minSize: 20,*/
+    maxSize: 70,
+    lockSize: false,
+    visible: true,
+};
+
+/* Warehouse item right area configuration */
+export const WarehouseItemSummaryAreaConfig: ISplitAreaConfig = {
+    size: 30,
+    /*minSize: 50,*/
+    maxSize: 30,
+    lockSize: false,
+    visible: true,
+};
 
 @Component({
     selector: 'ngx-split-pane-warehouse-item',
@@ -43,6 +62,7 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
     private warehouseTabsetComponent: WarehouseItemTabsetComponent;
     private warehouseSummaryComponent: WarehouseItemSummaryComponent;
     private warehouseToolbarComponent: WarehouseItemToolbarComponent;
+    private warehouseToolbarActionsListener: (e: IEvent) => void;
     private dataModel: IWarehouseItem;
 
     // -------------------------------------------------
@@ -93,6 +113,14 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
      */
     protected getToolbarComponent(): WarehouseItemToolbarComponent {
         return this.warehouseToolbarComponent;
+    }
+
+    /**
+     * Set the toolbar actions listener
+     * @param listener to apply
+     */
+    public setToolbarActionsListener(listener: (e: IEvent) => void): void {
+        this.warehouseToolbarActionsListener = listener;
     }
 
     // -------------------------------------------------
@@ -156,22 +184,24 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
         if (!event || !event.$data || !(event.$data as IToolbarActionsConfig)) {
             return;
         }
-        let action: IToolbarActionsConfig;
-        action = event.$data as IToolbarActionsConfig;
-        switch (action.id) {
-            case ACTION_SAVE:
-                // TODO Waiting for saving
-                break;
-            case ACTION_RESET:
-                // TODO Waiting for resetting
-                break;
-            case ACTION_DELETE:
-                // TODO Waiting for deleting
-                break;
-            case ACTION_BACK:
-                // TODO Waiting for backing
-                break;
-        }
+        if (!this.warehouseToolbarActionsListener) {
+            let action: IToolbarActionsConfig;
+            action = event.$data as IToolbarActionsConfig;
+            switch (action.id) {
+                case ACTION_SAVE:
+                    // TODO Waiting for saving
+                    break;
+                case ACTION_RESET:
+                    // TODO Waiting for resetting
+                    break;
+                case ACTION_DELETE:
+                    // TODO Waiting for deleting
+                    break;
+                case ACTION_BACK:
+                    // TODO Waiting for backing
+                    break;
+            }
+        } else this.warehouseToolbarActionsListener.apply(this, [ event ]);
     }
 
     // -------------------------------------------------
@@ -188,8 +218,10 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
 
         // create tabset component at left side
         this.warehouseTabsetComponent = super.setAreaComponent(0, WarehouseItemTabsetComponent);
+        this.configAreaByIndex(0, WarehouseItemTabsetAreaConfig);
 
         // create summary component at the right side
         this.warehouseSummaryComponent = super.setAreaComponent(1, WarehouseItemSummaryComponent);
+        this.configAreaByIndex(1, WarehouseItemSummaryAreaConfig);
     }
 }

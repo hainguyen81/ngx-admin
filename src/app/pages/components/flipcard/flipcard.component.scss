@@ -5,5 +5,9 @@
         transform: translate3d(0, 0, 0);
     }
 
-    ::ng-deep nb-flip-card .flipcard-body .front-container { margin-right: -200%; }
+    ::ng-deep nb-flip-card .flipcard-body .front-container { display: flex; }
+    ::ng-deep nb-flip-card .flipcard-body .back-container { display: none; }
+
+    ::ng-deep nb-flip-card.flipped .flipcard-body .front-container { display: none; }
+    ::ng-deep nb-flip-card.flipped .flipcard-body .back-container { display: flex; }
 }

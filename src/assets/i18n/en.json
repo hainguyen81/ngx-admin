@@ -318,6 +318,14 @@
                         "label": "Size",
                         "placeholder": "Size"
                     },
+                    "color": {
+                        "label": "Color",
+                        "placeholder": "Color"
+                    },
+                    "material": {
+                        "label": "Material",
+                        "placeholder": "Material"
+                    },
                     "unit": {
                         "label": "Unit",
                         "placeholder": "Unit"

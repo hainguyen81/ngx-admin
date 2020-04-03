@@ -22,6 +22,14 @@ import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
 import WarehouseItem, {ITEM_STATUS} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
+import {IEvent} from '../../../abstract.component';
+import {
+    ACTION_DELETE,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IToolbarActionsConfig,
+} from '../../../toolbar/abstract.toolbar.component';
+import {ACTION_BACK} from './warehouse.item.toolbar.component';
 
 @Component({
     selector: 'ngx-flip-card-warehouse-item',
@@ -109,6 +117,32 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
         this.createFlipComponents();
     }
 
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
+     */
+    onClickAction(event: IEvent) {
+        if (!event || !event.$data || !(event.$data as IToolbarActionsConfig)) {
+            return;
+        }
+        let action: IToolbarActionsConfig;
+        action = event.$data as IToolbarActionsConfig;
+        switch (action.id) {
+            case ACTION_SAVE:
+                // TODO Waiting for saving
+                break;
+            case ACTION_RESET:
+                // TODO Waiting for resetting
+                break;
+            case ACTION_DELETE:
+                // TODO Waiting for deleting
+                break;
+            case ACTION_BACK:
+                this.setFlipped(false);
+                break;
+        }
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
@@ -127,5 +161,6 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
                 this.setFlipped(true);
             });
         this.warehouseItemSplitPaneComponentBack = super.setBackComponent(WarehouseItemSplitPaneComponent);
+        this.warehouseItemSplitPaneComponentBack.setToolbarActionsListener((e) => this.onClickAction(e));
     }
 }

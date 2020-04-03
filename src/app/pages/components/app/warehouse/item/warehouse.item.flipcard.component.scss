@@ -4,4 +4,5 @@
     ::ng-deep nb-card {
         transform: translate3d(0, 0, 0);
     }
+    ::ng-deep nb-flip-card .flipcard-body .back-container ngx-split-pane-warehouse-item { flex: 1; }
 }

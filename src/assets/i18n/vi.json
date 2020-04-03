@@ -318,6 +318,14 @@
                         "label": "Kích thước",
                         "placeholder": "Kích thước"
                     },
+                    "color": {
+                        "label": "Màu sắc",
+                        "placeholder": "Màu sắc"
+                    },
+                    "material": {
+                        "label": "Chất liệu",
+                        "placeholder": "Chất liệu"
+                    },
                     "unit": {
                         "label": "ĐVT",
                         "placeholder": "ĐVT"
