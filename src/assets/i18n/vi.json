@@ -407,6 +407,8 @@
                 "height": "Cao",
                 "weight": "Trọng lượng",
                 "size": "Kích thước",
+                "color": "Màu sắc",
+                "material": "Chất liệu",
                 "unit": "ĐVT",
                 "rate_per_unit": "Tỷ lệ/ĐVT",
                 "dealer_price": "Giá sỉ",

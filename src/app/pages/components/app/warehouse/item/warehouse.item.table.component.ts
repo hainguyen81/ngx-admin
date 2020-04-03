@@ -134,6 +134,18 @@ export const WarehouseItemTableSettings = {
             sort: false,
             filter: false,
         },
+        color: {
+            title: 'warehouse.item.table.color',
+            type: 'string',
+            sort: false,
+            filter: false,
+        },
+        material: {
+            title: 'warehouse.item.table.material',
+            type: 'string',
+            sort: false,
+            filter: false,
+        },
         unit: {
             title: 'warehouse.item.table.unit',
             type: 'string',

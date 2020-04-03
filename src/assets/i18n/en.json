@@ -407,6 +407,8 @@
                 "height": "Height",
                 "weight": "Weight",
                 "size": "Size",
+                "color": "Color",
+                "material": "Material",
                 "unit": "Unit",
                 "rate_per_unit": "Rate/Unit",
                 "dealer_price": "Dealer Price",

@@ -207,6 +207,31 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-6',
+                key: 'color',
+                type: 'input',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.color.label',
+                    placeholder: 'warehouse.item.overview.form.color.placeholder',
+                    required: false,
+                },
+            },
+            {
+                className: 'col-6',
+                key: 'material',
+                type: 'input',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.material.label',
+                    placeholder: 'warehouse.item.overview.form.material.placeholder',
+                    required: false,
+                },
+            },
+        ],
+    },
+    {
+        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroup: [
+            {
+                className: 'col-6',
                 key: 'unit',
                 type: 'input',
                 templateOptions: {

@@ -43,6 +43,10 @@ export interface IWarehouseItem extends IModel {
     weight?: number | null;
     // Kích thước
     size?: number | null;
+    // Màu sắc
+    color?: string | null;
+    // Chất liệu
+    material?: string | null;
     // Đơn vị tính
     unit?: string | null;
     // Tỷ lệ trên mỗi đơn vị tính: Ví dụ 1 két bia = 24 chai
@@ -96,6 +100,8 @@ export default class WarehouseItem implements IWarehouseItem {
         public height?: number | null,
         public weight?: number | null,
         public size?: number | null,
+        public color?: string | null,
+        public material?: string | null,
         public unit?: string | null,
         public rate_per_unit?: number | null,
         public dealer_price?: number | null,
