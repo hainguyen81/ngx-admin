@@ -41,6 +41,7 @@ import {WarehouseItemOrdersSmartTableComponent} from './warehouse.item.orders.ta
 import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
+import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
 
 @NgModule({
     imports: [
@@ -119,6 +120,7 @@ import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.tab
         WarehouseItemPurchaseOrdersSmartTableComponent,
         WarehouseItemSaleOrdersSmartTableComponent,
         WarehouseItemInOutSmartTableComponent,
+        WarehouseItemAdjustmentSmartTableComponent,
     ],
     declarations: [
         WarehouseItemFlipcardComponent,
@@ -132,6 +134,7 @@ import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.tab
         WarehouseItemPurchaseOrdersSmartTableComponent,
         WarehouseItemSaleOrdersSmartTableComponent,
         WarehouseItemInOutSmartTableComponent,
+        WarehouseItemAdjustmentSmartTableComponent,
     ],
     providers: [
         {

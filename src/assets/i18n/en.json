@@ -381,6 +381,18 @@
                     "final_stock":  "REMAIN"
                 }
             },
+            "adjustment": {
+                "title": "Adjustments",
+                "table": {
+                    "date": "Date",
+                    "code": "Adjustment",
+                    "warehouse": "Warehouse",
+                    "quality": "Quality",
+                    "reason": "Reason",
+                    "createdUser": "Created by",
+                    "remark": "Remark"
+                }
+            },
             "table": {
                 "noData": "Not found any item in warehouse",
                 "code": "Code",

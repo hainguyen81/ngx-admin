@@ -8,6 +8,8 @@ export interface IWarehouseAdjust extends IModel {
     date: number;
     // Lý do điều chỉnh kho
     reason: string;
+    // Ghi chú
+    remark?: string | null;
     // Tập tin đính kèm
     file_attach?: string | null;
 
@@ -21,6 +23,7 @@ export default class WarehouseAdjust implements IWarehouseAdjust {
                 public code: string,
                 public date: number,
                 public reason: string,
+                public remark?: string | null,
                 public file_attach?: string | null,
                 public warehouse_id?: string | null,
                 public warehouse?: IWarehouse | null) {

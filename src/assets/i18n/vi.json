@@ -381,6 +381,18 @@
                     "final_stock":  "Tồn"
                 }
             },
+            "adjustment": {
+                "title": "Điều chỉnh",
+                "table": {
+                    "date": "Ngày",
+                    "code": "Mã điều chỉnh",
+                    "warehouse": "Kho hàng",
+                    "quality": "Số lượng",
+                    "reason": "Lý do",
+                    "createdUser": "Người tạo",
+                    "remark": "Ghi chú"
+                }
+            },
             "table": {
                 "noData": "Không có bất kỳ sản phẩm nào trong kho",
                 "code": "Mã SP",

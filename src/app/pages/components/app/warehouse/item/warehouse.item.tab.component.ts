@@ -24,6 +24,7 @@ import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
 import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
+import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
 
 /** The number of tabs */
 export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
@@ -170,6 +171,7 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
     private warehouseItemPurchaseTabComponent: WarehouseItemPurchaseOrdersSmartTableComponent;
     private warehouseItemSaleTabComponent: WarehouseItemSaleOrdersSmartTableComponent;
     private warehouseItemInOutTabComponent: WarehouseItemInOutSmartTableComponent;
+    private warehouseItemAdjustmentTabComponent: WarehouseItemAdjustmentSmartTableComponent;
     private dataModel: IWarehouseItem;
 
     // -------------------------------------------------
@@ -193,6 +195,8 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
         this.getOverviewTab() && this.getOverviewTab().setModel(dataModel);
         this.getPurchaseTab() && this.getPurchaseTab().setModel(dataModel);
         this.getSaleTab() && this.getSaleTab().setModel(dataModel);
+        this.getInOutTab() && this.getInOutTab().setModel(dataModel);
+        this.getAdjustmentTab() && this.getAdjustmentTab().setModel(dataModel);
     }
 
     /**
@@ -225,6 +229,14 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
      */
     protected getInOutTab(): WarehouseItemInOutSmartTableComponent {
         return this.warehouseItemInOutTabComponent;
+    }
+
+    /**
+     * Get the {WarehouseItemAdjustmentSmartTableComponent} instance
+     * @return the {WarehouseItemAdjustmentSmartTableComponent} instance
+     */
+    protected getAdjustmentTab(): WarehouseItemAdjustmentSmartTableComponent {
+        return this.warehouseItemAdjustmentTabComponent;
     }
 
     // -------------------------------------------------

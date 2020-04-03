@@ -4,7 +4,7 @@ import {IWarehouseItem} from './warehouse.item';
 
 export interface IWarehouseAdjustDetail extends IModel {
     // Số lượng
-    quanlity: number;
+    quality: number;
 
     // foreign keys
     item_id?: string | null;
@@ -15,7 +15,7 @@ export interface IWarehouseAdjustDetail extends IModel {
 
 export default class WarehouseAdjustDetail implements IWarehouseAdjustDetail {
     constructor(public id: string,
-                public quanlity: number,
+                public quality: number,
                 public item_id?: string | null,
                 public item?: IWarehouseItem | null,
                 public adjust_id?: string | null,
