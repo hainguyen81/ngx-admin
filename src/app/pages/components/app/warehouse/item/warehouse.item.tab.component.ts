@@ -153,6 +153,37 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      * @returns {boolean}
      */
     active: true,
+}, {
+    /**
+     * Tab title
+     * @type {string}
+     */
+    tabTitle: 'warehouse.item.adjustment.title',
+    /**
+     * Tab id
+     * @type {string}
+     */
+    tabId: 'WAREHOUSE_ITEM_ADJUSTMENT',
+    /**
+     * Tab icon name or icon config object
+     * @type {string | NbIconConfig}
+     */
+    tabIcon: { icon: 'adjust', pack: 'fa' },
+    /**
+     * Item is disabled and cannot be opened.
+     * @type {boolean}
+     */
+    disabled: false,
+    /**
+     * Show only icons when width is smaller than `tabs-icon-only-max-width`
+     * @type {boolean}
+     */
+    responsive: true,
+    /**
+     * Specifies active tab
+     * @returns {boolean}
+     */
+    active: true,
 }];
 
 @Component({
@@ -318,6 +349,11 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
         // in/out tab
         this.warehouseItemInOutTabComponent = this.setTabComponent(
             tabIndex, WarehouseItemInOutSmartTableComponent);
+        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
+        tabIndex += 1;
+        // adjustment tab
+        this.warehouseItemAdjustmentTabComponent = this.setTabComponent(
+            tabIndex, WarehouseItemAdjustmentSmartTableComponent);
         this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
         tabIndex += 1;
     }
