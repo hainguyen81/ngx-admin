@@ -44,7 +44,12 @@
                 "department": "Phòng ban",
                 "team_group": "Đội / Nhóm"
             },
-            "warehouseType": {
+            "warehouseCategoryStatus": {
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
+                "notActivated": "Chưa kích hoạt"
+            },
+            "warehouseCategoryType": {
                 "category": "Chủng loại",
                 "type": "Loại",
                 "brand": "Hãng sản xuất"
@@ -257,6 +262,37 @@
     "warehouse": {
         "title": "Quản lý kho",
         "menu": "Quản lý kho",
+        "category": {
+            "title": "Quản lý phân loại",
+            "menu": "Quản lý phân loại",
+            "new": "Phân loại mới",
+            "form": {
+                "belongTo": {
+                    "label": "Phân loại cha",
+                    "placeholder": "Phân loại cha"
+                },
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại"
+                },
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "image": {
+                    "label": "Hình ảnh",
+                    "placeholder": "Hình ảnh"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
+            }
+        },
         "item": {
             "title": "Quản lý trang thiết bị",
             "menu": "Quản lý trang thiết bị",

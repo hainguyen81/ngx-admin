@@ -1,5 +1,11 @@
 import {IModule} from '../../data/system/module';
-import {MockApiCustomer, MockApiOrganization, MockApiUser, MockApiWarehouseItem} from './mock.api';
+import {
+    MockApiCustomer,
+    MockApiOrganization,
+    MockApiUser,
+    MockApiWarehouseCategory,
+    MockApiWarehouseItem,
+} from './mock.api';
 import {IdGenerators} from '../../../config/generator.config';
 
 export const MockModuleUser: IModule = {
@@ -43,6 +49,15 @@ export const MockModuleSystem: IModule = {
     ],
 };
 
+export const MockModuleWarehouseCategory: IModule = {
+    code: 'WAREHOUSE_CATEGORY_MODULE',
+    name: 'warehouse.category.menu',
+    apiId: MockApiWarehouseCategory.id,
+    api: MockApiWarehouseCategory,
+    id: IdGenerators.oid.generate(),
+    children: [],
+};
+
 export const MockModuleWarehouseItem: IModule = {
     code: 'WAREHOUSE_ITEM_MODULE',
     name: 'warehouse.item.menu',
@@ -60,6 +75,7 @@ export const MockModuleWarehouse: IModule = {
     id: IdGenerators.oid.generate(),
     icon: {icon: 'warehouse', pack: 'fas'},
     children: [
+        MockModuleWarehouseCategory,
         MockModuleWarehouseItem,
     ],
 };

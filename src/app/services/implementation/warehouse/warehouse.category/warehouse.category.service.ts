@@ -17,7 +17,7 @@ export class WarehouseCategoryDbService extends AbstractDbService<IWarehouseCate
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService) {
-        super(dbService, logger, connectionService, DB_STORE.warehouse);
+        super(dbService, logger, connectionService, DB_STORE.warehouse_category);
     }
 
     getAll(): Promise<IWarehouseCategory[]> {

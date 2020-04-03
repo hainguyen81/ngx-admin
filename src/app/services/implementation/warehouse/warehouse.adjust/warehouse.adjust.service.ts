@@ -17,7 +17,7 @@ export class WarehouseAdjustDbService extends AbstractDbService<IWarehouseAdjust
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService) {
-        super(dbService, logger, connectionService, DB_STORE.warehouse);
+        super(dbService, logger, connectionService, DB_STORE.warehouse_adjust);
     }
 
     getAll(): Promise<IWarehouseAdjust[]> {

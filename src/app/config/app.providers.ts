@@ -40,18 +40,25 @@ import {Meta, Title} from '@angular/platform-browser';
 import PageHeaderService from '../services/header.service';
 import {PagesGuard} from '../pages/pages.guard.service';
 import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
-import {WarehouseDbService, WarehouseHttpService} from '../services/implementation/warehouse/warehouse/warehouse.service';
+import {
+    WarehouseDbService,
+    WarehouseHttpService,
+} from '../services/implementation/warehouse/warehouse/warehouse.service';
 import {WarehouseDatasource} from '../services/implementation/warehouse/warehouse/warehouse.datasource';
 import {
     WarehouseOrderDbService,
     WarehouseOrderHttpService,
 } from '../services/implementation/warehouse/warehouse.order/warehouse.order.service';
-import {WarehouseOrderDatasource} from '../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
+import {
+    WarehouseOrderDatasource,
+} from '../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {
     WarehouseOrderDetailDbService,
     WarehouseOrderDetailHttpService,
 } from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service';
-import {WarehouseOrderDetailDatasource} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource';
+import {
+    WarehouseOrderDetailDatasource,
+} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource';
 import {
     WarehouseItemDbService,
     WarehouseItemHttpService,
@@ -61,27 +68,37 @@ import {
     WarehouseInventoryDbService,
     WarehouseInventoryHttpService,
 } from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
-import {WarehouseInventoryDatasource} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {
+    WarehouseInventoryDatasource,
+} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {
     WarehouseInventoryDetailDbService,
     WarehouseInventoryDetailHttpService,
 } from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service';
-import {WarehouseInventoryDetailDatasource} from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {
+    WarehouseInventoryDetailDatasource,
+} from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {
     WarehouseCategoryDbService,
     WarehouseCategoryHttpService,
 } from '../services/implementation/warehouse/warehouse.category/warehouse.category.service';
-import {WarehouseCategoryDatasource} from '../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {
+    WarehouseCategoryDatasource,
+} from '../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {
     WarehouseAdjustDbService,
     WarehouseAdjustHttpService,
 } from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service';
-import {WarehouseAdjustDatasource} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
+import {
+    WarehouseAdjustDatasource,
+} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
 import {
     WarehouseAdjustDetailDbService,
     WarehouseAdjustDetailHttpService,
 } from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service';
-import {WarehouseAdjustDetailDatasource} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
+import {
+    WarehouseAdjustDetailDatasource,
+} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {

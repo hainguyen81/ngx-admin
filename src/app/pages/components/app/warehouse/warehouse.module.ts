@@ -26,6 +26,7 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {WarehouseCategoryModule} from './category/warehouse.category.module';
 
 @NgModule({
     imports: [
@@ -94,6 +95,7 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
         /* Modules */
         WarehouseItemModule,
+        WarehouseCategoryModule,
     ],
 })
 export class WarehouseModule {

@@ -1,4 +1,12 @@
-import {InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type} from '@angular/core';
+import {
+    InjectionToken,
+    Injector,
+    ModuleWithProviders,
+    NgModule,
+    Optional,
+    SkipSelf,
+    Type,
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CommonProviders, CustomerProviders, OrganizationProviders, UserProviders} from '../../config/app.providers';
 import {MockUserService} from './system/users.service';
@@ -11,6 +19,8 @@ import {MockCustomerService} from './system/customers.service';
 import {CustomerDbService} from '../../services/implementation/system/customer/customer.service';
 import {MockOrganizationService} from './system/organization.service';
 import {OrganizationDbService} from '../../services/implementation/system/organization/organization.service';
+import {MockWarehouseCategoryService} from './warehouse/category.service';
+import {WarehouseCategoryDbService} from '../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
 
 export const MOCK_DATA_PROVIDERS = [
     {
@@ -27,11 +37,19 @@ export const MOCK_DATA_PROVIDERS = [
     },
 ];
 
+export const MOCK_WAREHOUSE_DATA_PROVIDERS = [
+    {
+        provide: MockWarehouseCategoryService, useClass: MockWarehouseCategoryService,
+        deps: [WarehouseCategoryDbService, NGXLogger],
+    },
+];
+
 export const MOCK_PROVIDERS = CommonProviders
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
-    .concat(MOCK_DATA_PROVIDERS);
+    .concat(MOCK_DATA_PROVIDERS)
+    .concat(MOCK_WAREHOUSE_DATA_PROVIDERS);
 
 @NgModule({
     imports: [
@@ -71,7 +89,10 @@ export class MockDataModule {
             return;
         }
 
-        MOCK_DATA_PROVIDERS.forEach(provider => {
+        /** Common data providers */
+        [].concat(MOCK_DATA_PROVIDERS)
+            .concat(MOCK_WAREHOUSE_DATA_PROVIDERS)
+            .forEach(provider => {
             const mockService: any = this.getService(provider['provide']);
             mockService && typeof mockService['initialize'] === 'function'
             && mockService['initialize']['apply'](mockService);

@@ -17,7 +17,7 @@ export class WarehouseItemDbService extends AbstractDbService<IWarehouseItem> {
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService) {
-        super(dbService, logger, connectionService, DB_STORE.warehouse);
+        super(dbService, logger, connectionService, DB_STORE.warehouse_item);
     }
 
     getAll(): Promise<IWarehouseItem[]> {

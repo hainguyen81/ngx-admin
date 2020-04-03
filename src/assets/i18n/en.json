@@ -44,7 +44,12 @@
                 "department": "Department",
                 "team_group": "Team/Group"
             },
-            "warehouseType": {
+            "warehouseCategoryStatus": {
+                "activated": "Activated",
+                "locked": "Locked",
+                "notActivated": "Not activated"
+            },
+            "warehouseCategoryType": {
                 "category": "Category",
                 "type": "Type",
                 "brand": "Brand"
@@ -257,6 +262,37 @@
     "warehouse": {
         "title": "Warehouse Management",
         "menu": "Warehouse Management",
+        "category": {
+            "title": "Warehouse Category Management",
+            "menu": "Warehouse Category Management",
+            "new": "New Category",
+            "form": {
+                "belongTo": {
+                    "label": "Upper Category",
+                    "placeholder": "Upper Category"
+                },
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type"
+                },
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name"
+                },
+                "image": {
+                    "label": "Image",
+                    "placeholder": "Image"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                }
+            }
+        },
         "item": {
             "title": "Warehouse Item Management",
             "menu": "Warehouse Item",

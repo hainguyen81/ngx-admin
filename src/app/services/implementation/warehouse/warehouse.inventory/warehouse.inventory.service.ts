@@ -17,7 +17,7 @@ export class WarehouseInventoryDbService extends AbstractDbService<IWarehouseInv
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService) {
-        super(dbService, logger, connectionService, DB_STORE.warehouse);
+        super(dbService, logger, connectionService, DB_STORE.warehouse_inventory);
     }
 
     getAll(): Promise<IWarehouseInventory[]> {
