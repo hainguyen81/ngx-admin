@@ -1,7 +1,7 @@
 @import '../../../../../@theme/styles/themes';
 
 @include nb-install-component() {
-    ::ng-deep ngx-formly-warehouse-category-image ngx-image-gallery .images-album {
+    ::ng-deep ngx-formly-image-field ngx-image-gallery .images-album {
         max-width: unset;
 
         .primary-image .primary-image-preview {

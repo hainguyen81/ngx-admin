@@ -44,6 +44,7 @@ import {ComponentPlaceholderDirective} from './component.placeholder.directive';
 import {ImageCellComponent} from './smart-table/image.cell.component';
 import {LightboxModule} from 'ngx-lightbox';
 import {NgxImageGalleryComponent} from './image/image.component';
+import {ImageGalleryFormFieldComponent} from './formly/formly.image.field';
 
 @NgModule({
     imports: [
@@ -97,7 +98,14 @@ import {NgxImageGalleryComponent} from './image/image.component';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            types: [
+                {
+                    name: 'images-gallery',
+                    component: ImageGalleryFormFieldComponent,
+                },
+            ],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -117,6 +125,7 @@ import {NgxImageGalleryComponent} from './image/image.component';
         CheckboxCellComponent,
         ImageCellComponent,
         NgxImageGalleryComponent,
+        ImageGalleryFormFieldComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -132,12 +141,14 @@ import {NgxImageGalleryComponent} from './image/image.component';
         NotFoundComponent,
         ComponentPlaceholderDirective,
         NgxImageGalleryComponent,
+        ImageGalleryFormFieldComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
     ],
     exports: [
         NgxImageGalleryComponent,
+        ImageGalleryFormFieldComponent,
     ],
 })
 export class ComponentsModule {

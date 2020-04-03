@@ -1,16 +1,16 @@
 import {FieldType} from '@ngx-formly/material';
-import {Component, Inject, OnInit} from '@angular/core';
-import {IEvent} from '../../../abstract.component';
+import {Component, OnInit} from '@angular/core';
+import {IEvent} from '../abstract.component';
 
 /**
  * Warehouse Category Image field component base on {FieldType}
  */
 @Component({
-    selector: 'ngx-formly-warehouse-category-image',
-    templateUrl: './warehouse.category.image.component.html',
-    styleUrls: ['./warehouse.category.image.component.scss'],
+    selector: 'ngx-formly-image-field',
+    templateUrl: './formly.image.field.html',
+    styleUrls: ['./formly.image.field.scss'],
 })
-export class WarehouseCategoryImageFormFieldComponent extends FieldType
+export class ImageGalleryFormFieldComponent extends FieldType
     implements OnInit {
 
     /**

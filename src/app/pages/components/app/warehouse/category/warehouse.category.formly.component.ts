@@ -110,7 +110,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col',
                 key: 'image',
-                type: 'warehouse-category-images-gallery',
+                type: 'images-gallery',
                 templateOptions: {
                     label: 'warehouse.category.form.image.label',
                     placeholder: 'warehouse.category.form.image.placeholder',
