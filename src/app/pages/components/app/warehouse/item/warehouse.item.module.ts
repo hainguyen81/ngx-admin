@@ -40,6 +40,7 @@ import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.co
 import {WarehouseItemOrdersSmartTableComponent} from './warehouse.item.orders.table.component';
 import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
+import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 
 @NgModule({
     imports: [
@@ -117,6 +118,7 @@ import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.
         WarehouseItemOrdersSmartTableComponent,
         WarehouseItemPurchaseOrdersSmartTableComponent,
         WarehouseItemSaleOrdersSmartTableComponent,
+        WarehouseItemInOutSmartTableComponent,
     ],
     declarations: [
         WarehouseItemFlipcardComponent,
@@ -129,6 +131,7 @@ import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.
         WarehouseItemOrdersSmartTableComponent,
         WarehouseItemPurchaseOrdersSmartTableComponent,
         WarehouseItemSaleOrdersSmartTableComponent,
+        WarehouseItemInOutSmartTableComponent,
     ],
     providers: [
         {

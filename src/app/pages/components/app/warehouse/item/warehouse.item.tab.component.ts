@@ -23,6 +23,7 @@ import {ITabConfig} from '../../../tab/abstract.tab.component';
 import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
 import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
+import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 
 /** The number of tabs */
 export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
@@ -120,6 +121,37 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      * @returns {boolean}
      */
     active: true,
+}, {
+    /**
+     * Tab title
+     * @type {string}
+     */
+    tabTitle: 'warehouse.item.in_out.title',
+    /**
+     * Tab id
+     * @type {string}
+     */
+    tabId: 'WAREHOUSE_ITEM_IN_OUT',
+    /**
+     * Tab icon name or icon config object
+     * @type {string | NbIconConfig}
+     */
+    tabIcon: { icon: 'exchange', pack: 'fa' },
+    /**
+     * Item is disabled and cannot be opened.
+     * @type {boolean}
+     */
+    disabled: false,
+    /**
+     * Show only icons when width is smaller than `tabs-icon-only-max-width`
+     * @type {boolean}
+     */
+    responsive: true,
+    /**
+     * Specifies active tab
+     * @returns {boolean}
+     */
+    active: true,
 }];
 
 @Component({
@@ -137,6 +169,7 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
     private warehouseItemOverviewTabComponent: WarehouseItemOverviewFormlyComponent;
     private warehouseItemPurchaseTabComponent: WarehouseItemPurchaseOrdersSmartTableComponent;
     private warehouseItemSaleTabComponent: WarehouseItemSaleOrdersSmartTableComponent;
+    private warehouseItemInOutTabComponent: WarehouseItemInOutSmartTableComponent;
     private dataModel: IWarehouseItem;
 
     // -------------------------------------------------
@@ -184,6 +217,14 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
      */
     protected getSaleTab(): WarehouseItemSaleOrdersSmartTableComponent {
         return this.warehouseItemSaleTabComponent;
+    }
+
+    /**
+     * Get the {WarehouseItemInOutSmartTableComponent} instance
+     * @return the {WarehouseItemInOutSmartTableComponent} instance
+     */
+    protected getInOutTab(): WarehouseItemInOutSmartTableComponent {
+        return this.warehouseItemInOutTabComponent;
     }
 
     // -------------------------------------------------
@@ -260,6 +301,11 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
         // sale tab
         this.warehouseItemSaleTabComponent = this.setTabComponent(
             tabIndex, WarehouseItemSaleOrdersSmartTableComponent);
+        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
+        tabIndex += 1;
+        // in/out tab
+        this.warehouseItemInOutTabComponent = this.setTabComponent(
+            tabIndex, WarehouseItemInOutSmartTableComponent);
         this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
         tabIndex += 1;
     }

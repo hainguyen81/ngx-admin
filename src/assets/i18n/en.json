@@ -370,6 +370,17 @@
                     "status":  "Status"
                 }
             },
+            "in_out": {
+                "title": "IN/OUT",
+                "table": {
+                    "noData": "Not found any information",
+                    "date":  "Date",
+                    "warehouse":  "Warehouse",
+                    "stock_in":  "IN",
+                    "stock_out":  "OUT",
+                    "final_stock":  "REMAIN"
+                }
+            },
             "table": {
                 "noData": "Not found any item in warehouse",
                 "code": "Code",

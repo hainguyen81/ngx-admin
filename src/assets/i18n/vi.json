@@ -370,6 +370,17 @@
                     "status":  "Trạng thái"
                 }
             },
+            "in_out": {
+                "title": "Nhập/xuất",
+                "table": {
+                    "noData": "Không có bất kỳ thông tin nào",
+                    "date":  "Ngày xuất/nhập",
+                    "warehouse":  "Kho hàng",
+                    "stock_in":  "Nhập",
+                    "stock_out":  "Xuất",
+                    "final_stock":  "Tồn"
+                }
+            },
             "table": {
                 "noData": "Không có bất kỳ sản phẩm nào trong kho",
                 "code": "Mã SP",
