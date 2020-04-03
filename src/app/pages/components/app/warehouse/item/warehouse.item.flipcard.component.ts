@@ -138,7 +138,18 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
                 // TODO Waiting for deleting
                 break;
             case ACTION_BACK:
-                this.setFlipped(false);
+                if (this.getWarehouseItemSplitPaneComponentBack().hasChanged()) {
+                    this.getConfirmPopup().show({
+                        title: this.translate('warehouse.item.title'),
+                        content: this.translate('toast.confirm.lose_data.message'),
+                        color: 'warn',
+                        cancelButton: this.translate('toast.confirm.lose_data.cancel'),
+                        okButton: this.translate('toast.confirm.lose_data.ok'),
+                    }).subscribe(value => value && this.setFlipped(false));
+
+                } else {
+                    this.setFlipped(false);
+                }
                 break;
         }
     }

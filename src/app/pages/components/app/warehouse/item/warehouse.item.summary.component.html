@@ -3,8 +3,9 @@
         <ngx-image-gallery #imageGallery
                            [showAlbum]="true"
                            [allowModified]="true"
-                           [images]="getDataModelImages()">
-        </ngx-image-gallery>
+                           [images]="getDataModelImages()"
+                           (onChange)="onChange($event)"
+        ></ngx-image-gallery>
         <div [class.d-table]="true" [class.pt-4]="true">
             <table [class.border-0]="true" style="min-width: 300px; width: 300px;" cellpadding="5">
                 <tbody>

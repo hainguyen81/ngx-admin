@@ -32,10 +32,19 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
     // -------------------------------------------------
 
     private dataModel: IWarehouseItem;
+    private isChanged: boolean | false;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating the data model whether has been changed
+     * @return true for changed; else
+     */
+    public hasChanged(): boolean {
+        return this.isChanged;
+    }
 
     /**
      * Get the data model
@@ -105,6 +114,21 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver, viewContainerRef,
             changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    /**
+     * Raise while changing the images list of the data model
+     * @param e {IEvent} with $data as images list
+     */
+    protected onChange(e: IEvent): void {
+        this.isChanged = true;
+        if (this.getDataModel()) {
+            this.getDataModel().image = e.$data;
+        }
     }
 
     // -------------------------------------------------

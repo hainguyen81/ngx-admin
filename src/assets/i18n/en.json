@@ -105,6 +105,11 @@
                     "message": "Do you really want to delete data?",
                     "cancel": "Cancel",
                     "ok": "OK"
+                },
+                "lose_data": {
+                    "message": "Data, has been changed, will not be saved if you continue. Do you want to continue?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
                 }
             },
             "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"

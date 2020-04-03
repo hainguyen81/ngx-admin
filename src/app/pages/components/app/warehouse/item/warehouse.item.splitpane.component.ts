@@ -70,6 +70,14 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating the data model whether has been changed
+     * @return true for changed; else
+     */
+    public hasChanged(): boolean {
+        return this.getSummaryComponent().hasChanged();
+    }
+
+    /**
      * Get the data model
      * @return data model
      */

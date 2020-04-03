@@ -105,6 +105,11 @@
                     "message": "Bạn thật sự muốn xóa dữ liệu?",
                     "cancel": "Bỏ qua",
                     "ok": "Đồng ý"
+                },
+                "lose_data": {
+                    "message": "Dữ liệu thay đổi sẽ không được lưu nếu bạn tiếp tục. Bạn có muốn tiếp tục không?",
+                    "cancel": "Bỏ qua",
+                    "ok": "Đồng ý"
                 }
             },
             "unknown": "Bạn không có đủ quyền hoặc dữ liệu đã bị sai! Vui lòng liên hệ Quản trị viên để được hỗ trợ!"
