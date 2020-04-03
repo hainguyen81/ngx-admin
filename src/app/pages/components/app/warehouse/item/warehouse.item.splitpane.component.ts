@@ -74,7 +74,8 @@ export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<Ware
      * @return true for changed; else
      */
     public hasChanged(): boolean {
-        return this.getSummaryComponent().hasChanged();
+        return this.getSummaryComponent().hasChanged()
+            || this.getTabsetComponent().hasChanged();
     }
 
     /**

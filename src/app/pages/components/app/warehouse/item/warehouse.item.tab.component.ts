@@ -210,6 +210,14 @@ export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseI
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating the data model whether has been changed
+     * @return true for changed; else
+     */
+    public hasChanged(): boolean {
+        return this.getOverviewTab().getFormGroup().dirty;
+    }
+
+    /**
      * Get the data model
      * @return data model
      */
