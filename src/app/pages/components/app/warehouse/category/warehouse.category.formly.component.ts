@@ -83,7 +83,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col',
+                className: 'col-6',
                 key: 'code',
                 type: 'input',
                 templateOptions: {
@@ -92,13 +92,8 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                 },
             },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
             {
-                className: 'col',
+                className: 'col-6',
                 key: 'name',
                 type: 'input',
                 templateOptions: {
@@ -115,7 +110,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col',
                 key: 'image',
-                type: 'input',
+                type: 'warehouse-category-images-gallery',
                 templateOptions: {
                     label: 'warehouse.category.form.image.label',
                     placeholder: 'warehouse.category.form.image.placeholder',
@@ -145,7 +140,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
 @Component({
     selector: 'ngx-formly-form-warehouse-category',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['../../../formly/formly.component.scss'],
+    styleUrls: ['../../../formly/formly.component.scss', './warehouse.category.formly.component.scss'],
 })
 export class WarehouseCategoryFormlyComponent
     extends BaseFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource> {

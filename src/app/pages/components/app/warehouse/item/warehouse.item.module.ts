@@ -42,6 +42,7 @@ import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.p
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
+import {ComponentsModule} from '../../../components.module';
 
 @NgModule({
     imports: [
@@ -104,6 +105,9 @@ import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjus
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
+
+        /* Application components module */
+        ComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

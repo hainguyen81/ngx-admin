@@ -1,0 +1,12 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep ngx-formly-warehouse-category-image ngx-image-gallery .images-album {
+        max-width: unset;
+
+        .primary-image .primary-image-preview {
+            display: inline-block !important;
+            max-width: 200px;
+        }
+    }
+}

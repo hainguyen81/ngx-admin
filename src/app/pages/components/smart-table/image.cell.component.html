@@ -1,1 +1,5 @@
-<img [src]="getImage()" onerror="this.style.display='none'" (click)="openLightbox()">
+<ngx-image-gallery #imageGallery
+                   [showAlbum]="true"
+                   [allowModified]="false"
+                   [images]="getImages()">
+</ngx-image-gallery>

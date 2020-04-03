@@ -35,6 +35,8 @@ import {
     WarehouseCategoryDbService,
     WarehouseCategoryHttpService,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
+import {WarehouseCategoryImageFormFieldComponent} from './warehouse.category.image.component';
+import {ComponentsModule} from '../../../components.module';
 
 @NgModule({
     imports: [
@@ -75,7 +77,13 @@ import {
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            types: [
+                {
+                    name: 'warehouse-category-images-gallery',
+                    component: WarehouseCategoryImageFormFieldComponent},
+            ],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -87,6 +95,9 @@ import {
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
 
+        /* Application components module */
+        ComponentsModule,
+
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
@@ -95,12 +106,14 @@ import {
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
+        WarehouseCategoryImageFormFieldComponent,
     ],
     declarations: [
         WarehouseCategoryTreeviewComponent,
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
+        WarehouseCategoryImageFormFieldComponent,
     ],
     providers: [
         {

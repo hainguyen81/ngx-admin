@@ -43,6 +43,7 @@ import {NgxTabsetComponent} from './tab/tab.component';
 import {ComponentPlaceholderDirective} from './component.placeholder.directive';
 import {ImageCellComponent} from './smart-table/image.cell.component';
 import {LightboxModule} from 'ngx-lightbox';
+import {NgxImageGalleryComponent} from './image/image.component';
 
 @NgModule({
     imports: [
@@ -115,6 +116,7 @@ import {LightboxModule} from 'ngx-lightbox';
     entryComponents: [
         CheckboxCellComponent,
         ImageCellComponent,
+        NgxImageGalleryComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -129,9 +131,13 @@ import {LightboxModule} from 'ngx-lightbox';
         NgxTabsetComponent,
         NotFoundComponent,
         ComponentPlaceholderDirective,
+        NgxImageGalleryComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
+    ],
+    exports: [
+        NgxImageGalleryComponent,
     ],
 })
 export class ComponentsModule {

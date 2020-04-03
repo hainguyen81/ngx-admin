@@ -42,7 +42,7 @@ export interface IWarehouseCategory extends IModel {
     name: string;
     type: CATEGORY_TYPE | CATEGORY_TYPE.CATEGORY;
     status?: CATEGORY_STATUS | CATEGORY_STATUS.NOT_ACTIVATED;
-    image?: string | null;
+    image?: string[] | [];
     remark?: string | null;
 
     // foreign keys
@@ -57,7 +57,7 @@ export default class WarehouseCategory implements IWarehouseCategory {
                 public name: string,
                 public type: CATEGORY_TYPE | CATEGORY_TYPE.CATEGORY,
                 public status?: CATEGORY_STATUS | CATEGORY_STATUS.NOT_ACTIVATED,
-                public image?: string | null,
+                public image?: string[] | [],
                 public remark?: string | null,
                 public parentId?: string | null,
                 public parent?: IWarehouseCategory | null,
