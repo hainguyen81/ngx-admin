@@ -30,6 +30,7 @@ import {
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
 import {ACTION_BACK} from './warehouse.item.toolbar.component';
+import {ConfirmPopupConfig} from 'ngx-material-popup/lib/configs/confirm-popup.config';
 
 @Component({
     selector: 'ngx-flip-card-warehouse-item',
@@ -139,13 +140,16 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
                 break;
             case ACTION_BACK:
                 if (this.getWarehouseItemSplitPaneComponentBack().hasChanged()) {
-                    this.getConfirmPopup().show({
+                    let popupConfig: ConfirmPopupConfig;
+                    popupConfig = {
                         title: this.translate('warehouse.item.title'),
-                        content: this.translate('toast.confirm.lose_data.message'),
+                        content: this.translate('common.toast.confirm.lose_data.message'),
                         color: 'warn',
-                        cancelButton: this.translate('toast.confirm.lose_data.cancel'),
-                        okButton: this.translate('toast.confirm.lose_data.ok'),
-                    }).subscribe(value => value && this.setFlipped(false));
+                        cancelButton: this.translate('common.toast.confirm.lose_data.cancel'),
+                        okButton: this.translate('common.toast.confirm.lose_data.ok'),
+                    };
+                    this.getConfirmPopup().show(popupConfig)
+                        .subscribe(value => value && this.setFlipped(false));
 
                 } else {
                     this.setFlipped(false);
