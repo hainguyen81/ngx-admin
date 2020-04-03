@@ -63,6 +63,8 @@ export const BaseToolbarActions: IToolbarActionsConfig[] = [{
     shape: 'rectangle',
 }];
 
+export const IMAGE_FILE_EXTENSIONS: string[] = ['jpg', 'jpeg', 'png', 'bmp', 'gif'];
+
 export const COMMON = {
     theme: 'default',
     logConfig: LogConfig,
@@ -73,4 +75,5 @@ export const COMMON = {
     itemsPerPage: 10,
     baseMenu: BaseContextMenu,
     baseToolbarActions: BaseToolbarActions,
+    imageFileExtensions: IMAGE_FILE_EXTENSIONS,
 };

@@ -1,0 +1,49 @@
+<div [class.d-table]="true" class="images-album">
+    <div [class.d-table-row]="true" [class.border]="true" class="primary-image">
+        <div [class.d-table-cell]="true"
+             [class.border]="true"
+             [class.rounded-circle]="true"
+             [class.overflow-hidden]="true"
+             class="primary-image-preview">
+            <img #imagePreview [src]="getImage()" [width]="200" [height]="200"
+                 (error)="imagePreview.style.visibility = 'hidden'"
+                 (load)="imagePreview.style.visibility = 'visible'"
+                 (click)="showLightbox(imagePreview.src)">
+        </div>
+    </div>
+    <div [class.d-table-row]="true" *ngIf="showAlbum() || allowModified()" class="images-gallery">
+        <div [class.pt-2]="true"
+             [class.d-table-cell]="(image || '').length"
+             [class.d-none]="!(image || '').length"
+             [class.position-relative]="true"
+             [class.float-left]="true"
+             [class.mr-1]="true"
+             (click)="imagePreview.src = image"
+             *ngFor="let image of getImages()"
+             class="images-gallery-item">
+            <img [src]="image" [width]="48" [height]="48"
+                 [class.pt-2]="true"
+                 [class.d-table-cell]="(image || '').length"
+                 [class.d-none]="!(image || '').length"
+                 [class.float-left]="true"
+                 [class.mr-1]="true"
+                 (click)="imagePreview.src = image">
+            <nb-icon *ngIf="allowModified()"
+                     pack="fa" icon="times"
+                     [class.d-block]="true"
+                     [class.position-absolute]="true"
+                     class="images-gallery-item-remover"
+                     (click)="removeImage(image)">
+            </nb-icon>
+        </div>
+        <nb-icon *ngIf="allowModified()"
+                 pack="fa" icon="plus"
+                 [class.d-table-cell]="true"
+                 [class.pt-2]="true"
+                 [class.float-left]="true"
+                 class="images-gallery-item-pluser"
+                 (click)="file.click()">
+            <input #file type="file" [multiple]="true" (change)="onSelectFile({ $event: $event }); file.value = '';">
+        </nb-icon>
+    </div>
+</div>
