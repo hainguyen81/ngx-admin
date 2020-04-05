@@ -314,6 +314,30 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
 export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganization, OrganizationDataSource> {
 
     // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Set the form fields configuration
+     * @param fields to apply
+     */
+    protected setFields(fields: FormlyFieldConfig[]) {
+        let timer: number;
+        timer = window.setTimeout(() => {
+            Promise.all([this.getAllOrganization(), this.getAllUsers()])
+                .then(values => {
+                    if (values.length) {
+                        fields[0].fieldGroup[0].templateOptions.options = values[0];
+                    }
+                    if (values.length > 1) {
+                        fields[1].fieldGroup[1].templateOptions.options = values[1];
+                    }
+                    super.setFields(fields);
+                });
+        }, 100);
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -353,10 +377,6 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             OrganizationFormConfig, OrganizationFormFieldsConfig);
-        // parent selection settings
-        super.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
-        // manager selection settings
-        super.getFields()[1].fieldGroup[1].templateOptions.options = this.getAllUsers();
         super.setModel(new Organization(undefined, undefined, undefined, undefined));
     }
 
@@ -366,34 +386,32 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
 
     /**
      * Get the organization list for options selection
-     * @return {Observable}
+     * @return {Promise}
      */
-    private getAllUsers(): Observable<{ value: string, label: string }[]> {
+    private getAllUsers(): Promise<{ value: string, label: string }[]> {
         if (!this.userDataSource) {
-            return new Observable<{ value: string, label: string }[]>();
+            return Promise.resolve([]);
         }
 
         this.userDataSource.setPaging(1, undefined, false);
-        return PromiseUtils.promiseToObservable(
-            this.userDataSource.getAll().then(userValues => {
+        return this.userDataSource.getAll().then(userValues => {
                 let options: { value: string, label: string }[];
                 options = [];
                 Array.from(userValues).forEach((userValue: IUser) => {
                     this.mapUserAsOptions(userValue, options);
                 });
                 return options;
-            }));
+            });
     }
 
     /**
      * Get the organization list for options selection
-     * @return {Observable}
+     * @return {Promise}
      */
-    private getAllOrganization(): Observable<{ value: string, label: string }[]> {
-        return PromiseUtils.promiseToObservable(
-            this.getDataSource().getAll().then(orgValues => {
+    private getAllOrganization(): Promise<{ value: string, label: string }[]> {
+        return this.getDataSource().getAll().then(orgValues => {
                 if (!isArray(orgValues)) {
-                    orgValues = [].push(orgValues);
+                    orgValues = [ orgValues as IOrganization ];
                 }
                 let options: { value: string, label: string }[];
                 options = [];
@@ -401,7 +419,7 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
                     this.mapOrganizationAsOptions(orgValue, options);
                 });
                 return options;
-            }));
+            });
     }
 
     /**
