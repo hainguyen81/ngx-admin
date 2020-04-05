@@ -1,11 +1,10 @@
-/* default organization formly config */
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -347,8 +346,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
     styleUrls: ['../../../formly/formly.component.scss'],
 })
 export class WarehouseItemOverviewFormlyComponent
-    extends BaseFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
-    implements AfterViewInit {
+    extends BaseFormlyComponent<IWarehouseItem, WarehouseItemDatasource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -417,23 +415,6 @@ export class WarehouseItemOverviewFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             WarehouseItemOverviewFormConfig, WarehouseItemOverviewFormFieldsConfig);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // let timer: number;
-        // timer = window.setTimeout(() => {
-        //     this.loadWarehouseCategories().subscribe(categories => {
-        //         this.getLogger().debug('Loading Warehouse Categories...', categories);
-        //         this.getFields()[0].fieldGroup[0].templateOptions.options = categories;
-        //         window.clearTimeout(timer);
-        //     });
-        // }, 300);
     }
 
     // -------------------------------------------------

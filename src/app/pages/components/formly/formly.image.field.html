@@ -1,9 +1,8 @@
-<mat-label *ngIf="(((field || {})['templateOptions'] || {})['label'] || '').length">
-    {{field.templateOptions.label | translate}}
-</mat-label>
-<ngx-image-gallery #imageGallery
-                   [showAlbum]="true"
-                   [allowModified]="true"
-                   [images]="getImages()"
-                   (onChange)="onChange($event)"
-></ngx-image-gallery>
+<div class="form-field">
+    <ngx-image-gallery #imageGallery
+                       [showAlbum]="true"
+                       [allowModified]="true"
+                       [images]="getImages()"
+                       (onChange)="onChange($event)"
+    ></ngx-image-gallery>
+</div>

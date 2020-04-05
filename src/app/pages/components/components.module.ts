@@ -45,6 +45,8 @@ import {ImageCellComponent} from './smart-table/image.cell.component';
 import {LightboxModule} from 'ngx-lightbox';
 import {NgxImageGalleryComponent} from './image/image.component';
 import {ImageGalleryFormFieldComponent} from './formly/formly.image.field';
+import {DropdownTreeviewFormFieldComponent} from './formly/formly.treeview.dropdown.field';
+import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.component';
 
 @NgModule({
     imports: [
@@ -103,6 +105,12 @@ import {ImageGalleryFormFieldComponent} from './formly/formly.image.field';
                 {
                     name: 'images-gallery',
                     component: ImageGalleryFormFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'treeview-dropdown',
+                    component: DropdownTreeviewFormFieldComponent,
+                    wrappers: ['form-field'],
                 },
             ],
         }),
@@ -126,6 +134,8 @@ import {ImageGalleryFormFieldComponent} from './formly/formly.image.field';
         ImageCellComponent,
         NgxImageGalleryComponent,
         ImageGalleryFormFieldComponent,
+        NgxDropdownTreeviewComponent,
+        DropdownTreeviewFormFieldComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -142,6 +152,8 @@ import {ImageGalleryFormFieldComponent} from './formly/formly.image.field';
         ComponentPlaceholderDirective,
         NgxImageGalleryComponent,
         ImageGalleryFormFieldComponent,
+        NgxDropdownTreeviewComponent,
+        DropdownTreeviewFormFieldComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -149,6 +161,8 @@ import {ImageGalleryFormFieldComponent} from './formly/formly.image.field';
     exports: [
         NgxImageGalleryComponent,
         ImageGalleryFormFieldComponent,
+        NgxDropdownTreeviewComponent,
+        DropdownTreeviewFormFieldComponent,
     ],
 })
 export class ComponentsModule {

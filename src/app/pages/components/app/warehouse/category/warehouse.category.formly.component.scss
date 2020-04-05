@@ -1,12 +1,18 @@
 @import '../../../../../@theme/styles/themes';
 
 @include nb-install-component() {
-    ::ng-deep ngx-formly-image-field ngx-image-gallery .images-album {
-        max-width: unset;
+    ::ng-deep formly-field.images-gallery {
+        mat-form-field {
+            ngx-formly-image-field ngx-image-gallery .images-album {
+                max-width: unset;
 
-        .primary-image .primary-image-preview {
-            display: inline-block !important;
-            max-width: 200px;
+                .primary-image .primary-image-preview {
+                    display: inline-block !important;
+                    max-width: 200px;
+                }
+            }
+
+            .mat-form-field-underline { display: none; }
         }
     }
 }

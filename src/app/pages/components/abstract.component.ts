@@ -975,4 +975,11 @@ export class AbstractComponent
         !this.getLightbox() && throwError('Could not inject Lightbox');
         this.getLightbox().close();
     }
+
+    /**
+     * Log current actived element
+     */
+    protected debugActiveElement() {
+        this.getLogger().debug('Current activated element', document.activeElement);
+    }
 }

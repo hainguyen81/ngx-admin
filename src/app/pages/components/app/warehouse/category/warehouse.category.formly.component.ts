@@ -108,7 +108,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col',
+                className: 'col images-gallery',
                 key: 'image',
                 type: 'images-gallery',
                 templateOptions: {

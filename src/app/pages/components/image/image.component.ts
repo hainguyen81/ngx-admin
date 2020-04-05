@@ -17,6 +17,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {IEvent} from '../abstract.component';
 import {AppConfig} from '../../../config/app.config';
+import {Util} from 'leaflet';
+import isArray = Util.isArray;
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
@@ -83,6 +85,8 @@ export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<Data
         if ((files || []).length) {
             let invalidFiles: string[];
             invalidFiles = [];
+            let readFiles: Promise<string>[];
+            readFiles = [];
             Array.of(...files).forEach(f => {
                 let fileName: string;
                 fileName = (f || {})['name'] || '';
@@ -92,10 +96,22 @@ export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<Data
                     fileName.length && invalidFiles.push(fileName);
 
                 } else {
-                    this.readFile(f);
+                    readFiles.push(this.readFile(f));
                 }
             });
-            (invalidFiles.length) && this.processUnsupportedFiles(invalidFiles);
+
+            // read all files asynchronous
+            Promise.all(readFiles).then(values => {
+                this.setImages(values);
+                invalidFiles.length && this.processUnsupportedFiles(invalidFiles);
+
+            }, (errFile) => {
+                if (!isArray(errFile)) {
+                    errFile = [errFile];
+                }
+                invalidFiles = invalidFiles.concat(Array.from(errFile));
+                invalidFiles.length && this.processUnsupportedFiles(invalidFiles);
+            });
         }
     }
 
@@ -110,23 +126,21 @@ export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<Data
     /**
      * Read the specified {File} as base64
      * @param f to read
+     * @param retImages returned images list
      */
-    private readFile(f: File): void {
-        try {
-            let reader: FileReader;
-            reader = new FileReader();
-            reader.readAsDataURL(f); // read file as data url
-            reader.onload = (event) => { // called once readAsDataURL is completed
-                let images: string[];
-                images = this.getInternalImages();
-                if (!(images || []).length) {
-                    images = [];
-                }
-                images.push(reader.result.toString());
-                this.setImages(images);
-            };
-        } catch (e) {
-            this.getLogger().error('Could not read file {' + f.name + '}', e);
-        }
+    private readFile(f: File): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
+            try {
+                let reader: FileReader;
+                reader = new FileReader();
+                reader.readAsDataURL(f); // read file as data url
+                reader.onload = (event) => { // called once readAsDataURL is completed
+                    resolve.apply(this, [reader.result.toString()]);
+                };
+            } catch (e) {
+                this.getLogger().error('Could not read file {' + f.name + '}', e);
+                reject.apply(this, [f.name]);
+            }
+        });
     }
 }

@@ -44,6 +44,9 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * @return all images in album
      */
     protected getInternalImages(): string[] {
+        if (!this.images) {
+            this.images = [];
+        }
         return this.images;
     }
 
@@ -52,7 +55,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * @return all images in album
      */
     public getImages(): string[] {
-        return (!this.showAlbum() ? [] : (this.images || []));
+        return (!this.showAlbum() ? [] : this.getInternalImages());
     }
 
     /**
@@ -60,7 +63,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * @param images to apply
      */
     public setImages(images: string[]): void {
-        this.images = [].concat(images);
+        this.images = images || [];
         this.onChange && this.onChange.emit({$data: this.images});
     }
 

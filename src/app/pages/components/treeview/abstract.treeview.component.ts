@@ -2,9 +2,9 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     Inject,
-    OnInit,
+    OnInit, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -32,6 +32,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
+import {TreeviewSelection} from 'ngx-treeview/src/treeview-item';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -69,6 +70,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private treeviewItems: TreeviewItem[];
     /* drop-down button class */
     private buttonClass?: string | null;
+    @Output() private selectedChange: EventEmitter<IEvent>;
+    @Output() private filterChange: EventEmitter<IEvent>;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -107,6 +110,38 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     }
 
     /**
+     * Get the {EventEmitter} instance for listening the selected item changes
+     * @return the {EventEmitter} instance or default
+     */
+    public getSelectedChangeEvent(): EventEmitter<IEvent> {
+        return this.selectedChange || new EventEmitter(true);
+    }
+
+    /**
+     * Set the {EventEmitter} instance for listening the selected item changes
+     * @param selectedChange to apply
+     */
+    public setSelectedChangeEvent(selectedChange?: EventEmitter<IEvent> | null) {
+        this.selectedChange = selectedChange;
+    }
+
+    /**
+     * Get the {EventEmitter} instance for listening the filter changes
+     * @return the {EventEmitter} instance
+     */
+    public getFilterChangeEvent(): EventEmitter<IEvent> {
+        return this.filterChange || new EventEmitter(true);
+    }
+
+    /**
+     * Set the {EventEmitter} instance for listening the filter changes
+     * @param filterChange to apply
+     */
+    public setFilterChangeEvent(filterChange?: EventEmitter<IEvent> | null) {
+        this.filterChange = filterChange;
+    }
+
+    /**
      * Get the {TreeviewConfig} instance for configuring
      * @return the {TreeviewConfig} instance
      */
@@ -118,7 +153,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * Set the {TreeviewConfig} instance
      * @param cfg to apply. NULL for default
      */
-    protected setConfig(cfg?: TreeviewConfig) {
+    public setConfig(cfg?: TreeviewConfig) {
         this.treeviewConfig = cfg || DefaultTreeviewConfig;
     }
 
@@ -142,8 +177,101 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * Get the tree-view items array to show
      * @return the tree-view items array
      */
-    protected getTreeviewItems(): TreeviewItem[] {
+    public getTreeviewItems(): TreeviewItem[] {
         return this.treeviewItems || [];
+    }
+
+    /**
+     * Set the tree-view items array to show
+     * @param items to apply
+     */
+    public setTreeviewItems(items?: TreeviewItem[]): void {
+        this.treeviewItems = items;
+    }
+
+    /**
+     * Get the {TreeviewSelection} instance
+     * @return {TreeviewSelection}
+     */
+    public getTreeviewSelection(): TreeviewSelection {
+        if (this.isDropDown() && this.getDropdownTreeviewComponent()) {
+            return (!this.getDropdownTreeviewComponent().treeviewComponent ? null
+                : this.getDropdownTreeviewComponent().treeviewComponent.selection);
+        }
+        return (this.isDropDown() || !this.getTreeviewComponent() ? null
+            : this.getTreeviewComponent().selection);
+    }
+
+    /**
+     * Get the checked {TreeviewItem} array
+     * @return the checked {TreeviewItem} array
+     */
+    public getCheckedTreeviewItems(): TreeviewItem[] {
+        return (!this.getTreeviewSelection() ? [] : this.getTreeviewSelection().checkedItems);
+    }
+
+    /**
+     * Get the un-checked {TreeviewItem} array
+     * @return the un-checked {TreeviewItem} array
+     */
+    public getUncheckedTreeviewItems(): TreeviewItem[] {
+        return (!this.getTreeviewSelection() ? [] : this.getTreeviewSelection().uncheckedItems);
+    }
+
+    /**
+     * Get the selected {TreeviewItem} array
+     * @return the selected {TreeviewItem} array
+     */
+    public getSelectedTreeviewItems(): TreeviewItem[] {
+        let selectedItems: TreeviewItem[];
+        selectedItems = [];
+        // search current selected items by `selected` class
+        let hoveredItemEls: NodeListOf<HTMLElement>;
+        hoveredItemEls = this.getElementsBySelector(
+            [AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
+        hoveredItemEls && hoveredItemEls.length
+        && hoveredItemEls.forEach(el => {
+            let item: TreeviewItem;
+            item = this.getTreeviewItemByElement(el);
+            item && selectedItems.push(item);
+        });
+        return selectedItems;
+    }
+
+    /**
+     * Set the selected {TreeviewItem} array
+     * @param items to select
+     * @param reset specify whether reset the current selected items
+     */
+    public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean | false): void {
+        let currentItems: TreeviewItem[];
+        currentItems = this.getTreeviewItems();
+        if (!(currentItems || []).length) {
+            return;
+        }
+
+        currentItems.forEach(item => {
+            let treeviewItemEl: HTMLElement;
+            treeviewItemEl = this.getTreeviewElementByItem(item);
+            if ((items || []).indexOf(item) < 0 && reset) {
+                this.toggleElementClass(treeviewItemEl, 'selected', false);
+
+            } else if ((items || []).indexOf(item) >= 0) {
+                this.toggleElementClass(treeviewItemEl, 'selected', true);
+            }
+        });
+    }
+
+    /**
+     * Set the selected {TreeviewItem} keys array
+     * @param itemKeys to select
+     * @param reset specify whether reset the current selected items
+     */
+    public setSelectedTreeviewItemByKeys(itemKeys?: string[] | [], reset?: boolean | false): void {
+        let itemByKeys: TreeviewItem[];
+        itemByKeys = [];
+        (itemKeys || []).forEach(itemKey => itemByKeys.push(this.findTreeviewItemByKey(itemKey)));
+        this.setSelectedTreeviewItems(itemByKeys, reset);
     }
 
     // -------------------------------------------------
@@ -229,6 +357,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     onSelectedChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSelectedChange', event);
+        this.getSelectedChangeEvent() && this.getSelectedChangeEvent().emit(event);
     }
 
     /**
@@ -238,6 +367,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     onFilterChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onFilterChange', event);
+        this.getFilterChangeEvent() && this.getFilterChangeEvent().emit(event);
     }
 
     /**
@@ -502,20 +632,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param treeviewItem to toggle
      */
     protected toggleTreeviewItem(treeviewItem: TreeviewItem) {
-        let itemKey: string;
-        itemKey = this.generateTreeviewItemKey(treeviewItem);
-        if (!treeviewItem || !treeviewItem.value || !(itemKey || '').length) {
-            return;
-        }
-
-        let treeviewItemElSelector: string;
-        treeviewItemElSelector = '[id=\''.concat(itemKey).concat('\']')
-            .concat(AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR);
-        let treeviewItemEl: HTMLElement;
-        treeviewItemEl = this.getFirstElementBySelector(treeviewItemElSelector);
-        treeviewItemEl = (treeviewItemEl ? treeviewItemEl.closest(
-            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement : undefined);
-        this.toggleTreeviewItemElement(treeviewItemEl);
+        this.toggleTreeviewItemElement(this.getTreeviewElementByItem(treeviewItem));
     }
 
     /**
@@ -533,6 +650,27 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             return this.findTreeviewItemByKey(itemRowEl.id);
         }
         return undefined;
+    }
+
+    /**
+     * Get {HTMLElement} of the specified tree-view item {TreeviewItem}
+     * @param treeviewItem to detect
+     * @return {HTMLElement}
+     */
+    public getTreeviewElementByItem(treeviewItem: TreeviewItem): HTMLElement {
+        let itemKey: string;
+        itemKey = this.generateTreeviewItemKey(treeviewItem);
+        if (!treeviewItem || !treeviewItem.value || !(itemKey || '').length) {
+            return undefined;
+        }
+
+        let treeviewItemElSelector: string;
+        treeviewItemElSelector = '[id=\''.concat(itemKey).concat('\']')
+            .concat(AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR);
+        let treeviewItemEl: HTMLElement;
+        treeviewItemEl = this.getFirstElementBySelector(treeviewItemElSelector);
+        return (treeviewItemEl ? treeviewItemEl.closest(
+            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement : undefined);
     }
 
     /**

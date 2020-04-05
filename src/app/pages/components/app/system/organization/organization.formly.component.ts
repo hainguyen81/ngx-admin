@@ -19,8 +19,6 @@ import Organization, {
 } from '../../../../../@core/data/system/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
-import PromiseUtils from '../../../../../utils/promise.utils';
 import {isArray} from 'util';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {IUser} from '../../../../../@core/data/system/user';
@@ -28,6 +26,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {EmailValidators} from 'ngx-validators';
 import {Lightbox} from 'ngx-lightbox';
+import {OrganizationTreeviewConfig} from './organization.treeview.component';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -38,9 +37,9 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col',
+                className: 'col belongTo',
                 key: 'parentId',
-                type: 'select',
+                type: 'treeview-dropdown',
                 templateOptions: {
                     label: 'system.organization.form.belongTo.label',
                     placeholder: 'system.organization.form.belongTo.placeholder',
@@ -327,7 +326,10 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
             Promise.all([this.getAllOrganization(), this.getAllUsers()])
                 .then(values => {
                     if (values.length) {
-                        fields[0].fieldGroup[0].templateOptions.options = values[0];
+                        fields[0].fieldGroup[0].templateOptions.options = [
+                            OrganizationTreeviewConfig,
+                            values[0],
+                        ];
                     }
                     if (values.length > 1) {
                         fields[1].fieldGroup[1].templateOptions.options = values[1];

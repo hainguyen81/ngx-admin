@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {IEvent} from '../abstract.component';
 
 /**
- * Warehouse Category Image field component base on {FieldType}
+ * Formly Image field component base on {FieldType}
  */
 @Component({
     selector: 'ngx-formly-image-field',
