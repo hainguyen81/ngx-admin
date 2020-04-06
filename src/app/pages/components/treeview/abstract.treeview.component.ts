@@ -70,8 +70,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private treeviewItems: TreeviewItem[];
     /* drop-down button class */
     private buttonClass?: string | null;
-    @Output() private selectedChange: EventEmitter<IEvent>;
-    @Output() private filterChange: EventEmitter<IEvent>;
+    @Output() private selectedChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    @Output() private filterChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    @Output() private clickItem: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -114,7 +115,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return the {EventEmitter} instance or default
      */
     public getSelectedChangeEvent(): EventEmitter<IEvent> {
-        return this.selectedChange || new EventEmitter(true);
+        return this.selectedChange;
     }
 
     /**
@@ -122,7 +123,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param selectedChange to apply
      */
     public setSelectedChangeEvent(selectedChange?: EventEmitter<IEvent> | null) {
-        this.selectedChange = selectedChange;
+        if (selectedChange) {
+            this.selectedChange = selectedChange;
+        }
     }
 
     /**
@@ -130,7 +133,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return the {EventEmitter} instance
      */
     public getFilterChangeEvent(): EventEmitter<IEvent> {
-        return this.filterChange || new EventEmitter(true);
+        return this.filterChange;
     }
 
     /**
@@ -138,7 +141,27 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param filterChange to apply
      */
     public setFilterChangeEvent(filterChange?: EventEmitter<IEvent> | null) {
-        this.filterChange = filterChange;
+        if (filterChange) {
+            this.filterChange = filterChange;
+        }
+    }
+
+    /**
+     * Get the {EventEmitter} instance for listening the clicked item
+     * @return the {EventEmitter} instance
+     */
+    public getClickItemEvent(): EventEmitter<IEvent> {
+        return this.clickItem;
+    }
+
+    /**
+     * Set the {EventEmitter} instance for listening the clicked item
+     * @param clickItem to apply
+     */
+    public setClickItemEvent(clickItem?: EventEmitter<IEvent> | null) {
+        if (clickItem) {
+            this.clickItem = clickItem;
+        }
     }
 
     /**
@@ -348,6 +371,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     onClickItem(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickItem', event);
+        this.getClickItemEvent().emit(event);
     }
 
     /**
@@ -357,7 +381,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     onSelectedChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSelectedChange', event);
-        this.getSelectedChangeEvent() && this.getSelectedChangeEvent().emit(event);
+        this.getSelectedChangeEvent().emit(event);
     }
 
     /**
@@ -367,7 +391,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     onFilterChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onFilterChange', event);
-        this.getFilterChangeEvent() && this.getFilterChangeEvent().emit(event);
+        this.getFilterChangeEvent().emit(event);
     }
 
     /**
@@ -589,6 +613,15 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             item['key'] = key;
         }
         return key;
+    }
+
+    /**
+     * Get the {TreeviewItem} key
+     * @param item to parse
+     * @return the {TreeviewItem} key
+     */
+    public getTreeviewItemKey(item?: TreeviewItem | null): string {
+        return (item ? item['key'] : null);
     }
 
     /**

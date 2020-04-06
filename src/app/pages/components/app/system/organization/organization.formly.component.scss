@@ -1,0 +1,11 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep formly-field.belongTo mat-form-field {
+        ngx-formly-treeview-dropdown ngx-tree-view-dropdown ngx-dropdown-treeview {
+            .btn:focus,.btn.focus { box-shadow: none; }
+            .btn.dropdown-toggle { padding: 0; }
+            .dropdown-menu { width: 100%; }
+        }
+    }
+}

@@ -96,7 +96,7 @@
                    [indeterminate]="item.indeterminate"
                    (click)="onClickItem({ $event: $event, $data: item });"/>
             <label class="form-check-label"
-                   (click)="item.checked = !item.checked; onCheckedChange(); onClickItem({ $event: $event, $data: item });">
+                   (click)="onClickItemLabel($event, item, onCheckedChange);">
                 {{item.text}}</label>
         </div>
     </div>

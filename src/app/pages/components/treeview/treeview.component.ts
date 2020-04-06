@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Input,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -34,7 +34,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // DECLARATION
     // -------------------------------------------------
 
-    private enabledItemCheck?: boolean | false;
+    @Input('enabledItemCheck') private enabledItemCheck?: boolean | false;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -99,6 +99,37 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    /**
+     * Raise when tree-view item label has been clicked
+     * @param $event {MouseEvent}
+     * @param item item has been clicked
+     * @param onCheckedChange internal checked change listener
+     */
+    private onClickItemLabel($event: MouseEvent,
+                             item: TreeviewItem,
+                             onCheckedChange: (checked: boolean) => void): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onClickItemLabel', $event, item);
+        if (item) {
+            item.checked = !item.checked;
+            if (this.isEnabledItemCheck() && onCheckedChange) {
+                onCheckedChange.apply(this, [item.checked]);
+            }
+            if (!this.isEnabledItemCheck() || !onCheckedChange) {
+                let items: TreeviewItem[];
+                items = [].concat(this.getTreeviewItems());
+                items.splice(items.indexOf(item), 1);
+                this.getTreeviewSelection().checkedItems = [item];
+                this.getTreeviewSelection().uncheckedItems = items;
+                this.getTreeviewComponent() && this.getTreeviewComponent().selectedChange.emit([item]);
+                this.getDropdownTreeviewComponent()
+                && this.getDropdownTreeviewComponent().treeviewComponent
+                && this.getDropdownTreeviewComponent().treeviewComponent.selectedChange.emit([item]);
+            }
+            this.onClickItem.apply(this, [{$event: $event, $data: item}]);
+        }
+    }
 
     /**
      * Raise when tree-view item has been clicked
