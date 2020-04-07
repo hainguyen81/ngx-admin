@@ -29,6 +29,9 @@ import {OrganizationTreeviewConfig} from './organization.treeview.component';
 import OrganizationUtils from '../../../../../utils/system/organization.utils';
 import {Observable} from 'rxjs';
 import PromiseUtils from '../../../../../utils/promise.utils';
+import {FormGroup} from '@angular/forms';
+import {FormlyFormOptions} from '@ngx-formly/core/lib/components/formly.field.config';
+import {TreeviewItem} from 'ngx-treeview';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -41,13 +44,26 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col belongTo',
                 key: 'parentId',
-                type: 'treeview-dropdown',
+                type: 'organization-treeview-dropdown',
                 templateOptions: {
                     label: 'system.organization.form.belongTo.label',
                     placeholder: 'system.organization.form.belongTo.placeholder',
                     options: [],
-                    required: true,
                 },
+                // hooks: {
+                //     onInit: (field?: FormlyFieldConfig) => {
+                //         field && field.formControl
+                //         && field.formControl.valueChanges.subscribe(value => {
+                //             if ((field.model as IOrganization) && (value as TreeviewItem)) {
+                //                 let item: TreeviewItem;
+                //                 item = value as TreeviewItem;
+                //                 let orgItem: IOrganization;
+                //                 orgItem = (item ? item.value as IOrganization : null);
+                //                 (field.model as IOrganization).parentId = (orgItem ? orgItem.id : null);
+                //             }
+                //         });
+                //     },
+                // },
             },
         ],
     },

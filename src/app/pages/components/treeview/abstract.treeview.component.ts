@@ -22,7 +22,7 @@ import {
     IEvent,
 } from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
+import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import ObjectUtils from '../../../utils/object.utils';
@@ -277,9 +277,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             let treeviewItemEl: HTMLElement;
             treeviewItemEl = this.getTreeviewElementByItem(item);
             if ((items || []).indexOf(item) < 0 && reset) {
+                item.checked = false;
                 this.toggleElementClass(treeviewItemEl, 'selected', false);
 
             } else if ((items || []).indexOf(item) >= 0) {
+                item.checked = true;
                 this.toggleElementClass(treeviewItemEl, 'selected', true);
             }
         });
@@ -295,6 +297,21 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         itemByKeys = [];
         (itemKeys || []).forEach(itemKey => itemByKeys.push(this.findTreeviewItemByKey(itemKey)));
         this.setSelectedTreeviewItems(itemByKeys, reset);
+    }
+
+    /**
+     * Set the {TreeviewI18n} instance
+     * @param treeviewI18 to apply
+     */
+    public setTreeviewI18n(treeviewI18?: TreeviewI18n) {
+        if (treeviewI18 && this.getTreeviewComponent()) {
+            this.getTreeviewComponent().i18n = treeviewI18;
+        }
+        if (treeviewI18 && this.getDropdownTreeviewComponent()
+            && this.getDropdownTreeviewComponent().treeviewComponent) {
+            this.getDropdownTreeviewComponent().treeviewComponent.i18n = treeviewI18;
+        }
+
     }
 
     // -------------------------------------------------

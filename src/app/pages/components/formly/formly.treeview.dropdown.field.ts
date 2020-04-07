@@ -23,8 +23,7 @@ import {isArray} from 'util';
     templateUrl: './formly.treeview.dropdown.field.html',
     styleUrls: ['./formly.treeview.dropdown.field.scss'],
 })
-export class DropdownTreeviewFormFieldComponent extends FieldType
-    implements OnInit, AfterViewInit {
+export class DropdownTreeviewFormFieldComponent extends FieldType implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -49,18 +48,37 @@ export class DropdownTreeviewFormFieldComponent extends FieldType
         return this.ngxTreeviewComponent;
     }
 
+    /**
+     * Get the {TreeviewConfig} instance
+     * @return the {TreeviewConfig} instance
+     */
+    protected getConfig(): TreeviewConfig {
+        return this.config;
+    }
+
+    /**
+     * Get the {TreeviewItem} array
+     * @return the {TreeviewItem} array
+     */
+    protected getTreeviewItems(): TreeviewItem[] {
+        return this.items;
+    }
+
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
     ngAfterViewInit(): void {
         if (!this.ngxTreeviewComponent) {
+            // query component
             this.ngxTreeviewComponent = ComponentUtils.queryComponent(
-                this.queryNgxTreeviewComponent, (component) => {
+                this.queryNgxTreeviewComponent, component => {
                     component
                     && component.getSelectedChangeEvent().subscribe(
                         (e: IEvent) => this.onSelectedValue(e));
                 });
+
+            // initialization
             this.initialize();
         }
     }
@@ -68,6 +86,29 @@ export class DropdownTreeviewFormFieldComponent extends FieldType
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
+
+    /**
+     * Formatter function to format the model value to {TreeviewItem} instance to show
+     * @param value model value to format
+     */
+    protected valueFormatter(value: any): TreeviewItem {
+        return value as TreeviewItem;
+    }
+
+    /**
+     * Parser function to parse {TreeviewItem} or data instance to the model value
+     * @param value {TreeviewItem} or data to parse
+     */
+    protected valueParser(value?: any): any {
+        let parsedValue: any;
+        parsedValue = value;
+        if (this.field) {
+            for (const parser of (this.field.parsers || [])) {
+                parsedValue = parser.apply(this, [parsedValue]);
+            }
+        }
+        return parsedValue;
+    }
 
     /**
      * Initialize
@@ -89,7 +130,7 @@ export class DropdownTreeviewFormFieldComponent extends FieldType
         let config: TreeviewConfig;
         config = ((options || []).length ? options[0] as TreeviewConfig : DefaultTreeviewConfig);
         this.config = (config && Object.keys(config).length ? config : DefaultTreeviewConfig);
-        this.ngxTreeviewComponent && this.ngxTreeviewComponent.setConfig(this.config);
+        this.getTreeviewComponent() && this.getTreeviewComponent().setConfig(this.config);
 
         // treeview items
         let items: TreeviewItem[];
@@ -102,28 +143,50 @@ export class DropdownTreeviewFormFieldComponent extends FieldType
             });
         }
         this.items = [].concat(items);
-        this.ngxTreeviewComponent && this.ngxTreeviewComponent.setTreeviewItems(this.items);
+        this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(this.items);
 
-        // selected value
-        this.formControl && this.formControl.patchValue(value => {
-            this.value = value;
-            this.ngxTreeviewComponent && this.ngxTreeviewComponent
-                .setSelectedTreeviewItemByKeys([this.value], true);
-        });
+        // apply selected value
+        let selectedValue: TreeviewItem;
+        selectedValue = this.valueFormatter(this.value);
+        selectedValue && this.getTreeviewComponent()
+        && this.setTreeviewSelectedItem(selectedValue, false);
     }
 
+    /**
+     * Raise when the selected value of dropdown treeview has been changed
+     * @param e event data
+     */
     private onSelectedValue(e: IEvent): void {
         if (!this.getTreeviewComponent()) {
             return;
         }
 
-        let item: TreeviewItem;
-        item = (e && e.$data && isArray(e.$data) && Array.from(e.$data).length ? e.$data[0] as TreeviewItem : null);
-        (this.getTreeviewComponent().getTreeviewSelection().checkedItems || []).forEach(it => {
-            it.checked = false;
-        });
-        if (item) item.checked = true;
-        this.value = this.getTreeviewComponent().getTreeviewItemKey(item);
-        this.formControl && this.formControl.setValue(this.value);
+        let item: any;
+        item = (e && e.$data && isArray(e.$data) && Array.from(e.$data).length ? e.$data[0] : null);
+        if (!item || item instanceof TreeviewItem) {
+            this.setTreeviewSelectedItem(item as TreeviewItem, true);
+
+        } else {
+            for (const it of this.getTreeviewItems()) {
+                if (it.value === item) {
+                    this.setTreeviewSelectedItem(it as TreeviewItem, true);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Set the selected {TreeviewItem} and update model value if necessary
+     * @param item {TreeviewItem} to select
+     * @param updateValue true for updating
+     */
+    private setTreeviewSelectedItem(item?: TreeviewItem, updateValue?: boolean | false): void {
+        this.getTreeviewComponent().setSelectedTreeviewItems(item ? [item] : [], true);
+        this.value = this.valueParser(item);
+        if (updateValue) {
+            this.formControl && this.formControl.setValue(this.value);
+            this.formControl && this.formControl.updateValueAndValidity({onlySelf: true, emitEvent: true});
+        }
     }
 }

@@ -134,6 +134,7 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
         ImageCellComponent,
         NgxImageGalleryComponent,
         ImageGalleryFormFieldComponent,
+        NgxTreeviewComponent,
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
     ],
@@ -161,6 +162,7 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
     exports: [
         NgxImageGalleryComponent,
         ImageGalleryFormFieldComponent,
+        NgxTreeviewComponent,
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
     ],

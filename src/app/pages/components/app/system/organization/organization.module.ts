@@ -33,6 +33,8 @@ import {ThemeModule} from '../../../../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {AppMaterialModule} from '../../../../../app.material.module';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
+import {OrganizationFormlyTreeviewDropdownFieldComponent} from './organization.formly.treeview.dropdown.field';
+import {ComponentsModule} from "../../../components.module";
 
 @NgModule({
     imports: [
@@ -73,7 +75,15 @@ import {OrganizationToolbarComponent} from './organization.toolbar.component';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            types: [
+                {
+                    name: 'organization-treeview-dropdown',
+                    component: OrganizationFormlyTreeviewDropdownFieldComponent,
+                    wrappers: ['form-field'],
+                },
+            ],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -85,6 +95,9 @@ import {OrganizationToolbarComponent} from './organization.toolbar.component';
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
 
+        /* Application components module */
+        ComponentsModule,
+
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
@@ -92,18 +105,27 @@ import {OrganizationToolbarComponent} from './organization.toolbar.component';
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
         OrganizationToolbarComponent,
+        OrganizationFormlyTreeviewDropdownFieldComponent,
     ],
     declarations: [
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
         OrganizationToolbarComponent,
         OrganizationSplitPaneComponent,
+        OrganizationFormlyTreeviewDropdownFieldComponent,
     ],
     providers: [
         {
             provide: OrganizationDataSource, useClass: OrganizationDataSource,
             deps: [OrganizationHttpService, OrganizationDbService, NGXLogger],
         },
+    ],
+    exports: [
+        OrganizationTreeviewComponent,
+        OrganizationFormlyComponent,
+        OrganizationToolbarComponent,
+        OrganizationSplitPaneComponent,
+        OrganizationFormlyTreeviewDropdownFieldComponent,
     ],
 })
 export class OrganizationModule {

@@ -2,10 +2,9 @@
 
 @include nb-install-component() {
     ::ng-deep formly-field.belongTo mat-form-field {
-        ngx-formly-treeview-dropdown ngx-tree-view-dropdown ngx-dropdown-treeview {
-            .btn:focus,.btn.focus { box-shadow: none; }
-            .btn.dropdown-toggle { padding: 0; }
-            .dropdown-menu { width: 100%; }
+        .mat-form-field-infix {
+            /* make the field underline nearly for field label closer */
+            padding-bottom: 0.1em;
         }
     }
 }

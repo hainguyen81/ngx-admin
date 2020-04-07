@@ -35,6 +35,8 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // -------------------------------------------------
 
     @Input('enabledItemCheck') private enabledItemCheck?: boolean | false;
+    /** backup pointer to generate selection function of treeview component */
+    private origianlGenerateSelection: () => void;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -100,6 +102,22 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // EVENTS
     // -------------------------------------------------
 
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // unique hack (cheat) for single item selection
+        if (this.getTreeviewComponent()
+            && typeof this.getTreeviewComponent()['generateSelection'] === 'function') {
+            this.origianlGenerateSelection = this.getTreeviewComponent()['generateSelection'];
+            this.getTreeviewComponent()['generateSelection'] = () => this.generateSelection();
+        }
+        if (this.getDropdownTreeviewComponent() && this.getDropdownTreeviewComponent().treeviewComponent
+            && typeof this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] === 'function') {
+            this.origianlGenerateSelection = this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'];
+            this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] = () => this.generateSelection();
+        }
+    }
+
     /**
      * Raise when tree-view item label has been clicked
      * @param $event {MouseEvent}
@@ -117,11 +135,13 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
                 onCheckedChange.apply(this, [item.checked]);
             }
             if (!this.isEnabledItemCheck() || !onCheckedChange) {
-                let items: TreeviewItem[];
-                items = [].concat(this.getTreeviewItems());
-                items.splice(items.indexOf(item), 1);
-                this.getTreeviewSelection().checkedItems = [item];
-                this.getTreeviewSelection().uncheckedItems = items;
+                // un-check previous items
+                (this.getTreeviewSelection().checkedItems || []).forEach(it => it.checked = false);
+                // collect new item checked
+                let selection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
+                selection = this.collectSelection();
+                this.getTreeviewSelection().checkedItems = selection.checkedItems;
+                this.getTreeviewSelection().uncheckedItems = selection.uncheckedItems;
                 this.getTreeviewComponent() && this.getTreeviewComponent().selectedChange.emit([item]);
                 this.getDropdownTreeviewComponent()
                 && this.getDropdownTreeviewComponent().treeviewComponent
@@ -182,5 +202,68 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         // TODO Waiting for implementing from children component
         this.getLogger().debug('mappingDataSourceToTreeviewItems', data);
         return [];
+    }
+
+    /**
+     * Override this method of {TreeviewComponent}
+     */
+    private generateSelection() {
+        if (this.isEnabledItemCheck() && typeof this.origianlGenerateSelection === 'function') {
+            if (this.getTreeviewComponent()) {
+                this.origianlGenerateSelection.apply(this.getTreeviewComponent());
+            }
+            if (this.getDropdownTreeviewComponent() && this.getDropdownTreeviewComponent().treeviewComponent) {
+                this.origianlGenerateSelection.apply(this.getDropdownTreeviewComponent().treeviewComponent);
+            }
+
+        } else {
+            this.collectSelection();
+        }
+    }
+    private collectSelection(needToCheckedItems?: TreeviewItem[] | null):
+        {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]} {
+        let checkedItems: TreeviewItem[];
+        checkedItems = [];
+        if ((needToCheckedItems || []).length) {
+            needToCheckedItems.forEach(it => it.checked = true);
+            checkedItems = checkedItems.concat(needToCheckedItems);
+        }
+        let uncheckedItems: TreeviewItem[];
+        uncheckedItems = [];
+
+        let items: TreeviewItem[];
+        items = [].concat(this.getTreeviewItems());
+        items.forEach(item => this.checkSelection(item, checkedItems, uncheckedItems));
+        return  {
+            checkedItems: [].concat(checkedItems),
+            uncheckedItems: [].concat(uncheckedItems),
+        };
+    }
+    private checkSelection(item: TreeviewItem, checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]): void {
+        if (item.checked && checkedItems.indexOf(item) < 0) {
+            checkedItems.push(item);
+        } else if (!item.checked && uncheckedItems.indexOf(item) < 0) {
+            uncheckedItems.push(item);
+        }
+        if ((item.children || []).length) {
+            item.children.forEach(child => this.checkSelection(child, checkedItems, uncheckedItems));
+        }
+    }
+
+    /**
+     * Set the selected {TreeviewItem} array
+     * @param items to select
+     * @param reset specify whether reset the current selected items
+     */
+    setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
+        // super.setSelectedTreeviewItems(items, reset);
+
+        // un-check previous items
+        (this.getTreeviewSelection().checkedItems || []).forEach(it => it.checked = false);
+        // collect new item checked
+        let selection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
+        selection = this.collectSelection(items);
+        this.getTreeviewSelection().checkedItems = selection.checkedItems;
+        this.getTreeviewSelection().uncheckedItems = selection.uncheckedItems;
     }
 }
