@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -45,7 +45,7 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
 export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
-    implements AfterViewInit {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -104,7 +104,6 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
-        super.setTreeviewI18n(new OrganizationTreeviewI18n(translateService));
     }
 
     // -------------------------------------------------
@@ -131,12 +130,19 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         timer = window.setTimeout(() => {
             this.focus();
             window.clearTimeout(timer);
-        }, 300);
+        }, 100);
     }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
         this.getDataSource().refresh();
+
+        // apply multi-language
+        let timer: number;
+        timer = window.setTimeout(() => {
+            this.setTreeviewI18n(new OrganizationTreeviewI18n(this.getTranslateService()));
+            window.clearTimeout(timer);
+        }, 100);
     }
 
     // -------------------------------------------------
