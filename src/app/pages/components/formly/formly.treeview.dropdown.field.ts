@@ -148,8 +148,11 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
         // apply selected value
         let selectedValue: TreeviewItem;
         selectedValue = this.valueFormatter(this.value);
-        selectedValue && this.getTreeviewComponent()
-        && this.setTreeviewSelectedItem(selectedValue, false);
+        if (selectedValue) {
+            selectedValue.checked = true;
+            this.getTreeviewComponent()
+            && this.setTreeviewSelectedItem(selectedValue, false);
+        }
     }
 
     /**
@@ -182,8 +185,8 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
      * @param updateValue true for updating
      */
     private setTreeviewSelectedItem(item?: TreeviewItem, updateValue?: boolean | false): void {
-        this.getTreeviewComponent().setSelectedTreeviewItems(item ? [item] : [], true);
-        this.value = this.valueParser(item);
+        this.getTreeviewComponent().setSelectedTreeviewItems(item && item.checked ? [item] : [], true);
+        this.value = (item && item.checked ? this.valueParser(item) : null);
         if (updateValue) {
             this.formControl && this.formControl.setValue(this.value);
             this.formControl && this.formControl.updateValueAndValidity({onlySelf: true, emitEvent: true});

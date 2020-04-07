@@ -1,8 +1,9 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
 import {TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {AfterViewInit, Component, Inject} from '@angular/core';
+import {AfterViewInit, Component, Inject, Type} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import ObjectUtils from '../../../../../utils/object.utils';
 
 /**
  * Multi language for organization treeview field
@@ -82,8 +83,9 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
     }
 
     protected valueParser(value?: any): any {
-        return (value as IOrganization ? (value as IOrganization).id
-            : value && value.value as IOrganization ? (value.value as IOrganization).id : null);
+        let itValue: TreeviewItem;
+        itValue = ObjectUtils.cast(value, TreeviewItem);
+        return (itValue ? itValue.value['id'] : (value || {})['id']);
     }
 
     private filterOrganizationTreeItem(value: any): TreeviewItem {
