@@ -790,7 +790,7 @@ export class AbstractComponent
      * @return DOM elements or undefined
      */
     protected getElementsBySelector(selector: string, element?: Element): NodeListOf<HTMLElement> {
-        return HtmlUtils.getElementsBySelector(selector, element);
+        return HtmlUtils.getElementsBySelector(selector, (element || this.getElementRef().nativeElement));
     }
 
     /**
@@ -798,7 +798,7 @@ export class AbstractComponent
      * @return DOM elements or undefined
      */
     protected getFirstElementBySelector(selector: string, element?: Element): HTMLElement {
-        return HtmlUtils.getFirstElementBySelector(selector, element);
+        return HtmlUtils.getFirstElementBySelector(selector, (element || this.getElementRef().nativeElement));
     }
 
     /**
@@ -807,7 +807,7 @@ export class AbstractComponent
      * @return focusable DOM elements or undefined
      */
     protected getFocusableElements(element?: Element): NodeListOf<HTMLElement> {
-        return HtmlUtils.getFocusableElements(element);
+        return HtmlUtils.getFocusableElements((element || this.getElementRef().nativeElement));
     }
 
     /**
@@ -816,7 +816,7 @@ export class AbstractComponent
      * @return focusable DOM elements or undefined
      */
     protected getFirstFocusableElement(element?: Element): HTMLElement {
-        return HtmlUtils.getFirstFocusableElement(element);
+        return HtmlUtils.getFirstFocusableElement((element || this.getElementRef().nativeElement));
     }
 
     /**

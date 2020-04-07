@@ -307,11 +307,12 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         if (treeviewI18 && this.getTreeviewComponent()) {
             this.getTreeviewComponent().i18n = treeviewI18;
         }
-        if (treeviewI18 && this.getDropdownTreeviewComponent()
-            && this.getDropdownTreeviewComponent().treeviewComponent) {
-            this.getDropdownTreeviewComponent().treeviewComponent.i18n = treeviewI18;
+        if (treeviewI18 && this.getDropdownTreeviewComponent()) {
+            this.getDropdownTreeviewComponent().i18n = treeviewI18;
+            if (this.getDropdownTreeviewComponent().treeviewComponent) {
+                this.getDropdownTreeviewComponent().treeviewComponent.i18n = treeviewI18;
+            }
         }
-
     }
 
     // -------------------------------------------------

@@ -87,7 +87,7 @@
         ngx-treeview-item > .treeview-item > .row-item:hover,
         ngx-treeview-item > .treeview-item > .row-item:active,
         ngx-treeview-item > .treeview-item > .row-item:focus {
-            background-color: nb-theme(color-primary-focus);
+            background-color: nb-theme(color-basic-focus-border);
         }
     }
 

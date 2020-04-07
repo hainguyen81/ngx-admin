@@ -141,7 +141,13 @@
                 "belongTo": {
                     "label": "Belong to",
                     "placeholder": "Belong to",
-                    "description": "Belong to"
+                    "description": "Belong to",
+                    "not_selection": "",
+                    "all_selection": "All organization",
+                    "filter": "Filter",
+                    "not_found": "No organization found",
+                    "expand": "Expand",
+                    "collapse": "Collapse"
                 },
                 "manager": {
                     "label": "Manager",

@@ -141,7 +141,13 @@
                 "belongTo": {
                     "label": "Trực thuộc",
                     "placeholder": "Trực thuộc",
-                    "description": "Trực thuộc"
+                    "description": "Trực thuộc",
+                    "not_selection": "",
+                    "all_selection": "Tất cả các bộ phận",
+                    "filter": "Lọc",
+                    "not_found": "Không tìm thấy bộ phận nào",
+                    "expand": "Mở rộng",
+                    "collapse": "Thu nhỏ"
                 },
                 "manager": {
                     "label": "Quản lý",

@@ -50,20 +50,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'system.organization.form.belongTo.placeholder',
                     options: [],
                 },
-                // hooks: {
-                //     onInit: (field?: FormlyFieldConfig) => {
-                //         field && field.formControl
-                //         && field.formControl.valueChanges.subscribe(value => {
-                //             if ((field.model as IOrganization) && (value as TreeviewItem)) {
-                //                 let item: TreeviewItem;
-                //                 item = value as TreeviewItem;
-                //                 let orgItem: IOrganization;
-                //                 orgItem = (item ? item.value as IOrganization : null);
-                //                 (field.model as IOrganization).parentId = (orgItem ? orgItem.id : null);
-                //             }
-                //         });
-                //     },
-                // },
             },
         ],
     },

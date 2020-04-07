@@ -34,7 +34,7 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {AppMaterialModule} from '../../../../../app.material.module';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {OrganizationFormlyTreeviewDropdownFieldComponent} from './organization.formly.treeview.dropdown.field';
-import {ComponentsModule} from "../../../components.module";
+import {ComponentsModule} from '../../../components.module';
 
 @NgModule({
     imports: [

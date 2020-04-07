@@ -22,8 +22,8 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import Timer = NodeJS.Timer;
 import {Lightbox} from 'ngx-lightbox';
+import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -104,6 +104,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
+        super.setTreeviewI18n(new OrganizationTreeviewI18n(translateService));
     }
 
     // -------------------------------------------------
@@ -126,10 +127,10 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      */
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
-        let timer: Timer;
-        timer = setTimeout(() => {
+        let timer: number;
+        timer = window.setTimeout(() => {
             this.focus();
-            clearTimeout(timer);
+            window.clearTimeout(timer);
         }, 300);
     }
 
