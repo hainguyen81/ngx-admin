@@ -40,7 +40,7 @@
 
                 tbody {
                     tr.selected, tr.hover, tr:hover, tr:active, tr:focus {
-                        background-color: nb-theme(color-primary-focus) !important;
+                        background-color: nb-theme(color-basic-focus-border) !important;
                     }
                 }
             }
