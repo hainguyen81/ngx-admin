@@ -78,7 +78,7 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 })
 export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
     extends DropdownTreeviewFormFieldComponent
-    implements OnInit, AfterViewInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -96,8 +96,8 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
 
         this.getTreeviewComponent()
         && this.getTreeviewComponent().setEnabledItemImage(true);
