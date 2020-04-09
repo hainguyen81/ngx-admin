@@ -141,6 +141,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             modalDialogService, confirmPopup, lightbox);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
@@ -150,7 +154,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     }
 
     // -------------------------------------------------
-    // GETTER/SETTER
+    // GETTERS/SETTERS
     // -------------------------------------------------
 
     public allowMultipleEdit(): boolean {

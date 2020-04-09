@@ -63,12 +63,17 @@ export default class GlobalErrorsHandler implements ErrorHandler {
     handleError(error: any): void {
         // log error
         const location = this.getInjector().get(LocationStrategy);
-        const message = error.message ? error.message : error.toString();
+        const message = (error && error.message ? error.message : error ? error.toString() : 'Unknown ERROR!!!');
         const url = location instanceof PathLocationStrategy ? location.path() : '';
-        this.getLogger().error('Unexpected Error', {message, url, error: error});
+
+        window.console.error([ 'Global error handler', error ]);
+
+        this.getLogger()
+        && this.getLogger().error('Unexpected Error', {message, url, error: error});
 
         // show notification
-        this.getToasterService().error(
+        this.getToasterService()
+        && this.getToasterService().error(
             this.getTranslateService().instant('common.toast.unknown'),
             this.getTranslateService().instant('app'));
     }

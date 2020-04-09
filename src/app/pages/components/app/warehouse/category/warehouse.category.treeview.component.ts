@@ -13,7 +13,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {TreeItem, TreeviewItem} from 'ngx-treeview';
+import {TreeItem, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {IContextMenu, IEvent} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
@@ -27,8 +27,8 @@ import WarehouseCategory, {
     CATEGORY_TYPE,
     IWarehouseCategory,
 } from '../../../../../@core/data/warehouse/warehouse.category';
-import Timer = NodeJS.Timer;
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
+import {WarehouseCategoryTreeviewI18n} from "./warehouse.category.formly.treeview.dropdown.field";
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -109,6 +109,7 @@ export class WarehouseCategoryTreeviewComponent extends BaseNgxTreeviewComponent
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(WarehouseCategoryTreeviewConfig);
         super.setContextMenu(WarehouseCategoryContextMenu);
+        super.setTreeviewI18n(new WarehouseCategoryTreeviewI18n(this.getTranslateService(), false));
     }
 
     // -------------------------------------------------
@@ -131,10 +132,10 @@ export class WarehouseCategoryTreeviewComponent extends BaseNgxTreeviewComponent
      */
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
-        let timer: Timer;
-        timer = setTimeout(() => {
+        let timer: number;
+        timer = window.setTimeout(() => {
             this.focus();
-            clearTimeout(timer);
+            window.clearTimeout(timer);
         }, 300);
     }
 

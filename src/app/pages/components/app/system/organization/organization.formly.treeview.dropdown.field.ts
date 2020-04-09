@@ -1,5 +1,5 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
-import {TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
+import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/system/organization';
 import {AfterViewInit, Component, Inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -63,8 +63,15 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss' ],
 })
 export class OrganizationFormlyTreeviewDropdownFieldComponent
-    extends DropdownTreeviewFormFieldComponent
-    implements AfterViewInit {
+    extends DropdownTreeviewFormFieldComponent {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    getTreeviewI18n(): TreeviewI18n {
+        return new OrganizationTreeviewI18n(this.translateService, false);
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -76,18 +83,6 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService) {
         super(_translateService);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        this.getTreeviewComponent()
-        && this.getTreeviewComponent().setTreeviewI18n(
-            new OrganizationTreeviewI18n(this.translateService, false));
     }
 
     // -------------------------------------------------

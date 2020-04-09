@@ -1,6 +1,6 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
-import {TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
-import {AfterViewInit, Component, Inject} from '@angular/core';
+import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../../utils/object.utils';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
@@ -16,18 +16,18 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
     }
 
     getText(selection: TreeviewSelection): string {
-        if (selection.uncheckedItems.length === 0 && this.showAll) {
+        if ((!selection || !(selection.uncheckedItems || []).length) && this.showAll) {
             return this.getAllCheckboxText();
         }
 
-        switch (selection.checkedItems.length) {
+        switch (((selection || {})['checkedItems'] || []).length) {
             case 0:
                 return (this.translateService ? this.translateService.instant(
                     'warehouse.category.form.belongTo.not_selection') : 'Select category');
             case 1:
-                return (selection.checkedItems[0].text || '').trim();
+                return (((selection || {})['checkedItems'] || [])[0].text || '').trim();
             default:
-                return `${selection.checkedItems.length} categories selected`;
+                return `${((selection || {})['checkedItems'] || []).length} categories selected`;
         }
     }
 
@@ -64,7 +64,15 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 })
 export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
     extends DropdownTreeviewFormFieldComponent
-    implements AfterViewInit {
+    implements OnInit, AfterViewInit {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    getTreeviewI18n(): TreeviewI18n {
+        return new WarehouseCategoryTreeviewI18n(this.translateService, false);
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -82,12 +90,9 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    ngOnInit(): void {
+        super.ngOnInit();
 
-        this.getTreeviewComponent()
-        && this.getTreeviewComponent().setTreeviewI18n(
-            new WarehouseCategoryTreeviewI18n(this.translateService, false));
         this.getTreeviewComponent()
         && this.getTreeviewComponent().setEnabledItemImage(true);
         this.getTreeviewComponent()

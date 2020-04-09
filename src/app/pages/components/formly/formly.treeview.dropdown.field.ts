@@ -5,7 +5,7 @@ import {
     ViewChildren,
 } from '@angular/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {TreeviewItem} from 'ngx-treeview';
+import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem} from 'ngx-treeview';
 import ComponentUtils from '../../../utils/component.utils';
 import {isObservable, Observable} from 'rxjs';
 import {IEvent} from '../abstract.component';
@@ -35,8 +35,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Raise after loading items and parsing current selected value
      * @param {IEvent} with $data is current selected item
      */
-    @Output() readonly ngAfterLoadData: EventEmitter<IEvent> =
-        new EventEmitter<IEvent>(true);
+    @Output() readonly ngAfterLoadData: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     @ViewChildren(NgxDropdownTreeviewComponent)
     private readonly queryNgxTreeviewComponent: QueryList<NgxDropdownTreeviewComponent>;
@@ -45,6 +44,14 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {TreeviewI18n} instance
+     * return the {TreeviewI18n} instance
+     */
+    public getTreeviewI18n(): TreeviewI18n {
+        return new TreeviewI18nDefault();
+    }
 
     /**
      * Get the {NgxDropdownTreeviewComponent} instance

@@ -31,7 +31,8 @@ import {Lightbox} from 'ngx-lightbox';
     templateUrl: './flipcard.component.html',
     styleUrls: ['./flipcard.component.scss'],
 })
-export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> implements AfterViewInit {
+export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -128,6 +129,10 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource> 
             modalDialogService, confirmPopup, lightbox,
             false, false);
     }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();

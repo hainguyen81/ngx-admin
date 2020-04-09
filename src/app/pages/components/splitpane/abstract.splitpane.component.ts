@@ -152,6 +152,10 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
         (numberOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 

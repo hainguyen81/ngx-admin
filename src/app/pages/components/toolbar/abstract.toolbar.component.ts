@@ -5,7 +5,6 @@ import {
     ElementRef,
     EventEmitter,
     Inject,
-    OnInit,
     Output,
     QueryList,
     Renderer2,
@@ -99,7 +98,7 @@ export interface IToolbarHeaderConfig {
  * Abstract toolbar component base on {MatToolbar}
  */
 export abstract class AbstractToolbarComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit, OnInit {
+    extends AbstractComponent implements AfterViewInit {
 
     protected static TOOLBAR_ELEMENT_SELECTOR: string = 'mat-toolbar';
     protected static TOOLBAR_ACTION_ITEM_ELEMENT_SELECTOR: string = 'nbButton';
@@ -116,9 +115,7 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
     private toolbarActionComponents: NbButtonComponent[];
 
     private toolbarHeader?: IToolbarHeaderConfig | null;
-
-    @Output()
-    private actionClick = new EventEmitter<IEvent>();
+    @Output() private actionClick = new EventEmitter<IEvent>();
 
     // -------------------------------------------------
     // GETTERS/SETTERS

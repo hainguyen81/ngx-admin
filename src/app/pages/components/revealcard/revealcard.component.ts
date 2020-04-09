@@ -31,7 +31,8 @@ import {Lightbox} from 'ngx-lightbox';
     templateUrl: './revealcard.component.html',
     styleUrls: ['./revealcard.component.scss'],
 })
-export class NgxRevealCardComponent extends AbstractRevealcardComponent<DataSource> implements AfterViewInit {
+export class NgxRevealCardComponent extends AbstractRevealcardComponent<DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -128,6 +129,10 @@ export class NgxRevealCardComponent extends AbstractRevealcardComponent<DataSour
             modalDialogService, confirmPopup, lightbox,
             false, false);
     }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();

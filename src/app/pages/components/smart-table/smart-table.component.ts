@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -26,7 +25,7 @@ import {Lightbox} from 'ngx-lightbox';
     templateUrl: './smart-table.component.html',
     styleUrls: ['./smart-table.component.scss'],
 })
-export class SmartTableComponent extends AbstractSmartTableComponent<DataSource> implements AfterViewInit {
+export class SmartTableComponent extends AbstractSmartTableComponent<DataSource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS

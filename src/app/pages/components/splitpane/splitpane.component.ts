@@ -29,7 +29,8 @@ import {Lightbox} from 'ngx-lightbox';
     templateUrl: './splitpane.component.html',
     styleUrls: ['./splitpane.component.scss'],
 })
-export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource> implements AfterViewInit {
+export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -103,16 +104,19 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
             1, false);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
         if (!this.headerViewContainerRef) {
-            this.headerViewContainerRef =
-                ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
+            this.headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
         }
         if (!this.splitAreaHolderViewContainerRefs || !this.splitAreaHolderViewContainerRefs.length) {
-            this.splitAreaHolderViewContainerRefs =
-                ComponentUtils.queryComponents(this.querySplitAreaHolderViewContainerRefs);
+            this.splitAreaHolderViewContainerRefs = ComponentUtils.queryComponents(
+                this.querySplitAreaHolderViewContainerRefs);
         }
     }
 }

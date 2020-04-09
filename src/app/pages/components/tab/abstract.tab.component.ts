@@ -252,6 +252,10 @@ export abstract class AbstractTabComponent<T extends DataSource>
             modalDialogService, confirmPopup, lightbox);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 

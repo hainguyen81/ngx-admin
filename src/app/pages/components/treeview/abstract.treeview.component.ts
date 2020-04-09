@@ -3,8 +3,8 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
-    Inject,
-    OnInit, Output,
+    Inject, Input,
+    Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -22,7 +22,14 @@ import {
     IEvent,
 } from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
+import {
+    DropdownTreeviewComponent,
+    TreeItem,
+    TreeviewComponent,
+    TreeviewI18n,
+    TreeviewI18nDefault,
+    TreeviewItem,
+} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import ObjectUtils from '../../../utils/object.utils';
@@ -47,7 +54,7 @@ export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
  * Abstract tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
  */
 export abstract class AbstractTreeviewComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit, OnInit {
+    extends AbstractComponent implements AfterViewInit {
 
     protected static TREEVIEW_ELEMENT_SELECTOR: string = 'ngx-treeview';
     protected static TREEVIEW_ITEM_ELEMENT_SELECTOR: string = 'ngx-treeview-item';
@@ -70,6 +77,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private treeviewItems: TreeviewItem[];
     /* drop-down button class */
     private buttonClass?: string | null;
+    @Input('i18n') private i18n: TreeviewI18n = new TreeviewI18nDefault();
+
     @Output() private selectedChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private filterChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private clickItem: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -304,15 +313,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param treeviewI18 to apply
      */
     public setTreeviewI18n(treeviewI18?: TreeviewI18n) {
-        if (treeviewI18 && this.getTreeviewComponent()) {
-            this.getTreeviewComponent().i18n = treeviewI18;
-        }
-        if (treeviewI18 && this.getDropdownTreeviewComponent()) {
-            this.getDropdownTreeviewComponent().i18n = treeviewI18;
-            if (this.getDropdownTreeviewComponent().treeviewComponent) {
-                this.getDropdownTreeviewComponent().treeviewComponent.i18n = treeviewI18;
-            }
-        }
+        this.i18n = treeviewI18 || new TreeviewI18nDefault();
     }
 
     // -------------------------------------------------
@@ -365,15 +366,28 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         if (!this.treeviewComponent) {
             this.treeviewComponent = ComponentUtils.queryComponent(
                 this.queryTreeviewComponent, (component) => {
-                    component && component.selectedChange.subscribe(value => this.onSelectedChange({$data: value}));
-                    component && component.filterChange.subscribe(value => this.onFilterChange({$data: value}));
+                    if (component) {
+                        component.i18n = this.i18n;
+                        component.selectedChange.subscribe(
+                            value => this.onSelectedChange({$data: value}));
+                        component.filterChange.subscribe(
+                            value => this.onFilterChange({$data: value}));
+                    }
                 });
         }
         if (!this.dropdownTreeviewComponent) {
             this.dropdownTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryDropdownTreeviewComponent, (component) => {
-                    component && component.selectedChange.subscribe(value => this.onSelectedChange({$data: value}));
-                    component && component.filterChange.subscribe(value => this.onFilterChange({$data: value}));
+                    if (component) {
+                        component.i18n = this.i18n;
+                        if (component.treeviewComponent) {
+                            component.treeviewComponent.i18n = component.i18n;
+                        }
+                        component.selectedChange.subscribe(
+                            value => this.onSelectedChange({$data: value}));
+                        component.filterChange.subscribe(
+                            value => this.onFilterChange({$data: value}));
+                    }
                 });
         }
     }

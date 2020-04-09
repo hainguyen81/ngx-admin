@@ -140,6 +140,10 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
             modalDialogService, confirmPopup, lightbox);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 

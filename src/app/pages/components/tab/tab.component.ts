@@ -29,7 +29,8 @@ import {Lightbox} from 'ngx-lightbox';
     templateUrl: './tab.component.html',
     styleUrls: ['./tab.component.scss'],
 })
-export class NgxTabsetComponent extends AbstractTabComponent<DataSource> implements AfterViewInit {
+export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -90,6 +91,10 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource> impleme
             modalDialogService, confirmPopup, lightbox,
             1, true, true);
     }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();

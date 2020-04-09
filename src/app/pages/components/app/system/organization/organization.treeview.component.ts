@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -14,7 +14,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {TreeItem, TreeviewItem} from 'ngx-treeview';
+import {TreeItem, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import Organization, {IOrganization} from '../../../../../@core/data/system/organization';
 import OrganizationUtils from '../../../../../utils/system/organization.utils';
 import {IContextMenu, IEvent} from '../../../abstract.component';
@@ -45,7 +45,7 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
     styleUrls: ['../../../treeview/treeview.component.scss'],
 })
 export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
-    implements OnInit, AfterViewInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -104,6 +104,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
+        super.setTreeviewI18n(new OrganizationTreeviewI18n(this.getTranslateService(), false));
     }
 
     // -------------------------------------------------
@@ -126,6 +127,7 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
      */
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
+
         let timer: number;
         timer = window.setTimeout(() => {
             this.focus();
@@ -136,13 +138,6 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
         this.getDataSource().refresh();
-
-        // apply multi-language
-        let timer: number;
-        timer = window.setTimeout(() => {
-            this.setTreeviewI18n(new OrganizationTreeviewI18n(this.getTranslateService()));
-            window.clearTimeout(timer);
-        }, 100);
     }
 
     // -------------------------------------------------

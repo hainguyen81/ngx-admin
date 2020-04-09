@@ -12,7 +12,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {TreeviewItem} from 'ngx-treeview';
+import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
 import {IEvent} from '../abstract.component';
 import {ToastrService} from 'ngx-toastr';
@@ -147,8 +147,10 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         }
         if (this.getDropdownTreeviewComponent() && this.getDropdownTreeviewComponent().treeviewComponent
             && typeof this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] === 'function') {
-            this.origianlGenerateSelection = this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'];
-            this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] = () => this.generateSelection();
+            this.origianlGenerateSelection = this.getDropdownTreeviewComponent()
+                .treeviewComponent['generateSelection'];
+            this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] =
+                () => this.generateSelection();
         }
     }
 

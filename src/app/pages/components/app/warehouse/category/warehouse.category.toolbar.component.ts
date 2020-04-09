@@ -39,6 +39,7 @@ export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = []
     styleUrls: ['../../../toolbar/toolbar.component.scss', './warehouse.category.toolbar.component.scss'],
 })
 export class WarehouseCategoryToolbarComponent extends BaseNgxToolbarComponent<WarehouseCategoryDatasource> {
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------

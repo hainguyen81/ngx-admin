@@ -52,8 +52,8 @@ export const WarehouseItemSummaryAreaConfig: ISplitAreaConfig = {
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss', './warehouse.item.splitpane.component.scss'],
 })
-export class WarehouseItemSplitPaneComponent extends BaseSplitPaneComponent<WarehouseItemDatasource>
-    implements AfterViewInit {
+export class WarehouseItemSplitPaneComponent
+    extends BaseSplitPaneComponent<WarehouseItemDatasource> implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
