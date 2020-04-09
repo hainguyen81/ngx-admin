@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -17,7 +18,7 @@ import {
     IOrganization,
     ORGANIZTAION_TYPE,
 } from '../../../../../@core/data/system/organization';
-import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
+import {FormlyConfig, FormlyFieldConfig, FormlyTemplateOptions} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {IUser} from '../../../../../@core/data/system/user';
@@ -29,9 +30,8 @@ import {OrganizationTreeviewConfig} from './organization.treeview.component';
 import OrganizationUtils from '../../../../../utils/system/organization.utils';
 import {Observable} from 'rxjs';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import {FormGroup} from '@angular/forms';
-import {FormlyFormOptions} from '@ngx-formly/core/lib/components/formly.field.config';
-import {TreeviewItem} from 'ngx-treeview';
+import {OrganizationFormlyTreeviewDropdownFieldComponent} from './organization.formly.treeview.dropdown.field';
+import {IEvent} from '../../../abstract.component';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -100,6 +100,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.organization.form.manager.label',
                     placeholder: 'system.organization.form.manager.placeholder',
                     options: [],
+                    disabled: true,
                 },
             },
         ],
@@ -313,8 +314,25 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss', './organization.formly.component.scss'],
 })
-export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganization, OrganizationDataSource>
-    implements OnInit {
+export class OrganizationFormlyComponent
+    extends BaseFormlyComponent<IOrganization, OrganizationDataSource>
+    implements OnInit, AfterViewInit {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Set the form fields configuration
+     * @param fields to apply
+     */
+    protected setFields(fields: FormlyFieldConfig[]) {
+        // initialize fields
+        this.initializeFields(fields);
+
+        // apply fields
+        super.setFields(fields);
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -364,14 +382,56 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
 
     ngOnInit(): void {
         super.ngOnInit();
-
-        this.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
-        this.getFields()[1].fieldGroup[1].templateOptions.options = this.getAllUsers();
+        this.ngModelChanged.subscribe(
+            (e: IEvent) => this.disableModelFromBelongTo(
+                this.getFormlyForm().fields[0].fieldGroup[0], e.$data));
     }
 
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Initialize the specified fields configuration
+     * @param fields to initialize
+     */
+    private initializeFields(fields: FormlyFieldConfig[]) {
+        fields[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
+        fields[0].fieldGroup[0].hooks = {
+            afterViewInit: field => {
+                let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
+                belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
+                    ? <OrganizationFormlyTreeviewDropdownFieldComponent>field.templateOptions['componentRef'] : null);
+                belongToComponent && belongToComponent.ngAfterLoadData.subscribe(e => {
+                    this.disableModelFromBelongTo(field);
+                });
+            },
+        };
+        fields[1].fieldGroup[1].templateOptions.options = this.getAllUsers();
+    }
+
+    /**
+     * Disable current data model in the belongTo field
+     * @param field to parse field component
+     * @param model to disable
+     */
+    private disableModelFromBelongTo(field: FormlyFieldConfig, model?: IOrganization | null) {
+        model = model || this.getModel();
+        if (!model || !(model.id || '').length) {
+            return;
+        }
+
+        // detect field component
+        let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
+        belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
+            ? <OrganizationFormlyTreeviewDropdownFieldComponent>field.templateOptions['componentRef'] : null);
+
+        // disable current model item in treeview
+        belongToComponent && belongToComponent.disableItemsByValue(model);
+
+        // select current model item in treeview
+        belongToComponent && belongToComponent.setSelectedValue(model);
+    }
 
     /**
      * Get the organization list for options selection
@@ -406,45 +466,6 @@ export class OrganizationFormlyComponent extends BaseFormlyComponent<IOrganizati
                     OrganizationUtils.buildOrganization(orgValues as IOrganization[])];
             }));
     }
-
-    // /**
-    //  * Get the organization list for options selection
-    //  * @return {Promise}
-    //  */
-    // private getAllOrganization(): Promise<{ value: string, label: string }[]> {
-    //     return this.getDataSource().getAll().then(orgValues => {
-    //         if (!isArray(orgValues)) {
-    //             orgValues = [ orgValues as IOrganization ];
-    //         }
-    //         let options: { value: string, label: string }[];
-    //         options = [];
-    //         Array.from(orgValues).forEach((orgValue: IOrganization) => {
-    //             this.mapOrganizationAsOptions(orgValue, options);
-    //         });
-    //         return options;
-    //     });
-    // }
-    //
-    // /**
-    //  * Map the specified {IOrganization} into the return options array recursively
-    //  * @param orgValue to map
-    //  * @param retValues to push returned values
-    //  */
-    // private mapOrganizationAsOptions(orgValue: IOrganization, retValues: { value: string, label: string }[]): void {
-    //     if (!orgValue) {
-    //         return;
-    //     }
-    //
-    //     if (!retValues) {
-    //         retValues = [];
-    //     }
-    //     retValues.push({value: orgValue.id, label: orgValue.name});
-    //     if (orgValue.children && orgValue.children.length) {
-    //         for (const orgChild of orgValue.children) {
-    //             this.mapOrganizationAsOptions(orgChild, retValues);
-    //         }
-    //     }
-    // }
 
     /**
      * Map the specified {IUser} into the return options array recursively

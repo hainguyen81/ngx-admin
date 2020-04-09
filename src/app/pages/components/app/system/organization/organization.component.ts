@@ -202,7 +202,9 @@ export class OrganizationSplitPaneComponent
                 if (organization) {
                     this.selectedOrganization = organization;
                     // create formly form component
-                    this.organizationFormlyComponent = this.setAreaComponent(1, OrganizationFormlyComponent);
+                    if (!this.organizationFormlyComponent) {
+                        this.organizationFormlyComponent = this.setAreaComponent(1, OrganizationFormlyComponent);
+                    }
                     this.doReset();
                 }
             }

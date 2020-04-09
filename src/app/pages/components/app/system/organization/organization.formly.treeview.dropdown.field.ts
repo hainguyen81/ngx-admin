@@ -1,7 +1,7 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
 import {TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {AfterViewInit, Component, Inject, Type} from '@angular/core';
+import {AfterViewInit, Component, Inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../../utils/object.utils';
 
@@ -10,12 +10,13 @@ import ObjectUtils from '../../../../../utils/object.utils';
  */
 export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
 
-    constructor(@Inject(TranslateService) private translateService: TranslateService) {
+    constructor(@Inject(TranslateService) private translateService: TranslateService,
+                private showAll?: boolean | true) {
         super();
     }
 
     getText(selection: TreeviewSelection): string {
-        if (selection.uncheckedItems.length === 0) {
+        if (selection.uncheckedItems.length === 0 && this.showAll) {
             return this.getAllCheckboxText();
         }
 
@@ -66,16 +67,42 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
     extends DropdownTreeviewFormFieldComponent
     implements AfterViewInit {
 
-    constructor(@Inject(TranslateService) private translateService: TranslateService) {
-        super();
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {OrganizationFormlyTreeviewDropdownFieldComponent} class
+     * @param translateService {TranslateService}
+     */
+    constructor(@Inject(TranslateService) _translateService: TranslateService) {
+        super(_translateService);
     }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
         this.getTreeviewComponent()
         && this.getTreeviewComponent().setTreeviewI18n(
-            new OrganizationTreeviewI18n(this.translateService));
+            new OrganizationTreeviewI18n(this.translateService, false));
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Disable the treeview item by the specified organization
+     * @param value to disable
+     */
+    public disableItemsByValue(value?: IOrganization | null): void {
+        let item: TreeviewItem;
+        item = (value && value.id ? this.valueFormatter(value.id) : null);
+        item && this.disableItems(item);
     }
 
     protected valueFormatter(value: any): TreeviewItem {
@@ -85,7 +112,7 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
     protected valueParser(value?: any): any {
         let itValue: TreeviewItem;
         itValue = ObjectUtils.cast(value, TreeviewItem);
-        return (itValue ? itValue.value['id'] : (value || {})['id']);
+        return (itValue && itValue.value ? itValue.value['id'] : (value || {})['id']);
     }
 
     private filterOrganizationTreeItem(value: any): TreeviewItem {
@@ -100,7 +127,9 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
         return itemValue;
     }
     private filterOrganizationTreeItemRecursively(value: any, item?: TreeviewItem | null): TreeviewItem {
-        if (item && item.value as IOrganization && (item.value as IOrganization).id === value) {
+        if (item && item.value as IOrganization && value
+            && ((item.value as IOrganization).id === value
+                || (typeof value !== 'string') && (item.value as IOrganization).id === value['id'])) {
             return item;
         }
         if (item && (item.children || []).length) {

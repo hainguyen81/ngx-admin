@@ -1,11 +1,9 @@
 import {
     AfterViewInit,
-    Component,
-    OnInit,
+    Component, EventEmitter, Inject, Output,
     QueryList,
     ViewChildren,
 } from '@angular/core';
-import {FieldType} from '@ngx-formly/material';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeviewItem} from 'ngx-treeview';
 import ComponentUtils from '../../../utils/component.utils';
@@ -14,6 +12,8 @@ import {IEvent} from '../abstract.component';
 import {NgxDropdownTreeviewComponent} from '../treeview/treeview.dropdown.component';
 import {DefaultTreeviewConfig} from '../treeview/abstract.treeview.component';
 import {isArray} from 'util';
+import {AbstractFieldType} from '../abstract.fieldtype';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * Formly Treeview Dropdown field component base on {FieldType}
@@ -23,7 +23,7 @@ import {isArray} from 'util';
     templateUrl: './formly.treeview.dropdown.field.html',
     styleUrls: ['./formly.treeview.dropdown.field.scss'],
 })
-export class DropdownTreeviewFormFieldComponent extends FieldType implements AfterViewInit {
+export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -31,6 +31,12 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
 
     private config: TreeviewConfig;
     private items: TreeviewItem[];
+    /**
+     * Raise after loading items and parsing current selected value
+     * @param {IEvent} with $data is current selected item
+     */
+    @Output() readonly ngAfterLoadData: EventEmitter<IEvent> =
+        new EventEmitter<IEvent>(true);
 
     @ViewChildren(NgxDropdownTreeviewComponent)
     private readonly queryNgxTreeviewComponent: QueryList<NgxDropdownTreeviewComponent>;
@@ -65,6 +71,18 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
     }
 
     // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {DropdownTreeviewFormFieldComponent} class
+     * @param translateService {TranslateService}
+     */
+    constructor(@Inject(TranslateService) _translateService: TranslateService) {
+        super(_translateService);
+    }
+
+    // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
@@ -86,29 +104,6 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
-
-    /**
-     * Formatter function to format the model value to {TreeviewItem} instance to show
-     * @param value model value to format
-     */
-    protected valueFormatter(value: any): TreeviewItem {
-        return value as TreeviewItem;
-    }
-
-    /**
-     * Parser function to parse {TreeviewItem} or data instance to the model value
-     * @param value {TreeviewItem} or data to parse
-     */
-    protected valueParser(value?: any): any {
-        let parsedValue: any;
-        parsedValue = value;
-        if (this.field) {
-            for (const parser of (this.field.parsers || [])) {
-                parsedValue = parser.apply(this, [parsedValue]);
-            }
-        }
-        return parsedValue;
-    }
 
     /**
      * Initialize
@@ -135,7 +130,7 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
         // treeview items
         let items: TreeviewItem[];
         items = [];
-        if ((options || []).length && Array.isArray(options[1])) {
+        if ((options || []).length > 1 && Array.isArray(options[1])) {
             Array.from(options[1]).forEach(option => {
                 let item: TreeviewItem;
                 item = option as TreeviewItem;
@@ -146,13 +141,11 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
         this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(this.items);
 
         // apply selected value
-        let selectedValue: TreeviewItem;
-        selectedValue = this.valueFormatter(this.value);
-        if (selectedValue) {
-            selectedValue.checked = true;
-            this.getTreeviewComponent()
-            && this.setTreeviewSelectedItem(selectedValue, false);
-        }
+        let selectedItem: TreeviewItem;
+        selectedItem = this.setSelectedValue(this.value, false);
+
+        // raise event after loading data
+        this.ngAfterLoadData.emit({ $data: selectedItem });
     }
 
     /**
@@ -160,10 +153,6 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
      * @param e event data
      */
     private onSelectedValue(e: IEvent): void {
-        if (!this.getTreeviewComponent()) {
-            return;
-        }
-
         let item: any;
         item = (e && e.$data && isArray(e.$data) && Array.from(e.$data).length ? e.$data[0] : null);
         if (!item || item instanceof TreeviewItem) {
@@ -180,16 +169,73 @@ export class DropdownTreeviewFormFieldComponent extends FieldType implements Aft
     }
 
     /**
+     * Set the selected value
+     * @param value to apply
+     * @param updateValue true for updating
+     * @return the affected {TreeviewItem}
+     */
+    public setSelectedValue(value: any, updateValue?: boolean | false): TreeviewItem {
+        // apply selected value
+        let selectedValue: TreeviewItem;
+        selectedValue = this.valueFormatter(this.value);
+        if (selectedValue) {
+            selectedValue.checked = true;
+            selectedValue.collapsed = false;
+        }
+        this.setTreeviewSelectedItem(selectedValue, updateValue);
+        return selectedValue;
+    }
+
+    /**
      * Set the selected {TreeviewItem} and update model value if necessary
      * @param item {TreeviewItem} to select
      * @param updateValue true for updating
      */
-    private setTreeviewSelectedItem(item?: TreeviewItem, updateValue?: boolean | false): void {
+    public setTreeviewSelectedItem(item?: TreeviewItem, updateValue?: boolean | false): void {
+        if (!this.getTreeviewComponent()) {
+            return;
+        }
+
         this.getTreeviewComponent().setSelectedTreeviewItems(item && item.checked ? [item] : [], true);
         this.value = (item && item.checked ? this.valueParser(item) : null);
         if (updateValue) {
             this.formControl && this.formControl.setValue(this.value);
             this.formControl && this.formControl.updateValueAndValidity({onlySelf: true, emitEvent: true});
         }
+    }
+
+    /**
+     * Parse all items belong to the specified item
+     * @param item to parse
+     * @param items returned items array
+     */
+    private parseItemsRecursively(item?: TreeviewItem | null, items?: TreeviewItem[] | []): void {
+        items = (items || []);
+        item && items.push(item);
+        item && (item.children || []).forEach(it => this.parseItemsRecursively(it, items));
+    }
+
+    /**
+     * Disable the specified item and un-disable other items
+     * @param item to disable
+     */
+    public disableItems(item?: TreeviewItem | null): void {
+        let disabledItems: TreeviewItem[];
+        disabledItems = [];
+        this.parseItemsRecursively(item, disabledItems);
+        (this.items || []).forEach(it => this.disableItemsRecursively(it, disabledItems));
+    }
+    /**
+     * Check to disable/enable the specified item by the specified disabled items array
+     * @param item to disable/enable
+     * @param disabledItems disabled items to check
+     */
+    private disableItemsRecursively(item?: TreeviewItem | null, disabledItems?: TreeviewItem[] | []): void {
+        if (!item) return;
+        item.disabled = ((disabledItems || []).indexOf(item) >= 0);
+        if (item.disabled) {
+            item.checked = false;
+        }
+        (item.children || []).forEach(it => this.disableItemsRecursively(it, disabledItems));
     }
 }

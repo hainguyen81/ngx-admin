@@ -127,6 +127,14 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         this.options = options;
     }
 
+    /**
+     * Get the {FormlyForm} instance
+     * @return the {FormlyForm} instance
+     */
+    protected getFormlyForm(): FormlyForm {
+        return this.formlyForm;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------

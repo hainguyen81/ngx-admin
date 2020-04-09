@@ -60,6 +60,7 @@
              let-onCollapseExpand="onCollapseExpand"
              let-onCheckedChange="onCheckedChange">
     <div class="form-inline row-item"
+         *ngIf="!item.disabled"
          [id]="generateTreeviewItemKey(item) || ''"
          [contextMenu]="treeviewContextMenuComponent"
          (contextmenu)="onContextMenu({ $event: $event, $data: item })"
@@ -87,17 +88,43 @@
         <nb-icon *ngIf="item.children && !item.collapsed"
                  pack="fa" icon="caret-down"
                  (click)="onCollapseExpand()"></nb-icon>
-        <div class="form-check">
+        <div class="form-check" [attr.aria-disabled]="item.disabled">
             <input type="checkbox" class="form-check-input"
                    *ngIf="isEnabledItemCheck()"
                    [(ngModel)]="item.checked"
                    (ngModelChange)="onCheckedChange()"
                    [disabled]="item.disabled"
                    [indeterminate]="item.indeterminate"
-                   (click)="onClickItem({ $event: $event, $data: item });"/>
+                   (click)="onClickItem({ $event: $event, $data: item });"
+                   [id]="'item-'.concat(generateTreeviewItemKey(item) || '')"
+                   [attr.aria-disabled]="item.disabled" />
+            <label class="form-check-label disa"
+                   (click)="onClickItemLabel($event, item, onCheckedChange);"
+                   [attr.aria-disabled]="item.disabled"
+                   [attr.for]="'item-'.concat(generateTreeviewItemKey(item) || '')">{{item.text}}</label>
+        </div>
+    </div>
+    <div class="form-inline row-item"
+         *ngIf="item.disabled"
+         [id]="generateTreeviewItemKey(item) || ''">
+        <nb-icon *ngIf="item.children && item.collapsed"
+                 pack="fa" icon="caret-right"
+                 (click)="onCollapseExpand()"></nb-icon>
+        <nb-icon *ngIf="item.children && !item.collapsed"
+                 pack="fa" icon="caret-down"
+                 (click)="onCollapseExpand()"></nb-icon>
+        <div class="form-check" [attr.aria-disabled]="item.disabled">
+            <input type="checkbox" class="form-check-input"
+                   *ngIf="isEnabledItemCheck()"
+                   [(ngModel)]="item.checked"
+                   (ngModelChange)="onCheckedChange()"
+                   [disabled]="item.disabled"
+                   [indeterminate]="item.indeterminate"
+                   [id]="'item-'.concat(generateTreeviewItemKey(item) || '')"
+                   [attr.aria-disabled]="item.disabled" />
             <label class="form-check-label"
-                   (click)="onClickItemLabel($event, item, onCheckedChange);">
-                {{item.text}}</label>
+                   [attr.aria-disabled]="item.disabled"
+                   [attr.for]="'item-'.concat(generateTreeviewItemKey(item) || '')">{{item.text}}</label>
         </div>
     </div>
 </ng-template>

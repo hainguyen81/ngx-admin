@@ -4,4 +4,10 @@
     ::ng-deep nb-card {
         transform: translate3d(0, 0, 0);
     }
+    ::ng-deep ngx-treeview ngx-treeview-item {
+        [aria-disabled='true'] {
+            color: nb-theme(text-disabled-color);
+            pointer-events: none;
+        }
+    }
 }

@@ -1,6 +1,7 @@
-import {FieldType} from '@ngx-formly/material';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {IEvent} from '../abstract.component';
+import {AbstractFieldType} from '../abstract.fieldtype';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * Formly Image field component base on {FieldType}
@@ -10,8 +11,12 @@ import {IEvent} from '../abstract.component';
     templateUrl: './formly.image.field.html',
     styleUrls: ['./formly.image.field.scss'],
 })
-export class ImageGalleryFormFieldComponent extends FieldType
+export class ImageGalleryFormFieldComponent extends AbstractFieldType
     implements OnInit {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
 
     /**
      * Get field value as image sources
@@ -29,6 +34,22 @@ export class ImageGalleryFormFieldComponent extends FieldType
         this.value = e.$data || [];
         this.formControl && this.formControl.setValue(this.value);
     }
+
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {ImageGalleryFormFieldComponent} class
+     * @param translateService {TranslateService}
+     */
+    constructor(@Inject(TranslateService) _translateService: TranslateService) {
+        super(_translateService);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
 
     ngOnInit(): void {
         this.formControl && this.formControl.patchValue(value => {
