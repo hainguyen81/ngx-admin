@@ -15,7 +15,6 @@ import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import {isArray} from 'util';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
@@ -31,6 +30,7 @@ import {
     WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
 } from './warehouse.category.formly.treeview.dropdown.field';
 import {IEvent} from '../../../abstract.component';
+import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -45,7 +45,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                 fieldGroupClassName: 'row ml-0 mr-0',
                 fieldGroup: [
                     {
-                        className: 'w-100',
+                        className: 'w-100 belongTo',
                         key: 'parentId',
                         type: 'warehouse-category-treeview-dropdown',
                         templateOptions: {
@@ -119,10 +119,6 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                 className: 'col-4 images-gallery',
                 key: 'image',
                 type: 'images-gallery',
-                templateOptions: {
-                    label: 'warehouse.category.form.image.label',
-                    placeholder: 'warehouse.category.form.image.placeholder',
-                },
             },
         ],
     },
@@ -258,40 +254,11 @@ export class WarehouseCategoryFormlyComponent
      * Get the warehouse categories list for options selection
      * @return {Observable}
      */
-    private getAllWarehouseCategories(): Observable<{ value: string, label: string }[]> {
+    private getAllWarehouseCategories(): Observable<any[]> {
         return PromiseUtils.promiseToObservable(
             this.getDataSource().getAll().then(values => {
-                if (!isArray(values)) {
-                    values = [].push(values);
-                }
-                let options: { value: string, label: string }[];
-                options = [];
-                Array.from(values).forEach((value: IWarehouseCategory) => {
-                    this.mapWarehouseCategoryAsOptions(value, options);
-                });
-                return options;
+                return [WarehouseCategoryFormConfig,
+                    WarehouseUtils.buildWarehouseCategories(values as IWarehouseCategory[])];
             }));
-    }
-
-    /**
-     * Map the specified {IWarehouseCategory} into the return options array recursively
-     * @param value to map
-     * @param retValues to push returned values
-     */
-    private mapWarehouseCategoryAsOptions(
-        value: IWarehouseCategory, retValues: { value: string, label: string }[]): void {
-        if (!value || !((value || {})['id'] || '').length) {
-            return;
-        }
-
-        if (!retValues) {
-            retValues = [];
-        }
-        retValues.push({value: value.id, label: value.name});
-        if (value.children && value.children.length) {
-            for (const child of value.children) {
-                this.mapWarehouseCategoryAsOptions(child, retValues);
-            }
-        }
     }
 }

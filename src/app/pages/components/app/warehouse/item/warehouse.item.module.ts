@@ -11,15 +11,10 @@ import {
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
-import {LoggerModule, NGXLogger} from 'ngx-logger';
+import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component';
-import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {
-    WarehouseItemDbService,
-    WarehouseItemHttpService,
-} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {WarehouseItemFlipcardComponent} from './warehouse.item.flipcard.component';
 import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
@@ -43,6 +38,10 @@ import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
 import {ComponentsModule} from '../../../components.module';
+import {
+    WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
+} from '../category/warehouse.category.formly.treeview.dropdown.field';
+import {WarehouseProviders} from '../../../../../config/app.providers';
 
 @NgModule({
     imports: [
@@ -93,7 +92,15 @@ import {ComponentsModule} from '../../../components.module';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            types: [
+                {
+                    name: 'warehouse-category-treeview-dropdown',
+                    component: WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
+                    wrappers: ['form-field'],
+                },
+            ],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -140,12 +147,7 @@ import {ComponentsModule} from '../../../components.module';
         WarehouseItemInOutSmartTableComponent,
         WarehouseItemAdjustmentSmartTableComponent,
     ],
-    providers: [
-        {
-            provide: WarehouseItemDatasource, useClass: WarehouseItemDatasource,
-            deps: [WarehouseItemHttpService, WarehouseItemDbService, NGXLogger],
-        },
-    ],
+    providers: [ WarehouseProviders ],
 })
 export class WarehouseItemModule {
 }

@@ -5,4 +5,10 @@
         transform: translate3d(0, 0, 0);
     }
     ::ng-deep nb-flip-card .flipcard-body .back-container ngx-split-pane-warehouse-item { flex: 1; }
+    ::ng-deep formly-field.belongTo mat-form-field {
+        .mat-form-field-infix {
+            /* make the field underline nearly for field label closer */
+            padding-bottom: 0.1em;
+        }
+    }
 }

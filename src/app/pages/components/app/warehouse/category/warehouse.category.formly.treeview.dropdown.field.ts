@@ -25,7 +25,7 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
                 return (this.translateService ? this.translateService.instant(
                     'warehouse.category.form.belongTo.not_selection') : 'Select category');
             case 1:
-                return selection.checkedItems[0].text;
+                return (selection.checkedItems[0].text || '').trim();
             default:
                 return `${selection.checkedItems.length} categories selected`;
         }
