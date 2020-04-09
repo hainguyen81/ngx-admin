@@ -35,6 +35,8 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // -------------------------------------------------
 
     @Input('enabledItemCheck') private enabledItemCheck?: boolean | false;
+    @Input('enabledItemImage') private enabledItemImage?: boolean | false;
+    @Input('itemImage') private itemImageParser: (item?: TreeviewItem) => string[];
     /** backup pointer to generate selection function of treeview component */
     private origianlGenerateSelection: () => void;
 
@@ -54,8 +56,40 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * Set a boolean value indicating this component whether uses checkbox for tree-view item
      * @param enabledItemCheck true for using checkbox; else false
      */
-    protected setEnabledItemCheck(enabledItemCheck?: boolean | false): void {
+    public setEnabledItemCheck(enabledItemCheck?: boolean | false): void {
         this.enabledItemCheck = enabledItemCheck;
+    }
+
+    /**
+     * Get a boolean value indicating this component whether uses image for tree-view item
+     * @return true for using checkbox; else false
+     */
+    public isEnabledItemImage(): boolean {
+        return this.enabledItemImage;
+    }
+
+    /**
+     * Set a boolean value indicating this component whether uses image for tree-view item
+     * @param enabledItemImage true for using image; else false
+     */
+    public setEnabledItemImage(enabledItemImage?: boolean | false): void {
+        this.enabledItemImage = enabledItemImage;
+    }
+
+    /**
+     * Get the parser delegate to parse item image
+     * @return the parser delegate to parse item image
+     */
+    public getItemImageParser(): (item?: TreeviewItem) => string[] {
+        return this.itemImageParser;
+    }
+
+    /**
+     * Set a boolean value indicating this component whether uses image for tree-view item
+     * @param enabledItemImage true for using image; else false
+     */
+    public setItemImageParser(itemImageParser?: (item?: TreeviewItem) => string[] | null): void {
+        this.itemImageParser = itemImageParser;
     }
 
     // -------------------------------------------------
@@ -255,7 +289,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param items to select
      * @param reset specify whether reset the current selected items
      */
-    setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
+    public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
         // super.setSelectedTreeviewItems(items, reset);
 
         // un-check previous items
@@ -265,5 +299,14 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         selection = this.collectSelection(items);
         this.getTreeviewSelection().checkedItems = selection.checkedItems;
         this.getTreeviewSelection().uncheckedItems = selection.uncheckedItems;
+    }
+
+    /**
+     * Get the specified {TreeviewItem} image. NULL for not using
+     * @param item to parse
+     * @return the specified {TreeviewItem} image
+     */
+    public getItemImages(item?: TreeviewItem): string[] {
+        return (this.getItemImageParser() ? this.getItemImageParser().apply(this, [item]) : null);
     }
 }

@@ -967,6 +967,66 @@ export class AbstractComponent
         }
         this.getLightbox().open(album, imageIndex, options);
     }
+    /**
+     * Open the specified image.
+     * @param image to show
+     * @param options lightbox options
+     */
+    public openOneImageLightbox(image?: string, options?: {}): void {
+        let album: IAlbum[];
+        album = [{src: image, thumb: image}];
+        this.openLightbox(album, 0, options);
+    }
+    /**
+     * Open the specified images album at the specified image index
+     * @param album images album
+     * @param imageIndex to show
+     * @param options lightbox options
+     */
+    public openImagesLightbox(...images: string[]): void {
+        if (images && images.length) {
+            let album: IAlbum[];
+            album = [];
+            Array.of(...images).forEach(image => {
+                album.push({src: image, thumb: image});
+            });
+            this.openLightbox(album, 0);
+        }
+    }
+    /**
+     * Open the specified images album at the specified image index
+     * @param images images album
+     * @param imageIndex to show
+     * @param options lightbox options
+     */
+    public openAlbumLightboxAt(images: string[], imageIndex?: number, options?: {}): void {
+        if (images && images.length) {
+            let album: IAlbum[];
+            album = [];
+            Array.of(...images).forEach(image => {
+                album.push({src: image, thumb: image});
+            });
+            this.openLightbox(album, imageIndex, options);
+        }
+    }
+    /**
+     * Open the specified images album at the specified image index
+     * @param images images album
+     * @param image to show
+     * @param options lightbox options
+     */
+    public openAlbumLightbox(images: string[], image?: string, options?: {}): void {
+        if (images && images.length) {
+            let album: IAlbum[];
+            album = [];
+            Array.of(...images).forEach(img => {
+                album.push({src: img, thumb: img});
+            });
+            let imageIndex: number;
+            imageIndex = Math.max(images.indexOf(image), 0);
+            this.openLightbox(album, imageIndex, options);
+        }
+    }
 
     /**
      * Close lightbox

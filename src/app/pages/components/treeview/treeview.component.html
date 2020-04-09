@@ -98,7 +98,13 @@
                    (click)="onClickItem({ $event: $event, $data: item });"
                    [id]="'item-'.concat(generateTreeviewItemKey(item) || '')"
                    [attr.aria-disabled]="item.disabled" />
-            <label class="form-check-label disa"
+            <img #itemImage *ngIf="isEnabledItemImage()"
+                 [src]="(getItemImages(item) || []).length ? getItemImages(item)[0] : null"
+                 class="item-image"
+                 (error)="itemImage.style.visibility = 'hidden'"
+                 (load)="itemImage.style.visibility = 'visible'"
+                 (click)="openAlbumLightbox(getItemImages(item), itemImage.src)">
+            <label class="form-check-label"
                    (click)="onClickItemLabel($event, item, onCheckedChange);"
                    [attr.aria-disabled]="item.disabled"
                    [attr.for]="'item-'.concat(generateTreeviewItemKey(item) || '')">{{item.text}}</label>
@@ -113,7 +119,7 @@
         <nb-icon *ngIf="item.children && !item.collapsed"
                  pack="fa" icon="caret-down"
                  (click)="onCollapseExpand()"></nb-icon>
-        <div class="form-check" [attr.aria-disabled]="item.disabled">
+        <div class="form-check">
             <input type="checkbox" class="form-check-input"
                    *ngIf="isEnabledItemCheck()"
                    [(ngModel)]="item.checked"
@@ -122,6 +128,12 @@
                    [indeterminate]="item.indeterminate"
                    [id]="'item-'.concat(generateTreeviewItemKey(item) || '')"
                    [attr.aria-disabled]="item.disabled" />
+            <img #itemImage *ngIf="isEnabledItemImage()"
+                 [src]="(getItemImages(item) || []).length ? getItemImages(item)[0] : null"
+                 class="item-image"
+                 (error)="itemImage.style.visibility = 'hidden'"
+                 (load)="itemImage.style.visibility = 'visible'"
+                 (click)="openAlbumLightbox(getItemImages(item), itemImage.src); preventEvent($event)">
             <label class="form-check-label"
                    [attr.aria-disabled]="item.disabled"
                    [attr.for]="'item-'.concat(generateTreeviewItemKey(item) || '')">{{item.text}}</label>

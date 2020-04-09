@@ -88,6 +88,14 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
         this.getTreeviewComponent()
         && this.getTreeviewComponent().setTreeviewI18n(
             new WarehouseCategoryTreeviewI18n(this.translateService, false));
+        this.getTreeviewComponent()
+        && this.getTreeviewComponent().setEnabledItemImage(true);
+        this.getTreeviewComponent()
+        && this.getTreeviewComponent().setItemImageParser((item?: TreeviewItem) => {
+            let category: IWarehouseCategory;
+            category = (item && item.value ? <IWarehouseCategory>item.value : null);
+            return (category ? category.image : null);
+        });
     }
 
     // -------------------------------------------------

@@ -153,18 +153,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * @param currentImage to show
      */
     public showLightbox(currentImage?: string): void {
-        let images: string[];
-        images = this.getImages();
-        if ((images || []).length) {
-            let album: IAlbum[];
-            album = [];
-            Array.of(...images).forEach(image => {
-                album.push({src: image, thumb: image});
-            });
-            let imageIndex: number;
-            imageIndex = Math.max(images.indexOf(currentImage), 0);
-            this.openLightbox(album, imageIndex);
-        }
+        super.openAlbumLightbox(this.getImages(), currentImage);
     }
 
     /**

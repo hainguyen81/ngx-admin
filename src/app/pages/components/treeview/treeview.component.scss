@@ -9,5 +9,13 @@
             color: nb-theme(text-disabled-color);
             pointer-events: none;
         }
+        .item-image {
+            width: 16px;
+            height: 16px;
+            max-width: 16px;
+            max-height: 16px;
+            cursor: pointer;
+            padding: 2px;
+        }
     }
 }
