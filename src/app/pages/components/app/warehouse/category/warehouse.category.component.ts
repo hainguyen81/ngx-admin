@@ -206,7 +206,10 @@ export class WarehouseCategorySplitPaneComponent
                 if (category) {
                     this.selectedWarehouseCategory = category;
                     // create formly form component
-                    this.warehouseCategoryFormlyComponent = this.setAreaComponent(1, WarehouseCategoryFormlyComponent);
+                    if (!this.warehouseCategoryFormlyComponent) {
+                        this.warehouseCategoryFormlyComponent = this.setAreaComponent(
+                            1, WarehouseCategoryFormlyComponent);
+                    }
                     this.doReset();
                 }
             }

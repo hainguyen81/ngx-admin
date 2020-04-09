@@ -1,7 +1,7 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
-    ::ng-deep ngx-image-gallery .images-album {
+    ::ng-deep .form-images-gallery-file ngx-image-gallery .images-album {
         max-width: 200px;
 
         .primary-image {

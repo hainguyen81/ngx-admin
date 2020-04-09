@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -19,7 +19,7 @@ import {isArray} from 'util';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import WarehouseCategory, {
+import {
     CATEGORY_TYPE,
     convertWarehouseCategoryTypeToDisplay,
     IWarehouseCategory,
@@ -27,6 +27,10 @@ import WarehouseCategory, {
 import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {
+    WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
+} from './warehouse.category.formly.treeview.dropdown.field';
+import {IEvent} from '../../../abstract.component';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -37,97 +41,87 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col',
-                key: 'parentId',
-                type: 'select',
-                templateOptions: {
-                    label: 'warehouse.category.form.belongTo.label',
-                    placeholder: 'warehouse.category.form.belongTo.placeholder',
-                    options: [],
-                    disabled: true,
-                    required: true,
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col',
-                key: 'type',
-                type: 'select',
-                templateOptions: {
-                    label: 'warehouse.category.form.type.label',
-                    placeholder: 'warehouse.category.form.type.placeholder',
-                    options: [
-                        {
-                            value: CATEGORY_TYPE.TYPE,
-                            label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.TYPE),
+                className: 'col-8 category-info',
+                fieldGroupClassName: 'row ml-0 mr-0',
+                fieldGroup: [
+                    {
+                        className: 'w-100',
+                        key: 'parentId',
+                        type: 'warehouse-category-treeview-dropdown',
+                        templateOptions: {
+                            label: 'warehouse.category.form.belongTo.label',
+                            placeholder: 'warehouse.category.form.belongTo.placeholder',
+                            options: [],
                         },
-                        {
-                            value: CATEGORY_TYPE.BRAND,
-                            label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.BRAND),
+                    },
+                    {
+                        className: 'w-75',
+                        key: 'type',
+                        type: 'select',
+                        templateOptions: {
+                            label: 'warehouse.category.form.type.label',
+                            placeholder: 'warehouse.category.form.type.placeholder',
+                            options: [
+                                {
+                                    value: CATEGORY_TYPE.TYPE,
+                                    label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.TYPE),
+                                },
+                                {
+                                    value: CATEGORY_TYPE.BRAND,
+                                    label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.BRAND),
+                                },
+                                {
+                                    value: CATEGORY_TYPE.CATEGORY,
+                                    label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.CATEGORY),
+                                },
+                            ],
+                            required: true,
                         },
-                        {
-                            value: CATEGORY_TYPE.CATEGORY,
-                            label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.CATEGORY),
+                    },
+                    {
+                        className: 'w-100',
+                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroup: [
+                            {
+                                className: 'w-50 pl-0 pr-2',
+                                key: 'code',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.category.form.code.label',
+                                    placeholder: 'warehouse.category.form.code.placeholder',
+                                    required: true,
+                                },
+                            },
+                            {
+                                className: 'w-50 pl-2 pr-0',
+                                key: 'name',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.category.form.name.label',
+                                    placeholder: 'warehouse.category.form.name.placeholder',
+                                    required: true,
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        className: 'w-100',
+                        key: 'remark',
+                        type: 'textarea',
+                        templateOptions: {
+                            label: 'warehouse.category.form.remark.label',
+                            placeholder: 'warehouse.category.form.remark.placeholder',
                         },
-                    ],
-                    required: true,
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-6',
-                key: 'code',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.category.form.code.label',
-                    placeholder: 'warehouse.category.form.code.placeholder',
-                    required: true,
-                },
+                    },
+                ],
             },
             {
-                className: 'col-6',
-                key: 'name',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.category.form.name.label',
-                    placeholder: 'warehouse.category.form.name.placeholder',
-                    required: true,
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col images-gallery',
+                className: 'col-4 images-gallery',
                 key: 'image',
                 type: 'images-gallery',
                 templateOptions: {
                     label: 'warehouse.category.form.image.label',
                     placeholder: 'warehouse.category.form.image.placeholder',
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col',
-                key: 'remark',
-                type: 'textarea',
-                templateOptions: {
-                    label: 'warehouse.category.form.remark.label',
-                    placeholder: 'warehouse.category.form.remark.placeholder',
                 },
             },
         ],
@@ -143,7 +137,24 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
     styleUrls: ['../../../formly/formly.component.scss', './warehouse.category.formly.component.scss'],
 })
 export class WarehouseCategoryFormlyComponent
-    extends BaseFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource> {
+    extends BaseFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource>
+    implements OnInit {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Set the form fields configuration
+     * @param fields to apply
+     */
+    protected setFields(fields: FormlyFieldConfig[]) {
+        // initialize fields configuration
+        this.initializeFields(fields);
+
+        // apply fields configuration
+        super.setFields(fields);
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -183,14 +194,65 @@ export class WarehouseCategoryFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             WarehouseCategoryFormConfig, WarehouseCategoryFormFieldsConfig);
-        // parent selection settings
-        super.getFields()[0].fieldGroup[0].templateOptions.options = this.getAllWarehouseCategories();
-        super.setModel(new WarehouseCategory(undefined, undefined, undefined, CATEGORY_TYPE.CATEGORY));
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.ngModelChanged.subscribe(
+            (e: IEvent) => this.disableModelFromBelongTo(
+                this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0], e.$data));
     }
 
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Initialize the specified fields configuration
+     * @param fields to initialize
+     */
+    private initializeFields(fields: FormlyFieldConfig[]) {
+        fields[0].fieldGroup[0].fieldGroup[0].templateOptions.options = this.getAllWarehouseCategories();
+        fields[0].fieldGroup[0].fieldGroup[0].hooks = {
+            afterViewInit: field => {
+                let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
+                belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
+                    ? <WarehouseCategoryFormlyTreeviewDropdownFieldComponent>
+                        field.templateOptions['componentRef'] : null);
+                belongToComponent && belongToComponent.ngAfterLoadData.subscribe(e => {
+                    this.disableModelFromBelongTo(field);
+                });
+            },
+        };
+    }
+
+    /**
+     * Disable current data model in the belongTo field
+     * @param field to parse field component
+     * @param model to disable
+     */
+    private disableModelFromBelongTo(field: FormlyFieldConfig, model?: IWarehouseCategory | null) {
+        model = model || this.getModel();
+        if (!model || !(model.id || '').length) {
+            return;
+        }
+
+        // detect field component
+        let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
+        belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
+            ? <WarehouseCategoryFormlyTreeviewDropdownFieldComponent>
+                field.templateOptions['componentRef'] : null);
+
+        // disable current model item in treeview
+        belongToComponent && belongToComponent.disableItemsByValue(model);
+
+        // select current model item in treeview
+        belongToComponent && belongToComponent.setSelectedValue(model);
+    }
 
     /**
      * Get the warehouse categories list for options selection

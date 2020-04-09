@@ -1,14 +1,14 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
 import {TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
-import {IOrganization} from '../../../../../@core/data/system/organization';
 import {AfterViewInit, Component, Inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../../utils/object.utils';
+import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 
 /**
  * Multi language for organization treeview field
  */
-export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
+export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
                 private showAll?: boolean | true) {
@@ -23,46 +23,46 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
         switch (selection.checkedItems.length) {
             case 0:
                 return (this.translateService ? this.translateService.instant(
-                    'system.organization.form.belongTo.not_selection') : 'Select organization');
+                    'warehouse.category.form.belongTo.not_selection') : 'Select category');
             case 1:
                 return selection.checkedItems[0].text;
             default:
-                return `${selection.checkedItems.length} organization selected`;
+                return `${selection.checkedItems.length} categories selected`;
         }
     }
 
     getAllCheckboxText(): string {
         return (this.translateService ? this.translateService.instant(
-            'system.organization.form.belongTo.all_selection') : 'All organization');
+            'warehouse.category.form.belongTo.all_selection') : 'All category');
     }
 
     getFilterPlaceholder(): string {
         return (this.translateService ? this.translateService.instant(
-            'system.organization.form.belongTo.filter') : 'Filter');
+            'warehouse.category.form.belongTo.filter') : 'Filter');
     }
 
     getFilterNoItemsFoundText(): string {
         return (this.translateService ? this.translateService.instant(
-            'system.organization.form.belongTo.not_found') : 'No organization found');
+            'warehouse.category.form.belongTo.not_found') : 'No category found');
     }
 
     getTooltipCollapseExpandText(isCollapse: boolean): string {
         return (this.translateService ? this.translateService.instant(
-            isCollapse ? 'system.organization.form.belongTo.expand'
-                : 'system.organization.form.belongTo.collapse')
+            isCollapse ? 'warehouse.category.form.belongTo.expand'
+                : 'warehouse.category.form.belongTo.collapse')
             : isCollapse ? 'Expand' : 'Collapse');
     }
 }
 
 /**
- * Custom organization formly field for selecting parent organization
+ * Custom warehouse category formly field for selecting parent category
  */
 @Component({
-    selector: 'ngx-formly-treeview-dropdown-organization',
+    selector: 'ngx-formly-treeview-dropdown-warehouse-category',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss' ],
 })
-export class OrganizationFormlyTreeviewDropdownFieldComponent
+export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
     extends DropdownTreeviewFormFieldComponent
     implements AfterViewInit {
 
@@ -71,7 +71,7 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {OrganizationFormlyTreeviewDropdownFieldComponent} class
+     * Create a new instance of {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} class
      * @param translateService {TranslateService}
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService) {
@@ -87,7 +87,7 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
 
         this.getTreeviewComponent()
         && this.getTreeviewComponent().setTreeviewI18n(
-            new OrganizationTreeviewI18n(this.translateService, false));
+            new WarehouseCategoryTreeviewI18n(this.translateService, false));
     }
 
     // -------------------------------------------------
@@ -98,7 +98,7 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
      * Disable the treeview item by the specified organization
      * @param value to disable
      */
-    public disableItemsByValue(value?: IOrganization | null): void {
+    public disableItemsByValue(value?: IWarehouseCategory | null): void {
         let item: TreeviewItem;
         item = (value && value.id ? this.valueFormatter(value.id) : null);
         item && this.disableItems(item);

@@ -36,6 +36,7 @@ import {
     WarehouseCategoryHttpService,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
 import {ComponentsModule} from '../../../components.module';
+import {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} from './warehouse.category.formly.treeview.dropdown.field';
 
 @NgModule({
     imports: [
@@ -76,7 +77,15 @@ import {ComponentsModule} from '../../../components.module';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            types: [
+                {
+                    name: 'warehouse-category-treeview-dropdown',
+                    component: WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
+                    wrappers: ['form-field'],
+                },
+            ],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -99,18 +108,23 @@ import {ComponentsModule} from '../../../components.module';
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
+        WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],
     declarations: [
         WarehouseCategoryTreeviewComponent,
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
+        WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],
     providers: [
         {
             provide: WarehouseCategoryDatasource, useClass: WarehouseCategoryDatasource,
             deps: [WarehouseCategoryHttpService, WarehouseCategoryDbService, NGXLogger],
         },
+    ],
+    exports: [
+        WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],
 })
 export class WarehouseCategoryModule {
