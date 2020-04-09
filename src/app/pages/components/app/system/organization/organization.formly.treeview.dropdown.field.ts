@@ -1,17 +1,21 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
 import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {AfterViewInit, Component, Inject} from '@angular/core';
+import {Component, Inject, Injectable, InjectionToken} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../../utils/object.utils';
+
+export const ORGANIZATION_TREEVIEW_SHOW_ALL =
+    new InjectionToken<boolean>('True for show \'All\'; else False');
 
 /**
  * Multi language for organization treeview field
  */
+@Injectable()
 export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                private showAll?: boolean | true) {
+                @Inject(ORGANIZATION_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
         super();
     }
 
@@ -61,17 +65,19 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
     selector: 'ngx-formly-treeview-dropdown-organization',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss' ],
+    providers: [
+        {
+            provide: ORGANIZATION_TREEVIEW_SHOW_ALL, useValue: false,
+            multi: true,
+        },
+        {
+            provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
+            deps: [ TranslateService, ORGANIZATION_TREEVIEW_SHOW_ALL ],
+        },
+    ],
 })
 export class OrganizationFormlyTreeviewDropdownFieldComponent
     extends DropdownTreeviewFormFieldComponent {
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    getTreeviewI18n(): TreeviewI18n {
-        return new OrganizationTreeviewI18n(this.translateService, false);
-    }
 
     // -------------------------------------------------
     // CONSTRUCTION

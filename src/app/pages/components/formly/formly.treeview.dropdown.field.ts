@@ -46,14 +46,6 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // -------------------------------------------------
 
     /**
-     * Get the {TreeviewI18n} instance
-     * return the {TreeviewI18n} instance
-     */
-    public getTreeviewI18n(): TreeviewI18n {
-        return new TreeviewI18nDefault();
-    }
-
-    /**
      * Get the {NgxDropdownTreeviewComponent} instance
      * @return the {NgxDropdownTreeviewComponent} instance
      */

@@ -23,7 +23,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field';
+import {ORGANIZATION_TREEVIEW_SHOW_ALL, OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -43,6 +43,16 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
     selector: 'ngx-tree-view-organization',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
+    providers: [
+        {
+            provide: ORGANIZATION_TREEVIEW_SHOW_ALL, useValue: false,
+            multi: true,
+        },
+        {
+            provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
+            deps: [ TranslateService, ORGANIZATION_TREEVIEW_SHOW_ALL ],
+        },
+    ],
 })
 export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
     implements AfterViewInit {
@@ -104,7 +114,6 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(OrganizationTreeviewConfig);
         super.setContextMenu(OrganizationContextMenu);
-        super.setTreeviewI18n(new OrganizationTreeviewI18n(this.getTranslateService(), false));
     }
 
     // -------------------------------------------------

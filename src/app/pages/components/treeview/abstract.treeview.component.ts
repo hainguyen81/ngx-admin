@@ -26,8 +26,6 @@ import {
     DropdownTreeviewComponent,
     TreeItem,
     TreeviewComponent,
-    TreeviewI18n,
-    TreeviewI18nDefault,
     TreeviewItem,
 } from 'ngx-treeview';
 import HtmlUtils from '../../../utils/html.utils';
@@ -77,7 +75,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private treeviewItems: TreeviewItem[];
     /* drop-down button class */
     private buttonClass?: string | null;
-    @Input('i18n') private i18n: TreeviewI18n = new TreeviewI18nDefault();
 
     @Output() private selectedChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private filterChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -308,14 +305,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         this.setSelectedTreeviewItems(itemByKeys, reset);
     }
 
-    /**
-     * Set the {TreeviewI18n} instance
-     * @param treeviewI18 to apply
-     */
-    public setTreeviewI18n(treeviewI18?: TreeviewI18n) {
-        this.i18n = treeviewI18 || new TreeviewI18nDefault();
-    }
-
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -367,7 +356,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             this.treeviewComponent = ComponentUtils.queryComponent(
                 this.queryTreeviewComponent, (component) => {
                     if (component) {
-                        component.i18n = this.i18n;
                         component.selectedChange.subscribe(
                             value => this.onSelectedChange({$data: value}));
                         component.filterChange.subscribe(
@@ -379,7 +367,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             this.dropdownTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryDropdownTreeviewComponent, (component) => {
                     if (component) {
-                        component.i18n = this.i18n;
                         if (component.treeviewComponent) {
                             component.treeviewComponent.i18n = component.i18n;
                         }

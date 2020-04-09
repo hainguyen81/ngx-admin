@@ -1,17 +1,21 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
 import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
-import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, Injectable, InjectionToken, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../../utils/object.utils';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 
+export const WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL =
+    new InjectionToken<boolean>('True for show \'All\'; else False');
+
 /**
  * Multi language for organization treeview field
  */
+@Injectable()
 export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                private showAll?: boolean | true) {
+                @Inject(WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
         super();
     }
 
@@ -61,18 +65,20 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
     selector: 'ngx-formly-treeview-dropdown-warehouse-category',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss' ],
+    providers: [
+        {
+            provide: WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL, useValue: false,
+            multi: true,
+        },
+        {
+            provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
+            deps: [ TranslateService, WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL ],
+        },
+    ],
 })
 export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
     extends DropdownTreeviewFormFieldComponent
     implements OnInit, AfterViewInit {
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    getTreeviewI18n(): TreeviewI18n {
-        return new WarehouseCategoryTreeviewI18n(this.translateService, false);
-    }
 
     // -------------------------------------------------
     // CONSTRUCTION

@@ -28,7 +28,10 @@ import WarehouseCategory, {
     IWarehouseCategory,
 } from '../../../../../@core/data/warehouse/warehouse.category';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
-import {WarehouseCategoryTreeviewI18n} from "./warehouse.category.formly.treeview.dropdown.field";
+import {
+    WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL,
+    WarehouseCategoryTreeviewI18n,
+} from './warehouse.category.formly.treeview.dropdown.field';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -48,6 +51,16 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
     selector: 'ngx-tree-view-warehouse-category',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
+    providers: [
+        {
+            provide: WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL, useValue: false,
+            multi: true,
+        },
+        {
+            provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
+            deps: [ TranslateService, WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL ],
+        },
+    ],
 })
 export class WarehouseCategoryTreeviewComponent extends BaseNgxTreeviewComponent<WarehouseCategoryDatasource>
     implements AfterViewInit {
@@ -109,7 +122,6 @@ export class WarehouseCategoryTreeviewComponent extends BaseNgxTreeviewComponent
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(WarehouseCategoryTreeviewConfig);
         super.setContextMenu(WarehouseCategoryContextMenu);
-        super.setTreeviewI18n(new WarehouseCategoryTreeviewI18n(this.getTranslateService(), false));
     }
 
     // -------------------------------------------------
