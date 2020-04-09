@@ -260,9 +260,11 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         value: any, key?: string | null, item?: TreeviewItem | null): TreeviewItem {
         let found: boolean;
         found = (item === value || (item && item.value === value));
-        if (!found && (key || '').length && Object.keys(value).length) {
+        if (!found && (key || '').length) {
             found = (item && item.value && value
-                && (item.value[key] === value || item.value[key] === value[key] || item.value === value[key]));
+                && (item.value[key] === value
+                    || (Object.keys(value || {}).length
+                        && (item.value[key] === value[key] || item.value === value[key]))));
         }
         if (found) {
             return item;
