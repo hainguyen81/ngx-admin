@@ -280,7 +280,14 @@
             "form": {
                 "belongTo": {
                     "label": "Phân loại cha",
-                    "placeholder": "Phân loại cha"
+                    "placeholder": "Phân loại cha",
+                    "description": "Phân loại cha",
+                    "not_selection": "",
+                    "all_selection": "Tất cả các phân loại",
+                    "filter": "Lọc phân loại",
+                    "not_found": "Không tìm thấy phân loại nào",
+                    "expand": "Mở rộng",
+                    "collapse": "Thu nhỏ"
                 },
                 "type": {
                     "label": "Loại",

@@ -280,7 +280,14 @@
             "form": {
                 "belongTo": {
                     "label": "Upper Category",
-                    "placeholder": "Upper Category"
+                    "placeholder": "Upper Category",
+                    "description": "Upper Category",
+                    "not_selection": "",
+                    "all_selection": "All categories",
+                    "filter": "Filter category",
+                    "not_found": "No category found",
+                    "expand": "Expand",
+                    "collapse": "Collapse"
                 },
                 "type": {
                     "label": "Type",
