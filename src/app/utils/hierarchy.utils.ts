@@ -9,6 +9,97 @@ export default class HierarchyUtils {
      * Convert the specified entity instance to the specified built item type
      * @param entity to convert
      * @param builtType the destination built type
+     * @param parentBuilt the parent item or undefined if root
+     * @param childrenBuiltPropertyName the property/attribute name to assign children for new built item if necessary
+     * @param entityMapper the mapper function to mapping entity to new item of the specified built type
+     * @return the hierarchy item instance or undefined
+     */
+    private static buildFlatHierarchyItem<M, N>(entity: M, builtType?: Type<N>,
+                                            parentBuilt?: N, childrenBuiltPropertyName?: string,
+                                            entityMapper?: (entity: M, item: N) => N): N {
+        if (!entity) {
+            return undefined;
+        }
+
+        let item: N;
+        try {
+            item = (builtType ? ObjectUtils.createInstance(builtType) : undefined);
+        } catch (e) {
+            item = undefined;
+        }
+
+        if (entityMapper) {
+            item = entityMapper.apply(this, [ entity, item ]);
+        }
+
+        if (!item) {
+            if (builtType) {
+                throwError('Could not create new item by the specified built type {' + builtType.name + '}');
+            } else {
+                throwError('Could not create new item by the specified built type or via `entityMapper` method');
+            }
+        }
+
+        if (parentBuilt && (childrenBuiltPropertyName || '').length) {
+            // check for building children via temporary variable
+            // because some type require children property must be not empty such as TreeviewItem type
+            let childrenOfParent: N[];
+            childrenOfParent = (!parentBuilt[childrenBuiltPropertyName]
+                || !isArray(parentBuilt[childrenBuiltPropertyName])
+                ? [] : Array.from(parentBuilt[childrenBuiltPropertyName]));
+            childrenOfParent.push(item);
+            if (childrenOfParent && childrenOfParent.length) {
+                parentBuilt[childrenBuiltPropertyName] = childrenOfParent;
+            }
+        }
+        return item;
+    }
+
+    /**
+     * Build the hierarchy tree by the specified entity instances type
+     * @param entities to build
+     * @param entityIdPropertyName the entity identity to detect hierarchy (required)
+     * @param entityParentIdPropertyName the entity parent identity to detect hierarchy (required)
+     * @param parent the entity parent if searching its entity children
+     * @param builtType the destination built type
+     * @param parentBuilt the parent item or undefined if root
+     * @param childrenBuiltPropertyName the property/attribute name to assign children for new built item if necessary
+     * @param entityMapper the mapper function to mapping entity to new item of the specified built type
+     * @return the hierarchy instances array or undefined
+     */
+    public static buildFlatToHierarchyTree<M, N>(
+        entities: M[], entityIdPropertyName: string, entityParentIdPropertyName: string, parent?: M,
+        builtType?: Type<N>, parentBuilt?: N, childrenBuiltPropertyName?: string,
+        entityMapper?: (entity: M, item: N) => N): N[] {
+        ((entityIdPropertyName || '').length && (entityParentIdPropertyName || '').length)
+        || throwError('Could not build hierarchy that not specify property names to detect child/parent!');
+        (builtType || entityMapper) || throwError(
+            'Could not build hierarchy that not specify the built type or `entityMapper` method!');
+
+        let parentId: any;
+        parentId = (parent ? parent[entityIdPropertyName] : undefined);
+        let items: N[];
+        items = [];
+        parentBuilt && items.push(parentBuilt);
+        (entities || []).forEach((entity: M) => {
+            let builtItem: N;
+            if ((entity[entityParentIdPropertyName] || '') === (parentId || '')
+                && (entity[entityIdPropertyName] || '') !== (parentId || '')) {
+                builtItem = HierarchyUtils.buildFlatHierarchyItem(
+                    entity, builtType, parentBuilt, childrenBuiltPropertyName, entityMapper);
+                !parentBuilt && items.push(builtItem);
+                this.buildFlatToHierarchyTree(
+                    entities, entityIdPropertyName, entityParentIdPropertyName, entity,
+                    builtType, builtItem, childrenBuiltPropertyName, entityMapper);
+            }
+        });
+        return items;
+    }
+
+    /**
+     * Convert the specified entity instance to the specified built item type
+     * @param entity to convert
+     * @param builtType the destination built type
      * @param parent the parent item or undefined if root
      * @param parentBuiltPropertyName the property/attribute name to assign parent for new built item if necessary
      * @param childrenBuiltPropertyName the property/attribute name to assign children for new built item if necessary
@@ -51,7 +142,7 @@ export default class HierarchyUtils {
                 // because some type require children property must be not empty such as TreeviewItem type
                 let childrenOfParent: N[];
                 childrenOfParent = (!parent[childrenBuiltPropertyName] || !isArray(parent[childrenBuiltPropertyName])
-                                ? [] : Array.from(parent[childrenBuiltPropertyName]));
+                    ? [] : Array.from(parent[childrenBuiltPropertyName]));
                 childrenOfParent.push(item);
                 if (childrenOfParent && childrenOfParent.length) {
                     parent[childrenBuiltPropertyName] = childrenOfParent;

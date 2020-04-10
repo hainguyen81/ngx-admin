@@ -35,41 +35,43 @@ export function organizationGenerate(): IOrganization[] {
         let mockOrgHead: IOrganization;
         mockOrgHead = ObjectUtils.deepCopy(MockOrganizationHeadTemplate);
         mockOrgHead.id = IdGenerators.oid.generate();
-        mockOrgHead.code = 'HEAD-'.concat((i + 1).toString());
-        mockOrgHead.name = 'Head '.concat((i + 1).toString());
+        mockOrgHead.code = 'H'.concat((i + 1).toString());
+        mockOrgHead.name = 'Head '.concat(mockOrgHead.code);
         mockOrgHead.managerId = MockUserAdmin.id;
         mockOrgHead.manager = MockUserAdmin;
         // TODO Be careful with recursively forever (stack overflow)
         // mockOrgHead.parent = undefined;
-        mockOrgHead.children = [];
+        // mockOrgHead.children = [];
         mockOrganization.push(mockOrgHead);
 
         for (let j: number = 0; j < MAXIMUM_MOCK_ORGANIZATION_BRANCH; j++) {
             let mockOrgBranch: IOrganization;
             mockOrgBranch = ObjectUtils.deepCopy(MockOrganizationBranchTemplate);
             mockOrgBranch.id = IdGenerators.oid.generate();
-            mockOrgBranch.code = 'BRANCH-'.concat((j + 1).toString());
-            mockOrgBranch.name = 'Branch '.concat((j + 1).toString());
+            mockOrgBranch.code = 'H'.concat((i + 1).toString(), 'B', (j + 1).toString());
+            mockOrgBranch.name = 'Branch '.concat(mockOrgBranch.code);
             mockOrgBranch.managerId = MockUserAdmin.id;
             mockOrgBranch.manager = MockUserAdmin;
             mockOrgBranch.parentId = mockOrgHead.id;
             // TODO Be careful with recursively forever (stack overflow)
             // mockOrgBranch.parent = mockOrgHead;
-            mockOrgBranch.children = [];
-            mockOrgHead.children.push(mockOrgBranch);
+            // mockOrgBranch.children = [];
+            // mockOrgHead.children.push(mockOrgBranch);
+            mockOrganization.push(mockOrgBranch);
 
             for (let k: number = 0; k < MAXIMUM_MOCK_ORGANIZATION_DEPARTMENT; k++) {
                 let mockOrgDept: IOrganization;
                 mockOrgDept = ObjectUtils.deepCopy(MockOrganizationDepartmentTemplate);
                 mockOrgDept.id = IdGenerators.oid.generate();
-                mockOrgDept.code = 'DEPT-'.concat((k + 1).toString());
-                mockOrgDept.name = 'Department '.concat((k + 1).toString());
+                mockOrgDept.code = 'H'.concat((i + 1).toString(), 'B', (j + 1).toString(), 'D', (k + 1).toString());
+                mockOrgDept.name = 'Department '.concat(mockOrgDept.code);
                 mockOrgDept.managerId = MockUserAdmin.id;
                 mockOrgDept.manager = MockUserAdmin;
                 mockOrgDept.parentId = mockOrgBranch.id;
                 // TODO Be careful with recursively forever (stack overflow)
                 // mockOrgDept.parent = mockOrgBranch;
-                mockOrgBranch.children.push(mockOrgDept);
+                // mockOrgBranch.children.push(mockOrgDept);
+                mockOrganization.push(mockOrgDept);
             }
         }
     }

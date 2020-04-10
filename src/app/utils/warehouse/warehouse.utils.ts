@@ -28,8 +28,13 @@ export default class WarehouseUtils {
             }
             return item;
         };
-        return HierarchyUtils.buildHierarchyTree(
-            categories, undefined, parent, 'children',
-            undefined, 'children', treeItemMapper);
+        let items: TreeviewItem[];
+        items = HierarchyUtils.buildFlatToHierarchyTree(
+            categories, 'id', 'parentId', undefined,
+            undefined, undefined, 'children', treeItemMapper);
+        (items || []).sort((it1, it2) => {
+            return (it1.text < it2.text ? -1 : it1.text === it2.text ? 0 : 1);
+        });
+        return items;
     }
 }
