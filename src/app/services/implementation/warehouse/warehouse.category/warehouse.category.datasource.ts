@@ -3,6 +3,8 @@ import {AbstractDataSource} from '../../../datasource.service';
 import {NGXLogger} from 'ngx-logger';
 import {IWarehouseCategory} from '../../../../@core/data/warehouse/warehouse.category';
 import {WarehouseCategoryDbService, WarehouseCategoryHttpService} from './warehouse.category.service';
+import {throwError} from 'rxjs';
+import ObjectUtils from '../../../../utils/object.utils';
 
 @Injectable()
 export class WarehouseCategoryDatasource
@@ -26,6 +28,10 @@ export class WarehouseCategoryDatasource
         });
     }
 
+    getById(categoryId?: string | null): Promise<IWarehouseCategory> {
+        return super.getDbService().findById(categoryId);
+    }
+
     getElements(): Promise<IWarehouseCategory | IWarehouseCategory[]> {
         return this.getAll();
     }
@@ -41,10 +47,75 @@ export class WarehouseCategoryDatasource
      * @param newData to update into data source
      */
     update(oldData: IWarehouseCategory, newData: IWarehouseCategory): Promise<IWarehouseCategory> {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
+        if (!(oldData.parentId || '').length) {
+            if (!(newData.parentId || '').length) {
+                return this.getDbService().update(newData).then(() => {
+                    this.refresh();
+                    return oldData;
+                });
+
+            } else {
+                return this.getDbService().findById(newData.parentId)
+                    .then(parent => {
+                        !parent || throwError(
+                            'Could not found the NEW parent by id {' + newData.parentId + '}');
+                        parent.children = (parent.children || []);
+                        let newChild: IWarehouseCategory;
+                        newChild = ObjectUtils.deepCopy(newData);
+                        delete newChild['uid'];
+                        parent.children.push(newChild);
+                        return this.getDbService().update(parent).then(() => {
+                            return this.getDbService().deletePernament(newData).then(() => {
+                                this.refresh();
+                                return oldData;
+                            });
+                        });
+                    });
+            }
+
+        } else {
+            return this.getDbService().findById(oldData.parentId)
+                .then(oldParent => {
+                    !oldParent || throwError(
+                        'Could not found the OLD parent by id {' + oldData.parentId + '}');
+                    oldParent.children = (oldParent.children || []);
+                    let otherChilds: IWarehouseCategory[];
+                    otherChilds = oldParent.children.filter(oldChild => {
+                        return (oldChild.id !== oldData.id);
+                    });
+                    oldParent.children = (otherChilds || []);
+                    if (!(newData.parentId || '').length) {
+                        return this.getDbService().update(oldParent).then(() => {
+                            delete newData['uid'];
+                            return this.getDbService().insert(newData).then(() => {
+                                this.refresh();
+                                return oldData;
+                            });
+                        });
+
+                    } else {
+                        return this.getDbService().findById(newData.parentId)
+                            .then(newParent => {
+                                !newParent || throwError(
+                                    'Could not found the NEW parent by id {' + newData.parentId + '}');
+                                newParent.children = (newParent.children || []);
+                                let newChild: IWarehouseCategory;
+                                newChild = ObjectUtils.deepCopy(newData);
+                                delete newChild['uid'];
+                                newParent.children.push(newChild);
+                                return this.getDbService().update(newParent).then(() => {
+                                    return this.getDbService().update(oldParent).then(() => {
+                                        return this.getDbService().deletePernament(newData).then(() => {
+                                            this.refresh();
+                                            return oldData;
+                                        });
+                                    });
+                                });
+                            });
+                    }
+                });
+        }
+
     }
 
     /**

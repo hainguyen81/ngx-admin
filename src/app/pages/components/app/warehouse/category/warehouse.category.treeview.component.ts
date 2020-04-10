@@ -3,8 +3,8 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
-    Inject,
+    ElementRef, EventEmitter,
+    Inject, Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -70,6 +70,7 @@ export class WarehouseCategoryTreeviewComponent extends BaseNgxTreeviewComponent
     // -------------------------------------------------
 
     private clickItemDelegate: (event: MouseEvent, item: TreeviewItem) => void;
+    @Output() readonly dataSourceChanged: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -144,6 +145,7 @@ export class WarehouseCategoryTreeviewComponent extends BaseNgxTreeviewComponent
      */
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
+        this.dataSourceChanged.emit(event);
         let timer: number;
         timer = window.setTimeout(() => {
             this.focus();
@@ -237,5 +239,12 @@ export class WarehouseCategoryTreeviewComponent extends BaseNgxTreeviewComponent
                 treeviewEls.item(0).focus();
             }
         }
+    }
+
+    /**
+     * Refresh datasource
+     */
+    public refreshDatasource(): void {
+        this.getDataSource().refresh();
     }
 }

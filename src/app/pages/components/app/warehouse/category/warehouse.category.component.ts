@@ -20,7 +20,7 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
-import {DeepCloner} from '../../../../../utils/object.utils';
+import ObjectUtils, {DeepCloner} from '../../../../../utils/object.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {throwError} from 'rxjs';
@@ -35,6 +35,7 @@ import {
 import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
 import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
 import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
+import {TreeviewItem} from 'ngx-treeview';
 
 /* Warehouse category left area configuration */
 export const WarehouseCategoryTreeAreaConfig: ISplitAreaConfig = {
@@ -74,6 +75,7 @@ export class WarehouseCategorySplitPaneComponent
     private warehouseCategoryTreeviewComponent: WarehouseCategoryTreeviewComponent;
     private warehouseCategoryFormlyComponent: WarehouseCategoryFormlyComponent;
     private selectedWarehouseCategory: IWarehouseCategory | null;
+    private selectedWarehouseCategoryItem: TreeviewItem | null;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -85,6 +87,14 @@ export class WarehouseCategorySplitPaneComponent
      */
     protected getSelectedWarehouseCategory(): IWarehouseCategory {
         return this.selectedWarehouseCategory;
+    }
+
+    /**
+     * Get the selected {TreeviewItem} instance
+     * @return the selected {TreeviewItem} instance
+     */
+    protected getSelectedWarehouseCategoryItem(): TreeviewItem {
+        return this.selectedWarehouseCategoryItem;
     }
 
     /**
@@ -200,6 +210,7 @@ export class WarehouseCategorySplitPaneComponent
         this.warehouseCategoryTreeviewComponent = super.setAreaComponent(0, WarehouseCategoryTreeviewComponent);
         // handle click tree-view item to show form
         this.warehouseCategoryTreeviewComponent.setClickItemListener((e, it) => {
+            this.selectedWarehouseCategoryItem = it;
             if (it && it.value) {
                 let category: IWarehouseCategory;
                 category = it.value as IWarehouseCategory;
@@ -231,9 +242,10 @@ export class WarehouseCategorySplitPaneComponent
             return;
         }
 
-        this.getDataSource().update(
-            this.getSelectedWarehouseCategory(),
-            this.getFormlyComponent().getModel())
+        // update category's parent if necessary
+        let model: IWarehouseCategory;
+        model = this.getFormlyComponent().getModel();
+        this.getDataSource().update(this.getSelectedWarehouseCategory(), model)
             .then(() => this.showSaveDataSuccess())
             .catch(() => this.showSaveDataError());
     }

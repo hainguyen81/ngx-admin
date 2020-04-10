@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {DB_STORE} from '../config/db.config';
-import {AbstractDbService} from '../services/database.service';
+import {AbstractBaseDbService} from '../services/database.service';
 import {NbAuthToken} from '@nebular/auth';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
@@ -17,7 +17,7 @@ import {UserDbService} from '../services/implementation/system/user/user.service
 import JsonUtils from '../utils/json.utils';
 
 @Injectable()
-export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractDbService<T> {
+export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractBaseDbService<T> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,

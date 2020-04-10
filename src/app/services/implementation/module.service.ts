@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {AbstractDbService} from '../database.service';
+import {AbstractBaseDbService} from '../database.service';
 import {IModule} from '../../@core/data/system/module';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
@@ -7,7 +7,7 @@ import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 
 @Injectable()
-export class ModuleService extends AbstractDbService<IModule> {
+export class ModuleService extends AbstractBaseDbService<IModule> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,

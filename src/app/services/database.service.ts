@@ -34,6 +34,10 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
         return this.dbStore;
     }
 
+    protected getEnityKey(): string {
+        return this.entityKey;
+    }
+
     protected getLogger(): NGXLogger {
         return this.logger;
     }
@@ -41,10 +45,13 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     protected constructor(@Inject(NgxIndexedDBService) private dbService: NgxIndexedDBService,
                           @Inject(NGXLogger) private logger: NGXLogger,
                           @Inject(ConnectionService) private connectionService: ConnectionService,
-                          private dbStore: string) {
+                          private dbStore: string,
+                          private entityKey: string) {
         dbService || throwError('Could not inject IndexDb!');
         logger || throwError('Could not inject logger!');
         connectionService || throwError('Could not inject connection service!');
+        (dbStore || '').length || throwError('Database store name must be not empty!');
+        (entityKey || '').length || throwError('Database entity key property must be not empty!');
         logger.updateConfig(LogConfig);
         connectionService.monitor().subscribe((connected) => {
             if (connected) {
@@ -116,6 +123,18 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
         });
     }
 
+    deletePernament(entity: T): Promise<number> {
+        entity[this.getEnityKey()] || throwError(
+            'Not found entity primary key from property {' + this.getEnityKey() + '}');
+        return new Promise((resolve, reject) => {
+            this.getDbService().delete(this.getDbStore(), entity[this.getEnityKey()])
+                .then((affected) => resolve(affected), (errors) => {
+                    this.getLogger().error(errors);
+                    reject(errors);
+                });
+        });
+    }
+
     clear(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.getDbService().clear(this.getDbStore())
@@ -158,6 +177,17 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
             promises);
     }
 
+    deleteEntitiesPernament(entities: T[]): Promise<number> {
+        let promises: Promise<number>[];
+        promises = [];
+        if (entities && entities.length) {
+            entities.forEach((entity: T) => promises.push(this.deletePernament(entity)));
+        }
+        return this.invokePromises(0,
+            (result: number, value: number) => (result + (value > 0 ? 1 : 0)),
+            promises);
+    }
+
     count(): Promise<number> {
         return new Promise((resolve, reject) => {
             this.getDbService().count(this.getDbStore())
@@ -186,5 +216,19 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     synchronize() {
         // TODO Override by children class to synchronize offline data to service via HTTP service
         this.getLogger().debug('Synchronize data...');
+    }
+}
+
+/**
+ * Abstract IndexedDb database service
+ * @param <T> entity type
+ */
+export abstract class AbstractBaseDbService<T> extends AbstractDbService<T> {
+
+    protected constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(ConnectionService) connectionService: ConnectionService,
+                          dbStore: string) {
+        super(dbService, logger, connectionService, dbStore, 'uid');
     }
 }

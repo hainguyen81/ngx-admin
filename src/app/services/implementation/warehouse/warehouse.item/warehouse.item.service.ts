@@ -4,7 +4,7 @@ import {AbstractHttpService} from '../../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../../response.service';
 import JsonUtils from '../../../../utils/json.utils';
-import {AbstractDbService} from '../../../database.service';
+import {AbstractBaseDbService} from '../../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
@@ -12,7 +12,7 @@ import {Observable, throwError} from 'rxjs';
 import {IWarehouseItem} from '../../../../@core/data/warehouse/warehouse.item';
 
 @Injectable()
-export class WarehouseItemDbService extends AbstractDbService<IWarehouseItem> {
+export class WarehouseItemDbService extends AbstractBaseDbService<IWarehouseItem> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,

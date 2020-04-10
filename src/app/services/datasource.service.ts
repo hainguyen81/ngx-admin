@@ -31,6 +31,10 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         return this.dbService;
     }
 
+    public get databaseService(): IDbService<T> {
+        return this.getDbService();
+    }
+
     protected getLogger(): NGXLogger {
         return this.logger;
     }

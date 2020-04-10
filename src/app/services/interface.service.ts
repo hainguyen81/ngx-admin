@@ -86,6 +86,13 @@ export declare interface IDbService<T> {
     delete(entity: T): Promise<number>;
 
     /**
+     * Delete the specified entity out of database pernamently
+     * @param entity to delete
+     * @return a Promise of affected records number
+     */
+    deletePernament(entity: T): Promise<number>;
+
+    /**
      * Update the specified entity into database
      * @param entity to update
      * @return a Promise of affected records number
