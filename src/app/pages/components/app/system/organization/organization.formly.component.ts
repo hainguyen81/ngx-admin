@@ -96,7 +96,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.organization.form.manager.label',
                     placeholder: 'system.organization.form.manager.placeholder',
                     options: [],
-                    disabled: true,
                 },
             },
         ],
@@ -375,7 +374,7 @@ export class OrganizationFormlyComponent
                     belongToComponent = this.getFormFieldComponent(
                         this.getFormlyForm().fields[0].fieldGroup[0],
                         OrganizationFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent && belongToComponent.reloadFieldByOptions(orgValues);
+                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
                     this.disableModelFromBelongTo(
                         this.getFormlyForm().fields[0].fieldGroup[0],
                         this.getModel());
