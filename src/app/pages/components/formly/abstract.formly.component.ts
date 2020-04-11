@@ -5,9 +5,9 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Input,
     QueryList,
-    Renderer2,
+    Renderer2, Type,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -15,15 +15,15 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
 import {isArray} from 'util';
 import ComponentUtils from '../../../utils/component.utils';
 import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {DeepCloner} from '../../../utils/object.utils';
 import {Lightbox} from 'ngx-lightbox';
+import {FormlyTemplateOptions} from '@ngx-formly/core/lib/components/formly.field.config';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -41,7 +41,6 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
 
     /* whole form group */
     private formGroup: FormGroup = new FormGroup({});
-    protected translatedFields: FormlyFieldConfig[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -222,11 +221,10 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * Translate form fields configuration
      */
     private translateFormFields(): void {
-        this.translatedFields = DeepCloner(this.fields);
-        if (this.translatedFields && this.translatedFields.length) {
+        if ((this.fields || []).length) {
             let translate: TranslateService;
             translate = this.getTranslateService();
-            this.translatedFields.forEach(field => this.translateFormFieldConfig(translate, field));
+            this.fields.forEach(field => this.translateFormFieldConfig(translate, field));
         }
     }
 
@@ -240,20 +238,35 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
             return;
         }
 
-        if (field.templateOptions) {
-            if ((field.templateOptions.label || '').length) {
-                field.templateOptions.label = translate.instant(field.templateOptions.label);
+        let templOpts: FormlyTemplateOptions;
+        templOpts = field.templateOptions;
+        if (templOpts) {
+            // backup original field label/placeholder/etc. key for translating
+            if (!(<Object>templOpts).hasOwnProperty('original')) {
+                templOpts['original'] = {
+                    'label': templOpts.label,
+                    'placeholder': templOpts.placeholder,
+                    'description': templOpts.description,
+                };
             }
-            if ((field.templateOptions.placeholder || '').length) {
-                field.templateOptions.placeholder = translate.instant(field.templateOptions.placeholder);
+
+            // translate field label/placeholder/etc.
+            if ((templOpts['original']['label'] || '').length) {
+                templOpts.label = translate.instant(templOpts['original']['label']);
             }
-            if ((field.templateOptions.description || '').length) {
-                field.templateOptions.description = translate.instant(field.templateOptions.description);
+            if ((templOpts['original']['placeholder'] || '').length) {
+                templOpts.placeholder = translate.instant(templOpts['original']['placeholder']);
             }
-            if (isArray(field.templateOptions.options)) {
-                field.templateOptions.options.forEach(option => {
+            if ((templOpts['original']['description'] || '').length) {
+                templOpts.description = translate.instant(templOpts['original']['description']);
+            }
+            if (isArray(templOpts.options)) {
+                templOpts.options.forEach(option => {
                     if (option && (option['label'] || '').length) {
-                        option['label'] = translate.instant(option['label']);
+                        if (!(<Object>option).hasOwnProperty('original_label')) {
+                            option['original_label'] = option['label'];
+                        }
+                        option['label'] = translate.instant(option['original_label']);
                     }
                 });
             }
@@ -263,5 +276,15 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                 this.translateFormFieldConfig(translate, f);
             });
         }
+    }
+
+    /**
+     * Get the field component
+     * @param field to parse
+     * @param componentType component type
+     */
+    protected getFormFieldComponent<C>(field: FormlyFieldConfig, componentType: Type<C>): C {
+        return (field && field.templateOptions && field.templateOptions['componentRef']
+            ? <C>field.templateOptions['componentRef'] : null);
     }
 }

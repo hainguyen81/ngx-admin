@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -21,17 +21,13 @@ import {
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
-import {IUser} from '../../../../../@core/data/system/user';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {EmailValidators} from 'ngx-validators';
 import {Lightbox} from 'ngx-lightbox';
 import {OrganizationTreeviewConfig} from './organization.treeview.component';
-import OrganizationUtils from '../../../../../utils/system/organization.utils';
-import {Observable} from 'rxjs';
-import PromiseUtils from '../../../../../utils/promise.utils';
 import {OrganizationFormlyTreeviewDropdownFieldComponent} from './organization.formly.treeview.dropdown.field';
-import {IEvent} from '../../../abstract.component';
+import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -316,37 +312,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class OrganizationFormlyComponent
     extends BaseFormlyComponent<IOrganization, OrganizationDataSource>
-    implements OnInit, AfterViewInit {
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    /**
-     * Set the form fields configuration
-     * @param fields to apply
-     */
-    protected setFields(fields: FormlyFieldConfig[]) {
-        // initialize fields
-        this.initializeFields(fields);
-
-        // apply fields
-        super.setFields(fields);
-    }
-
-    /**
-     * Get the {OrganizationFormlyTreeviewDropdownFieldComponent} of the specified `belongTo` field
-     * @param field to parse component
-     * @return the {OrganizationFormlyTreeviewDropdownFieldComponent}
-     */
-    protected getBelongToFieldComponent(field: FormlyFieldConfig):
-        OrganizationFormlyTreeviewDropdownFieldComponent {
-        let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
-            ? <OrganizationFormlyTreeviewDropdownFieldComponent>
-                field.templateOptions['componentRef'] : null);
-        return belongToComponent;
-    }
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -394,49 +360,37 @@ export class OrganizationFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
-        this.ngModelChanged.subscribe(
-            (e: IEvent) => this.disableModelFromBelongTo(
-                this.getFormlyForm().fields[0].fieldGroup[0], e.$data));
-    }
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
 
-    onDataSourceChanged(value: IEvent) {
-        super.onDataSourceChanged(value);
-        this.invokeLoadOrganization().then(options => {
-            let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-            belongToComponent = this.getBelongToFieldComponent(
-                this.getFormlyForm().fields[0].fieldGroup[0]);
-            belongToComponent && belongToComponent.reloadFieldByOptions(options);
-        });
-        this.invokeLoadUsers().then(options => {
-            this.getFormlyForm().fields[1].fieldGroup[1]
-                .templateOptions.options = options;
+        this.getFormlyForm().modelChange.subscribe(() => {
+            SystemDataUtils.invokeAllOrganization(<OrganizationDataSource>this.getDataSource())
+                .then(orgValues => {
+                    let options: any[];
+                    options = [];
+                    options.push(OrganizationTreeviewConfig);
+                    options.push(orgValues);
+
+                    let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
+                    belongToComponent = this.getFormFieldComponent(
+                        this.getFormlyForm().fields[0].fieldGroup[0],
+                        OrganizationFormlyTreeviewDropdownFieldComponent);
+                    belongToComponent && belongToComponent.reloadFieldByOptions(orgValues);
+                    this.disableModelFromBelongTo(
+                        this.getFormlyForm().fields[0].fieldGroup[0],
+                        this.getModel());
+
+                    SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource)
+                        .then(users => {
+                            this.getFormlyForm().fields[1].fieldGroup[1].templateOptions.options = users;
+                        });
+                });
         });
     }
 
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
-
-    /**
-     * Initialize the specified fields configuration
-     * @param fields to initialize
-     */
-    private initializeFields(fields: FormlyFieldConfig[]) {
-        fields[0].fieldGroup[0].templateOptions.options = this.observeOrganization();
-        fields[0].fieldGroup[0].hooks = {
-            afterViewInit: field => {
-                let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-                belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
-                    ? <OrganizationFormlyTreeviewDropdownFieldComponent>field.templateOptions['componentRef'] : null);
-                belongToComponent && belongToComponent.ngAfterLoadData.subscribe(e => {
-                    this.disableModelFromBelongTo(field);
-                });
-            },
-        };
-        fields[1].fieldGroup[1].templateOptions.options = this.observeUsers();
-    }
 
     /**
      * Disable current data model in the belongTo field
@@ -451,71 +405,12 @@ export class OrganizationFormlyComponent
 
         // detect field component
         let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
-            ? <OrganizationFormlyTreeviewDropdownFieldComponent>field.templateOptions['componentRef'] : null);
+        belongToComponent = this.getFormFieldComponent(field, OrganizationFormlyTreeviewDropdownFieldComponent);
 
         // disable current model item in treeview
         belongToComponent && belongToComponent.disableItemsByValue(model);
 
         // select current model item in treeview
         belongToComponent && belongToComponent.setSelectedValue(model.parentId);
-    }
-
-    /**
-     * Get the organization list for options selection
-     * @return {Observable}
-     */
-    private observeUsers(): Observable<{ value: string, label: string }[]> {
-        return PromiseUtils.promiseToObservable(this.invokeLoadUsers());
-    }
-    private invokeLoadUsers(): Promise<{ value: string, label: string }[]> {
-        if (!this.userDataSource) {
-            return Promise.resolve([]);
-        }
-
-        return this.userDataSource.setPaging(1, undefined, false)
-            .setFilter([], false, false)
-            .getAll().then(userValues => {
-                let options: { value: string, label: string }[];
-                options = [];
-                Array.from(userValues).forEach((userValue: IUser) => {
-                    this.mapUserAsOptions(userValue, options);
-                });
-                return options;
-            });
-    }
-    /**
-     * Map the specified {IUser} into the return options array recursively
-     * @param userValue to map
-     * @param retValues to push returned values
-     */
-    private mapUserAsOptions(userValue: IUser, retValues: { value: string, label: string }[]): void {
-        if (!userValue) {
-            return;
-        }
-
-        if (!retValues) {
-            retValues = [];
-        }
-        let userName: string;
-        userName = userValue.username;
-        if ((userValue.firstName || '').length || (userValue.lastName || '')) {
-            userName = [(userValue.firstName || ''), (userValue.lastName || '')].join(' ').trim();
-        }
-        retValues.push({value: userValue.id, label: userName});
-    }
-
-    /**
-     * Get the organization list for options selection
-     * @return {Observable}
-     */
-    private observeOrganization(): Observable<any[]> {
-        return PromiseUtils.promiseToObservable(this.invokeLoadOrganization());
-    }
-    private invokeLoadOrganization(): Promise<any[]> {
-        return this.getDataSource().getAll().then(orgValues => {
-            return [OrganizationTreeviewConfig,
-                OrganizationUtils.buildOrganization(orgValues as IOrganization[])];
-        });
     }
 }

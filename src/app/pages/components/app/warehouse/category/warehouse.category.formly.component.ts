@@ -1,9 +1,10 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -13,8 +14,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
-import {Observable, of} from 'rxjs';
-import PromiseUtils from '../../../../../utils/promise.utils';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
@@ -29,8 +28,8 @@ import {
 import {
     WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
 } from './warehouse.category.formly.treeview.dropdown.field';
-import {IEvent} from '../../../abstract.component';
-import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
+import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
+import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -134,37 +133,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseCategoryFormlyComponent
     extends BaseFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource>
-    implements OnInit {
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    /**
-     * Set the form fields configuration
-     * @param fields to apply
-     */
-    protected setFields(fields: FormlyFieldConfig[]) {
-        // initialize fields configuration
-        this.initializeFields(fields);
-
-        // apply fields configuration
-        super.setFields(fields);
-    }
-
-    /**
-     * Get the {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} of the specified `belongTo` field
-     * @param field to parse component
-     * @return the {WarehouseCategoryFormlyTreeviewDropdownFieldComponent}
-     */
-    protected getBelongToFieldComponent(field: FormlyFieldConfig):
-        WarehouseCategoryFormlyTreeviewDropdownFieldComponent {
-        let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
-            ? <WarehouseCategoryFormlyTreeviewDropdownFieldComponent>
-                field.templateOptions['componentRef'] : null);
-        return belongToComponent;
-    }
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -210,45 +179,34 @@ export class WarehouseCategoryFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
-        this.ngModelChanged.subscribe(
-            (e: IEvent) => {
-                this.disableModelFromBelongTo(
-                    this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0], e.$data);
-            });
-    }
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
 
-    onDataSourceChanged(value: IEvent) {
-        super.onDataSourceChanged(value);
-        this.invokeLoadWarehouseCategories().then(options => {
-            let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-            belongToComponent = this.getBelongToFieldComponent(
-                this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0]);
-            belongToComponent && belongToComponent.reloadFieldByOptions(options);
+        // listen data model changes for updating
+        this.getFormlyForm().modelChange.subscribe(() => {
+            WarehouseDataUtils.invokeAllWarehouseCategories(<WarehouseCategoryDatasource>this.getDataSource())
+                .then(categories => {
+                    let options: any[];
+                    options = [];
+                    options.push(WarehouseCategoryTreeviewConfig);
+                    options.push(categories);
+                    let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
+                    belongToComponent = this.getFormFieldComponent(
+                        this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                        WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
+                    if (belongToComponent) {
+                        belongToComponent.reloadFieldByOptions(options);
+                        this.disableModelFromBelongTo(
+                            this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                            this.getFormlyForm().model);
+                    }
+                });
         });
     }
 
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
-
-    /**
-     * Initialize the specified fields configuration
-     * @param fields to initialize
-     */
-    private initializeFields(fields: FormlyFieldConfig[]) {
-        fields[0].fieldGroup[0].fieldGroup[0].templateOptions.options = this.observeWarehouseCategories();
-        fields[0].fieldGroup[0].fieldGroup[0].hooks = {
-            afterViewInit: field => {
-                let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-                belongToComponent = this.getBelongToFieldComponent(field);
-                belongToComponent && belongToComponent.ngAfterLoadData.subscribe(e => {
-                    this.disableModelFromBelongTo(field);
-                });
-            },
-        };
-    }
 
     /**
      * Disable current data model in the belongTo field
@@ -263,26 +221,12 @@ export class WarehouseCategoryFormlyComponent
 
         // detect field component
         let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = this.getBelongToFieldComponent(field);
+        belongToComponent = this.getFormFieldComponent(field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
 
         // disable current model item in treeview
         belongToComponent && belongToComponent.disableItemsByValue(model);
 
         // select current model item in treeview
         belongToComponent && belongToComponent.setSelectedValue(model.parentId);
-    }
-
-    /**
-     * Get the warehouse categories list for options selection
-     * @return {Observable}
-     */
-    private observeWarehouseCategories(): Observable<any[]> {
-        return PromiseUtils.promiseToObservable(this.invokeLoadWarehouseCategories());
-    }
-    private invokeLoadWarehouseCategories(): Promise<any[]> {
-        return this.getDataSource().getAll().then(values => {
-            return [WarehouseCategoryFormConfig,
-                WarehouseUtils.buildWarehouseCategories(values as IWarehouseCategory[])];
-        });
     }
 }

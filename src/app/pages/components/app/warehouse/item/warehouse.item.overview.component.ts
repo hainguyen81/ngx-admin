@@ -1,5 +1,6 @@
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
@@ -22,14 +23,11 @@ import {
 import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-import {Observable, throwError} from 'rxjs';
-import PromiseUtils from '../../../../../utils/promise.utils';
-import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
-import {IEvent} from '../../../abstract.component';
 import {
     WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
 } from '../category/warehouse.category.formly.treeview.dropdown.field';
+import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
+import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -353,25 +351,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseItemOverviewFormlyComponent
     extends BaseFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
-    implements OnInit {
-
-    private _categoryDatasource: WarehouseCategoryDatasource;
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    get categoryDatasource(): WarehouseCategoryDatasource {
-        return this._categoryDatasource;
-    }
-
-    set categoryDatasource(_categoryDatasource: WarehouseCategoryDatasource) {
-        this._categoryDatasource = _categoryDatasource;
-        if (this._categoryDatasource) {
-            this.getFields()[0].fieldGroup[0].
-                templateOptions.options = this.loadWarehouseCategories();
-        }
-    }
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -407,24 +387,37 @@ export class WarehouseItemOverviewFormlyComponent
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
-                @Inject(WarehouseCategoryDatasource) categoryDatasource?: WarehouseCategoryDatasource) {
+                @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             WarehouseItemOverviewFormConfig, WarehouseItemOverviewFormFieldsConfig);
-        this.categoryDatasource = categoryDatasource;
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
-        this.ngModelChanged.subscribe(
-            (e: IEvent) => this.setBelongToSelectedValue(
-                this.getFormlyForm().fields[0].fieldGroup[0], e.$data));
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // listen data model changes for updating
+        this.getFormlyForm().modelChange.subscribe(() => {
+            WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource)
+                .then(categories => {
+                    let options: any[];
+                    options = [];
+                    options.push(WarehouseCategoryTreeviewConfig);
+                    options.push(categories);
+                    let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
+                    belongToComponent = this.getFormFieldComponent(
+                        this.getFormlyForm().fields[0].fieldGroup[0],
+                        WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
+                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                    this.setBelongToSelectedValue(this.getFormlyForm().fields[0].fieldGroup[0], this.getModel());
+                });
+        });
     }
 
     // -------------------------------------------------
@@ -444,28 +437,9 @@ export class WarehouseItemOverviewFormlyComponent
 
         // detect field component
         let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
-            ? <WarehouseCategoryFormlyTreeviewDropdownFieldComponent>
-                field.templateOptions['componentRef'] : null);
+        belongToComponent = this.getFormFieldComponent(field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
 
         // select current model item in treeview
         belongToComponent && belongToComponent.setSelectedValue(model.categories_id);
-    }
-
-    /**
-     * Load all warehouse categories for selection
-     */
-    protected loadWarehouseCategories(): Observable<any[]> {
-        if (!this.categoryDatasource) {
-            return new Observable<{ value: string, label: string }[]>();
-        }
-
-        return PromiseUtils.promiseToObservable(
-            this.categoryDatasource.setPaging(1, undefined, false)
-                .setFilter([], false, false)
-                .getAll().then(values => {
-                return [WarehouseItemOverviewFormConfig,
-                    WarehouseUtils.buildWarehouseCategories(values as IWarehouseCategory[])];
-                }));
     }
 }

@@ -11,8 +11,8 @@ export default class OrganizationUtils {
      * @return the menu instances array or undefined
      */
     public static buildOrganization<O extends IOrganization>(organization: O[], parent?: TreeviewItem): TreeviewItem[] {
-        let treeItemMapper: (entity: O, item: TreeviewItem) => TreeviewItem;
-        treeItemMapper = (org: O, item: TreeviewItem) => {
+        let orgTreeItemMapper: (entity: O, item: TreeviewItem) => TreeviewItem;
+        orgTreeItemMapper = (org: O, item: TreeviewItem) => {
             if (!item) {
                 item = new TreeviewItem({
                     checked: false,
@@ -30,7 +30,7 @@ export default class OrganizationUtils {
         let items: TreeviewItem[];
         items = HierarchyUtils.buildFlatToHierarchyTree(
             organization, 'id', 'parentId', undefined,
-            undefined, undefined, 'children', treeItemMapper);
+            undefined, undefined, 'children', orgTreeItemMapper);
         (items || []).sort((it1, it2) => {
             return (it1.text < it2.text ? -1 : it1.text === it2.text ? 0 : 1);
         });

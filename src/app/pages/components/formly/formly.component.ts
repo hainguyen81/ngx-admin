@@ -33,11 +33,6 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
     // -------------------------------------------------
 
     private model: any = undefined;
-    /**
-     * Raise after data model had been changed
-     * @param {IEvent} with $data as data model
-     */
-    @Output() readonly ngModelChanged: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -58,7 +53,6 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
     public setModel(model: any) {
         this.model = model || {};
         this.getFormGroup().reset(this.model);
-        this.ngModelChanged.emit({ $data: this.model });
     }
 
     // -------------------------------------------------
