@@ -18,7 +18,7 @@ import {
     IOrganization,
     ORGANIZTAION_TYPE,
 } from '../../../../../@core/data/system/organization';
-import {FormlyConfig, FormlyFieldConfig, FormlyTemplateOptions} from '@ngx-formly/core';
+import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {IUser} from '../../../../../@core/data/system/user';
@@ -334,6 +334,20 @@ export class OrganizationFormlyComponent
         super.setFields(fields);
     }
 
+    /**
+     * Get the {OrganizationFormlyTreeviewDropdownFieldComponent} of the specified `belongTo` field
+     * @param field to parse component
+     * @return the {OrganizationFormlyTreeviewDropdownFieldComponent}
+     */
+    protected getBelongToFieldComponent(field: FormlyFieldConfig):
+        OrganizationFormlyTreeviewDropdownFieldComponent {
+        let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
+        belongToComponent = (field && field.templateOptions && field.templateOptions['componentRef']
+            ? <OrganizationFormlyTreeviewDropdownFieldComponent>
+                field.templateOptions['componentRef'] : null);
+        return belongToComponent;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -387,6 +401,20 @@ export class OrganizationFormlyComponent
                 this.getFormlyForm().fields[0].fieldGroup[0], e.$data));
     }
 
+    onDataSourceChanged(value: IEvent) {
+        super.onDataSourceChanged(value);
+        this.invokeLoadOrganization().then(options => {
+            let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
+            belongToComponent = this.getBelongToFieldComponent(
+                this.getFormlyForm().fields[0].fieldGroup[0]);
+            belongToComponent && belongToComponent.reloadFieldByOptions(options);
+        });
+        this.invokeLoadUsers().then(options => {
+            this.getFormlyForm().fields[1].fieldGroup[1]
+                .templateOptions.options = options;
+        });
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -396,7 +424,7 @@ export class OrganizationFormlyComponent
      * @param fields to initialize
      */
     private initializeFields(fields: FormlyFieldConfig[]) {
-        fields[0].fieldGroup[0].templateOptions.options = this.getAllOrganization();
+        fields[0].fieldGroup[0].templateOptions.options = this.observeOrganization();
         fields[0].fieldGroup[0].hooks = {
             afterViewInit: field => {
                 let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
@@ -407,7 +435,7 @@ export class OrganizationFormlyComponent
                 });
             },
         };
-        fields[1].fieldGroup[1].templateOptions.options = this.getAllUsers();
+        fields[1].fieldGroup[1].templateOptions.options = this.observeUsers();
     }
 
     /**
@@ -430,43 +458,32 @@ export class OrganizationFormlyComponent
         belongToComponent && belongToComponent.disableItemsByValue(model);
 
         // select current model item in treeview
-        belongToComponent && belongToComponent.setSelectedValue(model);
+        belongToComponent && belongToComponent.setSelectedValue(model.parentId);
     }
 
     /**
      * Get the organization list for options selection
      * @return {Observable}
      */
-    private getAllUsers(): Observable<{ value: string, label: string }[]> {
+    private observeUsers(): Observable<{ value: string, label: string }[]> {
+        return PromiseUtils.promiseToObservable(this.invokeLoadUsers());
+    }
+    private invokeLoadUsers(): Promise<{ value: string, label: string }[]> {
         if (!this.userDataSource) {
-            return new Observable<{value: string, label: string}[]>();
+            return Promise.resolve([]);
         }
 
-        return PromiseUtils.promiseToObservable(
-            this.userDataSource.setPaging(1, undefined, false)
-                .setFilter([], false, false)
-                .getAll().then(userValues => {
-                    let options: { value: string, label: string }[];
-                    options = [];
-                    Array.from(userValues).forEach((userValue: IUser) => {
-                        this.mapUserAsOptions(userValue, options);
-                    });
-                    return options;
-                }));
+        return this.userDataSource.setPaging(1, undefined, false)
+            .setFilter([], false, false)
+            .getAll().then(userValues => {
+                let options: { value: string, label: string }[];
+                options = [];
+                Array.from(userValues).forEach((userValue: IUser) => {
+                    this.mapUserAsOptions(userValue, options);
+                });
+                return options;
+            });
     }
-
-    /**
-     * Get the organization list for options selection
-     * @return {Observable}
-     */
-    private getAllOrganization(): Observable<any[]> {
-        return PromiseUtils.promiseToObservable(
-            this.getDataSource().getAll().then(orgValues => {
-                return [OrganizationTreeviewConfig,
-                    OrganizationUtils.buildOrganization(orgValues as IOrganization[])];
-            }));
-    }
-
     /**
      * Map the specified {IUser} into the return options array recursively
      * @param userValue to map
@@ -486,5 +503,19 @@ export class OrganizationFormlyComponent
             userName = [(userValue.firstName || ''), (userValue.lastName || '')].join(' ').trim();
         }
         retValues.push({value: userValue.id, label: userName});
+    }
+
+    /**
+     * Get the organization list for options selection
+     * @return {Observable}
+     */
+    private observeOrganization(): Observable<any[]> {
+        return PromiseUtils.promiseToObservable(this.invokeLoadOrganization());
+    }
+    private invokeLoadOrganization(): Promise<any[]> {
+        return this.getDataSource().getAll().then(orgValues => {
+            return [OrganizationTreeviewConfig,
+                OrganizationUtils.buildOrganization(orgValues as IOrganization[])];
+        });
     }
 }

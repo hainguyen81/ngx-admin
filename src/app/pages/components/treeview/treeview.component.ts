@@ -166,13 +166,14 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickItemLabel', $event, item);
         if (item) {
-            item.checked = !item.checked;
+            this.revertCheck(item);
             if (this.isEnabledItemCheck() && onCheckedChange) {
                 onCheckedChange.apply(this, [item.checked]);
             }
             if (!this.isEnabledItemCheck() || !onCheckedChange) {
                 // un-check previous items
-                (this.getTreeviewSelection().checkedItems || []).forEach(it => it.checked = false);
+                (this.getTreeviewSelection().checkedItems || [])
+                    .forEach(it => this.internalCheck(it, false));
                 // collect new item checked
                 let selection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
                 selection = this.collectSelection();
@@ -182,6 +183,11 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
                 this.getDropdownTreeviewComponent()
                 && this.getDropdownTreeviewComponent().treeviewComponent
                 && this.getDropdownTreeviewComponent().treeviewComponent.selectedChange.emit([item]);
+
+                // if not multiple selection; then closing dropdown if necessary
+                this.getDropdownTreeviewComponent()
+                && this.getDropdownTreeviewComponent().dropdownDirective
+                && this.getDropdownTreeviewComponent().dropdownDirective.close();
             }
             this.onClickItem.apply(this, [{$event: $event, $data: item}]);
         }
@@ -211,6 +217,13 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
 
                 // toggle current selected item
                 this.toggleElementClass(itemEl as HTMLElement, 'selected', true);
+
+                // if not multiple selection; then closing dropdown if necessary
+                if (!this.isEnabledItemCheck()) {
+                    this.getDropdownTreeviewComponent()
+                    && this.getDropdownTreeviewComponent().dropdownDirective
+                    && this.getDropdownTreeviewComponent().dropdownDirective.close();
+                }
             }
         }
     }
@@ -261,7 +274,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         let checkedItems: TreeviewItem[];
         checkedItems = [];
         if ((needToCheckedItems || []).length) {
-            needToCheckedItems.forEach(it => it.checked = true);
+            needToCheckedItems.forEach(it => this.internalCheck(it, true));
             checkedItems = checkedItems.concat(needToCheckedItems);
         }
         let uncheckedItems: TreeviewItem[];
@@ -292,10 +305,9 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param reset specify whether reset the current selected items
      */
     public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
-        // super.setSelectedTreeviewItems(items, reset);
-
         // un-check previous items
-        (this.getTreeviewSelection().checkedItems || []).forEach(it => it.checked = false);
+        (this.getTreeviewSelection().checkedItems || [])
+            .forEach(it => this.internalCheck(it, false));
         // collect new item checked
         let selection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
         selection = this.collectSelection(items);
@@ -310,5 +322,70 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      */
     public getItemImages(item?: TreeviewItem): string[] {
         return (this.getItemImageParser() ? this.getItemImageParser().apply(this, [item]) : null);
+    }
+
+    /**
+     * Apply internal property value for the specified {TreeviewItem}
+     * @param item to apply
+     * @param propertyKey the property key
+     * @param value to apply
+     */
+    public internalProperty(item?: TreeviewItem, propertyKey?: string, value?: any) {
+        if (!item || !(propertyKey || '').length) return;
+        item[propertyKey] = value;
+    }
+
+    /**
+     * Apply internal checked value for the specified {TreeviewItem}
+     * @param item to apply
+     * @param checked to apply
+     */
+    protected internalCheck(item?: TreeviewItem, checked?: boolean | false) {
+        this.internalProperty(item, 'internalChecked', checked);
+    }
+    /**
+     * Revert internal checked value for the specified {TreeviewItem}
+     * @param item to apply
+     */
+    protected revertCheck(item?: TreeviewItem) {
+        this.internalCheck(item,
+            (item && (<Object>item).hasOwnProperty('internalChecked')
+                ? !item['internalChecked'] : false));
+    }
+
+    /**
+     * Apply internal disabled value for the specified {TreeviewItem}
+     * @param item to apply
+     * @param disabled to apply
+     */
+    protected internalDisabled(item?: TreeviewItem, disabled?: boolean | false) {
+        this.internalProperty(item, 'internalDisabled', disabled);
+    }
+    /**
+     * Revert internal disabled value for the specified {TreeviewItem}
+     * @param item to apply
+     */
+    protected revertDisabled(item?: TreeviewItem) {
+        this.internalCheck(item,
+            (item && (<Object>item).hasOwnProperty('internalDisabled')
+                ? !item['internalDisabled'] : false));
+    }
+
+    /**
+     * Apply internal collapsed value for the specified {TreeviewItem}
+     * @param item to apply
+     * @param collapsed to apply
+     */
+    protected internalCollapsed(item?: TreeviewItem, collapsed?: boolean | false) {
+        this.internalProperty(item, 'internalCollapsed', collapsed);
+    }
+    /**
+     * Revert internal collapsed value for the specified {TreeviewItem}
+     * @param item to apply
+     */
+    protected revertCollapsed(item?: TreeviewItem) {
+        this.internalCheck(item,
+            (item && (<Object>item).hasOwnProperty('internalCollapsed')
+                ? !item['internalCollapsed'] : false));
     }
 }

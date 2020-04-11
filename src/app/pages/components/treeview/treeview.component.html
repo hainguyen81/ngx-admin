@@ -60,6 +60,7 @@
              let-onCollapseExpand="onCollapseExpand"
              let-onCheckedChange="onCheckedChange">
     <div class="form-inline row-item"
+         [class.selected]="item.checked"
          *ngIf="!item.disabled"
          [id]="generateTreeviewItemKey(item) || ''"
          [contextMenu]="treeviewContextMenuComponent"

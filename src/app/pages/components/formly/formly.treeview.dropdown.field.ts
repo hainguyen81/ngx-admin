@@ -1,6 +1,6 @@
 import {
     AfterViewInit,
-    Component, EventEmitter, Inject, Output,
+    Component, EventEmitter, Inject, Input, Output,
     QueryList,
     ViewChildren,
 } from '@angular/core';
@@ -57,16 +57,33 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Get the {TreeviewConfig} instance
      * @return the {TreeviewConfig} instance
      */
-    protected getConfig(): TreeviewConfig {
+    public getConfig(): TreeviewConfig {
         return this.config;
+    }
+    /**
+     * Set the {TreeviewConfig} instance
+     * @param config to apply
+     */
+    public setConfig(config: TreeviewConfig): void {
+        this.config = config;
+        this.getTreeviewComponent() && this.getTreeviewComponent().setConfig(this.config);
     }
 
     /**
      * Get the {TreeviewItem} array
      * @return the {TreeviewItem} array
      */
-    protected getTreeviewItems(): TreeviewItem[] {
+    public getTreeviewItems(): TreeviewItem[] {
         return this.items;
+    }
+
+    /**
+     * Set the {TreeviewItem} array
+     * @param items to apply
+     */
+    public setTreeviewItems(items?: TreeviewItem[]): void {
+        this.items = items;
+        this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(this.items);
     }
 
     // -------------------------------------------------
@@ -123,8 +140,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         // treeview configuration
         let config: TreeviewConfig;
         config = ((options || []).length ? options[0] as TreeviewConfig : DefaultTreeviewConfig);
-        this.config = (config && Object.keys(config).length ? config : DefaultTreeviewConfig);
-        this.getTreeviewComponent() && this.getTreeviewComponent().setConfig(this.config);
+        this.setConfig(config && Object.keys(config).length ? config : DefaultTreeviewConfig);
 
         // treeview items
         let items: TreeviewItem[];
@@ -136,8 +152,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
                 item && items.push(option as TreeviewItem);
             });
         }
-        this.items = [].concat(items);
-        this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(this.items);
+        this.setTreeviewItems([].concat(items));
 
         // apply selected value
         let selectedItem: TreeviewItem;
@@ -145,6 +160,14 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
 
         // raise event after loading data
         this.ngAfterLoadData.emit({ $data: selectedItem });
+    }
+
+    /**
+     * Reload field by the specified options
+     * @param options to reload with 0 - TreeviewConfig; 1 - TreeviewItem[]
+     */
+    public reloadFieldByOptions(options: any[]): void {
+        this.initializeTreeviewComponentFromTemplateOptions(options);
     }
 
     /**
@@ -222,7 +245,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         let disabledItems: TreeviewItem[];
         disabledItems = [];
         this.parseItemsRecursively(item, disabledItems);
-        (this.items || []).forEach(it => this.disableItemsRecursively(it, disabledItems));
+        (this.getTreeviewItems() || []).forEach(it => this.disableItemsRecursively(it, disabledItems));
     }
     /**
      * Check to disable/enable the specified item by the specified disabled items array
@@ -257,6 +280,8 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     }
     private filterValueTreeItemRecursively(
         value: any, key?: string | null, item?: TreeviewItem | null): TreeviewItem {
+        let foundItem: TreeviewItem;
+        foundItem = null;
         let found: boolean;
         found = (item === value || (item && item.value === value));
         if (!found && (key || '').length) {
@@ -265,16 +290,15 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
                     || (Object.keys(value || {}).length
                         && (item.value[key] === value[key] || item.value === value[key]))));
         }
-        if (found) {
-            return item;
-        }
-        if (item && (item.children || []).length) {
+        if (!found && item && (item.children || []).length) {
             for (const it of item.children) {
-                if (this.filterValueTreeItemRecursively(value, key, it)) {
-                    return it;
-                }
+                foundItem = this.filterValueTreeItemRecursively(value, key, it);
+                if (foundItem) break;
             }
+
+        } else if (found) {
+            foundItem = item;
         }
-        return null;
+        return foundItem;
     }
 }
