@@ -1,4 +1,5 @@
 import {IApi} from '../../data/system/api';
+import {IdGenerators} from '../../../config/generator.config';
 
 export const MockApiUser: IApi = {
     code: 'USER_API',
@@ -7,7 +8,7 @@ export const MockApiUser: IApi = {
     baseUrl: 'http://localhost:8082/api-rest-user/service',
     icon: { icon: 'users', pack: 'fa' },
     version: '1.0.0',
-    id: '5d7660cd738fbc23b43a857e',
+    id: IdGenerators.oid.generate(),
 };
 
 export const MockApiCustomer: IApi = {
@@ -17,7 +18,7 @@ export const MockApiCustomer: IApi = {
     baseUrl: 'http://localhost:8082/api-rest-customer/service',
     icon: {icon: 'address-card', pack: 'fa'},
     version: '1.0.0',
-    id: '5d7660cd738fbc23b43a857f',
+    id: IdGenerators.oid.generate(),
 };
 
 export const MockApiOrganization: IApi = {
@@ -27,7 +28,17 @@ export const MockApiOrganization: IApi = {
     baseUrl: 'http://localhost:8082/api-rest-organization/service',
     icon: {icon: 'sitemap', pack: 'fa'},
     version: '1.0.0',
-    id: '5d7660cd738fbc23b43a857g',
+    id: IdGenerators.oid.generate(),
+};
+
+export const MockApiWarehouseStorage: IApi = {
+    code: 'WAREHOUSE_STORAGE_API',
+    name: 'warehouse.storage.menu',
+    regexUrl: 'warehouse/**',
+    baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
+    icon: {icon: 'archive', pack: 'fa'},
+    version: '1.0.0',
+    id: IdGenerators.oid.generate(),
 };
 
 export const MockApiWarehouseCategory: IApi = {
@@ -37,7 +48,7 @@ export const MockApiWarehouseCategory: IApi = {
     baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
     icon: {icon: 'bars', pack: 'fa'},
     version: '1.0.0',
-    id: '5d7660cd738fbc23b43a857i',
+    id: IdGenerators.oid.generate(),
 };
 
 export const MockApiWarehouseItem: IApi = {
@@ -47,13 +58,14 @@ export const MockApiWarehouseItem: IApi = {
     baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
     icon: {icon: 'boxes', pack: 'fa'},
     version: '1.0.0',
-    id: '5d7660cd738fbc23b43a857h',
+    id: IdGenerators.oid.generate(),
 };
 
 export const MockApi = {
     user: MockApiUser,
     customer: MockApiCustomer,
     organization: MockApiOrganization,
+    warehouseStorage: MockApiWarehouseStorage,
     warehouseCategory: MockApiWarehouseCategory,
     warehouseItem: MockApiWarehouseItem,
 };

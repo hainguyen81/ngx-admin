@@ -31,6 +31,13 @@ export const API = {
         method: 'POST',
         client: '/dashboard/warehouse',
     },
+    warehouseStorage: {
+        code: 'WAREHOUSE_STORAGE_API',
+        baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
+        login: '/oauth/token?grant_type=client_credentials',
+        method: 'POST',
+        client: '/dashboard/warehouse/storage',
+    },
     warehouseCategory: {
         code: 'WAREHOUSE_CATEGORY_API',
         baseUrl: 'http://localhost:8082/api-rest-warehouse/service',

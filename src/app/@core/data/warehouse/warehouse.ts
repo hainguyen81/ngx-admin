@@ -5,6 +5,8 @@ export interface IWarehouse extends IModel {
     code: string;
     // Tên kho
     name: string;
+    // Hình ảnh
+    image?: string[] | null;
     // Địa chỉ
     street_address: string;
     // Thành phố
@@ -28,6 +30,7 @@ export default class Warehouse implements IWarehouse {
                 public code: string,
                 public name: string,
                 public street_address: string,
+                public image?: string[] | null,
                 public city?: string | null,
                 public state_province?: string | null,
                 public zip_code?: string | null,
