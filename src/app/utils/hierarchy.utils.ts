@@ -207,12 +207,12 @@ export default class HierarchyUtils {
                     checked: false,
                     collapsed: true,
                     disabled: false,
-                    text: model['modelTextProperty'],
+                    text: model[modelTextProperty] || '-',
                     value: model,
                 });
 
             } else if (model) {
-                item.text = model['modelTextProperty'];
+                item.text = model[modelTextProperty] || '';
                 item.value = model;
             }
             return item;
