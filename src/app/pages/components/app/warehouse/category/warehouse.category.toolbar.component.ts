@@ -20,6 +20,7 @@ import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {AppToolbarComponent} from '../../components/app.toolbar.component';
+import {ExtendedComponent} from '../../../customization/extend.component';
 
 /* default warehouse category toolbar header config */
 export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -33,9 +34,8 @@ export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = []
 /**
  * Toolbar component base on {MatToolbar}
  */
-@Component({
-    selector: 'ngx-toolbar-warehouse-category',
-    templateUrl: '../../../toolbar/toolbar.component.html',
+@ExtendedComponent({
+    selector: (parentSelector) => (parentSelector || '').concat('-warehouse-category'),
 })
 export class WarehouseCategoryToolbarComponent
     extends AppToolbarComponent<WarehouseCategoryDatasource> {
