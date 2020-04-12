@@ -21,6 +21,8 @@ import {MockOrganizationService} from './system/organization.service';
 import {OrganizationDbService} from '../../services/implementation/system/organization/organization.service';
 import {MockWarehouseCategoryService} from './warehouse/category.service';
 import {WarehouseCategoryDbService} from '../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
+import {MockWarehouseStorageService} from './warehouse/warehouse.service';
+import {WarehouseDbService} from '../../services/implementation/warehouse/warehouse/warehouse.service';
 
 export const MOCK_DATA_PROVIDERS = [
     {
@@ -38,6 +40,10 @@ export const MOCK_DATA_PROVIDERS = [
 ];
 
 export const MOCK_WAREHOUSE_DATA_PROVIDERS = [
+    {
+        provide: MockWarehouseStorageService, useClass: MockWarehouseStorageService,
+        deps: [WarehouseDbService, NGXLogger],
+    },
     {
         provide: MockWarehouseCategoryService, useClass: MockWarehouseCategoryService,
         deps: [WarehouseCategoryDbService, NGXLogger],
