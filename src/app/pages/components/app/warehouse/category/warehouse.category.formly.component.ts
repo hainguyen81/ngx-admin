@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -8,7 +7,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {BaseFormlyComponent} from '../../../formly/base.formly.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -30,6 +28,7 @@ import {
 } from './warehouse.category.formly.treeview.dropdown.field';
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
+import {AppFormlyComponent} from '../../components/app.formly.component';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -129,11 +128,10 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
 @Component({
     selector: 'ngx-formly-form-warehouse-category',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['../../../formly/formly.component.scss', './warehouse.category.formly.component.scss'],
+    styleUrls: ['./warehouse.category.formly.component.scss'],
 })
 export class WarehouseCategoryFormlyComponent
-    extends BaseFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource>
-    implements AfterViewInit {
+    extends AppFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -179,29 +177,30 @@ export class WarehouseCategoryFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    /**
+     * Raise when the model of form had been changed
+     */
+    protected onModelChanged() {
+        super.onModelChanged();
 
-        // listen data model changes for updating
-        this.getFormlyForm().modelChange.subscribe(() => {
-            WarehouseDataUtils.invokeAllWarehouseCategories(<WarehouseCategoryDatasource>this.getDataSource())
-                .then(categories => {
-                    let options: any[];
-                    options = [];
-                    options.push(WarehouseCategoryTreeviewConfig);
-                    options.push(categories);
-                    let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-                    belongToComponent = this.getFormFieldComponent(
+        // refresh belongTo field
+        WarehouseDataUtils.invokeAllWarehouseCategories(<WarehouseCategoryDatasource>this.getDataSource())
+            .then(categories => {
+                let options: any[];
+                options = [];
+                options.push(WarehouseCategoryTreeviewConfig);
+                options.push(categories);
+                let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
+                belongToComponent = this.getFormFieldComponent(
+                    this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                    WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
+                if (belongToComponent) {
+                    belongToComponent.reloadFieldByOptions(options);
+                    this.disableModelFromBelongTo(
                         this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
-                        WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                    if (belongToComponent) {
-                        belongToComponent.reloadFieldByOptions(options);
-                        this.disableModelFromBelongTo(
-                            this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
-                            this.getFormlyForm().model);
-                    }
-                });
-        });
+                        this.getFormlyForm().model);
+                }
+            });
     }
 
     // -------------------------------------------------

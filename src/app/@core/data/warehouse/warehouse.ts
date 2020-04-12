@@ -23,6 +23,8 @@ export interface IWarehouse extends IModel {
     fax?: string | null;
     // Email
     email?: string | null;
+    // Remark
+    remark?: string | null;
 }
 
 export default class Warehouse implements IWarehouse {
@@ -37,6 +39,7 @@ export default class Warehouse implements IWarehouse {
                 public country?: string | null,
                 public tel?: string | null,
                 public fax?: string | null,
-                public email?: string | null) {
+                public email?: string | null,
+                public remark?: string | null) {
     }
 }

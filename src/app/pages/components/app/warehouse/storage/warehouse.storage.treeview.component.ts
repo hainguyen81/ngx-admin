@@ -1,35 +1,24 @@
+import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {TranslateService} from '@ngx-translate/core';
-import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {TreeItem, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
-import {IContextMenu} from '../../../abstract.component';
-import {COMMON} from '../../../../../config/common.config';
+import Warehouse, {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {ToastrService} from 'ngx-toastr';
+import {TreeItem, TreeviewConfig, TreeviewItem} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {ConfirmPopup} from 'ngx-material-popup';
+import {IContextMenu} from '../../../abstract.component';
+import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    WarehouseCategoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import WarehouseCategory, {
-    CATEGORY_TYPE,
-    IWarehouseCategory,
-} from '../../../../../@core/data/warehouse/warehouse.category';
-import {AppTreeviewComponent} from '../../components/app.treeview.component';
-import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
-import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
-import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field';
+import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {COMMON} from '../../../../../config/common.config';
+import {TranslateService} from '@ngx-translate/core';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -46,30 +35,19 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view-warehouse-category',
+    selector: 'ngx-tree-view-warehouse-storage',
     templateUrl: '../../../treeview/treeview.component.html',
-    providers: [
-        {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
-            multi: true,
-        },
-        {
-            provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
-            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
-        },
-    ],
 })
-export class WarehouseCategoryTreeviewComponent
-    extends AppTreeviewComponent<IWarehouseCategory, WarehouseCategoryDatasource>
-    implements AfterViewInit {
+export class WarehouseStorageTreeviewComponent
+    extends AppTreeviewComponent<IWarehouse, WarehouseDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseCategoryTreeviewComponent} class
-     * @param dataSource {WarehouseCategoryDatasource}
+     * Create a new instance of {WarehouseStorageTreeviewComponent} class
+     * @param dataSource {WarehouseDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -83,7 +61,7 @@ export class WarehouseCategoryTreeviewComponent
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
      */
-    constructor(@Inject(WarehouseCategoryDatasource) dataSource: WarehouseCategoryDatasource,
+    constructor(@Inject(WarehouseDatasource) dataSource: WarehouseDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -117,18 +95,10 @@ export class WarehouseCategoryTreeviewComponent
         let newItem: TreeviewItem;
         newItem = super.newItem(parent, treeItem);
         if (newItem) {
-            newItem.text = this.translate('warehouse.category.new');
-            newItem.value = new WarehouseCategory(
-                undefined, undefined, undefined, CATEGORY_TYPE.CATEGORY);
+            newItem.text = this.translate('warehouse.storage.new');
+            newItem.value = new Warehouse(
+                undefined, undefined, undefined, undefined);
         }
         return newItem;
-    }
-
-    /**
-     * Mapping warehouse categories data to warehouse categories tree item
-     * @param data to map
-     */
-    mappingDataSourceToTreeviewItems(data: any): TreeviewItem[] {
-        return WarehouseUtils.buildWarehouseCategories(data as IWarehouseCategory[]);
     }
 }

@@ -10,42 +10,40 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
+import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
+import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
-import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    WarehouseCategoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {
-    IWarehouseCategory,
-} from '../../../../../@core/data/warehouse/warehouse.category';
-import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
-import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
-import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
-import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
+import {AppToolbarComponent} from '../../components/app.toolbar.component';
+import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+
+/* default warehouse storage toolbar header config */
+export const WarehouseStorageToolbarHeaderConfig: IToolbarHeaderConfig = {
+    title: 'warehouse.storage.title',
+    icon: {icon: 'archive', pack: 'fa'},
+};
+
+/* default warehouse storage toolbar actions config */
+export const WarehouseStorageToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
 
 /**
- * Warehouse Category split-pane component base on {AngularSplitModule}
+ * Toolbar component base on {MatToolbar}
  */
 @Component({
-    selector: 'ngx-split-pane-warehouse-category',
-    templateUrl: '../../../splitpane/splitpane.component.html',
+    selector: 'ngx-toolbar-warehouse-storage',
+    templateUrl: '../../../toolbar/toolbar.component.html',
 })
-export class WarehouseCategorySplitPaneComponent
-    extends AppSplitPaneComponent<
-        IWarehouseCategory, WarehouseCategoryDatasource,
-        WarehouseCategoryToolbarComponent,
-        WarehouseCategoryTreeviewComponent,
-        WarehouseCategoryFormlyComponent> {
+export class WarehouseStorageToolbarComponent extends AppToolbarComponent<WarehouseDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseCategorySplitPaneComponent} class
-     * @param dataSource {WarehouseCategoryDatasource}
+     * Create a new instance of {WarehouseStorageToolbarComponent} class
+     * @param dataSource {WarehouseDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -59,7 +57,7 @@ export class WarehouseCategorySplitPaneComponent
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
      */
-    constructor(@Inject(WarehouseCategoryDatasource) dataSource: WarehouseCategoryDatasource,
+    constructor(@Inject(WarehouseDatasource) dataSource: WarehouseDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -76,8 +74,6 @@ export class WarehouseCategorySplitPaneComponent
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            WarehouseCategoryToolbarComponent,
-            WarehouseCategoryTreeviewComponent,
-            WarehouseCategoryFormlyComponent);
+            WarehouseStorageToolbarHeaderConfig, WarehouseStorageToolbarActionsConfig);
     }
 }

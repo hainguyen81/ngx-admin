@@ -13,7 +13,7 @@ import {
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
-import {LoggerModule, NGXLogger} from 'ngx-logger';
+import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {TreeviewModule} from 'ngx-treeview';
@@ -31,6 +31,7 @@ import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.
 import {ComponentsModule} from '../../../components.module';
 import {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} from './warehouse.category.formly.treeview.dropdown.field';
 import {WarehouseProviders} from '../../../../../config/app.providers';
+import {AppComponentsModule} from '../../components/app.components.module';
 
 @NgModule({
     imports: [
@@ -93,6 +94,7 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
 
         /* Application components module */
         ComponentsModule,
+        AppComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

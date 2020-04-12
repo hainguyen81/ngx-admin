@@ -28,6 +28,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {WarehouseCategoryModule} from './category/warehouse.category.module';
 import {WarehouseProviders} from '../../../../config/app.providers';
+import {WarehouseStorageModule} from './storage/warehouse.storage.module';
 
 @NgModule({
     imports: [
@@ -97,6 +98,7 @@ import {WarehouseProviders} from '../../../../config/app.providers';
         /* Modules */
         WarehouseItemModule,
         WarehouseCategoryModule,
+        WarehouseStorageModule,
     ],
     providers: [ WarehouseProviders ],
 })

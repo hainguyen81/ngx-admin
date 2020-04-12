@@ -10,7 +10,6 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {BaseNgxToolbarComponent} from '../../../toolbar/base.toolbar.component';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
@@ -20,11 +19,12 @@ import {Lightbox} from 'ngx-lightbox';
 import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {AppToolbarComponent} from '../../components/app.toolbar.component';
 
 /* default warehouse category toolbar header config */
 export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
-    title: 'system.organization.title',
-    icon: {icon: 'sitemap', pack: 'fa'},
+    title: 'warehouse.category.title',
+    icon: {icon: 'bars', pack: 'fa'},
 };
 
 /* default warehouse category toolbar actions config */
@@ -36,9 +36,9 @@ export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = []
 @Component({
     selector: 'ngx-toolbar-warehouse-category',
     templateUrl: '../../../toolbar/toolbar.component.html',
-    styleUrls: ['../../../toolbar/toolbar.component.scss', './warehouse.category.toolbar.component.scss'],
 })
-export class WarehouseCategoryToolbarComponent extends BaseNgxToolbarComponent<WarehouseCategoryDatasource> {
+export class WarehouseCategoryToolbarComponent
+    extends AppToolbarComponent<WarehouseCategoryDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION

@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -14,38 +15,34 @@ import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    WarehouseCategoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {
-    IWarehouseCategory,
-} from '../../../../../@core/data/warehouse/warehouse.category';
-import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
-import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
-import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
+import {WarehouseStorageToolbarComponent} from './warehouse.storage.toolbar.component';
+import {WarehouseStorageTreeviewComponent} from './warehouse.storage.treeview.component';
+import {WarehouseStorageFormlyComponent} from './warehouse.storage.formly.component';
+import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 
 /**
- * Warehouse Category split-pane component base on {AngularSplitModule}
+ * Warehouse Storage split-pane component base on {AngularSplitModule}
  */
 @Component({
-    selector: 'ngx-split-pane-warehouse-category',
+    selector: 'ngx-split-pane-warehouse-storage',
     templateUrl: '../../../splitpane/splitpane.component.html',
 })
-export class WarehouseCategorySplitPaneComponent
-    extends AppSplitPaneComponent<
-        IWarehouseCategory, WarehouseCategoryDatasource,
-        WarehouseCategoryToolbarComponent,
-        WarehouseCategoryTreeviewComponent,
-        WarehouseCategoryFormlyComponent> {
+export class WarehouseStorageSplitPaneComponent
+    extends AppSplitPaneComponent<IWarehouse, WarehouseDatasource,
+        WarehouseStorageToolbarComponent,
+        WarehouseStorageTreeviewComponent,
+        WarehouseStorageFormlyComponent>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseCategorySplitPaneComponent} class
-     * @param dataSource {WarehouseCategoryDatasource}
+     * Create a new instance of {WarehouseStorageSplitPaneComponent} class
+     * @param dataSource {WarehouseDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -59,7 +56,7 @@ export class WarehouseCategorySplitPaneComponent
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
      */
-    constructor(@Inject(WarehouseCategoryDatasource) dataSource: WarehouseCategoryDatasource,
+    constructor(@Inject(WarehouseDatasource) dataSource: WarehouseDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -76,8 +73,8 @@ export class WarehouseCategorySplitPaneComponent
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            WarehouseCategoryToolbarComponent,
-            WarehouseCategoryTreeviewComponent,
-            WarehouseCategoryFormlyComponent);
+            WarehouseStorageToolbarComponent,
+            WarehouseStorageTreeviewComponent,
+            WarehouseStorageFormlyComponent);
     }
 }

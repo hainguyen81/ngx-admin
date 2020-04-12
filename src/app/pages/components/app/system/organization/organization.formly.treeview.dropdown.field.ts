@@ -1,12 +1,9 @@
-import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
-import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
+import {TreeviewI18n, TreeviewI18nDefault, TreeviewSelection} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {Component, Inject, Injectable, InjectionToken} from '@angular/core';
+import {Component, Inject, Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import ObjectUtils from '../../../../../utils/object.utils';
-
-export const ORGANIZATION_TREEVIEW_SHOW_ALL =
-    new InjectionToken<boolean>('True for show \'All\'; else False');
+import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {AppFormlyTreeviewDropdownFieldComponent} from '../../components/app.formly.treeview.dropdown.field';
 
 /**
  * Multi language for organization treeview field
@@ -15,7 +12,7 @@ export const ORGANIZATION_TREEVIEW_SHOW_ALL =
 export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                @Inject(ORGANIZATION_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
+                @Inject(APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
         super();
     }
 
@@ -64,20 +61,27 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
 @Component({
     selector: 'ngx-formly-treeview-dropdown-organization',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
-    styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss' ],
     providers: [
         {
-            provide: ORGANIZATION_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
-            deps: [ TranslateService, ORGANIZATION_TREEVIEW_SHOW_ALL ],
+            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
         },
     ],
 })
 export class OrganizationFormlyTreeviewDropdownFieldComponent
-    extends DropdownTreeviewFormFieldComponent {
+    extends AppFormlyTreeviewDropdownFieldComponent<IOrganization> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected get isEnabledItemImage(): boolean {
+        return false;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -89,29 +93,5 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService) {
         super(_translateService);
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    /**
-     * Disable the treeview item by the specified organization
-     * @param value to disable
-     */
-    public disableItemsByValue(value?: IOrganization | null): void {
-        let item: TreeviewItem;
-        item = (value && value.id ? this.valueFormatter(value.id) : null);
-        item && this.disableItems(item);
-    }
-
-    protected valueFormatter(value: any): TreeviewItem {
-        return this.filterValueTreeItem(value, 'id');
-    }
-
-    protected valueParser(value?: any): any {
-        let itValue: TreeviewItem;
-        itValue = ObjectUtils.cast(value, TreeviewItem);
-        return (itValue && itValue.value ? itValue.value['id'] : (value || {})['id']);
     }
 }

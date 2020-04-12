@@ -8,8 +8,9 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {BaseFormlyComponent} from '../../../formly/base.formly.component';
-import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
+import {
+    OrganizationDataSource,
+} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -28,6 +29,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {OrganizationTreeviewConfig} from './organization.treeview.component';
 import {OrganizationFormlyTreeviewDropdownFieldComponent} from './organization.formly.treeview.dropdown.field';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
+import {AppFormlyComponent} from '../../components/app.formly.component';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -307,11 +309,10 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
 @Component({
     selector: 'ngx-formly-form-organization',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['../../../formly/formly.component.scss', './organization.formly.component.scss'],
+    styleUrls: ['./organization.formly.component.scss'],
 })
 export class OrganizationFormlyComponent
-    extends BaseFormlyComponent<IOrganization, OrganizationDataSource>
-    implements AfterViewInit {
+    extends AppFormlyComponent<IOrganization, OrganizationDataSource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -359,32 +360,31 @@ export class OrganizationFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    protected onModelChanged() {
+        super.onModelChanged();
 
-        this.getFormlyForm().modelChange.subscribe(() => {
-            SystemDataUtils.invokeAllOrganization(<OrganizationDataSource>this.getDataSource())
-                .then(orgValues => {
-                    let options: any[];
-                    options = [];
-                    options.push(OrganizationTreeviewConfig);
-                    options.push(orgValues);
+        // reload belongTo field
+        SystemDataUtils.invokeAllOrganization(<OrganizationDataSource>this.getDataSource())
+            .then(orgValues => {
+                let options: any[];
+                options = [];
+                options.push(OrganizationTreeviewConfig);
+                options.push(orgValues);
 
-                    let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-                    belongToComponent = this.getFormFieldComponent(
-                        this.getFormlyForm().fields[0].fieldGroup[0],
-                        OrganizationFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                    this.disableModelFromBelongTo(
-                        this.getFormlyForm().fields[0].fieldGroup[0],
-                        this.getModel());
+                let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
+                belongToComponent = this.getFormFieldComponent(
+                    this.getFormlyForm().fields[0].fieldGroup[0],
+                    OrganizationFormlyTreeviewDropdownFieldComponent);
+                belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                this.disableModelFromBelongTo(
+                    this.getFormlyForm().fields[0].fieldGroup[0],
+                    this.getModel());
 
-                    SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource)
-                        .then(users => {
-                            this.getFormlyForm().fields[1].fieldGroup[1].templateOptions.options = users;
-                        });
-                });
-        });
+                SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource)
+                    .then(users => {
+                        this.getFormlyForm().fields[1].fieldGroup[1].templateOptions.options = users;
+                    });
+            });
     }
 
     // -------------------------------------------------

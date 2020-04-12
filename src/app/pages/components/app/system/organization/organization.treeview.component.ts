@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -8,7 +7,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {BaseNgxTreeviewComponent} from '../../../treeview/base.treeview.component';
 import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -17,13 +15,15 @@ import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeItem, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import Organization, {IOrganization} from '../../../../../@core/data/system/organization';
 import OrganizationUtils from '../../../../../utils/system/organization.utils';
-import {IContextMenu, IEvent} from '../../../abstract.component';
+import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {ORGANIZATION_TREEVIEW_SHOW_ALL, OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field';
+import {AppTreeviewComponent} from '../../components/app.treeview.component';
+import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -42,38 +42,19 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
 @Component({
     selector: 'ngx-tree-view-organization',
     templateUrl: '../../../treeview/treeview.component.html',
-    styleUrls: ['../../../treeview/treeview.component.scss'],
     providers: [
         {
-            provide: ORGANIZATION_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
-            deps: [ TranslateService, ORGANIZATION_TREEVIEW_SHOW_ALL ],
+            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
         },
     ],
 })
-export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<OrganizationDataSource>
-    implements AfterViewInit {
-
-    // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    private clickItemDelegate: (event: MouseEvent, item: TreeviewItem) => void;
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    /**
-     * Set the item click listener
-     * @param clickItemDelegate listener
-     */
-    public setClickItemListener(clickItemDelegate: (event: MouseEvent, item: TreeviewItem) => void) {
-        this.clickItemDelegate = clickItemDelegate;
-    }
+export class OrganizationTreeviewComponent
+    extends AppTreeviewComponent<IOrganization, OrganizationDataSource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -111,42 +92,8 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
-        super.setConfig(OrganizationTreeviewConfig);
-        super.setContextMenu(OrganizationContextMenu);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    /**
-     * Raise when tree-view item has been clicked
-     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {TreeviewItem}
-     */
-    onClickItem(event: IEvent) {
-        super.onClickItem(event);
-        this.clickItemDelegate
-        && this.clickItemDelegate.apply(this, [event.$event, event.$data]);
-    }
-
-    /**
-     * Perform action on data-source changed event
-     * @param event {IEvent} that contains {$event} as changed values
-     */
-    onDataSourceChanged(event: IEvent) {
-        super.onDataSourceChanged(event);
-
-        let timer: number;
-        timer = window.setTimeout(() => {
-            this.focus();
-            window.clearTimeout(timer);
-        }, 100);
-    }
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-        this.getDataSource().refresh();
+            modalDialogService, confirmPopup, lightbox,
+            OrganizationTreeviewConfig, OrganizationContextMenu);
     }
 
     // -------------------------------------------------
@@ -171,64 +118,10 @@ export class OrganizationTreeviewComponent extends BaseNgxTreeviewComponent<Orga
     }
 
     /**
-     * Delete the specified {TreeviewItem}
-     * @param treeviewItem to delete
-     * @return the deleted {TreeviewItem}
-     */
-    protected deleteItem(treeviewItem: TreeviewItem): TreeviewItem {
-        return this.doDeleteItemFromDataSource(super.deleteItem(treeviewItem));
-    }
-
-    /**
-     * Delete the specified {TreeviewItem} from data source
-     * @param item to delete
-     * @return the deleted item
-     */
-    private doDeleteItemFromDataSource(item: TreeviewItem): TreeviewItem {
-        if (!item || !item.value) {
-            return item;
-        }
-
-        // check for deleting children first
-        if (item.children && item.children.length) {
-            for (const it of item.children) {
-                this.doDeleteItemFromDataSource(it);
-            }
-        }
-
-        // if valid identity to delete
-        if (item.value && (item.value['id'] || '').length) {
-            this.getDataSource().remove(item.value)
-                .then(() => this.getLogger().debug('DELETED?', item.value),
-                    (errors) => this.getLogger().error(errors));
-        }
-        return item;
-    }
-
-    /**
      * Mapping organization data to organization tree item
      * @param data to map
      */
     mappingDataSourceToTreeviewItems(data: any): TreeviewItem[] {
         return OrganizationUtils.buildOrganization(data as IOrganization[]);
-    }
-
-    /**
-     * Focus on tree-view
-     */
-    public focus(): void {
-        let treeviewEls: NodeListOf<HTMLElement>;
-        treeviewEls = this.getElementsBySelector(
-            OrganizationTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
-        if (treeviewEls && treeviewEls.length) {
-            this.toggleTreeviewItemElement(treeviewEls.item(0));
-
-        } else {
-            treeviewEls = this.getElementsBySelector(
-                OrganizationTreeviewComponent.TREEVIEW_ELEMENT_SELECTOR);
-            if (treeviewEls && treeviewEls.length) {
-                treeviewEls.item(0).focus();
-            }
-        }
     }
 }

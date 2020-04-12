@@ -11,13 +11,13 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {BaseNgxToolbarComponent} from '../../../toolbar/base.toolbar.component';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
+import {AppToolbarComponent} from '../../components/app.toolbar.component';
 
 /* default organization toolbar header config */
 export const OrganizationToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -34,9 +34,8 @@ export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].conc
 @Component({
     selector: 'ngx-toolbar-organization',
     templateUrl: '../../../toolbar/toolbar.component.html',
-    styleUrls: ['../../../toolbar/toolbar.component.scss', './organization.toolbar.component.scss'],
 })
-export class OrganizationToolbarComponent extends BaseNgxToolbarComponent<OrganizationDataSource> {
+export class OrganizationToolbarComponent extends AppToolbarComponent<OrganizationDataSource> {
 
     // -------------------------------------------------
     // CONSTRUCTION

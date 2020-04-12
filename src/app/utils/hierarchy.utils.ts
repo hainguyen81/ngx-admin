@@ -2,6 +2,8 @@ import ObjectUtils from './object.utils';
 import {Type} from '@angular/core';
 import {throwError} from 'rxjs';
 import {isArray} from 'util';
+import {TreeviewItem} from 'ngx-treeview';
+import {IModel} from '../@core/data/base';
 
 export default class HierarchyUtils {
 
@@ -17,9 +19,7 @@ export default class HierarchyUtils {
     private static buildFlatHierarchyItem<M, N>(entity: M, builtType?: Type<N>,
                                             parentBuilt?: N, childrenBuiltPropertyName?: string,
                                             entityMapper?: (entity: M, item: N) => N): N {
-        if (!entity) {
-            return undefined;
-        }
+        if (!entity) return undefined;
 
         let item: N;
         try {
@@ -109,9 +109,7 @@ export default class HierarchyUtils {
     private static buildHierarchyItem<M, N>(entity: M, builtType?: Type<N>, parent?: N,
                                             parentBuiltPropertyName?: string, childrenBuiltPropertyName?: string,
                                             entityMapper?: (entity: M, item: N) => N): N {
-        if (!entity) {
-            return undefined;
-        }
+        if (!entity) return undefined;
 
         let item: N;
         try {
@@ -190,6 +188,42 @@ export default class HierarchyUtils {
                 }
             });
         }
+        return items;
+    }
+
+    /**
+     * Build the tree items by the specified model instances type
+     * @param models to build
+     * @param modelTextProperty the property name of model to show as {TreeviewItem} text
+     * @param parent the parent treeview item or undefined if root
+     * @return the tree item instances array or undefined
+     */
+    public static buildModelTreeview<M extends IModel>(
+        models: M[], modelTextProperty: string, parent?: TreeviewItem): TreeviewItem[] {
+        let modelToTreeItemMapper: (model: M, item: TreeviewItem) => TreeviewItem;
+        modelToTreeItemMapper = (model: M, item: TreeviewItem) => {
+            if (!item) {
+                item = new TreeviewItem({
+                    checked: false,
+                    collapsed: true,
+                    disabled: false,
+                    text: model['modelTextProperty'],
+                    value: model,
+                });
+
+            } else if (model) {
+                item.text = model['modelTextProperty'];
+                item.value = model;
+            }
+            return item;
+        };
+        let items: TreeviewItem[];
+        items = HierarchyUtils.buildFlatToHierarchyTree(
+            models, 'id', 'parentId', undefined,
+            undefined, undefined, 'children', modelToTreeItemMapper);
+        (items || []).sort((it1, it2) => {
+            return (it1.text < it2.text ? -1 : it1.text === it2.text ? 0 : 1);
+        });
         return items;
     }
 }

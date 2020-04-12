@@ -1,12 +1,9 @@
-import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field';
 import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
-import {AfterViewInit, Component, Inject, Injectable, InjectionToken, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import ObjectUtils from '../../../../../utils/object.utils';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-
-export const WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL =
-    new InjectionToken<boolean>('True for show \'All\'; else False');
+import {AppFormlyTreeviewDropdownFieldComponent} from '../../components/app.formly.treeview.dropdown.field';
+import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 
 /**
  * Multi language for organization treeview field
@@ -15,7 +12,7 @@ export const WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL =
 export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                @Inject(WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
+                @Inject(APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
         super();
     }
 
@@ -64,20 +61,19 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 @Component({
     selector: 'ngx-formly-treeview-dropdown-warehouse-category',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
-    styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss' ],
     providers: [
         {
-            provide: WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
-            deps: [ TranslateService, WAREHOUSE_CATEGORY_TREEVIEW_SHOW_ALL ],
+            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
         },
     ],
 })
 export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
-    extends DropdownTreeviewFormFieldComponent
+    extends AppFormlyTreeviewDropdownFieldComponent<IWarehouseCategory>
     implements AfterViewInit {
 
     // -------------------------------------------------
@@ -100,36 +96,10 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
         super.ngAfterViewInit();
 
         this.getTreeviewComponent()
-        && this.getTreeviewComponent().setEnabledItemImage(true);
-        this.getTreeviewComponent()
         && this.getTreeviewComponent().setItemImageParser((item?: TreeviewItem) => {
             let category: IWarehouseCategory;
             category = (item && item.value ? <IWarehouseCategory>item.value : null);
             return (category ? category.image : null);
         });
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    /**
-     * Disable the treeview item by the specified organization
-     * @param value to disable
-     */
-    public disableItemsByValue(value?: IWarehouseCategory | null): void {
-        let item: TreeviewItem;
-        item = (value && value.id ? this.valueFormatter(value.id) : null);
-        item && this.disableItems(item);
-    }
-
-    protected valueFormatter(value: any): TreeviewItem {
-        return this.filterValueTreeItem(value, 'id');
-    }
-
-    protected valueParser(value?: any): any {
-        let itValue: TreeviewItem;
-        itValue = ObjectUtils.cast(value, TreeviewItem);
-        return (itValue && itValue.value ? itValue.value['id'] : (value || {})['id']);
     }
 }

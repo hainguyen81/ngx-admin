@@ -127,6 +127,7 @@ export const dbConfig: DBConfig = {
             {name: 'tel', keypath: 'tel', options: {unique: false}},
             {name: 'fax', keypath: 'fax', options: {unique: false}},
             {name: 'email', keypath: 'email', options: {unique: false}},
+            {name: 'remark', keypath: 'remark', options: {unique: false}},
         ],
     }, {
         store: DB_STORE.warehouse_item,
