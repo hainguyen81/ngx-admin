@@ -3,14 +3,21 @@ import {
     ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Injectable,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import Warehouse, {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {ToastrService} from 'ngx-toastr';
-import {TreeItem, TreeviewConfig, TreeviewItem} from 'ngx-treeview';
+import {
+    TreeItem,
+    TreeviewConfig,
+    TreeviewI18n,
+    TreeviewI18nDefault,
+    TreeviewItem,
+    TreeviewSelection,
+} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {IContextMenu} from '../../../abstract.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -19,6 +26,7 @@ import {WarehouseDatasource} from '../../../../../services/implementation/wareho
 import {ConfirmPopup} from 'ngx-material-popup';
 import {COMMON} from '../../../../../config/common.config';
 import {TranslateService} from '@ngx-translate/core';
+import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -32,14 +40,86 @@ export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
 export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 /**
+ * Multi language for treeview field
+ */
+@Injectable()
+export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
+
+    constructor(@Inject(TranslateService) private translateService: TranslateService,
+                @Inject(APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
+        super();
+    }
+
+    getText(selection: TreeviewSelection): string {
+        if ((!selection || !(selection.uncheckedItems || []).length) && this.showAll) {
+            return this.getAllCheckboxText();
+        }
+
+        switch (((selection || {})['checkedItems'] || []).length) {
+            case 0:
+                return (this.translateService ? this.translateService.instant(
+                    'warehouse.storage.treeview.not_selection') : 'Select archive');
+            case 1:
+                return (((selection || {})['checkedItems'] || [])[0].text || '').trim();
+            default:
+                return `${((selection || {})['checkedItems'] || []).length} archives selected`;
+        }
+    }
+
+    getAllCheckboxText(): string {
+        return (this.translateService ? this.translateService.instant(
+            'warehouse.storage.treeview.all_selection') : 'All archives');
+    }
+
+    getFilterPlaceholder(): string {
+        return (this.translateService ? this.translateService.instant(
+            'warehouse.storage.treeview.filter') : 'Filter');
+    }
+
+    getFilterNoItemsFoundText(): string {
+        return (this.translateService ? this.translateService.instant(
+            'warehouse.storage.treeview.not_found') : 'No archive found');
+    }
+
+    getTooltipCollapseExpandText(isCollapse: boolean): string {
+        return (this.translateService ? this.translateService.instant(
+            isCollapse ? 'warehouse.storage.treeview.expand'
+                : 'warehouse.storage.treeview.collapse')
+            : isCollapse ? 'Expand' : 'Collapse');
+    }
+}
+
+/**
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view-warehouse-storage',
+    selector: 'ngx-tree-view-app-warehouse-storage',
     templateUrl: '../../../treeview/treeview.component.html',
+    styleUrls: [
+        '../../../treeview/treeview.component.scss',
+        './warehouse.storage.treeview.component.scss',
+    ],
+    providers: [
+        {
+            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            multi: true,
+        },
+        {
+            provide: TreeviewI18n, useClass: WarehouseStorageTreeviewI18n,
+            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+        },
+    ],
 })
 export class WarehouseStorageTreeviewComponent
     extends AppTreeviewComponent<IWarehouse, WarehouseDatasource> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    isEnabledItemImage(): boolean {
+        return true;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -79,6 +159,8 @@ export class WarehouseStorageTreeviewComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             WarehouseCategoryTreeviewConfig, WarehouseCategoryContextMenu);
+        super.setItemImageParser(
+            item => (item && (<IWarehouse>item.value) ? (<IWarehouse>item.value).image || [] : []));
     }
 
     // -------------------------------------------------

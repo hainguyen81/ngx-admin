@@ -26,8 +26,9 @@ import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
  * Warehouse Storage split-pane component base on {AngularSplitModule}
  */
 @Component({
-    selector: 'ngx-split-pane-warehouse-storage',
+    selector: 'ngx-split-pane-app-warehouse-storage',
     templateUrl: '../../../splitpane/splitpane.component.html',
+    styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })
 export class WarehouseStorageSplitPaneComponent
     extends AppSplitPaneComponent<IWarehouse, WarehouseDatasource,

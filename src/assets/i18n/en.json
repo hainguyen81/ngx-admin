@@ -281,6 +281,65 @@
     "warehouse": {
         "title": "Warehouse Management",
         "menu": "Warehouse Management",
+        "storage": {
+            "title": "Warehouse Archive Management",
+            "menu": "Warehouse Archive Management",
+            "new": "New Archive",
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "All archives",
+                "filter": "Filter archive",
+                "not_found": "No archive found",
+                "expand": "Expand",
+                "collapse": "Collapse"
+            },
+            "form": {
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name"
+                },
+                "street_address": {
+                    "label": "Address",
+                    "placeholder": "Address"
+                },
+                "city": {
+                    "label": "City",
+                    "placeholder": "City"
+                },
+                "state_province": {
+                    "label": "State/Province",
+                    "placeholder": "State/Province"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip"
+                },
+                "country": {
+                    "label": "Country",
+                    "placeholder": "Country"
+                },
+                "tel": {
+                    "label": "Tel",
+                    "placeholder": "Tel"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Email"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                }
+            }
+        },
         "category": {
             "title": "Warehouse Category Management",
             "menu": "Warehouse Category Management",

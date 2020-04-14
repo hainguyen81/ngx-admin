@@ -281,6 +281,65 @@
     "warehouse": {
         "title": "Quản lý kho",
         "menu": "Quản lý kho",
+        "storage": {
+            "title": "Quản lý kho xưởng",
+            "menu": "Quản lý kho xưởng",
+            "new": "Kho xưởng mới",
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "Tất cả các kho",
+                "filter": "Lọc kho xưởng",
+                "not_found": "Không tìm thấy kho xưởng nào",
+                "expand": "Mở rộng",
+                "collapse": "Thu nhỏ"
+            },
+            "form": {
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "street_address": {
+                    "label": "Địa chỉ",
+                    "placeholder": "Địa chỉ"
+                },
+                "city": {
+                    "label": "Thành phố",
+                    "placeholder": "Thành phố"
+                },
+                "state_province": {
+                    "label": "Quận/Huyện",
+                    "placeholder": "Quận/Huyện"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip"
+                },
+                "country": {
+                    "label": "Quốc gia",
+                    "placeholder": "Quốc gia"
+                },
+                "tel": {
+                    "label": "ĐT",
+                    "placeholder": "ĐT"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax"
+                },
+                "email": {
+                    "label": "Thư điện tử",
+                    "placeholder": "Thư điện tử"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
+            }
+        },
         "category": {
             "title": "Quản lý phân loại",
             "menu": "Quản lý phân loại",

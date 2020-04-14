@@ -32,8 +32,10 @@ export const WarehouseStorageToolbarActionsConfig: IToolbarActionsConfig[] = [].
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    selector: 'ngx-toolbar-warehouse-storage',
+    selector: 'ngx-toolbar-app-warehouse-storage',
     templateUrl: '../../../toolbar/toolbar.component.html',
+    styleUrls: ['../../../toolbar/toolbar.component.scss',
+        '../../components/app.toolbar.component.scss'],
 })
 export class WarehouseStorageToolbarComponent extends AppToolbarComponent<WarehouseDatasource> {
 

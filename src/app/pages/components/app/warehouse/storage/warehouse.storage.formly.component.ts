@@ -176,8 +176,11 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    selector: 'ngx-formly-form-warehouse-storage',
+    selector: 'ngx-formly-form-app-warehouse-storage',
     templateUrl: '../../../formly/formly.component.html',
+    styleUrls: ['../../../formly/formly.component.scss',
+        '../../components/app.formly.component.scss',
+    ],
 })
 export class WarehouseStorageFormlyComponent
     extends AppFormlyComponent<IWarehouse, WarehouseDatasource>

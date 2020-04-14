@@ -30,7 +30,6 @@ import {AppMaterialModule} from '../../../../../app.material.module';
 import {AppConfig} from '../../../../../config/app.config';
 import {WarehouseStorageSplitPaneComponent} from './warehouse.storage.component';
 
-
 @NgModule({
     imports: [
         CommonModule,

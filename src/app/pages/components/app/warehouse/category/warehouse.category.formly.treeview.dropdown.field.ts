@@ -6,7 +6,7 @@ import {AppFormlyTreeviewDropdownFieldComponent} from '../../components/app.form
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 
 /**
- * Multi language for organization treeview field
+ * Multi language for treeview field
  */
 @Injectable()
 export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
@@ -34,7 +34,7 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 
     getAllCheckboxText(): string {
         return (this.translateService ? this.translateService.instant(
-            'warehouse.category.form.belongTo.all_selection') : 'All category');
+            'warehouse.category.form.belongTo.all_selection') : 'All categories');
     }
 
     getFilterPlaceholder(): string {

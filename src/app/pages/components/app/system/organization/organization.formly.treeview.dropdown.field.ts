@@ -6,7 +6,7 @@ import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {AppFormlyTreeviewDropdownFieldComponent} from '../../components/app.formly.treeview.dropdown.field';
 
 /**
- * Multi language for organization treeview field
+ * Multi language for treeview field
  */
 @Injectable()
 export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
