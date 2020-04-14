@@ -53,11 +53,11 @@ function makeAutoUnsubscribeDecorator(obs$ = []): Function {
             const originalNgDestroy = unsubTarget.prototype.ngOnDestroy;
             obs$ = (obs$ || []);
             const overrideNgDestroy = function () {
-                this.forEach(function (property) {
-                    if (typeof property.unsubscribe === 'function' && !obs$.includes(property)) {
+                for (const property in this) {
+                    if (property && typeof property['unsubscribe'] === 'function' && !obs$.includes(property)) {
                         obs$.push(property);
                     }
-                });
+                }
                 for (const ob$ of obs$) {
                     ob$.unsubscribe();
                 }
