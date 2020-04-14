@@ -121,6 +121,14 @@
                 "reset": "Reset",
                 "delete": "Xóa",
                 "back": "Quay lại"
+            },
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "Tất cả các hạng mục",
+                "filter": "Lọc các hạng mục",
+                "not_found": "Không tìm thấy hạng mục nào",
+                "expand": "Mở rộng",
+                "collapse": "Thu nhỏ"
             }
         },
         "login": {

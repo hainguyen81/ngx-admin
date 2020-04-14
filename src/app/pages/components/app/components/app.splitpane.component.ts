@@ -4,8 +4,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {TreeviewItem} from 'ngx-treeview';
 import {
     AfterViewInit,
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver, ElementRef,
     Inject, Renderer2, Type,
     ViewContainerRef,

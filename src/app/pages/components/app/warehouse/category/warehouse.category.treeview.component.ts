@@ -46,8 +46,9 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view-warehouse-category',
+    selector: 'ngx-tree-view-app-warehouse-category',
     templateUrl: '../../../treeview/treeview.component.html',
+    styleUrls: ['../../../treeview/treeview.component.scss'],
     providers: [
         {
             provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
@@ -55,7 +56,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
         },
         {
             provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
-            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
+            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

@@ -34,8 +34,11 @@ export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = []
 /**
  * Toolbar component base on {MatToolbar}
  */
-@ExtendedComponent({
-    selector: (parentSelector) => (parentSelector || '').concat('-warehouse-category'),
+@Component({
+    selector: 'ngx-toolbar-app-warehouse-category',
+    templateUrl: '../../../toolbar/toolbar.component.html',
+    styleUrls: ['../../../toolbar/toolbar.component.scss',
+        '../../components/app.toolbar.component.scss'],
 })
 export class WarehouseCategoryToolbarComponent
     extends AppToolbarComponent<WarehouseCategoryDatasource> {

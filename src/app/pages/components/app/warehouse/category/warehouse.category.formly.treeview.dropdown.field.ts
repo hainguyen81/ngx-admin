@@ -59,8 +59,9 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
  * Custom warehouse category formly field for selecting parent category
  */
 @Component({
-    selector: 'ngx-formly-treeview-dropdown-warehouse-category',
+    selector: 'ngx-formly-treeview-dropdown-app-warehouse-category',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
+    styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss'],
     providers: [
         {
             provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
@@ -68,7 +69,7 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
         },
         {
             provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
-            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
+            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

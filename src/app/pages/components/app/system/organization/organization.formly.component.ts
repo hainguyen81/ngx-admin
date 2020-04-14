@@ -1,7 +1,5 @@
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
@@ -27,7 +25,9 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {EmailValidators} from 'ngx-validators';
 import {Lightbox} from 'ngx-lightbox';
 import {OrganizationTreeviewConfig} from './organization.treeview.component';
-import {OrganizationFormlyTreeviewDropdownFieldComponent} from './organization.formly.treeview.dropdown.field';
+import {
+    OrganizationFormlyTreeviewDropdownFieldComponent,
+} from './organization.formly.treeview.dropdown.field';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 
@@ -307,9 +307,12 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    selector: 'ngx-formly-form-organization',
+    selector: 'ngx-formly-form-app-organization',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['./organization.formly.component.scss'],
+    styleUrls: ['../../../formly/formly.component.scss',
+        '../../components/app.formly.component.scss',
+        './organization.formly.component.scss',
+    ],
 })
 export class OrganizationFormlyComponent
     extends AppFormlyComponent<IOrganization, OrganizationDataSource> {

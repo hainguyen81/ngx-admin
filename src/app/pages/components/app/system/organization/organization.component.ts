@@ -1,6 +1,5 @@
 import {
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
@@ -13,7 +12,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
 import {OrganizationFormlyComponent} from './organization.formly.component';
-import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {IOrganization} from '../../../../../@core/data/system/organization';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
@@ -26,8 +24,9 @@ import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
  * Organization split-pane component base on {AngularSplitModule}
  */
 @Component({
-    selector: 'ngx-split-pane-organization',
+    selector: 'ngx-split-pane-app-organization',
     templateUrl: '../../../splitpane/splitpane.component.html',
+    styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })
 export class OrganizationSplitPaneComponent
     extends AppSplitPaneComponent<

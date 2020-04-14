@@ -126,9 +126,12 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    selector: 'ngx-formly-form-warehouse-category',
+    selector: 'ngx-formly-form-app-warehouse-category',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['./warehouse.category.formly.component.scss'],
+    styleUrls: ['../../../formly/formly.component.scss',
+        '../../components/app.formly.component.scss',
+        './warehouse.category.formly.component.scss',
+    ],
 })
 export class WarehouseCategoryFormlyComponent
     extends AppFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource> {

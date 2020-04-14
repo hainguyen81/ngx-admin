@@ -1,6 +1,5 @@
 import {
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject, Optional,

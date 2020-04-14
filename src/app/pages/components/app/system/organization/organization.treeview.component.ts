@@ -1,6 +1,5 @@
 import {
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
@@ -40,8 +39,9 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view-organization',
+    selector: 'ngx-tree-view-app-organization',
     templateUrl: '../../../treeview/treeview.component.html',
+    styleUrls: ['../../../treeview/treeview.component.scss'],
     providers: [
         {
             provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
@@ -49,7 +49,7 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
         },
         {
             provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
-            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
+            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

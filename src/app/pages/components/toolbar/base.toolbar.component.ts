@@ -6,6 +6,7 @@ import {
     Inject,
     Renderer2,
     ViewContainerRef,
+    ViewEncapsulation,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NgxToolbarComponent} from './toolbar.component';

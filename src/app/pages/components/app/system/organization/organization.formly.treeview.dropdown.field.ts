@@ -59,8 +59,9 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
  * Custom organization formly field for selecting parent organization
  */
 @Component({
-    selector: 'ngx-formly-treeview-dropdown-organization',
+    selector: 'ngx-formly-treeview-dropdown-app-organization',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
+    styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss'],
     providers: [
         {
             provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
@@ -68,7 +69,7 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
         },
         {
             provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
-            deps: [ TranslateService, APP_TREEVIEW_SHOW_ALL ],
+            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

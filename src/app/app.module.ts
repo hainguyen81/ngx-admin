@@ -11,6 +11,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
+/* Prototypes */
+import './prototypes/array.prototypes';
 /* Nebular Theme */
 import {
     NbButtonModule,

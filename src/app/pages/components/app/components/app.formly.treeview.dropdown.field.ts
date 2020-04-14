@@ -1,6 +1,6 @@
 import {DropdownTreeviewFormFieldComponent} from '../../formly/formly.treeview.dropdown.field';
 import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
-import {AfterViewInit, Component, Inject, Injectable, InjectionToken, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../utils/object.utils';
 import {APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from '../components/app.treeview.i18n';

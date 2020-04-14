@@ -43,6 +43,7 @@ import {IComponentService} from '../../services/interface.service';
 import {AbstractComponentService, BaseComponentService} from '../../services/component.service';
 import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
+import {AutoUnsubscribe} from './customization/extend.component';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -70,6 +71,7 @@ export interface IEvent {
 /**
  * Abstract component
  */
+@AutoUnsubscribe()
 export class AbstractComponent
     implements OnChanges, OnInit, DoCheck,
         AfterContentInit, AfterContentChecked,

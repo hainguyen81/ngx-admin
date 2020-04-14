@@ -3,8 +3,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {
     AfterViewInit,
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver, ElementRef,
     Inject, Optional, Renderer2,
     ViewContainerRef,

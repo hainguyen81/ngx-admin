@@ -1,7 +1,6 @@
 import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {
-    ChangeDetectorRef,
-    Component,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
@@ -32,8 +31,9 @@ export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].conc
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    selector: 'ngx-toolbar-organization',
+    selector: 'ngx-toolbar-app-organization',
     templateUrl: '../../../toolbar/toolbar.component.html',
+    styleUrls: ['../../../toolbar/toolbar.component.scss', '../../components/app.toolbar.component.scss'],
 })
 export class OrganizationToolbarComponent extends AppToolbarComponent<OrganizationDataSource> {
 

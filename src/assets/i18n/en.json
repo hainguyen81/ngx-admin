@@ -121,6 +121,14 @@
                 "reset": "Reset",
                 "delete": "Delete",
                 "back": "Back"
+            },
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "All items",
+                "filter": "Filter items",
+                "not_found": "No items found",
+                "expand": "Expand",
+                "collapse": "Collapse"
             }
         },
         "login": {
