@@ -80,8 +80,6 @@ function makeExtendedComponentDecorator(annotation: any): Function {
         let targetAnnotations: any;
         targetAnnotations = Object.assign({}, annotation);
         let parentTarget: any = target;
-        let metaFnMap: any;
-        metaFnMap = {};
         while (parentTarget !== Object) {
             parentTarget = parentTarget.prototype.constructor;
             let parentAnnotation: any;
@@ -92,14 +90,8 @@ function makeExtendedComponentDecorator(annotation: any): Function {
                 if (parentAnnotation[key]) {
                     // verify is annotation typeof function
                     if (targetAnnotations.hasOwnProperty(key) && typeof targetAnnotations[key] === 'function') {
-                        if (!metaFnMap.hasOwnProperty(key)) {
-                            metaFnMap[key] = {
-                                'start': targetAnnotations[key],
-                                'parents': [parentAnnotation[key]],
-                            };
-                        } else {
-                            metaFnMap[key]['parents'].push(parentAnnotation[key]);
-                        }
+                        targetAnnotations[key] = targetAnnotations[key]['apply'](
+                            parentTarget, [parentAnnotation[key]]);
                     }
 
                     // check for merge metadata
@@ -131,16 +123,6 @@ function makeExtendedComponentDecorator(annotation: any): Function {
                 }
             });
             parentTarget = Object.getPrototypeOf(parentTarget.prototype).constructor;
-        }
-
-        // re-calculate metadata if they're function
-        for (const key of Object.keys(metaFnMap)) {
-            let result: any;
-            result = null;
-            Array.from(metaFnMap[key]['parents']).reverse().forEach(metaFn => {
-                result = (typeof metaFn !== 'function' ? metaFn : metaFn['apply'](this, [result]));
-            });
-            targetAnnotations[key] = metaFnMap[key]['start']['apply'](this, result ? [result] : []);
         }
 
         // return component decorator
