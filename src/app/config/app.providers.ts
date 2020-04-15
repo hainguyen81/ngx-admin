@@ -99,6 +99,12 @@ import {
 import {
     WarehouseAdjustDetailDatasource,
 } from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
+import {CountryDbService, CountryHttpService} from '../services/implementation/system/country/country.service';
+import {CountryDatasource} from '../services/implementation/system/country/country.datasource';
+import {CityDbService, CityHttpService} from '../services/implementation/system/city/city.service';
+import {CityDatasource} from '../services/implementation/system/city/city.datasource';
+import {ProvinceDbService, ProvinceHttpService} from '../services/implementation/system/province/province.service';
+import {ProvinceDatasource} from '../services/implementation/system/province/province.datasource';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -177,6 +183,50 @@ export const OrganizationProviders: StaticProvider[] = [
     {
         provide: OrganizationDataSource, useClass: OrganizationDataSource,
         deps: [OrganizationHttpService, OrganizationDbService, NGXLogger],
+    },
+];
+
+export const CountryProviders: StaticProvider[] = [
+    // Country
+    {
+        provide: CountryDbService, useClass: CountryDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: CountryHttpService, useClass: CountryHttpService,
+        deps: [HttpClient, NGXLogger, CountryDbService],
+    },
+    {
+        provide: CountryDatasource, useClass: CountryDatasource,
+        deps: [CountryHttpService, CountryDbService, NGXLogger],
+    },
+
+    // City
+    {
+        provide: CityDbService, useClass: CityDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: CityHttpService, useClass: CityHttpService,
+        deps: [HttpClient, NGXLogger, CityDbService],
+    },
+    {
+        provide: CityDatasource, useClass: CityDatasource,
+        deps: [CityHttpService, CityDbService, NGXLogger],
+    },
+
+    // Province
+    {
+        provide: ProvinceDbService, useClass: ProvinceDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: ProvinceHttpService, useClass: ProvinceHttpService,
+        deps: [HttpClient, NGXLogger, ProvinceDbService],
+    },
+    {
+        provide: ProvinceDatasource, useClass: ProvinceDatasource,
+        deps: [ProvinceHttpService, ProvinceDbService, NGXLogger],
     },
 ];
 

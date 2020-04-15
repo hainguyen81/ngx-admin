@@ -302,8 +302,12 @@ export const dbConfig: DBConfig = {
             {name: 'id', keypath: 'id', options: {unique: true}},
             {name: 'code', keypath: 'code', options: {unique: true}},
             {name: 'name', keypath: 'name', options: {unique: false}},
+            {name: 'capital', keypath: 'capital', options: {unique: false}},
+            {name: 'region', keypath: 'region', options: {unique: false}},
+            {name: 'currency', keypath: 'currency', options: {unique: false}},
+            {name: 'language', keypath: 'language', options: {unique: false}},
             {name: 'dial_code', keypath: 'dial_code', options: {unique: false}},
-            {name: 'image', keypath: 'image', options: {unique: false}},
+            {name: 'flag', keypath: 'flag', options: {unique: false}},
         ],
     }, {
         store: DB_STORE.city,
