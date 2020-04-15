@@ -283,7 +283,7 @@
         "menu": "Quản lý kho",
         "storage": {
             "title": "Quản lý kho xưởng",
-            "menu": "Quản lý kho xưởng",
+            "menu": "Kho xưởng",
             "new": "Kho xưởng mới",
             "treeview": {
                 "not_selection": "",
@@ -342,7 +342,7 @@
         },
         "category": {
             "title": "Quản lý phân loại",
-            "menu": "Quản lý phân loại",
+            "menu": "Phân loại",
             "new": "Phân loại mới",
             "form": {
                 "belongTo": {
@@ -380,7 +380,7 @@
         },
         "item": {
             "title": "Quản lý trang thiết bị",
-            "menu": "Quản lý trang thiết bị",
+            "menu": "Trang thiết bị",
             "summary": {
                 "not_supported_files": "Chỉ hỗ trợ tệp hình ảnh! Các tệp bên dưới sẽ không được tải lên:<br/>{{files}}"
             },

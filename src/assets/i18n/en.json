@@ -283,7 +283,7 @@
         "menu": "Warehouse Management",
         "storage": {
             "title": "Warehouse Archive Management",
-            "menu": "Warehouse Archive Management",
+            "menu": "Archive",
             "new": "New Archive",
             "treeview": {
                 "not_selection": "",
@@ -342,7 +342,7 @@
         },
         "category": {
             "title": "Warehouse Category Management",
-            "menu": "Warehouse Category Management",
+            "menu": "Category",
             "new": "New Category",
             "form": {
                 "belongTo": {
@@ -380,7 +380,7 @@
         },
         "item": {
             "title": "Warehouse Item Management",
-            "menu": "Warehouse Item",
+            "menu": "Item",
             "summary": {
                 "not_supported_files": "Only support for image file types! Below file(s) will not be uploaded:<br/>{{files}}"
             },
