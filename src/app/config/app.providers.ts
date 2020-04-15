@@ -411,6 +411,7 @@ export const Providers: StaticProvider[] = CommonProviders
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
+    .concat(CountryProviders)
     .concat(WarehouseProviders)
     .concat(InterceptorProviders)
     .concat(AuthenticationProviders)
