@@ -25,6 +25,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
+import {API} from '../../../../../config/api.config';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -96,6 +97,7 @@ export const CustomerTableSettings = {
 export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
+    moduleId: API.customer.code,
     selector: 'ngx-smart-table-customers',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

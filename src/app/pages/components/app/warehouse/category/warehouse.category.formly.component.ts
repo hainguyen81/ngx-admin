@@ -29,6 +29,7 @@ import {
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
 import {AppFormlyComponent} from '../../components/app.formly.component';
+import {API} from '../../../../../config/api.config';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -126,6 +127,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
+    moduleId: API.warehouseCategory.code,
     selector: 'ngx-formly-form-app-warehouse-category',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss',

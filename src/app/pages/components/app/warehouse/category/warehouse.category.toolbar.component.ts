@@ -21,6 +21,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {AppToolbarComponent} from '../../components/app.toolbar.component';
 import {ExtendedComponent} from '../../../customization/extend.component';
+import {API} from '../../../../../config/api.config';
 
 /* default warehouse category toolbar header config */
 export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -35,6 +36,7 @@ export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = []
  * Toolbar component base on {MatToolbar}
  */
 @Component({
+    moduleId: API.warehouseCategory.code,
     selector: 'ngx-toolbar-app-warehouse-category',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

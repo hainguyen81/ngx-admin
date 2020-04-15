@@ -18,6 +18,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppToolbarComponent} from '../../components/app.toolbar.component';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+import {API} from '../../../../../config/api.config';
 
 /* default warehouse storage toolbar header config */
 export const WarehouseStorageToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -32,6 +33,7 @@ export const WarehouseStorageToolbarActionsConfig: IToolbarActionsConfig[] = [].
  * Toolbar component base on {MatToolbar}
  */
 @Component({
+    moduleId: API.warehouseStorage.code,
     selector: 'ngx-toolbar-app-warehouse-storage',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

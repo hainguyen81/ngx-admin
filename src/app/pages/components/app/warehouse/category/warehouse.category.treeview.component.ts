@@ -30,6 +30,7 @@ import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field';
+import {API} from '../../../../../config/api.config';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -46,6 +47,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
+    moduleId: API.warehouseCategory.code,
     selector: 'ngx-tree-view-app-warehouse-category',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],

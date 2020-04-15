@@ -21,6 +21,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 import {Lightbox} from 'ngx-lightbox';
+import {API} from '../../../../../config/api.config';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -89,6 +90,7 @@ export const UserTableSettings = {
 export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
+    moduleId: API.organization.code,
     selector: 'ngx-smart-table-users',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

@@ -25,6 +25,7 @@ import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.p
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
+import {API} from '../../../../../config/api.config';
 
 /** The number of tabs */
 export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
@@ -187,6 +188,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
 }];
 
 @Component({
+    moduleId: API.warehouseItem.code,
     selector: 'ngx-tabset-warehouse-item',
     templateUrl: '../../../tab/tab.component.html',
     styleUrls: ['../../../tab/tab.component.scss'],

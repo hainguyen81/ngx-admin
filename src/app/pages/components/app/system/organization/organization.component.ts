@@ -19,11 +19,13 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
+import {API} from '../../../../../config/api.config';
 
 /**
  * Organization split-pane component base on {AngularSplitModule}
  */
 @Component({
+    moduleId: API.organization.code,
     selector: 'ngx-split-pane-app-organization',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss'],

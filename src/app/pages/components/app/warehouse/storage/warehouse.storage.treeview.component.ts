@@ -27,6 +27,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {COMMON} from '../../../../../config/common.config';
 import {TranslateService} from '@ngx-translate/core';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {API} from '../../../../../config/api.config';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -93,6 +94,7 @@ export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
+    moduleId: API.warehouseStorage.code,
     selector: 'ngx-tree-view-app-warehouse-storage',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: [

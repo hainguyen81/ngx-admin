@@ -30,6 +30,7 @@ import {
 } from './organization.formly.treeview.dropdown.field';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
+import {API} from '../../../../../config/api.config';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -307,6 +308,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
+    moduleId: API.organization.code,
     selector: 'ngx-formly-form-app-organization',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss',

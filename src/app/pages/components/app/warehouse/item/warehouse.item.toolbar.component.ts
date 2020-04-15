@@ -18,6 +18,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {Lightbox} from 'ngx-lightbox';
+import {API} from '../../../../../config/api.config';
 
 /* default warehouse item toolbar header config */
 export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -43,6 +44,7 @@ export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] =
  * Toolbar component base on {MatToolbar}
  */
 @Component({
+    moduleId: API.warehouseItem.code,
     selector: 'ngx-toolbar-warehouse-item',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss', './warehouse.item.toolbar.component.scss'],

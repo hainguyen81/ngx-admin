@@ -22,6 +22,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {WarehouseOrderDatasource} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {WAREHOUSE_ORDER_TYPE} from '../../../../../@core/data/warehouse/warehouse.order';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import {API} from '../../../../../config/api.config';
 
 /* warehouse item orders table settings */
 export const WarehouseItemOrdersTableSettings = {
@@ -85,6 +86,7 @@ export const WarehouseItemOrdersTableSettings = {
 export const WarehouseItemOrdersContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
+    moduleId: API.warehouseItem.code,
     selector: 'ngx-smart-table-warehouse-item-orders',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

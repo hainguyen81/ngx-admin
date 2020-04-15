@@ -24,11 +24,13 @@ import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.co
 import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
 import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
+import {API} from '../../../../../config/api.config';
 
 /**
  * Warehouse Category split-pane component base on {AngularSplitModule}
  */
 @Component({
+    moduleId: API.warehouseCategory.code,
     selector: 'ngx-split-pane-app-warehouse-category',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss'],

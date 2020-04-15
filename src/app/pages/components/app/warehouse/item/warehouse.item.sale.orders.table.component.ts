@@ -17,8 +17,10 @@ import {Lightbox} from 'ngx-lightbox';
 import {WarehouseOrderDatasource} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {WAREHOUSE_ORDER_TYPE} from '../../../../../@core/data/warehouse/warehouse.order';
 import {WarehouseItemOrdersSmartTableComponent} from './warehouse.item.orders.table.component';
+import {API} from '../../../../../config/api.config';
 
 @Component({
+    moduleId: API.warehouseItem.code,
     selector: 'ngx-smart-table-warehouse-item-sale-orders',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

@@ -21,6 +21,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Lightbox} from 'ngx-lightbox';
 import {WarehouseInventoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import {API} from '../../../../../config/api.config';
 
 /* warehouse item IN/OUT table settings */
 export const WarehouseItemInOutTableSettings = {
@@ -72,6 +73,7 @@ export const WarehouseItemInOutTableSettings = {
 export const WarehouseItemInOutContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
+    moduleId: API.warehouseItem.code,
     selector: 'ngx-smart-table-warehouse-item-in-out',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

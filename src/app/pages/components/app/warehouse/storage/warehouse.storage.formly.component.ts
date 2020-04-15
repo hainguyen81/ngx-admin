@@ -19,6 +19,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+import {API} from '../../../../../config/api.config';
 
 /* default warehouse storage formly config */
 export const WarehouseStorageFormConfig: FormlyConfig = new FormlyConfig();
@@ -176,6 +177,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
+    moduleId: API.warehouseStorage.code,
     selector: 'ngx-formly-form-app-warehouse-storage',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss',

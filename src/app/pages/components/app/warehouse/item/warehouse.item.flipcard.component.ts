@@ -31,8 +31,10 @@ import {
 } from '../../../toolbar/abstract.toolbar.component';
 import {ACTION_BACK} from './warehouse.item.toolbar.component';
 import {ConfirmPopupConfig} from 'ngx-material-popup/lib/configs/confirm-popup.config';
+import {API} from '../../../../../config/api.config';
 
 @Component({
+    moduleId: API.warehouseItem.code,
     selector: 'ngx-flip-card-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',
