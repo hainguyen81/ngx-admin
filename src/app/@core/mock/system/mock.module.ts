@@ -8,6 +8,10 @@ import {
 } from './mock.api';
 import {IdGenerators} from '../../../config/generator.config';
 
+// -------------------------------------------------
+// SYSTEM
+// -------------------------------------------------
+
 export const MockModuleUser: IModule = {
     code: 'USER_MODULE',
     name: 'system.user.menu',
@@ -37,7 +41,7 @@ export const MockModuleOrganization: IModule = {
 
 export const MockModuleSystem: IModule = {
     code: 'SYSTEM',
-    name: 'system.menu',
+    name: 'system.menu.module',
     apiId: null,
     api: null,
     id: IdGenerators.oid.generate(),
@@ -48,6 +52,10 @@ export const MockModuleSystem: IModule = {
         MockModuleCustomer,
     ],
 };
+
+// -------------------------------------------------
+// WAREHOUSE
+// -------------------------------------------------
 
 export const MockModuleWarehouseStorage: IModule = {
     code: 'WAREHOUSE_STORAGE_MODULE',
@@ -76,19 +84,47 @@ export const MockModuleWarehouseItem: IModule = {
     children: [],
 };
 
-export const MockModuleWarehouse: IModule = {
-    code: 'WAREHOUSE_MODULE',
-    name: 'warehouse.menu',
+export const MockModuleWarehouseMaster: IModule = {
+    code: 'WAREHOUSE_MASTER_MODULE',
+    name: 'warehouse.menu.master',
     apiId: null,
     api: null,
     id: IdGenerators.oid.generate(),
-    icon: {icon: 'warehouse', pack: 'fas'},
+    icon: {icon: 'cog', pack: 'fas'},
+    children: [
+    ],
+};
+
+export const MockModuleWarehouseFeatures: IModule = {
+    code: 'WAREHOUSE_MODULE',
+    name: 'warehouse.menu.features',
+    apiId: null,
+    api: null,
+    id: IdGenerators.oid.generate(),
+    icon: {icon: 'briefcase', pack: 'fas'},
     children: [
         MockModuleWarehouseStorage,
         MockModuleWarehouseCategory,
         MockModuleWarehouseItem,
     ],
 };
+
+export const MockModuleWarehouse: IModule = {
+    code: 'WAREHOUSE_MODULE',
+    name: 'warehouse.menu.module',
+    apiId: null,
+    api: null,
+    id: IdGenerators.oid.generate(),
+    icon: {icon: 'warehouse', pack: 'fas'},
+    children: [
+        MockModuleWarehouseMaster,
+        MockModuleWarehouseFeatures,
+    ],
+};
+
+// -------------------------------------------------
+// SUMMARY
+// -------------------------------------------------
 
 export const MockModule = {
     system: MockModuleSystem,

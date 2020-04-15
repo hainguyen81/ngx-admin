@@ -140,7 +140,9 @@
     },
 	"system": {
         "title": "System",
-        "menu": "System",
+        "menu": {
+            "module": "System"
+        },
         "organization": {
             "title": "Organization Management",
             "menu": "Organization",
@@ -280,7 +282,11 @@
     },
     "warehouse": {
         "title": "Warehouse Management",
-        "menu": "Warehouse Management",
+        "menu": {
+            "module": "Warehouse Management",
+            "master": "Settings",
+            "features": "Features"
+        },
         "storage": {
             "title": "Warehouse Archive Management",
             "menu": "Archive",

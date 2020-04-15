@@ -140,7 +140,9 @@
     },
 	"system": {
         "title": "Hệ thống",
-        "menu": "Hệ thống",
+        "menu": {
+            "module": "Hệ thống"
+        },
         "organization": {
             "title": "Quản lý tổ chức",
             "menu": "Tổ chức",
@@ -280,7 +282,11 @@
     },
     "warehouse": {
         "title": "Quản lý kho",
-        "menu": "Quản lý kho",
+        "menu": {
+            "module": "Quản lý kho",
+            "master": "Thiết lập",
+            "features": "Tính năng"
+        },
         "storage": {
             "title": "Quản lý kho xưởng",
             "menu": "Kho xưởng",

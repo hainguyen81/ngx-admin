@@ -42,21 +42,30 @@ const routes: Routes = [{
         path: 'warehouse',
         children: [
             {
-                path: 'storage',
-                component: WarehouseStorageSplitPaneComponent,
+                path: 'master',
+                children: [],
             },
             {
-                path: 'category',
-                component: WarehouseCategorySplitPaneComponent,
-            },
-            {
-                path: 'item',
-                component: WarehouseItemFlipcardComponent,
-            },
-            {
-                path: '',
-                redirectTo: 'category',
-                pathMatch: 'full',
+                path: 'features',
+                children: [
+                    {
+                        path: 'storage',
+                        component: WarehouseStorageSplitPaneComponent,
+                    },
+                    {
+                        path: 'category',
+                        component: WarehouseCategorySplitPaneComponent,
+                    },
+                    {
+                        path: 'item',
+                        component: WarehouseItemFlipcardComponent,
+                    },
+                    {
+                        path: '',
+                        redirectTo: 'category',
+                        pathMatch: 'full',
+                    },
+                ],
             },
         ],
     }, {
