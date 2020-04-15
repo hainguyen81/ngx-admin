@@ -33,7 +33,7 @@ import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {
     size: 30,
-    /*minSize: 20,*/
+    minSize: 20,
     maxSize: 30,
     lockSize: false,
     visible: true,
@@ -42,8 +42,8 @@ export const LeftTreeAreaConfig: ISplitAreaConfig = {
 /* Default right area configuration */
 export const RightFormAreaConfig: ISplitAreaConfig = {
     size: 70,
-    /*minSize: 50,*/
-    maxSize: 70,
+    minSize: 70,
+    maxSize: 80,
     lockSize: false,
     visible: true,
 };
