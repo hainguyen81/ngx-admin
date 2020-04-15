@@ -102,7 +102,7 @@ export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<Data
 
             // read all files asynchronous
             Promise.all(readFiles).then(values => {
-                this.setImages(values);
+                this.addImages(values);
                 invalidFiles.length && this.processUnsupportedFiles(invalidFiles);
 
             }, (errFile) => {

@@ -68,6 +68,15 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     }
 
     /**
+     * Add images in album
+     * @param images to apply
+     */
+    public addImages(images: string[]): void {
+        this.images = (this.images || []).concat(images || []);
+        this.onChange && this.onChange.emit({$data: this.images});
+    }
+
+    /**
      * Get the first image to show as primary image
      * @return the first image to show as primary image
      */
