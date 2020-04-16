@@ -65,7 +65,7 @@ export interface IContextMenu {
 /* Customize event for abstract component */
 export interface IEvent {
     $data?: any | null;
-    $event?: Event | null;
+    $event?: Event | void | null;
 }
 
 /**
@@ -410,7 +410,7 @@ export class AbstractComponent
         // check whether navigating on context menu
         let isOnContextMenu: boolean;
         let targetEl: HTMLElement;
-        targetEl = event.$event.target as HTMLElement;
+        targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
         isOnContextMenu = (targetEl && !!targetEl.closest(AbstractComponent.CONTEXT_MENU_SELECTOR));
         // if action key on context-menu, not handle it
         if (isOnContextMenu) {

@@ -44,9 +44,11 @@ import {ComponentPlaceholderDirective} from './component.placeholder.directive';
 import {ImageCellComponent} from './smart-table/image.cell.component';
 import {LightboxModule} from 'ngx-lightbox';
 import {NgxImageGalleryComponent} from './image/image.component';
-import {ImageGalleryFormFieldComponent} from './formly/formly.image.field';
-import {DropdownTreeviewFormFieldComponent} from './formly/formly.treeview.dropdown.field';
+import {ImageGalleryFormFieldComponent} from './formly/formly.image.field.component';
+import {DropdownTreeviewFormFieldComponent} from './formly/formly.treeview.dropdown.field.component';
 import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.component';
+import {NgxSelectModule} from 'ngx-select-ex';
+import {NgxSelectExComponent} from './select-ex/select.ex.component';
 
 @NgModule({
     imports: [
@@ -98,6 +100,9 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
         /* Selection Dropdown */
         SelectDropDownModule,
 
+        /* Select-ex */
+        NgxSelectModule,
+
         /* Formly for form builder */
         ReactiveFormsModule,
         FormlyModule.forRoot({
@@ -137,6 +142,7 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
         NgxTreeviewComponent,
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
+        NgxSelectExComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -155,6 +161,7 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
         ImageGalleryFormFieldComponent,
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
+        NgxSelectExComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -165,6 +172,7 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
         NgxTreeviewComponent,
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
+        NgxSelectExComponent,
     ],
 })
 export class ComponentsModule {

@@ -8,8 +8,8 @@ import {TranslateService} from '@ngx-translate/core';
  */
 @Component({
     selector: 'ngx-formly-image-field',
-    templateUrl: './formly.image.field.html',
-    styleUrls: ['./formly.image.field.scss'],
+    templateUrl: './formly.image.field.component.html',
+    styleUrls: ['./formly.image.field.component.scss'],
 })
 export class ImageGalleryFormFieldComponent extends AbstractFieldType
     implements OnInit {

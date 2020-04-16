@@ -5,7 +5,7 @@ import {
     ViewChildren,
 } from '@angular/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem} from 'ngx-treeview';
+import {TreeviewItem} from 'ngx-treeview';
 import ComponentUtils from '../../../utils/component.utils';
 import {isObservable, Observable} from 'rxjs';
 import {IEvent} from '../abstract.component';
@@ -20,8 +20,8 @@ import {TranslateService} from '@ngx-translate/core';
  */
 @Component({
     selector: 'ngx-formly-treeview-dropdown',
-    templateUrl: './formly.treeview.dropdown.field.html',
-    styleUrls: ['./formly.treeview.dropdown.field.scss'],
+    templateUrl: './formly.treeview.dropdown.field.component.html',
+    styleUrls: ['./formly.treeview.dropdown.field.component.scss'],
 })
 export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implements AfterViewInit {
 

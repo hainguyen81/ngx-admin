@@ -66,6 +66,8 @@ import {LightboxModule} from 'ngx-lightbox';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+/* Select-ex */
+import {NgxSelectModule} from 'ngx-select-ex';
 
 @NgModule({
     declarations: [AppComponent],
@@ -180,6 +182,9 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
         /* Tree-view */
         TreeviewModule.forRoot(),
+
+        /* Select-ex */
+        NgxSelectModule,
 
         /* Formly for form builder */
         ReactiveFormsModule,
