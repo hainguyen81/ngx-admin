@@ -32,6 +32,14 @@ export interface IOrganization extends IModel {
     type: ORGANIZTAION_TYPE;
     tax?: string | null;
     address?: string | null;
+    // Thành phố
+    city?: string | null;
+    // Tỉnh
+    state_province?: string | null;
+    // Zip code
+    zip_code?: string | null;
+    // Quốc gia
+    country?: string | null;
     tel?: string | null;
     fax?: string | null;
     email?: string | null;
@@ -56,6 +64,8 @@ export default class Organization implements IOrganization {
     constructor(public id: string, public code: string, public name: string,
                 public type: ORGANIZTAION_TYPE,
                 public tax?: string | null, public address?: string | null,
+                public city?: string | null, public state_province?: string | null,
+                public zip_code?: string | null, public country?: string | null,
                 public tel?: string | null, public fax?: string | null,
                 public email?: string | null, public remark?: string | null,
                 public managerId?: string | null, public manager?: any,
