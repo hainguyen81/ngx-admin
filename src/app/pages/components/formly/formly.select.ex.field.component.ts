@@ -60,6 +60,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      */
     public setConfig(config: INgxSelectOptions): void {
         this.config = config;
+        this.selectExComponent
+        && this.selectExComponent.setConfig(config);
     }
 
     /**
@@ -76,6 +78,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      */
     public setItems(items?: NgxSelectOption[]): void {
         this.items = items;
+        this.selectExComponent
+        && this.selectExComponent.setItems(items);
     }
 
     // -------------------------------------------------

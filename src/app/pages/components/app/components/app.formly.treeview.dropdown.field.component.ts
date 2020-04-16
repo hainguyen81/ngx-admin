@@ -7,7 +7,7 @@ import {APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from '../components/app.treeview
 import {IModel} from '../../../../@core/data/base';
 
 /**
- * Custom warehouse category formly field for selecting parent category
+ * Custom formly field for selecting special
  */
 @Component({
     selector: 'ngx-formly-treeview-dropdown-app',

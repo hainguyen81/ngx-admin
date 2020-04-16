@@ -4,4 +4,26 @@
     ::ng-deep nb-card {
         transform: translate3d(0, 0, 0);
     }
+    ::ng-deep ngx-select-ex ngx-select {
+        .ngx-select__toggle {
+            border: none;
+            padding: 0;
+            height: auto;
+            line-height: inherit;
+        }
+        .ngx-select__toggle.btn {
+            font-size: inherit;
+            font-weight: inherit;
+        }
+        .ngx-select__toggle:hover {
+            background-color: transparent;
+        }
+
+        .ngx-select, .ngx-select:focus, .ngx-select:active,
+        .ngx-select__search, .ngx-select__search:focus, .ngx-select__search:active {
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+    }
 }

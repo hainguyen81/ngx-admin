@@ -15,17 +15,16 @@ import {
 } from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
-import {ComponentsModule} from '../../components.module';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {ThemeModule} from '../../../../@theme/theme.module';
+import {ThemeModule} from '../../../../../@theme/theme.module';
 import {LoggerModule} from 'ngx-logger';
-import {AppMaterialModule} from '../../../../app.material.module';
-import {AppConfig} from '../../../../config/app.config';
-import {AppCommonComponentsModule} from './common/app.common.components.module';
+import {AppMaterialModule} from '../../../../../app.material.module';
+import {AppConfig} from '../../../../../config/app.config';
+import {AppCityFormlySelectExFieldComponent} from './app.city.formly.select.ex.field.component';
 import {NgxSelectModule} from 'ngx-select-ex';
-
+import {ComponentsModule} from '../../../components.module';
 
 @NgModule({
     imports: [
@@ -69,7 +68,15 @@ import {NgxSelectModule} from 'ngx-select-ex';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            types: [
+                {
+                    name: 'select-ex-city',
+                    component: AppCityFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+            ],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -84,12 +91,18 @@ import {NgxSelectModule} from 'ngx-select-ex';
         /* Application components module */
         ComponentsModule,
 
-        /* Application common components module */
-        AppCommonComponentsModule,
-
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
+    entryComponents: [
+        AppCityFormlySelectExFieldComponent,
+    ],
+    exports: [
+        AppCityFormlySelectExFieldComponent,
+    ],
+    declarations: [
+        AppCityFormlySelectExFieldComponent,
+    ],
 })
-export class AppComponentsModule {
+export class AppCommonComponentsModule {
 }
