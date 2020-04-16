@@ -1,10 +1,28 @@
-<ngx-select [items]="getItems()"
+<ngx-select #selectExComponent
+            [items]="getItems()"
             [(ngModel)]="getModel()"
             [defaultValue]="getInitialValues()"
             [searchCallback]="SELECT_SEARCH_CALLBACK"
             [autoActiveOnMouseEnter]="configValue('autoActiveOnMouseEnter', true)"
             [keepSelectMenuOpened]="configValue('keepSelectMenuOpened', false)"
             [autoActiveOnMouseEnter]="configValue('showOptionNotFoundForEmptyItems', false)"
+            [optionValueField]="getConfig().optionValueField"
+            [optionTextField]="getConfig().optionTextField | translate"
+            [optGroupLabelField]="getConfig().optGroupLabelField | translate"
+            [optGroupOptionsField]="getConfig().optGroupOptionsField"
+            [multiple]="getConfig().multiple"
+            [allowClear]="getConfig().allowClear"
+            [placeholder]="getConfig().placeholder | translate"
+            [noAutoComplete]="getConfig().noAutoComplete"
+            [disabled]="getConfig().disabled"
+            [autoSelectSingleOption]="getConfig().autoSelectSingleOption"
+            [autoClearSearch]="getConfig().autoClearSearch"
+            [noResultsFound]="getConfig().noResultsFound | translate"
+            [keepSelectedItems]="getConfig().keepSelectedItems"
+            [size]="getConfig().size"
+            [isFocused]="getConfig().isFocused"
+            [autocomplete]="getConfig().autocomplete"
+            [dropDownMenuOtherClasses]="getConfig().dropDownMenuOtherClasses"
             (typed)="onTyped({ $data: $event })"
             (open)="onOpen({ $event: $event })"
             (close)="onClose({ $event: $event })"
@@ -12,4 +30,38 @@
             (remove)="onRemove({ $data: $event })"
             (navigated)="onNavigated({ $data: $event })"
             (selectionChanges)="onSelectionChanges({ $data: $event })"
+
+            [contextMenu]="selectExContextMenuComponent"
+            (contextmenu)="onContextMenu({ $event: $event, $data: selectExComponent })"
+            (keydown)="onKeyDown({ $event: $event, $data: selectExComponent })"
+            (keypress)="onKeyPress({ $event: $event, $data: selectExComponent })"
+            (keyup)="onKeyUp({ $event: $event, $data: selectExComponent })"
+            (click)="onClick({ $event: $event, $data: selectExComponent })"
+            (dblclick)="onDoubleClick({ $event: $event, $data: selectExComponent })"
+            (mousedown)="onMouseDown({ $event: $event, $data: selectExComponent })"
+            (mouseenter)="onMouseEnter({ $event: $event, $data: selectExComponent })"
+            (mouseleave)="onMouseLeave({ $event: $event, $data: selectExComponent })"
+            (mousemove)="onMouseMove({ $event: $event, $data: selectExComponent })"
+            (mouseout)="onMouseOut({ $event: $event, $data: selectExComponent })"
+            (mouseover)="onMouseOver({ $event: $event, $data: selectExComponent })"
+            (mouseup)="onMouseUp({ $event: $event, $data: selectExComponent })"
+            (mousewheel)="onMouseWheel({ $event: $event, $data: selectExComponent })"
+            (focus)="onFocus({ $event: $event, $data: selectExComponent })"
+            (focusin)="onFocusIn({ $event: $event, $data: selectExComponent })"
+            (focusout)="onFocusOut({ $event: $event, $data: selectExComponent })"
+            (blur)="onBlur({ $event: $event, $data: selectExComponent })"
 ></ngx-select>
+
+<context-menu #selectExContextMenuComponent
+              [disabled]="!contextMenu || !contextMenu.length"
+              (close)="onContextMenuClose()">
+    <ng-template
+        contextMenuItem
+        *ngFor="let item of contextMenu"
+        [visible]="item?.visible?.apply(this, [ item ])"
+        [enabled]="item?.enabled?.apply(this, [ item ])"
+        [divider]="item?.divider?.apply(this, [ item ])"
+        (execute)="onMenuEvent({ $event: $event.event, $data: { item: $event.item, menu: item } })"
+    ><span><nb-icon [icon]="item?.icon?.apply(this, [ item ])" pack="fa"></nb-icon>
+        {{item?.title?.apply(this, [item]) | translate}}</span></ng-template>
+</context-menu>
