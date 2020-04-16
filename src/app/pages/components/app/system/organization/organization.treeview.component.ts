@@ -22,7 +22,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
-import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field';
+import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field.component';
 import {API} from '../../../../../config/api.config';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {

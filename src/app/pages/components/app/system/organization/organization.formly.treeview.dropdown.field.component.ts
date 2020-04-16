@@ -3,7 +3,9 @@ import {IOrganization} from '../../../../../@core/data/system/organization';
 import {Component, Inject, Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
-import {AppFormlyTreeviewDropdownFieldComponent} from '../../components/app.formly.treeview.dropdown.field';
+import {
+    AppFormlyTreeviewDropdownFieldComponent,
+} from '../../components/app.formly.treeview.dropdown.field.component';
 import {API} from '../../../../../config/api.config';
 
 /**

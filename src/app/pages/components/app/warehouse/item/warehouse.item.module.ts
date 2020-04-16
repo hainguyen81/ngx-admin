@@ -40,7 +40,7 @@ import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjus
 import {ComponentsModule} from '../../../components.module';
 import {
     WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-} from '../category/warehouse.category.formly.treeview.dropdown.field';
+} from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
 
 @NgModule({

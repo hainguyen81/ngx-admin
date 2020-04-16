@@ -25,7 +25,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {
     WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-} from '../category/warehouse.category.formly.treeview.dropdown.field';
+} from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
 import {API} from '../../../../../config/api.config';

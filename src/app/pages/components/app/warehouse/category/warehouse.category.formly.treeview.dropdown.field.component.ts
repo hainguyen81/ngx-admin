@@ -2,7 +2,9 @@ import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from
 import {AfterViewInit, Component, Inject, Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-import {AppFormlyTreeviewDropdownFieldComponent} from '../../components/app.formly.treeview.dropdown.field';
+import {
+    AppFormlyTreeviewDropdownFieldComponent,
+} from '../../components/app.formly.treeview.dropdown.field.component';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {API} from '../../../../../config/api.config';
 

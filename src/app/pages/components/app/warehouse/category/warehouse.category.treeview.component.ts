@@ -29,7 +29,7 @@ import WarehouseCategory, {
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
-import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field';
+import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field.component';
 import {API} from '../../../../../config/api.config';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {

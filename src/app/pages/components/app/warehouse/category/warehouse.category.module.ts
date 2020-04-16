@@ -29,7 +29,9 @@ import {WarehouseCategorySplitPaneComponent} from './warehouse.category.componen
 import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
 import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
 import {ComponentsModule} from '../../../components.module';
-import {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} from './warehouse.category.formly.treeview.dropdown.field';
+import {
+    WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
+} from './warehouse.category.formly.treeview.dropdown.field.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
 import {AppComponentsModule} from '../../components/app.components.module';
 

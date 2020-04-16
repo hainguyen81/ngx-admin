@@ -27,7 +27,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {OrganizationTreeviewConfig} from './organization.treeview.component';
 import {
     OrganizationFormlyTreeviewDropdownFieldComponent,
-} from './organization.formly.treeview.dropdown.field';
+} from './organization.formly.treeview.dropdown.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {API} from '../../../../../config/api.config';
