@@ -189,6 +189,26 @@
 					"placeholder": "Address",
 					"description": "Address"
 				},
+                "city": {
+                    "label": "City",
+                    "placeholder": "City",
+                    "description": "City"
+                },
+                "state_province": {
+                    "label": "State/Province",
+                    "placeholder": "State/Province",
+                    "description": "State/Province"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "country": {
+                    "label": "Country",
+                    "placeholder": "Country",
+                    "description": "Country"
+                },
 				"tel": {
 					"label": "Tel",
 					"placeholder": "Tel",

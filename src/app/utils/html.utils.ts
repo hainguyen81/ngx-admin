@@ -57,16 +57,17 @@ export default class HtmlUtils {
      * Prevent the specified event
      * @param event to prevent
      */
-    public static preventEvent(event: Event): boolean {
-        if (!event) {
+    public static preventEvent(event: any): boolean {
+        const evt: Event = <Event>event;
+        if (!evt) {
             return true;
         }
 
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        event.cancelBubble = true;
-        event.returnValue = false;
+        evt.preventDefault();
+        evt.stopPropagation();
+        evt.stopImmediatePropagation();
+        evt.cancelBubble = true;
+        evt.returnValue = false;
         return false;
     }
 

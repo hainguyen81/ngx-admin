@@ -62,8 +62,8 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 @Component({
     moduleId: API.warehouseCategory.code,
     selector: 'ngx-formly-treeview-dropdown-app-warehouse-category',
-    templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
-    styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss'],
+    templateUrl: '../../../formly/formly.treeview.dropdown.field.component.html',
+    styleUrls: ['../../../formly/formly.treeview.dropdown.field.component.scss'],
     providers: [
         {
             provide: APP_TREEVIEW_SHOW_ALL, useValue: false,

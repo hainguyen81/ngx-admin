@@ -189,6 +189,26 @@
 					"placeholder": "Địa chỉ",
 					"description": "Địa chỉ"
 				},
+                "city": {
+                    "label": "Thành phố",
+                    "placeholder": "Thành phố",
+                    "description": "Thành phố"
+                },
+                "state_province": {
+                    "label": "Quận/Huyện",
+                    "placeholder": "Quận/Huyện",
+                    "description": "Quận/Huyện"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "country": {
+                    "label": "Quốc gia",
+                    "placeholder": "Quốc gia",
+                    "description": "Quốc gia"
+                },
 				"tel": {
 					"label": "Tel",
 					"placeholder": "Tel",

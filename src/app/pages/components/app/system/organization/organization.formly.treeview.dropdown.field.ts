@@ -62,8 +62,8 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
 @Component({
     moduleId: API.organization.code,
     selector: 'ngx-formly-treeview-dropdown-app-organization',
-    templateUrl: '../../../formly/formly.treeview.dropdown.field.html',
-    styleUrls: ['../../../formly/formly.treeview.dropdown.field.scss'],
+    templateUrl: '../../../formly/formly.treeview.dropdown.field.component.html',
+    styleUrls: ['../../../formly/formly.treeview.dropdown.field.component.scss'],
     providers: [
         {
             provide: APP_TREEVIEW_SHOW_ALL, useValue: false,

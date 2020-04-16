@@ -1,4 +1,7 @@
 import {IModel} from '../base';
+import {ICity} from './city';
+import {IProvince} from './province';
+import {ICountry} from './country';
 
 export const enum ORGANIZTAION_TYPE {
     HEAD_CENTER,
@@ -33,13 +36,16 @@ export interface IOrganization extends IModel {
     tax?: string | null;
     address?: string | null;
     // Thành phố
-    city?: string | null;
+    city_id?: string | null;
+    city?: ICity | null;
     // Tỉnh
-    state_province?: string | null;
+    state_province_id?: string | null;
+    state_province?: IProvince | null;
     // Zip code
     zip_code?: string | null;
     // Quốc gia
-    country?: string | null;
+    country_id?: string | null;
+    country?: ICountry | null;
     tel?: string | null;
     fax?: string | null;
     email?: string | null;
@@ -64,8 +70,10 @@ export default class Organization implements IOrganization {
     constructor(public id: string, public code: string, public name: string,
                 public type: ORGANIZTAION_TYPE,
                 public tax?: string | null, public address?: string | null,
-                public city?: string | null, public state_province?: string | null,
-                public zip_code?: string | null, public country?: string | null,
+                public city_id?: string | null, public city?: ICity | null,
+                public state_province_id?: string | null, public state_province?: IProvince | null,
+                public zip_code?: string | null,
+                public country_id?: string | null, public country?: ICountry | null,
                 public tel?: string | null, public fax?: string | null,
                 public email?: string | null, public remark?: string | null,
                 public managerId?: string | null, public manager?: any,

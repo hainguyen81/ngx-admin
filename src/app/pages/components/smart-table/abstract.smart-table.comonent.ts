@@ -705,13 +705,13 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByEvent(event.$event);
+        row = this.getRowByEvent(event.$event as Event);
         this.getLogger().debug('onClick', event, row);
         if (row) {
             this.selectRow(row);
 
             // stop firing event
-            this.preventEvent(event.$event);
+            this.preventEvent(event.$event as Event);
         }
     }
 
@@ -722,11 +722,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByEvent(event.$event);
+        row = this.getRowByEvent(event.$event as Event);
         this.getLogger().debug('onContextMenu', event, row);
-        if (this.showHideContextMenuOnRow(row, event.$event)) {
+        if (this.showHideContextMenuOnRow(row, event.$event as Event)) {
             // stop firing event
-            this.preventEvent(event.$event);
+            this.preventEvent(event.$event as Event);
         }
     }
 
@@ -764,7 +764,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
         // check whether navigating on context menu
         let targetEl: HTMLElement;
-        targetEl = event.$event.target as HTMLElement;
+        targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
         if (targetEl && targetEl.closest(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR)) {
             return;
         }
@@ -812,7 +812,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
             }
         }
-        this.preventEvent(event.$event);
+        this.preventEvent(event.$event as Event);
     }
 
     /**
@@ -830,9 +830,9 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         let row: Row;
         row = (hoveredRows && hoveredRows.length
             ? this.getRowByElement(hoveredRows.item(0)) : undefined);
-        if (this.showHideContextMenuOnRow(row, event.$event)) {
+        if (this.showHideContextMenuOnRow(row, event.$event as Event)) {
             // stop firing event
-            this.preventEvent(event.$event);
+            this.preventEvent(event.$event as Event);
         }
     }
 

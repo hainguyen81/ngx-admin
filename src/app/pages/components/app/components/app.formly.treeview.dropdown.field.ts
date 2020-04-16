@@ -1,4 +1,4 @@
-import {DropdownTreeviewFormFieldComponent} from '../../formly/formly.treeview.dropdown.field';
+import {DropdownTreeviewFormFieldComponent} from '../../formly/formly.treeview.dropdown.field.component';
 import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {AfterViewInit, Component, Inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -11,8 +11,8 @@ import {IModel} from '../../../../@core/data/base';
  */
 @Component({
     selector: 'ngx-formly-treeview-dropdown-app',
-    templateUrl: '../../formly/formly.treeview.dropdown.field.html',
-    styleUrls: ['../../formly/formly.treeview.dropdown.field.scss'],
+    templateUrl: '../../formly/formly.treeview.dropdown.field.component.html',
+    styleUrls: ['../../formly/formly.treeview.dropdown.field.component.scss'],
     providers: [
         {
             provide: APP_TREEVIEW_SHOW_ALL, useValue: false,

@@ -439,7 +439,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
 
         // check whether navigating on context menu
         let targetEl: HTMLElement;
-        targetEl = event.$event.target as HTMLElement;
+        targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
         if (targetEl && targetEl.closest(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR)) {
             return;
         }

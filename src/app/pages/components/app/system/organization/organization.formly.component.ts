@@ -147,6 +147,52 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-6',
+                key: 'city_id',
+                type: 'input',
+                templateOptions: {
+                    label: 'system.organization.form.city.label',
+                    placeholder: 'system.organization.form.city.placeholder',
+                },
+            },
+            {
+                className: 'col-6',
+                key: 'state_province_id',
+                type: 'input',
+                templateOptions: {
+                    label: 'system.organization.form.state_province.label',
+                    placeholder: 'system.organization.form.state_province.placeholder',
+                },
+            },
+        ],
+    },
+    {
+        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroup: [
+            {
+                className: 'col-6',
+                key: 'zip_code',
+                type: 'input',
+                templateOptions: {
+                    label: 'system.organization.form.zip_code.label',
+                    placeholder: 'system.organization.form.zip_code.placeholder',
+                },
+            },
+            {
+                className: 'col-6',
+                key: 'country_id',
+                type: 'input',
+                templateOptions: {
+                    label: 'system.organization.form.country.label',
+                    placeholder: 'system.organization.form.country.placeholder',
+                },
+            },
+        ],
+    },
+    {
+        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroup: [
+            {
+                className: 'col-6',
                 key: 'tel',
                 type: 'input',
                 templateOptions: {
