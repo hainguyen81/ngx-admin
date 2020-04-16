@@ -21,6 +21,7 @@
             {
                 "name": "tslint-language-service"
             }
-        ]
+        ],
+        "skipLibCheck": true
     }
 }
