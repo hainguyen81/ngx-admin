@@ -190,7 +190,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     private readonly queryNgxSelectComponent: QueryList<NgxSelectComponent>;
     private ngxSelectExComponent: NgxSelectComponent;
 
-    private config: INgxSelectOptions;
+    @Input() private config: INgxSelectOptions;
     /**
      * Items array.
      * Should be an array of objects with id and text properties.

@@ -49,6 +49,7 @@ import {DropdownTreeviewFormFieldComponent} from './formly/formly.treeview.dropd
 import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.component';
 import {NgxSelectModule} from 'ngx-select-ex';
 import {NgxSelectExComponent} from './select-ex/select.ex.component';
+import {SelectExFormFieldComponent} from './formly/formly.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -117,6 +118,11 @@ import {NgxSelectExComponent} from './select-ex/select.ex.component';
                     component: DropdownTreeviewFormFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'select-ex',
+                    component: SelectExFormFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -143,6 +149,7 @@ import {NgxSelectExComponent} from './select-ex/select.ex.component';
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
         NgxSelectExComponent,
+        SelectExFormFieldComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -162,6 +169,7 @@ import {NgxSelectExComponent} from './select-ex/select.ex.component';
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
         NgxSelectExComponent,
+        SelectExFormFieldComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -173,6 +181,7 @@ import {NgxSelectExComponent} from './select-ex/select.ex.component';
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
         NgxSelectExComponent,
+        SelectExFormFieldComponent,
     ],
 })
 export class ComponentsModule {
