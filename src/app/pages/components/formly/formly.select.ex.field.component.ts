@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Inject, Input, QueryList, ViewChildren} from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
-import {INgxSelectOptions, NgxSelectOption} from 'ngx-select-ex';
+import {INgxSelectOptions} from 'ngx-select-ex';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
@@ -29,7 +29,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * whose value should be another array of items.
      * Items that have children may omit to have an ID.
      */
-    @Input() private items: NgxSelectOption[];
+    @Input() private items: any[];
 
     @ViewChildren(NgxSelectExComponent)
     private readonly queryNgxSelectExComponent: QueryList<NgxSelectExComponent>;
@@ -60,26 +60,22 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      */
     public setConfig(config: INgxSelectOptions): void {
         this.config = config;
-        this.selectExComponent
-        && this.selectExComponent.setConfig(config);
     }
 
     /**
      * Get the {NgxSelectOption} array
      * @return the {NgxSelectOption} array
      */
-    public getItems(): NgxSelectOption[] {
-        return this.items;
+    public getItems(): any[] {
+        return this.items || [];
     }
 
     /**
      * Set the {NgxSelectOption} array
      * @param items to apply
      */
-    public setItems(items?: NgxSelectOption[]): void {
-        this.items = items;
-        this.selectExComponent
-        && this.selectExComponent.setItems(items);
+    public setItems(items?: any[]): void {
+        this.items = (items || []);
     }
 
     // -------------------------------------------------

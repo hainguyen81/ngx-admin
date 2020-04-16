@@ -148,7 +148,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'city_id',
-                type: 'select-ex-city',
+                type: 'input',
                 templateOptions: {
                     label: 'system.organization.form.city.label',
                     placeholder: 'system.organization.form.city.placeholder',
@@ -180,7 +180,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'country_id',
-                type: 'input',
+                type: 'select-ex-country',
                 templateOptions: {
                     label: 'system.organization.form.country.label',
                     placeholder: 'system.organization.form.country.placeholder',

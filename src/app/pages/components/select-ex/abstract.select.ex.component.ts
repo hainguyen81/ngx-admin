@@ -4,7 +4,6 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     Inject, Input,
-    Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -200,12 +199,12 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * whose value should be another array of items.
      * Items that have children may omit to have an ID.
      */
-    @Input() private items: NgxSelectOption[];
+    @Input() private items: any[];
     /**
      * Use to set default value
      * {any[]}
      */
-    @Input() private initialValues: NgxSelectOption[];
+    @Input() private initialValues: any[];
     @Input() private model: any;
 
     // -------------------------------------------------
@@ -233,14 +232,14 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * @param config to apply. NULL for default
      */
     public setConfig(config?: INgxSelectOptions) {
-        this.config = config;
+        this.config = config || DefaultNgxSelectOptions;
     }
 
     /**
      * Get the option items array to show
      * @return the option items array
      */
-    public getItems(): NgxSelectOption[] {
+    public getItems(): any[] {
         return this.items || [];
     }
 
@@ -248,7 +247,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * Set the option items array to show
      * @param items to apply
      */
-    public setItems(items?: NgxSelectOption[]): void {
+    public setItems(items?: any[]): void {
         this.items = (items || []);
     }
 
@@ -256,7 +255,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * Get the initial selected option items array to show
      * @return the initial selected  items array
      */
-    public getInitialValues(): NgxSelectOption[] {
+    public getInitialValues(): any[] {
         return this.initialValues || [];
     }
 
@@ -264,7 +263,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * Set the initial selected option items array to show
      * @param items to apply
      */
-    public setInitialValues(items?: NgxSelectOption[]): void {
+    public setInitialValues(items?: any[]): void {
         this.initialValues = (items || []);
     }
 
@@ -368,13 +367,15 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     /**
      * Callback while searching option items.
      * The callback function for custom filtering the select list
-     * {(search: string, item: INgxSelectOption) => boolean}
+     * {(search: string, item: INgxSelectOption) => boolean}.
+     * Default is <code>TRUE</code> for showing all items.
      * @param $event {IEvent} with {IEvent#$data} is {ISelectSearchCallbackData}
      *              as {search: string, item: INgxSelectOption}
+     * @return true for showing this item; else false
      */
     protected onSearchCallback($event: IEvent): boolean {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSearchCallback', $event);
-        return false;
+        return true;
     }
 }

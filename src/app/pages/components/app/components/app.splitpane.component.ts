@@ -56,8 +56,7 @@ export const RightFormAreaConfig: ISplitAreaConfig = {
     templateUrl: '../../splitpane/splitpane.component.html',
     styleUrls: ['../../splitpane/splitpane.component.scss'],
 })
-export abstract class AppSplitPaneComponent<
-    T extends IModel, D extends DataSource,
+export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     TR extends AppTreeviewComponent<T, D>,
     F extends AppFormlyComponent<T, D>>
@@ -138,22 +137,22 @@ export abstract class AppSplitPaneComponent<
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
      */
-    constructor(@Inject(DataSource) dataSource: D,
-                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                @Inject(ToastrService) toasterService: ToastrService,
-                @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(Renderer2) renderer: Renderer2,
-                @Inject(TranslateService) translateService: TranslateService,
-                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                @Inject(ElementRef) elementRef: ElementRef,
-                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox,
-                private toolBarType?: Type<TB> | null,
-                private treeviewType?: Type<TR> | null,
-                private formType?: Type<F> | null) {
+    protected constructor(@Inject(DataSource) dataSource: D,
+                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                          @Inject(ToastrService) toasterService: ToastrService,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(Renderer2) renderer: Renderer2,
+                          @Inject(TranslateService) translateService: TranslateService,
+                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) elementRef: ElementRef,
+                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                          @Inject(Lightbox) lightbox?: Lightbox,
+                          private toolBarType?: Type<TB> | null,
+                          private treeviewType?: Type<TR> | null,
+                          private formType?: Type<F> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

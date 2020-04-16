@@ -367,9 +367,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             this.dropdownTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryDropdownTreeviewComponent, (component) => {
                     if (component) {
-                        if (component.treeviewComponent) {
-                            component.treeviewComponent.i18n = component.i18n;
-                        }
                         component.selectedChange.subscribe(
                             value => this.onSelectedChange({$data: value}));
                         component.filterChange.subscribe(

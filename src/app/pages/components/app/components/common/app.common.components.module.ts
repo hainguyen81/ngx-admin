@@ -22,7 +22,7 @@ import {ThemeModule} from '../../../../../@theme/theme.module';
 import {LoggerModule} from 'ngx-logger';
 import {AppMaterialModule} from '../../../../../app.material.module';
 import {AppConfig} from '../../../../../config/app.config';
-import {AppCityFormlySelectExFieldComponent} from './app.city.formly.select.ex.field.component';
+import {AppCountryFormlySelectExFieldComponent} from './app.country.formly.select.ex.field.component';
 import {NgxSelectModule} from 'ngx-select-ex';
 import {ComponentsModule} from '../../../components.module';
 
@@ -71,8 +71,8 @@ import {ComponentsModule} from '../../../components.module';
         FormlyModule.forRoot({
             types: [
                 {
-                    name: 'select-ex-city',
-                    component: AppCityFormlySelectExFieldComponent,
+                    name: 'select-ex-country',
+                    component: AppCountryFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
             ],
@@ -95,13 +95,13 @@ import {ComponentsModule} from '../../../components.module';
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
-        AppCityFormlySelectExFieldComponent,
+        AppCountryFormlySelectExFieldComponent,
     ],
     exports: [
-        AppCityFormlySelectExFieldComponent,
+        AppCountryFormlySelectExFieldComponent,
     ],
     declarations: [
-        AppCityFormlySelectExFieldComponent,
+        AppCountryFormlySelectExFieldComponent,
     ],
 })
 export class AppCommonComponentsModule {

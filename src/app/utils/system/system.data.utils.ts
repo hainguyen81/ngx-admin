@@ -4,8 +4,26 @@ import OrganizationUtils from './organization.utils';
 import {IOrganization} from '../../@core/data/system/organization';
 import {UserDataSource} from '../../services/implementation/system/user/user.datasource';
 import {IUser} from '../../@core/data/system/user';
+import {CountryDatasource} from '../../services/implementation/system/country/country.datasource';
+import CountryUtils from './country.utils';
+import {ICountry} from '../../@core/data/system/country';
 
 export default class SystemDataUtils {
+
+    /**
+     * Get all countries
+     * @param countryDatasource to invoke
+     */
+    public static invokeAllCountries(countryDatasource: CountryDatasource): Promise<any[]> {
+        countryDatasource
+        || throwError('CountryDatasource is required to invoke!');
+        return countryDatasource
+            .setPaging(1, undefined, false)
+            .setFilter([], false, false)
+            .getAll().then(values => {
+                return CountryUtils.buildCountries(values as ICountry[]);
+            });
+    }
 
     /**
      * Get all organization
