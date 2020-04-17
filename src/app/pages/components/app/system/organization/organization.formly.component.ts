@@ -147,20 +147,24 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-6',
+                key: 'country_id',
+                type: 'select-ex-country',
+                templateOptions: {
+                    label: 'system.organization.form.country.label',
+                    placeholder: 'system.organization.form.country.placeholder',
+                },
+            },
+            {
+                className: 'col-6',
                 key: 'city_id',
                 type: 'input',
                 templateOptions: {
                     label: 'system.organization.form.city.label',
                     placeholder: 'system.organization.form.city.placeholder',
+                    disabled: true,
                 },
-            },
-            {
-                className: 'col-6',
-                key: 'state_province_id',
-                type: 'input',
-                templateOptions: {
-                    label: 'system.organization.form.state_province.label',
-                    placeholder: 'system.organization.form.state_province.placeholder',
+                expressionProperties: {
+                    'templateOptions.disabled': model => (!model || !(model['country_id'] || '').length),
                 },
             },
         ],
@@ -170,20 +174,28 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-6',
+                key: 'state_province_id',
+                type: 'input',
+                templateOptions: {
+                    label: 'system.organization.form.state_province.label',
+                    placeholder: 'system.organization.form.state_province.placeholder',
+                    disabled: true,
+                },
+                expressionProperties: {
+                    'templateOptions.disabled': model => (!model || !(model['country_id'] || '').length),
+                },
+            },
+            {
+                className: 'col-6',
                 key: 'zip_code',
                 type: 'input',
                 templateOptions: {
                     label: 'system.organization.form.zip_code.label',
                     placeholder: 'system.organization.form.zip_code.placeholder',
+                    disabled: true,
                 },
-            },
-            {
-                className: 'col-6',
-                key: 'country_id',
-                type: 'select-ex-country',
-                templateOptions: {
-                    label: 'system.organization.form.country.label',
-                    placeholder: 'system.organization.form.country.placeholder',
+                expressionProperties: {
+                    'templateOptions.disabled': model => (!model || !(model['country_id'] || '').length),
                 },
             },
         ],

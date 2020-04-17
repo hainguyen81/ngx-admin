@@ -73,23 +73,26 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
+                                className: 'w-50 pl-2 pr-0',
+                                key: 'country',
+                                type: 'select-ex-country',
+                                templateOptions: {
+                                    label: 'warehouse.storage.form.country.label',
+                                    placeholder: 'warehouse.storage.form.country.placeholder',
+                                },
+                            },
+                            {
                                 className: 'w-50 pl-0 pr-2',
                                 key: 'city',
                                 type: 'select',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.city.label',
                                     placeholder: 'warehouse.storage.form.city.placeholder',
-                                    options: [],
+                                    disabled: true,
                                 },
-                            },
-                            {
-                                className: 'w-50 pl-2 pr-0',
-                                key: 'state_province',
-                                type: 'select',
-                                templateOptions: {
-                                    label: 'warehouse.storage.form.state_province.label',
-                                    placeholder: 'warehouse.storage.form.state_province.placeholder',
-                                    options: [],
+                                expressionProperties: {
+                                    'templateOptions.disabled':
+                                            model => (!model || !(model['country_id'] || '').length),
                                 },
                             },
                         ],
@@ -99,21 +102,31 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
+                                className: 'w-50 pl-2 pr-0',
+                                key: 'state_province',
+                                type: 'select',
+                                templateOptions: {
+                                    label: 'warehouse.storage.form.state_province.label',
+                                    placeholder: 'warehouse.storage.form.state_province.placeholder',
+                                    disabled: true,
+                                },
+                                expressionProperties: {
+                                    'templateOptions.disabled':
+                                        model => (!model || !(model['country_id'] || '').length),
+                                },
+                            },
+                            {
                                 className: 'w-50 pl-0 pr-2',
                                 key: 'zip_code',
                                 type: 'input',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.zip_code.label',
                                     placeholder: 'warehouse.storage.form.zip_code.placeholder',
+                                    disabled: true,
                                 },
-                            },
-                            {
-                                className: 'w-50 pl-2 pr-0',
-                                key: 'country',
-                                type: 'select-ex-country',
-                                templateOptions: {
-                                    label: 'warehouse.storage.form.country.label',
-                                    placeholder: 'warehouse.storage.form.country.placeholder',
+                                expressionProperties: {
+                                    'templateOptions.disabled':
+                                        model => (!model || !(model['country_id'] || '').length),
                                 },
                             },
                         ],
