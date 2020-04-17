@@ -1,0 +1,586 @@
+{
+    "app": "Hi! System",
+    "common": {
+        "languages": {
+            "vi": "Tiếng Việt",
+            "en": "Tiếng Anh"
+        },
+        "search": {
+            "placeholder": "Tìm kiếm"
+        },
+        "contextMenu": {
+            "add": "Thêm",
+            "edit": "Sửa",
+            "delete": "Xoá"
+        },
+        "enum": {
+            "userStatus": {
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
+                "notActivated": "Chưa kích hoạt"
+            },
+            "customerStatus": {
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
+                "notActivated": "Chưa kích hoạt"
+            },
+            "customerType": {
+                "customer": "Khách hàng",
+                "vendor": "Nhà cung cấp",
+                "all": "Khách hàng/Nhà cung cấp"
+            },
+            "customerLevel": {
+                "new": "Mới",
+                "bronze": "Hạng đồng",
+                "silver": "Hạng bạc",
+                "gold": "Hạng vàng",
+                "platinum": "Hạng bạch kim"
+            },
+            "organizationType": {
+                "head": "Hội sở",
+                "branch": "Chi nhánh",
+                "division": "Phân khu",
+                "unit": "Đơn vị",
+                "department": "Phòng ban",
+                "team_group": "Đội / Nhóm"
+            },
+            "warehouseCategoryStatus": {
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
+                "notActivated": "Chưa kích hoạt"
+            },
+            "warehouseCategoryType": {
+                "category": "Chủng loại",
+                "type": "Loại",
+                "brand": "Hãng sản xuất"
+            },
+            "warehouseItemStatus": {
+                "activated": "Đã kích hoạt",
+                "locked": "Khoá",
+                "notActivated": "Chưa kích hoạt"
+            },
+            "warehouseInventoryType": {
+                "in": "Nhập",
+                "out": "Xuất"
+            },
+            "warehouseInventoryStatus": {
+                "finished": "Hoàn thành",
+                "unfinished": "Chưa hoàn thành"
+            },
+            "warehouseOrderStatus": {
+                "draft": "Đang xác nhận",
+                "confirmed": "Đã xác nhận",
+                "shipped": "Đã nhận hàng",
+                "delivered": "Đã giao hàng",
+                "closed": "Đóng"
+            },
+            "warehouseOrderType": {
+                "purchase": "Mua",
+                "sale": "Bán"
+            }
+        },
+        "toast": {
+            "save": {
+				"success": {
+					"title": "Lưu",
+					"body": "Dữ liệu đã lưu thành công!"
+				},
+				"error": {
+					"title": "Lỗi",
+					"body": "Không thể lưu dữ liệu vì có lỗi!"
+				}
+            },
+            "delete": {
+                "success": {
+                    "title": "Xóa",
+                    "body": "Đã xóa dữ liệu!"
+                },
+                "error": {
+                    "title": "Lỗi",
+                    "body": "Không thể xoá dữ liệu vì có lỗi!"
+                }
+            },
+            "confirm": {
+                "delete": {
+                    "message": "Bạn thật sự muốn xóa dữ liệu?",
+                    "cancel": "Bỏ qua",
+                    "ok": "Đồng ý"
+                },
+                "lose_data": {
+                    "message": "Dữ liệu thay đổi sẽ không được lưu nếu bạn tiếp tục. Bạn có muốn tiếp tục không?",
+                    "cancel": "Bỏ qua",
+                    "ok": "Đồng ý"
+                }
+            },
+            "unknown": "Bạn không có đủ quyền hoặc dữ liệu đã bị sai! Vui lòng liên hệ Quản trị viên để được hỗ trợ!"
+        },
+        "form": {
+            "invalid_data": "Vui lòng nhập đầy đủ thông tin yêu cầu trước khi tiếp tục!",
+            "action": {
+                "save": "Lưu",
+                "reset": "Reset",
+                "delete": "Xóa",
+                "back": "Quay lại"
+            },
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "Tất cả các hạng mục",
+                "filter": "Lọc các hạng mục",
+                "not_found": "Không tìm thấy hạng mục nào",
+                "expand": "Mở rộng",
+                "collapse": "Thu nhỏ"
+            }
+        },
+        "login": {
+            "title": "Đăng nhập"
+        },
+        "logout": {
+            "title": "Đăng xuất"
+        }
+    },
+	"system": {
+        "title": "Hệ thống",
+        "menu": {
+            "module": "Hệ thống"
+        },
+        "organization": {
+            "title": "Quản lý tổ chức",
+            "menu": "Tổ chức",
+            "new": "Bộ phận mới",
+            "form": {
+                "belongTo": {
+                    "label": "Trực thuộc",
+                    "placeholder": "Trực thuộc",
+                    "description": "Trực thuộc",
+                    "not_selection": "",
+                    "all_selection": "Tất cả các bộ phận",
+                    "filter": "Lọc bộ phận",
+                    "not_found": "Không tìm thấy bộ phận nào",
+                    "expand": "Mở rộng",
+                    "collapse": "Thu nhỏ"
+                },
+                "manager": {
+                    "label": "Quản lý",
+                    "placeholder": "Quản lý",
+                    "description": "Quản lý"
+				},
+				"code": {
+					"label": "Mã",
+					"placeholder": "Mã",
+					"description": "Mã"
+				},
+				"name": {
+					"label": "Tên",
+					"placeholder": "Tên",
+					"description": "Tên"
+				},
+				"type": {
+					"label": "Loại",
+					"placeholder": "Loại",
+					"description": "Loại"
+				},
+				"tax": {
+					"label": "Mã số thuế",
+					"placeholder": "Mã số thuế",
+					"description": "Mã số thuế"
+				},
+				"address": {
+					"label": "Địa chỉ",
+					"placeholder": "Địa chỉ",
+					"description": "Địa chỉ"
+				},
+                "city": {
+                    "label": "Thành phố",
+                    "placeholder": "Thành phố",
+                    "description": "Thành phố"
+                },
+                "state_province": {
+                    "label": "Quận/Huyện",
+                    "placeholder": "Quận/Huyện",
+                    "description": "Quận/Huyện"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "country": {
+                    "label": "Quốc gia",
+                    "placeholder": "Quốc gia",
+                    "description": "Quốc gia"
+                },
+				"tel": {
+					"label": "Tel",
+					"placeholder": "Tel",
+					"description": "Tel"
+				},
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Thư điện tử",
+                    "placeholder": "Thư điện tử",
+                    "description": "Thư điện tử"
+                },
+                "legal_representative": {
+                    "label": "Người đại diện",
+                    "placeholder": "Người đại diện",
+                    "description": "Người đại diện"
+                },
+                "tel_representative": {
+                    "label": "ĐT người đại diện",
+                    "placeholder": "ĐT người đại diện",
+                    "description": "ĐT người đại diện"
+                },
+                "business_license": {
+                    "label": "Giấy phép kinh doanh",
+                    "placeholder": "Giấy phép kinh doanh",
+                    "description": "Giấy phép kinh doanh"
+                },
+                "business_license_dt": {
+                    "label": "Ngày cấp",
+                    "placeholder": "Ngày cấp",
+                    "description": "Ngày cấp"
+                },
+                "date_incorporation": {
+                    "label": "Ngày thành lập",
+                    "placeholder": "Ngày thành lập",
+                    "description": "Ngày thành lập"
+                },
+                "bank_company": {
+                    "label": "Ngân hàng",
+                    "placeholder": "Ngân hàng",
+                    "description": "Ngân hàng"
+                },
+                "bank_company_at": {
+                    "label": "Chi nhánh",
+                    "placeholder": "Chi nhánh",
+                    "description": "Chi nhánh"
+                },
+                "bank_company_account": {
+                    "label": "Số TK",
+                    "placeholder": "Số TK",
+                    "description": "Số TK"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú",
+                    "description": "Ghi chú"
+                }
+            }
+		},
+        "user": {
+            "title": "Quản lý người dùng",
+            "menu": "Người dùng",
+            "table": {
+                "noData": "Không có bất kỳ người dùng nào",
+                "username": "Tên đăng nhập",
+                "firstName": "Họ",
+                "lastName": "Tên",
+                "email": "Thư điện tử",
+                "status": "Trạng thái",
+				"enterprise": "Enterprise"
+			}
+		},
+		"customer": {
+			"title": "Quản lý khách hàng",
+			"menu": "Khách hàng",
+			"table": {
+                "noData": "Không có bất kỳ khách hàng nào",
+                "code": "Mã",
+                "name": "Tên",
+                "level": "Cấp bậc",
+                "email": "Thư điện tử",
+                "tel": "ĐT",
+                "address": "Địa chỉ",
+                "status": "Trạng thái",
+                "enterprise": "Enterprise"
+            }
+        }
+    },
+    "warehouse": {
+        "title": "Quản lý kho",
+        "menu": {
+            "module": "Quản lý kho",
+            "master": "Thiết lập",
+            "features": "Tính năng"
+        },
+        "storage": {
+            "title": "Quản lý kho xưởng",
+            "menu": "Kho xưởng",
+            "new": "Kho xưởng mới",
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "Tất cả các kho",
+                "filter": "Lọc kho xưởng",
+                "not_found": "Không tìm thấy kho xưởng nào",
+                "expand": "Mở rộng",
+                "collapse": "Thu nhỏ"
+            },
+            "form": {
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "street_address": {
+                    "label": "Địa chỉ",
+                    "placeholder": "Địa chỉ"
+                },
+                "city": {
+                    "label": "Thành phố",
+                    "placeholder": "Thành phố"
+                },
+                "state_province": {
+                    "label": "Quận/Huyện",
+                    "placeholder": "Quận/Huyện"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip"
+                },
+                "country": {
+                    "label": "Quốc gia",
+                    "placeholder": "Quốc gia"
+                },
+                "tel": {
+                    "label": "ĐT",
+                    "placeholder": "ĐT"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax"
+                },
+                "email": {
+                    "label": "Thư điện tử",
+                    "placeholder": "Thư điện tử"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
+            }
+        },
+        "category": {
+            "title": "Quản lý phân loại",
+            "menu": "Phân loại",
+            "new": "Phân loại mới",
+            "form": {
+                "belongTo": {
+                    "label": "Phân loại cha",
+                    "placeholder": "Phân loại cha",
+                    "description": "Phân loại cha",
+                    "not_selection": "",
+                    "all_selection": "Tất cả các phân loại",
+                    "filter": "Lọc phân loại",
+                    "not_found": "Không tìm thấy phân loại nào",
+                    "expand": "Mở rộng",
+                    "collapse": "Thu nhỏ"
+                },
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại"
+                },
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "image": {
+                    "label": "Hình ảnh",
+                    "placeholder": "Hình ảnh"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
+            }
+        },
+        "item": {
+            "title": "Quản lý trang thiết bị",
+            "menu": "Trang thiết bị",
+            "summary": {
+                "not_supported_files": "Chỉ hỗ trợ tệp hình ảnh! Các tệp bên dưới sẽ không được tải lên:<br/>{{files}}"
+            },
+            "overview": {
+                "title": "Tổng quát",
+                "form": {
+                    "category": {
+                        "label": "Phân loại",
+                        "placeholder": "Phân loại"
+                    },
+                    "brand": {
+                        "label": "Hãng SX",
+                        "placeholder": "Hãng SX"
+                    },
+                    "code": {
+                        "label": "Mã SP",
+                        "placeholder": "Mã SP"
+                    },
+                    "name": {
+                        "label": "Tên SP",
+                        "placeholder": "Tên SP"
+                    },
+                    "barcode": {
+                        "label": "Mã vạch",
+                        "placeholder": "Mã vạch"
+                    },
+                    "number_of_prints": {
+                        "label": "Số bản in",
+                        "placeholder": "Số bản in"
+                    },
+                    "serial": {
+                        "label": "Serial No.",
+                        "placeholder": "Serial No."
+                    },
+                    "manufacturer": {
+                        "label": "Xuất xứ",
+                        "placeholder": "Xuất xứ"
+                    },
+                    "length": {
+                        "label": "Dài",
+                        "placeholder": "Dài"
+                    },
+                    "width": {
+                        "label": "Rộng",
+                        "placeholder": "Rộng"
+                    },
+                    "height": {
+                        "label": "Cao",
+                        "placeholder": "Cao"
+                    },
+                    "weight": {
+                        "label": "Trọng lượng",
+                        "placeholder": "Trọng lượng"
+                    },
+                    "size": {
+                        "label": "Kích thước",
+                        "placeholder": "Kích thước"
+                    },
+                    "color": {
+                        "label": "Màu sắc",
+                        "placeholder": "Màu sắc"
+                    },
+                    "material": {
+                        "label": "Chất liệu",
+                        "placeholder": "Chất liệu"
+                    },
+                    "unit": {
+                        "label": "ĐVT",
+                        "placeholder": "ĐVT"
+                    },
+                    "rate_per_unit": {
+                        "label": "Tỷ lệ/ĐVT",
+                        "placeholder": "Tỷ lệ/ĐVT"
+                    },
+                    "dealer_price": {
+                        "label": "Giá sỉ",
+                        "placeholder": "Giá sỉ"
+                    },
+                    "cost_price": {
+                        "label": "Giá vốn",
+                        "placeholder": "Giá vốn"
+                    },
+                    "selling_price": {
+                        "label": "Giá bán",
+                        "placeholder": "Giá bán"
+                    },
+                    "currency": {
+                        "label": "Loại tiền tệ",
+                        "placeholder": "Loại tiền tệ"
+                    },
+                    "remark": {
+                        "label": "Ghi chú",
+                        "placeholder": "Ghi chú"
+                    },
+                    "description": {
+                        "label": "Mô tả",
+                        "placeholder": "Mô tả"
+                    }
+                }
+            },
+            "orders": {
+                "purchase": {
+                    "title": "Đặt hàng"
+                },
+                "sale": {
+                    "title": "Bán hàng"
+                },
+                "table": {
+                    "noData": "Không có bất kỳ chứng từ nào",
+                    "order_date":  "Ngày giao dịch",
+                    "order_code":  "Mã chứng từ",
+                    "sales_person":  "Đối tượng",
+                    "quantity":  "Số lượng",
+                    "unit_price":  "Đơn giá",
+                    "amount":  "Thành tiền",
+                    "status":  "Trạng thái"
+                }
+            },
+            "in_out": {
+                "title": "Nhập/xuất",
+                "table": {
+                    "noData": "Không có bất kỳ thông tin nào",
+                    "date":  "Ngày xuất/nhập",
+                    "warehouse":  "Kho hàng",
+                    "stock_in":  "Nhập",
+                    "stock_out":  "Xuất",
+                    "final_stock":  "Tồn"
+                }
+            },
+            "adjustment": {
+                "title": "Điều chỉnh",
+                "table": {
+                    "date": "Ngày",
+                    "code": "Mã điều chỉnh",
+                    "warehouse": "Kho hàng",
+                    "quality": "Số lượng",
+                    "reason": "Lý do",
+                    "createdUser": "Người tạo",
+                    "remark": "Ghi chú"
+                }
+            },
+            "table": {
+                "noData": "Không có bất kỳ sản phẩm nào trong kho",
+                "code": "Mã SP",
+                "name": "Tên SP",
+                "status": "Trạng thái",
+                "barcode": "Mã vạch",
+                "serial": "Serial No.",
+                "image": "Hình ảnh",
+                "manufacturer": "Xuất xứ",
+                "length": "Dài",
+                "width": "Rộng",
+                "height": "Cao",
+                "weight": "Trọng lượng",
+                "size": "Kích thước",
+                "color": "Màu sắc",
+                "material": "Chất liệu",
+                "unit": "ĐVT",
+                "rate_per_unit": "Tỷ lệ/ĐVT",
+                "dealer_price": "Giá sỉ",
+                "cost_price": "Giá vốn",
+                "selling_price": "Giá bán",
+                "currency": "Loại tiền tệ",
+                "stock_on_hand": "Tổng SL",
+                "committed_stock": "Tổng bán",
+                "available_stock": "Tồn kho",
+                "incoming_stock": "Tổng mua",
+                "quantity_shipped": "SL vận chuyển",
+                "quantity_received": "SL được nhận",
+                "description": "Mô tả",
+                "remark": "Ghi chú",
+                "category": "Loại SP",
+                "brand": "Hãng SX"
+            }
+        }
+    }
+}

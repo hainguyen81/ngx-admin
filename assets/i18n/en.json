@@ -1,0 +1,586 @@
+{
+    "app": "Hi! System",
+    "common": {
+        "languages": {
+            "vi": "Vietnamese",
+            "en": "English"
+        },
+        "search": {
+            "placeholder": "Search"
+        },
+        "contextMenu": {
+            "add": "Add",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "enum": {
+            "userStatus": {
+                "activated": "Activated",
+                "locked": "Locked",
+                "notActivated": "Not activated"
+            },
+            "customerStatus": {
+                "activated": "Activated",
+                "locked": "Locked",
+                "notActivated": "Not activated"
+            },
+            "customerType": {
+                "customer": "Customer",
+                "vendor": "Vendor",
+                "all": "Customer/Vendor"
+            },
+            "customerLevel": {
+                "new": "New",
+                "bronze": "Bronze",
+                "silver": "Silver",
+                "gold": "Gold",
+                "platinum": "Platinum"
+            },
+            "organizationType": {
+                "head": "Head Center",
+                "branch": "Branch",
+                "division": "Division",
+                "unit": "Unit",
+                "department": "Department",
+                "team_group": "Team/Group"
+            },
+            "warehouseCategoryStatus": {
+                "activated": "Activated",
+                "locked": "Locked",
+                "notActivated": "Not activated"
+            },
+            "warehouseCategoryType": {
+                "category": "Category",
+                "type": "Type",
+                "brand": "Brand"
+            },
+            "warehouseItemStatus": {
+                "activated": "Activated",
+                "locked": "Locked",
+                "notActivated": "Not activated"
+            },
+            "warehouseInventoryType": {
+                "in": "In",
+                "out": "Out"
+            },
+            "warehouseInventoryStatus": {
+                "finished": "Finished",
+                "unfinished": "Unfinished"
+            },
+            "warehouseOrderStatus": {
+                "draft": "Draft",
+                "confirmed": "Confirmed",
+                "shipped": "Shipped",
+                "delivered": "Delivered",
+                "closed": "Closed"
+            },
+            "warehouseOrderType": {
+                "purchase": "Purchase",
+                "sale": "Sale"
+            }
+        },
+        "toast": {
+            "save": {
+				"success": {
+					"title": "Save",
+					"body": "Data has been saved successfully!"
+				},
+				"error": {
+					"title": "Error",
+					"body": "Could not save data because error has been occurred!"
+				}
+            },
+            "delete": {
+                "success": {
+                    "title": "Deletion",
+                    "body": "Data has been deleted successfully!"
+                },
+                "error": {
+                    "title": "Error",
+                    "body": "Could not delete data because error has been occurred!"
+                }
+            },
+            "confirm": {
+                "delete": {
+                    "message": "Do you really want to delete data?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
+                },
+                "lose_data": {
+                    "message": "Data, has been changed, will not be saved if you continue. Do you want to continue?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
+                }
+            },
+            "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
+        },
+        "form": {
+            "invalid_data": "Please correct data before performing action!",
+            "action": {
+                "save": "Save",
+                "reset": "Reset",
+                "delete": "Delete",
+                "back": "Back"
+            },
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "All items",
+                "filter": "Filter items",
+                "not_found": "No items found",
+                "expand": "Expand",
+                "collapse": "Collapse"
+            }
+        },
+        "login": {
+            "title": "Login"
+        },
+        "logout": {
+            "title": "Log out"
+        }
+    },
+	"system": {
+        "title": "System",
+        "menu": {
+            "module": "System"
+        },
+        "organization": {
+            "title": "Organization Management",
+            "menu": "Organization",
+            "new": "New Organization",
+            "form": {
+                "belongTo": {
+                    "label": "Belong to",
+                    "placeholder": "Belong to",
+                    "description": "Belong to",
+                    "not_selection": "",
+                    "all_selection": "All organization",
+                    "filter": "Filter organization",
+                    "not_found": "No organization found",
+                    "expand": "Expand",
+                    "collapse": "Collapse"
+                },
+                "manager": {
+                    "label": "Manager",
+                    "placeholder": "Manager",
+                    "description": "Manager"
+				},
+				"code": {
+					"label": "Code",
+					"placeholder": "Code",
+					"description": "Code"
+				},
+				"name": {
+					"label": "Name",
+					"placeholder": "Name",
+					"description": "Name"
+				},
+				"type": {
+					"label": "Type",
+					"placeholder": "Type",
+					"description": "Type"
+				},
+				"tax": {
+					"label": "Tax",
+					"placeholder": "Tax",
+					"description": "Tax"
+				},
+				"address": {
+					"label": "Address",
+					"placeholder": "Address",
+					"description": "Address"
+				},
+                "city": {
+                    "label": "City",
+                    "placeholder": "City",
+                    "description": "City"
+                },
+                "state_province": {
+                    "label": "State/Province",
+                    "placeholder": "State/Province",
+                    "description": "State/Province"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "country": {
+                    "label": "Country",
+                    "placeholder": "Country",
+                    "description": "Country"
+                },
+				"tel": {
+					"label": "Tel",
+					"placeholder": "Tel",
+					"description": "Tel"
+				},
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Email",
+                    "description": "Email"
+                },
+                "legal_representative": {
+                    "label": "The legal representative",
+                    "placeholder": "The legal representative",
+                    "description": "The legal representative"
+                },
+                "tel_representative": {
+                    "label": "Tel. representative",
+                    "placeholder": "Tel. representative",
+                    "description": "Tel. representative"
+                },
+                "business_license": {
+                    "label": "Business license",
+                    "placeholder": "Business license",
+                    "description": "Business license"
+                },
+                "business_license_dt": {
+                    "label": "Issued on",
+                    "placeholder": "Issued on",
+                    "description": "Issued on"
+                },
+                "date_incorporation": {
+                    "label": "Date of incorporation",
+                    "placeholder": "Date of incorporation",
+                    "description": "Date of incorporation"
+                },
+                "bank_company": {
+                    "label": "Bank name",
+                    "placeholder": "Bank name",
+                    "description": "Bank name"
+                },
+                "bank_company_at": {
+                    "label": "Bank branch",
+                    "placeholder": "Bank branch",
+                    "description": "Bank branch"
+                },
+                "bank_company_account": {
+                    "label": "Bank account No.",
+                    "placeholder": "Bank account No.",
+                    "description": "Bank account No."
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark",
+                    "description": "Remark"
+                }
+            }
+        },
+        "user": {
+            "title": "Users Management",
+            "menu": "Users Management",
+            "table": {
+                "noData": "Not found any users",
+                "username": "User Name",
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Email",
+                "status": "Status",
+				"enterprise": "Enterprise"
+			}
+		},
+		"customer": {
+			"title": "Customers Management",
+			"menu": "Customers Management",
+			"table": {
+                "noData": "Not found any customers",
+                "code": "Code",
+                "name": "Name",
+                "level": "Level",
+                "email": "Email",
+                "tel": "Tel.",
+                "address": "Address",
+                "status": "Status",
+                "enterprise": "Enterprise"
+            }
+        }
+    },
+    "warehouse": {
+        "title": "Warehouse Management",
+        "menu": {
+            "module": "Warehouse Management",
+            "master": "Settings",
+            "features": "Features"
+        },
+        "storage": {
+            "title": "Warehouse Archive Management",
+            "menu": "Archive",
+            "new": "New Archive",
+            "treeview": {
+                "not_selection": "",
+                "all_selection": "All archives",
+                "filter": "Filter archive",
+                "not_found": "No archive found",
+                "expand": "Expand",
+                "collapse": "Collapse"
+            },
+            "form": {
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name"
+                },
+                "street_address": {
+                    "label": "Address",
+                    "placeholder": "Address"
+                },
+                "city": {
+                    "label": "City",
+                    "placeholder": "City"
+                },
+                "state_province": {
+                    "label": "State/Province",
+                    "placeholder": "State/Province"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip"
+                },
+                "country": {
+                    "label": "Country",
+                    "placeholder": "Country"
+                },
+                "tel": {
+                    "label": "Tel",
+                    "placeholder": "Tel"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Email"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                }
+            }
+        },
+        "category": {
+            "title": "Warehouse Category Management",
+            "menu": "Category",
+            "new": "New Category",
+            "form": {
+                "belongTo": {
+                    "label": "Upper Category",
+                    "placeholder": "Upper Category",
+                    "description": "Upper Category",
+                    "not_selection": "",
+                    "all_selection": "All categories",
+                    "filter": "Filter category",
+                    "not_found": "No category found",
+                    "expand": "Expand",
+                    "collapse": "Collapse"
+                },
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type"
+                },
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name"
+                },
+                "image": {
+                    "label": "Image",
+                    "placeholder": "Image"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                }
+            }
+        },
+        "item": {
+            "title": "Warehouse Item Management",
+            "menu": "Item",
+            "summary": {
+                "not_supported_files": "Only support for image file types! Below file(s) will not be uploaded:<br/>{{files}}"
+            },
+            "overview": {
+                "title": "Overview",
+                "form": {
+                    "category": {
+                        "label": "Category",
+                        "placeholder": "Category"
+                    },
+                    "brand": {
+                        "label": "Brand",
+                        "placeholder": "Brand"
+                    },
+                    "code": {
+                        "label": "Code",
+                        "placeholder": "Item code"
+                    },
+                    "name": {
+                        "label": "Name",
+                        "placeholder": "Item name"
+                    },
+                    "barcode": {
+                        "label": "Barcode",
+                        "placeholder": "Barcode"
+                    },
+                    "number_of_prints": {
+                        "label": "Number of prints",
+                        "placeholder": "Number of prints"
+                    },
+                    "serial": {
+                        "label": "Serial No.",
+                        "placeholder": "Serial No."
+                    },
+                    "manufacturer": {
+                        "label": "Manufacturer",
+                        "placeholder": "Manufacturer"
+                    },
+                    "length": {
+                        "label": "Length",
+                        "placeholder": "Length"
+                    },
+                    "width": {
+                        "label": "Width",
+                        "placeholder": "Width"
+                    },
+                    "height": {
+                        "label": "Height",
+                        "placeholder": "Height"
+                    },
+                    "weight": {
+                        "label": "Weight",
+                        "placeholder": "Weight"
+                    },
+                    "size": {
+                        "label": "Size",
+                        "placeholder": "Size"
+                    },
+                    "color": {
+                        "label": "Color",
+                        "placeholder": "Color"
+                    },
+                    "material": {
+                        "label": "Material",
+                        "placeholder": "Material"
+                    },
+                    "unit": {
+                        "label": "Unit",
+                        "placeholder": "Unit"
+                    },
+                    "rate_per_unit": {
+                        "label": "Rate per Unit",
+                        "placeholder": "Rate per Unit"
+                    },
+                    "dealer_price": {
+                        "label": "Dealer Price",
+                        "placeholder": "Dealer Price"
+                    },
+                    "cost_price": {
+                        "label": "Cost Price",
+                        "placeholder": "Cost Price"
+                    },
+                    "selling_price": {
+                        "label": "Selling Price",
+                        "placeholder": "Selling Price"
+                    },
+                    "currency": {
+                        "label": "Currency",
+                        "placeholder": "Currency"
+                    },
+                    "remark": {
+                        "label": "Remark",
+                        "placeholder": "Remark"
+                    },
+                    "description": {
+                        "label": "Description",
+                        "placeholder": "Description"
+                    }
+                }
+            },
+            "orders": {
+                "purchase": {
+                    "title": "Purchase Orders"
+                },
+                "sale": {
+                    "title": "Sale Orders"
+                },
+                "table": {
+                    "noData": "Not found any orders",
+                    "order_date":  "Date",
+                    "order_code":  "Order No.",
+                    "sales_person":  "Person",
+                    "quantity":  "Quantity",
+                    "unit_price":  "Price",
+                    "amount":  "Total",
+                    "status":  "Status"
+                }
+            },
+            "in_out": {
+                "title": "IN/OUT",
+                "table": {
+                    "noData": "Not found any information",
+                    "date":  "Date",
+                    "warehouse":  "Warehouse",
+                    "stock_in":  "IN",
+                    "stock_out":  "OUT",
+                    "final_stock":  "REMAIN"
+                }
+            },
+            "adjustment": {
+                "title": "Adjustments",
+                "table": {
+                    "date": "Date",
+                    "code": "Adjustment",
+                    "warehouse": "Warehouse",
+                    "quality": "Quality",
+                    "reason": "Reason",
+                    "createdUser": "Created by",
+                    "remark": "Remark"
+                }
+            },
+            "table": {
+                "noData": "Not found any item in warehouse",
+                "code": "Code",
+                "name": "Name",
+                "status": "Status",
+                "barcode": "Barcode",
+                "serial": "Serial No.",
+                "image": "Image",
+                "manufacturer": "Manufacturer",
+                "length": "Length",
+                "width": "Width",
+                "height": "Height",
+                "weight": "Weight",
+                "size": "Size",
+                "color": "Color",
+                "material": "Material",
+                "unit": "Unit",
+                "rate_per_unit": "Rate/Unit",
+                "dealer_price": "Dealer Price",
+                "cost_price": "Cost Price",
+                "selling_price": "Selling Price",
+                "currency": "Currency",
+                "stock_on_hand": "Stock-on-Hand (SOH)",
+                "committed_stock": "Committed SOH",
+                "available_stock": "Avai. SOH",
+                "incoming_stock": "Incoming SOH",
+                "quantity_shipped": "Shipped Quantity",
+                "quantity_received": "Received Quantity",
+                "description": "Description",
+                "remark": "Remark",
+                "category": "Category",
+                "brand": "Brand"
+            }
+        }
+    }
+}
