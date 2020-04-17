@@ -1,5 +1,5 @@
 import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
-import {AfterViewInit, Component, Inject, Injectable} from '@angular/core';
+import {AfterViewInit, Component, Inject, Injectable, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 import {
@@ -87,10 +87,12 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
 
     /**
      * Create a new instance of {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
      */
-    constructor(@Inject(TranslateService) _translateService: TranslateService) {
-        super(_translateService);
+    constructor(@Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2) {
+        super(_translateService, _renderer);
     }
 
     // -------------------------------------------------

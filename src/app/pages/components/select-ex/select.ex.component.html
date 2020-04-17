@@ -49,7 +49,63 @@
             (focusin)="onFocusIn({ $event: $event, $data: selectExComponent })"
             (focusout)="onFocusOut({ $event: $event, $data: selectExComponent })"
             (blur)="onBlur({ $event: $event, $data: selectExComponent })"
-></ngx-select>
+>
+    <ng-template ngx-select-option-selected let-option let-text="text">
+        <img #itemImage *ngIf="isEnabledOptionImage()"
+             [src]="(getOptionImages(option) || []).length ? getOptionImages(option)[0] : null"
+             class="ngx-select-option-selected_option-image option-image"
+             (error)="itemImage.style.visibility = 'hidden'"
+             (load)="itemImage.style.visibility = 'visible'"
+             (click)="openAlbumLightbox(getOptionImages(option), itemImage.src); preventEvent($event)">
+        <span class="ngx-select-option-selected_option-label" [innerHtml]="text"></span>
+    </ng-template>
+
+    <ng-template ngx-select-option let-option let-text="text">
+        <img #itemImage *ngIf="isEnabledOptionImage()"
+             [src]="(getOptionImages(option) || []).length ? getOptionImages(option)[0] : null"
+             class="ngx-select-option_option-image option-image"
+             (error)="itemImage.style.visibility = 'hidden'"
+             (load)="itemImage.style.visibility = 'visible'"
+             (click)="openAlbumLightbox(getOptionImages(option), itemImage.src); preventEvent($event)">
+        <span class="ngx-select-option_option-label" [innerHtml]="text"></span>
+    </ng-template>
+
+    <ng-template ngx-select-option-not-found>
+        <span class="ngx-select-option-not-found_option-label">{{getConfig().noResultsFound | translate}}</span>
+        <button *ngIf="configValue('showAddNewOptionIfNotFound', false) && configValue('addNewOptionConfig', null)"
+                nbButton
+                [id]="addNewActionConfig().id"
+                [title]="addNewActionConfig().description || ''"
+                [classList]="addNewActionConfig().class || ''"
+                [type]="addNewActionConfig().type || 'button'"
+                [filled]="addNewActionConfig().filled"
+                [outline]="addNewActionConfig().outline"
+                [ghost]="addNewActionConfig().ghost"
+                [hero]="addNewActionConfig().hero"
+                [fullWidth]="addNewActionConfig().fullWidth"
+                [disabled]="addNewActionConfig().disabled"
+                [size]="addNewActionConfig().size"
+                [shape]="addNewActionConfig().shape"
+                [status]="addNewActionConfig().status"
+                (click)="onAddNewOption({ $event: $event, $data: addNewActionConfig() });"
+                (mousedown)="onMouseDown({ $event: $event, $data: addNewActionConfig() })"
+                (mouseenter)="onMouseEnter({ $event: $event, $data: addNewActionConfig() })"
+                (mouseleave)="onMouseLeave({ $event: $event, $data: addNewActionConfig() })"
+                (mousemove)="onMouseMove({ $event: $event, $data: addNewActionConfig() })"
+                (mouseout)="onMouseOut({ $event: $event, $data: addNewActionConfig() })"
+                (mouseover)="onMouseOver({ $event: $event, $data: addNewActionConfig() })"
+                (mouseup)="onMouseUp({ $event: $event, $data: addNewActionConfig() })"
+                (mousewheel)="onMouseWheel({ $event: $event, $data: addNewActionConfig() })"
+                (focus)="onFocus({ $event: $event, $data: addNewActionConfig() })"
+                (focusin)="onFocusIn({ $event: $event, $data: addNewActionConfig() })"
+                (focusout)="onFocusOut({ $event: $event, $data: addNewActionConfig() })"
+                (blur)="onBlur({ $event: $event, $data: addNewActionConfig() })"
+        ><span><nb-icon [icon]="addNewActionConfig().icon.icon"
+                        *ngIf="addNewActionConfig().icon && addNewActionConfig().icon.icon.length > 0"
+                        [pack]="addNewActionConfig().icon.pack"></nb-icon>
+            {{addNewActionConfig().label | translate}}</span></button>
+    </ng-template>
+</ngx-select>
 
 <context-menu #selectExContextMenuComponent
               [disabled]="!contextMenu || !contextMenu.length"

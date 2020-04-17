@@ -107,6 +107,9 @@
     .mat-option:hover:not(.mat-option-disabled), .mat-option:focus:not(.mat-option-disabled) {
         background-color: nb-theme(color-basic-focus-border);
     }
+    .mat-form-field.form-field-select-ex-image .mat-form-field-infix {
+        padding: 0.1775rem 0;
+    }
 
     /* Toaster */
 

@@ -28,6 +28,7 @@ import {
     NgxSelectOption,
 } from 'ngx-select-ex';
 import {BehaviorSubject} from 'rxjs';
+import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 
 /**
  * The interface of data while searching option items
@@ -49,6 +50,11 @@ export type SelectSearchCallbackDelegate = (search?: string | null, item?: NgxSe
  */
 export interface INgxSelectExOptions extends INgxSelectOptions {
     /**
+     * Specify whether using image for option
+     * {boolean}
+     */
+    enableOptionImage?: boolean | false;
+    /**
      * Automatically activate item when mouse enter on it
      * {boolean}
      */
@@ -63,6 +69,16 @@ export interface INgxSelectExOptions extends INgxSelectOptions {
      * {boolean}
      */
     showOptionNotFoundForEmptyItems: boolean | false;
+    /**
+     * Shows the 'Add new option' action in case of out of items at all
+     * {boolean}
+     */
+    showAddNewOptionIfNotFound?: boolean | false;
+    /**
+     * The configuration of 'Add new option' action
+     * {IToolbarActionsConfig}
+     */
+    addNewOptionConfig?: IToolbarActionsConfig | null;
 }
 
 /**

@@ -1,6 +1,6 @@
 import {DropdownTreeviewFormFieldComponent} from '../../formly/formly.treeview.dropdown.field.component';
 import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
-import {AfterViewInit, Component, Inject} from '@angular/core';
+import {AfterViewInit, Component, Inject, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../utils/object.utils';
 import {APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from '../components/app.treeview.i18n';
@@ -42,10 +42,12 @@ export abstract class AppFormlyTreeviewDropdownFieldComponent<T extends IModel>
 
     /**
      * Create a new instance of {AppFormlyTreeviewDropdownFieldComponent} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
      */
-    protected constructor(@Inject(TranslateService) _translateService: TranslateService) {
-        super(_translateService);
+    protected constructor(@Inject(TranslateService) _translateService: TranslateService,
+                          @Inject(Renderer2) _renderer: Renderer2) {
+        super(_translateService, _renderer);
     }
 
     // -------------------------------------------------

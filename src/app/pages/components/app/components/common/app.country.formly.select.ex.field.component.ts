@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
 import {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import {throwError} from 'rxjs';
 import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {ICountry} from '../../../../../@core/data/system/country';
 
 export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
     /**
@@ -18,6 +19,11 @@ export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
      * {string}
      */
     optionTextField: 'text',
+    /**
+     * Specify whether using image for option
+     * {boolean}
+     */
+    enableOptionImage: true,
 }, DefaultNgxSelectOptions);
 
 /**
@@ -30,7 +36,7 @@ export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
 })
 export class AppCountryFormlySelectExFieldComponent
     extends AppFormlySelectExFieldComponent<ICity>
-    implements OnInit {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -38,11 +44,14 @@ export class AppCountryFormlySelectExFieldComponent
 
     /**
      * Create a new instance of {AppFormlyTreeviewDropdownFieldComponent} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
+     * @param countryDataSource {CountryDatasource}
      */
     constructor(@Inject(CountryDatasource) private countryDataSource: CountryDatasource,
-                @Inject(TranslateService) _translateService: TranslateService) {
-        super(_translateService);
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2) {
+        super(_translateService, _renderer);
         countryDataSource || throwError('Could not inject CountryDatasource instance');
         super.setConfig(AppCountriesSelectOptions);
     }
@@ -57,5 +66,15 @@ export class AppCountryFormlySelectExFieldComponent
                 .then(countries => this.setItems(countries));
         });
         this.countryDataSource.refresh();
+    }
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        this.selectExComponent
+        && this.selectExComponent.setOptionImageParser(
+            item => (item && item.data
+            && (((item.data as ICountry).flag || '').length)
+                ? [(item.data as ICountry).flag] : null));
     }
 }

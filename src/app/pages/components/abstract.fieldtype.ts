@@ -1,4 +1,4 @@
-import {Inject, OnDestroy} from '@angular/core';
+import {Inject, OnDestroy, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
@@ -44,17 +44,28 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         return this._translateService;
     }
 
+    /**
+     * Get the {Renderer2} instance for applying HTML element attributes
+     * @return the {Renderer2} instance
+     */
+    protected get renderer(): Renderer2 {
+        return this._renderer;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
      * Create a new instance of {AbstractFieldType} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
      */
-    protected constructor(@Inject(TranslateService) private _translateService: TranslateService) {
+    protected constructor(@Inject(TranslateService) private _translateService: TranslateService,
+                          @Inject(Renderer2) private _renderer: Renderer2) {
         super();
         _translateService || throwError('Could not inject TranslateService');
+        _renderer || throwError('Could not inject Renderer2');
     }
 
     // -------------------------------------------------

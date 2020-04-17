@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {IEvent} from '../abstract.component';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
@@ -41,10 +41,12 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
 
     /**
      * Create a new instance of {ImageGalleryFormFieldComponent} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
      */
-    constructor(@Inject(TranslateService) _translateService: TranslateService) {
-        super(_translateService);
+    constructor(@Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2) {
+        super(_translateService, _renderer);
     }
 
     // -------------------------------------------------

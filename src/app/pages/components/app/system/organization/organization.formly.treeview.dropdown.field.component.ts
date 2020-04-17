@@ -1,6 +1,6 @@
 import {TreeviewI18n, TreeviewI18nDefault, TreeviewSelection} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {Component, Inject, Injectable} from '@angular/core';
+import {Component, Inject, Injectable, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {
@@ -94,9 +94,11 @@ export class OrganizationFormlyTreeviewDropdownFieldComponent
 
     /**
      * Create a new instance of {OrganizationFormlyTreeviewDropdownFieldComponent} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
      */
-    constructor(@Inject(TranslateService) _translateService: TranslateService) {
-        super(_translateService);
+    constructor(@Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2) {
+        super(_translateService, _renderer);
     }
 }

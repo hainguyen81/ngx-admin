@@ -1,7 +1,7 @@
 import {
     AfterViewInit,
     Component, EventEmitter, Inject, Input, Output,
-    QueryList,
+    QueryList, Renderer2,
     ViewChildren,
 } from '@angular/core';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
@@ -92,10 +92,12 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
 
     /**
      * Create a new instance of {DropdownTreeviewFormFieldComponent} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
      */
-    constructor(@Inject(TranslateService) _translateService: TranslateService) {
-        super(_translateService);
+    constructor(@Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2) {
+        super(_translateService, _renderer);
     }
 
     // -------------------------------------------------

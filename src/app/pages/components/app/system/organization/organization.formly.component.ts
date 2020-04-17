@@ -178,7 +178,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 },
             },
             {
-                className: 'col-6',
+                className: 'col-6 form-field-country',
                 key: 'country_id',
                 type: 'select-ex-country',
                 templateOptions: {

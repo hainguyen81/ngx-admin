@@ -1,4 +1,11 @@
-import {AfterViewInit, Component, Inject, Input, QueryList, ViewChildren} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    Inject,
+    Input,
+    QueryList, Renderer2,
+    ViewChildren,
+} from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {INgxSelectOptions} from 'ngx-select-ex';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,6 +23,9 @@ import {isArray} from 'util';
     styleUrls: ['./formly.select.ex.field.component.scss'],
 })
 export class SelectExFormFieldComponent extends AbstractFieldType implements AfterViewInit {
+
+    private static DEFAULT_CLASS_FORM_FIELD: string = 'form-field-select-ex';
+    private static IMAGE_CLASS_FORM_FIELD: string = 'form-field-select-ex-image';
 
     // -------------------------------------------------
     // DECLARATION
@@ -86,10 +96,12 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
 
     /**
      * Create a new instance of {SelectExFormFieldComponent} class
-     * @param translateService {TranslateService}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
      */
-    constructor(@Inject(TranslateService) _translateService: TranslateService) {
-        super(_translateService);
+    constructor(@Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2) {
+        super(_translateService, _renderer);
     }
 
     // -------------------------------------------------
@@ -106,7 +118,30 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
                     this.formControl
                     && this.formControl.valueChanges.subscribe(
                         val => this.__applySelectedItems(component, val));
+                    this.checkOverrideFormFieldClass(component);
                 });
+        }
+    }
+
+    /**
+     * Check for adding/removing form field class for customizing
+     */
+    private checkOverrideFormFieldClass(selectComponent?: NgxSelectExComponent) {
+        if (this.formField && this.formField._elementRef
+            && this.formField._elementRef.nativeElement) {
+            const enabledImage: boolean = (selectComponent && selectComponent.isEnabledOptionImage());
+            enabledImage && this.renderer.removeClass(
+                this.formField._elementRef.nativeElement,
+                SelectExFormFieldComponent.DEFAULT_CLASS_FORM_FIELD);
+            !enabledImage && this.renderer.removeClass(
+                this.formField._elementRef.nativeElement,
+                SelectExFormFieldComponent.IMAGE_CLASS_FORM_FIELD);
+            enabledImage && this.renderer.addClass(
+                this.formField._elementRef.nativeElement,
+                SelectExFormFieldComponent.IMAGE_CLASS_FORM_FIELD);
+            !enabledImage && this.renderer.addClass(
+                this.formField._elementRef.nativeElement,
+                SelectExFormFieldComponent.DEFAULT_CLASS_FORM_FIELD);
         }
     }
 

@@ -2,7 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef, EventEmitter,
-    Inject, Output,
+    Inject, Input, Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -16,6 +16,9 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
+import {NgxSelectOption} from 'ngx-select-ex';
+import {throwError} from 'rxjs';
+import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 
 /**
  * Select component base on {NgxSelectComponent}
@@ -35,6 +38,46 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
      * Fire while selecting option item
      */
     @Output() select: EventEmitter<IEvent> = new EventEmitter<IEvent>();
+    @Output() addNewOption: EventEmitter<IEvent> = new EventEmitter<IEvent>();
+    @Input('optionImage') private optionImageParser: (item?: NgxSelectOption) => string[];
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating this component whether uses image for option item
+     * @return true for using image; else false
+     */
+    public isEnabledOptionImage(): boolean {
+        return this.configValue('enableOptionImage', false);
+    }
+
+    /**
+     * Set a boolean value indicating this component whether uses image for option item
+     * @param enabledItemImage true for using image; else false
+     */
+    public setEnabledItemImage(enabledOptionImage?: boolean | false): void {
+        this.saveConfigValue('enableOptionImage', enabledOptionImage);
+    }
+
+    /**
+     * Get the parser delegate to parse item image
+     * @return the parser delegate to parse item image
+     */
+    public getOptionImageParser(): (item?: NgxSelectOption) => string[] {
+        return this.optionImageParser;
+    }
+
+    /**
+     * Set a boolean value indicating this component whether uses image for tree-view item
+     * @param enabledItemImage true for using image; else false
+     */
+    public setOptionImageParser(optionImageParser?: (item?: NgxSelectOption) => string[] | null): void {
+        this.isEnabledOptionImage() || throwError(
+            'Not allow for using option image! Please apply `enableOptionImage` in config to use!');
+        this.optionImageParser = optionImageParser;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -151,6 +194,15 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
         this.getLogger().debug('onSelectionChanges', $event);
     }
 
+    /**
+     * Raise by clicking on 'Add new option' action.
+     * @param $event {IEvent} as {IEvent#$event} is event data
+     */
+    protected onAddNewOption($event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onAddNewOption', $event);
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -163,5 +215,29 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
     private configValue(key?: string, defaultValue?: any): any {
         return (this.getConfig() && (<Object>this.getConfig()).hasOwnProperty(key)
             ? this.getConfig()[key] : defaultValue);
+    }
+    /**
+     * Set configuration value for template
+     * @param key configuration key
+     * @param value to apply
+     */
+    private saveConfigValue(key?: string, value?: any): void {
+        this.getConfig()[key] = value;
+    }
+
+    /**
+     * Alias of {AbstractSelectExComponent#configValue} for 'Add new option' action
+     */
+    private addNewActionConfig(): IToolbarActionsConfig {
+        return this.configValue('addNewOptionConfig', null) as IToolbarActionsConfig;
+    }
+
+    /**
+     * Get the specified {NgxSelectOption} image. NULL for not using
+     * @param item to parse
+     * @return the specified {NgxSelectOption} image
+     */
+    public getOptionImages(item?: NgxSelectOption): string[] {
+        return (this.getOptionImageParser() ? this.getOptionImageParser().apply(this, [item]) : null);
     }
 }
