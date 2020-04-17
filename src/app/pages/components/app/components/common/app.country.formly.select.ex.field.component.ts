@@ -77,4 +77,12 @@ export class AppCountryFormlySelectExFieldComponent
             && (((item.data as ICountry).flag || '').length)
                 ? [(item.data as ICountry).flag] : null));
     }
+
+    protected valueFormatter(value: any): any {
+        let options: any[];
+        options = this.getItems().filter(opt => {
+            return (opt && ((opt === value) || (opt[this.getConfig().optionValueField] === value)));
+        });
+        return options || [];
+    }
 }

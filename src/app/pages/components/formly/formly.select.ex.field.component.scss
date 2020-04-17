@@ -9,11 +9,15 @@
             border: none;
             padding: 0;
             height: auto;
-            line-height: inherit;
         }
-        .ngx-select__toggle.btn {
-            font-size: inherit;
-            font-weight: inherit;
+        .form-select-ex:not(form-select-ex-image) {
+            .ngx-select__toggle {
+                line-height: inherit;
+            }
+            .ngx-select__toggle.btn {
+                font-size: inherit;
+                font-weight: inherit;
+            }
         }
         .ngx-select__toggle:hover {
             background-color: transparent;

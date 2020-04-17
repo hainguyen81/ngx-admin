@@ -110,11 +110,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'w-50 pl-2 pr-0',
                                 key: 'country',
-                                type: 'select',
+                                type: 'select-ex-country',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.country.label',
                                     placeholder: 'warehouse.storage.form.country.placeholder',
-                                    options: [],
                                 },
                             },
                         ],
