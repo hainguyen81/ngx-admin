@@ -393,8 +393,9 @@ export class WarehouseItemOverviewFormlyComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseItemOverviewFormConfig, WarehouseItemOverviewFormFieldsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setConfig(WarehouseItemOverviewFormConfig);
+        super.setFields(WarehouseItemOverviewFormFieldsConfig);
     }
 
     // -------------------------------------------------

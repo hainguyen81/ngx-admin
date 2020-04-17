@@ -13,7 +13,6 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
-import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -60,10 +59,6 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
-     * @param config {FormlyConfig}
-     * @param fields {FormlyFieldConfig}
-     * @param options {FormlyFormOptions}
-     * @param actions {IFormActionsConfig}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -77,18 +72,10 @@ export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFo
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          config?: FormlyConfig,
-                          fields?: FormlyFieldConfig[],
-                          options?: FormlyFormOptions,
-                          actions?: IToolbarActionsConfig[] | []) {
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
-        this.setConfig(config);
-        this.setFields(fields);
-        this.setOptions(options);
-        this.setActions(actions);
     }
 }

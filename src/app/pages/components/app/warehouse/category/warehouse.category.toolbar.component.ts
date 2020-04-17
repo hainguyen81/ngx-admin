@@ -81,7 +81,8 @@ export class WarehouseCategoryToolbarComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseCategoryToolbarHeaderConfig, WarehouseCategoryToolbarActionsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setToolbarHeader(WarehouseCategoryToolbarHeaderConfig);
+        super.setActions(WarehouseCategoryToolbarActionsConfig);
     }
 }

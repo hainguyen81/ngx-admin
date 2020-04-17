@@ -86,7 +86,8 @@ export class WarehouseItemToolbarComponent extends BaseNgxToolbarComponent<Wareh
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseItemToolbarHeaderConfig, WarehouseItemToolbarActionsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setToolbarHeader(WarehouseItemToolbarHeaderConfig);
+        super.setActions(WarehouseItemToolbarActionsConfig);
     }
 }

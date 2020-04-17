@@ -63,13 +63,10 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          toolbarHeader?: IToolbarHeaderConfig, actions?: IToolbarActionsConfig[]) {
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
-        this.setToolbarHeader(toolbarHeader);
-        this.setActions(actions);
     }
 }

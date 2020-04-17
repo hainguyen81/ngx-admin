@@ -62,13 +62,10 @@ export abstract class AppToolbarComponent<D extends DataSource>
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Optional() headerConfig?: IToolbarHeaderConfig | null,
-                          @Optional() actionsConfig?: IToolbarActionsConfig[]) {
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            headerConfig, actionsConfig);
+            modalDialogService, confirmPopup, lightbox);
     }
 }

@@ -77,7 +77,8 @@ export class WarehouseStorageToolbarComponent extends AppToolbarComponent<Wareho
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseStorageToolbarHeaderConfig, WarehouseStorageToolbarActionsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setToolbarHeader(WarehouseStorageToolbarHeaderConfig);
+        super.setActions(WarehouseStorageToolbarActionsConfig);
     }
 }

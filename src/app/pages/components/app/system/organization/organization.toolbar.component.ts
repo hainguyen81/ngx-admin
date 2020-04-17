@@ -75,7 +75,8 @@ export class OrganizationToolbarComponent extends AppToolbarComponent<Organizati
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            OrganizationToolbarHeaderConfig, OrganizationToolbarActionsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setToolbarHeader(OrganizationToolbarHeaderConfig);
+        super.setActions(OrganizationToolbarActionsConfig);
     }
 }
