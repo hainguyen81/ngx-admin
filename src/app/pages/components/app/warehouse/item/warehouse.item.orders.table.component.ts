@@ -192,9 +192,10 @@ export class WarehouseItemOrdersSmartTableComponent extends BaseSmartTableCompon
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            'warehouse.item.title',
-            WarehouseItemOrdersTableSettings, WarehouseItemOrdersContextMenu);
+            modalDialogService, confirmPopup, lightbox);
+        super.setTableHeader('warehouse.item.title');
+        super.setTableSettings(WarehouseItemOrdersTableSettings);
+        super.setContextMenu(WarehouseItemOrdersContextMenu);
     }
 
     doSearch(keyword: any): void {

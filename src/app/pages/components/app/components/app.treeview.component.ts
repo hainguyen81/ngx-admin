@@ -95,15 +95,11 @@ export abstract class AppTreeviewComponent<T extends IModel, D extends DataSourc
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Optional() treeviewConfig?: TreeviewConfig | null,
-                          @Optional() treeviewContextMenu?: IContextMenu[] | []) {
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
-        super.setConfig(treeviewConfig);
-        super.setContextMenu(treeviewContextMenu);
     }
 
     // -------------------------------------------------

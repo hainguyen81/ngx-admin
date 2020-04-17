@@ -53,13 +53,13 @@ export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
  * Context menu item declaration
  */
 export interface IContextMenu {
-    id?: (item?: any) => string;
-    icon: (item?: any) => string;
-    title: (item?: any) => string;
-    enabled: (item?: any) => boolean;
-    visible: (item?: any) => boolean;
-    divider: (item?: any) => boolean;
-    click?: (item?: any) => void | null;
+    id?: ((item?: any) => string) | string;
+    icon: ((item?: any) => string) | string;
+    title: ((item?: any) => string) | string;
+    enabled: ((item?: any) => boolean) | boolean;
+    visible: ((item?: any) => boolean) | boolean;
+    divider: ((item?: any) => boolean) | boolean;
+    click?: ((item?: any) => void) | null;
 }
 
 /* Customize event for abstract component */
@@ -527,7 +527,8 @@ export class AbstractComponent
                 let menuItem: IContextMenu;
                 menuItem = event.$data['menu'] as IContextMenu;
                 let mnuId: string;
-                mnuId = (menuItem ? menuItem.id.apply(this, [event.$data['item']]) : '');
+                mnuId = (menuItem && typeof menuItem.id === 'function'
+                    ? menuItem.id.apply(this, [event.$data['item']]) : menuItem.id);
                 this.doMenuAction(event, mnuId, event.$data['item']);
             }
         }
@@ -840,13 +841,13 @@ export class AbstractComponent
      * Show message notification toast
      * @param title toast title
      * @param body toast message
-     * @param type toast type
+     * @param msgType toast type
      */
-    protected showMessage(title?: string, body?: string, type?: string): void {
+    protected showMessage(title?: string, body?: string, msgType?: string): void {
         if (!(title || '').length || !(body || '').length) {
             return;
         }
-        this.getToasterService().show(this.translate(body), this.translate(title), undefined, type);
+        this.getToasterService().show(this.translate(body), this.translate(title), undefined, msgType);
     }
 
     /**

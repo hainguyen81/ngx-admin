@@ -51,6 +51,7 @@
         "@ngx-translate/http-loader": "^4.0.0",
         "@reactivex/rxjs": "^6.5.5",
         "@swimlane/ngx-charts": "^10.1.0",
+        "angular-cli-ghpages": "^0.6.2",
         "angular-resize-event": "^1.2.1",
         "angular-split": "^3.0.3",
         "angular-tree-component": "7.2.0",

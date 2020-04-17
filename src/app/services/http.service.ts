@@ -29,7 +29,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
 
     protected constructor(@Inject(HttpClient) private http: HttpClient,
                           @Inject(NGXLogger) private logger: NGXLogger,
-                          private dbService: IDbService<K>) {
+                          private dbService?: IDbService<K> | null) {
         http || throwError('Could not inject HttpClient!');
         logger || throwError('Could not inject logger!');
         logger.updateConfig(LogConfig);

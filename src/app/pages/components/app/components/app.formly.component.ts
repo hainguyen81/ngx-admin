@@ -60,14 +60,11 @@ export abstract class AppFormlyComponent<T extends IModel, D extends DataSource>
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Optional() formConfig?: FormlyConfig,
-                          @Optional() formFieldsConfig?: FormlyFieldConfig[] | []) {
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            formConfig, formFieldsConfig);
+            modalDialogService, confirmPopup, lightbox);
     }
 
     // -------------------------------------------------

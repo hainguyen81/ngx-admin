@@ -140,8 +140,10 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            'system.customer.title', CustomerTableSettings, CustomerContextMenu);
+            modalDialogService, confirmPopup, lightbox);
+        super.setTableHeader('system.customer.title');
+        super.setTableSettings(CustomerTableSettings);
+        super.setContextMenu(CustomerContextMenu);
     }
 
     doSearch(keyword: any): void {

@@ -14,26 +14,26 @@ import {
 
 /* base context menu items */
 export const BaseContextMenu: IContextMenu[] = [{
-    id: (item?: any) => CONTEXT_MENU_ADD,
-    icon: (item?: any) => 'plus-square',
-    title: (item?: any) => 'common.contextMenu.add',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
+    id: CONTEXT_MENU_ADD,
+    icon: 'plus-square',
+    title: 'common.contextMenu.add',
+    enabled: true,
+    visible: true,
+    divider: false,
 }, {
-    id: (item?: any) => CONTEXT_MENU_EDIT,
-    icon: (item?: any) => 'edit',
-    title: (item?: any) => 'common.contextMenu.edit',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
+    id: CONTEXT_MENU_EDIT,
+    icon: 'edit',
+    title: 'common.contextMenu.edit',
+    enabled: true,
+    visible: true,
+    divider: false,
 }, {
-    id: (item?: any) => CONTEXT_MENU_DELETE,
-    icon: (item?: any) => 'minus-square',
-    title: (item?: any) => 'common.contextMenu.delete',
-    enabled: (item?: any) => true,
-    visible: (item?: any) => true,
-    divider: (item?: any) => false,
+    id: CONTEXT_MENU_DELETE,
+    icon: 'minus-square',
+    title: 'common.contextMenu.delete',
+    enabled: true,
+    visible: true,
+    divider: false,
 }];
 
 /* base toolbar actions */

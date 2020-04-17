@@ -7,6 +7,6 @@ export default class AppUtils {
      * @return the injectable service instance
      */
     public static getService<T>(token: any): T {
-        return AppConfig.getService(token);
+        return AppConfig.Injector['get'].apply(this, token);
     }
 }

@@ -133,8 +133,10 @@ export class UserSmartTableComponent extends BaseSmartTableComponent<UserDataSou
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            'system.user.title', UserTableSettings, UserContextMenu);
+            modalDialogService, confirmPopup, lightbox);
+        super.setTableHeader('system.user.title');
+        super.setTableSettings(UserTableSettings);
+        super.setContextMenu(UserContextMenu);
     }
 
     doSearch(keyword: any): void {

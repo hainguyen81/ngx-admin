@@ -45,7 +45,7 @@ function __defineMetadata(target: any, metaKey: string, metaValue: any): void {
  * @param obs$ need to ub-subscribe more
  * @constructor
  */
-function makeAutoUnsubscribeDecorator(obs$ = []): Function {
+export function makeAutoUnsubscribeDecorator(obs$ = []): Function {
     return function(target: any) {
         let unsubTarget: any;
         unsubTarget = target;
@@ -75,7 +75,7 @@ function makeAutoUnsubscribeDecorator(obs$ = []): Function {
  * @param annotation the annotation of extended components
  * @constructor
  */
-function makeExtendedComponentDecorator(annotation: any): Function {
+export function makeExtendedComponentDecorator(annotation: any): Function {
     return function(target: Function) {
         let targetAnnotations: any;
         targetAnnotations = Object.assign({}, annotation);

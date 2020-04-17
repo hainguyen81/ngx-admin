@@ -26,7 +26,7 @@ export abstract class AbstractUpdateService<T> extends AbstractHttpService<T, T>
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(ApplicationRef) private appRef: ApplicationRef,
                           @Inject(SwUpdate) private swUpdate: SwUpdate,
-                          dbService: IDbService<T>) {
+                          dbService?: IDbService<T> | null) {
         super(http, logger, dbService);
         appRef || throwError('Could not inject application reference');
         swUpdate || throwError('Could not inject socket updater subscription');

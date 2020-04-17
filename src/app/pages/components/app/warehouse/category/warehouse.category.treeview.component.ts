@@ -102,8 +102,9 @@ export class WarehouseCategoryTreeviewComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseCategoryTreeviewConfig, WarehouseCategoryContextMenu);
+            modalDialogService, confirmPopup, lightbox);
+        super.setConfig(WarehouseCategoryTreeviewConfig);
+        super.setContextMenu(WarehouseCategoryContextMenu);
     }
 
     // -------------------------------------------------

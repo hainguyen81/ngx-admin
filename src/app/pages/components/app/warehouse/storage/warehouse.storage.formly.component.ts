@@ -236,7 +236,8 @@ export class WarehouseStorageFormlyComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseStorageFormConfig, WarehouseStorageFormFieldsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setConfig(WarehouseStorageFormConfig);
+        super.setFields(WarehouseStorageFormFieldsConfig);
     }
 }

@@ -94,8 +94,9 @@ export class OrganizationTreeviewComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            OrganizationTreeviewConfig, OrganizationContextMenu);
+            modalDialogService, confirmPopup, lightbox);
+        super.setConfig(OrganizationTreeviewConfig);
+        super.setContextMenu(OrganizationContextMenu);
     }
 
     // -------------------------------------------------

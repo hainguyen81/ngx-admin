@@ -50,9 +50,6 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
-     * @param tableHeader the table caption
-     * @param tableSettings the table settings
-     * @param contextMenu the context menu items array
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -66,16 +63,11 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          tableHeader?: string, tableSettings?: any,
-                          contextMenu?: IContextMenu[]) {
+                          @Inject(Lightbox) lightbox?: Lightbox) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
-        this.setTableHeader(tableHeader || '');
-        this.setTableSettings(tableSettings);
-        this.setContextMenu(contextMenu || []);
     }
 
     /**

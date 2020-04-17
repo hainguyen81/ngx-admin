@@ -21,7 +21,4 @@ export const AppConfig = {
     Env: environment,
     i18n: i18n,
     IdGenerators: IdGenerators,
-    getService: (token: any) => {
-        return AppConfig.Injector['get'].apply(this, token);
-    },
 };

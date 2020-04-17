@@ -9,7 +9,7 @@ import {AnalyticsService, SeoService} from './@core/services';
 import {throwError} from 'rxjs';
 import {AppConfig} from './config/app.config';
 import {NGXLogger} from 'ngx-logger';
-import PageHeaderService, {IPageHeaderConfig} from './services/header.service';
+import {IPageHeaderConfig, PageHeaderService} from './services/header.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {isArray} from 'util';
@@ -17,8 +17,7 @@ import Timer = NodeJS.Timer;
 
 @Component({
     selector: 'ngx-app',
-    template: `
-        <router-outlet></router-outlet>`,
+    template: `<router-outlet></router-outlet>`,
 })
 export class AppComponent implements OnInit {
 

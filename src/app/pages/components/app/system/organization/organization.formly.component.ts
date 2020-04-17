@@ -415,8 +415,9 @@ export class OrganizationFormlyComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            OrganizationFormConfig, OrganizationFormFieldsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setConfig(OrganizationFormConfig);
+        super.setFields(OrganizationFormFieldsConfig);
     }
 
     // -------------------------------------------------

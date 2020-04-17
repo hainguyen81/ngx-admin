@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import {CoreModule} from './@core/core.module';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Meta, Title} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
@@ -59,6 +59,7 @@ import {AppMaterialModule} from './app.material.module';
 /* Device Detector */
 import {DeviceDetectorModule} from 'ngx-device-detector';
 /* Pipes */
+// @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
 /* Lightbox */
 import {LightboxModule} from 'ngx-lightbox';

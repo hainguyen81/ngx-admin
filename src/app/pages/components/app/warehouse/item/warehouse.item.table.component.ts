@@ -309,8 +309,10 @@ export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<Wa
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            'warehouse.item.title', WarehouseItemTableSettings, WarehouseItemContextMenu);
+            modalDialogService, confirmPopup, lightbox);
+        super.setTableHeader('warehouse.item.title');
+        super.setTableSettings(WarehouseItemTableSettings);
+        super.setContextMenu(WarehouseItemContextMenu);
     }
 
     doSearch(keyword: any): void {

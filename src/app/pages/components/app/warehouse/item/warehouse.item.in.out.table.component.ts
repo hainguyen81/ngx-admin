@@ -171,9 +171,10 @@ export class WarehouseItemInOutSmartTableComponent extends BaseSmartTableCompone
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            'warehouse.item.title',
-            WarehouseItemInOutTableSettings, WarehouseItemInOutContextMenu);
+            modalDialogService, confirmPopup, lightbox);
+        super.setTableHeader('warehouse.item.title');
+        super.setTableSettings(WarehouseItemInOutTableSettings);
+        super.setContextMenu(WarehouseItemInOutContextMenu);
     }
 
     doSearch(keyword: any): void {

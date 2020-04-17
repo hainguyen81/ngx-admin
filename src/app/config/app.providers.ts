@@ -36,8 +36,7 @@ import {
     OrganizationHttpService,
 } from '../services/implementation/system/organization/organization.service';
 import {OrganizationDataSource} from '../services/implementation/system/organization/organization.datasource';
-import {Meta, Title} from '@angular/platform-browser';
-import PageHeaderService from '../services/header.service';
+import {PageHeaderService} from '../services/header.service';
 import {PagesGuard} from '../pages/pages.guard.service';
 import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
 import {
@@ -137,7 +136,7 @@ export const I18NProviders: StaticProvider[] = [
     },
     {
         provide: PageHeaderService, useClass: PageHeaderService,
-        deps: [Title, Meta, NGXLogger, TranslateService],
+        deps: [TranslateService, NGXLogger],
     },
 ];
 

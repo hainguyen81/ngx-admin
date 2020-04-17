@@ -32,7 +32,7 @@ export interface IPageHeaderService {
 
 /* page header service */
 @Injectable()
-export default class PageHeaderService implements IPageHeaderService {
+export class PageHeaderService implements IPageHeaderService {
 
     // -------------------------------------------------
     // DECLARATION
@@ -49,7 +49,8 @@ export default class PageHeaderService implements IPageHeaderService {
      * @return the page title service {Title} instance
      */
     protected getTitleService(): Title {
-        return this.titleService;
+        // return this.titleService;
+        return null;
     }
 
     /**
@@ -57,7 +58,8 @@ export default class PageHeaderService implements IPageHeaderService {
      * @return the page meta-data service {Meta} instance
      */
     protected getMetaService(): Meta {
-        return this.metaService;
+        // return this.metaService;
+        return null;
     }
 
     /**
@@ -100,15 +102,15 @@ export default class PageHeaderService implements IPageHeaderService {
 
     /**
      * Create a new instance of {PageHeaderService} class
+     * @param translateService {TranslateService}
+     * @param logger {NGXLogger}
      * @param titleService {Title}
      * @param metaService {Meta}
      */
-    constructor(@Inject(Title) private titleService: Title,
-                @Inject(Meta) private metaService: Meta,
-                @Inject(NGXLogger) private logger: NGXLogger,
-                @Inject(TranslateService) private translateService: TranslateService) {
-        titleService || throwError('Could not inject Title service');
-        metaService || throwError('Could not inject Meta service');
+    constructor(@Inject(TranslateService) private translateService: TranslateService,
+                @Inject(NGXLogger) private logger: NGXLogger) {
+        // titleService || throwError('Could not inject Title service');
+        // metaService || throwError('Could not inject Meta service');
         logger || throwError('Could not inject NGXLogger');
         translateService || throwError('Could not inject TranslateService');
     }

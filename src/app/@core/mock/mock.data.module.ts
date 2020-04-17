@@ -3,7 +3,7 @@ import {
     Injector,
     ModuleWithProviders,
     NgModule,
-    Optional,
+    Optional, Provider,
     SkipSelf,
     Type,
 } from '@angular/core';
@@ -85,9 +85,7 @@ export class MockDataModule {
     static forRoot(): ModuleWithProviders {
         return <ModuleWithProviders>{
             ngModule: MockDataModule,
-            providers: [
-                ...MOCK_PROVIDERS,
-            ],
+            providers: MOCK_PROVIDERS,
         };
     }
 
@@ -97,9 +95,9 @@ export class MockDataModule {
     }
 
     protected initialization() {
-        if (AppConfig.Env.production) {
-            return;
-        }
+        // if (AppConfig.Env.production) {
+        //     return;
+        // }
 
         /** Common data providers */
         [].concat(MOCK_DATA_PROVIDERS)

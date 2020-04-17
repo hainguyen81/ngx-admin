@@ -174,8 +174,9 @@ export class WarehouseCategoryFormlyComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseCategoryFormConfig, WarehouseCategoryFormFieldsConfig);
+            modalDialogService, confirmPopup, lightbox);
+        super.setConfig(WarehouseCategoryFormConfig);
+        super.setFields(WarehouseCategoryFormFieldsConfig);
     }
 
     // -------------------------------------------------

@@ -26,7 +26,7 @@ export abstract class AbstractPushService<T> extends AbstractHttpService<T, T> {
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(SwPush) private swPush: SwPush,
                           @Inject(SW_VAPID_PUBLIC_KEY) private swVapidPublicKey: string = 'VAPID_PUBLIC_KEY',
-                          dbService: IDbService<T>) {
+                          dbService?: IDbService<T> | null) {
         super(http, logger, dbService);
     }
 
