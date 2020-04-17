@@ -1,3 +1,3 @@
 <div class="form-field form-select-ex">
-    <ngx-select-ex [items]="getItems()" [config]="getConfig()"></ngx-select-ex>
+    <ngx-select-ex [items]="getItems()" [config]="getConfig()" (select)="onSelect($event)"></ngx-select-ex>
 </div>

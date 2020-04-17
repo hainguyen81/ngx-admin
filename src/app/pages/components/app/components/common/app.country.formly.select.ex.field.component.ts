@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
 import {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
@@ -30,7 +30,7 @@ export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
 })
 export class AppCountryFormlySelectExFieldComponent
     extends AppFormlySelectExFieldComponent<ICity>
-    implements AfterViewInit {
+    implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -51,9 +51,7 @@ export class AppCountryFormlySelectExFieldComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
+    ngOnInit(): void {
         this.countryDataSource.onChanged().subscribe(value => {
             SystemDataUtils.invokeAllCountries(this.countryDataSource)
                 .then(countries => this.setItems(countries));

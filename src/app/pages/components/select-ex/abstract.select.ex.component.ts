@@ -2,8 +2,8 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef,
-    Inject, Input,
+    ElementRef, EventEmitter,
+    Inject, Input, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -22,7 +22,12 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {INgxSelectOptions, NgxSelectComponent, NgxSelectOption} from 'ngx-select-ex';
+import {
+    INgxSelectOptions,
+    NgxSelectComponent,
+    NgxSelectOption,
+} from 'ngx-select-ex';
+import {BehaviorSubject} from 'rxjs';
 
 /**
  * The interface of data while searching option items
@@ -54,7 +59,7 @@ export interface INgxSelectExOptions extends INgxSelectOptions {
      */
     keepSelectMenuOpened: boolean | false;
     /**
-     * Shows the "Not Found" menu option in case of out of items at all
+     * Shows the 'Not Found' menu option in case of out of items at all
      * {boolean}
      */
     showOptionNotFoundForEmptyItems: boolean | false;
@@ -161,7 +166,7 @@ export const DefaultNgxSelectOptions: INgxSelectExOptions = {
      */
     dropDownMenuOtherClasses: '',
     /**
-     * Shows the "Not Found" menu option in case of out of items at all
+     * Shows the 'Not Found' menu option in case of out of items at all
      * {boolean}
      */
     showOptionNotFoundForEmptyItems: false,
@@ -189,6 +194,11 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     private readonly queryNgxSelectComponent: QueryList<NgxSelectComponent>;
     private ngxSelectExComponent: NgxSelectComponent;
 
+    /**
+     * Raise after items already were loaded to show
+     */
+    @Output() finishedLoading: EventEmitter<any> = new EventEmitter<any>();
+
     @Input() config: INgxSelectOptions;
     /**
      * Items array.
@@ -205,7 +215,6 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * {any[]}
      */
     @Input() private initialValues: any[];
-    @Input() private model: any;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -267,22 +276,6 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
         this.initialValues = (items || []);
     }
 
-    /**
-     * Get the {ngModel} instance for configuring
-     * @return the {ngModel} instance
-     */
-    public getModel(): any {
-        return this.model;
-    }
-
-    /**
-     * Set the {ngModel} instance
-     * @param model to apply. NULL for default
-     */
-    public setModel(model?: any) {
-        this.model = model;
-    }
-
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -340,6 +333,8 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
                         $event => this.onSelectFocus({ $event: $event }));
                     component && component.blur.subscribe(
                         $event => this.onSelectBlur({ $event: $event }));
+                    component && component.subjOptions.subscribe(
+                        value => this.finishedLoading.emit(value));
                 });
         }
     }
@@ -377,5 +372,35 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSearchCallback', $event);
         return true;
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Set the selected items
+     * TODO Need to cross-check with multiple selected items and items group
+     * @param items to apply
+     */
+    public setSelectedItems(items?: any[]) {
+        if (!this.selectComponent
+            || typeof this.selectComponent['buildOption'] !== 'function'
+            || !(this.selectComponent['subjOptionsSelected'] instanceof BehaviorSubject)) {
+            this.getLogger().warn('Could not apply selected items!');
+            return;
+        }
+
+        let buildOptFnc: any;
+        buildOptFnc = this.selectComponent['buildOption'];
+        let opts: NgxSelectOption[];
+        opts = [];
+        (items || []).forEach(it => {
+            const opt: NgxSelectOption = buildOptFnc['apply'](this.selectComponent, [it, null]);
+            opt && opts.push(opt);
+        });
+        const currentOptionsSelected: NgxSelectOption[] =
+            (this.getConfig().multiple ? this.selectComponent.optionsSelected || [] : []).concat(opts);
+        (<BehaviorSubject<any>>this.selectComponent['subjOptionsSelected']).next(currentOptionsSelected);
     }
 }

@@ -127,4 +127,15 @@ export default class ObjectUtils {
         }
         return undefined;
     }
+
+    /**
+     * Get a boolean value indicating that the specified object
+     * whether exists the specified property name
+     * @param obj to check
+     * @param propertyName to check
+     * @return true for existed; else false
+     */
+    public static propertyExists(obj: object, propertyName: string): boolean {
+        return (obj && (obj.hasOwnProperty(propertyName) || (propertyName in obj)));
+    }
 }

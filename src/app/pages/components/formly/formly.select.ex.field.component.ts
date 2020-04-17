@@ -4,6 +4,8 @@ import {INgxSelectOptions} from 'ngx-select-ex';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
+import {IEvent} from '../abstract.component';
+import {isArray} from 'util';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -97,7 +99,38 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     ngAfterViewInit(): void {
         if (!this.ngxSelectExComponent) {
             // query component
-            this.ngxSelectExComponent = ComponentUtils.queryComponent(this.queryNgxSelectExComponent);
+            this.ngxSelectExComponent = ComponentUtils.queryComponent(
+                this.queryNgxSelectExComponent, component => {
+                    component && component.finishedLoading.subscribe(
+                        value => this.__applySelectedItems(component, this.value));
+                    this.formControl
+                    && this.formControl.valueChanges.subscribe(
+                        val => this.__applySelectedItems(component, val));
+                });
         }
+    }
+
+    /**
+     * Set current value
+     * @param value to apply
+     */
+    public setValue(value?: any): void {
+        value = this.valueParser(value);
+        if (this.value !== value) {
+            this.value = value;
+            this.formControl && this.formControl.setValue(this.value);
+            this.formControl && this.formControl.updateValueAndValidity({onlySelf: true, emitEvent: true});
+        }
+    }
+
+    private __applySelectedItems(selectComponent?: NgxSelectExComponent, value?: any) {
+        selectComponent = (selectComponent || this.selectExComponent);
+        if (!selectComponent || !this.getItems().length) return;
+        value = this.valueFormatter(value);
+        selectComponent.setSelectedItems(isArray(value) ? Array.from(value) : [value]);
+    }
+
+    protected onSelect($event: IEvent): void {
+        this.setValue(($event || {}).$data);
     }
 }

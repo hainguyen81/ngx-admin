@@ -1,8 +1,8 @@
 import {
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
+    ComponentFactoryResolver, ElementRef, EventEmitter,
+    Inject, Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -26,6 +26,15 @@ import {IEvent} from '../abstract.component';
     styleUrls: ['./select.ex.component.scss'],
 })
 export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    /**
+     * Fire while selecting option item
+     */
+    @Output() select: EventEmitter<IEvent> = new EventEmitter<IEvent>();
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -109,6 +118,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
     protected onSelect($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSelect', $event);
+        this.select.emit($event);
     }
 
     /**
