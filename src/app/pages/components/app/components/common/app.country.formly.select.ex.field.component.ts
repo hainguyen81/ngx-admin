@@ -6,7 +6,7 @@ import {throwError} from 'rxjs';
 import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
-import {ICountry} from '../../../../../@core/data/system/country';
+import Country, {ICountry} from '../../../../../@core/data/system/country';
 
 export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
     /**
@@ -63,7 +63,12 @@ export class AppCountryFormlySelectExFieldComponent
     ngOnInit(): void {
         this.countryDataSource.onChanged().subscribe(value => {
             SystemDataUtils.invokeAllCountries(this.countryDataSource)
-                .then(countries => this.setItems(countries));
+                .then(countries => {
+                    let noneCountry: ICountry;
+                    noneCountry = new Country(null, null, null);
+                    noneCountry['text'] = this.getConfig().placeholder;
+                    this.setItems([noneCountry].concat(countries));
+                });
         });
         this.countryDataSource.refresh();
     }
