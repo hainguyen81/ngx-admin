@@ -8,6 +8,7 @@ import {Inject} from '@angular/core';
 import {LogConfig} from '../config/log.config';
 import {isArray} from 'util';
 import {Cacheable} from 'ngx-cacheable';
+import {environment} from '../../environments/environment';
 
 /**
  * Abstract HTTP service
@@ -113,9 +114,10 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
     }): Observable<T | T[]> {
         const errors = [];
         // for handling offline mode
-        if ((res && res instanceof HttpErrorResponse
-            && (res.status === 0 || res.status > 500) && this.getDbService())
-            || (res && !(res instanceof HttpErrorResponse))) {
+        if (environment.offline
+            && ((res && res instanceof HttpErrorResponse
+                && (res.status === 0 || res.status > 500) && this.getDbService())
+                    || (res && !(res instanceof HttpErrorResponse)))) {
             return typeof this.handleOfflineModeDelegate === 'function'
                 ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options])
                 : this.handleOfflineMode(url, method, res, options);

@@ -95,9 +95,9 @@ export class MockDataModule {
     }
 
     protected initialization() {
-        // if (AppConfig.Env.production) {
-        //     return;
-        // }
+        if (!AppConfig.Env.offline) {
+            return;
+        }
 
         /** Common data providers */
         [].concat(MOCK_DATA_PROVIDERS)
