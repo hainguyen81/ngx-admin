@@ -48,18 +48,22 @@ export class PageHeaderService implements IPageHeaderService {
      * Get the page title service {Title} instance
      * @return the page title service {Title} instance
      */
-    protected getTitleService(): Title {
-        // return this.titleService;
-        return null;
+    get titleService(): Title {
+        return this._titleService;
+    }
+    set titleService(_titleService: Title) {
+        this._titleService = _titleService;
     }
 
     /**
      * Get the page meta-data service {Meta} instance
      * @return the page meta-data service {Meta} instance
      */
-    protected getMetaService(): Meta {
-        // return this.metaService;
-        return null;
+    get metaService(): Meta {
+        return this._metaService;
+    }
+    set metaService(_metaService: Meta) {
+        this._metaService = _metaService;
     }
 
     /**
@@ -108,11 +112,13 @@ export class PageHeaderService implements IPageHeaderService {
      * @param metaService {Meta}
      */
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                @Inject(NGXLogger) private logger: NGXLogger) {
-        // titleService || throwError('Could not inject Title service');
-        // metaService || throwError('Could not inject Meta service');
+                @Inject(NGXLogger) private logger: NGXLogger,
+                @Inject(Title) private _titleService: Title,
+                @Inject(Meta) private _metaService: Meta) {
         logger || throwError('Could not inject NGXLogger');
         translateService || throwError('Could not inject TranslateService');
+        _titleService || throwError('Could not inject Title');
+        _metaService || throwError('Could not inject Meta');
     }
 
     // -------------------------------------------------
@@ -125,7 +131,9 @@ export class PageHeaderService implements IPageHeaderService {
         }
 
         // apply title
-        if (this.getTitleService() && (this.getConfig().title || '').length) {
+        this.getLogger().debug('Resolve page header',
+            this.titleService, this.metaService, this.getConfig());
+        if (this.titleService && (this.getConfig().title || '').length) {
             let translate: TranslateService;
             translate = this.getTranslateService();
             let finalTitle: string[];
@@ -144,13 +152,13 @@ export class PageHeaderService implements IPageHeaderService {
             }
             this.getLogger().debug('Translate?',
                 this.getConfig().title, ' -> ', finalTitle.join(' - '));
-            this.getTitleService().setTitle(finalTitle.join(' - '));
+            this.titleService.setTitle(finalTitle.join(' - '));
         }
 
         // apply meta-data
-        if (this.getMetaService() && this.getConfig().meta && this.getConfig().meta.length) {
+        if (this.metaService && this.getConfig().meta && this.getConfig().meta.length) {
             let ms: Meta;
-            ms = this.getMetaService();
+            ms = this.metaService;
             this.getConfig().meta.forEach(meta => {
                 let tag: HTMLMetaElement;
                 tag = ms.getTag(meta.id);

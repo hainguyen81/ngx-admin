@@ -13,7 +13,6 @@ import {IPageHeaderConfig, PageHeaderService} from './services/header.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {isArray} from 'util';
-import Timer = NodeJS.Timer;
 
 @Component({
     selector: 'ngx-app',
@@ -25,16 +24,16 @@ export class AppComponent implements OnInit {
                 @Inject(SeoService) private seoService: SeoService,
                 @Inject(NGXLogger) private logger: NGXLogger,
                 @Inject(TranslateService) private translateService: TranslateService,
-                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
                 @Inject(Router) private router: Router,
-                @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute) {
+                @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
+                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService) {
         analytics || throwError('Could not inject AnalyticsService');
         seoService || throwError('Could not inject SeoService');
         logger || throwError('Could not inject TranslateService');
         translateService || throwError('Could not inject TranslateService');
-        pageHeaderService || throwError('Could not inject PageHeaderService');
         router || throwError('Could not inject Router');
         activatedRoute || throwError('Could not inject ActivatedRoute');
+        pageHeaderService || throwError('Could not inject PageHeaderService');
     }
 
     ngOnInit(): void {
@@ -83,10 +82,10 @@ export class AppComponent implements OnInit {
         ).subscribe((headerConfig: IPageHeaderConfig) => {
             // wait for translation service configuration
             if (headerConfig) {
-                let timer: Timer;
-                timer = setTimeout(() => {
+                let timer: number;
+                timer = window.setTimeout(() => {
                     this.pageHeaderService.setConfig(headerConfig);
-                    clearTimeout(timer);
+                    window.clearTimeout(timer);
                 }, 300);
             }
         });

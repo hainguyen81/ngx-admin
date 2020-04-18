@@ -1,5 +1,5 @@
 import {ErrorHandler, InjectionToken, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
-import {APP_BASE_HREF, DatePipe} from '@angular/common';
+import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
@@ -105,6 +105,7 @@ import {CityDatasource} from '../services/implementation/system/city/city.dataso
 import {ProvinceDbService, ProvinceHttpService} from '../services/implementation/system/province/province.service';
 import {ProvinceDatasource} from '../services/implementation/system/province/province.datasource';
 import '../prototypes/string.prototype';
+import {Meta, Title} from '@angular/platform-browser';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -122,11 +123,13 @@ export const BASE_HREF: InjectionToken<string> =
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
     http || throwError('Not found HttpClient to create TranslateHttpLoader');
-    return new TranslateHttpLoader(http, (baseHref || '').toString().trimLast('/').concat('/assets/i18n/'));
+    return new TranslateHttpLoader(http, (baseHref || '').concat('/assets/i18n/'));
 }
 
 export const CommonProviders: StaticProvider[] = [
-    {provide: APP_BASE_HREF, useFactory: BaseHrefProvider},
+    {provide: DOCUMENT, useValue: document},
+    {provide: APP_BASE_HREF, useFactory: BaseHrefProvider, deps: []},
+    {provide: BASE_HREF, useFactory: BaseHrefProvider, deps: []},
     {provide: SW_VAPID_PUBLIC_KEY, useValue: COMMON.sw.vapid_public_key},
     {provide: LOCALE_ID, useValue: 'vi'},
     {provide: DatePipe, useClass: DatePipe, deps: []},
@@ -137,6 +140,8 @@ export const CommonProviders: StaticProvider[] = [
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
+    {provide: Title, useClass: Title, deps: [DOCUMENT]},
+    {provide: Meta, useClass: Meta, deps: [DOCUMENT]},
     {
         provide: ErrorHandler, useClass: GlobalErrorsHandler,
         deps: [TranslateService, ToastrService, NGXLogger, Injector],

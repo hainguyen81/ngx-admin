@@ -50,8 +50,19 @@ export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
 export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
 
 /**
- * Context menu item declaration
+ * Invoke the specified {IContextMenu} item
+ * @param item to invoke
+ * @param property item property to invoke/eval
+ * @param args invocation arguments
+ * @param defaultValue default value
  */
+export function __evalContextMenuItem(
+    item?: IContextMenu, property?: string, args?: any | null, defaultValue?: any): any {
+    return (item && (property || '').length && typeof item[property] === 'function'
+        ? item[property]['apply'](this, [args]) || defaultValue
+        : item && (property || '').length && typeof item[property] !== 'function'
+            ? item[property] || defaultValue : defaultValue);
+}
 export interface IContextMenu {
     id?: ((item?: any) => string) | string;
     icon: ((item?: any) => string) | string;
@@ -1044,5 +1055,16 @@ export class AbstractComponent
      */
     protected debugActiveElement() {
         this.getLogger().debug('Current activated element', document.activeElement);
+    }
+
+    /**
+     * Support for eval the specified context menu item.
+     * @param item to eval
+     * @param property item property to eval
+     * @param defaultValue default value
+     */
+    protected evalContextMenuItem(
+        item?: IContextMenu | null, property?: string | null, defaultValue?: any | null): any {
+        return __evalContextMenuItem(item, property, item, defaultValue);
     }
 }

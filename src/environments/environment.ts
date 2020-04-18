@@ -10,5 +10,5 @@
 
 export const environment = {
     production: false,
-    baseHref: '/',
+    baseHref: 'https://hainguyen81.github.io/ngx-admin/',
 };
