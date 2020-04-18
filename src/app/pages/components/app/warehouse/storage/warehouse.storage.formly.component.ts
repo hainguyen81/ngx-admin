@@ -73,7 +73,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'w-50 pl-0 pr-2',
                                 key: 'country',
                                 type: 'select-ex-country',
                                 templateOptions: {
@@ -82,7 +82,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'w-50 pl-2 pr-0',
                                 key: 'city',
                                 type: 'select',
                                 templateOptions: {
@@ -102,7 +102,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'w-50 pl-0 pr-2',
                                 key: 'state_province',
                                 type: 'select',
                                 templateOptions: {
@@ -116,7 +116,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'w-50 pl-2 pr-0',
                                 key: 'zip_code',
                                 type: 'input',
                                 templateOptions: {

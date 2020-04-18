@@ -13,10 +13,15 @@ import {IPageHeaderConfig, PageHeaderService} from './services/header.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {isArray} from 'util';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'ngx-app',
     template: `<router-outlet></router-outlet>`,
+    providers: [
+        Title,
+        Meta,
+    ],
 })
 export class AppComponent implements OnInit {
 
@@ -26,7 +31,9 @@ export class AppComponent implements OnInit {
                 @Inject(TranslateService) private translateService: TranslateService,
                 @Inject(Router) private router: Router,
                 @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
-                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService) {
+                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
+                titleService?: Title | null,
+                metaService?: Meta | null) {
         analytics || throwError('Could not inject AnalyticsService');
         seoService || throwError('Could not inject SeoService');
         logger || throwError('Could not inject TranslateService');
@@ -34,6 +41,12 @@ export class AppComponent implements OnInit {
         router || throwError('Could not inject Router');
         activatedRoute || throwError('Could not inject ActivatedRoute');
         pageHeaderService || throwError('Could not inject PageHeaderService');
+        if (!pageHeaderService.titleService && titleService) {
+            pageHeaderService.titleService = titleService;
+        }
+        if (!pageHeaderService.metaService && metaService) {
+            pageHeaderService.metaService = metaService;
+        }
     }
 
     ngOnInit(): void {
