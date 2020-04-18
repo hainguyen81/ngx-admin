@@ -5,5 +5,6 @@
  */
 export const environment = {
     production: true,
+    databaseName: 'HiSystem',
     baseHref: 'https://hainguyen81.github.io/ngx-admin/',
 };

@@ -31,9 +31,7 @@ export class AppComponent implements OnInit {
                 @Inject(TranslateService) private translateService: TranslateService,
                 @Inject(Router) private router: Router,
                 @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
-                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
-                titleService?: Title | null,
-                metaService?: Meta | null) {
+                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService) {
         analytics || throwError('Could not inject AnalyticsService');
         seoService || throwError('Could not inject SeoService');
         logger || throwError('Could not inject TranslateService');
@@ -41,12 +39,6 @@ export class AppComponent implements OnInit {
         router || throwError('Could not inject Router');
         activatedRoute || throwError('Could not inject ActivatedRoute');
         pageHeaderService || throwError('Could not inject PageHeaderService');
-        if (!pageHeaderService.titleService && titleService) {
-            pageHeaderService.titleService = titleService;
-        }
-        if (!pageHeaderService.metaService && metaService) {
-            pageHeaderService.metaService = metaService;
-        }
     }
 
     ngOnInit(): void {

@@ -1,4 +1,5 @@
 import {DBConfig} from 'ngx-indexed-db';
+import {environment} from '../../environments/environment';
 
 export const DB_STORE: any = {
     auth: 'auth',
@@ -21,7 +22,7 @@ export const DB_STORE: any = {
 };
 
 export const dbConfig: DBConfig = {
-    name: 'qDb',
+    name: environment.databaseName,
     version: 1,
     objectStoresMeta: [{
         store: DB_STORE.auth,

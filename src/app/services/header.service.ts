@@ -49,6 +49,7 @@ export class PageHeaderService implements IPageHeaderService {
      * @return the page title service {Title} instance
      */
     get titleService(): Title {
+        this._titleService = (this._titleService || new Title(document));
         return this._titleService;
     }
     set titleService(_titleService: Title) {
@@ -60,6 +61,7 @@ export class PageHeaderService implements IPageHeaderService {
      * @return the page meta-data service {Meta} instance
      */
     get metaService(): Meta {
+        this._metaService = (this._metaService || new Meta(document));
         return this._metaService;
     }
     set metaService(_metaService: Meta) {
