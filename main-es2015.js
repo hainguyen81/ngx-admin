@@ -8601,6 +8601,8 @@ let PageHeaderService = class PageHeaderService {
         this._metaService = _metaService;
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject NGXLogger');
         translateService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject TranslateService');
+        _titleService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject Title');
+        _metaService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject Meta');
     }
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -8663,6 +8665,7 @@ let PageHeaderService = class PageHeaderService {
             return;
         }
         // apply title
+        this.getLogger().debug('Resolve page header', this.titleService, this.metaService, this.getConfig());
         if (this.titleService && (this.getConfig().title || '').length) {
             let translate;
             translate = this.getTranslateService();
@@ -13265,7 +13268,7 @@ class PromiseUtils {
         if (!promise || !Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_2__["isPromise"])(promise)) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(null);
         }
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise.then(value => value));
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise);
     }
     /**
      * Invoke multiple promises for combining into one promise by running sequentially

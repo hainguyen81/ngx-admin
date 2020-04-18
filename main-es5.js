@@ -14721,6 +14721,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         this._metaService = _metaService;
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject NGXLogger');
         translateService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject TranslateService');
+        _titleService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject Title');
+        _metaService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject Meta');
       } // -------------------------------------------------
       // GETTERS/SETTERS
       // -------------------------------------------------
@@ -14783,6 +14785,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return;
           } // apply title
 
+
+          this.getLogger().debug('Resolve page header', this.titleService, this.metaService, this.getConfig());
 
           if (this.titleService && (this.getConfig().title || '').length) {
             var translate;
@@ -23286,9 +23290,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(null);
           }
 
-          return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise.then(function (value) {
-            return value;
-          }));
+          return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise);
         }
         /**
          * Invoke multiple promises for combining into one promise by running sequentially
