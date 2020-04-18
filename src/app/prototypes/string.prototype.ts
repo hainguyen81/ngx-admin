@@ -21,6 +21,12 @@ declare global {
          * @param fillStr to fill
          */
         padCenter(maxLength: number, fillStr: string): string;
+
+        /**
+         * Trim the specified {trimStr} at the last position
+         * @param trimStr to trim
+         */
+        trimLast(trimStr?: string | '/'): string;
     }
 }
 
@@ -62,5 +68,20 @@ function __padCenterStr(str: string, maxLength: number, fillString: string) {
 if (!String.prototype.padCenter) {
     String.prototype.padCenter = function(maxLength: number, fillStr: string) {
         return __padCenterStr(this, maxLength, fillStr);
+    };
+}
+
+export function __trimLast(str: string, trimStr?: string | '/'): string {
+    let _this: string;
+    _this = (str || '');
+    if (_this.lastIndexOf(trimStr) >= 0) {
+        return _this.substring(0, _this.lastIndexOf(trimStr));
+    }
+    return _this;
+}
+
+if (!String.prototype.trimLast) {
+    String.prototype.trimLast = function(trimStr?: string | '/') {
+        return __trimLast(this, trimStr);
     };
 }

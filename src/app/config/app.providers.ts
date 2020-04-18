@@ -104,6 +104,7 @@ import {CityDbService, CityHttpService} from '../services/implementation/system/
 import {CityDatasource} from '../services/implementation/system/city/city.datasource';
 import {ProvinceDbService, ProvinceHttpService} from '../services/implementation/system/province/province.service';
 import {ProvinceDatasource} from '../services/implementation/system/province/province.datasource';
+import '../prototypes/string.prototype';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -121,7 +122,7 @@ export const BASE_HREF: InjectionToken<string> =
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
     http || throwError('Not found HttpClient to create TranslateHttpLoader');
-    return new TranslateHttpLoader(http, (baseHref || '').concat('/assets/i18n/'));
+    return new TranslateHttpLoader(http, (baseHref || '').toString().trimLast('/').concat('/assets/i18n/'));
 }
 
 export const CommonProviders: StaticProvider[] = [
