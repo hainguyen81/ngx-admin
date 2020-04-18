@@ -1,4 +1,4 @@
-import {ErrorHandler, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
+import {ErrorHandler, InjectionToken, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
@@ -105,14 +105,27 @@ import {CityDatasource} from '../services/implementation/system/city/city.dataso
 import {ProvinceDbService, ProvinceHttpService} from '../services/implementation/system/province/province.service';
 import {ProvinceDatasource} from '../services/implementation/system/province/province.datasource';
 
+export function BaseHrefProvider(): string {
+    let baseElement: HTMLCollectionBase;
+    baseElement = <HTMLCollectionBase>document.getElementsByTagName('base');
+    let href: string;
+    href = (baseElement && baseElement.item(0)
+        && baseElement.item(0).hasAttribute('href')
+        ? baseElement.item(0).getAttribute('href') : environment.baseHref);
+    return href;
+}
+
+export const BASE_HREF: InjectionToken<string> =
+    new InjectionToken<string>('Application baseHref injection');
+
 // required for AOT compilation
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
     http || throwError('Not found HttpClient to create TranslateHttpLoader');
-    return new TranslateHttpLoader(http, environment.baseHref.concat('/assets/i18n/'));
+    return new TranslateHttpLoader(http, (baseHref || '').concat('/assets/i18n/'));
 }
 
 export const CommonProviders: StaticProvider[] = [
-    {provide: APP_BASE_HREF, useValue: environment.baseHref},
+    {provide: APP_BASE_HREF, useFactory: BaseHrefProvider},
     {provide: SW_VAPID_PUBLIC_KEY, useValue: COMMON.sw.vapid_public_key},
     {provide: LOCALE_ID, useValue: 'vi'},
     {provide: DatePipe, useClass: DatePipe, deps: []},
@@ -132,7 +145,7 @@ export const CommonProviders: StaticProvider[] = [
 export const I18NProviders: StaticProvider[] = [
     {
         provide: TranslateLoader, useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
+        deps: [HttpClient, APP_BASE_HREF],
     },
     {
         provide: PageHeaderService, useClass: PageHeaderService,
