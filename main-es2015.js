@@ -7451,8 +7451,8 @@ let PagesGuard = class PagesGuard {
     getLogger() {
         return this.logger;
     }
-    canActivateChild(childRoute, state) {
-        return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModuleService().count()
+    getModulesCounter(state) {
+        return this.getModuleService().count()
             .then(modulesCount => {
             if (!modulesCount || modulesCount <= 0) {
                 this.getToasterService().error(this.getTranslateService().instant('common.toast.unknown'), this.getTranslateService().instant('app'));
@@ -7461,7 +7461,10 @@ let PagesGuard = class PagesGuard {
         }, (errors) => {
             this.getLogger().error('ERROR - Check child route activate', state, errors);
             return false;
-        }));
+        });
+    }
+    canActivateChild(childRoute, state) {
+        return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModulesCounter(state));
     }
 };
 PagesGuard.ctorParameters = () => [

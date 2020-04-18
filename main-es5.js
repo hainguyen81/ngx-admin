@@ -12856,11 +12856,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           return this.logger;
         }
       }, {
-        key: "canActivateChild",
-        value: function canActivateChild(childRoute, state) {
+        key: "getModulesCounter",
+        value: function getModulesCounter(state) {
           var _this31 = this;
 
-          return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModuleService().count().then(function (modulesCount) {
+          return this.getModuleService().count().then(function (modulesCount) {
             if (!modulesCount || modulesCount <= 0) {
               _this31.getToasterService().error(_this31.getTranslateService().instant('common.toast.unknown'), _this31.getTranslateService().instant('app'));
             }
@@ -12870,7 +12870,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             _this31.getLogger().error('ERROR - Check child route activate', state, errors);
 
             return false;
-          }));
+          });
+        }
+      }, {
+        key: "canActivateChild",
+        value: function canActivateChild(childRoute, state) {
+          return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModulesCounter(state));
         }
       }]);
 
