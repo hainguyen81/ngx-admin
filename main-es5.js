@@ -8588,7 +8588,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     function HttpLoaderFactory(http) {
       http || Object(rxjs__WEBPACK_IMPORTED_MODULE_28__["throwError"])('Not found HttpClient to create TranslateHttpLoader');
-      return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__["TranslateHttpLoader"](http);
+      return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__["TranslateHttpLoader"](http, _environments_environment__WEBPACK_IMPORTED_MODULE_12__["environment"].baseHref.concat('/assets/i18n/'));
     }
 
     var CommonProviders = [{
@@ -12868,13 +12868,49 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     !*** ./src/app/prototypes/array.prototypes.ts ***!
     \************************************************/
 
-  /*! no exports provided */
+  /*! exports provided: __removeIf, __remove, __inject, __unique, __diff, __isDiff */
 
   /***/
   function srcAppPrototypesArrayPrototypesTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "__removeIf", function () {
+      return __removeIf;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "__remove", function () {
+      return __remove;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "__inject", function () {
+      return __inject;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "__unique", function () {
+      return __unique;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "__diff", function () {
+      return __diff;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "__isDiff", function () {
+      return __isDiff;
+    });
     /* harmony import */
 
 
@@ -12882,25 +12918,184 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /*! tslib */
     "./node_modules/tslib/tslib.es6.js");
 
-    if (!Array.prototype.removeIf) {
-      Array.prototype.removeIf = function (condition) {
-        var retArray;
-        retArray = [].concat(this);
+    function __removeIf(array, condition) {
+      var retArray;
+      retArray = [].concat(array || []);
 
-        if (typeof condition === 'function') {
-          var index;
-          index = 0;
+      if (typeof condition === 'function') {
+        var index;
+        index = 0;
 
-          while (index < this.length) {
-            if (condition.apply(retArray, [retArray[index], index])) {
-              retArray.splice(index, 1);
-            } else {
-              ++index;
-            }
+        while (index < this.length) {
+          if (condition.apply(retArray, [retArray[index], index])) {
+            retArray.splice(index, 1);
+          } else {
+            ++index;
           }
         }
+      }
 
-        return retArray;
+      return retArray;
+    }
+
+    if (!Array.prototype.removeIf) {
+      Array.prototype.removeIf = function (condition) {
+        return __removeIf(this, condition);
+      };
+    }
+
+    function __remove(array) {
+      var itemIdx;
+      var arrayIndex;
+      var remItem;
+
+      for (var _len3 = arguments.length, items = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        items[_key3 - 1] = arguments[_key3];
+      }
+
+      itemIdx = (items || []).length;
+
+      while (itemIdx && (array || []).length) {
+        remItem = items[--itemIdx];
+
+        while ((arrayIndex = (array || []).indexOf(remItem)) !== -1) {
+          array.splice(arrayIndex, 1);
+        }
+      }
+    }
+
+    if (!Array.prototype.remove) {
+      Array.prototype.remove = function () {
+        for (var _len4 = arguments.length, items = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+          items[_key4] = arguments[_key4];
+        }
+
+        return __remove.apply(void 0, [this].concat(items));
+      };
+    }
+
+    if (!Array.prototype.clear) {
+      Array.prototype.clear = function () {
+        return this.splice(0, this.length);
+      };
+    }
+
+    if (!Array.prototype.first) {
+      Array.prototype.first = function () {
+        return this.length ? this[0] : null;
+      };
+    }
+
+    if (!Array.prototype.last) {
+      Array.prototype.last = function () {
+        return this.length ? this[this.length - 1] : null;
+      };
+    }
+
+    function __inject(array, index) {
+      var subItems;
+      subItems = [];
+
+      for (var _len5 = arguments.length, items = new Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
+        items[_key5 - 2] = arguments[_key5];
+      }
+
+      if (items instanceof Array || Object.prototype.toString.call(items) === '[object Array]') {
+        subItems = [].concat(items);
+      } else if (items) {
+        subItems.push(items);
+      }
+
+      if (subItems.length && !isNaN(index) && 0 <= index && index < this.length) {
+        array.splice.apply(array, [index + 1, 0].concat(_toConsumableArray(subItems)));
+      }
+    }
+
+    if (!Array.prototype.inject) {
+      Array.prototype.inject = function (index) {
+        for (var _len6 = arguments.length, items = new Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+          items[_key6 - 1] = arguments[_key6];
+        }
+
+        __inject.apply(void 0, [this, index].concat(items));
+      };
+    }
+
+    function __unique(array) {
+      var cloned;
+      cloned = (array || []).concat();
+
+      if ((cloned || []).length) {
+        for (var i = 0; i < cloned.length; i++) {
+          for (var j = i + 1; j < cloned.length; j++) {
+            if (cloned[i] === cloned[j]) cloned.splice(j--, 1);
+          }
+        }
+      }
+
+      return cloned;
+    }
+
+    if (!Array.prototype.unique) {
+      Array.prototype.unique = function () {
+        return __unique(this);
+      };
+    }
+
+    if (!Array.prototype.contains) {
+      Array.prototype.contains = function (item) {
+        return this.length && this.indexOf(item) >= 0;
+      };
+    }
+
+    function __diff(a, b) {
+      var diffItems;
+      diffItems = [];
+      var clonedB;
+      clonedB = (b || []).concat();
+
+      for (var i = 0; i < (a || []).length; i++) {
+        if (!clonedB.contains(a[i])) {
+          diffItems.push(a[i]);
+        } else {
+          clonedB.splice(clonedB.indexOf(a[i]), 1);
+        }
+      }
+
+      for (var _i2 = 0; _i2 < clonedB.length; _i2++) {
+        if (!diffItems.contains(clonedB[_i2])) {
+          diffItems.push(clonedB[_i2]);
+        }
+      }
+
+      return diffItems;
+    }
+
+    if (!Array.prototype.diff) {
+      Array.prototype.diff = function (other) {
+        return __diff(this, other);
+      };
+    }
+
+    function __isDiff(a, b) {
+      var isDiff;
+      isDiff = (b || []).length !== (a || []).length;
+
+      if (!isDiff) {
+        for (var i = 0; i < (a || []).length; i++) {
+          if (!(b || []).contains(a[i])) {
+            isDiff = true;
+            break;
+          }
+        }
+      }
+
+      return isDiff;
+    }
+
+    if (!Array.prototype.isDiff) {
+      Array.prototype.isDiff = function (other) {
+        return __isDiff(this, other);
       };
     }
     /***/
@@ -13237,8 +13432,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         this.entityKey = entityKey;
 
         this.updateExecutor = function (resolve, reject) {
-          for (var _len3 = arguments.length, args = new Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
-            args[_key3 - 2] = arguments[_key3];
+          for (var _len7 = arguments.length, args = new Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
+            args[_key7 - 2] = arguments[_key7];
           }
 
           if (args && args.length) {
@@ -15229,8 +15424,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this55 = _super20.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_5__["DB_STORE"].module);
 
         _this55.deleteExecutor = function (resolve, reject) {
-          for (var _len4 = arguments.length, args = new Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
-            args[_key4 - 2] = arguments[_key4];
+          for (var _len8 = arguments.length, args = new Array(_len8 > 2 ? _len8 - 2 : 0), _key8 = 2; _key8 < _len8; _key8++) {
+            args[_key8 - 2] = arguments[_key8];
           }
 
           if (args && args.length) {
@@ -15247,8 +15442,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         };
 
         _this55.updateExecutor = function (resolve, reject) {
-          for (var _len5 = arguments.length, args = new Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
-            args[_key5 - 2] = arguments[_key5];
+          for (var _len9 = arguments.length, args = new Array(_len9 > 2 ? _len9 - 2 : 0), _key9 = 2; _key9 < _len9; _key9++) {
+            args[_key9 - 2] = arguments[_key9];
           }
 
           if (args && args.length) {
@@ -15583,8 +15778,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this61 = _super22.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].city);
 
         _this61.deleteExecutor = function (resolve, reject) {
-          for (var _len6 = arguments.length, args = new Array(_len6 > 2 ? _len6 - 2 : 0), _key6 = 2; _key6 < _len6; _key6++) {
-            args[_key6 - 2] = arguments[_key6];
+          for (var _len10 = arguments.length, args = new Array(_len10 > 2 ? _len10 - 2 : 0), _key10 = 2; _key10 < _len10; _key10++) {
+            args[_key10 - 2] = arguments[_key10];
           }
 
           if (args && args.length) {
@@ -15982,8 +16177,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this68 = _super25.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].country);
 
         _this68.deleteExecutor = function (resolve, reject) {
-          for (var _len7 = arguments.length, args = new Array(_len7 > 2 ? _len7 - 2 : 0), _key7 = 2; _key7 < _len7; _key7++) {
-            args[_key7 - 2] = arguments[_key7];
+          for (var _len11 = arguments.length, args = new Array(_len11 > 2 ? _len11 - 2 : 0), _key11 = 2; _key11 < _len11; _key11++) {
+            args[_key11 - 2] = arguments[_key11];
           }
 
           if (args && args.length) {
@@ -16381,8 +16576,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this75 = _super28.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].customer);
 
         _this75.deleteExecutor = function (resolve, reject) {
-          for (var _len8 = arguments.length, args = new Array(_len8 > 2 ? _len8 - 2 : 0), _key8 = 2; _key8 < _len8; _key8++) {
-            args[_key8 - 2] = arguments[_key8];
+          for (var _len12 = arguments.length, args = new Array(_len12 > 2 ? _len12 - 2 : 0), _key12 = 2; _key12 < _len12; _key12++) {
+            args[_key12 - 2] = arguments[_key12];
           }
 
           if (args && args.length) {
@@ -16784,8 +16979,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this82 = _super31.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].organization);
 
         _this82.deleteExecutor = function (resolve, reject) {
-          for (var _len9 = arguments.length, args = new Array(_len9 > 2 ? _len9 - 2 : 0), _key9 = 2; _key9 < _len9; _key9++) {
-            args[_key9 - 2] = arguments[_key9];
+          for (var _len13 = arguments.length, args = new Array(_len13 > 2 ? _len13 - 2 : 0), _key13 = 2; _key13 < _len13; _key13++) {
+            args[_key13 - 2] = arguments[_key13];
           }
 
           if (args && args.length) {
@@ -17187,8 +17382,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this89 = _super34.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].province);
 
         _this89.deleteExecutor = function (resolve, reject) {
-          for (var _len10 = arguments.length, args = new Array(_len10 > 2 ? _len10 - 2 : 0), _key10 = 2; _key10 < _len10; _key10++) {
-            args[_key10 - 2] = arguments[_key10];
+          for (var _len14 = arguments.length, args = new Array(_len14 > 2 ? _len14 - 2 : 0), _key14 = 2; _key14 < _len14; _key14++) {
+            args[_key14 - 2] = arguments[_key14];
           }
 
           if (args && args.length) {
@@ -17588,8 +17783,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this96 = _super37.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].user);
 
         _this96.deleteExecutor = function (resolve, reject) {
-          for (var _len11 = arguments.length, args = new Array(_len11 > 2 ? _len11 - 2 : 0), _key11 = 2; _key11 < _len11; _key11++) {
-            args[_key11 - 2] = arguments[_key11];
+          for (var _len15 = arguments.length, args = new Array(_len15 > 2 ? _len15 - 2 : 0), _key15 = 2; _key15 < _len15; _key15++) {
+            args[_key15 - 2] = arguments[_key15];
           }
 
           if (args && args.length) {
@@ -18001,8 +18196,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this103 = _super40.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_adjust_detail);
 
         _this103.deleteExecutor = function (resolve, reject) {
-          for (var _len12 = arguments.length, args = new Array(_len12 > 2 ? _len12 - 2 : 0), _key12 = 2; _key12 < _len12; _key12++) {
-            args[_key12 - 2] = arguments[_key12];
+          for (var _len16 = arguments.length, args = new Array(_len16 > 2 ? _len16 - 2 : 0), _key16 = 2; _key16 < _len16; _key16++) {
+            args[_key16 - 2] = arguments[_key16];
           }
 
           if (args && args.length) {
@@ -18400,8 +18595,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this110 = _super43.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_adjust);
 
         _this110.deleteExecutor = function (resolve, reject) {
-          for (var _len13 = arguments.length, args = new Array(_len13 > 2 ? _len13 - 2 : 0), _key13 = 2; _key13 < _len13; _key13++) {
-            args[_key13 - 2] = arguments[_key13];
+          for (var _len17 = arguments.length, args = new Array(_len17 > 2 ? _len17 - 2 : 0), _key17 = 2; _key17 < _len17; _key17++) {
+            args[_key17 - 2] = arguments[_key17];
           }
 
           if (args && args.length) {
@@ -18804,8 +18999,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this117 = _super46.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_category);
 
         _this117.deleteExecutor = function (resolve, reject) {
-          for (var _len14 = arguments.length, args = new Array(_len14 > 2 ? _len14 - 2 : 0), _key14 = 2; _key14 < _len14; _key14++) {
-            args[_key14 - 2] = arguments[_key14];
+          for (var _len18 = arguments.length, args = new Array(_len18 > 2 ? _len18 - 2 : 0), _key18 = 2; _key18 < _len18; _key18++) {
+            args[_key18 - 2] = arguments[_key18];
           }
 
           if (args && args.length) {
@@ -19203,8 +19398,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this124 = _super49.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_inventory_detail);
 
         _this124.deleteExecutor = function (resolve, reject) {
-          for (var _len15 = arguments.length, args = new Array(_len15 > 2 ? _len15 - 2 : 0), _key15 = 2; _key15 < _len15; _key15++) {
-            args[_key15 - 2] = arguments[_key15];
+          for (var _len19 = arguments.length, args = new Array(_len19 > 2 ? _len19 - 2 : 0), _key19 = 2; _key19 < _len19; _key19++) {
+            args[_key19 - 2] = arguments[_key19];
           }
 
           if (args && args.length) {
@@ -19602,8 +19797,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this131 = _super52.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_inventory);
 
         _this131.deleteExecutor = function (resolve, reject) {
-          for (var _len16 = arguments.length, args = new Array(_len16 > 2 ? _len16 - 2 : 0), _key16 = 2; _key16 < _len16; _key16++) {
-            args[_key16 - 2] = arguments[_key16];
+          for (var _len20 = arguments.length, args = new Array(_len20 > 2 ? _len20 - 2 : 0), _key20 = 2; _key20 < _len20; _key20++) {
+            args[_key20 - 2] = arguments[_key20];
           }
 
           if (args && args.length) {
@@ -20001,8 +20196,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this138 = _super55.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_item);
 
         _this138.deleteExecutor = function (resolve, reject) {
-          for (var _len17 = arguments.length, args = new Array(_len17 > 2 ? _len17 - 2 : 0), _key17 = 2; _key17 < _len17; _key17++) {
-            args[_key17 - 2] = arguments[_key17];
+          for (var _len21 = arguments.length, args = new Array(_len21 > 2 ? _len21 - 2 : 0), _key21 = 2; _key21 < _len21; _key21++) {
+            args[_key21 - 2] = arguments[_key21];
           }
 
           if (args && args.length) {
@@ -20400,8 +20595,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this145 = _super58.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_order_detail);
 
         _this145.deleteExecutor = function (resolve, reject) {
-          for (var _len18 = arguments.length, args = new Array(_len18 > 2 ? _len18 - 2 : 0), _key18 = 2; _key18 < _len18; _key18++) {
-            args[_key18 - 2] = arguments[_key18];
+          for (var _len22 = arguments.length, args = new Array(_len22 > 2 ? _len22 - 2 : 0), _key22 = 2; _key22 < _len22; _key22++) {
+            args[_key22 - 2] = arguments[_key22];
           }
 
           if (args && args.length) {
@@ -20799,8 +20994,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this152 = _super61.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_order);
 
         _this152.deleteExecutor = function (resolve, reject) {
-          for (var _len19 = arguments.length, args = new Array(_len19 > 2 ? _len19 - 2 : 0), _key19 = 2; _key19 < _len19; _key19++) {
-            args[_key19 - 2] = arguments[_key19];
+          for (var _len23 = arguments.length, args = new Array(_len23 > 2 ? _len23 - 2 : 0), _key23 = 2; _key23 < _len23; _key23++) {
+            args[_key23 - 2] = arguments[_key23];
           }
 
           if (args && args.length) {
@@ -21198,8 +21393,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         _this159 = _super64.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse);
 
         _this159.deleteExecutor = function (resolve, reject) {
-          for (var _len20 = arguments.length, args = new Array(_len20 > 2 ? _len20 - 2 : 0), _key20 = 2; _key20 < _len20; _key20++) {
-            args[_key20 - 2] = arguments[_key20];
+          for (var _len24 = arguments.length, args = new Array(_len24 > 2 ? _len24 - 2 : 0), _key24 = 2; _key24 < _len24; _key24++) {
+            args[_key24 - 2] = arguments[_key24];
           }
 
           if (args && args.length) {
@@ -21737,8 +21932,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           var encrypted;
           encrypted = '';
 
-          for (var _len21 = arguments.length, values = new Array(_len21 > 1 ? _len21 - 1 : 0), _key21 = 1; _key21 < _len21; _key21++) {
-            values[_key21 - 1] = arguments[_key21];
+          for (var _len25 = arguments.length, values = new Array(_len25 > 1 ? _len25 - 1 : 0), _key25 = 1; _key25 < _len25; _key25++) {
+            values[_key25 - 1] = arguments[_key25];
           }
 
           if (values && values.length) {
@@ -21773,8 +21968,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           var encryptedValues;
           encryptedValues = [];
 
-          for (var _len22 = arguments.length, values = new Array(_len22 > 1 ? _len22 - 1 : 0), _key22 = 1; _key22 < _len22; _key22++) {
-            values[_key22 - 1] = arguments[_key22];
+          for (var _len26 = arguments.length, values = new Array(_len26 > 1 ? _len26 - 1 : 0), _key26 = 1; _key26 < _len26; _key26++) {
+            values[_key26 - 1] = arguments[_key26];
           }
 
           if (values && values.length) {
@@ -22471,8 +22666,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
          * @return true for the event whether came from one of the specified keys; else false
          */
         value: function isSpecifiedKey(e) {
-          for (var _len23 = arguments.length, detectedKeys = new Array(_len23 > 1 ? _len23 - 1 : 0), _key23 = 1; _key23 < _len23; _key23++) {
-            detectedKeys[_key23 - 1] = arguments[_key23];
+          for (var _len27 = arguments.length, detectedKeys = new Array(_len27 > 1 ? _len27 - 1 : 0), _key27 = 1; _key27 < _len27; _key27++) {
+            detectedKeys[_key27 - 1] = arguments[_key27];
           }
 
           if (!e || !detectedKeys || !detectedKeys.length) {
@@ -22742,8 +22937,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "createInstanceWithArguments",
         value: function createInstanceWithArguments(type) {
-          for (var _len24 = arguments.length, args = new Array(_len24 > 1 ? _len24 - 1 : 0), _key24 = 1; _key24 < _len24; _key24++) {
-            args[_key24 - 1] = arguments[_key24];
+          for (var _len28 = arguments.length, args = new Array(_len28 > 1 ? _len28 - 1 : 0), _key28 = 1; _key28 < _len28; _key28++) {
+            args[_key28 - 1] = arguments[_key28];
           }
 
           return new type(args);
@@ -22822,12 +23017,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "ifDefined",
         value: function ifDefined() {
-          for (var _len25 = arguments.length, args = new Array(_len25), _key25 = 0; _key25 < _len25; _key25++) {
-            args[_key25] = arguments[_key25];
+          for (var _len29 = arguments.length, args = new Array(_len29), _key29 = 0; _key29 < _len29; _key29++) {
+            args[_key29] = arguments[_key29];
           }
 
-          for (var _i2 = 0, _args = args; _i2 < _args.length; _i2++) {
-            var arg = _args[_i2];
+          for (var _i3 = 0, _args = args; _i3 < _args.length; _i3++) {
+            var arg = _args[_i3];
 
             if (arg) {
               return arg;
@@ -23037,8 +23232,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return '';
           }
 
-          for (var _i3 = 0, _Object$values = Object.values(_config_api_config__WEBPACK_IMPORTED_MODULE_1__["API"]); _i3 < _Object$values.length; _i3++) {
-            var api = _Object$values[_i3];
+          for (var _i4 = 0, _Object$values = Object.values(_config_api_config__WEBPACK_IMPORTED_MODULE_1__["API"]); _i4 < _Object$values.length; _i4++) {
+            var api = _Object$values[_i4];
 
             if (api && api.hasOwnProperty('code') && api['code'] === apiCode) {
               return api['client'] || '';

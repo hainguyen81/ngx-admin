@@ -5212,7 +5212,7 @@ __webpack_require__.r(__webpack_exports__);
 // required for AOT compilation
 function HttpLoaderFactory(http) {
     http || Object(rxjs__WEBPACK_IMPORTED_MODULE_28__["throwError"])('Not found HttpClient to create TranslateHttpLoader');
-    return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__["TranslateHttpLoader"](http);
+    return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__["TranslateHttpLoader"](http, _environments_environment__WEBPACK_IMPORTED_MODULE_12__["environment"].baseHref.concat('/assets/i18n/'));
 }
 const CommonProviders = [
     { provide: _angular_common__WEBPACK_IMPORTED_MODULE_2__["APP_BASE_HREF"], useValue: _environments_environment__WEBPACK_IMPORTED_MODULE_12__["environment"].baseHref },
@@ -7472,30 +7472,156 @@ PagesGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!************************************************!*\
   !*** ./src/app/prototypes/array.prototypes.ts ***!
   \************************************************/
-/*! no exports provided */
+/*! exports provided: __removeIf, __remove, __inject, __unique, __diff, __isDiff */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__removeIf", function() { return __removeIf; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__remove", function() { return __remove; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__inject", function() { return __inject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__unique", function() { return __unique; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__diff", function() { return __diff; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__isDiff", function() { return __isDiff; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
-if (!Array.prototype.removeIf) {
-    Array.prototype.removeIf = function (condition) {
-        let retArray;
-        retArray = [].concat(this);
-        if (typeof condition === 'function') {
-            let index;
-            index = 0;
-            while (index < this.length) {
-                if (condition.apply(retArray, [retArray[index], index])) {
-                    retArray.splice(index, 1);
-                }
-                else {
-                    ++index;
-                }
+function __removeIf(array, condition) {
+    let retArray;
+    retArray = [].concat(array || []);
+    if (typeof condition === 'function') {
+        let index;
+        index = 0;
+        while (index < this.length) {
+            if (condition.apply(retArray, [retArray[index], index])) {
+                retArray.splice(index, 1);
+            }
+            else {
+                ++index;
             }
         }
-        return retArray;
+    }
+    return retArray;
+}
+if (!Array.prototype.removeIf) {
+    Array.prototype.removeIf = function (condition) {
+        return __removeIf(this, condition);
+    };
+}
+function __remove(array, ...items) {
+    let itemIdx;
+    let arrayIndex;
+    let remItem;
+    itemIdx = (items || []).length;
+    while (itemIdx && (array || []).length) {
+        remItem = items[--itemIdx];
+        while ((arrayIndex = (array || []).indexOf(remItem)) !== -1) {
+            array.splice(arrayIndex, 1);
+        }
+    }
+}
+if (!Array.prototype.remove) {
+    Array.prototype.remove = function (...items) {
+        return __remove(this, ...items);
+    };
+}
+if (!Array.prototype.clear) {
+    Array.prototype.clear = function () {
+        return this.splice(0, this.length);
+    };
+}
+if (!Array.prototype.first) {
+    Array.prototype.first = function () {
+        return (this.length ? this[0] : null);
+    };
+}
+if (!Array.prototype.last) {
+    Array.prototype.last = function () {
+        return (this.length ? this[this.length - 1] : null);
+    };
+}
+function __inject(array, index, ...items) {
+    let subItems;
+    subItems = [];
+    if (items instanceof Array
+        || Object.prototype.toString.call(items) === '[object Array]') {
+        subItems = [].concat(items);
+    }
+    else if (items) {
+        subItems.push(items);
+    }
+    if (subItems.length && !isNaN(index) && 0 <= index && index < this.length) {
+        array.splice(index + 1, 0, ...subItems);
+    }
+}
+if (!Array.prototype.inject) {
+    Array.prototype.inject = function (index, ...items) {
+        __inject(this, index, ...items);
+    };
+}
+function __unique(array) {
+    let cloned;
+    cloned = (array || []).concat();
+    if ((cloned || []).length) {
+        for (let i = 0; i < cloned.length; i++) {
+            for (let j = i + 1; j < cloned.length; j++) {
+                if (cloned[i] === cloned[j])
+                    cloned.splice(j--, 1);
+            }
+        }
+    }
+    return cloned;
+}
+if (!Array.prototype.unique) {
+    Array.prototype.unique = function () {
+        return __unique(this);
+    };
+}
+if (!Array.prototype.contains) {
+    Array.prototype.contains = function (item) {
+        return (this.length && this.indexOf(item) >= 0);
+    };
+}
+function __diff(a, b) {
+    let diffItems;
+    diffItems = [];
+    let clonedB;
+    clonedB = (b || []).concat();
+    for (let i = 0; i < (a || []).length; i++) {
+        if (!clonedB.contains(a[i])) {
+            diffItems.push(a[i]);
+        }
+        else {
+            clonedB.splice(clonedB.indexOf(a[i]), 1);
+        }
+    }
+    for (let i = 0; i < clonedB.length; i++) {
+        if (!diffItems.contains(clonedB[i])) {
+            diffItems.push(clonedB[i]);
+        }
+    }
+    return diffItems;
+}
+if (!Array.prototype.diff) {
+    Array.prototype.diff = function (other) {
+        return __diff(this, other);
+    };
+}
+function __isDiff(a, b) {
+    let isDiff;
+    isDiff = ((b || []).length !== (a || []).length);
+    if (!isDiff) {
+        for (let i = 0; i < (a || []).length; i++) {
+            if (!(b || []).contains(a[i])) {
+                isDiff = true;
+                break;
+            }
+        }
+    }
+    return isDiff;
+}
+if (!Array.prototype.isDiff) {
+    Array.prototype.isDiff = function (other) {
+        return __isDiff(this, other);
     };
 }
 
