@@ -6062,7 +6062,7 @@ const TOASTER = {
 /*!********************************************************!*\
   !*** ./src/app/pages/components/abstract.component.ts ***!
   \********************************************************/
-/*! exports provided: CONTEXT_MENU_ADD, CONTEXT_MENU_EDIT, CONTEXT_MENU_DELETE, AbstractComponent */
+/*! exports provided: CONTEXT_MENU_ADD, CONTEXT_MENU_EDIT, CONTEXT_MENU_DELETE, __evalContextMenuItem, AbstractComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6070,6 +6070,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONTEXT_MENU_ADD", function() { return CONTEXT_MENU_ADD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONTEXT_MENU_EDIT", function() { return CONTEXT_MENU_EDIT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONTEXT_MENU_DELETE", function() { return CONTEXT_MENU_DELETE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__evalContextMenuItem", function() { return __evalContextMenuItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AbstractComponent", function() { return AbstractComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
@@ -6112,6 +6113,19 @@ var AbstractComponent_1;
 const CONTEXT_MENU_ADD = 'MENU_ADD';
 const CONTEXT_MENU_EDIT = 'MENU_EDIT';
 const CONTEXT_MENU_DELETE = 'MENU_DELETE';
+/**
+ * Invoke the specified {IContextMenu} item
+ * @param item to invoke
+ * @param property item property to invoke/eval
+ * @param args invocation arguments
+ * @param defaultValue default value
+ */
+function __evalContextMenuItem(item, property, args, defaultValue) {
+    return (item && (property || '').length && typeof item[property] === 'function'
+        ? item[property]['apply'](this, [args]) || defaultValue
+        : item && (property || '').length && typeof item[property] !== 'function'
+            ? item[property] || defaultValue : defaultValue);
+}
 /**
  * Abstract component
  */
@@ -6968,6 +6982,15 @@ let AbstractComponent = AbstractComponent_1 = class AbstractComponent {
     debugActiveElement() {
         this.getLogger().debug('Current activated element', document.activeElement);
     }
+    /**
+     * Support for eval the specified context menu item.
+     * @param item to eval
+     * @param property item property to eval
+     * @param defaultValue default value
+     */
+    evalContextMenuItem(item, property, defaultValue) {
+        return __evalContextMenuItem(item, property, item, defaultValue);
+    }
 };
 AbstractComponent.CONTEXT_MENU_SELECTOR = '.ngx-contextmenu';
 AbstractComponent.ctorParameters = () => [
@@ -7451,8 +7474,8 @@ let PagesGuard = class PagesGuard {
     getLogger() {
         return this.logger;
     }
-    getModulesCounter(state) {
-        return this.getModuleService().count()
+    canActivateChild(childRoute, state) {
+        return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModuleService().count()
             .then(modulesCount => {
             if (!modulesCount || modulesCount <= 0) {
                 this.getToasterService().error(this.getTranslateService().instant('common.toast.unknown'), this.getTranslateService().instant('app'));
@@ -7461,10 +7484,7 @@ let PagesGuard = class PagesGuard {
         }, (errors) => {
             this.getLogger().error('ERROR - Check child route activate', state, errors);
             return false;
-        });
-    }
-    canActivateChild(childRoute, state) {
-        return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModulesCounter(state));
+        }));
     }
 };
 PagesGuard.ctorParameters = () => [
@@ -13271,7 +13291,7 @@ class PromiseUtils {
         if (!promise || !Object(rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_2__["isPromise"])(promise)) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(null);
         }
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise.then(value => value));
     }
     /**
      * Invoke multiple promises for combining into one promise by running sequentially

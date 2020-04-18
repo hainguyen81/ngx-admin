@@ -10782,7 +10782,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     !*** ./src/app/pages/components/abstract.component.ts ***!
     \********************************************************/
 
-  /*! exports provided: CONTEXT_MENU_ADD, CONTEXT_MENU_EDIT, CONTEXT_MENU_DELETE, AbstractComponent */
+  /*! exports provided: CONTEXT_MENU_ADD, CONTEXT_MENU_EDIT, CONTEXT_MENU_DELETE, __evalContextMenuItem, AbstractComponent */
 
   /***/
   function srcAppPagesComponentsAbstractComponentTs(module, __webpack_exports__, __webpack_require__) {
@@ -10806,6 +10806,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     __webpack_require__.d(__webpack_exports__, "CONTEXT_MENU_DELETE", function () {
       return CONTEXT_MENU_DELETE;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "__evalContextMenuItem", function () {
+      return __evalContextMenuItem;
     });
     /* harmony export (binding) */
 
@@ -10931,8 +10937,20 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var CONTEXT_MENU_EDIT = 'MENU_EDIT';
     var CONTEXT_MENU_DELETE = 'MENU_DELETE';
     /**
+     * Invoke the specified {IContextMenu} item
+     * @param item to invoke
+     * @param property item property to invoke/eval
+     * @param args invocation arguments
+     * @param defaultValue default value
+     */
+
+    function __evalContextMenuItem(item, property, args, defaultValue) {
+      return item && (property || '').length && typeof item[property] === 'function' ? item[property]['apply'](this, [args]) || defaultValue : item && (property || '').length && typeof item[property] !== 'function' ? item[property] || defaultValue : defaultValue;
+    }
+    /**
      * Abstract component
      */
+
 
     var AbstractComponent = AbstractComponent_1 = /*#__PURE__*/function () {
       // -------------------------------------------------
@@ -12082,6 +12100,18 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         value: function debugActiveElement() {
           this.getLogger().debug('Current activated element', document.activeElement);
         }
+        /**
+         * Support for eval the specified context menu item.
+         * @param item to eval
+         * @param property item property to eval
+         * @param defaultValue default value
+         */
+
+      }, {
+        key: "evalContextMenuItem",
+        value: function evalContextMenuItem(item, property, defaultValue) {
+          return __evalContextMenuItem(item, property, item, defaultValue);
+        }
       }]);
 
       return AbstractComponent;
@@ -12856,11 +12886,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           return this.logger;
         }
       }, {
-        key: "getModulesCounter",
-        value: function getModulesCounter(state) {
+        key: "canActivateChild",
+        value: function canActivateChild(childRoute, state) {
           var _this31 = this;
 
-          return this.getModuleService().count().then(function (modulesCount) {
+          return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModuleService().count().then(function (modulesCount) {
             if (!modulesCount || modulesCount <= 0) {
               _this31.getToasterService().error(_this31.getTranslateService().instant('common.toast.unknown'), _this31.getTranslateService().instant('app'));
             }
@@ -12870,12 +12900,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             _this31.getLogger().error('ERROR - Check child route activate', state, errors);
 
             return false;
-          });
-        }
-      }, {
-        key: "canActivateChild",
-        value: function canActivateChild(childRoute, state) {
-          return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModulesCounter(state));
+          }));
         }
       }]);
 
@@ -23295,7 +23320,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(null);
           }
 
-          return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise);
+          return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["from"])(promise.then(function (value) {
+            return value;
+          }));
         }
         /**
          * Invoke multiple promises for combining into one promise by running sequentially
