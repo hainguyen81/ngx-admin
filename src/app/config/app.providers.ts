@@ -114,7 +114,7 @@ export function BaseHrefProvider(): string {
     href = (baseElement && baseElement.item(0)
         && baseElement.item(0).hasAttribute('href')
         ? baseElement.item(0).getAttribute('href') : environment.baseHref);
-    return href;
+    return (href || '').trimLast('/');
 }
 
 export const BASE_HREF: InjectionToken<string> =
