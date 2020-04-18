@@ -108,7 +108,7 @@ import {ProvinceDatasource} from '../services/implementation/system/province/pro
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
     http || throwError('Not found HttpClient to create TranslateHttpLoader');
-    return new TranslateHttpLoader(http);
+    return new TranslateHttpLoader(http, environment.baseHref.concat('/assets/i18n/'));
 }
 
 export const CommonProviders: StaticProvider[] = [
