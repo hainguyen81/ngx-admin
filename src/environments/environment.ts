@@ -11,5 +11,6 @@
 export const environment = {
     production: false,
     databaseName: 'HiDemo',
-    baseHref: 'https://hainguyen81.github.io/ngx-admin/',
+    // baseHref: 'https://hainguyen81.github.io/ngx-admin/',
+    baseHref: '/',
 };
