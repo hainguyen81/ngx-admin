@@ -2,6 +2,7 @@ import {DBConfig} from 'ngx-indexed-db';
 import {environment} from '../../environments/environment';
 
 export const DB_STORE: any = {
+    third_party: 'third_party',
     auth: 'auth',
     module: 'module',
     user: 'user',
@@ -25,6 +26,15 @@ export const dbConfig: DBConfig = {
     name: environment.databaseName,
     version: 1,
     objectStoresMeta: [{
+        store: DB_STORE.third_party,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'code', keypath: 'code', options: {unique: true}},
+            {name: 'response', keypath: 'response', options: {unique: false}},
+            {name: 'expiredAt', keypath: 'expiredAt', options: {unique: false}},
+        ],
+    }, {
         store: DB_STORE.auth,
         storeConfig: {keyPath: 'uid', autoIncrement: true},
         storeSchema: [
