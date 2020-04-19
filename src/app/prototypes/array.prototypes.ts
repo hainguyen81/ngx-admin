@@ -68,7 +68,7 @@ export function __removeIf<T>(array: Array<T> | T[], condition: (item: T, index?
     if (typeof condition === 'function') {
         let index: number;
         index = 0;
-        while (index < this.length) {
+        while (index < retArray.length) {
             if (condition.apply(retArray, [retArray[index], index])) {
                 retArray.splice(index, 1);
 

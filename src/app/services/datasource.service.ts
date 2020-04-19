@@ -185,7 +185,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         if (this.filterCfg.filters) {
             if (this.filterCfg.andOperator) {
                 this.filterCfg.filters.forEach((fieldConf: any) => {
-                    if (fieldConf['search'].length > 0) {
+                    if ((fieldConf['search'] || '').length) {
                         data = LocalFilter.filter(data,
                             fieldConf['field'], fieldConf['search'], fieldConf['filter']);
                     }
@@ -194,7 +194,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
             } else if (this.filterCfg.filters.length) {
                 let mergedData: any = [];
                 this.filterCfg.filters.forEach((fieldConf: any) => {
-                    if (fieldConf['search'].length > 0) {
+                    if ((fieldConf['search'] || '').length) {
                         mergedData = mergedData.concat(LocalFilter.filter(
                             data, fieldConf['field'], fieldConf['search'], fieldConf['filter']));
                     }

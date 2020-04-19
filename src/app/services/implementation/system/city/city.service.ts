@@ -66,7 +66,7 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
                             // apply country for city API data
                             let cities: ICity[];
                             cities = data as ICity[];
-                            cities = cities.removeIf(city => !city);
+                            cities = (cities || []).removeIf(city => !city);
                             cities.forEach(city => {
                                 city.country_id = country.id;
                             });

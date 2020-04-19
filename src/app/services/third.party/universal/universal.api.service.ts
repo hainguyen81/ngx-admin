@@ -176,8 +176,10 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
         if (this.config) {
             const tokenValue: string = (this.config[
                 UniversalApiHttpService.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME] || this.latestToken);
-            // @ts-ignore
-            options = this.processAccessToken(tokenValue, options);
+            if (tokenValue) {
+                // @ts-ignore
+                options = this.processAccessToken(tokenValue, options);
+            }
         }
         return super.request(url, method, options);
     }

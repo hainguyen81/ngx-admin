@@ -133,7 +133,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
             errors.push(res);
         }
         return of(this.parseResponse(
-            new ServiceResponse(false, res, options.redirectFailure, errors, [])));
+            new ServiceResponse(false, res, (options || {})['redirectFailure'], errors, [])));
     }
 
     @Cacheable()
