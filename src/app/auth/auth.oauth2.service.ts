@@ -8,7 +8,7 @@ import {AbstractHttpService} from '../services/http.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../services/response.service';
 import {ConnectionService} from 'ng-connection-service';
-import {NBX_AUTH_AUTHORIZATION_HEADER, NBX_AUTH_AUTHORIZATION_TYPE} from './auth.interceptor';
+import {NBX_AUTH_AUTHORIZATION_HEADER, NBX_AUTH_AUTHORIZATION_BASIC_TYPE} from './auth.interceptor';
 import {Observable, of, throwError} from 'rxjs';
 import EncryptionUtils from '../utils/encryption.utils';
 import PromiseUtils from '../utils/promise.utils';
@@ -90,7 +90,7 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                             let encryptedToken: string;
                             encryptedToken = EncryptionUtils.base64Encode(':',
                                 u.username || '', u.password || '');
-                            encryptedToken = [NBX_AUTH_AUTHORIZATION_TYPE, encryptedToken].join(' ');
+                            encryptedToken = [NBX_AUTH_AUTHORIZATION_BASIC_TYPE, encryptedToken].join(' ');
                             return (authorization.toLowerCase() === encryptedToken.toLowerCase());
                         });
                         if (foundUsers && foundUsers.length) {

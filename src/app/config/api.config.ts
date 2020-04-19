@@ -1,3 +1,6 @@
+/**
+ * Application API configuration
+ */
 export const API = {
     headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -51,14 +54,5 @@ export const API = {
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
         client: '/dashboard/warehouse/features/item',
-    },
-    third_party: {
-        // https://www.universal-tutorial.com/rest-apis/free-rest-api-for-country-state-city
-        universal: {
-            code: 'UNIVERSAL',
-            name: 'Hai Nguyen',
-            email: 'hainguyenjc@gmail.com',
-            vapid_public_key: 'M70onCyk9pjjPxfwNiM3TyerUYNPGI26ZqBKuqhAP6LmE3Ct2bR91gw8QPg4D5Aom14',
-        },
     },
 };

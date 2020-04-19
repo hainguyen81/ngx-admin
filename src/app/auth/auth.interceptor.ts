@@ -10,7 +10,8 @@ export const NBX_AUTH_AUTHORIZATION_HEADER = 'Authorization';
 export const NBX_AUTH_COMPANY_HEADER = 'Company';
 export const NBX_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
 export const NBX_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
-export const NBX_AUTH_AUTHORIZATION_TYPE = 'Basic';
+export const NBX_AUTH_AUTHORIZATION_BASIC_TYPE = 'Basic';
+export const NBX_AUTH_AUTHORIZATION_BEARER_TYPE = 'Bearer';
 
 @Injectable()
 export class NbxAuthInterceptor extends NbAuthSimpleInterceptor {

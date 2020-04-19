@@ -1,5 +1,5 @@
 import {IModel} from '../base';
-import {API} from '../../../config/api.config';
+import {THIRD_PARTY_API} from '../../../config/third.party.api';
 
 export interface IApiThirdParty extends IModel {
     code: string;
@@ -15,6 +15,6 @@ export default class ApiThirdParty implements IApiThirdParty {
 
 export class UniversalApiThirdParty extends ApiThirdParty {
     constructor() {
-        super(null, API.third_party.universal.code);
+        super(null, THIRD_PARTY_API.universal.code);
     }
 }

@@ -10,19 +10,16 @@ export default class JsonUtils {
      * @param data HTTP response data to parse
      */
     public static parseResponseJson(data?: any): any {
-        if (typeof data === 'string') {
-            try {
-                data = JSON.parse(data);
-            } catch (e) {
+        data = this.safeParseJson(data);
+        if (data) {
+            let isValid: boolean;
+            isValid = (isObject(data) && Object.keys(data).length > 0);
+            isValid = isValid && (isObject(data['status']) && data['status']['code'] === 200);
+            isValid = isValid && (isBoolean(data['status']['success']) && (data['status']['success'] || false));
+            isValid = isValid && (isArray(data['elements']) && Array.from(data['elements']).length > 0);
+            if (isValid) {
+                data = Array.from(data['elements']);
             }
-        }
-        let isValid: boolean;
-        isValid = (isObject(data) && Object.keys(data).length > 0);
-        isValid = isValid && (isObject(data['status']) && data['status']['code'] === 200);
-        isValid = isValid && (isBoolean(data['status']['success']) && (data['status']['success'] || false));
-        isValid = isValid && (isArray(data['elements']) && Array.from(data['elements']).length > 0);
-        if (isValid) {
-            data = Array.from(data['elements']);
         }
         return data;
     }
@@ -49,9 +46,25 @@ export default class JsonUtils {
         if (!source) {
             return undefined;
         }
+        let data: any;
+        data = this.safeParseJson(source);
+        return (data ? Object.assign(new type(), data) : undefined);
+    }
+
+    /**
+     * Alias of {JSON#parse} in safety mode.
+     * If invalid JSON source or could not parse; then an undefined value will be returned
+     * @param source to convert
+     * @return the converted value or undefined
+     */
+    public static safeParseJson(source: any): any {
+        if (!source) {
+            return undefined;
+        }
         try {
-            return Object.assign(new type(), JSON.parse(source));
+            return JSON.parse(source);
         } catch (e) {
+            window.console.error(['Could not parse JSON', source, e]);
             return undefined;
         }
     }
