@@ -40,7 +40,6 @@ export class OrganizationHttpService extends AbstractHttpService<IOrganization, 
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(OrganizationDbService) dbService: OrganizationDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): IOrganization {

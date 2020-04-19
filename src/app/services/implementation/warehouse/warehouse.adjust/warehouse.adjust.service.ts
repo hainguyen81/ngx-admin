@@ -37,7 +37,6 @@ export class WarehouseAdjustHttpService extends AbstractHttpService<IWarehouseAd
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(WarehouseAdjustDbService) dbService: WarehouseAdjustDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): IWarehouseAdjust {

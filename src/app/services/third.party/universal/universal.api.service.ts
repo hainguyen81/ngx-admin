@@ -6,7 +6,7 @@ import JsonUtils from '../../../utils/json.utils';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
-import {UniversalApiThirdParty} from '../../../@core/data/system/api.third.party';
+import {IApiThirdParty, UniversalApiThirdParty} from '../../../@core/data/system/api.third.party';
 import ThirdPartyApiConfig, {
     IThirdPartyApiConfig,
     THIRDPARTY_AUTHORIZATION_API_CONFIG,
@@ -35,6 +35,7 @@ export interface IUniversalApiExpiredResponse extends IModel {
 }
 
 export const UNIVERSAL_API_CONFIG: IThirdPartyApiConfig = {
+    code: THIRD_PARTY_API.universal.code,
     tokenUrl: THIRD_PARTY_API.universal.tokenUrl,
     method: 'GET',
     tokenParam: {
@@ -83,7 +84,6 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(UniversalApiDbService) dbService: UniversalApiDbService) {
         super(http, logger, dbService, UNIVERSAL_API_CONFIG);
-        dbService || throwError('Could not inject user database service for offline mode');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): UniversalApiThirdParty {
@@ -91,9 +91,9 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
             || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
             return undefined;
         }
-        const data: UniversalApiThirdParty
-            = JsonUtils.jsonToInstance(serviceResponse.getResponse().body, UniversalApiThirdParty);
-        data.code = data.code.concat(serviceResponse.getResponse().url || 'UNKNOWN_URL');
+        const data: UniversalApiThirdParty = new UniversalApiThirdParty();
+        data.code = [this.config.code, this.config.method || 'UNKNOWN', serviceResponse.getResponse().url].join('|');
+        (<IApiThirdParty>data).response = serviceResponse.getResponse().body;
         return data;
     }
 

@@ -1,13 +1,12 @@
 import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
+import {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
-import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
-import Country, {ICountry} from '../../../../../@core/data/system/country';
+import {CityDatasource} from '../../../../../services/implementation/system/city/city.datasource';
 
-export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
+export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
@@ -22,20 +21,20 @@ export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
      * Specify whether using image for option
      * {boolean}
      */
-    enableOptionImage: true,
+    enableOptionImage: false,
 }, DefaultNgxSelectOptions);
 
 /**
- * Custom country formly field for selecting special
+ * Custom city formly field for selecting special
  */
 @Component({
-    selector: 'ngx-select-ex-app-country',
+    selector: 'ngx-select-ex-app-city',
     templateUrl: '../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export class AppCountryFormlySelectExFieldComponent
-    extends AppFormlySelectExFieldComponent<ICountry>
-    implements OnInit, AfterViewInit {
+export class AppCityFormlySelectExFieldComponent
+    extends AppFormlySelectExFieldComponent<ICity>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -45,41 +44,40 @@ export class AppCountryFormlySelectExFieldComponent
      * Create a new instance of {AppFormlyTreeviewDropdownFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param countryDataSource {CountryDatasource}
+     * @param cityDataSource {CityDatasource}
      */
-    constructor(@Inject(CountryDatasource) private countryDataSource: CountryDatasource,
+    constructor(@Inject(CityDatasource) private cityDataSource: CityDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2) {
         super(_translateService, _renderer);
-        countryDataSource || throwError('Could not inject CountryDatasource instance');
-        super.setConfig(AppCountriesSelectOptions);
+        cityDataSource || throwError('Could not inject CityDatasource instance');
+        super.setConfig(AppCitiesSelectOptions);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        this.countryDataSource.onChanged().subscribe(value => {
-            SystemDataUtils.invokeAllCountries(this.countryDataSource)
-                .then(countries => {
-                    let noneCountry: ICountry;
-                    noneCountry = new Country(null, null, null);
-                    noneCountry['text'] = this.getConfig().placeholder;
-                    this.setItems([noneCountry].concat(countries));
-                });
-        });
-        this.countryDataSource.refresh();
-    }
+    // ngOnInit(): void {
+    //     this.cityDataSource.onChanged().subscribe(value => {
+    //         SystemDataUtils.invokeAllCountries(this.countryDataSource)
+    //             .then(countries => {
+    //                 let noneCountry: ICountry;
+    //                 noneCountry = new Country(null, null, null);
+    //                 noneCountry['text'] = this.getConfig().placeholder;
+    //                 this.setItems([noneCountry].concat(countries));
+    //             });
+    //     });
+    //     this.countryDataSource.refresh();
+    // }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.selectExComponent
-        && this.selectExComponent.setOptionImageParser(
-            item => (item && item.data
-            && (((item.data as ICountry).flag || '').length)
-                ? [(item.data as ICountry).flag] : null));
+        this.form
+        && this.form.valueChanges.subscribe(value => {
+            window.console.error(['Value changes -----------------', value]);
+        });
     }
 
     protected valueFormatter(value: any): any {

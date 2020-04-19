@@ -233,13 +233,28 @@ export abstract class BaseDataSource<T, H extends IHttpService<T>, D extends IDb
     }
 
     getAll(): Promise<T | T[]> {
-        return super.getDbService().getAll().then((data: T[]) => {
+        return super.getDbService().getAll()
+            .then(this.onFulfilledData(), reason => {
+                this.getLogger().error(reason);
+                return [];
+            }).catch(reason => {
+                this.getLogger().error(reason);
+                return [];
+            });
+    }
+
+    protected onFulfilledData() {
+        return (data: T[]) => {
             data = this.filter(data);
             data = this.sort(data);
-            this.latestCount = (data || []).length;
+            this.setRecordsNumber((data || []).length);
             data = this.paginate(data);
             return data;
-        });
+        };
+    }
+
+    protected setRecordsNumber(recNumber?: number | 0): void {
+        this.latestCount = recNumber || 0;
     }
 
     getElements(): Promise<T | T[]> {

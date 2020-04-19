@@ -37,7 +37,6 @@ export class ProvinceHttpService extends AbstractHttpService<IProvince, IProvinc
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ProvinceDbService) dbService: ProvinceDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): IProvince {

@@ -18,6 +18,10 @@ import {catchError, map} from 'rxjs/operators';
  */
 export interface IThirdPartyApiConfig {
     /**
+     * Third-party code to manage (required)
+     */
+    code: string;
+    /**
      * Request access token in expired/un-authorized case
      */
     tokenUrl: string;
@@ -34,8 +38,12 @@ export interface IThirdPartyApiConfig {
     };
 }
 
+/**
+ * Default third-party API authentication configuration
+ */
 export default class ThirdPartyApiConfig implements IThirdPartyApiConfig {
-    constructor(public tokenUrl: string,
+    constructor(public code: string,
+                public tokenUrl: string,
                 public tokenParam: {
                     type: 'header' | 'body' | 'param' | 'custom',
                     values: HttpHeaders | { [header: string]: string | string[]; }
@@ -47,8 +55,8 @@ export default class ThirdPartyApiConfig implements IThirdPartyApiConfig {
     }
 }
 
-export const THIRDPARTY_AUTHORIZATION_API_CONFIG: InjectionToken<ThirdPartyApiConfig>
-    = new InjectionToken<ThirdPartyApiConfig>(
+export const THIRDPARTY_AUTHORIZATION_API_CONFIG: InjectionToken<IThirdPartyApiConfig>
+    = new InjectionToken<IThirdPartyApiConfig>(
     'Third-party API authorization token configuration');
 
 /**
@@ -152,9 +160,10 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(ThirdPartyApiDbService) dbService: ThirdPartyApiDbService<T>,
                           @Inject(THIRDPARTY_AUTHORIZATION_API_CONFIG)
-                          private apiConfig: ThirdPartyApiConfig) {
+                          private apiConfig: IThirdPartyApiConfig) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
+        apiConfig || throwError('Could not inject third-party API configuration');
+        (apiConfig.code || '').length || throwError('Third-party API configuration code must be not undefined');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): T {
@@ -162,7 +171,10 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
             || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
             return undefined;
         }
-        return JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as T;
+        const data: T = JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as T;
+        data.code = this.config.code
+            .concat('|', this.apiConfig.method || 'UNKNOWN', '|', serviceResponse.getResponse().url);
+        return data;
     }
 
     handleOfflineMode(url: string, method?: string, res?: any, options?: {

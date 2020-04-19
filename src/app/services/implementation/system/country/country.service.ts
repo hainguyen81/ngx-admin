@@ -37,7 +37,6 @@ export class CountryHttpService extends AbstractHttpService<ICountry, ICountry> 
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(CountryDbService) dbService: CountryDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): ICountry {

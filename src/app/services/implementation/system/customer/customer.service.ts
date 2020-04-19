@@ -37,7 +37,6 @@ export class CustomerHttpService extends AbstractHttpService<ICustomer, ICustome
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(CustomerDbService) dbService: CustomerDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): ICustomer {

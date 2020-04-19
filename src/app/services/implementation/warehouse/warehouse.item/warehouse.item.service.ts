@@ -37,7 +37,6 @@ export class WarehouseItemHttpService extends AbstractHttpService<IWarehouseItem
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(WarehouseItemDbService) dbService: WarehouseItemDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): IWarehouseItem {
