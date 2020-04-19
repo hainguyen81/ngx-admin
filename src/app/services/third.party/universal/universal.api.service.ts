@@ -91,7 +91,10 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
             || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
             return undefined;
         }
-        return JsonUtils.jsonToInstance(serviceResponse.getResponse().body, UniversalApiThirdParty);
+        const data: UniversalApiThirdParty
+            = JsonUtils.jsonToInstance(serviceResponse.getResponse().body, UniversalApiThirdParty);
+        data.code = data.code.concat(serviceResponse.getResponse().url || 'UNKNOWN_URL');
+        return data;
     }
 
     protected isUnauthorizedOrExpired(res?: any): boolean {
