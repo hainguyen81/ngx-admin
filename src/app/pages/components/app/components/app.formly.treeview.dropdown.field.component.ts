@@ -5,6 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../utils/object.utils';
 import {APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from '../components/app.treeview.i18n';
 import {IModel} from '../../../../@core/data/base';
+import {NGXLogger} from 'ngx-logger';
 
 /**
  * Custom formly field for selecting special
@@ -44,10 +45,12 @@ export abstract class AppFormlyTreeviewDropdownFieldComponent<T extends IModel>
      * Create a new instance of {AppFormlyTreeviewDropdownFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
+     * @param _logger {NGXLogger}
      */
     protected constructor(@Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2) {
-        super(_translateService, _renderer);
+                          @Inject(Renderer2) _renderer: Renderer2,
+                          @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_translateService, _renderer, _logger);
     }
 
     // -------------------------------------------------

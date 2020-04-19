@@ -1,8 +1,9 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -31,6 +32,13 @@ import {
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {API} from '../../../../../config/api.config';
+import {of} from 'rxjs';
+import {
+    AppCountryFormlySelectExFieldComponent,
+} from '../../components/common/app.country.formly.select.ex.field.component';
+import {
+    AppCityFormlySelectExFieldComponent,
+} from '../../components/common/app.city.formly.select.ex.field.component';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -375,7 +383,8 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class OrganizationFormlyComponent
-    extends AppFormlyComponent<IOrganization, OrganizationDataSource> {
+    extends AppFormlyComponent<IOrganization, OrganizationDataSource>
+    implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -416,8 +425,8 @@ export class OrganizationFormlyComponent
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
-        super.setConfig(OrganizationFormConfig);
-        super.setFields(OrganizationFormFieldsConfig);
+        this.setConfig(OrganizationFormConfig);
+        this.setFields(OrganizationFormFieldsConfig);
     }
 
     // -------------------------------------------------
@@ -451,9 +460,57 @@ export class OrganizationFormlyComponent
             });
     }
 
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        // observer fields for applying values
+        this.observeFields();
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Observe model fields for applying values
+     */
+    private observeFields(): void {
+        let fields: FormlyFieldConfig[];
+        fields = this.getFields();
+        if (fields.length > 4 && fields[4].fieldGroup.length) {
+            fields[4].fieldGroup[0].expressionProperties = {
+                'country_id': (model: IOrganization) => {
+                    if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {
+                        this.observeCountryField(model);
+                    }
+                },
+            };
+        }
+    }
+
+    /**
+     * Observe country field to apply model country
+     * @param field to observe
+     * @param model form model
+     */
+    private observeCountryField(model?: IOrganization | null): void {
+        const countryField: FormlyFieldConfig = this.getFields()[4].fieldGroup[0];
+        const countryFieldComponent: AppCountryFormlySelectExFieldComponent =
+            super.getFormFieldComponent(countryField, AppCountryFormlySelectExFieldComponent);
+        if (countryFieldComponent) {
+            model.country = ((countryFieldComponent.selectedValues || []).length
+                ? countryFieldComponent.selectedValues[0] : null);
+        } else {
+            model.country = null;
+        }
+
+        const cityField: FormlyFieldConfig = this.getFields()[4].fieldGroup[1];
+        const cityFieldComponent: AppCityFormlySelectExFieldComponent =
+            super.getFormFieldComponent(cityField, AppCityFormlySelectExFieldComponent);
+        if (cityFieldComponent) {
+            cityFieldComponent.country = model.country;
+        }
+    }
 
     /**
      * Disable current data model in the belongTo field

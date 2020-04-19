@@ -81,7 +81,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @return the form fields configuration
      */
     public getFields(): FormlyFieldConfig[] {
-        return this.fields;
+        return this.fields || [];
     }
 
     /**
@@ -89,7 +89,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param fields to apply
      */
     protected setFields(fields: FormlyFieldConfig[]) {
-        this.fields = fields;
+        this.fields = fields || [];
         // translate form fields
         this.translateFormFields();
     }

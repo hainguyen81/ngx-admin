@@ -6,6 +6,7 @@ import {CountryDatasource} from '../../../../../services/implementation/system/c
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import Country, {ICountry} from '../../../../../@core/data/system/country';
+import {NGXLogger} from 'ngx-logger';
 
 export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
     /**
@@ -46,11 +47,13 @@ export class AppCountryFormlySelectExFieldComponent
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param countryDataSource {CountryDatasource}
+     * @param _logger {NGXLogger}
      */
     constructor(@Inject(CountryDatasource) private countryDataSource: CountryDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
-                @Inject(Renderer2) _renderer: Renderer2) {
-        super(_translateService, _renderer);
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_translateService, _renderer, _logger);
         countryDataSource || throwError('Could not inject CountryDatasource instance');
         super.setConfig(AppCountriesSelectOptions);
     }

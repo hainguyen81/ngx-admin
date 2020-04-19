@@ -7,12 +7,13 @@ import {
     ViewChildren,
 } from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
-import {INgxSelectOptions} from 'ngx-select-ex';
+import {INgxSelectOptions, NgxSelectOption} from 'ngx-select-ex';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
 import {IEvent} from '../abstract.component';
 import {isArray} from 'util';
+import {NGXLogger} from 'ngx-logger';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -98,10 +99,12 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * Create a new instance of {SelectExFormFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
+     * @param _logger {NGXLogger}
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService,
-                @Inject(Renderer2) _renderer: Renderer2) {
-        super(_translateService, _renderer);
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_translateService, _renderer, _logger);
     }
 
     // -------------------------------------------------
@@ -167,5 +170,13 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
 
     protected onSelect($event: IEvent): void {
         this.setValue(($event || {}).$data);
+    }
+
+    public get selectedOptions(): NgxSelectOption[] {
+        return (this.selectExComponent ? this.selectExComponent.selectedOptions : []);
+    }
+
+    public get selectedValues(): any[] {
+        return (this.selectExComponent ? this.selectExComponent.selectedOptionValues : []);
     }
 }

@@ -14,6 +14,7 @@ import {DefaultTreeviewConfig} from '../treeview/abstract.treeview.component';
 import {isArray} from 'util';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
+import {NGXLogger} from 'ngx-logger';
 
 /**
  * Formly Treeview Dropdown field component base on {FieldType}
@@ -94,10 +95,12 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Create a new instance of {DropdownTreeviewFormFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
+     * @param _logger {NGXLogger}
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService,
-                @Inject(Renderer2) _renderer: Renderer2) {
-        super(_translateService, _renderer);
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_translateService, _renderer, _logger);
     }
 
     // -------------------------------------------------

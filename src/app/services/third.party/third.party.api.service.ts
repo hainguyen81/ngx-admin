@@ -89,7 +89,7 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends A
     getAll(): Promise<T[]> {
         return super.getAll()
             .then(value => {
-                this._ensureNonExpiredData(...value);
+                (value || []).length && this._ensureNonExpiredData(...value);
                 return value;
             }, (reason) => {
                 this.getLogger().error(reason);
@@ -100,7 +100,7 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends A
     findEntities(indexName: string, criteria?: any): Promise<T[]> {
         return super.findEntities(indexName, criteria)
             .then((value: T[]) => {
-                this._ensureNonExpiredData(...value);
+                (value || []).length && this._ensureNonExpiredData(...value);
                 return value;
             }, reason => {
                 this.getLogger().error(reason);
@@ -111,7 +111,7 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends A
     findById(id?: any): Promise<T> {
         return super.findById(id)
             .then((value: T) => {
-                this._ensureNonExpiredData(value);
+                value && this._ensureNonExpiredData(value);
                 return value;
             }, reason => {
                 this.getLogger().error(reason);

@@ -395,6 +395,28 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     // -------------------------------------------------
 
     /**
+     * Get the selected options
+     * @return {NgxSelectOption} array
+     */
+    public get selectedOptions(): NgxSelectOption[] {
+        return (this.selectComponent ? this.selectComponent.optionsSelected : []);
+    }
+
+    /**
+     * Get the selected options
+     * @return {NgxSelectOption} array
+     */
+    public get selectedOptionValues(): any[] {
+        const selectedOptions: NgxSelectOption[] = this.selectedOptions;
+        let selectedValues: any[];
+        selectedValues = [];
+        selectedOptions.forEach(opt => {
+            selectedValues.push(opt.data);
+        });
+        return selectedValues;
+    }
+
+    /**
      * Set the selected items
      * TODO Need to cross-check with multiple selected items and items group
      * @param items to apply

@@ -2,6 +2,7 @@ import {Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {IEvent} from '../abstract.component';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
+import {NGXLogger} from 'ngx-logger';
 
 /**
  * Formly Image field component base on {FieldType}
@@ -43,10 +44,12 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
      * Create a new instance of {ImageGalleryFormFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
+     * @param _logger {NGXLogger}
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService,
-                @Inject(Renderer2) _renderer: Renderer2) {
-        super(_translateService, _renderer);
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_translateService, _renderer, _logger);
     }
 
     // -------------------------------------------------

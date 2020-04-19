@@ -1,10 +1,13 @@
 import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
-import {ICity} from '../../../../../@core/data/system/city';
+import City, {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
+import {of, throwError} from 'rxjs';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {CityDatasource} from '../../../../../services/implementation/system/city/city.datasource';
+import Country, {ICountry} from '../../../../../@core/data/system/country';
+import SystemDataUtils from '../../../../../utils/system/system.data.utils';
+import {NGXLogger} from 'ngx-logger';
 
 export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
     /**
@@ -33,8 +36,7 @@ export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export class AppCityFormlySelectExFieldComponent
-    extends AppFormlySelectExFieldComponent<ICity>
-    implements AfterViewInit {
+    extends AppFormlySelectExFieldComponent<ICity> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -45,39 +47,34 @@ export class AppCityFormlySelectExFieldComponent
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param cityDataSource {CityDatasource}
+     * @param _logger {NGXLogger}
      */
     constructor(@Inject(CityDatasource) private cityDataSource: CityDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
-                @Inject(Renderer2) _renderer: Renderer2) {
-        super(_translateService, _renderer);
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_translateService, _renderer, _logger);
         cityDataSource || throwError('Could not inject CityDatasource instance');
         super.setConfig(AppCitiesSelectOptions);
     }
 
     // -------------------------------------------------
-    // EVENTS
+    // FUNCTIONS
     // -------------------------------------------------
 
-    // ngOnInit(): void {
-    //     this.cityDataSource.onChanged().subscribe(value => {
-    //         SystemDataUtils.invokeAllCountries(this.countryDataSource)
-    //             .then(countries => {
-    //                 let noneCountry: ICountry;
-    //                 noneCountry = new Country(null, null, null);
-    //                 noneCountry['text'] = this.getConfig().placeholder;
-    //                 this.setItems([noneCountry].concat(countries));
-    //             });
-    //     });
-    //     this.countryDataSource.refresh();
-    // }
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        this.form
-        && this.form.valueChanges.subscribe(value => {
-            window.console.error(['Value changes -----------------', value]);
-        });
+    set country(country: ICountry) {
+        if (!country || !(country.id || '').length
+            || !(country.code || '').length || !(country.name || '').length) {
+            this.getItems().clear();
+        } else {
+            SystemDataUtils.invokeAllCities(this.cityDataSource, country)
+                .then(cities => {
+                    let noneCity: ICity;
+                    noneCity = new City(null, null, null);
+                    noneCity['text'] = this.getConfig().placeholder;
+                    this.setItems([noneCity].concat(cities));
+                });
+        }
     }
 
     protected valueFormatter(value: any): any {

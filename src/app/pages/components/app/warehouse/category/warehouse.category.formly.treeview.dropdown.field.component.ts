@@ -7,6 +7,7 @@ import {
 } from '../../components/app.formly.treeview.dropdown.field.component';
 import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {API} from '../../../../../config/api.config';
+import {NGXLogger} from 'ngx-logger';
 
 /**
  * Multi language for treeview field
@@ -89,10 +90,12 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
      * Create a new instance of {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
+     * @param _logger {NGXLogger}
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService,
-                @Inject(Renderer2) _renderer: Renderer2) {
-        super(_translateService, _renderer);
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_translateService, _renderer, _logger);
     }
 
     // -------------------------------------------------

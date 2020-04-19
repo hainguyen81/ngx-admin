@@ -239,7 +239,7 @@ export const CountryProviders: StaticProvider[] = [
     // City
     {
         provide: CityDbService, useClass: CityDbService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService, UniversalApiDatasource],
     },
     {
         provide: CityHttpService, useClass: CityHttpService,

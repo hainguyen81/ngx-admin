@@ -1,11 +1,12 @@
-import {Inject, OnDestroy, Renderer2} from '@angular/core';
+import {AfterViewInit, Inject, OnDestroy, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
+import {NGXLogger} from 'ngx-logger';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
-    extends FieldType<F> implements OnDestroy {
+    extends FieldType<F> implements OnDestroy, AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -52,6 +53,21 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         return this._renderer;
     }
 
+    /**
+     * Get the {Renderer2} instance for applying HTML element attributes
+     * @return the {Renderer2} instance
+     */
+    protected get logger(): NGXLogger {
+        return this._logger;
+    }
+
+    /**
+     * TODO Override to define the {FormlyFieldConfig#expressionProperties} key to observe
+     */
+    protected expressionPropertyObserver(): string {
+        return null;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -60,17 +76,28 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * Create a new instance of {AbstractFieldType} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
+     * @param logger {NGXLogger}
      */
     protected constructor(@Inject(TranslateService) private _translateService: TranslateService,
-                          @Inject(Renderer2) private _renderer: Renderer2) {
+                          @Inject(Renderer2) private _renderer: Renderer2,
+                          @Inject(NGXLogger) private _logger: NGXLogger) {
         super();
         _translateService || throwError('Could not inject TranslateService');
         _renderer || throwError('Could not inject Renderer2');
+        _logger || throwError('Could not inject NGXLogger');
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        this.field && this.field.expressionProperties
+        && (this.expressionPropertyObserver() || '').length
+        && this.field.expressionProperties.hasOwnProperty(this.expressionPropertyObserver())
+        && of(this.field.expressionProperties[this.expressionPropertyObserver()])
+            .subscribe(value => this.subscribeExpressionProperty(value));
+    }
 
     ngOnDestroy(): void {
         if (this.field && this.field.templateOptions) {
@@ -81,6 +108,14 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
+
+    /**
+     * Subscribe a changes by expression property via {AbstractFieldType#expressionPropertyObserver}
+     * @param value to subscribe
+     */
+    protected subscribeExpressionProperty(value: any): void {
+        this.logger.error('Subscribe', value);
+    }
 
     /**
      * Translate the specified value
