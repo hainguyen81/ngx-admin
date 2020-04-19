@@ -63,10 +63,10 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
     handleOfflineMode(url: string, method?: string, res?: any, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
-        observe?: 'body';
+        observe?: 'body' | 'events' | 'response' | any;
         params?: HttpParams | { [param: string]: string | string[]; };
         reportProgress?: boolean;
-        responseType: 'arraybuffer';
+        responseType: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
         withCredentials?: boolean;
         redirectSuccess?: any;
         redirectFailure?: any;

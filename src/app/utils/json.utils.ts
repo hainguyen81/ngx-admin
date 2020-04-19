@@ -62,7 +62,7 @@ export default class JsonUtils {
             return undefined;
         }
         try {
-            return JSON.parse(source);
+            return JSON.parse(typeof source === 'string' ? source : JSON.stringify(source));
         } catch (e) {
             window.console.error(['Could not parse JSON', source, e]);
             return undefined;
