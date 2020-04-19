@@ -1,3 +1,4 @@
+import './prototypes.import';
 import {ErrorHandler, InjectionToken, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
@@ -104,8 +105,9 @@ import {CityDbService, CityHttpService} from '../services/implementation/system/
 import {CityDatasource} from '../services/implementation/system/city/city.datasource';
 import {ProvinceDbService, ProvinceHttpService} from '../services/implementation/system/province/province.service';
 import {ProvinceDatasource} from '../services/implementation/system/province/province.datasource';
-import '../prototypes/string.prototype';
 import {Meta, Title} from '@angular/platform-browser';
+import {UniversalApiDbService, UniversalApiHttpService} from '../services/third.party/universal/universal.api.service';
+import {UniversalApiDatasource} from '../services/third.party/universal/universal.api.datasource';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -156,6 +158,21 @@ export const I18NProviders: StaticProvider[] = [
     {
         provide: PageHeaderService, useClass: PageHeaderService,
         deps: [TranslateService, NGXLogger],
+    },
+];
+
+export const ThirdPartyApiProviders: StaticProvider[] = [
+    {
+        provide: UniversalApiDbService, useClass: UniversalApiDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: UniversalApiHttpService, useClass: UniversalApiHttpService,
+        deps: [HttpClient, NGXLogger, UniversalApiDbService],
+    },
+    {
+        provide: UniversalApiDatasource, useClass: UniversalApiDatasource,
+        deps: [UniversalApiHttpService, UniversalApiDbService, NGXLogger],
     },
 ];
 

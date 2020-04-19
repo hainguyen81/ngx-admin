@@ -81,9 +81,8 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
 
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(UniversalApiDbService) dbService: UniversalApiDbService,
-                @Inject(THIRDPARTY_AUTHORIZATION_API_CONFIG) apiConfig: ThirdPartyApiConfig) {
-        super(http, logger, dbService, apiConfig || UNIVERSAL_API_CONFIG);
+                @Inject(UniversalApiDbService) dbService: UniversalApiDbService) {
+        super(http, logger, dbService, UNIVERSAL_API_CONFIG);
         dbService || throwError('Could not inject user database service for offline mode');
     }
 

@@ -12,7 +12,7 @@ import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 /* Prototypes */
-import './prototypes/array.prototypes';
+import './config/prototypes.import';
 /* Nebular Theme */
 import {
     NbButtonModule,
