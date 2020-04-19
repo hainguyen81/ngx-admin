@@ -20,10 +20,6 @@ export class CountryDbService extends AbstractBaseDbService<ICountry> {
         super(dbService, logger, connectionService, DB_STORE.country);
     }
 
-    getAll(): Promise<ICountry[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: ICountry[]) => {
         if (args && args.length) {

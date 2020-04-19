@@ -20,10 +20,6 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
         super(dbService, logger, connectionService, DB_STORE.province);
     }
 
-    getAll(): Promise<IProvince[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IProvince[]) => {
         if (args && args.length) {

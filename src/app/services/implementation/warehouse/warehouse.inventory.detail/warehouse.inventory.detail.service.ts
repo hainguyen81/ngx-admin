@@ -20,10 +20,6 @@ export class WarehouseInventoryDetailDbService extends AbstractBaseDbService<IWa
         super(dbService, logger, connectionService, DB_STORE.warehouse_inventory_detail);
     }
 
-    getAll(): Promise<IWarehouseInventoryDetail[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IWarehouseInventoryDetail[]) => {
         if (args && args.length) {

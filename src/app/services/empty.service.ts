@@ -38,6 +38,13 @@ export class EmptyService extends AbstractBaseDbService<any> {
         });
     }
 
+    getAll(): Promise<any[]> {
+        return new Promise((resolve) => {
+            super.getLogger().debug('Call get all entities....');
+            resolve(null);
+        });
+    }
+
     findById(id?: any): Promise<any> {
         return new Promise((resolve) => {
             super.getLogger().debug('Call find entity by identity....');

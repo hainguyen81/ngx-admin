@@ -20,10 +20,6 @@ export class UserDbService extends AbstractBaseDbService<IUser> {
         super(dbService, logger, connectionService, DB_STORE.user);
     }
 
-    getAll(): Promise<IUser[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IUser[]) => {
         if (args && args.length) {

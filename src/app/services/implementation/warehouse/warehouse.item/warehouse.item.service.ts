@@ -20,10 +20,6 @@ export class WarehouseItemDbService extends AbstractBaseDbService<IWarehouseItem
         super(dbService, logger, connectionService, DB_STORE.warehouse_item);
     }
 
-    getAll(): Promise<IWarehouseItem[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IWarehouseItem[]) => {
         if (args && args.length) {

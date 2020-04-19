@@ -20,10 +20,6 @@ export class CustomerDbService extends AbstractBaseDbService<ICustomer> {
         super(dbService, logger, connectionService, DB_STORE.customer);
     }
 
-    getAll(): Promise<ICustomer[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: ICustomer[]) => {
         if (args && args.length) {

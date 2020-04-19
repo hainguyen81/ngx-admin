@@ -20,10 +20,6 @@ export class OrganizationDbService extends AbstractBaseDbService<IOrganization> 
         super(dbService, logger, connectionService, DB_STORE.organization);
     }
 
-    getAll(): Promise<IOrganization[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: IOrganization[]) => {
         if (args && args.length) {

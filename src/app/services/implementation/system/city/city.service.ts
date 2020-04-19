@@ -20,10 +20,6 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
         super(dbService, logger, connectionService, DB_STORE.city);
     }
 
-    getAll(): Promise<ICity[]> {
-        return super.getAll();
-    }
-
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: ICity[]) => {
         if (args && args.length) {
