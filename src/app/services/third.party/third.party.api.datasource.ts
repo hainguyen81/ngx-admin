@@ -98,28 +98,40 @@ export class ThirdPartyApiDatasource<T extends IApiThirdParty>
                 if (!(value || []).length) {
                     return this.getHttpService().request(url, method, options).toPromise()
                         .then((data: T[]) => {
-                            let parsedData: K[];
-                            parsedData = [];
-                            if (dataParserType && this.dataParser() && this.dataParser().parsers) {
-                                let parser: IThirdPartyApiDataParser<T, K>;
-                                parser = this.getDataParser(dataParserType);
-                                if (parser) {
-                                    (data || []).forEach(dat => {
-                                        const parsed: K | K[] = parser.parse(dat);
-                                        if (parsed && isArray(parsed)) {
-                                            parsedData = parsedData.concat(parsed as K[]);
-                                        } else if (parsed) {
-                                            parsedData.push(parsed as K);
+                            // catch for future from offline database
+                            return this.getDbService().insertEntities(data)
+                                .then(affected => {
+                                    let parsedData: K[];
+                                    parsedData = [];
+                                    if (dataParserType && this.dataParser() && this.dataParser().parsers) {
+                                        let parser: IThirdPartyApiDataParser<T, K>;
+                                        parser = this.getDataParser(dataParserType);
+                                        if (parser) {
+                                            (data || []).forEach(dat => {
+                                                const parsed: K | K[] = parser.parse(dat);
+                                                if (parsed && isArray(parsed)) {
+                                                    parsedData = parsedData.concat(parsed as K[]);
+                                                } else if (parsed) {
+                                                    parsedData.push(parsed as K);
+                                                }
+                                            });
                                         }
-                                    });
-                                }
-                            }
+                                    }
 
-                            data = this.filter(data);
-                            data = this.sort(data);
-                            this.setRecordsNumber((data || []).length);
-                            data = this.paginate(data);
-                            return (parsedData.length ? parsedData : data);
+                                    data = this.filter(data);
+                                    data = this.sort(data);
+                                    this.setRecordsNumber((data || []).length);
+                                    data = this.paginate(data);
+                                    return (parsedData.length ? parsedData : data);
+
+                                }, reason => {
+                                    this.getLogger().error(reason);
+                                    return [];
+                                }).catch(reason => {
+                                    this.getLogger().error(reason);
+                                    return [];
+                                });
+
                         }, reason => {
                             this.getLogger().error(reason);
                             return [];

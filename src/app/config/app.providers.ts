@@ -150,17 +150,6 @@ export const CommonProviders: StaticProvider[] = [
     },
 ];
 
-export const I18NProviders: StaticProvider[] = [
-    {
-        provide: TranslateLoader, useFactory: HttpLoaderFactory,
-        deps: [HttpClient, APP_BASE_HREF],
-    },
-    {
-        provide: PageHeaderService, useClass: PageHeaderService,
-        deps: [TranslateService, NGXLogger],
-    },
-];
-
 export const ThirdPartyApiProviders: StaticProvider[] = [
     {
         provide: UniversalApiDbService, useClass: UniversalApiDbService,
@@ -173,6 +162,17 @@ export const ThirdPartyApiProviders: StaticProvider[] = [
     {
         provide: UniversalApiDatasource, useClass: UniversalApiDatasource,
         deps: [UniversalApiHttpService, UniversalApiDbService, NGXLogger],
+    },
+];
+
+export const I18NProviders: StaticProvider[] = [
+    {
+        provide: TranslateLoader, useFactory: HttpLoaderFactory,
+        deps: [HttpClient, APP_BASE_HREF],
+    },
+    {
+        provide: PageHeaderService, useClass: PageHeaderService,
+        deps: [TranslateService, NGXLogger],
     },
 ];
 
@@ -442,6 +442,7 @@ export const ExampleProviders: StaticProvider[] = [
 ];
 
 export const Providers: StaticProvider[] = CommonProviders
+    .concat(ThirdPartyApiProviders)
     .concat(I18NProviders)
     .concat(OrganizationProviders)
     .concat(UserProviders)
