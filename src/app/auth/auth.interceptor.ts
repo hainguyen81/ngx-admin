@@ -7,6 +7,8 @@ import {Observable} from 'rxjs';
 export const NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM = new InjectionToken<string>('Custom Interceptor Access Token Parameter');
 export const NBX_AUTH_INTERCEPTOR_COMPANY_HEADER = new InjectionToken<string>('Custom Interceptor Company Header Parameter');
 export const NBX_AUTH_AUTHORIZATION_HEADER = 'Authorization';
+export const NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER = 'Access-Control-Allow-Origin';
+export const NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL = '*';
 export const NBX_AUTH_COMPANY_HEADER = 'Company';
 export const NBX_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
 export const NBX_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
@@ -33,6 +35,8 @@ export class NbxAuthInterceptor extends NbAuthSimpleInterceptor {
                             setHeaders: {
                                 [this.headerName]: token.getValue(),
                                 [this.companyHeaderName]: token.getPayload()['company'],
+                                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER:
+                                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL,
                             },
                         });
                         req.params.append(this.accessTokenParamName, token.getValue());
