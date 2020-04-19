@@ -1,7 +1,7 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {IDbService, IHttpService} from './interface.service';
 import {throwError} from 'rxjs';
-import {Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../config/log.config';
 import {LocalPager} from 'ng2-smart-table/lib/data-source/local/local.pager';
@@ -213,5 +213,87 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
             data = LocalPager.paginate(data, this.pagingCfg['page'], this.pagingCfg['perPage']);
         }
         return data;
+    }
+}
+
+/**
+ * Abstract base data source for table service
+ * @param <T> IndexDb entity type
+ * @param <H> HTTP service type
+ * @param <D> IndexDb service type
+ */
+export abstract class BaseDataSource<T, H extends IHttpService<T>, D extends IDbService<T>>
+    extends AbstractDataSource<T, H, D> {
+
+    private latestCount: number = 0;
+
+    protected constructor(httpService: H, dbService: D,
+                          @Inject(NGXLogger) logger: NGXLogger) {
+        super(httpService, dbService, logger);
+    }
+
+    getAll(): Promise<T | T[]> {
+        return super.getDbService().getAll().then((data: T[]) => {
+            data = this.filter(data);
+            data = this.sort(data);
+            this.latestCount = (data || []).length;
+            data = this.paginate(data);
+            return data;
+        });
+    }
+
+    getElements(): Promise<T | T[]> {
+        return this.getAll();
+    }
+
+    count(): number {
+        return this.latestCount;
+    }
+
+    /**
+     * Update new data by old data as key.
+     * TODO remember return Promise of old data for updating view value
+     * @param oldData to filter for updating and returning to update view value
+     * @param newData to update into data source
+     */
+    update(oldData: T, newData: T): Promise<T> {
+        return this.getDbService().update(newData).then(() => {
+            this.refresh();
+            return oldData;
+        });
+    }
+
+    /**
+     * Remove the specified data
+     * @param data to remove
+     * @return effected records number
+     */
+    remove(data: T): Promise<number> {
+        return this.getDbService().delete(data).then(() => {
+            this.refresh();
+            return 1;
+        });
+    }
+
+    refresh(): void {
+        this.getLogger().debug('Refresh data source');
+        super.refresh();
+    }
+
+    load(data: Array<T> | T[]): Promise<any> {
+        this.getLogger().debug('Load data', data);
+        return super.load(data);
+    }
+
+    prepend(data: T): Promise<number> {
+        return this.append(data);
+    }
+
+    append(data: T): Promise<any> {
+        this.getLogger().debug('New data', data);
+        return this.getDbService().insert(data).then(() => {
+            this.refresh();
+            return 1;
+        });
     }
 }

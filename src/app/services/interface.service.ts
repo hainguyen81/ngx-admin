@@ -65,6 +65,12 @@ export declare interface IDbService<T> {
     findEntities(criteria?: any): Promise<T[]>;
 
     /**
+     * Get all entities
+     * @return a Promise of entities array
+     */
+    getAll(): Promise<T[]>;
+
+    /**
      * Find entity by the specified identity
      * @param id to filter
      * @return a Promise of entity
