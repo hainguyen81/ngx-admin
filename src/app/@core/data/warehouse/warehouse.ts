@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 
 export interface IWarehouse extends IModel {
     // Mã kho
@@ -27,19 +27,8 @@ export interface IWarehouse extends IModel {
     remark?: string | null;
 }
 
-export default class Warehouse implements IWarehouse {
-    constructor(public id: string,
-                public code: string,
-                public name: string,
-                public street_address: string,
-                public image?: string[] | null,
-                public city?: string | null,
-                public state_province?: string | null,
-                public zip_code?: string | null,
-                public country?: string | null,
-                public tel?: string | null,
-                public fax?: string | null,
-                public email?: string | null,
-                public remark?: string | null) {
+export default class Warehouse extends BaseModel implements IWarehouse {
+    constructor(public id: string, public code: string, public name: string, public street_address: string) {
+        super(id);
     }
 }

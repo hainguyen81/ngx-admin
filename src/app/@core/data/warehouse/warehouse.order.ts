@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 import {ICustomer} from '../system/customer';
 
 export const enum WAREHOUSE_ORDER_STATUS {
@@ -109,41 +109,13 @@ export interface IWarehouseOrder extends IModel {
     customer?: ICustomer | null;
 }
 
-export default class WarehouseOrder implements IWarehouseOrder {
-    constructor(public id: string,
-                public order_code: string,
+export default class WarehouseOrder extends BaseModel implements IWarehouseOrder {
+    constructor(public id: string, public order_code: string,
                 public order_type: WAREHOUSE_ORDER_TYPE | WAREHOUSE_ORDER_TYPE.SALE,
-                public sales_person: string,
-                public order_date: number,
+                public sales_person: string, public order_date: number,
                 public order_status: WAREHOUSE_ORDER_STATUS | WAREHOUSE_ORDER_STATUS.DRAFT,
-                public ship_to_name: string,
-                public ship_to_street_address: string,
-                public sub_total: number,
-                public total: number,
-                public ship_to_company?: string | null,
-                public ship_to_city?: string | null,
-                public ship_to_state_province?: string | null,
-                public ship_to_zip_code?: string | null,
-                public ship_to_country?: string | null,
-                public ship_to_tel?: string | null,
-                public ship_to_fax?: string | null,
-                public ship_to_email?: string | null,
-                public expected_delivery_date?: number | null,
-                public shipment_date?: number | null,
-                public payment_terms?: string | null,
-                public delivery_method?: string | null,
-                public discount_rate?: number | null,
-                public discount_amount?: number | null,
-                public tax_rate?: number | null,
-                public tax_amount?: number | null,
-                public shipping_charges?: number | null,
-                public other_amount?: number | null,
-                public terms_conditions?: string | null,
-                public order_remark?: string | null,
-                public file_attach?: string | null,
-                public vendor_id?: string | null,
-                public vendor?: ICustomer | null,
-                public customer_id?: string | null,
-                public customer?: ICustomer | null) {
+                public ship_to_name: string, public ship_to_street_address: string,
+                public sub_total: number, public total: number) {
+        super(id);
     }
 }

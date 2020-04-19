@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 
 export interface ICountry extends IModel {
     code: string;
@@ -18,15 +18,8 @@ export interface ICountry extends IModel {
     flag?: string | null;
 }
 
-export default class Country implements ICountry {
-    constructor(public id: string,
-                public code: string,
-                public name: string,
-                public capital?: string | null,
-                public region?: string | null,
-                public currency?: { code?: string | null, name?: string | null, symbol?: string | null } | null,
-                public language?: { code?: string | null, name?: string | null } | null,
-                public dial_code?: string | null,
-                public flag?: string | null) {
+export default class Country extends BaseModel implements ICountry {
+    constructor(public id: string, public code: string, public name: string) {
+        super(id);
     }
 }

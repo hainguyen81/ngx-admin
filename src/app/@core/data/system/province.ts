@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 import {ICity} from './city';
 
 export interface IProvince extends IModel {
@@ -10,13 +10,8 @@ export interface IProvince extends IModel {
     city?: ICity | null;
 }
 
-export default class Province implements IProvince {
-    constructor(public id: string,
-                public code: string,
-                public name: string,
-                public image?: string | null,
-                public zip_code?: string | null,
-                public city_id?: string | null,
-                public city?: ICity | null) {
+export default class Province extends BaseModel implements IProvince {
+    constructor(public id: string, public code: string, public name: string) {
+        super(id);
     }
 }

@@ -1,5 +1,5 @@
 import {IApi} from './api';
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 
 export interface IModule extends IModel {
     code: string;
@@ -10,10 +10,8 @@ export interface IModule extends IModel {
     children?: IModule[] | null;
 }
 
-export default class Module implements IModule {
-    constructor(public id: string, public code: string,
-                public name: string, public apiId: string,
-                public api?: IApi | null, public icon?: string | { icon: string, pack: string },
-                public children?: IModule[] | null) {
+export default class Module extends BaseModel implements IModule {
+    constructor(public id: string, public code: string, public name: string, public apiId: string) {
+        super(id);
     }
 }

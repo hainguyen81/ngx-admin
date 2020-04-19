@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 import {IWarehouse} from './warehouse';
 import {ICustomer} from '../system/customer';
 
@@ -66,22 +66,11 @@ export interface IWarehouseInventory extends IModel {
     customer?: ICustomer | null;
 }
 
-export default class WarehouseInventory implements IWarehouseInventory {
-    constructor(public id: string,
-                public code: string,
+export default class WarehouseInventory extends BaseModel implements IWarehouseInventory {
+    constructor(public id: string, public code: string,
                 public type: WAREHOUSE_INVENTORY_TYPE | WAREHOUSE_INVENTORY_TYPE.IN,
-                public date: number,
-                public reason_for_issuing: string,
-                public total_amount: number,
-                public status: WAREHOUSE_INVENTORY_STATUS | WAREHOUSE_INVENTORY_STATUS.UNFINISHED,
-                public deliverer?: string | null,
-                public remark?: string | null,
-                public file_attach?: string | null,
-                public warehouse_id?: string | null,
-                public warehouse?: IWarehouse | null,
-                public vendor_id?: string | null,
-                public vendor?: ICustomer | null,
-                public customer_id?: string | null,
-                public customer?: ICustomer | null) {
+                public date: number, public reason_for_issuing: string, public total_amount: number,
+                public status: WAREHOUSE_INVENTORY_STATUS | WAREHOUSE_INVENTORY_STATUS.UNFINISHED) {
+        super(id);
     }
 }

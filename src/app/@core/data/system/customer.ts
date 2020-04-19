@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 
 export const enum CUSTOMER_STATUS {
     NOT_ACTIVATED,
@@ -83,25 +83,8 @@ export interface ICustomer extends IModel {
     remark?: string | null;
 }
 
-export default class Customer implements ICustomer {
-    constructor(public id: string,
-                public code: string,
-                public name: string,
-                public email: string,
-                public address: string | null,
-                public type?: CUSTOMER_TYPE | CUSTOMER_TYPE.CUSTOMER,
-                public status?: CUSTOMER_STATUS | CUSTOMER_STATUS.NOT_ACTIVATED,
-                public level?: CUSTOMER_LEVEL | CUSTOMER_LEVEL.NEW,
-                public tel?: string | null,
-                public fax?: string | null,
-                public website?: string | null,
-                public city?: string | null,
-                public state_province?: string | null,
-                public zip_code?: string | null,
-                public country?: string | null,
-                public contact_name?: string | null,
-                public contact_tel?: string | null,
-                public contact_fax?: string | null,
-                public remark?: string | null) {
+export default class Customer extends BaseModel implements ICustomer {
+    constructor(public id: string, public code: string, public name: string, public email: string) {
+        super(id);
     }
 }

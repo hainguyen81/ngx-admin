@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 
 export const enum CATEGORY_TYPE {
     // Chủng loại
@@ -51,16 +51,9 @@ export interface IWarehouseCategory extends IModel {
     children?: IWarehouseCategory[] | null;
 }
 
-export default class WarehouseCategory implements IWarehouseCategory {
-    constructor(public id: string,
-                public code: string,
-                public name: string,
-                public type: CATEGORY_TYPE | CATEGORY_TYPE.CATEGORY,
-                public status?: CATEGORY_STATUS | CATEGORY_STATUS.NOT_ACTIVATED,
-                public image?: string[] | [],
-                public remark?: string | null,
-                public parentId?: string | null,
-                public parent?: IWarehouseCategory | null,
-                public children?: IWarehouseCategory[] | null) {
+export default class WarehouseCategory extends BaseModel implements IWarehouseCategory {
+    constructor(public id: string, public code: string, public name: string,
+                public type: CATEGORY_TYPE | CATEGORY_TYPE.CATEGORY) {
+        super(id);
     }
 }

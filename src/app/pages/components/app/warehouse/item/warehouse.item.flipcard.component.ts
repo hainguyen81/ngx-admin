@@ -20,7 +20,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component';
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
-import WarehouseItem, {ITEM_STATUS} from '../../../../../@core/data/warehouse/warehouse.item';
+import WarehouseItem, {ITEM_STATUS, IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {
@@ -172,9 +172,9 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
         this.warehouseItemTableComponentFront = super.setFrontComponent(WarehouseItemSmartTableComponent);
         this.warehouseItemTableComponentFront.setNewItemListener(
             ($event) => {
-                this.getWarehouseItemSplitPaneComponentBack().setDataModel(
-                    new WarehouseItem(null, null, null,
-                        ITEM_STATUS.NOT_ACTIVATED, null, null, []));
+                const newItem: IWarehouseItem = new WarehouseItem(null, null, null);
+                newItem.status = ITEM_STATUS.NOT_ACTIVATED;
+                this.getWarehouseItemSplitPaneComponentBack().setDataModel(newItem);
                 this.setFlipped(true);
             });
         this.warehouseItemSplitPaneComponentBack = super.setBackComponent(WarehouseItemSplitPaneComponent);

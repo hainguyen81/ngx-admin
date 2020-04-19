@@ -1,5 +1,5 @@
 import {IRolesGroup} from './roles.group';
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 
 export const enum USER_STATUS {
     NOT_ACTIVATED,
@@ -37,16 +37,13 @@ export interface IUser extends IModel {
     enterprise?: boolean | false;
 }
 
-export default class User implements IUser {
+export default class User extends BaseModel implements IUser {
     constructor(public id: string, public access_token: string,
                 public token_type: string, public refresh_token: string,
                 public expires_in: number, public scope: string,
                 public company: string, public username: string, public password: string,
                 public firstName: string, public lastName: string,
-                public email: string,
-                public status?: USER_STATUS | USER_STATUS.NOT_ACTIVATED,
-                public lang?: string | 'en',
-                public rolesGroupId?: string | null, public rolesGroup?: IRolesGroup | null,
-                public enterprise?: boolean | false) {
+                public email: string) {
+        super(id);
     }
 }

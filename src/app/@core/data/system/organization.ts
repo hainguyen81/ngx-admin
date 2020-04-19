@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 import {ICity} from './city';
 import {IProvince} from './province';
 import {ICountry} from './country';
@@ -66,24 +66,8 @@ export interface IOrganization extends IModel {
     children?: IOrganization[] | null;
 }
 
-export default class Organization implements IOrganization {
-    constructor(public id: string, public code: string, public name: string,
-                public type: ORGANIZTAION_TYPE,
-                public tax?: string | null, public address?: string | null,
-                public city_id?: string | null, public city?: ICity | null,
-                public state_province_id?: string | null, public state_province?: IProvince | null,
-                public zip_code?: string | null,
-                public country_id?: string | null, public country?: ICountry | null,
-                public tel?: string | null, public fax?: string | null,
-                public email?: string | null, public remark?: string | null,
-                public managerId?: string | null, public manager?: any,
-                public image?: string | { icon: string, pack: string } | null,
-                public legal_representative?: string | null, public tel_representative?: string | null,
-                public business_license?: string | null, public business_license_dt?: string | Date | null,
-                public date_incorporation?: string | Date | null,
-                public bank_company?: string | null, public bank_company_at?: string | null,
-                public bank_company_account?: string | null,
-                public parentId?: string | null, public parent?: IOrganization | null,
-                public children?: IOrganization[] | null) {
+export default class Organization extends BaseModel implements IOrganization {
+    constructor(public id: string, public code: string, public name: string, public type: ORGANIZTAION_TYPE) {
+        super(id);
     }
 }

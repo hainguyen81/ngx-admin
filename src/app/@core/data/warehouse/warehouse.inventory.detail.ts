@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 import {IWarehouseInventory} from './warehouse.inventory';
 import {IWarehouseItem} from './warehouse.item';
 
@@ -21,16 +21,9 @@ export interface IWarehouseInventoryDetail extends IModel {
     item?: IWarehouseItem | null;
 }
 
-export default class WarehouseInventoryDetail implements IWarehouseInventoryDetail {
-    constructor(public id: string,
-                public quantity_orders: number,
-                public quantity_actually: number,
-                public unit_price: number,
-                public amount: number,
-                public remark?: string | null,
-                public inventory_id?: string | null,
-                public inventory?: IWarehouseInventory | null,
-                public item_id?: string | null,
-                public item?: IWarehouseItem | null) {
+export default class WarehouseInventoryDetail extends BaseModel implements IWarehouseInventoryDetail {
+    constructor(public id: string, public quantity_orders: number, public quantity_actually: number,
+                public unit_price: number, public amount: number) {
+        super(id);
     }
 }

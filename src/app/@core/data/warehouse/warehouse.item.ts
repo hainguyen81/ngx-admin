@@ -1,4 +1,4 @@
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 import {IWarehouseCategory} from './warehouse.category';
 
 export const enum ITEM_STATUS {
@@ -85,40 +85,8 @@ export interface IWarehouseItem extends IModel {
     brand?: IWarehouseCategory | null;
 }
 
-export default class WarehouseItem implements IWarehouseItem {
-    constructor(
-        public id: string,
-        public code: string,
-        public name: string,
-        public status?: ITEM_STATUS | ITEM_STATUS.NOT_ACTIVATED,
-        public barcode?: string | null,
-        public serial?: string | null,
-        public image?: string[] | null,
-        public manufacturer?: string | null,
-        public length?: number | null,
-        public width?: number | null,
-        public height?: number | null,
-        public weight?: number | null,
-        public size?: number | null,
-        public color?: string | null,
-        public material?: string | null,
-        public unit?: string | null,
-        public rate_per_unit?: number | null,
-        public dealer_price?: number | null,
-        public cost_price?: number | null,
-        public selling_price?: number | null,
-        public currency?: string | null,
-        public stock_on_hand?: number | null,
-        public committed_stock?: number | null,
-        public available_stock?: number | null,
-        public incoming_stock?: number | null,
-        public quantity_shipped?: number | null,
-        public quantity_received?: number | null,
-        public description?: string | null,
-        public remark?: string | null,
-        public categories_id?: String | null,
-        public category?: IWarehouseCategory | null,
-        public brand_id?: String | null,
-        public brand?: IWarehouseCategory | null) {
+export default class WarehouseItem extends BaseModel implements IWarehouseItem {
+    constructor(public id: string, public code: string, public name: string) {
+        super(id);
     }
 }

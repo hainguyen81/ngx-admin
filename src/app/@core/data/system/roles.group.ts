@@ -1,5 +1,5 @@
 import {IRole} from './role';
-import {IModel} from '../base';
+import BaseModel, {IModel} from '../base';
 
 export interface IRolesGroup extends IModel {
     company: string;
@@ -8,9 +8,8 @@ export interface IRolesGroup extends IModel {
     roles?: IRole[] | null;
 }
 
-export default class RolesGroup implements IRolesGroup {
-    constructor(public id: string, public company: string,
-                public code: string, public name: string,
-                public roles?: IRole[] | null) {
+export default class RolesGroup extends BaseModel implements IRolesGroup {
+    constructor(public id: string, public company: string, public code: string, public name: string) {
+        super(id);
     }
 }
