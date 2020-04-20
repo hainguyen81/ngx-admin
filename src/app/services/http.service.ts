@@ -246,9 +246,17 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
                 if (res instanceof HttpResponse) {
                     const httpResp: HttpResponse<any> = <HttpResponse<any>>res;
                     _this.ensureVaidResponse(httpResp, url, method, options);
+                } else {
+                    res = new HttpResponse({
+                        body: JSON.stringify(res),
+                        headers: (options && options.headers instanceof HttpHeaders
+                            ? <HttpHeaders>options.headers
+                            : new HttpHeaders(<{ [name: string]: string | string[]; }>(options || {}).headers)),
+                        status: 200, url: url,
+                    });
                 }
-                return of(_this.parseResponse(new ServiceResponse(
-                    true, res, options.redirectSuccess, [], options.messages)));
+                return _this.parseResponse(new ServiceResponse(
+                    true, res, options.redirectSuccess, [], options.messages));
             }),
             catchError(_this.processRequestError(url, method, options)));
     }

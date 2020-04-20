@@ -77,7 +77,7 @@ export const COMMON = {
     request: {
         headers: RC_DEFAULT_HEADERS,
         // number (in milliseconds) | date
-        timeout: 30000,
+        timeout: 60000,
     },
     itemsPerPage: 15,
     baseMenu: BaseContextMenu,

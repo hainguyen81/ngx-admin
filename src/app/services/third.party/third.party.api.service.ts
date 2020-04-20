@@ -8,10 +8,10 @@ import {AbstractBaseDbService} from '../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/object.utils';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, flatMap, map} from 'rxjs/operators';
 import {RC_THIRD_PARTY_CUSTOM_TYPE} from '../../config/request.config';
 import {Cacheable} from 'ngx-cacheable';
 
@@ -42,6 +42,11 @@ export interface IThirdPartyApiConfig {
         observe?: 'body' | 'events' | 'response' | any,
         responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any,
     };
+    /**
+     * The time (in milliseconds) that token/data has been expired.
+     * 0 for un-expired
+     */
+    expiredIn?: number;
 }
 
 /**
@@ -184,6 +189,9 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         const data: T = JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as T;
         data.code = this.config.code
             .concat('|', this.apiConfig.method || 'UNKNOWN', '|', serviceResponse.getResponse().url);
+        if (Math.max(this.config.expiredIn, 0) > 0) {
+            data.expiredAt = (new Date()).getTime() + this.config.expiredIn;
+        }
         return data;
     }
 
@@ -329,14 +337,29 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
             }),
             map(accessToken => {
                 // include new token to original request to request again
-                options = _this.updateRequestOptionsBeforeRequest(options);
+                return  _this.updateRequestOptionsBeforeRequest(options);
+            }),
+            // TODO this is way to call an observer in another observer
+            flatMap(tokenOptions => {
+                return _this.getHttp().request(method, url, tokenOptions).pipe(
+                    map(apiDataResp => {
+                        if (apiDataResp instanceof HttpResponse) {
+                            const httpResp: HttpResponse<any> = <HttpResponse<any>>apiDataResp;
+                            _this.ensureVaidResponse(httpResp, url, method, options);
+                        } else {
+                            apiDataResp = new HttpResponse({
+                                body: JSON.stringify(apiDataResp),
+                                headers: (options && options.headers instanceof HttpHeaders
+                                    ? <HttpHeaders>options.headers
+                                    : new HttpHeaders(<{ [name: string]: string | string[]; }>(options || {}).headers)),
+                                status: 200, url: url,
+                            });
+                        }
 
-                // re-request original again after including new authorization token
-                return _this.getHttp().request(method, url, options).toPromise()
-                    .then(data => {
-                        _this.getLogger().debug('API data', data);
-                        return data as T[];
-                    });
+                        return _this.parseResponse(new ServiceResponse(
+                            true, apiDataResp, options.redirectSuccess, [], options.messages));
+                    }),
+                    catchError(_this.processRequestError(url, method, options)));
             }),
             catchError(_this.processRequestError(url, method, options)));
     }
