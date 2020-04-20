@@ -19,6 +19,7 @@ import {
     RC_AUTH_AUTHORIZATION_BEARER_TYPE,
     RC_AUTH_AUTHORIZATION_HEADER, RC_THIRD_PARTY_CUSTOM_TYPE,
 } from '../../../config/request.config';
+import {IdGenerators} from '../../../config/generator.config';
 
 /**
  * { 'error': {
@@ -83,6 +84,7 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
             return undefined;
         }
         const data: UniversalApiThirdParty = new UniversalApiThirdParty();
+        data.id = (data.id || IdGenerators.oid.generate());
         data.code = [this.config.code, this.config.method || 'UNKNOWN', serviceResponse.getResponse().url].join('|');
         (<IApiThirdParty>data).response = serviceResponse.getResponse().body;
         return data;

@@ -86,7 +86,7 @@ export class ThirdPartyApiDatasource<T extends IApiThirdParty>
             redirectFailure?: any;
             errors?: any;
             messages?: any;
-        }): Promise<T | T[] | K | K[]> {
+        }): Promise<K | K[]> {
         (url || '').length || throwError(ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED);
         const criteria: string = [
             this.getHttpService().config.code,
@@ -99,6 +99,10 @@ export class ThirdPartyApiDatasource<T extends IApiThirdParty>
                     return this.getHttpService().request(url, method, options).toPromise()
                         .then((data: T[]) => {
                             // catch for future from offline database
+                            if (!isArray(data)) {
+                                data = [].concat(data);
+                            }
+
                             return this.getDbService().insertEntities(data)
                                 .then(affected => {
                                     let parsedData: K[];
@@ -122,7 +126,7 @@ export class ThirdPartyApiDatasource<T extends IApiThirdParty>
                                     data = this.sort(data);
                                     this.setRecordsNumber((data || []).length);
                                     data = this.paginate(data);
-                                    return (parsedData.length ? parsedData : data);
+                                    return parsedData as K[];
 
                                 }, reason => {
                                     this.getLogger().error(reason);

@@ -62,7 +62,7 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
                         country.name,
                     ].join('/');
                     return this.thirdPartyApi.findData(url, CityDbService.THIRD_PARTY_CITY_METHOD, City)
-                        .then((data: IApiThirdParty | IApiThirdParty[] | City | City[]) => {
+                        .then((data: City[]) => {
                             // apply country for city API data
                             let cities: ICity[];
                             cities = data as ICity[];
