@@ -1,0 +1,11 @@
+CACHE MANIFEST
+# v1 - 2011-08-13
+# This is a comment.
+*.svg
+*.ttf
+*.eot
+*.woff
+*.js
+*.css
+*.scss
+/assets
