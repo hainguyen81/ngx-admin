@@ -8,13 +8,13 @@ import {AbstractHttpService} from '../services/http.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../services/response.service';
 import {ConnectionService} from 'ng-connection-service';
-import {NBX_AUTH_AUTHORIZATION_HEADER, NBX_AUTH_AUTHORIZATION_BASIC_TYPE} from './auth.interceptor';
 import {Observable, of, throwError} from 'rxjs';
 import EncryptionUtils from '../utils/encryption.utils';
 import PromiseUtils from '../utils/promise.utils';
 import {IUser} from '../@core/data/system/user';
 import {UserDbService} from '../services/implementation/system/user/user.service';
 import JsonUtils from '../utils/json.utils';
+import {RC_AUTH_AUTHORIZATION_BASIC_TYPE, RC_AUTH_AUTHORIZATION_HEADER} from '../config/request.config';
 
 @Injectable()
 export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractBaseDbService<T> {
@@ -75,11 +75,11 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
     }): Observable<T[] | T> {
         let headers: HttpHeaders;
         headers = (options && options.headers ? options.headers as HttpHeaders : undefined);
-        if (headers && headers.has(NBX_AUTH_AUTHORIZATION_HEADER)) {
+        if (headers && headers.has(RC_AUTH_AUTHORIZATION_HEADER)) {
             let dbService: UserDbService;
             dbService = this.getDbService() as UserDbService;
             let authorization: string;
-            authorization = headers.get(NBX_AUTH_AUTHORIZATION_HEADER);
+            authorization = headers.get(RC_AUTH_AUTHORIZATION_HEADER);
             this.getLogger().debug('Check authentication', authorization);
             return PromiseUtils.promiseToObservable(
                 dbService.getAll().then((users) => {
@@ -90,7 +90,7 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                             let encryptedToken: string;
                             encryptedToken = EncryptionUtils.base64Encode(':',
                                 u.username || '', u.password || '');
-                            encryptedToken = [NBX_AUTH_AUTHORIZATION_BASIC_TYPE, encryptedToken].join(' ');
+                            encryptedToken = [RC_AUTH_AUTHORIZATION_BASIC_TYPE, encryptedToken].join(' ');
                             return (authorization.toLowerCase() === encryptedToken.toLowerCase());
                         });
                         if (foundUsers && foundUsers.length) {

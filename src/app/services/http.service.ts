@@ -9,10 +9,6 @@ import {LogConfig} from '../config/log.config';
 import {isArray} from 'util';
 import {Cacheable} from 'ngx-cacheable';
 import {environment} from '../../environments/environment';
-import {
-    NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER,
-    NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL,
-} from '../auth/auth.interceptor';
 
 /**
  * Abstract HTTP service
@@ -239,14 +235,6 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         errors?: any;
         messages?: any;
     }): Observable<T | T[]> {
-        // TODO Access-Control-Allow-Origin
-        options = Object.assign({}, options);
-        if (!options.headers || !(options.headers instanceof HttpHeaders)) {
-            options.headers = new HttpHeaders(<{ [header: string]: string | string[]; }>options.headers || {});
-        }
-        (<HttpHeaders>options.headers).set(
-            NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER,
-            NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL);
         // detect connection before requesting
         const _this: AbstractHttpService<T, K> = this;
         return _this.getHttp().request(method, url, options).pipe(

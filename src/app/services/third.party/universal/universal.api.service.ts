@@ -5,21 +5,20 @@ import {ServiceResponse} from '../../response.service';
 import JsonUtils from '../../../utils/json.utils';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {IApiThirdParty, UniversalApiThirdParty} from '../../../@core/data/system/api.third.party';
-import ThirdPartyApiConfig, {
+import {
     IThirdPartyApiConfig,
-    THIRDPARTY_AUTHORIZATION_API_CONFIG,
     ThirdPartyApiDbService,
     ThirdPartyApiHttpService,
 } from '../third.party.api.service';
 import {IModel} from '../../../@core/data/base';
-import {
-    NBX_AUTH_AUTHORIZATION_BEARER_TYPE,
-    NBX_AUTH_AUTHORIZATION_HEADER,
-} from '../../../auth/auth.interceptor';
 import {THIRD_PARTY_API} from '../../../config/third.party.api';
 import {Cacheable} from 'ngx-cacheable';
+import {
+    RC_AUTH_AUTHORIZATION_BEARER_TYPE,
+    RC_AUTH_AUTHORIZATION_HEADER,
+} from '../../../config/request.config';
 
 /**
  * { 'error': {
@@ -147,13 +146,13 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
         errors?: any;
         messages?: any;
     } {
-        const authTokenValue = [NBX_AUTH_AUTHORIZATION_BEARER_TYPE, tokenValue].join(' ');
+        const authTokenValue = [RC_AUTH_AUTHORIZATION_BEARER_TYPE, (tokenValue || '')].join(' ');
         options = (options || {});
         options.headers = (options.headers || new HttpHeaders());
         if (options.headers instanceof HttpHeaders) {
-            (<HttpHeaders>options.headers).set(NBX_AUTH_AUTHORIZATION_HEADER, authTokenValue);
+            (<HttpHeaders>options.headers).set(RC_AUTH_AUTHORIZATION_HEADER, authTokenValue);
         } else {
-            options.headers[NBX_AUTH_AUTHORIZATION_HEADER] = authTokenValue;
+            options.headers[RC_AUTH_AUTHORIZATION_HEADER] = authTokenValue;
         }
         return options;
     }

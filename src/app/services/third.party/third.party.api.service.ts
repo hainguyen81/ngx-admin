@@ -12,10 +12,6 @@ import {Observable, throwError} from 'rxjs';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/object.utils';
 import {catchError, map} from 'rxjs/operators';
-import {
-    NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER,
-    NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL
-} from "../../auth/auth.interceptor";
 
 /**
  * The third-party API authorization configuration interface
@@ -292,23 +288,6 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         errors?: any;
         messages?: any;
     }): Observable<T | T[]> {
-        // include the check flag to original request to avoid loop stack
-        options = (options || {});
-        options.headers = (options.headers || new HttpHeaders());
-        if (options.headers instanceof HttpHeaders) {
-            (<HttpHeaders>options.headers).set(
-                ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG,
-                (new Date()).getUTCDate().toString());
-            (<HttpHeaders>options.headers).set(
-                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER,
-                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL);
-        } else {
-            options.headers[ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG] =
-                (new Date()).getUTCDate().toString();
-            options.headers[NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER] =
-                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL;
-        }
-
         // prepare options for authorization request
         let clonedOptions: {
             body?: any;
@@ -337,16 +316,11 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         // also including the check flag to authorization request to avoid loop stack
         if (clonedOptions.headers instanceof HttpHeaders) {
             (<HttpHeaders>clonedOptions.headers).set(
-                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER,
-                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL);
-            (<HttpHeaders>clonedOptions.headers).set(
                 ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG,
                 (new Date()).getUTCDate().toString());
         } else {
             clonedOptions.headers[ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG] =
                 (new Date()).getUTCDate().toString();
-            clonedOptions.headers[NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER] =
-                NBX_AUTH_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL;
         }
 
         // create authorization request to require token or authorize

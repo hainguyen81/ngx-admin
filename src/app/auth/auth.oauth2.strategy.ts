@@ -16,7 +16,7 @@ import {IRole} from '../@core/data/system/role';
 import {isObject} from 'rxjs/internal-compatibility';
 import {map} from 'rxjs/operators';
 import EncryptionUtils from '../utils/encryption.utils';
-import {NBX_AUTH_AUTHORIZATION_BASIC_TYPE} from './auth.interceptor';
+import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -65,7 +65,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
         let authorization: string;
         authorization = EncryptionUtils.base64Encode(':',
             data['email'] || '', EncryptionUtils.md5Encode(':', data['password']));
-        headers = headers.set('Authorization', [NBX_AUTH_AUTHORIZATION_BASIC_TYPE, authorization].join(' '));
+        headers = headers.set('Authorization', [RC_AUTH_AUTHORIZATION_BASIC_TYPE, authorization].join(' '));
         let method: string;
         method = oauth2.getOption(`${module}.method`);
         let url: string;
