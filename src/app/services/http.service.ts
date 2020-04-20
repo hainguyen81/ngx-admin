@@ -256,7 +256,8 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
                     });
                 }
                 return _this.parseResponse(new ServiceResponse(
-                    true, res, options.redirectSuccess, [], options.messages));
+                    true, res, (options || {}).redirectSuccess,
+                    [], (options || {}).messages));
             }),
             catchError(_this.processRequestError(url, method, options)));
     }
@@ -325,6 +326,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
             messages?: any;
         }): (err: any, caught: Observable<any>) => ObservableInput<any> {
         return (httpErrorResponse: HttpErrorResponse) => {
+            this.getLogger().error('Request Error', url, method, options, httpErrorResponse);
             const observer: Observable<T | T[]> = (typeof this.handleResponseErrorDelegate === 'function'
                 ? this.handleResponseErrorDelegate(url, method, httpErrorResponse, options)
                 : this.handleResponseError(url, method, httpErrorResponse, options));

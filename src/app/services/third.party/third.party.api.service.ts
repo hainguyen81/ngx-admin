@@ -345,19 +345,20 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
                     map(apiDataResp => {
                         if (apiDataResp instanceof HttpResponse) {
                             const httpResp: HttpResponse<any> = <HttpResponse<any>>apiDataResp;
-                            _this.ensureVaidResponse(httpResp, url, method, options);
+                            _this.ensureVaidResponse(httpResp, url, method, tokenOptions);
                         } else {
                             apiDataResp = new HttpResponse({
                                 body: JSON.stringify(apiDataResp),
-                                headers: (options && options.headers instanceof HttpHeaders
-                                    ? <HttpHeaders>options.headers
-                                    : new HttpHeaders(<{ [name: string]: string | string[]; }>(options || {}).headers)),
+                                headers: (tokenOptions && tokenOptions.headers instanceof HttpHeaders
+                                    ? <HttpHeaders>tokenOptions.headers
+                                    : new HttpHeaders(<{ [name: string]: string | string[]; }>
+                                        (tokenOptions || {}).headers)),
                                 status: 200, url: url,
                             });
                         }
-
                         return _this.parseResponse(new ServiceResponse(
-                            true, apiDataResp, options.redirectSuccess, [], options.messages));
+                            true, apiDataResp, tokenOptions.redirectSuccess,
+                            [], tokenOptions.messages));
                     }),
                     catchError(_this.processRequestError(url, method, options)));
             }),

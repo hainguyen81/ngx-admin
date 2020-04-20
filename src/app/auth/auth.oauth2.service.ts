@@ -105,7 +105,9 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                                     headers: headers,
                                     status: 200, url: url,
                                 }),
-                                options.redirectSuccess, options.errors, options.messages));
+                                (options || {}).redirectSuccess,
+                                (options || {}).errors,
+                                (options || {}).messages));
                         }
                     }
                     if (!token) {
@@ -114,7 +116,9 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                                 body: '', headers: headers,
                                 status: 401, url: url,
                             }),
-                            options.redirectFailure, options.errors, options.messages));
+                            (options || {}).redirectFailure,
+                            (options || {}).errors,
+                            (options || {}).messages));
                     }
                     return token;
 
@@ -125,7 +129,9 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                             body: '', headers: headers,
                             status: 401, url: url,
                         }),
-                        options.redirectFailure, options.errors, options.messages));
+                        (options || {}).redirectFailure,
+                        (options || {}).errors,
+                        (options || {}).messages));
 
                 }).catch((errors) => {
                     this.getLogger().error('Not found any valid token', errors);
@@ -134,7 +140,9 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                             body: '', headers: headers,
                             status: 401, url: url,
                         }),
-                        options.redirectFailure, options.errors, options.messages));
+                        (options || {}).redirectFailure,
+                        (options || {}).errors,
+                        (options || {}).messages));
                 }));
         }
         return of(undefined);
