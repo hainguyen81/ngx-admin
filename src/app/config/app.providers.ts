@@ -109,7 +109,6 @@ import {Meta, Title} from '@angular/platform-browser';
 import {UniversalApiDbService, UniversalApiHttpService} from '../services/third.party/universal/universal.api.service';
 import {UniversalApiDatasource} from '../services/third.party/universal/universal.api.datasource';
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
-import {AppConfig} from './app.config';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -408,7 +407,7 @@ export const InterceptorProviders = [
     },
 
     /* Request timeout */
-    {provide: HTTP_REQUEST_TIMEOUT, useValue: AppConfig.COMMON.requestTimeout},
+    {provide: HTTP_REQUEST_TIMEOUT, useValue: COMMON.requestTimeout},
     {
         provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true,
         deps: [Injector, NGXLogger, HTTP_REQUEST_TIMEOUT],
