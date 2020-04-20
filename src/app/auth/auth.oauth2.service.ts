@@ -66,7 +66,7 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
         observe?: 'body' | 'events' | 'response' | any;
         params?: HttpParams | { [param: string]: string | string[]; };
         reportProgress?: boolean;
-        responseType: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
         withCredentials?: boolean;
         redirectSuccess?: any;
         redirectFailure?: any;

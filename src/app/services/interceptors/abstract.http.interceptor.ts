@@ -3,6 +3,7 @@ import {Inject, Injectable, Injector} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, throwError} from 'rxjs';
 import {NbAuthSimpleInterceptor} from '@nebular/auth';
+import {isNullOrUndefined} from 'util';
 
 @Injectable()
 export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor implements HttpInterceptor {
@@ -47,8 +48,8 @@ export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor im
      * @param next for next intercept
      */
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.logger.debug('Intercept HTTP', req);
-        return this.doIntercept(req, next);
+        this.logger.warn('Just remind: Intercept HTTP{' + (<Object>this).constructor.name + '}', req);
+        return (this.isSupported(req) ? this.doIntercept(req, next) : next.handle(req));
     }
 
     /**
@@ -57,4 +58,13 @@ export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor im
      * @param next for next intercept
      */
     protected abstract doIntercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;
+
+    /**
+     * Get a boolean value indicating the specified {HttpRequest} should be filtered.
+     * TODO Children classes should override this method if they wanna filter request. Default is TRUE
+     * @param req to check
+     */
+    protected isSupported(req: HttpRequest<any>): boolean {
+        return !isNullOrUndefined(req);
+    }
 }

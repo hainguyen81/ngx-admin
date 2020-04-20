@@ -11,7 +11,7 @@ export const HTTP_REQUEST_TIMEOUT = new InjectionToken<number>('The default requ
 export class TimeoutInterceptor extends AbstractHttpInterceptor {
 
     public get timeout() {
-        return (this._timeout <= 0 ? 10 : this._timeout);
+        return Math.max(this._timeout, 0);
     }
 
     constructor(_injector: Injector,
@@ -23,7 +23,6 @@ export class TimeoutInterceptor extends AbstractHttpInterceptor {
     protected doIntercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const timeoutValue = req.headers.get('timeout') || this.timeout;
         const timeoutValueNumeric = Number(timeoutValue);
-        this.logger.debug('Request timeout', timeoutValueNumeric);
         return next.handle(req).pipe(opTimeout(timeoutValueNumeric));
     }
 }

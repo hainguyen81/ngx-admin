@@ -76,9 +76,10 @@ export const COMMON = {
     /* default HTTP request */
     request: {
         headers: RC_DEFAULT_HEADERS,
-        timeout: 10,
+        // number (in milliseconds) | date
+        timeout: 60000,
     },
-    itemsPerPage: 10,
+    itemsPerPage: 15,
     baseMenu: BaseContextMenu,
     baseToolbarActions: BaseToolbarActions,
     imageFileExtensions: IMAGE_FILE_EXTENSIONS,

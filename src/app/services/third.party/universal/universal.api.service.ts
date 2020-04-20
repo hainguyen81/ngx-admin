@@ -17,7 +17,7 @@ import {THIRD_PARTY_API} from '../../../config/third.party.api';
 import {Cacheable} from 'ngx-cacheable';
 import {
     RC_AUTH_AUTHORIZATION_BEARER_TYPE,
-    RC_AUTH_AUTHORIZATION_HEADER,
+    RC_AUTH_AUTHORIZATION_HEADER, RC_THIRD_PARTY_CUSTOM_TYPE,
 } from '../../../config/request.config';
 
 /**
@@ -26,8 +26,13 @@ import {
  *      'message': 'jwt expired',
  *      'expiredAt': '2020-02-18T17:55:22.000Z'
  * } }
+ * { 'error': {
+ *      'name': 'JsonWebTokenError',
+ *      'message': 'jwt must be provided'
+ * } }
  */
 export const TOKEN_EXPIRED_ERROR_NAME: string = 'TokenExpiredError';
+export const TOKEN_UNPROVIDED_ERROR_NAME: string = 'JsonWebTokenError';
 
 export interface IUniversalApiExpiredResponse extends IModel {
     error?: { name?: string | null, message?: string | null, expiredAt?: string | null } | null;
@@ -63,20 +68,6 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
     private static UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME: string = 'auth_token';
 
     // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    private _latestToken: string;
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    get latestToken(): string {
-        return this._latestToken;
-    }
-
-    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -105,7 +96,8 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
                 const errorResp: IUniversalApiExpiredResponse =
                     JsonUtils.safeParseJson(respErr.error) as IUniversalApiExpiredResponse;
                 return (errorResp && errorResp.error
-                    && errorResp.error.name === TOKEN_EXPIRED_ERROR_NAME);
+                    && [TOKEN_EXPIRED_ERROR_NAME, TOKEN_UNPROVIDED_ERROR_NAME]
+                        .indexOf(errorResp.error.name) >= 0);
             }
         }
         return super.isUnauthorizedOrExpired(res);
@@ -113,11 +105,7 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
 
     protected parseAccessToken(httpResponse: HttpResponse<any>): any {
         const token: any = super.parseAccessToken(httpResponse);
-        const tokenValue: string = (token || {})[
-            UniversalApiHttpService.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME];
-        this.config[UniversalApiHttpService.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME] = tokenValue;
-        this._latestToken = tokenValue;
-        return tokenValue;
+        return (token || {})[UniversalApiHttpService.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME];
     }
 
     protected processAccessToken(
@@ -147,40 +135,16 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
         errors?: any;
         messages?: any;
     } {
-        const authTokenValue = [RC_AUTH_AUTHORIZATION_BEARER_TYPE, (tokenValue || '')].join(' ');
-        options = (options || {});
-        options.headers = (options.headers || new HttpHeaders());
-        if (options.headers instanceof HttpHeaders) {
-            (<HttpHeaders>options.headers).set(RC_AUTH_AUTHORIZATION_HEADER, authTokenValue);
-        } else {
-            options.headers[RC_AUTH_AUTHORIZATION_HEADER] = authTokenValue;
-        }
-        return options;
-    }
-
-    @Cacheable()
-    public request(url: string, method?: string, options?: {
-        body?: any;
-        headers?: HttpHeaders | { [header: string]: string | string[]; };
-        observe?: 'body' | 'events' | 'response' | any;
-        params?: HttpParams | { [param: string]: string | string[]; };
-        reportProgress?: boolean;
-        responseType: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
-        withCredentials?: boolean;
-        redirectSuccess?: any;
-        redirectFailure?: any;
-        errors?: any;
-        messages?: any;
-    }): Observable<UniversalApiThirdParty | UniversalApiThirdParty[]> {
-        // apply latest token if necessary
-        if (this.config) {
-            const tokenValue: string = (this.config[
-                UniversalApiHttpService.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME] || this.latestToken);
-            if (tokenValue) {
-                // @ts-ignore
-                options = this.processAccessToken(tokenValue, options);
+        if ((tokenValue || '').length) {
+            const authTokenValue = [RC_AUTH_AUTHORIZATION_BEARER_TYPE, (tokenValue || '')].join(' ');
+            options = (options || {});
+            options.headers = (options.headers || {});
+            if (options.headers instanceof HttpHeaders) {
+                (<HttpHeaders>options.headers).set(RC_AUTH_AUTHORIZATION_HEADER, authTokenValue);
+            } else {
+                options.headers[RC_AUTH_AUTHORIZATION_HEADER] = authTokenValue;
             }
         }
-        return super.request(url, method, options);
+        return options;
     }
 }

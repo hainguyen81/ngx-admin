@@ -12,8 +12,8 @@ import {Observable, throwError} from 'rxjs';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/object.utils';
 import {catchError, map} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
 import {RC_THIRD_PARTY_CUSTOM_TYPE} from '../../config/request.config';
+import {Cacheable} from 'ngx-cacheable';
 
 /**
  * The third-party API authorization configuration interface
@@ -129,8 +129,8 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends A
                       reject: (reason?: any) => void, ...args: T[]) => {
         if (args && args.length) {
             this.getLogger().debug('Delete data', args, 'First data', args[0]);
-            args[0].deletedAt = (new Date()).getUTCDate();
-            args[0].expiredAt = (new Date()).getUTCDate();
+            args[0].deletedAt = (new Date()).getTime();
+            args[0].expiredAt = (new Date()).getTime();
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
     }
@@ -156,14 +156,14 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends A
 export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
     extends AbstractHttpService<T, T> {
 
-    protected static REQUEST_REQUIRE_TOKEN_FLAG: string = 'XRequiredToken';
+    protected static THIRD_PARTY_LATEST_ACCESS_TOKEN: string = 'XThirdPartyToken';
 
     get config(): IThirdPartyApiConfig {
         return this.apiConfig;
     }
 
-    getBaseUrl(): string {
-        return this.config.baseUrl || environment.baseHref;
+    get latestToken(): any {
+        return this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN];
     }
 
     protected constructor(@Inject(HttpClient) http: HttpClient,
@@ -206,7 +206,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
     protected configHeaders(
         defaultValue?: HttpHeaders | { [header: string]: string | string[]; } | null):
         HttpHeaders | { [header: string]: string | string[]; } {
-        return (this.config && this.config.tokenParam && this.config.tokenParam.type === 'header'
+        return (this.config.tokenParam && this.config.tokenParam.type === 'header'
             ? <HttpHeaders | { [header: string]: string | string[]; }>
                 this.config.tokenParam.values : defaultValue);
     }
@@ -214,25 +214,23 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
     protected configParams(
         defaultValue?: HttpParams | { [param: string]: string | string[]; } | null):
         HttpParams | { [param: string]: string | string[]; } {
-        return (this.config && this.config.tokenParam && this.config.tokenParam.type === 'param'
+        return (this.config.tokenParam && this.config.tokenParam.type === 'param'
             ? <HttpParams | { [param: string]: string | string[]; }>
                 this.config.tokenParam.values : defaultValue);
     }
 
     protected configBody(defaultValue?: any | null): any {
-        return (this.config && this.config.tokenParam && this.config.tokenParam.type === 'body'
+        return (this.config.tokenParam && this.config.tokenParam.type === 'body'
             ? this.config.tokenParam.values : defaultValue);
     }
 
     protected configResponseType(
         defaultValue?: 'arraybuffer' | 'blob' | 'json' | 'text' | any): 'arraybuffer' | 'blob' | 'json' | 'text' | any {
-        return (this.config && this.config.tokenParam
-            ? this.config.tokenParam.responseType : defaultValue);
+        return (this.config.tokenParam ? this.config.tokenParam.responseType : defaultValue);
     }
 
     protected configObserve(defaultValue?: 'body' | 'events' | 'response' | any): 'body' | 'events' | 'response' | any {
-        return (this.config && this.config.tokenParam
-            ? this.config.tokenParam.observe : defaultValue);
+        return (this.config.tokenParam ? this.config.tokenParam.observe : defaultValue);
     }
 
     protected handleResponseError(url: string, method?: string, res?: any, options?: {
@@ -249,28 +247,12 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         messages?: any;
     }): Observable<T | T[]> {
         /** check whether is un-authorized/expired */
-        const alreadyCheckToken: boolean =
-            this.alreadyCheckUnauthorizeOrExpired(options ? options.headers || {} : {});
-        if (!alreadyCheckToken && this.isUnauthorizedOrExpired(res)) {
-            !this.config || !(this.config.tokenUrl || '').length
+        if (url !== this.config.tokenUrl && this.isUnauthorizedOrExpired(res)) {
+            !(this.config.tokenUrl || '').length
             || throwError('Please provide third-party authorization configuration to require access token!');
             return this.handleUnauthorizedExpired(url, method, options);
         }
         return super.handleResponseError(url, method, options);
-    }
-
-    /**
-     * Get a boolean value indicating the third-party request whether is un-authorized or expired
-     * TODO Children class should override this method to specify current request error
-     * TODO whether is un-authorized or expired to make a new request to require new access token
-     * @param res response error to check
-     */
-    private alreadyCheckUnauthorizeOrExpired(
-        headers?: HttpHeaders | { [header: string]: string | string[]; }): boolean {
-        return (headers instanceof HttpHeaders
-            ? (<HttpHeaders>headers).has(ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG)
-            : (<{ [header: string]: string | string[]; }>headers)
-                .hasOwnProperty(ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG));
     }
 
     protected isUnauthorizedOrExpired(res?: any): boolean {
@@ -298,9 +280,6 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         errors?: any;
         messages?: any;
     }): Observable<T | T[]> {
-        // include the check flag to original request to avoid loop stack
-        options = this._updateRequestOptionsForThirdParty(options);
-
         // prepare options for authorization request
         let clonedOptions: {
             body?: any;
@@ -320,48 +299,45 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         clonedOptions.body = this.configBody();
         clonedOptions.observe = this.configObserve();
         clonedOptions.responseType = this.configResponseType();
-        if (this.config && this.config.tokenParam && this.config.tokenParam.type === 'custom') {
+        if (this.config.tokenParam && this.config.tokenParam.type === 'custom') {
             clonedOptions = this.customAuthorizeRequestOptions(clonedOptions);
             clonedOptions = (clonedOptions || {});
         }
 
         // create authorization request to require token or authorize
         const _this: ThirdPartyApiHttpService<T> = this;
-        return _this.getHttp().request(
-            _this.config.method, _this.config.tokenUrl, clonedOptions).pipe(
+        return _this.getHttp().request(_this.config.method, _this.config.tokenUrl, clonedOptions).pipe(
             map(accessTokenResp => {
                 _this.getLogger().debug('Access Token Response', accessTokenResp);
                 return accessTokenResp;
             }),
             map(accessTokenResp => {
                 const httpResp: HttpResponse<any> = <HttpResponse<any>>(<any>accessTokenResp);
-                // @ts-ignore
                 _this.ensureVaidResponse(httpResp, _this.config.tokenUrl, _this.config.method, clonedOptions);
                 const accessToken: any = this.parseAccessToken(httpResp);
+                this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN] = accessToken;
                 if (!accessToken) {
-                    _this.handleResponseError(
-                        url, method,
-                        new HttpErrorResponse({
-                            url: url,
-                            headers: <HttpHeaders>options.headers,
-                            status: 401,
-                            statusText: 'Unauthorized',
-                            error: 'Token has been expired! But could not require/parse new token again!',
-                        }),
-                        options,
-                    );
+                    throwError(new HttpErrorResponse({
+                        url: url,
+                        headers: <HttpHeaders>options.headers,
+                        status: 401,
+                        statusText: 'Unauthorized',
+                        error: 'Token has been expired! But could not require/parse new token again!',
+                    }));
                 }
                 return accessToken;
             }),
             map(accessToken => {
                 // include new token to original request to request again
-                options = _this.processAccessToken(accessToken, options);
+                options = _this.updateRequestOptionsBeforeRequest(options);
 
                 // re-request original again after including new authorization token
-                // @ts-ignore
-                return _this.request(url, method, options);
+                return _this.getHttp().request(method, url, options).toPromise()
+                    .then(data => {
+                        _this.getLogger().debug('API data', data);
+                        return data as T[];
+                    });
             }),
-            // @ts-ignore
             catchError(_this.processRequestError(url, method, options)));
     }
 
@@ -404,7 +380,8 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
      * @param httpResponse to parse
      */
     protected parseAccessToken(httpResponse: HttpResponse<any>): any {
-        return JsonUtils.safeParseJson(httpResponse ? httpResponse.body : null);
+        const source: any = (httpResponse instanceof HttpResponse ? httpResponse.body : httpResponse);
+        return JsonUtils.safeParseJson(source);
     }
 
     /**
@@ -449,7 +426,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
      * @param options to update
      * @private
      */
-    private _updateRequestOptionsForThirdParty(options?: {
+    protected updateRequestOptionsBeforeRequest(options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
         observe?: 'body' | 'events' | 'response' | any;
@@ -476,17 +453,33 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
     } {
         // include the check flag to original request to avoid loop stack
         options = Object.assign({}, options || {});
-        options.headers = (options.headers || new HttpHeaders());
+        options.headers = (options.headers || {});
         if (options.headers instanceof HttpHeaders) {
             (<HttpHeaders>options.headers).set(RC_THIRD_PARTY_CUSTOM_TYPE, this.config.code);
-            (<HttpHeaders>options.headers).set(
-                ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG,
-                (new Date()).getUTCDate().toString());
         } else {
             options.headers[RC_THIRD_PARTY_CUSTOM_TYPE] = this.config.code;
-            options.headers[ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG] =
-                (new Date()).getUTCDate().toString();
         }
-        return options;
+        return this.processAccessToken(
+            this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN], options);
+    }
+
+    @Cacheable()
+    public request(url: string, method?: string, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body' | 'events' | 'response' | any;
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }): Observable<T | T[]> {
+        // apply latest token if necessary
+        options = (options || {});
+        options = this.updateRequestOptionsBeforeRequest(options);
+        return super.request(url, method, options);
     }
 }

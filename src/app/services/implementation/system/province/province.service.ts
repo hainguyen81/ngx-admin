@@ -24,7 +24,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
                       reject: (reason?: any) => void, ...args: IProvince[]) => {
         if (args && args.length) {
             this.getLogger().debug('Delete data', args, 'First data', args[0]);
-            args[0].deletedAt = (new Date()).getUTCDate();
+            args[0].deletedAt = (new Date()).getTime();
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
     }

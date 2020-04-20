@@ -24,8 +24,6 @@ export class RequestHeadersInterceptor extends AbstractHttpInterceptor {
     protected doIntercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req && this.headers) {
             let httpHeaders: HttpHeaders;
-            let defaultHeaders: { [header: string]: string | string[]; };
-            defaultHeaders = {};
             if (this.headers instanceof HttpHeaders) {
                 httpHeaders = <HttpHeaders>this.headers;
             } else {
@@ -33,12 +31,9 @@ export class RequestHeadersInterceptor extends AbstractHttpInterceptor {
             }
             httpHeaders.keys().forEach(key => {
                 // remove existed headers for non-overriding
-                if (!(req.headers || new HttpHeaders()).has(key)) {
-                    defaultHeaders[key] = httpHeaders.get(key);
+                if (!req.headers.has(key)) {
+                    req.headers.set(key, httpHeaders.get(key));
                 }
-            });
-            req = req.clone({
-                setHeaders: defaultHeaders,
             });
         }
         return next.handle(req);

@@ -40,10 +40,10 @@ export declare interface IHttpService<T> {
     request(url: string, method?: string, options?: {
         body?: any;
         headers?: HttpHeaders | { [header: string]: string | string[]; };
-        observe?: 'body' | 'events' | 'response';
+        observe?: 'body' | 'events' | 'response' | any;
         params?: HttpParams | { [param: string]: string | string[]; };
         reportProgress?: boolean;
-        responseType?: 'arraybuffer'|'blob'|'json'|'text';
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
         withCredentials?: boolean;
         redirectSuccess?: any;
         redirectFailure?: any;

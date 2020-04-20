@@ -1,7 +1,11 @@
 import './prototypes.import';
 import {ErrorHandler, InjectionToken, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
-import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpXhrBackend} from '@angular/common/http';
+import {
+    HTTP_INTERCEPTORS,
+    HttpClient,
+    HttpHandler,
+} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
 import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
@@ -109,7 +113,7 @@ import {Meta, Title} from '@angular/platform-browser';
 import {UniversalApiDbService, UniversalApiHttpService} from '../services/third.party/universal/universal.api.service';
 import {UniversalApiDatasource} from '../services/third.party/universal/universal.api.datasource';
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
-import {HTTP_REQUEST_HEADERS} from '../services/interceptors/headers.interceptor';
+import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/interceptors/headers.interceptor';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -137,10 +141,9 @@ export const CommonProviders: StaticProvider[] = [
     {provide: SW_VAPID_PUBLIC_KEY, useValue: COMMON.sw.vapid_public_key},
     {provide: LOCALE_ID, useValue: 'vi'},
     {provide: DatePipe, useClass: DatePipe, deps: []},
-    {provide: HttpBackend, useExisting: HttpXhrBackend, deps: []},
-    {provide: NGXMapperService, useClass: NGXMapperService, deps: [HttpBackend]},
-    {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpBackend]},
-    {provide: HttpClient, useClass: HttpClient, deps: [HttpBackend]},
+    {provide: HttpClient, useClass: HttpClient, deps: [HttpHandler]},
+    {provide: NGXMapperService, useClass: NGXMapperService, deps: [HttpHandler]},
+    {provide: NGXLoggerHttpService, useClass: NGXLoggerHttpService, deps: [HttpHandler]},
     {provide: DataSource, useClass: LocalDataSource, deps: []},
     {provide: ContextMenuService, useClass: ContextMenuService, deps: []},
     {provide: ConnectionService, useClass: ConnectionService, deps: []},
@@ -149,6 +152,60 @@ export const CommonProviders: StaticProvider[] = [
     {
         provide: ErrorHandler, useClass: GlobalErrorsHandler,
         deps: [TranslateService, ToastrService, NGXLogger, Injector],
+    },
+];
+
+export const InterceptorProviders = [
+    /* Request authentication */
+    {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization'},
+    {provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company'},
+    {provide: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, useValue: 'access_token'},
+    {
+        provide: HTTP_INTERCEPTORS, useClass: NbxAuthInterceptor,
+        deps: [
+            Injector, NGXLogger,
+            NB_AUTH_INTERCEPTOR_HEADER,
+            NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
+            NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,
+        ],
+        multi: true,
+    },
+
+    /* Request timeout */
+    {provide: HTTP_REQUEST_TIMEOUT, useValue: COMMON.request.timeout},
+    {
+        provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor,
+        deps: [Injector, NGXLogger, HTTP_REQUEST_TIMEOUT],
+        multi: true,
+    },
+
+    /* Request headers */
+    {provide: HTTP_REQUEST_HEADERS, useValue: COMMON.request.headers},
+    {
+        provide: HTTP_INTERCEPTORS, useClass: RequestHeadersInterceptor,
+        deps: [Injector, NGXLogger, HTTP_REQUEST_HEADERS],
+        multi: true,
+    },
+];
+
+export const AuthenticationProviders: StaticProvider[] = [
+    {provide: AuthGuard, useClass: AuthGuard, deps: [NbAuthService, Router]},
+    {
+        provide: ModuleService, useClass: ModuleService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
+        deps: [HttpClient, NGXLogger, UserDbService],
+    },
+    {
+        provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
+        deps: [HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService,
+            NbxOAuth2AuthDbService, ModuleService, NGXLogger],
     },
 ];
 
@@ -395,54 +452,6 @@ export const WarehouseProviders: StaticProvider[] = [
     },
 ];
 
-export const InterceptorProviders = [
-    /* Request authentication */
-    {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization'},
-    {provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company'},
-    {provide: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, useValue: 'access_token'},
-    {
-        provide: HTTP_INTERCEPTORS, useClass: NbxAuthInterceptor, multi: true,
-        deps: [Injector, NGXLogger, NB_AUTH_INTERCEPTOR_HEADER,
-            NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
-            NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM],
-    },
-
-    /* Request timeout */
-    {provide: HTTP_REQUEST_TIMEOUT, useValue: COMMON.request.timeout},
-    {
-        provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true,
-        deps: [Injector, NGXLogger, HTTP_REQUEST_TIMEOUT],
-    },
-
-    /* Request headers */
-    {provide: HTTP_REQUEST_HEADERS, useValue: COMMON.request.headers},
-    {
-        provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true,
-        deps: [Injector, NGXLogger, HTTP_REQUEST_TIMEOUT],
-    },
-];
-
-export const AuthenticationProviders: StaticProvider[] = [
-    {provide: AuthGuard, useClass: AuthGuard, deps: [NbAuthService, Router]},
-    {
-        provide: ModuleService, useClass: ModuleService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
-    },
-    {
-        provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
-    },
-    {
-        provide: NbxOAuth2AuthHttpService, useClass: NbxOAuth2AuthHttpService,
-        deps: [HttpClient, NGXLogger, UserDbService],
-    },
-    {
-        provide: NbxOAuth2AuthStrategy, useClass: NbxOAuth2AuthStrategy,
-        deps: [HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService,
-            NbxOAuth2AuthDbService, ModuleService, NGXLogger],
-    },
-];
-
 export const MenuProviders: StaticProvider[] = [
     {
         provide: MenuService, useClass: MenuService,
@@ -459,14 +468,14 @@ export const ExampleProviders: StaticProvider[] = [
 ];
 
 export const Providers: StaticProvider[] = CommonProviders
+    .concat(InterceptorProviders)
     .concat(ThirdPartyApiProviders)
+    .concat(AuthenticationProviders)
     .concat(I18NProviders)
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
     .concat(CountryProviders)
     .concat(WarehouseProviders)
-    .concat(InterceptorProviders)
-    .concat(AuthenticationProviders)
     .concat(MenuProviders)
     .concat(ExampleProviders);
