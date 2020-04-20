@@ -135,15 +135,14 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
         errors?: any;
         messages?: any;
     } {
-        if ((tokenValue || '').length) {
-            const authTokenValue = [RC_AUTH_AUTHORIZATION_BEARER_TYPE, (tokenValue || '')].join(' ');
-            options = (options || {});
-            options.headers = (options.headers || {});
-            if (options.headers instanceof HttpHeaders) {
-                (<HttpHeaders>options.headers).set(RC_AUTH_AUTHORIZATION_HEADER, authTokenValue);
-            } else {
-                options.headers[RC_AUTH_AUTHORIZATION_HEADER] = authTokenValue;
-            }
+        // accept invalid token for expired/unauthorized case
+        const authTokenValue = [RC_AUTH_AUTHORIZATION_BEARER_TYPE, (tokenValue || '')].join(' ');
+        options = (options || {});
+        options.headers = (options.headers || {});
+        if (options.headers instanceof HttpHeaders) {
+            (<HttpHeaders>options.headers).set(RC_AUTH_AUTHORIZATION_HEADER, authTokenValue);
+        } else {
+            options.headers[RC_AUTH_AUTHORIZATION_HEADER] = authTokenValue;
         }
         return options;
     }
