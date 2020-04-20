@@ -14,24 +14,24 @@ export const THIRD_PARTY_API = {
         tokenUrl: 'api/getaccesstoken',
         api: {
             country: {
-                // // TODO for proxy case
-                // url: 'api/countries',
-                // TODO for non-proxy case
-                url: 'https://www.universal-tutorial.com/api/countries',
+                // TODO for proxy case
+                url: 'api/countries',
+                // // TODO for non-proxy case
+                // url: 'https://www.universal-tutorial.com/api/countries',
                 method: 'GET',
             },
             city: {
-                // // TODO for proxy case
-                // url: 'api/states',
-                // TODO for non-proxy case
-                url: 'https://www.universal-tutorial.com/api/states',
+                // TODO for proxy case
+                url: 'api/states',
+                // // TODO for non-proxy case
+                // url: 'https://www.universal-tutorial.com/api/states',
                 method: 'GET',
             },
             province: {
-                // // TODO for proxy case
-                // url: 'api/states',
-                // TODO for non-proxy case
-                url: 'https://www.universal-tutorial.com/api/states',
+                // TODO for proxy case
+                url: 'api/states',
+                // // TODO for non-proxy case
+                // url: 'https://www.universal-tutorial.com/api/states',
                 method: 'GET',
             },
         },

@@ -392,7 +392,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
         const optionText: string = (!$event || !$event.$data || !($event.$data['item'] instanceof NgxSelectOption)
             || !((<NgxSelectOption>$event.$data['item']).text || '').length ? ''
             : (<NgxSelectOption>$event.$data['item']).text.toLowerCase());
-        return (keyword.length && optionText.length ? optionText.indexOf(keyword) >= 0 : true);
+        return (keyword.length || optionText.length ? optionText.indexOf(keyword) >= 0 : true);
     }
 
     // -------------------------------------------------

@@ -11,6 +11,7 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../pages/components/toolbar/abstract.toolbar.component';
+import {RC_DEFAULT_HEADERS} from './request.config';
 
 /* base context menu items */
 export const BaseContextMenu: IContextMenu[] = [{
@@ -72,8 +73,11 @@ export const COMMON = {
         vapid_public_key: '',
         base_url: 'http://localhost:8089/api-rest-notification/service',
     },
-    /* default HTTP request timeout */
-    requestTimeout: 10,
+    /* default HTTP request */
+    request: {
+        headers: RC_DEFAULT_HEADERS,
+        timeout: 10,
+    },
     itemsPerPage: 10,
     baseMenu: BaseContextMenu,
     baseToolbarActions: BaseToolbarActions,

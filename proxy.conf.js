@@ -1,7 +1,7 @@
 const PROXY_CONFIG = {
     "/api/*": {
         "target": "https://www.universal-tutorial.com/",
-        "secure": false,
+        "secure": true,
         "logLevel": "debug",
         "changeOrigin": true,
     }
