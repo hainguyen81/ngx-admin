@@ -35,7 +35,7 @@ export interface IUniversalApiExpiredResponse extends IModel {
 
 export const UNIVERSAL_API_CONFIG: IThirdPartyApiConfig = {
     code: THIRD_PARTY_API.universal.code,
-    baseUrl: 'https://www.universal-tutorial.com/',
+    baseUrl: THIRD_PARTY_API.universal.baseUrl,
     tokenUrl: THIRD_PARTY_API.universal.tokenUrl,
     method: 'GET',
     tokenParam: {

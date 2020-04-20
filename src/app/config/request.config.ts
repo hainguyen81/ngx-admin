@@ -6,3 +6,4 @@ export const RC_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
 export const RC_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
 export const RC_AUTH_AUTHORIZATION_BASIC_TYPE = 'Basic';
 export const RC_AUTH_AUTHORIZATION_BEARER_TYPE = 'Bearer';
+export const RC_THIRD_PARTY_CUSTOM_TYPE = 'X-Third-Party';

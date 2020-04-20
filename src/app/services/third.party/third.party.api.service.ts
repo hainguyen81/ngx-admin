@@ -13,6 +13,7 @@ import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/object.utils';
 import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
+import {RC_THIRD_PARTY_CUSTOM_TYPE} from '../../config/request.config';
 
 /**
  * The third-party API authorization configuration interface
@@ -297,6 +298,9 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         errors?: any;
         messages?: any;
     }): Observable<T | T[]> {
+        // include the check flag to original request to avoid loop stack
+        options = this._updateRequestOptionsForThirdParty(options);
+
         // prepare options for authorization request
         let clonedOptions: {
             body?: any;
@@ -319,17 +323,6 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         if (this.config && this.config.tokenParam && this.config.tokenParam.type === 'custom') {
             clonedOptions = this.customAuthorizeRequestOptions(clonedOptions);
             clonedOptions = (clonedOptions || {});
-        }
-        clonedOptions.headers = (clonedOptions.headers || new HttpHeaders());
-
-        // also including the check flag to authorization request to avoid loop stack
-        if (clonedOptions.headers instanceof HttpHeaders) {
-            (<HttpHeaders>clonedOptions.headers).set(
-                ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG,
-                (new Date()).getUTCDate().toString());
-        } else {
-            clonedOptions.headers[ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG] =
-                (new Date()).getUTCDate().toString();
         }
 
         // create authorization request to require token or authorize
@@ -363,16 +356,6 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
             map(accessToken => {
                 // include new token to original request to request again
                 options = _this.processAccessToken(accessToken, options);
-
-                // also ensuring for including the check flag to original request to avoid loop stack
-                if (options.headers instanceof HttpHeaders) {
-                    (<HttpHeaders>options.headers).set(
-                        ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG,
-                        (new Date()).getUTCDate().toString());
-                } else {
-                    options.headers[ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG] =
-                        (new Date()).getUTCDate().toString();
-                }
 
                 // re-request original again after including new authorization token
                 // @ts-ignore
@@ -458,6 +441,52 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         errors?: any;
         messages?: any;
     } {
+        return options;
+    }
+
+    /**
+     * Update X-Values header for request options to specified this request from third-party
+     * @param options to update
+     * @private
+     */
+    private _updateRequestOptionsForThirdParty(options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body' | 'events' | 'response' | any;
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }): {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body' | 'events' | 'response' | any;
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    } {
+        // include the check flag to original request to avoid loop stack
+        options = Object.assign({}, options || {});
+        options.headers = (options.headers || new HttpHeaders());
+        if (options.headers instanceof HttpHeaders) {
+            (<HttpHeaders>options.headers).set(RC_THIRD_PARTY_CUSTOM_TYPE, this.config.code);
+            (<HttpHeaders>options.headers).set(
+                ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG,
+                (new Date()).getUTCDate().toString());
+        } else {
+            options.headers[RC_THIRD_PARTY_CUSTOM_TYPE] = this.config.code;
+            options.headers[ThirdPartyApiHttpService.REQUEST_REQUIRE_TOKEN_FLAG] =
+                (new Date()).getUTCDate().toString();
+        }
         return options;
     }
 }

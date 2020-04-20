@@ -7,18 +7,31 @@ export const THIRD_PARTY_API = {
         code: 'UNIVERSAL',
         email: 'hainguyenjc@gmail.com',
         vapid_public_key: 'M70onCyk9pjjPxfwNiM3TyerUYNPGI26ZqBKuqhAP6LmE3Ct2bR91gw8QPg4D5Aom14',
+        // // TODO for proxy case
+        // baseUrl: 'https://www.universal-tutorial.com/',
+        // TODO for non-proxy case
+        baseUrl: null,
         tokenUrl: 'api/getaccesstoken',
         api: {
             country: {
-                url: 'api/countries',
+                // // TODO for proxy case
+                // url: 'api/countries',
+                // TODO for non-proxy case
+                url: 'https://www.universal-tutorial.com/api/countries',
                 method: 'GET',
             },
             city: {
-                url: 'api/states',
+                // // TODO for proxy case
+                // url: 'api/states',
+                // TODO for non-proxy case
+                url: 'https://www.universal-tutorial.com/api/states',
                 method: 'GET',
             },
             province: {
-                url: 'api/states',
+                // // TODO for proxy case
+                // url: 'api/states',
+                // TODO for non-proxy case
+                url: 'https://www.universal-tutorial.com/api/states',
                 method: 'GET',
             },
         },
