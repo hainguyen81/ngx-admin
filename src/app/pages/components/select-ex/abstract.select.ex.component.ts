@@ -387,7 +387,12 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     protected onSearchCallback($event: IEvent): boolean {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSearchCallback', $event);
-        return true;
+        const keyword: string = (!$event || !$event.$data || !$event.$data['search'] ? ''
+            : (<Object>$event.$data['search']).toString().toLowerCase());
+        const optionText: string = (!$event || !$event.$data || !($event.$data['item'] instanceof NgxSelectOption)
+            || !((<NgxSelectOption>$event.$data['item']).text || '').length ? ''
+            : (<NgxSelectOption>$event.$data['item']).text.toLowerCase());
+        return (keyword.length && optionText.length ? optionText.indexOf(keyword) >= 0 : true);
     }
 
     // -------------------------------------------------

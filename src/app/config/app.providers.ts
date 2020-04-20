@@ -15,7 +15,7 @@ import {
     NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,
     NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
     NbxAuthInterceptor,
-} from '../auth/auth.interceptor';
+} from '../services/interceptors/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
 import {ToastrService} from 'ngx-toastr';
@@ -108,6 +108,8 @@ import {ProvinceDatasource} from '../services/implementation/system/province/pro
 import {Meta, Title} from '@angular/platform-browser';
 import {UniversalApiDbService, UniversalApiHttpService} from '../services/third.party/universal/universal.api.service';
 import {UniversalApiDatasource} from '../services/third.party/universal/universal.api.datasource';
+import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
+import {AppConfig} from './app.config';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -394,14 +396,22 @@ export const WarehouseProviders: StaticProvider[] = [
 ];
 
 export const InterceptorProviders = [
+    /* Request authentication */
     {provide: NB_AUTH_INTERCEPTOR_HEADER, useValue: 'Authorization'},
     {provide: NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, useValue: 'Company'},
     {provide: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, useValue: 'access_token'},
     {
         provide: HTTP_INTERCEPTORS, useClass: NbxAuthInterceptor, multi: true,
-        deps: [Injector, NB_AUTH_INTERCEPTOR_HEADER,
+        deps: [Injector, NGXLogger, NB_AUTH_INTERCEPTOR_HEADER,
             NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
             NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM],
+    },
+
+    /* Request timeout */
+    {provide: HTTP_REQUEST_TIMEOUT, useValue: AppConfig.COMMON.requestTimeout},
+    {
+        provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true,
+        deps: [Injector, NGXLogger, HTTP_REQUEST_TIMEOUT],
     },
 ];
 

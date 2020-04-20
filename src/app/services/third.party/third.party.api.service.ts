@@ -12,6 +12,7 @@ import {Observable, throwError} from 'rxjs';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/object.utils';
 import {catchError, map} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 /**
  * The third-party API authorization configuration interface
@@ -21,6 +22,10 @@ export interface IThirdPartyApiConfig {
      * Third-party code to manage (required)
      */
     code: string;
+    /**
+     * Third-party base URL for proxy if necessary
+     */
+    baseUrl?: string | null;
     /**
      * Request access token in expired/un-authorized case
      */
@@ -154,6 +159,10 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
 
     get config(): IThirdPartyApiConfig {
         return this.apiConfig;
+    }
+
+    getBaseUrl(): string {
+        return this.config.baseUrl || environment.baseHref;
     }
 
     protected constructor(@Inject(HttpClient) http: HttpClient,
@@ -326,7 +335,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         // create authorization request to require token or authorize
         const _this: ThirdPartyApiHttpService<T> = this;
         return _this.getHttp().request(
-            _this.config.tokenUrl, _this.config.method, clonedOptions).pipe(
+            _this.config.method, _this.config.tokenUrl, clonedOptions).pipe(
             map(accessTokenResp => {
                 _this.getLogger().debug('Access Token Response', accessTokenResp);
                 return accessTokenResp;

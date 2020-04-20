@@ -72,6 +72,8 @@ export const COMMON = {
         vapid_public_key: '',
         base_url: 'http://localhost:8089/api-rest-notification/service',
     },
+    /* default HTTP request timeout */
+    requestTimeout: 10,
     itemsPerPage: 10,
     baseMenu: BaseContextMenu,
     baseToolbarActions: BaseToolbarActions,
