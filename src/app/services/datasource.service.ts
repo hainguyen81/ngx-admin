@@ -244,11 +244,13 @@ export abstract class BaseDataSource<T, H extends IHttpService<T>, D extends IDb
     }
 
     protected onFulfilledData() {
+        const _this: BaseDataSource<T, H, D> = this;
         return (data: T[]) => {
-            data = this.filter(data);
-            data = this.sort(data);
-            this.setRecordsNumber((data || []).length);
-            data = this.paginate(data);
+            window.console.error(['[', (<Object>_this).constructor.name, '] Fetch data', data]);
+            data = _this.filter(data);
+            data = _this.sort(data);
+            _this.setRecordsNumber((data || []).length);
+            data = _this.paginate(data);
             return data;
         };
     }

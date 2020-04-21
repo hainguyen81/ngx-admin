@@ -114,8 +114,7 @@ import {UniversalApiDbService, UniversalApiHttpService} from '../services/third.
 import {UniversalApiDatasource} from '../services/third.party/universal/universal.api.datasource';
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
 import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/interceptors/headers.interceptor';
-import {ThirdPartyApiBridgeDbService} from "../services/third.party/third.party.api.bridge.service";
-import {UniversalApiBridgeDbService} from "../services/third.party/universal/universal.api.bridge.service";
+import {UniversalApiBridgeDbService} from '../services/third.party/universal/universal.api.bridge.service';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -302,20 +301,6 @@ export const CountryProviders: StaticProvider[] = [
         deps: [CountryHttpService, CountryDbService, NGXLogger],
     },
 
-    // City
-    {
-        provide: CityDbService, useClass: CityDbService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService, UniversalApiDatasource],
-    },
-    {
-        provide: CityHttpService, useClass: CityHttpService,
-        deps: [HttpClient, NGXLogger, CityDbService],
-    },
-    {
-        provide: CityDatasource, useClass: CityDatasource,
-        deps: [CityHttpService, CityDbService, NGXLogger],
-    },
-
     // Province
     {
         provide: ProvinceDbService, useClass: ProvinceDbService,
@@ -328,6 +313,20 @@ export const CountryProviders: StaticProvider[] = [
     {
         provide: ProvinceDatasource, useClass: ProvinceDatasource,
         deps: [ProvinceHttpService, ProvinceDbService, NGXLogger],
+    },
+
+    // City
+    {
+        provide: CityDbService, useClass: CityDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService, UniversalApiDatasource],
+    },
+    {
+        provide: CityHttpService, useClass: CityHttpService,
+        deps: [HttpClient, NGXLogger, CityDbService],
+    },
+    {
+        provide: CityDatasource, useClass: CityDatasource,
+        deps: [CityHttpService, CityDbService, NGXLogger],
     },
 ];
 
