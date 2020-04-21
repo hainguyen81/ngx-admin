@@ -1,10 +1,16 @@
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
 function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
 function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -857,6 +863,233 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
   },
 
   /***/
+  "./src/app/@core/data/base.ts":
+  /*!************************************!*\
+    !*** ./src/app/@core/data/base.ts ***!
+    \************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppCoreDataBaseTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return BaseModel;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+
+    var BaseModel = // readonly upToDated: () => boolean;
+    function BaseModel(id) {
+      _classCallCheck(this, BaseModel);
+
+      this.id = id; // this.upToDated = () => (!this.deletedAt
+      //     && (!this.expiredAt || new Date(this.expiredAt) <= new Date()));
+    };
+    /***/
+
+  },
+
+  /***/
+  "./src/app/@core/data/system/api.third.party.ts":
+  /*!******************************************************!*\
+    !*** ./src/app/@core/data/system/api.third.party.ts ***!
+    \******************************************************/
+
+  /*! exports provided: default, UniversalApiThirdParty */
+
+  /***/
+  function srcAppCoreDataSystemApiThirdPartyTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return ApiThirdParty;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UniversalApiThirdParty", function () {
+      return UniversalApiThirdParty;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../base */
+    "./src/app/@core/data/base.ts");
+    /* harmony import */
+
+
+    var _config_third_party_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../../../config/third.party.api */
+    "./src/app/config/third.party.api.ts");
+
+    var ApiThirdParty = /*#__PURE__*/function (_base__WEBPACK_IMPORT) {
+      _inherits(ApiThirdParty, _base__WEBPACK_IMPORT);
+
+      var _super2 = _createSuper(ApiThirdParty);
+
+      function ApiThirdParty(id, code) {
+        var _this2;
+
+        _classCallCheck(this, ApiThirdParty);
+
+        _this2 = _super2.call(this, id);
+        _this2.id = id;
+        _this2.code = code;
+        return _this2;
+      }
+
+      return ApiThirdParty;
+    }(_base__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+    var UniversalApiThirdParty = /*#__PURE__*/function (_ApiThirdParty) {
+      _inherits(UniversalApiThirdParty, _ApiThirdParty);
+
+      var _super3 = _createSuper(UniversalApiThirdParty);
+
+      function UniversalApiThirdParty() {
+        _classCallCheck(this, UniversalApiThirdParty);
+
+        return _super3.call(this, null, _config_third_party_api__WEBPACK_IMPORTED_MODULE_2__["THIRD_PARTY_API"].universal.code);
+      }
+
+      return UniversalApiThirdParty;
+    }(ApiThirdParty);
+    /***/
+
+  },
+
+  /***/
+  "./src/app/@core/data/system/city.ts":
+  /*!*******************************************!*\
+    !*** ./src/app/@core/data/system/city.ts ***!
+    \*******************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppCoreDataSystemCityTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return City;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../base */
+    "./src/app/@core/data/base.ts");
+
+    var City = /*#__PURE__*/function (_base__WEBPACK_IMPORT2) {
+      _inherits(City, _base__WEBPACK_IMPORT2);
+
+      var _super4 = _createSuper(City);
+
+      function City(id, code, name) {
+        var _this3;
+
+        _classCallCheck(this, City);
+
+        _this3 = _super4.call(this, id);
+        _this3.id = id;
+        _this3.code = code;
+        _this3.name = name;
+        return _this3;
+      }
+
+      return City;
+    }(_base__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    /***/
+
+  },
+
+  /***/
+  "./src/app/@core/data/system/province.ts":
+  /*!***********************************************!*\
+    !*** ./src/app/@core/data/system/province.ts ***!
+    \***********************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppCoreDataSystemProvinceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return Province;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../base */
+    "./src/app/@core/data/base.ts");
+
+    var Province = /*#__PURE__*/function (_base__WEBPACK_IMPORT3) {
+      _inherits(Province, _base__WEBPACK_IMPORT3);
+
+      var _super5 = _createSuper(Province);
+
+      function Province(id, code, name) {
+        var _this4;
+
+        _classCallCheck(this, Province);
+
+        _this4 = _super5.call(this, id);
+        _this4.id = id;
+        _this4.code = code;
+        _this4.name = name;
+        return _this4;
+      }
+
+      return Province;
+    }(_base__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    /***/
+
+  },
+
+  /***/
   "./src/app/@core/mock/mock.data.module.ts":
   /*!************************************************!*\
     !*** ./src/app/@core/mock/mock.data.module.ts ***!
@@ -944,67 +1177,73 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _config_app_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! ../../config/app.config */
+    "./src/app/config/app.config.ts");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! rxjs */
     "./node_modules/rxjs/_esm2015/index.js");
     /* harmony import */
 
 
-    var _system_customers_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _system_customers_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! ./system/customers.service */
     "./src/app/@core/mock/system/customers.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! ../../services/implementation/system/customer/customer.service */
     "./src/app/services/implementation/system/customer/customer.service.ts");
     /* harmony import */
 
 
-    var _system_organization_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var _system_organization_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
     /*! ./system/organization.service */
     "./src/app/@core/mock/system/organization.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
     /*! ../../services/implementation/system/organization/organization.service */
     "./src/app/services/implementation/system/organization/organization.service.ts");
     /* harmony import */
 
 
-    var _warehouse_category_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    var _warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
     /*! ./warehouse/category.service */
     "./src/app/@core/mock/warehouse/category.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
     /*! ../../services/implementation/warehouse/warehouse.category/warehouse.category.service */
     "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.service.ts");
     /* harmony import */
 
 
-    var _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    var _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
     /*! ./warehouse/warehouse.service */
     "./src/app/@core/mock/warehouse/warehouse.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
     /*! ../../services/implementation/warehouse/warehouse/warehouse.service */
     "./src/app/services/implementation/warehouse/warehouse/warehouse.service.ts");
     /* harmony import */
 
 
-    var _system_country_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    var _system_country_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
     /*! ./system/country.service */
     "./src/app/@core/mock/system/country.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
     /*! ../../services/implementation/system/country/country.service */
     "./src/app/services/implementation/system/country/country.service.ts");
 
@@ -1014,26 +1253,26 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       useClass: _system_users_service__WEBPACK_IMPORTED_MODULE_4__["MockUserService"],
       deps: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_5__["UserDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
     }, {
-      provide: _system_customers_service__WEBPACK_IMPORTED_MODULE_9__["MockCustomerService"],
-      useClass: _system_customers_service__WEBPACK_IMPORTED_MODULE_9__["MockCustomerService"],
-      deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_10__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
+      provide: _system_customers_service__WEBPACK_IMPORTED_MODULE_10__["MockCustomerService"],
+      useClass: _system_customers_service__WEBPACK_IMPORTED_MODULE_10__["MockCustomerService"],
+      deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_11__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
     }, {
-      provide: _system_organization_service__WEBPACK_IMPORTED_MODULE_11__["MockOrganizationService"],
-      useClass: _system_organization_service__WEBPACK_IMPORTED_MODULE_11__["MockOrganizationService"],
-      deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_12__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
+      provide: _system_organization_service__WEBPACK_IMPORTED_MODULE_12__["MockOrganizationService"],
+      useClass: _system_organization_service__WEBPACK_IMPORTED_MODULE_12__["MockOrganizationService"],
+      deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_13__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
     }, {
-      provide: _system_country_service__WEBPACK_IMPORTED_MODULE_17__["MockCountryService"],
-      useClass: _system_country_service__WEBPACK_IMPORTED_MODULE_17__["MockCountryService"],
-      deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_18__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
+      provide: _system_country_service__WEBPACK_IMPORTED_MODULE_18__["MockCountryService"],
+      useClass: _system_country_service__WEBPACK_IMPORTED_MODULE_18__["MockCountryService"],
+      deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_19__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
     }];
     var MOCK_WAREHOUSE_DATA_PROVIDERS = [{
-      provide: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_15__["MockWarehouseStorageService"],
-      useClass: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_15__["MockWarehouseStorageService"],
-      deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
+      provide: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__["MockWarehouseStorageService"],
+      useClass: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__["MockWarehouseStorageService"],
+      deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_17__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
     }, {
-      provide: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_13__["MockWarehouseCategoryService"],
-      useClass: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_13__["MockWarehouseCategoryService"],
-      deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
+      provide: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__["MockWarehouseCategoryService"],
+      useClass: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__["MockWarehouseCategoryService"],
+      deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_15__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]]
     }];
 
     var MOCK_PROVIDERS = _config_app_providers__WEBPACK_IMPORTED_MODULE_3__["CommonProviders"].concat(_config_app_providers__WEBPACK_IMPORTED_MODULE_3__["OrganizationProviders"]).concat(_config_app_providers__WEBPACK_IMPORTED_MODULE_3__["UserProviders"]).concat(_config_app_providers__WEBPACK_IMPORTED_MODULE_3__["CustomerProviders"]).concat(MOCK_DATA_PROVIDERS).concat(MOCK_WAREHOUSE_DATA_PROVIDERS);
@@ -1054,21 +1293,22 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(MockDataModule, [{
         key: "getService",
         value: function getService(token) {
-          this.moduleInjector || Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["throwError"])('Could not create injector to inject mock services!');
+          this.moduleInjector || Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["throwError"])('Could not create injector to inject mock services!');
           return this.moduleInjector.get(token);
         }
       }, {
         key: "initialization",
         value: function initialization() {
-          var _this2 = this;
+          var _this5 = this;
 
-          // if (AppConfig.Env.production) {
-          //     return;
-          // }
-
+          if (!_config_app_config__WEBPACK_IMPORTED_MODULE_8__["AppConfig"].Env.offline) {
+            return;
+          }
           /** Common data providers */
+
+
           [].concat(MOCK_DATA_PROVIDERS).concat(MOCK_WAREHOUSE_DATA_PROVIDERS).forEach(function (provider) {
-            var mockService = _this2.getService(provider['provide']);
+            var mockService = _this5.getService(provider['provide']);
 
             mockService && typeof mockService['initialize'] === 'function' && mockService['initialize']['apply'](mockService);
           });
@@ -1189,7 +1429,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(MockCountryService, [{
         key: "initialize",
         value: function initialize() {
-          var _this3 = this;
+          var _this6 = this;
 
           if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].production) {
             return;
@@ -1201,15 +1441,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               var mockCountries;
               mockCountries = Object(_mock_country__WEBPACK_IMPORTED_MODULE_7__["countriesGenerate"])();
 
-              _this3.logger.debug('Generate countries', mockCountries);
+              _this6.logger.debug('Generate countries', mockCountries);
 
-              _this3.dbService.insertEntities(mockCountries).then(function (affected) {
-                return _this3.logger.debug('Initialized mock countries data', affected);
+              _this6.dbService.insertEntities(mockCountries).then(function (affected) {
+                return _this6.logger.debug('Initialized mock countries data', affected);
               }, function (errors) {
-                return _this3.logger.error('Could not initialize mock countries data', errors);
+                return _this6.logger.error('Could not initialize mock countries data', errors);
               });
             } else {
-              _this3.logger.debug('Initialized mock countries data', recNumber);
+              _this6.logger.debug('Initialized mock countries data', recNumber);
             }
           });
         }
@@ -1320,7 +1560,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(MockCustomerService, [{
         key: "initialize",
         value: function initialize() {
-          var _this4 = this;
+          var _this7 = this;
 
           if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].production) {
             return;
@@ -1333,15 +1573,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               var mockCustomers;
               mockCustomers = Object(_mock_customer__WEBPACK_IMPORTED_MODULE_7__["customersGenerate"])();
 
-              _this4.logger.debug('Generate customers', mockCustomers);
+              _this7.logger.debug('Generate customers', mockCustomers);
 
-              _this4.dbService.insertEntities(mockCustomers).then(function (affected) {
-                return _this4.logger.debug('Initialized mock customers data', affected);
+              _this7.dbService.insertEntities(mockCustomers).then(function (affected) {
+                return _this7.logger.debug('Initialized mock customers data', affected);
               }, function (errors) {
-                return _this4.logger.error('Could not initialize mock customers data', errors);
+                return _this7.logger.error('Could not initialize mock customers data', errors);
               });
             } else {
-              _this4.logger.debug('Initialized mock customers data', recNumber);
+              _this7.logger.debug('Initialized mock customers data', recNumber);
             }
           });
         }
@@ -1791,7 +2031,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       children: []
     };
     var MockModuleSystem = {
-      code: 'SYSTEM',
+      code: 'SYSTEM_MODULE',
       name: 'system.menu.module',
       apiId: null,
       api: null,
@@ -1839,7 +2079,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         icon: 'cog',
         pack: 'fas'
       },
-      children: []
+      children: [MockModuleWarehouseStorage, MockModuleWarehouseCategory]
     };
     var MockModuleWarehouseFeatures = {
       code: 'WAREHOUSE_MODULE',
@@ -1851,7 +2091,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         icon: 'briefcase',
         pack: 'fas'
       },
-      children: [MockModuleWarehouseStorage, MockModuleWarehouseCategory, MockModuleWarehouseItem]
+      children: [MockModuleWarehouseItem]
     };
     var MockModuleWarehouse = {
       code: 'WAREHOUSE_MODULE',
@@ -2331,7 +2571,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(MockOrganizationService, [{
         key: "initialize",
         value: function initialize() {
-          var _this5 = this;
+          var _this8 = this;
 
           if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].production) {
             return;
@@ -2344,15 +2584,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               var mockOrganization;
               mockOrganization = Object(_mock_organization__WEBPACK_IMPORTED_MODULE_7__["organizationGenerate"])();
 
-              _this5.logger.debug('Generate organization', mockOrganization);
+              _this8.logger.debug('Generate organization', mockOrganization);
 
-              _this5.dbService.insertEntities(mockOrganization).then(function (affected) {
-                return _this5.logger.debug('Initialized mock organization data', affected);
+              _this8.dbService.insertEntities(mockOrganization).then(function (affected) {
+                return _this8.logger.debug('Initialized mock organization data', affected);
               }, function (errors) {
-                return _this5.logger.error('Could not initialize mock organization data', errors);
+                return _this8.logger.error('Could not initialize mock organization data', errors);
               });
             } else {
-              _this5.logger.debug('Initialized mock organization data', recNumber);
+              _this8.logger.debug('Initialized mock organization data', recNumber);
             }
           });
         }
@@ -2463,7 +2703,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(MockUserService, [{
         key: "initialize",
         value: function initialize() {
-          var _this6 = this;
+          var _this9 = this;
 
           if (_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].production) {
             return;
@@ -2476,15 +2716,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               var mockUsers;
               mockUsers = Object(_mock_user__WEBPACK_IMPORTED_MODULE_5__["usersGenerate"])();
 
-              _this6.logger.debug('Generate users', mockUsers);
+              _this9.logger.debug('Generate users', mockUsers);
 
-              _this6.dbService.insertEntities(mockUsers).then(function (affected) {
-                return _this6.logger.debug('Initialized mock users data', affected);
+              _this9.dbService.insertEntities(mockUsers).then(function (affected) {
+                return _this9.logger.debug('Initialized mock users data', affected);
               }, function (errors) {
-                return _this6.logger.error('Could not initialize mock user data', errors);
+                return _this9.logger.error('Could not initialize mock user data', errors);
               });
             } else {
-              _this6.logger.debug('Initialized mock users data', recNumber);
+              _this9.logger.debug('Initialized mock users data', recNumber);
             }
           });
         }
@@ -2595,7 +2835,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(MockWarehouseCategoryService, [{
         key: "initialize",
         value: function initialize() {
-          var _this7 = this;
+          var _this10 = this;
 
           if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].production) {
             return;
@@ -2608,15 +2848,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               var mockCategories;
               mockCategories = Object(_mock_category__WEBPACK_IMPORTED_MODULE_7__["categoryGenerate"])();
 
-              _this7.logger.debug('Generate warehouse categories', mockCategories);
+              _this10.logger.debug('Generate warehouse categories', mockCategories);
 
-              _this7.dbService.insertEntities(mockCategories).then(function (affected) {
-                return _this7.logger.debug('Initialized mock warehouse categories data', affected);
+              _this10.dbService.insertEntities(mockCategories).then(function (affected) {
+                return _this10.logger.debug('Initialized mock warehouse categories data', affected);
               }, function (errors) {
-                return _this7.logger.error('Could not initialize mock warehouse categories data', errors);
+                return _this10.logger.error('Could not initialize mock warehouse categories data', errors);
               });
             } else {
-              _this7.logger.debug('Initialized mock warehouse categories data', recNumber);
+              _this10.logger.debug('Initialized mock warehouse categories data', recNumber);
             }
           });
         }
@@ -2915,7 +3155,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(MockWarehouseStorageService, [{
         key: "initialize",
         value: function initialize() {
-          var _this8 = this;
+          var _this11 = this;
 
           if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].production) {
             return;
@@ -2928,15 +3168,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               var mockWarehouses;
               mockWarehouses = Object(_mock_storage__WEBPACK_IMPORTED_MODULE_7__["warehouseGenerate"])();
 
-              _this8.logger.debug('Generate warehouses', mockWarehouses);
+              _this11.logger.debug('Generate warehouses', mockWarehouses);
 
-              _this8.dbService.insertEntities(mockWarehouses).then(function (affected) {
-                return _this8.logger.debug('Initialized mock warehouses data', affected);
+              _this11.dbService.insertEntities(mockWarehouses).then(function (affected) {
+                return _this11.logger.debug('Initialized mock warehouses data', affected);
               }, function (errors) {
-                return _this8.logger.error('Could not initialize mock warehouses data', errors);
+                return _this11.logger.error('Could not initialize mock warehouses data', errors);
               });
             } else {
-              _this8.logger.debug('Initialized mock warehouses data', recNumber);
+              _this11.logger.debug('Initialized mock warehouses data', recNumber);
             }
           });
         }
@@ -3027,7 +3267,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(AnalyticsService, [{
         key: "trackPageViews",
         value: function trackPageViews() {
-          var _this9 = this;
+          var _this12 = this;
 
           if (this.enabled) {
             this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(function (event) {
@@ -3035,7 +3275,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             })).subscribe(function () {
               ga('send', {
                 hitType: 'pageview',
-                page: _this9.location.path()
+                page: _this12.location.path()
               });
             });
           }
@@ -3298,7 +3538,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "trackCanonicalChanges",
         value: function trackCanonicalChanges() {
-          var _this10 = this;
+          var _this13 = this;
 
           if (!this.isBrowser) {
             return;
@@ -3307,7 +3547,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["filter"])(function (event) {
             return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"];
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.destroy$)).subscribe(function () {
-            _this10.linkCanonical.setAttribute('href', _this10.getCanonicalUrl());
+            _this13.linkCanonical.setAttribute('href', _this13.getCanonicalUrl());
           });
         }
       }, {
@@ -3394,7 +3634,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     var StateService = /*#__PURE__*/function () {
       function StateService(directionService) {
-        var _this11 = this;
+        var _this14 = this;
 
         _classCallCheck(this, StateService);
 
@@ -3426,9 +3666,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         this.sidebarState$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](this.sidebars[0]);
         this.alive = true;
         directionService.onDirectionChange().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeWhile"])(function () {
-          return _this11.alive;
+          return _this14.alive;
         })).subscribe(function (direction) {
-          return _this11.updateSidebarIcons(direction);
+          return _this14.updateSidebarIcons(direction);
         });
         this.updateSidebarIcons(directionService.getDirection());
       }
@@ -3666,7 +3906,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     var HeaderComponent = /*#__PURE__*/function () {
       function HeaderComponent(sidebarService, menuService, themeService, breakpointService, authService, authDbService, translateService, logger) {
-        var _this12 = this;
+        var _this15 = this;
 
         _classCallCheck(this, HeaderComponent);
 
@@ -3692,10 +3932,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         this.authService.onTokenChange().subscribe(function (token) {
           if (token.isValid()) {
             // here we receive a payload from the token and assigns it to our `user` variable
-            _this12.token = token;
-            _this12.user = token.getPayload();
-            _this12.currentLang = _this12.user['lang'] || _this12.languages[0];
-            _this12.user['lang'] = _this12.currentLang;
+            _this15.token = token;
+            _this15.user = token.getPayload();
+            _this15.currentLang = _this15.user['lang'] || _this15.languages[0];
+            _this15.user['lang'] = _this15.currentLang;
           }
         });
       }
@@ -3703,7 +3943,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(HeaderComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this13 = this;
+          var _this16 = this;
 
           this.currentTheme = this.themeService.currentTheme;
           this.languages = this.translateService.getLangs();
@@ -3731,13 +3971,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
             return currentBreakpoint.width < xl;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$)).subscribe(function (isLessThanXl) {
-            return _this13.userPictureOnly = isLessThanXl;
+            return _this16.userPictureOnly = isLessThanXl;
           });
           this.themeService.onThemeChange().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (_ref3) {
             var name = _ref3.name;
             return name;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$)).subscribe(function (themeName) {
-            return _this13.currentTheme = themeName;
+            return _this16.currentTheme = themeName;
           });
         }
       }, {
@@ -3761,10 +4001,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "getUserMenu",
         value: function getUserMenu() {
-          var _this14 = this;
+          var _this17 = this;
 
           this.userMenu.forEach(function (item) {
-            return item.title = _this14.translateService.instant(item.title);
+            return item.title = _this17.translateService.instant(item.title);
           });
           return this.userMenu;
         }
@@ -4033,16 +4273,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(TinyMCEComponent, [{
         key: "ngAfterViewInit",
         value: function ngAfterViewInit() {
-          var _this15 = this;
+          var _this18 = this;
 
           tinymce.init({
             target: this.host.nativeElement,
             plugins: ['link', 'paste', 'table'],
             skin_url: "".concat(this.locationStrategy.getBaseHref(), "assets/skins/lightgray"),
             setup: function setup(editor) {
-              _this15.editor = editor;
+              _this18.editor = editor;
               editor.on('keyup', function () {
-                _this15.editorKeyup.emit(editor.getContent());
+                _this18.editorKeyup.emit(editor.getContent());
               });
             },
             height: '320'
@@ -6296,7 +6536,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       _createClass(AppComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this16 = this;
+          var _this19 = this;
 
           this.analytics.trackPageViews();
           this.seoService.trackCanonicalChanges();
@@ -6304,10 +6544,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           this.translateService.use(_config_app_config__WEBPACK_IMPORTED_MODULE_5__["AppConfig"].i18n.use);
           this.translateService.addLangs(_config_app_config__WEBPACK_IMPORTED_MODULE_5__["AppConfig"].i18n.languages);
           this.translateService.get('common.search.placeholder').subscribe(function (value) {
-            return _this16.logger.debug('Translated?', 'common.search.placeholder', ' -> ', value);
+            return _this19.logger.debug('Translated?', 'common.search.placeholder', ' -> ', value);
           });
           this.translateService.get('app').subscribe(function (value) {
-            return _this16.logger.debug('Translated?', 'app', ' -> ', value);
+            return _this19.logger.debug('Translated?', 'app', ' -> ', value);
           }); // apply application header configuration
 
           this.detectForPageHeaderConfig();
@@ -6319,14 +6559,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "detectForPageHeaderConfig",
         value: function detectForPageHeaderConfig() {
-          var _this17 = this;
+          var _this20 = this;
 
           // listen router for applying page header configuration
           this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["filter"])(function (event) {
             return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_8__["NavigationEnd"];
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function () {
             var headerConfig;
-            var child = _this17.activatedRoute.firstChild;
+            var child = _this20.activatedRoute.firstChild;
 
             if (child.snapshot.data['headerConfig']) {
               headerConfig = child.snapshot.data['headerConfig'];
@@ -6351,7 +6591,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             if (headerConfig) {
               var timer;
               timer = window.setTimeout(function () {
-                _this17.pageHeaderService.setConfig(headerConfig);
+                _this20.pageHeaderService.setConfig(headerConfig);
 
                 window.clearTimeout(timer);
               }, 300);
@@ -6659,9 +6899,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _prototypes_array_prototypes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-    /*! ./prototypes/array.prototypes */
-    "./src/app/prototypes/array.prototypes.ts");
+    var _config_prototypes_import__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ./config/prototypes.import */
+    "./src/app/config/prototypes.import.ts");
     /* harmony import */
 
 
@@ -7047,11 +7287,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "canActivate",
         value: function canActivate() {
-          var _this18 = this;
+          var _this21 = this;
 
           return this.getAuthService().isAuthenticated().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (authenticated) {
             if (!authenticated) {
-              _this18.getRouter().navigate(['auth/login']);
+              _this21.getRouter().navigate(['auth/login']);
             }
           }));
         }
@@ -7069,172 +7309,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     };
 
     AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_nebular_auth__WEBPACK_IMPORTED_MODULE_3__["NbAuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])], AuthGuard);
-    /***/
-  },
-
-  /***/
-  "./src/app/auth/auth.interceptor.ts":
-  /*!******************************************!*\
-    !*** ./src/app/auth/auth.interceptor.ts ***!
-    \******************************************/
-
-  /*! exports provided: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, NBX_AUTH_AUTHORIZATION_HEADER, NBX_AUTH_COMPANY_HEADER, NBX_AUTH_ACCESS_TOKEN_PARAM, NBX_AUTH_REFRESH_TOKEN_PARAM, NBX_AUTH_AUTHORIZATION_TYPE, NbxAuthInterceptor */
-
-  /***/
-  function srcAppAuthAuthInterceptorTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM", function () {
-      return NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_COMPANY_HEADER", function () {
-      return NBX_AUTH_INTERCEPTOR_COMPANY_HEADER;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_AUTHORIZATION_HEADER", function () {
-      return NBX_AUTH_AUTHORIZATION_HEADER;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_COMPANY_HEADER", function () {
-      return NBX_AUTH_COMPANY_HEADER;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_ACCESS_TOKEN_PARAM", function () {
-      return NBX_AUTH_ACCESS_TOKEN_PARAM;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_REFRESH_TOKEN_PARAM", function () {
-      return NBX_AUTH_REFRESH_TOKEN_PARAM;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_AUTHORIZATION_TYPE", function () {
-      return NBX_AUTH_AUTHORIZATION_TYPE;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "NbxAuthInterceptor", function () {
-      return NbxAuthInterceptor;
-    });
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
-
-
-    var _nebular_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @nebular/auth */
-    "./node_modules/@nebular/auth/fesm2015/index.js");
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
-    /* harmony import */
-
-
-    var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! rxjs/operators */
-    "./node_modules/rxjs/_esm2015/operators/index.js");
-
-    var NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Access Token Parameter');
-    var NBX_AUTH_INTERCEPTOR_COMPANY_HEADER = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Company Header Parameter');
-    var NBX_AUTH_AUTHORIZATION_HEADER = 'Authorization';
-    var NBX_AUTH_COMPANY_HEADER = 'Company';
-    var NBX_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
-    var NBX_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
-    var NBX_AUTH_AUTHORIZATION_TYPE = 'Basic';
-
-    var NbxAuthInterceptor = /*#__PURE__*/function (_nebular_auth__WEBPAC) {
-      _inherits(NbxAuthInterceptor, _nebular_auth__WEBPAC);
-
-      var _super2 = _createSuper(NbxAuthInterceptor);
-
-      function NbxAuthInterceptor(injector) {
-        var _this19;
-
-        var headerName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : NBX_AUTH_AUTHORIZATION_HEADER;
-        var companyHeaderName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : NBX_AUTH_COMPANY_HEADER;
-        var accessTokenParamName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : NBX_AUTH_ACCESS_TOKEN_PARAM;
-
-        _classCallCheck(this, NbxAuthInterceptor);
-
-        _this19 = _super2.call(this, injector, headerName);
-        _this19.headerName = headerName;
-        _this19.companyHeaderName = companyHeaderName;
-        _this19.accessTokenParamName = accessTokenParamName;
-        return _this19;
-      }
-
-      _createClass(NbxAuthInterceptor, [{
-        key: "intercept",
-        value: function intercept(req, next) {
-          var _this20 = this;
-
-          return this.authService.getToken().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (token) {
-            if (token && token.getValue()) {
-              var _setHeaders;
-
-              req = req.clone({
-                setHeaders: (_setHeaders = {}, _defineProperty(_setHeaders, _this20.headerName, token.getValue()), _defineProperty(_setHeaders, _this20.companyHeaderName, token.getPayload()['company']), _setHeaders)
-              });
-              req.params.append(_this20.accessTokenParamName, token.getValue());
-            }
-
-            return next.handle(req);
-          }));
-        }
-      }]);
-
-      return NbxAuthInterceptor;
-    }(_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NbAuthSimpleInterceptor"]);
-
-    NbxAuthInterceptor.ctorParameters = function () {
-      return [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"]
-      }, {
-        type: String,
-        decorators: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"],
-          args: [_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"]]
-        }]
-      }, {
-        type: String,
-        decorators: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"],
-          args: [NBX_AUTH_INTERCEPTOR_COMPANY_HEADER]
-        }]
-      }, {
-        type: String,
-        decorators: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"],
-          args: [NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM]
-        }]
-      }];
-    };
-
-    NbxAuthInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_COMPANY_HEADER)), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], String, String, String])], NbxAuthInterceptor);
     /***/
   },
 
@@ -7326,71 +7400,71 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _auth_interceptor__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! ./auth.interceptor */
-    "./src/app/auth/auth.interceptor.ts");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! rxjs */
     "./node_modules/rxjs/_esm2015/index.js");
     /* harmony import */
 
 
-    var _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! ../utils/encryption.utils */
     "./src/app/utils/encryption.utils.ts");
     /* harmony import */
 
 
-    var _utils_promise_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    var _utils_promise_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
     /*! ../utils/promise.utils */
     "./src/app/utils/promise.utils.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
     /*! ../services/implementation/system/user/user.service */
     "./src/app/services/implementation/system/user/user.service.ts");
     /* harmony import */
 
 
-    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
     /*! ../utils/json.utils */
     "./src/app/utils/json.utils.ts");
+    /* harmony import */
+
+
+    var _config_request_config__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    /*! ../config/request.config */
+    "./src/app/config/request.config.ts");
 
     var NbxOAuth2AuthDbService = /*#__PURE__*/function (_services_database_se) {
       _inherits(NbxOAuth2AuthDbService, _services_database_se);
 
-      var _super3 = _createSuper(NbxOAuth2AuthDbService);
+      var _super6 = _createSuper(NbxOAuth2AuthDbService);
 
       function NbxOAuth2AuthDbService(dbService, logger, connectionService) {
-        var _this21;
+        var _this22;
 
         _classCallCheck(this, NbxOAuth2AuthDbService);
 
-        _this21 = _super3.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_2__["DB_STORE"].auth);
+        _this22 = _super6.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_2__["DB_STORE"].auth);
 
-        _this21.deleteExecutor = function (resolve, reject) {
+        _this22.deleteExecutor = function (resolve, reject) {
           for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
             args[_key - 2] = arguments[_key];
           }
 
           if (args && args.length) {
-            _this21.getDbService()["delete"](_this21.getDbStore(), {
+            _this22.getDbService()["delete"](_this22.getDbStore(), {
               'id': (args[0].getPayload() || {}).id
             }).then(function () {
               return resolve(1);
             }, function (errors) {
-              _this21.getLogger().error(errors);
+              _this22.getLogger().error(errors);
 
               reject(errors);
             });
           }
         };
 
-        return _this21;
+        return _this22;
       }
 
       return NbxOAuth2AuthDbService;
@@ -7423,16 +7497,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var NbxOAuth2AuthHttpService = /*#__PURE__*/function (_services_http_servic) {
       _inherits(NbxOAuth2AuthHttpService, _services_http_servic);
 
-      var _super4 = _createSuper(NbxOAuth2AuthHttpService);
+      var _super7 = _createSuper(NbxOAuth2AuthHttpService);
 
       function NbxOAuth2AuthHttpService(http, logger, dbService) {
-        var _this22;
+        var _this23;
 
         _classCallCheck(this, NbxOAuth2AuthHttpService);
 
-        _this22 = _super4.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject authentication database service for offline mode');
-        return _this22;
+        _this23 = _super7.call(this, http, logger, dbService);
+        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject authentication database service for offline mode');
+        return _this23;
       }
 
       _createClass(NbxOAuth2AuthHttpService, [{
@@ -7452,26 +7526,26 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "handleOfflineMode",
         value: function handleOfflineMode(url, method, res, options) {
-          var _this23 = this;
+          var _this24 = this;
 
           var headers;
           headers = options && options.headers ? options.headers : undefined;
 
-          if (headers && headers.has(_auth_interceptor__WEBPACK_IMPORTED_MODULE_10__["NBX_AUTH_AUTHORIZATION_HEADER"])) {
+          if (headers && headers.has(_config_request_config__WEBPACK_IMPORTED_MODULE_15__["RC_AUTH_AUTHORIZATION_HEADER"])) {
             var dbService;
             dbService = this.getDbService();
             var authorization;
-            authorization = headers.get(_auth_interceptor__WEBPACK_IMPORTED_MODULE_10__["NBX_AUTH_AUTHORIZATION_HEADER"]);
+            authorization = headers.get(_config_request_config__WEBPACK_IMPORTED_MODULE_15__["RC_AUTH_AUTHORIZATION_HEADER"]);
             this.getLogger().debug('Check authentication', authorization);
-            return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_13__["default"].promiseToObservable(dbService.getAll().then(function (users) {
+            return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_12__["default"].promiseToObservable(dbService.getAll().then(function (users) {
               var token;
 
               if (users && users.length) {
                 var foundUsers;
                 foundUsers = users.filter(function (u) {
                   var encryptedToken;
-                  encryptedToken = _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_12__["default"].base64Encode(':', u.username || '', u.password || '');
-                  encryptedToken = [_auth_interceptor__WEBPACK_IMPORTED_MODULE_10__["NBX_AUTH_AUTHORIZATION_TYPE"], encryptedToken].join(' ');
+                  encryptedToken = _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_11__["default"].base64Encode(':', u.username || '', u.password || '');
+                  encryptedToken = [_config_request_config__WEBPACK_IMPORTED_MODULE_15__["RC_AUTH_AUTHORIZATION_BASIC_TYPE"], encryptedToken].join(' ');
                   return authorization.toLowerCase() === encryptedToken.toLowerCase();
                 });
 
@@ -7479,49 +7553,49 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                   var u;
                   u = foundUsers[0];
                   var tokenValue;
-                  tokenValue = _utils_json_utils__WEBPACK_IMPORTED_MODULE_15__["default"].parseFisrtResponseJson(JSON.stringify(u));
+                  tokenValue = _utils_json_utils__WEBPACK_IMPORTED_MODULE_14__["default"].parseFisrtResponseJson(JSON.stringify(u));
                   delete tokenValue['password'];
-                  token = _this23.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](true, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
+                  token = _this24.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](true, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                     body: JSON.stringify(tokenValue),
                     headers: headers,
                     status: 200,
                     url: url
-                  }), options.redirectSuccess, options.errors, options.messages));
+                  }), (options || {}).redirectSuccess, (options || {}).errors, (options || {}).messages));
                 }
               }
 
               if (!token) {
-                token = _this23.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
+                token = _this24.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                   body: '',
                   headers: headers,
                   status: 401,
                   url: url
-                }), options.redirectFailure, options.errors, options.messages));
+                }), (options || {}).redirectFailure, (options || {}).errors, (options || {}).messages));
               }
 
               return token;
             }, function (errors) {
-              _this23.getLogger().error('Not found any valid token', errors);
+              _this24.getLogger().error('Not found any valid token', errors);
 
-              return _this23.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
+              return _this24.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                 body: '',
                 headers: headers,
                 status: 401,
                 url: url
-              }), options.redirectFailure, options.errors, options.messages));
+              }), (options || {}).redirectFailure, (options || {}).errors, (options || {}).messages));
             })["catch"](function (errors) {
-              _this23.getLogger().error('Not found any valid token', errors);
+              _this24.getLogger().error('Not found any valid token', errors);
 
-              return _this23.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
+              return _this24.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                 body: '',
                 headers: headers,
                 status: 401,
                 url: url
-              }), options.redirectFailure, options.errors, options.messages));
+              }), (options || {}).redirectFailure, (options || {}).errors, (options || {}).messages));
             }));
           }
 
-          return Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["of"])(undefined);
+          return Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["of"])(undefined);
         }
       }]);
 
@@ -7542,15 +7616,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           args: [ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
         }]
       }, {
-        type: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"],
+        type: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"],
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
-          args: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"]]
+          args: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"]]
         }]
       }];
     };
 
-    NbxOAuth2AuthHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"]])], NbxOAuth2AuthHttpService);
+    NbxOAuth2AuthHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"]])], NbxOAuth2AuthHttpService);
     /***/
   },
 
@@ -7664,37 +7738,37 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _auth_interceptor__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
-    /*! ./auth.interceptor */
-    "./src/app/auth/auth.interceptor.ts");
+    var _config_request_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! ../config/request.config */
+    "./src/app/config/request.config.ts");
 
     var NbxOAuth2AuthStrategy_1;
 
-    var NbxOAuth2AuthStrategy = NbxOAuth2AuthStrategy_1 = /*#__PURE__*/function (_nebular_auth__WEBPAC2) {
-      _inherits(NbxOAuth2AuthStrategy, _nebular_auth__WEBPAC2);
+    var NbxOAuth2AuthStrategy = NbxOAuth2AuthStrategy_1 = /*#__PURE__*/function (_nebular_auth__WEBPAC) {
+      _inherits(NbxOAuth2AuthStrategy, _nebular_auth__WEBPAC);
 
-      var _super5 = _createSuper(NbxOAuth2AuthStrategy);
+      var _super8 = _createSuper(NbxOAuth2AuthStrategy);
 
       function NbxOAuth2AuthStrategy(http, route, authHttpService, authDbService, moduleDbService, logger) {
-        var _this24;
+        var _this25;
 
         _classCallCheck(this, NbxOAuth2AuthStrategy);
 
-        _this24 = _super5.call(this, http, route);
-        _this24.authHttpService = authHttpService;
-        _this24.authDbService = authDbService;
-        _this24.moduleDbService = moduleDbService;
-        _this24.logger = logger;
+        _this25 = _super8.call(this, http, route);
+        _this25.authHttpService = authHttpService;
+        _this25.authDbService = authDbService;
+        _this25.moduleDbService = moduleDbService;
+        _this25.logger = logger;
 
-        _this24.authenticate = function (data) {
+        _this25.authenticate = function (data) {
           var oauth2;
-          oauth2 = _assertThisInitialized(_this24);
+          oauth2 = _assertThisInitialized(_this25);
           var module = 'login';
           var headers;
           headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"](oauth2.getOption("".concat(module, ".headers")) || {});
           var authorization;
           authorization = _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_13__["default"].base64Encode(':', data['email'] || '', _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_13__["default"].md5Encode(':', data['password']));
-          headers = headers.set('Authorization', [_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_AUTHORIZATION_TYPE"], authorization].join(' '));
+          headers = headers.set('Authorization', [_config_request_config__WEBPACK_IMPORTED_MODULE_14__["RC_AUTH_AUTHORIZATION_BASIC_TYPE"], authorization].join(' '));
           var method;
           method = oauth2.getOption("".concat(module, ".method"));
           var url;
@@ -7709,7 +7783,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             errors: oauth2.getOption("".concat(module, ".errors")) || [],
             messages: oauth2.getOption("".concat(module, ".messages")) || []
           };
-          return _this24.getHttpService().request(url, method, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_12__["map"])(function (token) {
+          return _this25.getHttpService().request(url, method, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_12__["map"])(function (token) {
             return !Object(util__WEBPACK_IMPORTED_MODULE_10__["isArray"])(token) && token ? token : Object(util__WEBPACK_IMPORTED_MODULE_10__["isArray"])(token) ? token[0] : undefined;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_12__["map"])(function (token) {
             return new _nebular_auth__WEBPACK_IMPORTED_MODULE_2__["NbAuthResult"](token && Object.keys(token).length ? true : false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpResponse"]({
@@ -7723,16 +7797,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         route || Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])('Could not inject route!');
         authHttpService || Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])('Could not inject HttpService!');
 
-        var _this = _assertThisInitialized(_this24);
+        var _this = _assertThisInitialized(_this25);
 
-        _this24.authHttpService.setCreateTokenDelegate(function (value) {
+        _this25.authHttpService.setCreateTokenDelegate(function (value) {
           return _this.createToken(value);
         });
 
         authDbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])('Could not inject IndexedDb!');
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])('Could not inject logger!');
         logger.updateConfig(_config_log_config__WEBPACK_IMPORTED_MODULE_8__["LogConfig"]);
-        return _this24;
+        return _this25;
       }
 
       _createClass(NbxOAuth2AuthStrategy, [{
@@ -7758,21 +7832,21 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "createToken",
         value: function createToken(value, failWhenInvalidToken) {
-          var _this25 = this;
+          var _this26 = this;
 
           var token;
           token = _get(_getPrototypeOf(NbxOAuth2AuthStrategy.prototype), "createToken", this).call(this, value, this.getOption("login.failWhenInvalidToken"));
           this.storeDb(token).then(function (t) {
             return token = t;
           }, function (errors) {
-            return _this25.getLogger().error(errors);
+            return _this26.getLogger().error(errors);
           });
           return token;
         }
       }, {
         key: "storeDb",
         value: function storeDb(token) {
-          var _this26 = this;
+          var _this27 = this;
 
           if (!token || !token.getPayload() || !token.isValid()) {
             return new Promise(function (resolve) {
@@ -7781,29 +7855,29 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           }
 
           return new Promise(function (resolve, reject) {
-            _this26.getDbService().clear().then(function () {
-              _this26.getDbService().insert(token.getPayload()).then(function () {
+            _this27.getDbService().clear().then(function () {
+              _this27.getDbService().insert(token.getPayload()).then(function () {
                 // insert modules to build menu
-                _this26.getModuleDbService().clear().then(function () {
-                  _this26.getModuleDbService().insertEntities(_this26.parseModules(token.getPayload())).then(function () {
+                _this27.getModuleDbService().clear().then(function () {
+                  _this27.getModuleDbService().insertEntities(_this27.parseModules(token.getPayload())).then(function () {
                     return resolve(token);
                   }, function (errors) {
-                    _this26.getLogger().error(errors);
+                    _this27.getLogger().error(errors);
 
                     reject(errors);
                   });
                 }, function (errors) {
-                  _this26.getLogger().error(errors);
+                  _this27.getLogger().error(errors);
 
                   reject(errors);
                 });
               }, function (errors) {
-                _this26.getLogger().error(errors);
+                _this27.getLogger().error(errors);
 
                 reject(errors);
               });
             }, function (errors) {
-              _this26.getLogger().error(errors);
+              _this27.getLogger().error(errors);
 
               reject(errors);
             });
@@ -7933,15 +8007,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /*! ../utils/json.utils */
     "./src/app/utils/json.utils.ts");
 
-    var NbxAuthOAuth2Token = /*#__PURE__*/function (_nebular_auth__WEBPAC3) {
-      _inherits(NbxAuthOAuth2Token, _nebular_auth__WEBPAC3);
+    var NbxAuthOAuth2Token = /*#__PURE__*/function (_nebular_auth__WEBPAC2) {
+      _inherits(NbxAuthOAuth2Token, _nebular_auth__WEBPAC2);
 
-      var _super6 = _createSuper(NbxAuthOAuth2Token);
+      var _super9 = _createSuper(NbxAuthOAuth2Token);
 
       function NbxAuthOAuth2Token(data, ownerStrategyName, createdAt) {
         _classCallCheck(this, NbxAuthOAuth2Token);
 
-        return _super6.call(this, _utils_json_utils__WEBPACK_IMPORTED_MODULE_2__["default"].parseFisrtResponseJson(data), ownerStrategyName, createdAt);
+        return _super9.call(this, _utils_json_utils__WEBPACK_IMPORTED_MODULE_2__["default"].parseFisrtResponseJson(data), ownerStrategyName, createdAt);
       }
 
       _createClass(NbxAuthOAuth2Token, [{
@@ -7990,6 +8064,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
     /*! tslib */
     "./node_modules/tslib/tslib.es6.js");
+    /**
+     * Application API configuration
+     */
+
 
     var API = {
       headers: {
@@ -8029,14 +8107,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
-        client: '/dashboard/warehouse/features/storage'
+        client: '/dashboard/warehouse/settings/storage'
       },
       warehouseCategory: {
         code: 'WAREHOUSE_CATEGORY_API',
         baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
-        client: '/dashboard/warehouse/features/category'
+        client: '/dashboard/warehouse/settings/category'
       },
       warehouseItem: {
         code: 'WAREHOUSE_ITEM_API',
@@ -8152,7 +8230,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     !*** ./src/app/config/app.providers.ts ***!
     \*****************************************/
 
-  /*! exports provided: BaseHrefProvider, BASE_HREF, HttpLoaderFactory, CommonProviders, I18NProviders, UserProviders, CustomerProviders, OrganizationProviders, CountryProviders, WarehouseProviders, InterceptorProviders, AuthenticationProviders, MenuProviders, ExampleProviders, Providers */
+  /*! exports provided: BaseHrefProvider, BASE_HREF, HttpLoaderFactory, CommonProviders, InterceptorProviders, AuthenticationProviders, ThirdPartyApiProviders, I18NProviders, UserProviders, CustomerProviders, OrganizationProviders, CountryProviders, WarehouseProviders, MenuProviders, ExampleProviders, Providers */
 
   /***/
   function srcAppConfigAppProvidersTs(module, __webpack_exports__, __webpack_require__) {
@@ -8182,6 +8260,24 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     __webpack_require__.d(__webpack_exports__, "CommonProviders", function () {
       return CommonProviders;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "InterceptorProviders", function () {
+      return InterceptorProviders;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AuthenticationProviders", function () {
+      return AuthenticationProviders;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ThirdPartyApiProviders", function () {
+      return ThirdPartyApiProviders;
     });
     /* harmony export (binding) */
 
@@ -8222,18 +8318,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "InterceptorProviders", function () {
-      return InterceptorProviders;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "AuthenticationProviders", function () {
-      return AuthenticationProviders;
-    });
-    /* harmony export (binding) */
-
-
     __webpack_require__.d(__webpack_exports__, "MenuProviders", function () {
       return MenuProviders;
     });
@@ -8258,384 +8342,414 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    var _prototypes_import__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ./prototypes.import */
+    "./src/app/config/prototypes.import.ts");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/fesm2015/core.js");
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @angular/common */
     "./node_modules/@angular/common/fesm2015/common.js");
     /* harmony import */
 
 
-    var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/fesm2015/http.js");
     /* harmony import */
 
 
-    var ngx_logger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! ngx-logger */
     "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
     /* harmony import */
 
 
-    var _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ../auth/auth.guard.service */
     "./src/app/auth/auth.guard.service.ts");
     /* harmony import */
 
 
-    var _nebular_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _nebular_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @nebular/auth */
     "./node_modules/@nebular/auth/fesm2015/index.js");
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/fesm2015/router.js");
     /* harmony import */
 
 
-    var _services_empty_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _services_empty_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ../services/empty.service */
     "./src/app/services/empty.service.ts");
     /* harmony import */
 
 
-    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! ngx-indexed-db */
     "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
     /* harmony import */
 
 
-    var _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! ../auth/auth.oauth2.service */
     "./src/app/auth/auth.oauth2.service.ts");
     /* harmony import */
 
 
-    var _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
     /*! ../auth/auth.oauth2.strategy */
     "./src/app/auth/auth.oauth2.strategy.ts");
     /* harmony import */
 
 
-    var _environments_environment__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
     /*! ../../environments/environment */
     "./src/environments/environment.ts");
     /* harmony import */
 
 
-    var _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
-    /*! ../auth/auth.interceptor */
-    "./src/app/auth/auth.interceptor.ts");
+    var _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! ../services/interceptors/auth.interceptor */
+    "./src/app/services/interceptors/auth.interceptor.ts");
     /* harmony import */
 
 
-    var _sw_push_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    var _sw_push_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
     /*! ../sw/push.service */
     "./src/app/sw/push.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    var _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
     /*! ../services/implementation/menu.service */
     "./src/app/services/implementation/menu.service.ts");
     /* harmony import */
 
 
-    var ngx_toastr__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    var ngx_toastr__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
     /*! ngx-toastr */
     "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
     /* harmony import */
 
 
-    var _common_config__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    var _common_config__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
     /*! ./common.config */
     "./src/app/config/common.config.ts");
     /* harmony import */
 
 
-    var _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    var _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
     /*! ../services/implementation/module.service */
     "./src/app/services/implementation/module.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+    var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
     /*! ../services/implementation/system/user/user.service */
     "./src/app/services/implementation/system/user/user.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
+    var _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
     /*! ../services/implementation/system/user/user.datasource */
     "./src/app/services/implementation/system/user/user.datasource.ts");
     /* harmony import */
 
 
-    var ngx_contextmenu__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
+    var ngx_contextmenu__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
     /*! ngx-contextmenu */
     "./node_modules/ngx-contextmenu/fesm2015/ngx-contextmenu.js");
     /* harmony import */
 
 
-    var ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+    var ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
     /*! ng2-smart-table/lib/data-source/data-source */
     "./node_modules/ng2-smart-table/lib/data-source/data-source.js");
     /* harmony import */
 
 
-    var ng2_smart_table__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
+    var ng2_smart_table__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
     /*! ng2-smart-table */
     "./node_modules/ng2-smart-table/index.js");
     /* harmony import */
 
 
-    var ng_connection_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    var ng_connection_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
     /* harmony import */
 
 
-    var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
+    var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(
     /*! ../services/implementation/system/customer/customer.service */
     "./src/app/services/implementation/system/customer/customer.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(
+    var _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(
     /*! ../services/implementation/system/customer/customer.datasource */
     "./src/app/services/implementation/system/customer/customer.datasource.ts");
     /* harmony import */
 
 
-    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(
     /*! @ngx-translate/core */
     "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
     /* harmony import */
 
 
-    var rxjs__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(
+    var rxjs__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(
     /*! rxjs */
     "./node_modules/rxjs/_esm2015/index.js");
     /* harmony import */
 
 
-    var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(
+    var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(
     /*! @ngx-translate/http-loader */
     "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
     /* harmony import */
 
 
-    var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(
+    var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(
     /*! ../services/implementation/system/organization/organization.service */
     "./src/app/services/implementation/system/organization/organization.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(
+    var _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(
     /*! ../services/implementation/system/organization/organization.datasource */
     "./src/app/services/implementation/system/organization/organization.datasource.ts");
     /* harmony import */
 
 
-    var _services_header_service__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(
+    var _services_header_service__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(
     /*! ../services/header.service */
     "./src/app/services/header.service.ts");
     /* harmony import */
 
 
-    var _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(
+    var _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(
     /*! ../pages/pages.guard.service */
     "./src/app/pages/pages.guard.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(
+    var _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(
     /*! ../services/implementation/global.errors.handler */
     "./src/app/services/implementation/global.errors.handler.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse/warehouse.service */
     "./src/app/services/implementation/warehouse/warehouse/warehouse.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse/warehouse.datasource */
     "./src/app/services/implementation/warehouse/warehouse/warehouse.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.order/warehouse.order.service */
     "./src/app/services/implementation/warehouse/warehouse.order/warehouse.order.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.order/warehouse.order.datasource */
     "./src/app/services/implementation/warehouse/warehouse.order/warehouse.order.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service */
     "./src/app/services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource */
     "./src/app/services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.item/warehouse.item.service */
     "./src/app/services/implementation/warehouse/warehouse.item/warehouse.item.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.item/warehouse.item.datasource */
     "./src/app/services/implementation/warehouse/warehouse.item/warehouse.item.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service */
     "./src/app/services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource */
     "./src/app/services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service */
     "./src/app/services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource */
     "./src/app/services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.category/warehouse.category.service */
     "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.category/warehouse.category.datasource */
     "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service */
     "./src/app/services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource */
     "./src/app/services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service */
     "./src/app/services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(
+    var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(
     /*! ../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource */
     "./src/app/services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(
+    var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(
     /*! ../services/implementation/system/country/country.service */
     "./src/app/services/implementation/system/country/country.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(
+    var _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(
     /*! ../services/implementation/system/country/country.datasource */
     "./src/app/services/implementation/system/country/country.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(
+    var _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(
     /*! ../services/implementation/system/city/city.service */
     "./src/app/services/implementation/system/city/city.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(
+    var _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(
     /*! ../services/implementation/system/city/city.datasource */
     "./src/app/services/implementation/system/city/city.datasource.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(
+    var _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(
     /*! ../services/implementation/system/province/province.service */
     "./src/app/services/implementation/system/province/province.service.ts");
     /* harmony import */
 
 
-    var _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(
+    var _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(
     /*! ../services/implementation/system/province/province.datasource */
     "./src/app/services/implementation/system/province/province.datasource.ts");
-    /* harmony import */
-
-
-    var _prototypes_string_prototype__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(
-    /*! ../prototypes/string.prototype */
-    "./src/app/prototypes/string.prototype.ts");
     /* harmony import */
 
 
     var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(
     /*! @angular/platform-browser */
     "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+    /* harmony import */
+
+
+    var _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(
+    /*! ../services/third.party/universal/universal.api.service */
+    "./src/app/services/third.party/universal/universal.api.service.ts");
+    /* harmony import */
+
+
+    var _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(
+    /*! ../services/third.party/universal/universal.api.datasource */
+    "./src/app/services/third.party/universal/universal.api.datasource.ts");
+    /* harmony import */
+
+
+    var _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(
+    /*! ../services/interceptors/timeout.interceptor */
+    "./src/app/services/interceptors/timeout.interceptor.ts");
+    /* harmony import */
+
+
+    var _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(
+    /*! ../services/interceptors/headers.interceptor */
+    "./src/app/services/interceptors/headers.interceptor.ts");
+    /* harmony import */
+
+
+    var _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(
+    /*! ../services/third.party/universal/universal.api.bridge.service */
+    "./src/app/services/third.party/universal/universal.api.bridge.service.ts");
 
     function BaseHrefProvider() {
       var baseElement;
       baseElement = document.getElementsByTagName('base');
       var href;
-      href = baseElement && baseElement.item(0) && baseElement.item(0).hasAttribute('href') ? baseElement.item(0).getAttribute('href') : _environments_environment__WEBPACK_IMPORTED_MODULE_12__["environment"].baseHref;
-      return href;
+      href = baseElement && baseElement.item(0) && baseElement.item(0).hasAttribute('href') ? baseElement.item(0).getAttribute('href') : _environments_environment__WEBPACK_IMPORTED_MODULE_13__["environment"].baseHref;
+      return (href || '').trimLast('/');
     }
 
-    var BASE_HREF = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('Application baseHref injection'); // required for AOT compilation
+    var BASE_HREF = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Application baseHref injection'); // required for AOT compilation
 
     function HttpLoaderFactory(http, baseHref) {
-      http || Object(rxjs__WEBPACK_IMPORTED_MODULE_28__["throwError"])('Not found HttpClient to create TranslateHttpLoader');
-      return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__["TranslateHttpLoader"](http, (baseHref || '').concat('/assets/i18n/'));
+      http || Object(rxjs__WEBPACK_IMPORTED_MODULE_29__["throwError"])('Not found HttpClient to create TranslateHttpLoader');
+      return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_30__["TranslateHttpLoader"](http, (baseHref || '').concat('/assets/i18n/'));
     }
 
     var CommonProviders = [{
-      provide: _angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"],
+      provide: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"],
       useValue: document
     }, {
-      provide: _angular_common__WEBPACK_IMPORTED_MODULE_2__["APP_BASE_HREF"],
+      provide: _angular_common__WEBPACK_IMPORTED_MODULE_3__["APP_BASE_HREF"],
       useFactory: BaseHrefProvider,
       deps: []
     }, {
@@ -8643,313 +8757,349 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       useFactory: BaseHrefProvider,
       deps: []
     }, {
-      provide: _sw_push_service__WEBPACK_IMPORTED_MODULE_14__["SW_VAPID_PUBLIC_KEY"],
-      useValue: _common_config__WEBPACK_IMPORTED_MODULE_17__["COMMON"].sw.vapid_public_key
+      provide: _sw_push_service__WEBPACK_IMPORTED_MODULE_15__["SW_VAPID_PUBLIC_KEY"],
+      useValue: _common_config__WEBPACK_IMPORTED_MODULE_18__["COMMON"].sw.vapid_public_key
     }, {
-      provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"],
+      provide: _angular_core__WEBPACK_IMPORTED_MODULE_2__["LOCALE_ID"],
       useValue: 'vi'
     }, {
-      provide: _angular_common__WEBPACK_IMPORTED_MODULE_2__["DatePipe"],
-      useClass: _angular_common__WEBPACK_IMPORTED_MODULE_2__["DatePipe"],
+      provide: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"],
+      useClass: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"],
       deps: []
     }, {
-      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"],
-      useExisting: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpXhrBackend"],
+      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+      useClass: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHandler"]]
+    }, {
+      provide: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXMapperService"],
+      useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXMapperService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHandler"]]
+    }, {
+      provide: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLoggerHttpService"],
+      useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLoggerHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHandler"]]
+    }, {
+      provide: ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_23__["DataSource"],
+      useClass: ng2_smart_table__WEBPACK_IMPORTED_MODULE_24__["LocalDataSource"],
       deps: []
     }, {
-      provide: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXMapperService"],
-      useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXMapperService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"]]
-    }, {
-      provide: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLoggerHttpService"],
-      useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLoggerHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"]]
-    }, {
-      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
-      useClass: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"]]
-    }, {
-      provide: ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_22__["DataSource"],
-      useClass: ng2_smart_table__WEBPACK_IMPORTED_MODULE_23__["LocalDataSource"],
+      provide: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_22__["ContextMenuService"],
+      useClass: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_22__["ContextMenuService"],
       deps: []
     }, {
-      provide: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_21__["ContextMenuService"],
-      useClass: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_21__["ContextMenuService"],
-      deps: []
-    }, {
-      provide: ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"],
-      useClass: ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"],
+      provide: ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"],
+      useClass: ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"],
       deps: []
     }, {
       provide: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Title"],
       useClass: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Title"],
-      deps: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"]]
+      deps: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"]]
     }, {
       provide: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Meta"],
       useClass: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Meta"],
-      deps: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"]]
+      deps: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"]]
     }, {
-      provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"],
-      useClass: _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_34__["default"],
-      deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateService"], ngx_toastr__WEBPACK_IMPORTED_MODULE_16__["ToastrService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"]]
+      provide: _angular_core__WEBPACK_IMPORTED_MODULE_2__["ErrorHandler"],
+      useClass: _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_35__["default"],
+      deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateService"], ngx_toastr__WEBPACK_IMPORTED_MODULE_17__["ToastrService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"]]
+    }];
+    var InterceptorProviders = [
+    /* Request authentication */
+    {
+      provide: _nebular_auth__WEBPACK_IMPORTED_MODULE_7__["NB_AUTH_INTERCEPTOR_HEADER"],
+      useValue: 'Authorization'
+    }, {
+      provide: _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"],
+      useValue: 'Company'
+    }, {
+      provide: _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"],
+      useValue: 'access_token'
+    }, {
+      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HTTP_INTERCEPTORS"],
+      useClass: _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NbxAuthInterceptor"],
+      deps: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _nebular_auth__WEBPACK_IMPORTED_MODULE_7__["NB_AUTH_INTERCEPTOR_HEADER"], _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"], _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"]],
+      multi: true
+    },
+    /* Request timeout */
+    {
+      provide: _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__["HTTP_REQUEST_TIMEOUT"],
+      useValue: _common_config__WEBPACK_IMPORTED_MODULE_18__["COMMON"].request.timeout
+    }, {
+      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HTTP_INTERCEPTORS"],
+      useClass: _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__["TimeoutInterceptor"],
+      deps: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__["HTTP_REQUEST_TIMEOUT"]],
+      multi: true
+    },
+    /* Request headers */
+    {
+      provide: _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__["HTTP_REQUEST_HEADERS"],
+      useValue: _common_config__WEBPACK_IMPORTED_MODULE_18__["COMMON"].request.headers
+    }, {
+      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HTTP_INTERCEPTORS"],
+      useClass: _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__["RequestHeadersInterceptor"],
+      deps: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__["HTTP_REQUEST_HEADERS"]],
+      multi: true
+    }];
+    var AuthenticationProviders = [{
+      provide: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"],
+      useClass: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"],
+      deps: [_nebular_auth__WEBPACK_IMPORTED_MODULE_7__["NbAuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"]]
+    }, {
+      provide: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"],
+      useClass: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
+    }, {
+      provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthDbService"],
+      useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
+    }, {
+      provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthHttpService"],
+      useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"]]
+    }, {
+      provide: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_12__["NbxOAuth2AuthStrategy"],
+      useClass: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_12__["NbxOAuth2AuthStrategy"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["ActivatedRoute"], _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthHttpService"], _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthDbService"], _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
+    }];
+    var ThirdPartyApiProviders = [// https://www.universal-tutorial.com/api
+    {
+      provide: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"],
+      useClass: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
+    }, {
+      provide: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiHttpService"],
+      useClass: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"]]
+    }, {
+      provide: _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__["UniversalApiDatasource"],
+      useClass: _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__["UniversalApiDatasource"],
+      deps: [_services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiHttpService"], _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
+    }, {
+      provide: _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"],
+      useClass: _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__["UniversalApiDatasource"]]
     }];
     var I18NProviders = [{
-      provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateLoader"],
+      provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateLoader"],
       useFactory: HttpLoaderFactory,
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["APP_BASE_HREF"]]
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["APP_BASE_HREF"]]
     }, {
-      provide: _services_header_service__WEBPACK_IMPORTED_MODULE_32__["PageHeaderService"],
-      useClass: _services_header_service__WEBPACK_IMPORTED_MODULE_32__["PageHeaderService"],
-      deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_header_service__WEBPACK_IMPORTED_MODULE_33__["PageHeaderService"],
+      useClass: _services_header_service__WEBPACK_IMPORTED_MODULE_33__["PageHeaderService"],
+      deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }];
     var UserProviders = [{
-      provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"],
-      useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"],
+      useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserHttpService"],
-      useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"]]
+      provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserHttpService"],
+      useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"]]
     }, {
-      provide: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_20__["UserDataSource"],
-      useClass: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_20__["UserDataSource"],
-      deps: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserHttpService"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_21__["UserDataSource"],
+      useClass: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_21__["UserDataSource"],
+      deps: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserHttpService"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }];
     var CustomerProviders = [{
-      provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerDbService"],
-      useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerDbService"],
+      useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerHttpService"],
-      useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"]]
+      provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerHttpService"],
+      useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"]]
     }, {
-      provide: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_26__["CustomerDatasource"],
-      useClass: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_26__["CustomerDatasource"],
-      deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerHttpService"], _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_27__["CustomerDatasource"],
+      useClass: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_27__["CustomerDatasource"],
+      deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerHttpService"], _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }];
     var OrganizationProviders = [{
-      provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"],
-      useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"],
+      useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationHttpService"],
-      useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"]]
+      provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationHttpService"],
+      useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"]]
     }, {
-      provide: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_31__["OrganizationDataSource"],
-      useClass: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_31__["OrganizationDataSource"],
-      deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationHttpService"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_32__["OrganizationDataSource"],
+      useClass: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_32__["OrganizationDataSource"],
+      deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationHttpService"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }];
     var CountryProviders = [// Country
     {
-      provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"],
-      useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"],
+      useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryHttpService"],
-      useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"]]
+      provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryHttpService"],
+      useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"]]
     }, {
-      provide: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_54__["CountryDatasource"],
-      useClass: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_54__["CountryDatasource"],
-      deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryHttpService"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
-    }, // City
-    {
-      provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"],
-      useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
-    }, {
-      provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityHttpService"],
-      useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"]]
-    }, {
-      provide: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_56__["CityDatasource"],
-      useClass: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_56__["CityDatasource"],
-      deps: [_services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityHttpService"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_55__["CountryDatasource"],
+      useClass: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_55__["CountryDatasource"],
+      deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryHttpService"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Province
     {
-      provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"],
-      useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"],
+      useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"]]
     }, {
-      provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceHttpService"],
-      useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"]]
+      provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceHttpService"],
+      useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"]]
     }, {
-      provide: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_58__["ProvinceDatasource"],
-      useClass: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_58__["ProvinceDatasource"],
-      deps: [_services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceHttpService"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_59__["ProvinceDatasource"],
+      useClass: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_59__["ProvinceDatasource"],
+      deps: [_services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceHttpService"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
+    }, // City
+    {
+      provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"],
+      useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"]]
+    }, {
+      provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityHttpService"],
+      useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"]]
+    }, {
+      provide: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_57__["CityDatasource"],
+      useClass: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_57__["CityDatasource"],
+      deps: [_services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityHttpService"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }];
     var WarehouseProviders = [// Warehouse
     {
-      provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"],
-      useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"],
+      useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_36__["WarehouseDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_36__["WarehouseDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseHttpService"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_37__["WarehouseDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_37__["WarehouseDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseHttpService"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Order
     {
-      provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderDbService"],
-      useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDbService"],
+      useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderHttpService"], _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderHttpService"], _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Order Detail
     {
-      provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailDbService"],
-      useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDbService"],
+      useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailHttpService"], _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_41__["WarehouseOrderDetailDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_41__["WarehouseOrderDetailDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailHttpService"], _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Item
     {
-      provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemDbService"],
-      useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDbService"],
+      useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemHttpService"], _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_43__["WarehouseItemDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_43__["WarehouseItemDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemHttpService"], _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Inventory
     {
-      provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryDbService"],
-      useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDbService"],
+      useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryHttpService"], _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryHttpService"], _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Inventory Detail
     {
-      provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailDbService"],
-      useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDbService"],
+      useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailHttpService"], _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_47__["WarehouseInventoryDetailDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_47__["WarehouseInventoryDetailDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailHttpService"], _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Category
     {
-      provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryDbService"],
-      useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDbService"],
+      useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryHttpService"], _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_49__["WarehouseCategoryDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_49__["WarehouseCategoryDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryHttpService"], _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Adjust
     {
-      provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustDbService"],
-      useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDbService"],
+      useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustHttpService"], _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustHttpService"], _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }, // Warehouse Adjust Detail
     {
-      provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailDbService"],
-      useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDbService"],
+      useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDbService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailHttpService"],
-      useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]]
+      provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailHttpService"],
+      useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailHttpService"],
+      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]]
     }, {
-      provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDatasource"],
-      useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDatasource"],
-      deps: [_services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailHttpService"], _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
-    }];
-    var InterceptorProviders = [{
-      provide: _nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NB_AUTH_INTERCEPTOR_HEADER"],
-      useValue: 'Authorization'
-    }, {
-      provide: _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"],
-      useValue: 'Company'
-    }, {
-      provide: _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"],
-      useValue: 'access_token'
-    }, {
-      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"],
-      useClass: _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NbxAuthInterceptor"],
-      multi: true,
-      deps: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"], _nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NB_AUTH_INTERCEPTOR_HEADER"], _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"], _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"]]
-    }];
-    var AuthenticationProviders = [{
-      provide: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"],
-      useClass: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"],
-      deps: [_nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NbAuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]]
-    }, {
-      provide: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"],
-      useClass: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
-    }, {
-      provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthDbService"],
-      useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthDbService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
-    }, {
-      provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthHttpService"],
-      useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthHttpService"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"]]
-    }, {
-      provide: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthStrategy"],
-      useClass: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthStrategy"],
-      deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"], _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthHttpService"], _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthDbService"], _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_53__["WarehouseAdjustDetailDatasource"],
+      useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_53__["WarehouseAdjustDetailDatasource"],
+      deps: [_services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailHttpService"], _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }];
     var MenuProviders = [{
-      provide: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_15__["MenuService"],
-      useClass: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_15__["MenuService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_16__["MenuService"],
+      useClass: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_16__["MenuService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }, {
-      provide: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_33__["PagesGuard"],
-      useClass: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_33__["PagesGuard"],
-      deps: [_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"], ngx_toastr__WEBPACK_IMPORTED_MODULE_16__["ToastrService"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+      provide: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_34__["PagesGuard"],
+      useClass: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_34__["PagesGuard"],
+      deps: [_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"], ngx_toastr__WEBPACK_IMPORTED_MODULE_17__["ToastrService"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
     }];
     var ExampleProviders = [{
-      provide: _services_empty_service__WEBPACK_IMPORTED_MODULE_8__["EmptyService"],
-      useClass: _services_empty_service__WEBPACK_IMPORTED_MODULE_8__["EmptyService"],
-      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]]
+      provide: _services_empty_service__WEBPACK_IMPORTED_MODULE_9__["EmptyService"],
+      useClass: _services_empty_service__WEBPACK_IMPORTED_MODULE_9__["EmptyService"],
+      deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]]
     }];
-    var Providers = CommonProviders.concat(I18NProviders).concat(OrganizationProviders).concat(UserProviders).concat(CustomerProviders).concat(CountryProviders).concat(WarehouseProviders).concat(InterceptorProviders).concat(AuthenticationProviders).concat(MenuProviders).concat(ExampleProviders);
+    var Providers = CommonProviders.concat(InterceptorProviders).concat(ThirdPartyApiProviders).concat(AuthenticationProviders).concat(I18NProviders).concat(OrganizationProviders).concat(UserProviders).concat(CustomerProviders).concat(CountryProviders).concat(WarehouseProviders).concat(MenuProviders).concat(ExampleProviders);
     /***/
   },
 
@@ -9014,6 +9164,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var _pages_components_toolbar_abstract_toolbar_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! ../pages/components/toolbar/abstract.toolbar.component */
     "./src/app/pages/components/toolbar/abstract.toolbar.component.ts");
+    /* harmony import */
+
+
+    var _request_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./request.config */
+    "./src/app/config/request.config.ts");
     /* base context menu items */
 
 
@@ -9083,7 +9239,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         vapid_public_key: '',
         base_url: 'http://localhost:8089/api-rest-notification/service'
       },
-      itemsPerPage: 10,
+
+      /* default HTTP request */
+      request: {
+        headers: _request_config__WEBPACK_IMPORTED_MODULE_4__["RC_DEFAULT_HEADERS"],
+        // number (in milliseconds) | date
+        timeout: 300000
+      },
+      itemsPerPage: 15,
       baseMenu: BaseContextMenu,
       baseToolbarActions: BaseToolbarActions,
       imageFileExtensions: IMAGE_FILE_EXTENSIONS
@@ -9130,6 +9293,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     "./src/environments/environment.ts");
 
     var DB_STORE = {
+      third_party: 'third_party',
       auth: 'auth',
       module: 'module',
       user: 'user',
@@ -9152,6 +9316,37 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       name: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].databaseName,
       version: 1,
       objectStoresMeta: [{
+        store: DB_STORE.third_party,
+        storeConfig: {
+          keyPath: 'uid',
+          autoIncrement: true
+        },
+        storeSchema: [{
+          name: 'id',
+          keypath: 'id',
+          options: {
+            unique: true
+          }
+        }, {
+          name: 'code',
+          keypath: 'code',
+          options: {
+            unique: true
+          }
+        }, {
+          name: 'response',
+          keypath: 'response',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'expiredAt',
+          keypath: 'expiredAt',
+          options: {
+            unique: false
+          }
+        }]
+      }, {
         store: DB_STORE.auth,
         storeConfig: {
           keyPath: 'uid',
@@ -9431,20 +9626,50 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             unique: false
           }
         }, {
+          name: 'district_id',
+          keypath: 'district_id',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'district',
+          keypath: 'district',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'city_id',
+          keypath: 'city_id',
+          options: {
+            unique: false
+          }
+        }, {
           name: 'city',
           keypath: 'city',
           options: {
             unique: false
           }
         }, {
-          name: 'state_province',
-          keypath: 'state_province',
+          name: 'province_id',
+          keypath: 'province_id',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'province',
+          keypath: 'province',
           options: {
             unique: false
           }
         }, {
           name: 'zip_code',
           keypath: 'zip_code',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'country_id',
+          keypath: 'country_id',
           options: {
             unique: false
           }
@@ -9534,6 +9759,60 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             unique: false
           }
         }, {
+          name: 'district_id',
+          keypath: 'district_id',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'district',
+          keypath: 'district',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'city_id',
+          keypath: 'city_id',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'city',
+          keypath: 'city',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'province_id',
+          keypath: 'province_id',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'province',
+          keypath: 'province',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'zip_code',
+          keypath: 'zip_code',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'country_id',
+          keypath: 'country_id',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'country',
+          keypath: 'country',
+          options: {
+            unique: false
+          }
+        }, {
           name: 'tel',
           keypath: 'tel',
           options: {
@@ -9619,26 +9898,56 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             unique: false
           }
         }, {
+          name: 'district_id',
+          keypath: 'district_id',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'district',
+          keypath: 'district',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'city_id',
+          keypath: 'city_id',
+          options: {
+            unique: false
+          }
+        }, {
           name: 'city',
           keypath: 'city',
           options: {
             unique: false
           }
         }, {
-          name: 'state_province',
-          keypath: 'state_province',
+          name: 'province_id',
+          keypath: 'province_id',
           options: {
             unique: false
           }
         }, {
-          name: 'zip_code',
-          keypath: 'zip_code',
+          name: 'province',
+          keypath: 'province',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'country_id',
+          keypath: 'country_id',
           options: {
             unique: false
           }
         }, {
           name: 'country',
           keypath: 'country',
+          options: {
+            unique: false
+          }
+        }, {
+          name: 'zip_code',
+          keypath: 'zip_code',
           options: {
             unique: false
           }
@@ -10559,14 +10868,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             unique: false
           }
         }, {
-          name: 'country_id',
-          keypath: 'country_id',
+          name: 'province_id',
+          keypath: 'province_id',
           options: {
             unique: false
           }
         }, {
-          name: 'country',
-          keypath: 'country',
+          name: 'province',
+          keypath: 'province',
           options: {
             unique: false
           }
@@ -10608,14 +10917,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             unique: false
           }
         }, {
-          name: 'city_id',
-          keypath: 'city_id',
+          name: 'country_id',
+          keypath: 'country_id',
           options: {
             unique: false
           }
         }, {
-          name: 'city',
-          keypath: 'city',
+          name: 'country',
+          keypath: 'country',
           options: {
             unique: false
           }
@@ -10740,9 +11049,229 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
 
     var LogConfig = {
-      level: ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NgxLoggerLevel"].DEBUG,
+      level: ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NgxLoggerLevel"].ERROR,
       serverLogLevel: ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NgxLoggerLevel"].OFF,
       disableConsoleLogging: false
+    };
+    /***/
+  },
+
+  /***/
+  "./src/app/config/prototypes.import.ts":
+  /*!*********************************************!*\
+    !*** ./src/app/config/prototypes.import.ts ***!
+    \*********************************************/
+
+  /*! no exports provided */
+
+  /***/
+  function srcAppConfigPrototypesImportTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _prototypes_array_prototypes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../prototypes/array.prototypes */
+    "./src/app/prototypes/array.prototypes.ts");
+    /* harmony import */
+
+
+    var _prototypes_string_prototype__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../prototypes/string.prototype */
+    "./src/app/prototypes/string.prototype.ts");
+    /***/
+
+  },
+
+  /***/
+  "./src/app/config/request.config.ts":
+  /*!******************************************!*\
+    !*** ./src/app/config/request.config.ts ***!
+    \******************************************/
+
+  /*! exports provided: RC_AUTH_AUTHORIZATION_HEADER, RC_COMPANY_HEADER, RC_AUTH_ACCESS_TOKEN_PARAM, RC_AUTH_REFRESH_TOKEN_PARAM, RC_AUTH_AUTHORIZATION_BASIC_TYPE, RC_AUTH_AUTHORIZATION_BEARER_TYPE, RC_THIRD_PARTY_CUSTOM_TYPE, RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL, RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER, RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL, RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER, RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL, RC_DEFAULT_HEADERS */
+
+  /***/
+  function srcAppConfigRequestConfigTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    var _RC_DEFAULT_HEADERS;
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_AUTH_AUTHORIZATION_HEADER", function () {
+      return RC_AUTH_AUTHORIZATION_HEADER;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_COMPANY_HEADER", function () {
+      return RC_COMPANY_HEADER;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_AUTH_ACCESS_TOKEN_PARAM", function () {
+      return RC_AUTH_ACCESS_TOKEN_PARAM;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_AUTH_REFRESH_TOKEN_PARAM", function () {
+      return RC_AUTH_REFRESH_TOKEN_PARAM;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_AUTH_AUTHORIZATION_BASIC_TYPE", function () {
+      return RC_AUTH_AUTHORIZATION_BASIC_TYPE;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_AUTH_AUTHORIZATION_BEARER_TYPE", function () {
+      return RC_AUTH_AUTHORIZATION_BEARER_TYPE;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_THIRD_PARTY_CUSTOM_TYPE", function () {
+      return RC_THIRD_PARTY_CUSTOM_TYPE;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER", function () {
+      return RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL", function () {
+      return RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER", function () {
+      return RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL", function () {
+      return RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER", function () {
+      return RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL", function () {
+      return RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RC_DEFAULT_HEADERS", function () {
+      return RC_DEFAULT_HEADERS;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+
+    var RC_AUTH_AUTHORIZATION_HEADER = 'Authorization';
+    var RC_COMPANY_HEADER = 'Company';
+    var RC_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
+    var RC_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
+    var RC_AUTH_AUTHORIZATION_BASIC_TYPE = 'Basic';
+    var RC_AUTH_AUTHORIZATION_BEARER_TYPE = 'Bearer';
+    var RC_THIRD_PARTY_CUSTOM_TYPE = 'X-ThirdParty'; // CORS headers
+
+    var RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER = 'Access-Control-Allow-Origin';
+    var RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL = '*';
+    var RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER = 'Access-Control-Allow-Methods';
+    var RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL = '*';
+    var RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER = 'Access-Control-Allow-Headers';
+    var RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL = '*';
+    var RC_DEFAULT_HEADERS = (_RC_DEFAULT_HEADERS = {}, _defineProperty(_RC_DEFAULT_HEADERS, RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL), _defineProperty(_RC_DEFAULT_HEADERS, RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER, RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL), _defineProperty(_RC_DEFAULT_HEADERS, RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER, RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL), _RC_DEFAULT_HEADERS);
+    /***/
+  },
+
+  /***/
+  "./src/app/config/third.party.api.ts":
+  /*!*******************************************!*\
+    !*** ./src/app/config/third.party.api.ts ***!
+    \*******************************************/
+
+  /*! exports provided: THIRD_PARTY_API */
+
+  /***/
+  function srcAppConfigThirdPartyApiTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "THIRD_PARTY_API", function () {
+      return THIRD_PARTY_API;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /**
+     * Third-party API configuration
+     */
+
+
+    var THIRD_PARTY_API = {
+      // https://www.universal-tutorial.com/rest-apis/free-rest-api-for-country-state-city
+      universal: {
+        code: 'UNIVERSAL',
+        email: 'hainguyenjc@gmail.com',
+        vapid_public_key: 'M70onCyk9pjjPxfwNiM3TyerUYNPGI26ZqBKuqhAP6LmE3Ct2bR91gw8QPg4D5Aom14',
+        // baseUrl: 'https://www.universal-tutorial.com/',
+        baseUrl: null,
+        tokenUrl: 'api/getaccesstoken',
+        api: {
+          country: {
+            // url: 'https://www.universal-tutorial.com/api/countries',
+            url: 'api/countries',
+            method: 'GET'
+          },
+          province: {
+            // url: 'https://www.universal-tutorial.com/api/states',
+            url: 'api/states',
+            method: 'GET'
+          },
+          city: {
+            // url: 'https://www.universal-tutorial.com/api/cities',
+            url: 'api/cities',
+            method: 'GET'
+          }
+        }
+      }
     };
     /***/
   },
@@ -10987,7 +11516,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
        * @param lightbox {Lightbox}
        */
       function AbstractComponent(dataSource, contextMenuService, toasterService, logger, renderer, translateService, factoryResolver, viewContainerRef, changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox) {
-        var _this27 = this;
+        var _this28 = this;
 
         _classCallCheck(this, AbstractComponent);
 
@@ -11012,12 +11541,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         factoryResolver || Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["throwError"])('Could not inject ComponentFactoryResolver');
         dataSource = dataSource || new ng2_smart_table__WEBPACK_IMPORTED_MODULE_7__["LocalDataSource"]();
         dataSource.onChanged().subscribe(function (value) {
-          return _this27.onDataSourceChanged({
+          return _this28.onDataSourceChanged({
             $data: value
           });
         });
         translateService.onLangChange.subscribe(function (value) {
-          return _this27.onLangChange({
+          return _this28.onLangChange({
             $event: value
           });
         });
@@ -11678,22 +12207,22 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "initializeKeyboardHandlers",
         value: function initializeKeyboardHandlers() {
-          var _this28 = this;
+          var _this29 = this;
 
           var componentElement;
           componentElement = this.getNativeElement();
           this.componentKeyDownHandlerService = new _services_implementation_base_keyboard_handler__WEBPACK_IMPORTED_MODULE_14__["BaseElementKeydownHandlerService"](componentElement ? componentElement : document, function (e) {
-            return _this28.onKeyDown({
+            return _this29.onKeyDown({
               $event: e
             });
           }, this.getLogger());
           this.componentKeyUpHandlerService = new _services_implementation_base_keyboard_handler__WEBPACK_IMPORTED_MODULE_14__["BaseElementKeyupHandlerService"](componentElement ? componentElement : document, function (e) {
-            return _this28.onKeyUp({
+            return _this29.onKeyUp({
               $event: e
             });
           }, this.getLogger());
           this.componentKeyPressHandlerService = new _services_implementation_base_keyboard_handler__WEBPACK_IMPORTED_MODULE_14__["BaseElementKeypressHandlerService"](componentElement ? componentElement : document, function (e) {
-            return _this28.onKeyPress({
+            return _this29.onKeyPress({
               $event: e
             });
           }, this.getLogger());
@@ -11735,7 +12264,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "showHideContextMenu",
         value: function showHideContextMenu(event, target, data) {
-          var _this29 = this;
+          var _this30 = this;
 
           this.getLogger().debug('showHideContextMenu', data);
           var mouseEvent;
@@ -11756,7 +12285,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             var timer;
             timer = window.setTimeout(function () {
               var ctxMnuEls;
-              ctxMnuEls = _this29.getElementsBySelector(AbstractComponent_1.CONTEXT_MENU_SELECTOR);
+              ctxMnuEls = _this30.getElementsBySelector(AbstractComponent_1.CONTEXT_MENU_SELECTOR);
 
               if (ctxMnuEls && ctxMnuEls.length) {
                 ctxMnuEls[0].focus({
@@ -12618,7 +13147,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractToolbarComponent = /*#__PURE__*/function (_abstract_component__) {
       _inherits(AbstractToolbarComponent, _abstract_component__);
 
-      var _super7 = _createSuper(AbstractToolbarComponent);
+      var _super10 = _createSuper(AbstractToolbarComponent);
 
       // -------------------------------------------------
       // CONSTRUCTION
@@ -12643,15 +13172,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
        * @param actions {IToolbarActionsConfig}
        */
       function AbstractToolbarComponent(dataSource, contextMenuService, toasterService, logger, renderer, translateService, factoryResolver, viewContainerRef, changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox, header, actions) {
-        var _this30;
+        var _this31;
 
         _classCallCheck(this, AbstractToolbarComponent);
 
-        _this30 = _super7.call(this, dataSource, contextMenuService, toasterService, logger, renderer, translateService, factoryResolver, viewContainerRef, changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox);
-        _this30.header = header;
-        _this30.actions = actions;
-        _this30.actionClick = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-        return _this30;
+        _this31 = _super10.call(this, dataSource, contextMenuService, toasterService, logger, renderer, translateService, factoryResolver, viewContainerRef, changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox);
+        _this31.header = header;
+        _this31.actions = actions;
+        _this31.actionClick = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        return _this31;
       } // -------------------------------------------------
       // GETTERS/SETTERS
       // -------------------------------------------------
@@ -12901,16 +13430,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "canActivateChild",
         value: function canActivateChild(childRoute, state) {
-          var _this31 = this;
+          var _this32 = this;
 
           return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_5__["default"].promiseToObservable(this.getModuleService().count().then(function (modulesCount) {
             if (!modulesCount || modulesCount <= 0) {
-              _this31.getToasterService().error(_this31.getTranslateService().instant('common.toast.unknown'), _this31.getTranslateService().instant('app'));
+              _this32.getToasterService().error(_this32.getTranslateService().instant('common.toast.unknown'), _this32.getTranslateService().instant('app'));
             }
 
             return modulesCount && modulesCount > 0;
           }, function (errors) {
-            _this31.getLogger().error('ERROR - Check child route activate', state, errors);
+            _this32.getLogger().error('ERROR - Check child route activate', state, errors);
 
             return false;
           }));
@@ -13018,7 +13547,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         var index;
         index = 0;
 
-        while (index < this.length) {
+        while (index < retArray.length) {
           if (condition.apply(retArray, [retArray[index], index])) {
             retArray.splice(index, 1);
           } else {
@@ -13485,7 +14014,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var BaseComponentService = /*#__PURE__*/function (_AbstractComponentSer) {
       _inherits(BaseComponentService, _AbstractComponentSer);
 
-      var _super8 = _createSuper(BaseComponentService);
+      var _super11 = _createSuper(BaseComponentService);
 
       // -------------------------------------------------
       // CONSTRUCTION
@@ -13501,7 +14030,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       function BaseComponentService(componentFactoryResolver, viewContainerRef, logger, componentType) {
         _classCallCheck(this, BaseComponentService);
 
-        return _super8.call(this, componentFactoryResolver, viewContainerRef, logger, componentType);
+        return _super11.call(this, componentFactoryResolver, viewContainerRef, logger, componentType);
       }
 
       return BaseComponentService;
@@ -13616,7 +14145,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     var AbstractDbService = /*#__PURE__*/function () {
       function AbstractDbService(dbService, logger, connectionService, dbStore, entityKey) {
-        var _this32 = this;
+        var _this33 = this;
 
         _classCallCheck(this, AbstractDbService);
 
@@ -13632,12 +14161,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           }
 
           if (args && args.length) {
-            _this32.getLogger().debug('Update data', args, 'First data', args[0]);
+            _this33.getLogger().debug('Update data', args, 'First data', args[0]);
 
-            _this32.getDbService().update(_this32.getDbStore(), args[0]).then(function () {
+            _this33.getDbService().update(_this33.getDbStore(), args[0]).then(function () {
               return resolve(1);
             }, function (errors) {
-              _this32.getLogger().error('Could not update data', errors);
+              _this33.getLogger().error('Could not update data', errors);
 
               reject(errors);
             });
@@ -13652,9 +14181,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         logger.updateConfig(_config_log_config__WEBPACK_IMPORTED_MODULE_5__["LogConfig"]);
         connectionService.monitor().subscribe(function (connected) {
           if (connected) {
-            _this32.synchronize();
+            _this33.synchronize();
           } else {
-            _this32.getLogger().warn('Not found internet connection to synchronize offline data');
+            _this33.getLogger().warn('Not found internet connection to synchronize offline data');
           }
         });
       }
@@ -13687,48 +14216,33 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "delete",
         value: function _delete(entity) {
-          var _this33 = this;
-
-          var _this = this;
-
-          return new Promise(function (resolve, reject) {
-            _this33.deleteExecutor.apply(_this, [resolve, reject, entity]);
-          });
-        }
-      }, {
-        key: "update",
-        value: function update(entity) {
           var _this34 = this;
 
           var _this = this;
 
           return new Promise(function (resolve, reject) {
-            _this34.updateExecutor.apply(_this, [resolve, reject, entity]);
+            _this34.deleteExecutor.apply(_this, [resolve, reject, entity]);
+          });
+        }
+      }, {
+        key: "update",
+        value: function update(entity) {
+          var _this35 = this;
+
+          var _this = this;
+
+          return new Promise(function (resolve, reject) {
+            _this35.updateExecutor.apply(_this, [resolve, reject, entity]);
           });
         }
       }, {
         key: "findEntities",
         value: function findEntities(indexName, criteria) {
-          var _this35 = this;
+          var _this36 = this;
 
           if (!criteria) return this.getAll();
           return new Promise(function (resolve, reject) {
-            _this35.getDbService().getByIndex(_this35.getDbStore(), indexName, criteria).then(function (value) {
-              return resolve(value);
-            }, function (errors) {
-              _this35.getLogger().error(errors);
-
-              reject(errors);
-            });
-          });
-        }
-      }, {
-        key: "findById",
-        value: function findById(id) {
-          var _this36 = this;
-
-          return new Promise(function (resolve, reject) {
-            _this36.getDbService().getByIndex(_this36.getDbStore(), 'id', id).then(function (value) {
+            _this36.getDbService().getByIndex(_this36.getDbStore(), indexName, criteria).then(function (value) {
               return resolve(value);
             }, function (errors) {
               _this36.getLogger().error(errors);
@@ -13738,13 +14252,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           });
         }
       }, {
-        key: "insert",
-        value: function insert(entity) {
+        key: "findById",
+        value: function findById(id) {
           var _this37 = this;
 
           return new Promise(function (resolve, reject) {
-            _this37.getDbService().add(_this37.getDbStore(), entity).then(function (affected) {
-              return resolve(affected);
+            _this37.getDbService().getByIndex(_this37.getDbStore(), 'id', id).then(function (value) {
+              return resolve(value);
             }, function (errors) {
               _this37.getLogger().error(errors);
 
@@ -13753,13 +14267,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           });
         }
       }, {
-        key: "deletePernament",
-        value: function deletePernament(entity) {
+        key: "insert",
+        value: function insert(entity) {
           var _this38 = this;
 
-          entity[this.getEnityKey()] || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Not found entity primary key from property {' + this.getEnityKey() + '}');
           return new Promise(function (resolve, reject) {
-            _this38.getDbService()["delete"](_this38.getDbStore(), entity[_this38.getEnityKey()]).then(function (affected) {
+            _this38.getDbService().add(_this38.getDbStore(), entity).then(function (affected) {
               return resolve(affected);
             }, function (errors) {
               _this38.getLogger().error(errors);
@@ -13769,13 +14282,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           });
         }
       }, {
-        key: "clear",
-        value: function clear() {
+        key: "deletePernament",
+        value: function deletePernament(entity) {
           var _this39 = this;
 
+          entity[this.getEnityKey()] || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Not found entity primary key from property {' + this.getEnityKey() + '}');
           return new Promise(function (resolve, reject) {
-            _this39.getDbService().clear(_this39.getDbStore()).then(function () {
-              return resolve();
+            _this39.getDbService()["delete"](_this39.getDbStore(), entity[_this39.getEnityKey()]).then(function (affected) {
+              return resolve(affected);
             }, function (errors) {
               _this39.getLogger().error(errors);
 
@@ -13784,13 +14298,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           });
         }
       }, {
-        key: "getAll",
-        value: function getAll() {
+        key: "clear",
+        value: function clear() {
           var _this40 = this;
 
           return new Promise(function (resolve, reject) {
-            _this40.getDbService().getAll(_this40.getDbStore()).then(function (value) {
-              return resolve(value);
+            _this40.getDbService().clear(_this40.getDbStore()).then(function () {
+              return resolve();
             }, function (errors) {
               _this40.getLogger().error(errors);
 
@@ -13799,16 +14313,31 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           });
         }
       }, {
+        key: "getAll",
+        value: function getAll() {
+          var _this41 = this;
+
+          return new Promise(function (resolve, reject) {
+            _this41.getDbService().getAll(_this41.getDbStore()).then(function (value) {
+              return resolve(value);
+            }, function (errors) {
+              _this41.getLogger().error(errors);
+
+              reject(errors);
+            });
+          });
+        }
+      }, {
         key: "insertEntities",
         value: function insertEntities(entities) {
-          var _this41 = this;
+          var _this42 = this;
 
           var promises;
           promises = [];
 
           if (entities && entities.length) {
             entities.forEach(function (entity) {
-              return promises.push(_this41.insert(entity));
+              return promises.push(_this42.insert(entity));
             });
           }
 
@@ -13819,14 +14348,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "deleteEntities",
         value: function deleteEntities(entities) {
-          var _this42 = this;
+          var _this43 = this;
 
           var promises;
           promises = [];
 
           if (entities && entities.length) {
             entities.forEach(function (entity) {
-              return promises.push(_this42["delete"](entity));
+              return promises.push(_this43["delete"](entity));
             });
           }
 
@@ -13837,14 +14366,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "deleteEntitiesPernament",
         value: function deleteEntitiesPernament(entities) {
-          var _this43 = this;
+          var _this44 = this;
 
           var promises;
           promises = [];
 
           if (entities && entities.length) {
             entities.forEach(function (entity) {
-              return promises.push(_this43.deletePernament(entity));
+              return promises.push(_this44.deletePernament(entity));
             });
           }
 
@@ -13855,13 +14384,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "count",
         value: function count() {
-          var _this44 = this;
+          var _this45 = this;
 
           return new Promise(function (resolve, reject) {
-            _this44.getDbService().count(_this44.getDbStore()).then(function (recNumber) {
+            _this45.getDbService().count(_this45.getDbStore()).then(function (recNumber) {
               return resolve(recNumber);
             }, function (errors) {
-              _this44.getLogger().error(errors);
+              _this45.getLogger().error(errors);
 
               reject(errors);
             });
@@ -13881,6 +14410,53 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         key: "invokePromises",
         value: function invokePromises(defValue, calculateResult, promises) {
           return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_7__["default"].sequencePromises(defValue, calculateResult, promises);
+        }
+        /**
+         * TODO ngx-indexed-db v5.0.2
+         * Open cursor by the specified key range
+         * @param cursorCallback cursor callback for handling
+         * @param keyRange key range for filtering
+         */
+
+      }, {
+        key: "openCursor",
+        value: function openCursor(cursorCallback, keyRange) {
+          return this.getDbService().openCursor(this.getDbStore(), cursorCallback, keyRange);
+        }
+        /**
+         * TODO ngx-indexed-db v5.0.2
+         * Open a cursor by index filter.
+         * @param indexName The index name to filter.
+         * @param keyRange The range value and criteria to apply on the index.
+         * @param cursorCallback A callback called when done.
+         */
+
+      }, {
+        key: "openCursorByIndex",
+        value: function openCursorByIndex(indexName, keyRange, cursorCallback) {
+          return this.getDbService().openCursorByIndex(this.getDbStore(), indexName, keyRange, cursorCallback);
+        }
+        /**
+         * TODO ngx-indexed-db v5.0.2
+         * Returns all items by an index.
+         * @param indexName The index name to filter
+         * @param keyRange  The range value and criteria to apply on the index.
+         */
+
+      }, {
+        key: "getAllByIndex",
+        value: function getAllByIndex(indexName, keyRange) {
+          var _this46 = this;
+
+          return new Promise(function (resolve, reject) {
+            _this46.getDbService().getAllByIndex(_this46.getDbStore(), indexName, keyRange).then(function (value) {
+              return resolve(value);
+            }, function (errors) {
+              _this46.getLogger().error(errors);
+
+              reject(errors);
+            });
+          });
         }
       }, {
         key: "synchronize",
@@ -13902,12 +14478,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractBaseDbService = /*#__PURE__*/function (_AbstractDbService) {
       _inherits(AbstractBaseDbService, _AbstractDbService);
 
-      var _super9 = _createSuper(AbstractBaseDbService);
+      var _super12 = _createSuper(AbstractBaseDbService);
 
       function AbstractBaseDbService(dbService, logger, connectionService, dbStore) {
         _classCallCheck(this, AbstractBaseDbService);
 
-        return _super9.call(this, dbService, logger, connectionService, dbStore, 'uid');
+        return _super12.call(this, dbService, logger, connectionService, dbStore, 'uid');
       }
 
       return AbstractBaseDbService;
@@ -13923,7 +14499,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     !*** ./src/app/services/datasource.service.ts ***!
     \************************************************/
 
-  /*! exports provided: AbstractDataSource */
+  /*! exports provided: AbstractDataSource, BaseDataSource */
 
   /***/
   function srcAppServicesDatasourceServiceTs(module, __webpack_exports__, __webpack_require__) {
@@ -13935,6 +14511,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     __webpack_require__.d(__webpack_exports__, "AbstractDataSource", function () {
       return AbstractDataSource;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "BaseDataSource", function () {
+      return BaseDataSource;
     });
     /* harmony import */
 
@@ -14001,30 +14583,30 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractDataSource = /*#__PURE__*/function (_ng2_smart_table_lib_) {
       _inherits(AbstractDataSource, _ng2_smart_table_lib_);
 
-      var _super10 = _createSuper(AbstractDataSource);
+      var _super13 = _createSuper(AbstractDataSource);
 
       function AbstractDataSource(httpService, dbService, logger) {
-        var _this45;
+        var _this47;
 
         _classCallCheck(this, AbstractDataSource);
 
-        _this45 = _super10.call(this);
-        _this45.httpService = httpService;
-        _this45.dbService = dbService;
-        _this45.logger = logger;
-        _this45.filterCfg = {
+        _this47 = _super13.call(this);
+        _this47.httpService = httpService;
+        _this47.dbService = dbService;
+        _this47.logger = logger;
+        _this47.filterCfg = {
           filters: [],
           andOperator: true
         };
-        _this45.pagingCfg = {
+        _this47.pagingCfg = {
           page: 1
         };
-        _this45.sortCfg = [];
+        _this47.sortCfg = [];
         httpService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Not found HTTP service');
         dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Not found database service');
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject logger!');
         logger.updateConfig(_config_log_config__WEBPACK_IMPORTED_MODULE_5__["LogConfig"]);
-        return _this45;
+        return _this47;
       }
 
       _createClass(AbstractDataSource, [{
@@ -14079,11 +14661,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "setFilter",
         value: function setFilter(conf, andOperator, doEmit) {
-          var _this46 = this;
+          var _this48 = this;
 
           if (conf && conf.length > 0) {
             conf.forEach(function (fieldConf) {
-              _this46.addFilter(fieldConf, andOperator, false);
+              _this48.addFilter(fieldConf, andOperator, false);
             });
           } else {
             this.filterCfg = {
@@ -14102,7 +14684,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "addFilter",
         value: function addFilter(fieldConf) {
-          var _this47 = this;
+          var _this49 = this;
 
           var andOperator = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
           var doEmit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
@@ -14114,7 +14696,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           var found = false;
           this.filterCfg.filters.forEach(function (currentFieldConf, index) {
             if (currentFieldConf['field'] === fieldConf['field']) {
-              _this47.filterCfg.filters[index] = fieldConf;
+              _this49.filterCfg.filters[index] = fieldConf;
               found = true;
             }
           });
@@ -14214,14 +14796,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           if (this.filterCfg.filters) {
             if (this.filterCfg.andOperator) {
               this.filterCfg.filters.forEach(function (fieldConf) {
-                if (fieldConf['search'].length > 0) {
+                if ((fieldConf['search'] || '').length) {
                   data = ng2_smart_table_lib_data_source_local_local_filter__WEBPACK_IMPORTED_MODULE_7__["LocalFilter"].filter(data, fieldConf['field'], fieldConf['search'], fieldConf['filter']);
                 }
               });
             } else if (this.filterCfg.filters.length) {
               var mergedData = [];
               this.filterCfg.filters.forEach(function (fieldConf) {
-                if (fieldConf['search'].length > 0) {
+                if ((fieldConf['search'] || '').length) {
                   mergedData = mergedData.concat(ng2_smart_table_lib_data_source_local_local_filter__WEBPACK_IMPORTED_MODULE_7__["LocalFilter"].filter(data, fieldConf['field'], fieldConf['search'], fieldConf['filter']));
                 }
               }); // remove non unique items
@@ -14254,6 +14836,144 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     }(ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_1__["DataSource"]);
 
     AbstractDataSource = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [Object, Object, ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]])], AbstractDataSource);
+    /**
+     * Abstract base data source for table service
+     * @param <T> IndexDb entity type
+     * @param <H> HTTP service type
+     * @param <D> IndexDb service type
+     */
+
+    var BaseDataSource = /*#__PURE__*/function (_AbstractDataSource) {
+      _inherits(BaseDataSource, _AbstractDataSource);
+
+      var _super14 = _createSuper(BaseDataSource);
+
+      function BaseDataSource(httpService, dbService, logger) {
+        var _this50;
+
+        _classCallCheck(this, BaseDataSource);
+
+        _this50 = _super14.call(this, httpService, dbService, logger);
+        _this50.latestCount = 0;
+        return _this50;
+      }
+
+      _createClass(BaseDataSource, [{
+        key: "getAll",
+        value: function getAll() {
+          var _this51 = this;
+
+          return _get(_getPrototypeOf(BaseDataSource.prototype), "getDbService", this).call(this).getAll().then(this.onFulfilledData(), function (reason) {
+            _this51.getLogger().error(reason);
+
+            return [];
+          })["catch"](function (reason) {
+            _this51.getLogger().error(reason);
+
+            return [];
+          });
+        }
+      }, {
+        key: "onFulfilledData",
+        value: function onFulfilledData() {
+          var _this = this;
+
+          return function (data) {
+            data = _this.filter(data);
+            data = _this.sort(data);
+
+            _this.setRecordsNumber((data || []).length);
+
+            data = _this.paginate(data);
+            return data;
+          };
+        }
+      }, {
+        key: "setRecordsNumber",
+        value: function setRecordsNumber(recNumber) {
+          this.latestCount = recNumber || 0;
+        }
+      }, {
+        key: "getElements",
+        value: function getElements() {
+          return this.getAll();
+        }
+      }, {
+        key: "count",
+        value: function count() {
+          return this.latestCount;
+        }
+        /**
+         * Update new data by old data as key.
+         * TODO remember return Promise of old data for updating view value
+         * @param oldData to filter for updating and returning to update view value
+         * @param newData to update into data source
+         */
+
+      }, {
+        key: "update",
+        value: function update(oldData, newData) {
+          var _this52 = this;
+
+          return this.getDbService().update(newData).then(function () {
+            _this52.refresh();
+
+            return oldData;
+          });
+        }
+        /**
+         * Remove the specified data
+         * @param data to remove
+         * @return effected records number
+         */
+
+      }, {
+        key: "remove",
+        value: function remove(data) {
+          var _this53 = this;
+
+          return this.getDbService()["delete"](data).then(function () {
+            _this53.refresh();
+
+            return 1;
+          });
+        }
+      }, {
+        key: "refresh",
+        value: function refresh() {
+          this.getLogger().debug('Refresh data source');
+
+          _get(_getPrototypeOf(BaseDataSource.prototype), "refresh", this).call(this);
+        }
+      }, {
+        key: "load",
+        value: function load(data) {
+          this.getLogger().debug('Load data', data);
+          return _get(_getPrototypeOf(BaseDataSource.prototype), "load", this).call(this, data);
+        }
+      }, {
+        key: "prepend",
+        value: function prepend(data) {
+          return this.append(data);
+        }
+      }, {
+        key: "append",
+        value: function append(data) {
+          var _this54 = this;
+
+          this.getLogger().debug('New data', data);
+          return this.getDbService().insert(data).then(function () {
+            _this54.refresh();
+
+            return 1;
+          });
+        }
+      }]);
+
+      return BaseDataSource;
+    }(AbstractDataSource);
+
+    BaseDataSource = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [Object, Object, ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]])], BaseDataSource);
     /***/
   },
 
@@ -14326,50 +15046,61 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var EmptyService = /*#__PURE__*/function (_database_service__WE) {
       _inherits(EmptyService, _database_service__WE);
 
-      var _super11 = _createSuper(EmptyService);
+      var _super15 = _createSuper(EmptyService);
 
       function EmptyService(dbService, logger, connectionService) {
-        var _this48;
+        var _this55;
 
         _classCallCheck(this, EmptyService);
 
-        _this48 = _super11.call(this, dbService, logger, connectionService, 'EMPTY');
+        _this55 = _super15.call(this, dbService, logger, connectionService, 'EMPTY');
 
-        _this48.deleteExecutor = function (resolve, reject) {
-          _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _assertThisInitialized(_this48)).call(_assertThisInitialized(_this48)).debug('Call delete entity....');
+        _this55.deleteExecutor = function (resolve, reject) {
+          _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _assertThisInitialized(_this55)).call(_assertThisInitialized(_this55)).debug('Call delete entity....');
 
           resolve(0);
         };
 
-        _this48.updateExecutor = function (resolve, reject) {
-          _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _assertThisInitialized(_this48)).call(_assertThisInitialized(_this48)).debug('Call insert entity....');
+        _this55.updateExecutor = function (resolve, reject) {
+          _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _assertThisInitialized(_this55)).call(_assertThisInitialized(_this55)).debug('Call insert entity....');
 
           resolve(0);
         };
 
         dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])('Could not inject IndexDb!');
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])('Could not inject logger!');
-        return _this48;
+        return _this55;
       }
 
       _createClass(EmptyService, [{
         key: "update",
         value: function update(entity) {
-          var _this49 = this;
+          var _this56 = this;
 
           return new Promise(function (resolve) {
-            _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _this49).call(_this49).debug('Call update entity....');
+            _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _this56).call(_this56).debug('Call update entity....');
 
             resolve(0);
           });
         }
       }, {
-        key: "findById",
-        value: function findById(id) {
-          var _this50 = this;
+        key: "getAll",
+        value: function getAll() {
+          var _this57 = this;
 
           return new Promise(function (resolve) {
-            _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _this50).call(_this50).debug('Call find entity by identity....');
+            _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _this57).call(_this57).debug('Call get all entities....');
+
+            resolve(null);
+          });
+        }
+      }, {
+        key: "findById",
+        value: function findById(id) {
+          var _this58 = this;
+
+          return new Promise(function (resolve) {
+            _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _this58).call(_this58).debug('Call find entity by identity....');
 
             resolve(null);
           });
@@ -14377,10 +15108,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "findEntities",
         value: function findEntities(criteria) {
-          var _this51 = this;
+          var _this59 = this;
 
           return new Promise(function (resolve) {
-            _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _this51).call(_this51).debug('Call find entities by criteria....');
+            _get(_getPrototypeOf(EmptyService.prototype), "getLogger", _this59).call(_this59).debug('Call find entities by criteria....');
 
             resolve([]);
           });
@@ -14498,7 +15229,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     var AbstractEventHandlerService = /*#__PURE__*/function () {
       function AbstractEventHandlerService(target, eventName, eventHandlerDelegate, logger) {
-        var _this52 = this;
+        var _this60 = this;
 
         _classCallCheck(this, AbstractEventHandlerService);
 
@@ -14510,10 +15241,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         (eventName || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Event to handle could not be empty');
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject logger!');
         Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["fromEvent"])(target, eventName).subscribe(function (e) {
-          if (_this52.getEventHandler()) {
-            _this52.getEventHandler().apply(_this52, [e]);
+          if (_this60.getEventHandler()) {
+            _this60.getEventHandler().apply(_this60, [e]);
           } else {
-            _this52.handleEvent.apply(_this52, [e]);
+            _this60.handleEvent.apply(_this60, [e]);
           }
         });
       }
@@ -14553,17 +15284,17 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractKeyboardEventHandlerService = /*#__PURE__*/function (_AbstractEventHandler) {
       _inherits(AbstractKeyboardEventHandlerService, _AbstractEventHandler);
 
-      var _super12 = _createSuper(AbstractKeyboardEventHandlerService);
+      var _super16 = _createSuper(AbstractKeyboardEventHandlerService);
 
       function AbstractKeyboardEventHandlerService(target, eventName, eventHandlerDelegate, logger) {
-        var _this53;
+        var _this61;
 
         _classCallCheck(this, AbstractKeyboardEventHandlerService);
 
-        _this53 = _super12.call(this, target, eventName, eventHandlerDelegate, logger);
-        _this53.onEnter = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-        _this53.onEsc = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-        return _this53;
+        _this61 = _super16.call(this, target, eventName, eventHandlerDelegate, logger);
+        _this61.onEnter = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        _this61.onEsc = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        return _this61;
       }
 
       _createClass(AbstractKeyboardEventHandlerService, [{
@@ -14606,12 +15337,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractKeypressEventHandlerService = /*#__PURE__*/function (_AbstractKeyboardEven) {
       _inherits(AbstractKeypressEventHandlerService, _AbstractKeyboardEven);
 
-      var _super13 = _createSuper(AbstractKeypressEventHandlerService);
+      var _super17 = _createSuper(AbstractKeypressEventHandlerService);
 
       function AbstractKeypressEventHandlerService(target, eventHandlerDelegate, logger) {
         _classCallCheck(this, AbstractKeypressEventHandlerService);
 
-        return _super13.call(this, target, 'keypress', eventHandlerDelegate, logger);
+        return _super17.call(this, target, 'keypress', eventHandlerDelegate, logger);
       }
 
       return AbstractKeypressEventHandlerService;
@@ -14626,12 +15357,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractKeydownEventHandlerService = /*#__PURE__*/function (_AbstractKeyboardEven2) {
       _inherits(AbstractKeydownEventHandlerService, _AbstractKeyboardEven2);
 
-      var _super14 = _createSuper(AbstractKeydownEventHandlerService);
+      var _super18 = _createSuper(AbstractKeydownEventHandlerService);
 
       function AbstractKeydownEventHandlerService(target, eventHandlerDelegate, logger) {
         _classCallCheck(this, AbstractKeydownEventHandlerService);
 
-        return _super14.call(this, target, 'keydown', eventHandlerDelegate, logger);
+        return _super18.call(this, target, 'keydown', eventHandlerDelegate, logger);
       }
 
       return AbstractKeydownEventHandlerService;
@@ -14646,12 +15377,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractKeyupEventHandlerService = /*#__PURE__*/function (_AbstractKeyboardEven3) {
       _inherits(AbstractKeyupEventHandlerService, _AbstractKeyboardEven3);
 
-      var _super15 = _createSuper(AbstractKeyupEventHandlerService);
+      var _super19 = _createSuper(AbstractKeyupEventHandlerService);
 
       function AbstractKeyupEventHandlerService(target, eventHandlerDelegate, logger) {
         _classCallCheck(this, AbstractKeyupEventHandlerService);
 
-        return _super15.call(this, target, 'keyup', eventHandlerDelegate, logger);
+        return _super19.call(this, target, 'keyup', eventHandlerDelegate, logger);
       }
 
       return AbstractKeyupEventHandlerService;
@@ -15012,6 +15743,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ngx_cacheable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ngx-cacheable */
     "./node_modules/ngx-cacheable/esm2015/index.js");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ../../environments/environment */
+    "./src/environments/environment.ts");
     /**
      * Abstract HTTP service
      * @param <T> entity type
@@ -15064,7 +15801,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         value: function handleResponseError(url, method, res, options) {
           var errors = []; // for handling offline mode
 
-          if (res && res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"] && (res.status === 0 || res.status > 500) && this.getDbService() || res && !(res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"])) {
+          if (_environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].offline && (res && res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"] && (res.status === 0 || res.status > 500) && this.getDbService() || res && !(res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]))) {
             return typeof this.handleOfflineModeDelegate === 'function' ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options]) : this.handleOfflineMode(url, method, res, options);
           } else if (res && res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"] && res.error && (res.error.error_description || '').length) {
             errors.push(res.error.error_description);
@@ -15074,7 +15811,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             errors.push(res);
           }
 
-          return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](false, res, options.redirectFailure, errors, [])));
+          return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](false, res, (options || {})['redirectFailure'], errors, [])));
         }
       }, {
         key: "post",
@@ -15105,18 +15842,76 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         key: "request",
         value: function request(url, method, options) {
           // detect connection before requesting
-          var _this;
+          var _this = this;
 
-          _this = this;
           return _this.getHttp().request(method, url, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) {
             _this.getLogger().debug('Response', res);
 
             return res;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](true, res, options.redirectSuccess, [], options.messages)));
-          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (res) {
-            var observer;
-            observer = typeof _this.handleResponseErrorDelegate === 'function' ? _this.handleResponseErrorDelegate(url, method, res, options) : _this.handleResponseError(url, method, res, options);
+            if (res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"]) {
+              var httpResp = res;
+
+              _this.ensureVaidResponse(httpResp, url, method, options);
+            } else {
+              res = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"]({
+                body: JSON.stringify(res),
+                headers: options && options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"] ? options.headers : new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]((options || {}).headers),
+                status: 200,
+                url: url
+              });
+            }
+
+            return _this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](true, res, (options || {}).redirectSuccess, [], (options || {}).messages));
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(_this.processRequestError(url, method, options)));
+        }
+        /**
+         * Check for ensuring the specified {HttpResponse} is valid/success
+         * @param httpResponse {HttpResponse}
+         * @param url request URL
+         * @param method request method
+         * @param options request options
+         */
+
+      }, {
+        key: "ensureVaidResponse",
+        value: function ensureVaidResponse(httpResponse, url, method, options) {
+          if (!httpResponse || !httpResponse.ok) {
+            var errorHeaders;
+
+            if (httpResponse && httpResponse.headers) {
+              errorHeaders = httpResponse.headers;
+            } else if (options && options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]) {
+              errorHeaders = options.headers;
+            } else if (options && options.headers) {
+              errorHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"](options.headers);
+            }
+
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]({
+              error: httpResponse ? httpResponse.body : options ? options.body : null,
+              headers: errorHeaders,
+              status: httpResponse ? httpResponse.status : 0,
+              statusText: httpResponse ? httpResponse.statusText : null,
+              url: httpResponse ? httpResponse.url : url
+            }));
+          }
+        }
+        /**
+         * Process error response from {AbstractHttpService#request} method
+         * @param url request URL
+         * @param method request method
+         * @param options request options
+         */
+
+      }, {
+        key: "processRequestError",
+        value: function processRequestError(url, method, options) {
+          var _this62 = this;
+
+          return function (httpErrorResponse) {
+            _this62.getLogger().error('Request Error', url, method, options, httpErrorResponse);
+
+            var observer = typeof _this62.handleResponseErrorDelegate === 'function' ? _this62.handleResponseErrorDelegate(url, method, httpErrorResponse, options) : _this62.handleResponseError(url, method, httpErrorResponse, options);
             return observer ? observer.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (value) {
               var tokens;
               tokens = [];
@@ -15133,7 +15928,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
               return undefined;
             })) : Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(undefined);
-          }));
+          };
         }
       }]);
 
@@ -15213,12 +16008,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var BaseElementKeypressHandlerService = /*#__PURE__*/function (_event_handler_servic) {
       _inherits(BaseElementKeypressHandlerService, _event_handler_servic);
 
-      var _super16 = _createSuper(BaseElementKeypressHandlerService);
+      var _super20 = _createSuper(BaseElementKeypressHandlerService);
 
       function BaseElementKeypressHandlerService(target, eventHandlerDelegate, logger) {
         _classCallCheck(this, BaseElementKeypressHandlerService);
 
-        return _super16.call(this, target, eventHandlerDelegate, logger);
+        return _super20.call(this, target, eventHandlerDelegate, logger);
       }
 
       return BaseElementKeypressHandlerService;
@@ -15232,12 +16027,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var BaseElementKeyupHandlerService = /*#__PURE__*/function (_event_handler_servic2) {
       _inherits(BaseElementKeyupHandlerService, _event_handler_servic2);
 
-      var _super17 = _createSuper(BaseElementKeyupHandlerService);
+      var _super21 = _createSuper(BaseElementKeyupHandlerService);
 
       function BaseElementKeyupHandlerService(target, eventHandlerDelegate, logger) {
         _classCallCheck(this, BaseElementKeyupHandlerService);
 
-        return _super17.call(this, target, eventHandlerDelegate, logger);
+        return _super21.call(this, target, eventHandlerDelegate, logger);
       }
 
       return BaseElementKeyupHandlerService;
@@ -15251,12 +16046,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var BaseElementKeydownHandlerService = /*#__PURE__*/function (_event_handler_servic3) {
       _inherits(BaseElementKeydownHandlerService, _event_handler_servic3);
 
-      var _super18 = _createSuper(BaseElementKeydownHandlerService);
+      var _super22 = _createSuper(BaseElementKeydownHandlerService);
 
       function BaseElementKeydownHandlerService(target, eventHandlerDelegate, logger) {
         _classCallCheck(this, BaseElementKeydownHandlerService);
 
-        return _super18.call(this, target, eventHandlerDelegate, logger);
+        return _super22.call(this, target, eventHandlerDelegate, logger);
       }
 
       return BaseElementKeydownHandlerService;
@@ -15510,32 +16305,32 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var MenuService = /*#__PURE__*/function (_module_service__WEBP) {
       _inherits(MenuService, _module_service__WEBP);
 
-      var _super19 = _createSuper(MenuService);
+      var _super23 = _createSuper(MenuService);
 
       function MenuService(dbService, logger, connectionService) {
         _classCallCheck(this, MenuService);
 
-        return _super19.call(this, dbService, logger, connectionService);
+        return _super23.call(this, dbService, logger, connectionService);
       }
 
       _createClass(MenuService, [{
         key: "buildMenu",
         value: function buildMenu() {
-          var _this54 = this;
+          var _this63 = this;
 
           return new Promise(function (resolve, reject) {
-            _get(_getPrototypeOf(MenuService.prototype), "getAll", _this54).call(_this54).then(function (modules) {
+            _get(_getPrototypeOf(MenuService.prototype), "getAll", _this63).call(_this63).then(function (modules) {
               var menuItems;
 
               if (modules && modules.length) {
                 menuItems = _utils_system_menu_utils__WEBPACK_IMPORTED_MODULE_5__["default"].buildMenu(modules, _nebular_theme__WEBPACK_IMPORTED_MODULE_4__["NbMenuItem"]);
               }
 
-              _this54.getLogger().debug('Built menu', menuItems);
+              _this63.getLogger().debug('Built menu', menuItems);
 
               resolve(menuItems);
             }, function (errors) {
-              _this54.getLogger().error(errors);
+              _this63.getLogger().error(errors);
 
               reject(errors);
             });
@@ -15637,50 +16432,50 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ModuleService = /*#__PURE__*/function (_database_service__WE2) {
       _inherits(ModuleService, _database_service__WE2);
 
-      var _super20 = _createSuper(ModuleService);
+      var _super24 = _createSuper(ModuleService);
 
       function ModuleService(dbService, logger, connectionService) {
-        var _this55;
+        var _this64;
 
         _classCallCheck(this, ModuleService);
 
-        _this55 = _super20.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_5__["DB_STORE"].module);
+        _this64 = _super24.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_5__["DB_STORE"].module);
 
-        _this55.deleteExecutor = function (resolve, reject) {
+        _this64.deleteExecutor = function (resolve, reject) {
           for (var _len8 = arguments.length, args = new Array(_len8 > 2 ? _len8 - 2 : 0), _key8 = 2; _key8 < _len8; _key8++) {
             args[_key8 - 2] = arguments[_key8];
           }
 
           if (args && args.length) {
-            _this55.getDbService()["delete"](_this55.getDbStore(), {
+            _this64.getDbService()["delete"](_this64.getDbStore(), {
               'id': args[0].id
             }).then(function () {
               return resolve(1);
             }, function (errors) {
-              _this55.getLogger().error(errors);
+              _this64.getLogger().error(errors);
 
               reject(errors);
             });
           }
         };
 
-        _this55.updateExecutor = function (resolve, reject) {
+        _this64.updateExecutor = function (resolve, reject) {
           for (var _len9 = arguments.length, args = new Array(_len9 > 2 ? _len9 - 2 : 0), _key9 = 2; _key9 < _len9; _key9++) {
             args[_key9 - 2] = arguments[_key9];
           }
 
           if (args && args.length) {
-            _this55.getDbService().update(_this55.getDbStore(), args[0]).then(function () {
+            _this64.getDbService().update(_this64.getDbStore(), args[0]).then(function () {
               return resolve(1);
             }, function (errors) {
-              _this55.getLogger().error(errors);
+              _this64.getLogger().error(errors);
 
               reject(errors);
             });
           }
         };
 
-        return _this55;
+        return _this64;
       }
 
       return ModuleService;
@@ -15765,110 +16560,38 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var CityDatasource = /*#__PURE__*/function (_datasource_service__) {
       _inherits(CityDatasource, _datasource_service__);
 
-      var _super21 = _createSuper(CityDatasource);
+      var _super25 = _createSuper(CityDatasource);
 
       function CityDatasource(httpService, dbService, logger) {
-        var _this56;
-
         _classCallCheck(this, CityDatasource);
 
-        _this56 = _super21.call(this, httpService, dbService, logger);
-        _this56.latestCount = 0;
-        return _this56;
+        return _super25.call(this, httpService, dbService, logger);
       }
+      /**
+       * Find all cities by the specified {IProvince}
+       * @param province to filter
+       */
+
 
       _createClass(CityDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this57 = this;
+        key: "findByProvince",
+        value: function findByProvince(province) {
+          var _this65 = this;
 
-          return _get(_getPrototypeOf(CityDatasource.prototype), "getDbService", this).call(this).getAll().then(function (cities) {
-            cities = _this57.filter(cities);
-            cities = _this57.sort(cities);
-            _this57.latestCount = (cities || []).length;
-            cities = _this57.paginate(cities);
-            return cities;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
+          return _get(_getPrototypeOf(CityDatasource.prototype), "getDbService", this).call(this).findByProvince(province).then(this.onFulfilledData(), function (reason) {
+            _this65.getLogger().error(reason);
 
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this58 = this;
+            return [];
+          })["catch"](function (reason) {
+            _this65.getLogger().error(reason);
 
-          return this.getDbService().update(newData).then(function () {
-            _this58.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this59 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this59.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(CityDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(CityDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this60 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this60.refresh();
-
-            return 1;
+            return [];
           });
         }
       }]);
 
       return CityDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"]);
 
     CityDatasource.ctorParameters = function () {
       return [{
@@ -15942,97 +16665,200 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../../../../@core/data/system/city */
+    "./src/app/@core/data/system/city.ts");
+    /* harmony import */
+
+
+    var _http_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ../../../http.service */
     "./src/app/services/http.service.ts");
     /* harmony import */
 
 
-    var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/fesm2015/http.js");
     /* harmony import */
 
 
-    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ../../../../utils/json.utils */
     "./src/app/utils/json.utils.ts");
     /* harmony import */
 
 
-    var _database_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _database_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! ../../../database.service */
     "./src/app/services/database.service.ts");
     /* harmony import */
 
 
-    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! ngx-indexed-db */
     "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
     /* harmony import */
 
 
-    var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _config_db_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ../../../../config/db.config */
     "./src/app/config/db.config.ts");
     /* harmony import */
 
 
-    var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var ng_connection_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
     /* harmony import */
 
 
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! rxjs */
     "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
 
-    var CityDbService = /*#__PURE__*/function (_database_service__WE3) {
+
+    var _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! ../../../../config/third.party.api */
+    "./src/app/config/third.party.api.ts");
+    /* harmony import */
+
+
+    var _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ../../../third.party/third.party.api.bridge.service */
+    "./src/app/services/third.party/third.party.api.bridge.service.ts");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! util */
+    "./node_modules/util/util.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_14__);
+
+    var CityDbService_1;
+
+    var CityDbService = CityDbService_1 = /*#__PURE__*/function (_database_service__WE3) {
       _inherits(CityDbService, _database_service__WE3);
 
-      var _super22 = _createSuper(CityDbService);
+      var _super26 = _createSuper(CityDbService);
 
-      function CityDbService(dbService, logger, connectionService) {
-        var _this61;
+      function CityDbService(dbService, logger, connectionService, thirdPartyApiBridge) {
+        var _this66;
 
         _classCallCheck(this, CityDbService);
 
-        _this61 = _super22.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].city);
+        _this66 = _super26.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_9__["DB_STORE"].city);
+        _this66.thirdPartyApiBridge = thirdPartyApiBridge;
 
-        _this61.deleteExecutor = function (resolve, reject) {
+        _this66.deleteExecutor = function (resolve, reject) {
           for (var _len10 = arguments.length, args = new Array(_len10 > 2 ? _len10 - 2 : 0), _key10 = 2; _key10 < _len10; _key10++) {
             args[_key10 - 2] = arguments[_key10];
           }
 
           if (args && args.length) {
-            _this61.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this66.getLogger().debug('Delete data', args, 'First data', args[0]);
 
-            args[0].deletedAt = new Date().getUTCDate();
+            args[0].deletedAt = new Date().getTime();
 
-            _this61.updateExecutor.apply(_assertThisInitialized(_this61), [resolve, reject].concat(args));
+            _this66.updateExecutor.apply(_assertThisInitialized(_this66), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this61;
+        thirdPartyApiBridge || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject ThirdPartyApiBridgeDbService instance');
+        return _this66;
       }
+      /**
+       * TODO Not support for getting all coutries because of performance
+       */
+
 
       _createClass(CityDbService, [{
         key: "getAll",
         value: function getAll() {
-          return _get(_getPrototypeOf(CityDbService.prototype), "getAll", this).call(this);
+          Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(CityDbService_1.EXCEPTION_PERFORMANCE_REASON);
+          return Promise.reject(CityDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        }
+        /**
+         * Find all cities by the specified {IProvince}
+         * @param province to filter
+         */
+
+      }, {
+        key: "findByProvince",
+        value: function findByProvince(province) {
+          province || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(CityDbService_1.EXCEPTION_PERFORMANCE_REASON);
+
+          var _this = this;
+
+          var fetchParam = {
+            dbCacheFilter: {
+              dbStore: this.getDbStore(),
+              indexName: CityDbService_1.INDEX_NAME_PROVINCE_ID,
+              criteria: province.id
+            },
+            callApi: {
+              method: CityDbService_1.THIRD_PARTY_ENTRY_METHOD,
+              args: [CityDbService_1.THIRD_PARTY_CITY_URL.concat('/', province.name), CityDbService_1.THIRD_PARTY_CITY_METHOD, _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__["default"]]
+            },
+            apiFulfilled: function apiFulfilled(apiData) {
+              // apply province for city API data
+              var cities;
+              var duplicatedCode = {};
+              cities = Object(util__WEBPACK_IMPORTED_MODULE_14__["isArray"])(apiData) ? apiData : apiData ? [apiData] : [];
+              cities = cities.removeIf(function (city) {
+                return Object(util__WEBPACK_IMPORTED_MODULE_14__["isNullOrUndefined"])(city);
+              });
+              cities.forEach(function (city) {
+                city.province_id = province.id; // check for duplicated code because API data has no returned code
+
+                var cityCode = province.code.concat('|', city.code);
+
+                if (duplicatedCode.hasOwnProperty(cityCode)) {
+                  duplicatedCode[cityCode] = duplicatedCode[cityCode] + 1;
+                  cityCode = cityCode.concat('|', duplicatedCode[cityCode].toString());
+                } else {
+                  duplicatedCode[cityCode] = 1;
+                }
+
+                city.code = cityCode;
+              }); // insert application database for future
+
+              return _this.insertEntities(cities).then(function (affected) {
+                return cities;
+              }, function (reason) {
+                _this.getLogger().error(reason);
+
+                return [];
+              })["catch"](function (reason) {
+                _this.getLogger().error(reason);
+
+                return [];
+              });
+            }
+          };
+          return _this.thirdPartyApiBridge.fetch(fetchParam);
         }
       }]);
 
       return CityDbService;
-    }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
+    }(_database_service__WEBPACK_IMPORTED_MODULE_7__["AbstractBaseDbService"]);
+
+    CityDbService.EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all cities because of performance!';
+    CityDbService.INDEX_NAME_PROVINCE_ID = 'province_id';
+    CityDbService.THIRD_PARTY_CITY_URL = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.city.url;
+    CityDbService.THIRD_PARTY_CITY_METHOD = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.city.method;
+    CityDbService.THIRD_PARTY_ENTRY_METHOD = 'findData';
 
     CityDbService.ctorParameters = function () {
       return [{
-        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],
+        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
-          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"]]
+          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"]]
         }]
       }, {
         type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
@@ -16041,29 +16867,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
         }]
       }, {
-        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"],
+        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
-          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"]]
+          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"]]
+        }]
+      }, {
+        type: _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"]]
         }]
       }];
     };
 
-    CityDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"]])], CityDbService);
+    CityDbService = CityDbService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"], _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"]])], CityDbService);
 
     var CityHttpService = /*#__PURE__*/function (_http_service__WEBPAC) {
       _inherits(CityHttpService, _http_service__WEBPAC);
 
-      var _super23 = _createSuper(CityHttpService);
+      var _super27 = _createSuper(CityHttpService);
 
       function CityHttpService(http, logger, dbService) {
-        var _this62;
+        var _this67;
 
         _classCallCheck(this, CityHttpService);
 
-        _this62 = _super23.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this62;
+        _this67 = _super27.call(this, http, logger, dbService);
+        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject user database service for offline mode');
+        return _this67;
       }
 
       _createClass(CityHttpService, [{
@@ -16073,7 +16905,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return undefined;
           }
 
-          return _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__["default"].parseResponseJson(serviceResponse.getResponse().body);
+          return _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].parseResponseJson(serviceResponse.getResponse().body);
         }
       }, {
         key: "handleOfflineMode",
@@ -16083,14 +16915,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }]);
 
       return CityHttpService;
-    }(_http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"]);
+    }(_http_service__WEBPACK_IMPORTED_MODULE_4__["AbstractHttpService"]);
 
     CityHttpService.ctorParameters = function () {
       return [{
-        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
-          args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]]
+          args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"]]
         }]
       }, {
         type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
@@ -16107,7 +16939,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }];
     };
 
-    CityHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(CityDbService)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], CityDbService])], CityHttpService);
+    CityHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(CityDbService)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], CityDbService])], CityHttpService);
     /***/
   },
 
@@ -16164,110 +16996,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var CountryDatasource = /*#__PURE__*/function (_datasource_service__2) {
       _inherits(CountryDatasource, _datasource_service__2);
 
-      var _super24 = _createSuper(CountryDatasource);
+      var _super28 = _createSuper(CountryDatasource);
 
       function CountryDatasource(httpService, dbService, logger) {
-        var _this63;
-
         _classCallCheck(this, CountryDatasource);
 
-        _this63 = _super24.call(this, httpService, dbService, logger);
-        _this63.latestCount = 0;
-        return _this63;
+        return _super28.call(this, httpService, dbService, logger);
       }
 
-      _createClass(CountryDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this64 = this;
-
-          return _get(_getPrototypeOf(CountryDatasource.prototype), "getDbService", this).call(this).getAll().then(function (countries) {
-            countries = _this64.filter(countries);
-            countries = _this64.sort(countries);
-            _this64.latestCount = (countries || []).length;
-            countries = _this64.paginate(countries);
-            return countries;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this65 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this65.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this66 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this66.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(CountryDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(CountryDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this67 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this67.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return CountryDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"]);
 
     CountryDatasource.ctorParameters = function () {
       return [{
@@ -16380,24 +17118,18 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var CountryDbService = /*#__PURE__*/function (_database_service__WE4) {
       _inherits(CountryDbService, _database_service__WE4);
 
-      var _super25 = _createSuper(CountryDbService);
+      var _super29 = _createSuper(CountryDbService);
 
       function CountryDbService(dbService, logger, connectionService) {
         var _this68;
 
         _classCallCheck(this, CountryDbService);
 
-        _this68 = _super25.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].country);
+        _this68 = _super29.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].country);
 
         _this68.deleteExecutor = function (resolve, reject) {
           for (var _len11 = arguments.length, args = new Array(_len11 > 2 ? _len11 - 2 : 0), _key11 = 2; _key11 < _len11; _key11++) {
@@ -16407,7 +17139,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           if (args && args.length) {
             _this68.getLogger().debug('Delete data', args, 'First data', args[0]);
 
-            args[0].deletedAt = new Date().getUTCDate();
+            args[0].deletedAt = new Date().getTime();
 
             _this68.updateExecutor.apply(_assertThisInitialized(_this68), [resolve, reject].concat(args));
           } else resolve(0);
@@ -16415,13 +17147,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
         return _this68;
       }
-
-      _createClass(CountryDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(CountryDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return CountryDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -16453,16 +17178,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var CountryHttpService = /*#__PURE__*/function (_http_service__WEBPAC2) {
       _inherits(CountryHttpService, _http_service__WEBPAC2);
 
-      var _super26 = _createSuper(CountryHttpService);
+      var _super30 = _createSuper(CountryHttpService);
 
       function CountryHttpService(http, logger, dbService) {
-        var _this69;
-
         _classCallCheck(this, CountryHttpService);
 
-        _this69 = _super26.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this69;
+        return _super30.call(this, http, logger, dbService);
       }
 
       _createClass(CountryHttpService, [{
@@ -16563,110 +17284,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var CustomerDatasource = /*#__PURE__*/function (_datasource_service__3) {
       _inherits(CustomerDatasource, _datasource_service__3);
 
-      var _super27 = _createSuper(CustomerDatasource);
+      var _super31 = _createSuper(CustomerDatasource);
 
       function CustomerDatasource(httpService, dbService, logger) {
-        var _this70;
-
         _classCallCheck(this, CustomerDatasource);
 
-        _this70 = _super27.call(this, httpService, dbService, logger);
-        _this70.latestCount = 0;
-        return _this70;
+        return _super31.call(this, httpService, dbService, logger);
       }
 
-      _createClass(CustomerDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this71 = this;
-
-          return _get(_getPrototypeOf(CustomerDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this71.filter(customers);
-            customers = _this71.sort(customers);
-            _this71.latestCount = (customers || []).length;
-            customers = _this71.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this72 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this72.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this73 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this73.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(CustomerDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(CustomerDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this74 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this74.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return CustomerDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"]);
 
     CustomerDatasource.ctorParameters = function () {
       return [{
@@ -16779,50 +17406,37 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var CustomerDbService = /*#__PURE__*/function (_database_service__WE5) {
       _inherits(CustomerDbService, _database_service__WE5);
 
-      var _super28 = _createSuper(CustomerDbService);
+      var _super32 = _createSuper(CustomerDbService);
 
       function CustomerDbService(dbService, logger, connectionService) {
-        var _this75;
+        var _this69;
 
         _classCallCheck(this, CustomerDbService);
 
-        _this75 = _super28.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].customer);
+        _this69 = _super32.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].customer);
 
-        _this75.deleteExecutor = function (resolve, reject) {
+        _this69.deleteExecutor = function (resolve, reject) {
           for (var _len12 = arguments.length, args = new Array(_len12 > 2 ? _len12 - 2 : 0), _key12 = 2; _key12 < _len12; _key12++) {
             args[_key12 - 2] = arguments[_key12];
           }
 
           if (args && args.length) {
-            _this75.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this69.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].status = 2
             /* LOCKED */
             ;
 
-            _this75.updateExecutor.apply(_assertThisInitialized(_this75), [resolve, reject].concat(args));
+            _this69.updateExecutor.apply(_assertThisInitialized(_this69), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this75;
+        return _this69;
       }
-
-      _createClass(CustomerDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(CustomerDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return CustomerDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -16854,16 +17468,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var CustomerHttpService = /*#__PURE__*/function (_http_service__WEBPAC3) {
       _inherits(CustomerHttpService, _http_service__WEBPAC3);
 
-      var _super29 = _createSuper(CustomerHttpService);
+      var _super33 = _createSuper(CustomerHttpService);
 
       function CustomerHttpService(http, logger, dbService) {
-        var _this76;
-
         _classCallCheck(this, CustomerHttpService);
 
-        _this76 = _super29.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this76;
+        return _super33.call(this, http, logger, dbService);
       }
 
       _createClass(CustomerHttpService, [{
@@ -16964,112 +17574,25 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var OrganizationDataSource = /*#__PURE__*/function (_datasource_service__4) {
       _inherits(OrganizationDataSource, _datasource_service__4);
 
-      var _super30 = _createSuper(OrganizationDataSource);
+      var _super34 = _createSuper(OrganizationDataSource);
 
       function OrganizationDataSource(httpService, dbService, logger) {
-        var _this77;
+        var _this70;
 
         _classCallCheck(this, OrganizationDataSource);
 
-        _this77 = _super30.call(this, httpService, dbService, logger);
-        _this77.latestCount = 0;
+        _this70 = _super34.call(this, httpService, dbService, logger);
 
-        _get(_getPrototypeOf(OrganizationDataSource.prototype), "setSort", _assertThisInitialized(_this77)).call(_assertThisInitialized(_this77), [{
+        _get(_getPrototypeOf(OrganizationDataSource.prototype), "setSort", _assertThisInitialized(_this70)).call(_assertThisInitialized(_this70), [{
           field: 'uid',
           direction: 'desc'
         }]);
 
-        return _this77;
+        return _this70;
       }
 
-      _createClass(OrganizationDataSource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this78 = this;
-
-          // sort by uid desc
-          return _get(_getPrototypeOf(OrganizationDataSource.prototype), "getDbService", this).call(this).getAll().then(function (data) {
-            data = _this78.filter(data);
-            data = _this78.sort(data);
-            _this78.latestCount = (data || []).length;
-            data = _this78.paginate(data);
-            return data;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this79 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this79.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this80 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this80.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          data = this.filter(data);
-          data = this.sort(data);
-          return _get(_getPrototypeOf(OrganizationDataSource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this81 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this81.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return OrganizationDataSource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     OrganizationDataSource.ctorParameters = function () {
       return [{
@@ -17182,52 +17705,39 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var OrganizationDbService = /*#__PURE__*/function (_database_service__WE6) {
       _inherits(OrganizationDbService, _database_service__WE6);
 
-      var _super31 = _createSuper(OrganizationDbService);
+      var _super35 = _createSuper(OrganizationDbService);
 
       function OrganizationDbService(dbService, logger, connectionService) {
-        var _this82;
+        var _this71;
 
         _classCallCheck(this, OrganizationDbService);
 
-        _this82 = _super31.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].organization);
+        _this71 = _super35.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].organization);
 
-        _this82.deleteExecutor = function (resolve, reject) {
+        _this71.deleteExecutor = function (resolve, reject) {
           for (var _len13 = arguments.length, args = new Array(_len13 > 2 ? _len13 - 2 : 0), _key13 = 2; _key13 < _len13; _key13++) {
             args[_key13 - 2] = arguments[_key13];
           }
 
           if (args && args.length) {
-            _this82.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this71.getLogger().debug('Delete data', args, 'First data', args[0]);
 
-            _this82.getDbService().deleteRecord(_this82.getDbStore(), args[0]['uid']).then(function () {
+            _this71.getDbService().deleteRecord(_this71.getDbStore(), args[0]['uid']).then(function () {
               return resolve(1);
             }, function (errors) {
-              _this82.getLogger().error('Could not delete data', errors);
+              _this71.getLogger().error('Could not delete data', errors);
 
               reject(errors);
             });
           } else resolve(0);
         };
 
-        return _this82;
+        return _this71;
       }
-
-      _createClass(OrganizationDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(OrganizationDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return OrganizationDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -17259,16 +17769,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var OrganizationHttpService = /*#__PURE__*/function (_http_service__WEBPAC4) {
       _inherits(OrganizationHttpService, _http_service__WEBPAC4);
 
-      var _super32 = _createSuper(OrganizationHttpService);
+      var _super36 = _createSuper(OrganizationHttpService);
 
       function OrganizationHttpService(http, logger, dbService) {
-        var _this83;
-
         _classCallCheck(this, OrganizationHttpService);
 
-        _this83 = _super32.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this83;
+        return _super36.call(this, http, logger, dbService);
       }
 
       _createClass(OrganizationHttpService, [{
@@ -17369,110 +17875,38 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ProvinceDatasource = /*#__PURE__*/function (_datasource_service__5) {
       _inherits(ProvinceDatasource, _datasource_service__5);
 
-      var _super33 = _createSuper(ProvinceDatasource);
+      var _super37 = _createSuper(ProvinceDatasource);
 
       function ProvinceDatasource(httpService, dbService, logger) {
-        var _this84;
-
         _classCallCheck(this, ProvinceDatasource);
 
-        _this84 = _super33.call(this, httpService, dbService, logger);
-        _this84.latestCount = 0;
-        return _this84;
+        return _super37.call(this, httpService, dbService, logger);
       }
+      /**
+       * Find all provinces by the specified {ICountry}
+       * @param country to filter
+       */
+
 
       _createClass(ProvinceDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this85 = this;
+        key: "findByCountry",
+        value: function findByCountry(country) {
+          var _this72 = this;
 
-          return _get(_getPrototypeOf(ProvinceDatasource.prototype), "getDbService", this).call(this).getAll().then(function (provinces) {
-            provinces = _this85.filter(provinces);
-            provinces = _this85.sort(provinces);
-            _this85.latestCount = (provinces || []).length;
-            provinces = _this85.paginate(provinces);
-            return provinces;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
+          return _get(_getPrototypeOf(ProvinceDatasource.prototype), "getDbService", this).call(this).findByCountry(country).then(this.onFulfilledData(), function (reason) {
+            _this72.getLogger().error(reason);
 
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this86 = this;
+            return [];
+          })["catch"](function (reason) {
+            _this72.getLogger().error(reason);
 
-          return this.getDbService().update(newData).then(function () {
-            _this86.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this87 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this87.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(ProvinceDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(ProvinceDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this88 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this88.refresh();
-
-            return 1;
+            return [];
           });
         }
       }]);
 
       return ProvinceDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"]);
 
     ProvinceDatasource.ctorParameters = function () {
       return [{
@@ -17546,97 +17980,200 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _core_data_system_province__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../../../../@core/data/system/province */
+    "./src/app/@core/data/system/province.ts");
+    /* harmony import */
+
+
+    var _http_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ../../../http.service */
     "./src/app/services/http.service.ts");
     /* harmony import */
 
 
-    var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/fesm2015/http.js");
     /* harmony import */
 
 
-    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ../../../../utils/json.utils */
     "./src/app/utils/json.utils.ts");
     /* harmony import */
 
 
-    var _database_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _database_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! ../../../database.service */
     "./src/app/services/database.service.ts");
     /* harmony import */
 
 
-    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! ngx-indexed-db */
     "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
     /* harmony import */
 
 
-    var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _config_db_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ../../../../config/db.config */
     "./src/app/config/db.config.ts");
     /* harmony import */
 
 
-    var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var ng_connection_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
     /* harmony import */
 
 
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! rxjs */
     "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
 
-    var ProvinceDbService = /*#__PURE__*/function (_database_service__WE7) {
+
+    var _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! ../../../../config/third.party.api */
+    "./src/app/config/third.party.api.ts");
+    /* harmony import */
+
+
+    var _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ../../../third.party/third.party.api.bridge.service */
+    "./src/app/services/third.party/third.party.api.bridge.service.ts");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! util */
+    "./node_modules/util/util.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_14__);
+
+    var ProvinceDbService_1;
+
+    var ProvinceDbService = ProvinceDbService_1 = /*#__PURE__*/function (_database_service__WE7) {
       _inherits(ProvinceDbService, _database_service__WE7);
 
-      var _super34 = _createSuper(ProvinceDbService);
+      var _super38 = _createSuper(ProvinceDbService);
 
-      function ProvinceDbService(dbService, logger, connectionService) {
-        var _this89;
+      function ProvinceDbService(dbService, logger, connectionService, thirdPartyApiBridge) {
+        var _this73;
 
         _classCallCheck(this, ProvinceDbService);
 
-        _this89 = _super34.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].province);
+        _this73 = _super38.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_9__["DB_STORE"].province);
+        _this73.thirdPartyApiBridge = thirdPartyApiBridge;
 
-        _this89.deleteExecutor = function (resolve, reject) {
+        _this73.deleteExecutor = function (resolve, reject) {
           for (var _len14 = arguments.length, args = new Array(_len14 > 2 ? _len14 - 2 : 0), _key14 = 2; _key14 < _len14; _key14++) {
             args[_key14 - 2] = arguments[_key14];
           }
 
           if (args && args.length) {
-            _this89.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this73.getLogger().debug('Delete data', args, 'First data', args[0]);
 
-            args[0].deletedAt = new Date().getUTCDate();
+            args[0].deletedAt = new Date().getTime();
 
-            _this89.updateExecutor.apply(_assertThisInitialized(_this89), [resolve, reject].concat(args));
+            _this73.updateExecutor.apply(_assertThisInitialized(_this73), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this89;
+        thirdPartyApiBridge || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject ThirdPartyApiBridgeDbService instance');
+        return _this73;
       }
+      /**
+       * TODO Not support for getting all provinces because of performance
+       */
+
 
       _createClass(ProvinceDbService, [{
         key: "getAll",
         value: function getAll() {
-          return _get(_getPrototypeOf(ProvinceDbService.prototype), "getAll", this).call(this);
+          Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(ProvinceDbService_1.EXCEPTION_PERFORMANCE_REASON);
+          return Promise.reject(ProvinceDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        }
+        /**
+         * Find all states/provinces by the specified {ICountry}
+         * @param country to filter
+         */
+
+      }, {
+        key: "findByCountry",
+        value: function findByCountry(country) {
+          country || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(ProvinceDbService_1.EXCEPTION_PERFORMANCE_REASON);
+
+          var _this = this;
+
+          var fetchParam = {
+            dbCacheFilter: {
+              dbStore: this.getDbStore(),
+              indexName: ProvinceDbService_1.INDEX_NAME_COUNTRY_ID,
+              criteria: country.id
+            },
+            callApi: {
+              method: ProvinceDbService_1.THIRD_PARTY_ENTRY_METHOD,
+              args: [ProvinceDbService_1.THIRD_PARTY_STATE_URL.concat('/', country.name), ProvinceDbService_1.THIRD_PARTY_STATE_METHOD, _core_data_system_province__WEBPACK_IMPORTED_MODULE_3__["default"]]
+            },
+            apiFulfilled: function apiFulfilled(apiData) {
+              // apply country for province API data
+              var provinces;
+              var duplicatedCode = {};
+              provinces = Object(util__WEBPACK_IMPORTED_MODULE_14__["isArray"])(apiData) ? apiData : apiData ? [apiData] : [];
+              provinces = provinces.removeIf(function (province) {
+                return Object(util__WEBPACK_IMPORTED_MODULE_14__["isNullOrUndefined"])(province);
+              });
+              provinces.forEach(function (province) {
+                province.country_id = country.id; // check for duplicated code because API data has no returned code
+
+                var provinceCode = country.code.concat('|', province.code);
+
+                if (duplicatedCode.hasOwnProperty(provinceCode)) {
+                  duplicatedCode[provinceCode] = duplicatedCode[provinceCode] + 1;
+                  provinceCode = provinceCode.concat('|', duplicatedCode[provinceCode].toString());
+                } else {
+                  duplicatedCode[provinceCode] = 1;
+                }
+
+                province.code = provinceCode;
+              }); // insert application database for future
+
+              return _this.insertEntities(provinces).then(function (affected) {
+                return provinces;
+              }, function (reason) {
+                _this.getLogger().error(reason);
+
+                return [];
+              })["catch"](function (reason) {
+                _this.getLogger().error(reason);
+
+                return [];
+              });
+            }
+          };
+          return _this.thirdPartyApiBridge.fetch(fetchParam);
         }
       }]);
 
       return ProvinceDbService;
-    }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
+    }(_database_service__WEBPACK_IMPORTED_MODULE_7__["AbstractBaseDbService"]);
+
+    ProvinceDbService.EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all provinces because of performance!';
+    ProvinceDbService.INDEX_NAME_COUNTRY_ID = 'country_id';
+    ProvinceDbService.THIRD_PARTY_STATE_URL = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.province.url;
+    ProvinceDbService.THIRD_PARTY_STATE_METHOD = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.province.method;
+    ProvinceDbService.THIRD_PARTY_ENTRY_METHOD = 'findData';
 
     ProvinceDbService.ctorParameters = function () {
       return [{
-        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],
+        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
-          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"]]
+          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"]]
         }]
       }, {
         type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
@@ -17645,29 +18182,31 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
         }]
       }, {
-        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"],
+        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
-          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"]]
+          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"]]
+        }]
+      }, {
+        type: _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"]]
         }]
       }];
     };
 
-    ProvinceDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"]])], ProvinceDbService);
+    ProvinceDbService = ProvinceDbService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"], _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"]])], ProvinceDbService);
 
     var ProvinceHttpService = /*#__PURE__*/function (_http_service__WEBPAC5) {
       _inherits(ProvinceHttpService, _http_service__WEBPAC5);
 
-      var _super35 = _createSuper(ProvinceHttpService);
+      var _super39 = _createSuper(ProvinceHttpService);
 
       function ProvinceHttpService(http, logger, dbService) {
-        var _this90;
-
         _classCallCheck(this, ProvinceHttpService);
 
-        _this90 = _super35.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this90;
+        return _super39.call(this, http, logger, dbService);
       }
 
       _createClass(ProvinceHttpService, [{
@@ -17677,7 +18216,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return undefined;
           }
 
-          return _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__["default"].parseResponseJson(serviceResponse.getResponse().body);
+          return _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].parseResponseJson(serviceResponse.getResponse().body);
         }
       }, {
         key: "handleOfflineMode",
@@ -17687,14 +18226,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }]);
 
       return ProvinceHttpService;
-    }(_http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"]);
+    }(_http_service__WEBPACK_IMPORTED_MODULE_4__["AbstractHttpService"]);
 
     ProvinceHttpService.ctorParameters = function () {
       return [{
-        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
-          args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]]
+          args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"]]
         }]
       }, {
         type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
@@ -17711,7 +18250,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }];
     };
 
-    ProvinceHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ProvinceDbService)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ProvinceDbService])], ProvinceHttpService);
+    ProvinceHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ProvinceDbService)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ProvinceDbService])], ProvinceHttpService);
     /***/
   },
 
@@ -17768,112 +18307,25 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var UserDataSource = /*#__PURE__*/function (_datasource_service__6) {
       _inherits(UserDataSource, _datasource_service__6);
 
-      var _super36 = _createSuper(UserDataSource);
+      var _super40 = _createSuper(UserDataSource);
 
       function UserDataSource(httpService, dbService, logger) {
-        var _this91;
+        var _this74;
 
         _classCallCheck(this, UserDataSource);
 
-        _this91 = _super36.call(this, httpService, dbService, logger);
-        _this91.latestCount = 0;
+        _this74 = _super40.call(this, httpService, dbService, logger);
 
-        _get(_getPrototypeOf(UserDataSource.prototype), "setSort", _assertThisInitialized(_this91)).call(_assertThisInitialized(_this91), [{
+        _get(_getPrototypeOf(UserDataSource.prototype), "setSort", _assertThisInitialized(_this74)).call(_assertThisInitialized(_this74), [{
           field: 'uid',
           direction: 'desc'
         }]);
 
-        return _this91;
+        return _this74;
       }
 
-      _createClass(UserDataSource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this92 = this;
-
-          // sort by uid desc
-          return _get(_getPrototypeOf(UserDataSource.prototype), "getDbService", this).call(this).getAll().then(function (users) {
-            users = _this92.filter(users);
-            users = _this92.sort(users);
-            _this92.latestCount = (users || []).length;
-            users = _this92.paginate(users);
-            return users;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this93 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this93.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this94 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this94.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          data = this.filter(data);
-          data = this.sort(data);
-          return _get(_getPrototypeOf(UserDataSource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this95 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this95.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return UserDataSource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"]);
 
     UserDataSource.ctorParameters = function () {
       return [{
@@ -17986,32 +18438,26 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var UserDbService = /*#__PURE__*/function (_database_service__WE8) {
       _inherits(UserDbService, _database_service__WE8);
 
-      var _super37 = _createSuper(UserDbService);
+      var _super41 = _createSuper(UserDbService);
 
       function UserDbService(dbService, logger, connectionService) {
-        var _this96;
+        var _this75;
 
         _classCallCheck(this, UserDbService);
 
-        _this96 = _super37.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].user);
+        _this75 = _super41.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].user);
 
-        _this96.deleteExecutor = function (resolve, reject) {
+        _this75.deleteExecutor = function (resolve, reject) {
           for (var _len15 = arguments.length, args = new Array(_len15 > 2 ? _len15 - 2 : 0), _key15 = 2; _key15 < _len15; _key15++) {
             args[_key15 - 2] = arguments[_key15];
           }
 
           if (args && args.length) {
-            _this96.getLogger().debug('Delete data', args, 'First data', args[0]); // if existed user
+            _this75.getLogger().debug('Delete data', args, 'First data', args[0]); // if existed user
 
 
             if ((args[0].id || '').length) {
@@ -18019,13 +18465,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               /* LOCKED */
               ;
 
-              _this96.updateExecutor.apply(_assertThisInitialized(_this96), [resolve, reject].concat(args)); // if new user (invalid user identity)
+              _this75.updateExecutor.apply(_assertThisInitialized(_this75), [resolve, reject].concat(args)); // if new user (invalid user identity)
 
             } else {
-              _this96.getDbService().deleteRecord(_this96.getDbStore(), args[0]['uid']).then(function () {
+              _this75.getDbService().deleteRecord(_this75.getDbStore(), args[0]['uid']).then(function () {
                 return resolve(1);
               }, function (errors) {
-                _this96.getLogger().error('Could not delete data', errors);
+                _this75.getLogger().error('Could not delete data', errors);
 
                 reject(errors);
               });
@@ -18033,15 +18479,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           } else resolve(0);
         };
 
-        return _this96;
+        return _this75;
       }
-
-      _createClass(UserDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(UserDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return UserDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -18073,16 +18512,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var UserHttpService = /*#__PURE__*/function (_http_service__WEBPAC6) {
       _inherits(UserHttpService, _http_service__WEBPAC6);
 
-      var _super38 = _createSuper(UserHttpService);
+      var _super42 = _createSuper(UserHttpService);
 
       function UserHttpService(http, logger, dbService) {
-        var _this97;
-
         _classCallCheck(this, UserHttpService);
 
-        _this97 = _super38.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this97;
+        return _super42.call(this, http, logger, dbService);
       }
 
       _createClass(UserHttpService, [{
@@ -18183,110 +18618,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseAdjustDetailDatasource = /*#__PURE__*/function (_datasource_service__7) {
       _inherits(WarehouseAdjustDetailDatasource, _datasource_service__7);
 
-      var _super39 = _createSuper(WarehouseAdjustDetailDatasource);
+      var _super43 = _createSuper(WarehouseAdjustDetailDatasource);
 
       function WarehouseAdjustDetailDatasource(httpService, dbService, logger) {
-        var _this98;
-
         _classCallCheck(this, WarehouseAdjustDetailDatasource);
 
-        _this98 = _super39.call(this, httpService, dbService, logger);
-        _this98.latestCount = 0;
-        return _this98;
+        return _super43.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseAdjustDetailDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this99 = this;
-
-          return _get(_getPrototypeOf(WarehouseAdjustDetailDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this99.filter(customers);
-            customers = _this99.sort(customers);
-            _this99.latestCount = (customers || []).length;
-            customers = _this99.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this100 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this100.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this101 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this101.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseAdjustDetailDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseAdjustDetailDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this102 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this102.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseAdjustDetailDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseAdjustDetailDatasource.ctorParameters = function () {
       return [{
@@ -18399,48 +18740,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseAdjustDetailDbService = /*#__PURE__*/function (_database_service__WE9) {
       _inherits(WarehouseAdjustDetailDbService, _database_service__WE9);
 
-      var _super40 = _createSuper(WarehouseAdjustDetailDbService);
+      var _super44 = _createSuper(WarehouseAdjustDetailDbService);
 
       function WarehouseAdjustDetailDbService(dbService, logger, connectionService) {
-        var _this103;
+        var _this76;
 
         _classCallCheck(this, WarehouseAdjustDetailDbService);
 
-        _this103 = _super40.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_adjust_detail);
+        _this76 = _super44.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_adjust_detail);
 
-        _this103.deleteExecutor = function (resolve, reject) {
+        _this76.deleteExecutor = function (resolve, reject) {
           for (var _len16 = arguments.length, args = new Array(_len16 > 2 ? _len16 - 2 : 0), _key16 = 2; _key16 < _len16; _key16++) {
             args[_key16 - 2] = arguments[_key16];
           }
 
           if (args && args.length) {
-            _this103.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this76.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this103.updateExecutor.apply(_assertThisInitialized(_this103), [resolve, reject].concat(args));
+            _this76.updateExecutor.apply(_assertThisInitialized(_this76), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this103;
+        return _this76;
       }
-
-      _createClass(WarehouseAdjustDetailDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseAdjustDetailDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseAdjustDetailDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -18472,16 +18800,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseAdjustDetailHttpService = /*#__PURE__*/function (_http_service__WEBPAC7) {
       _inherits(WarehouseAdjustDetailHttpService, _http_service__WEBPAC7);
 
-      var _super41 = _createSuper(WarehouseAdjustDetailHttpService);
+      var _super45 = _createSuper(WarehouseAdjustDetailHttpService);
 
       function WarehouseAdjustDetailHttpService(http, logger, dbService) {
-        var _this104;
-
         _classCallCheck(this, WarehouseAdjustDetailHttpService);
 
-        _this104 = _super41.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this104;
+        return _super45.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseAdjustDetailHttpService, [{
@@ -18582,110 +18906,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseAdjustDatasource = /*#__PURE__*/function (_datasource_service__8) {
       _inherits(WarehouseAdjustDatasource, _datasource_service__8);
 
-      var _super42 = _createSuper(WarehouseAdjustDatasource);
+      var _super46 = _createSuper(WarehouseAdjustDatasource);
 
       function WarehouseAdjustDatasource(httpService, dbService, logger) {
-        var _this105;
-
         _classCallCheck(this, WarehouseAdjustDatasource);
 
-        _this105 = _super42.call(this, httpService, dbService, logger);
-        _this105.latestCount = 0;
-        return _this105;
+        return _super46.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseAdjustDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this106 = this;
-
-          return _get(_getPrototypeOf(WarehouseAdjustDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this106.filter(customers);
-            customers = _this106.sort(customers);
-            _this106.latestCount = (customers || []).length;
-            customers = _this106.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this107 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this107.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this108 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this108.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseAdjustDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseAdjustDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this109 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this109.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseAdjustDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseAdjustDatasource.ctorParameters = function () {
       return [{
@@ -18798,48 +19028,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseAdjustDbService = /*#__PURE__*/function (_database_service__WE10) {
       _inherits(WarehouseAdjustDbService, _database_service__WE10);
 
-      var _super43 = _createSuper(WarehouseAdjustDbService);
+      var _super47 = _createSuper(WarehouseAdjustDbService);
 
       function WarehouseAdjustDbService(dbService, logger, connectionService) {
-        var _this110;
+        var _this77;
 
         _classCallCheck(this, WarehouseAdjustDbService);
 
-        _this110 = _super43.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_adjust);
+        _this77 = _super47.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_adjust);
 
-        _this110.deleteExecutor = function (resolve, reject) {
+        _this77.deleteExecutor = function (resolve, reject) {
           for (var _len17 = arguments.length, args = new Array(_len17 > 2 ? _len17 - 2 : 0), _key17 = 2; _key17 < _len17; _key17++) {
             args[_key17 - 2] = arguments[_key17];
           }
 
           if (args && args.length) {
-            _this110.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this77.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this110.updateExecutor.apply(_assertThisInitialized(_this110), [resolve, reject].concat(args));
+            _this77.updateExecutor.apply(_assertThisInitialized(_this77), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this110;
+        return _this77;
       }
-
-      _createClass(WarehouseAdjustDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseAdjustDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseAdjustDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -18871,16 +19088,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseAdjustHttpService = /*#__PURE__*/function (_http_service__WEBPAC8) {
       _inherits(WarehouseAdjustHttpService, _http_service__WEBPAC8);
 
-      var _super44 = _createSuper(WarehouseAdjustHttpService);
+      var _super48 = _createSuper(WarehouseAdjustHttpService);
 
       function WarehouseAdjustHttpService(http, logger, dbService) {
-        var _this111;
-
         _classCallCheck(this, WarehouseAdjustHttpService);
 
-        _this111 = _super44.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this111;
+        return _super48.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseAdjustHttpService, [{
@@ -18981,115 +19194,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseCategoryDatasource = /*#__PURE__*/function (_datasource_service__9) {
       _inherits(WarehouseCategoryDatasource, _datasource_service__9);
 
-      var _super45 = _createSuper(WarehouseCategoryDatasource);
+      var _super49 = _createSuper(WarehouseCategoryDatasource);
 
       function WarehouseCategoryDatasource(httpService, dbService, logger) {
-        var _this112;
-
         _classCallCheck(this, WarehouseCategoryDatasource);
 
-        _this112 = _super45.call(this, httpService, dbService, logger);
-        _this112.latestCount = 0;
-        return _this112;
+        return _super49.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseCategoryDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this113 = this;
-
-          return _get(_getPrototypeOf(WarehouseCategoryDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this113.filter(customers);
-            customers = _this113.sort(customers);
-            _this113.latestCount = (customers || []).length;
-            customers = _this113.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getById",
-        value: function getById(categoryId) {
-          return _get(_getPrototypeOf(WarehouseCategoryDatasource.prototype), "getDbService", this).call(this).findById(categoryId);
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this114 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this114.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this115 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this115.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseCategoryDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseCategoryDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this116 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this116.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseCategoryDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseCategoryDatasource.ctorParameters = function () {
       return [{
@@ -19202,48 +19316,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseCategoryDbService = /*#__PURE__*/function (_database_service__WE11) {
       _inherits(WarehouseCategoryDbService, _database_service__WE11);
 
-      var _super46 = _createSuper(WarehouseCategoryDbService);
+      var _super50 = _createSuper(WarehouseCategoryDbService);
 
       function WarehouseCategoryDbService(dbService, logger, connectionService) {
-        var _this117;
+        var _this78;
 
         _classCallCheck(this, WarehouseCategoryDbService);
 
-        _this117 = _super46.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_category);
+        _this78 = _super50.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_category);
 
-        _this117.deleteExecutor = function (resolve, reject) {
+        _this78.deleteExecutor = function (resolve, reject) {
           for (var _len18 = arguments.length, args = new Array(_len18 > 2 ? _len18 - 2 : 0), _key18 = 2; _key18 < _len18; _key18++) {
             args[_key18 - 2] = arguments[_key18];
           }
 
           if (args && args.length) {
-            _this117.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this78.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this117.updateExecutor.apply(_assertThisInitialized(_this117), [resolve, reject].concat(args));
+            _this78.updateExecutor.apply(_assertThisInitialized(_this78), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this117;
+        return _this78;
       }
-
-      _createClass(WarehouseCategoryDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseCategoryDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseCategoryDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -19275,16 +19376,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseCategoryHttpService = /*#__PURE__*/function (_http_service__WEBPAC9) {
       _inherits(WarehouseCategoryHttpService, _http_service__WEBPAC9);
 
-      var _super47 = _createSuper(WarehouseCategoryHttpService);
+      var _super51 = _createSuper(WarehouseCategoryHttpService);
 
       function WarehouseCategoryHttpService(http, logger, dbService) {
-        var _this118;
-
         _classCallCheck(this, WarehouseCategoryHttpService);
 
-        _this118 = _super47.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this118;
+        return _super51.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseCategoryHttpService, [{
@@ -19385,110 +19482,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseInventoryDetailDatasource = /*#__PURE__*/function (_datasource_service__10) {
       _inherits(WarehouseInventoryDetailDatasource, _datasource_service__10);
 
-      var _super48 = _createSuper(WarehouseInventoryDetailDatasource);
+      var _super52 = _createSuper(WarehouseInventoryDetailDatasource);
 
       function WarehouseInventoryDetailDatasource(httpService, dbService, logger) {
-        var _this119;
-
         _classCallCheck(this, WarehouseInventoryDetailDatasource);
 
-        _this119 = _super48.call(this, httpService, dbService, logger);
-        _this119.latestCount = 0;
-        return _this119;
+        return _super52.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseInventoryDetailDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this120 = this;
-
-          return _get(_getPrototypeOf(WarehouseInventoryDetailDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this120.filter(customers);
-            customers = _this120.sort(customers);
-            _this120.latestCount = (customers || []).length;
-            customers = _this120.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this121 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this121.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this122 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this122.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseInventoryDetailDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseInventoryDetailDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this123 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this123.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseInventoryDetailDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseInventoryDetailDatasource.ctorParameters = function () {
       return [{
@@ -19601,48 +19604,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseInventoryDetailDbService = /*#__PURE__*/function (_database_service__WE12) {
       _inherits(WarehouseInventoryDetailDbService, _database_service__WE12);
 
-      var _super49 = _createSuper(WarehouseInventoryDetailDbService);
+      var _super53 = _createSuper(WarehouseInventoryDetailDbService);
 
       function WarehouseInventoryDetailDbService(dbService, logger, connectionService) {
-        var _this124;
+        var _this79;
 
         _classCallCheck(this, WarehouseInventoryDetailDbService);
 
-        _this124 = _super49.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_inventory_detail);
+        _this79 = _super53.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_inventory_detail);
 
-        _this124.deleteExecutor = function (resolve, reject) {
+        _this79.deleteExecutor = function (resolve, reject) {
           for (var _len19 = arguments.length, args = new Array(_len19 > 2 ? _len19 - 2 : 0), _key19 = 2; _key19 < _len19; _key19++) {
             args[_key19 - 2] = arguments[_key19];
           }
 
           if (args && args.length) {
-            _this124.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this79.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this124.updateExecutor.apply(_assertThisInitialized(_this124), [resolve, reject].concat(args));
+            _this79.updateExecutor.apply(_assertThisInitialized(_this79), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this124;
+        return _this79;
       }
-
-      _createClass(WarehouseInventoryDetailDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseInventoryDetailDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseInventoryDetailDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -19674,16 +19664,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseInventoryDetailHttpService = /*#__PURE__*/function (_http_service__WEBPAC10) {
       _inherits(WarehouseInventoryDetailHttpService, _http_service__WEBPAC10);
 
-      var _super50 = _createSuper(WarehouseInventoryDetailHttpService);
+      var _super54 = _createSuper(WarehouseInventoryDetailHttpService);
 
       function WarehouseInventoryDetailHttpService(http, logger, dbService) {
-        var _this125;
-
         _classCallCheck(this, WarehouseInventoryDetailHttpService);
 
-        _this125 = _super50.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this125;
+        return _super54.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseInventoryDetailHttpService, [{
@@ -19784,110 +19770,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseInventoryDatasource = /*#__PURE__*/function (_datasource_service__11) {
       _inherits(WarehouseInventoryDatasource, _datasource_service__11);
 
-      var _super51 = _createSuper(WarehouseInventoryDatasource);
+      var _super55 = _createSuper(WarehouseInventoryDatasource);
 
       function WarehouseInventoryDatasource(httpService, dbService, logger) {
-        var _this126;
-
         _classCallCheck(this, WarehouseInventoryDatasource);
 
-        _this126 = _super51.call(this, httpService, dbService, logger);
-        _this126.latestCount = 0;
-        return _this126;
+        return _super55.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseInventoryDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this127 = this;
-
-          return _get(_getPrototypeOf(WarehouseInventoryDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this127.filter(customers);
-            customers = _this127.sort(customers);
-            _this127.latestCount = (customers || []).length;
-            customers = _this127.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this128 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this128.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this129 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this129.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseInventoryDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseInventoryDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this130 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this130.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseInventoryDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseInventoryDatasource.ctorParameters = function () {
       return [{
@@ -20000,48 +19892,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseInventoryDbService = /*#__PURE__*/function (_database_service__WE13) {
       _inherits(WarehouseInventoryDbService, _database_service__WE13);
 
-      var _super52 = _createSuper(WarehouseInventoryDbService);
+      var _super56 = _createSuper(WarehouseInventoryDbService);
 
       function WarehouseInventoryDbService(dbService, logger, connectionService) {
-        var _this131;
+        var _this80;
 
         _classCallCheck(this, WarehouseInventoryDbService);
 
-        _this131 = _super52.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_inventory);
+        _this80 = _super56.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_inventory);
 
-        _this131.deleteExecutor = function (resolve, reject) {
+        _this80.deleteExecutor = function (resolve, reject) {
           for (var _len20 = arguments.length, args = new Array(_len20 > 2 ? _len20 - 2 : 0), _key20 = 2; _key20 < _len20; _key20++) {
             args[_key20 - 2] = arguments[_key20];
           }
 
           if (args && args.length) {
-            _this131.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this80.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this131.updateExecutor.apply(_assertThisInitialized(_this131), [resolve, reject].concat(args));
+            _this80.updateExecutor.apply(_assertThisInitialized(_this80), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this131;
+        return _this80;
       }
-
-      _createClass(WarehouseInventoryDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseInventoryDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseInventoryDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -20073,16 +19952,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseInventoryHttpService = /*#__PURE__*/function (_http_service__WEBPAC11) {
       _inherits(WarehouseInventoryHttpService, _http_service__WEBPAC11);
 
-      var _super53 = _createSuper(WarehouseInventoryHttpService);
+      var _super57 = _createSuper(WarehouseInventoryHttpService);
 
       function WarehouseInventoryHttpService(http, logger, dbService) {
-        var _this132;
-
         _classCallCheck(this, WarehouseInventoryHttpService);
 
-        _this132 = _super53.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this132;
+        return _super57.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseInventoryHttpService, [{
@@ -20183,110 +20058,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseItemDatasource = /*#__PURE__*/function (_datasource_service__12) {
       _inherits(WarehouseItemDatasource, _datasource_service__12);
 
-      var _super54 = _createSuper(WarehouseItemDatasource);
+      var _super58 = _createSuper(WarehouseItemDatasource);
 
       function WarehouseItemDatasource(httpService, dbService, logger) {
-        var _this133;
-
         _classCallCheck(this, WarehouseItemDatasource);
 
-        _this133 = _super54.call(this, httpService, dbService, logger);
-        _this133.latestCount = 0;
-        return _this133;
+        return _super58.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseItemDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this134 = this;
-
-          return _get(_getPrototypeOf(WarehouseItemDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this134.filter(customers);
-            customers = _this134.sort(customers);
-            _this134.latestCount = (customers || []).length;
-            customers = _this134.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this135 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this135.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this136 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this136.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseItemDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseItemDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this137 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this137.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseItemDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseItemDatasource.ctorParameters = function () {
       return [{
@@ -20399,48 +20180,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseItemDbService = /*#__PURE__*/function (_database_service__WE14) {
       _inherits(WarehouseItemDbService, _database_service__WE14);
 
-      var _super55 = _createSuper(WarehouseItemDbService);
+      var _super59 = _createSuper(WarehouseItemDbService);
 
       function WarehouseItemDbService(dbService, logger, connectionService) {
-        var _this138;
+        var _this81;
 
         _classCallCheck(this, WarehouseItemDbService);
 
-        _this138 = _super55.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_item);
+        _this81 = _super59.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_item);
 
-        _this138.deleteExecutor = function (resolve, reject) {
+        _this81.deleteExecutor = function (resolve, reject) {
           for (var _len21 = arguments.length, args = new Array(_len21 > 2 ? _len21 - 2 : 0), _key21 = 2; _key21 < _len21; _key21++) {
             args[_key21 - 2] = arguments[_key21];
           }
 
           if (args && args.length) {
-            _this138.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this81.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this138.updateExecutor.apply(_assertThisInitialized(_this138), [resolve, reject].concat(args));
+            _this81.updateExecutor.apply(_assertThisInitialized(_this81), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this138;
+        return _this81;
       }
-
-      _createClass(WarehouseItemDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseItemDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseItemDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -20472,16 +20240,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseItemHttpService = /*#__PURE__*/function (_http_service__WEBPAC12) {
       _inherits(WarehouseItemHttpService, _http_service__WEBPAC12);
 
-      var _super56 = _createSuper(WarehouseItemHttpService);
+      var _super60 = _createSuper(WarehouseItemHttpService);
 
       function WarehouseItemHttpService(http, logger, dbService) {
-        var _this139;
-
         _classCallCheck(this, WarehouseItemHttpService);
 
-        _this139 = _super56.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this139;
+        return _super60.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseItemHttpService, [{
@@ -20582,110 +20346,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseOrderDetailDatasource = /*#__PURE__*/function (_datasource_service__13) {
       _inherits(WarehouseOrderDetailDatasource, _datasource_service__13);
 
-      var _super57 = _createSuper(WarehouseOrderDetailDatasource);
+      var _super61 = _createSuper(WarehouseOrderDetailDatasource);
 
       function WarehouseOrderDetailDatasource(httpService, dbService, logger) {
-        var _this140;
-
         _classCallCheck(this, WarehouseOrderDetailDatasource);
 
-        _this140 = _super57.call(this, httpService, dbService, logger);
-        _this140.latestCount = 0;
-        return _this140;
+        return _super61.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseOrderDetailDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this141 = this;
-
-          return _get(_getPrototypeOf(WarehouseOrderDetailDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this141.filter(customers);
-            customers = _this141.sort(customers);
-            _this141.latestCount = (customers || []).length;
-            customers = _this141.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this142 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this142.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this143 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this143.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseOrderDetailDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseOrderDetailDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this144 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this144.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseOrderDetailDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseOrderDetailDatasource.ctorParameters = function () {
       return [{
@@ -20798,48 +20468,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseOrderDetailDbService = /*#__PURE__*/function (_database_service__WE15) {
       _inherits(WarehouseOrderDetailDbService, _database_service__WE15);
 
-      var _super58 = _createSuper(WarehouseOrderDetailDbService);
+      var _super62 = _createSuper(WarehouseOrderDetailDbService);
 
       function WarehouseOrderDetailDbService(dbService, logger, connectionService) {
-        var _this145;
+        var _this82;
 
         _classCallCheck(this, WarehouseOrderDetailDbService);
 
-        _this145 = _super58.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_order_detail);
+        _this82 = _super62.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_order_detail);
 
-        _this145.deleteExecutor = function (resolve, reject) {
+        _this82.deleteExecutor = function (resolve, reject) {
           for (var _len22 = arguments.length, args = new Array(_len22 > 2 ? _len22 - 2 : 0), _key22 = 2; _key22 < _len22; _key22++) {
             args[_key22 - 2] = arguments[_key22];
           }
 
           if (args && args.length) {
-            _this145.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this82.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this145.updateExecutor.apply(_assertThisInitialized(_this145), [resolve, reject].concat(args));
+            _this82.updateExecutor.apply(_assertThisInitialized(_this82), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this145;
+        return _this82;
       }
-
-      _createClass(WarehouseOrderDetailDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseOrderDetailDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseOrderDetailDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -20871,16 +20528,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseOrderDetailHttpService = /*#__PURE__*/function (_http_service__WEBPAC13) {
       _inherits(WarehouseOrderDetailHttpService, _http_service__WEBPAC13);
 
-      var _super59 = _createSuper(WarehouseOrderDetailHttpService);
+      var _super63 = _createSuper(WarehouseOrderDetailHttpService);
 
       function WarehouseOrderDetailHttpService(http, logger, dbService) {
-        var _this146;
-
         _classCallCheck(this, WarehouseOrderDetailHttpService);
 
-        _this146 = _super59.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this146;
+        return _super63.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseOrderDetailHttpService, [{
@@ -20981,110 +20634,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseOrderDatasource = /*#__PURE__*/function (_datasource_service__14) {
       _inherits(WarehouseOrderDatasource, _datasource_service__14);
 
-      var _super60 = _createSuper(WarehouseOrderDatasource);
+      var _super64 = _createSuper(WarehouseOrderDatasource);
 
       function WarehouseOrderDatasource(httpService, dbService, logger) {
-        var _this147;
-
         _classCallCheck(this, WarehouseOrderDatasource);
 
-        _this147 = _super60.call(this, httpService, dbService, logger);
-        _this147.latestCount = 0;
-        return _this147;
+        return _super64.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseOrderDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this148 = this;
-
-          return _get(_getPrototypeOf(WarehouseOrderDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this148.filter(customers);
-            customers = _this148.sort(customers);
-            _this148.latestCount = (customers || []).length;
-            customers = _this148.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this149 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this149.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this150 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this150.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseOrderDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseOrderDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this151 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this151.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseOrderDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseOrderDatasource.ctorParameters = function () {
       return [{
@@ -21197,48 +20756,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseOrderDbService = /*#__PURE__*/function (_database_service__WE16) {
       _inherits(WarehouseOrderDbService, _database_service__WE16);
 
-      var _super61 = _createSuper(WarehouseOrderDbService);
+      var _super65 = _createSuper(WarehouseOrderDbService);
 
       function WarehouseOrderDbService(dbService, logger, connectionService) {
-        var _this152;
+        var _this83;
 
         _classCallCheck(this, WarehouseOrderDbService);
 
-        _this152 = _super61.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_order);
+        _this83 = _super65.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse_order);
 
-        _this152.deleteExecutor = function (resolve, reject) {
+        _this83.deleteExecutor = function (resolve, reject) {
           for (var _len23 = arguments.length, args = new Array(_len23 > 2 ? _len23 - 2 : 0), _key23 = 2; _key23 < _len23; _key23++) {
             args[_key23 - 2] = arguments[_key23];
           }
 
           if (args && args.length) {
-            _this152.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this83.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this152.updateExecutor.apply(_assertThisInitialized(_this152), [resolve, reject].concat(args));
+            _this83.updateExecutor.apply(_assertThisInitialized(_this83), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this152;
+        return _this83;
       }
-
-      _createClass(WarehouseOrderDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseOrderDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseOrderDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -21270,16 +20816,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseOrderHttpService = /*#__PURE__*/function (_http_service__WEBPAC14) {
       _inherits(WarehouseOrderHttpService, _http_service__WEBPAC14);
 
-      var _super62 = _createSuper(WarehouseOrderHttpService);
+      var _super66 = _createSuper(WarehouseOrderHttpService);
 
       function WarehouseOrderHttpService(http, logger, dbService) {
-        var _this153;
-
         _classCallCheck(this, WarehouseOrderHttpService);
 
-        _this153 = _super62.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this153;
+        return _super66.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseOrderHttpService, [{
@@ -21380,110 +20922,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseDatasource = /*#__PURE__*/function (_datasource_service__15) {
       _inherits(WarehouseDatasource, _datasource_service__15);
 
-      var _super63 = _createSuper(WarehouseDatasource);
+      var _super67 = _createSuper(WarehouseDatasource);
 
       function WarehouseDatasource(httpService, dbService, logger) {
-        var _this154;
-
         _classCallCheck(this, WarehouseDatasource);
 
-        _this154 = _super63.call(this, httpService, dbService, logger);
-        _this154.latestCount = 0;
-        return _this154;
+        return _super67.call(this, httpService, dbService, logger);
       }
 
-      _createClass(WarehouseDatasource, [{
-        key: "getAll",
-        value: function getAll() {
-          var _this155 = this;
-
-          return _get(_getPrototypeOf(WarehouseDatasource.prototype), "getDbService", this).call(this).getAll().then(function (customers) {
-            customers = _this155.filter(customers);
-            customers = _this155.sort(customers);
-            _this155.latestCount = (customers || []).length;
-            customers = _this155.paginate(customers);
-            return customers;
-          });
-        }
-      }, {
-        key: "getElements",
-        value: function getElements() {
-          return this.getAll();
-        }
-      }, {
-        key: "count",
-        value: function count() {
-          return this.latestCount;
-        }
-        /**
-         * Update new data by old data as key.
-         * TODO remember return Promise of old data for updating view value
-         * @param oldData to filter for updating and returning to update view value
-         * @param newData to update into data source
-         */
-
-      }, {
-        key: "update",
-        value: function update(oldData, newData) {
-          var _this156 = this;
-
-          return this.getDbService().update(newData).then(function () {
-            _this156.refresh();
-
-            return oldData;
-          });
-        }
-        /**
-         * Remove the specified data
-         * @param data to remove
-         * @return effected records number
-         */
-
-      }, {
-        key: "remove",
-        value: function remove(data) {
-          var _this157 = this;
-
-          return this.getDbService()["delete"](data).then(function () {
-            _this157.refresh();
-
-            return 1;
-          });
-        }
-      }, {
-        key: "refresh",
-        value: function refresh() {
-          this.getLogger().debug('Refresh data source');
-
-          _get(_getPrototypeOf(WarehouseDatasource.prototype), "refresh", this).call(this);
-        }
-      }, {
-        key: "load",
-        value: function load(data) {
-          this.getLogger().debug('Load data', data);
-          return _get(_getPrototypeOf(WarehouseDatasource.prototype), "load", this).call(this, data);
-        }
-      }, {
-        key: "prepend",
-        value: function prepend(data) {
-          return this.append(data);
-        }
-      }, {
-        key: "append",
-        value: function append(data) {
-          var _this158 = this;
-
-          this.getLogger().debug('New data', data);
-          return this.getDbService().insert(data).then(function () {
-            _this158.refresh();
-
-            return 1;
-          });
-        }
-      }]);
-
       return WarehouseDatasource;
-    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"]);
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
 
     WarehouseDatasource.ctorParameters = function () {
       return [{
@@ -21596,48 +21044,35 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-    /* harmony import */
-
-
-    var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
 
     var WarehouseDbService = /*#__PURE__*/function (_database_service__WE17) {
       _inherits(WarehouseDbService, _database_service__WE17);
 
-      var _super64 = _createSuper(WarehouseDbService);
+      var _super68 = _createSuper(WarehouseDbService);
 
       function WarehouseDbService(dbService, logger, connectionService) {
-        var _this159;
+        var _this84;
 
         _classCallCheck(this, WarehouseDbService);
 
-        _this159 = _super64.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse);
+        _this84 = _super68.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].warehouse);
 
-        _this159.deleteExecutor = function (resolve, reject) {
+        _this84.deleteExecutor = function (resolve, reject) {
           for (var _len24 = arguments.length, args = new Array(_len24 > 2 ? _len24 - 2 : 0), _key24 = 2; _key24 < _len24; _key24++) {
             args[_key24 - 2] = arguments[_key24];
           }
 
           if (args && args.length) {
-            _this159.getLogger().debug('Delete data', args, 'First data', args[0]);
+            _this84.getLogger().debug('Delete data', args, 'First data', args[0]);
 
             args[0].deletedAt = new Date().getTime();
 
-            _this159.updateExecutor.apply(_assertThisInitialized(_this159), [resolve, reject].concat(args));
+            _this84.updateExecutor.apply(_assertThisInitialized(_this84), [resolve, reject].concat(args));
           } else resolve(0);
         };
 
-        return _this159;
+        return _this84;
       }
-
-      _createClass(WarehouseDbService, [{
-        key: "getAll",
-        value: function getAll() {
-          return _get(_getPrototypeOf(WarehouseDbService.prototype), "getAll", this).call(this);
-        }
-      }]);
 
       return WarehouseDbService;
     }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
@@ -21669,16 +21104,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var WarehouseHttpService = /*#__PURE__*/function (_http_service__WEBPAC15) {
       _inherits(WarehouseHttpService, _http_service__WEBPAC15);
 
-      var _super65 = _createSuper(WarehouseHttpService);
+      var _super69 = _createSuper(WarehouseHttpService);
 
       function WarehouseHttpService(http, logger, dbService) {
-        var _this160;
-
         _classCallCheck(this, WarehouseHttpService);
 
-        _this160 = _super65.call(this, http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
-        return _this160;
+        return _super69.call(this, http, logger, dbService);
       }
 
       _createClass(WarehouseHttpService, [{
@@ -21723,6 +21154,563 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     };
 
     WarehouseHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(WarehouseDbService)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], WarehouseDbService])], WarehouseHttpService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/interceptors/abstract.http.interceptor.ts":
+  /*!********************************************************************!*\
+    !*** ./src/app/services/interceptors/abstract.http.interceptor.ts ***!
+    \********************************************************************/
+
+  /*! exports provided: AbstractHttpInterceptor */
+
+  /***/
+  function srcAppServicesInterceptorsAbstractHttpInterceptorTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AbstractHttpInterceptor", function () {
+      return AbstractHttpInterceptor;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var _nebular_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @nebular/auth */
+    "./node_modules/@nebular/auth/fesm2015/index.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! util */
+    "./node_modules/util/util.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_5__);
+
+    var AbstractHttpInterceptor = /*#__PURE__*/function (_nebular_auth__WEBPAC3) {
+      _inherits(AbstractHttpInterceptor, _nebular_auth__WEBPAC3);
+
+      var _super70 = _createSuper(AbstractHttpInterceptor);
+
+      // -------------------------------------------------
+      // CONSTRUCTION
+      // -------------------------------------------------
+
+      /**
+       * Create a new instance of {AbstractHttpInterceptor}
+       * @param _injector {Injector}
+       * @param _logger {NGXLogger}
+       * @param headerName request header name for applying token if necessary
+       */
+      function AbstractHttpInterceptor(_injector, _logger, headerName) {
+        var _this85;
+
+        _classCallCheck(this, AbstractHttpInterceptor);
+
+        _this85 = _super70.call(this, _injector, headerName);
+        _this85._injector = _injector;
+        _this85._logger = _logger;
+        _injector || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject Injector instance');
+        _logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject NGXLogger instance');
+        return _this85;
+      } // -------------------------------------------------
+      // GETTERS/SETTERS
+      // -------------------------------------------------
+
+
+      _createClass(AbstractHttpInterceptor, [{
+        key: "getInjector",
+        value: function getInjector() {
+          return this._injector;
+        }
+      }, {
+        key: "intercept",
+        // -------------------------------------------------
+        // FUNCTIONS
+        // -------------------------------------------------
+
+        /**
+         * Intercept the present specified request {HttpRequest}
+         * @param req to intercept
+         * @param next for next intercept
+         */
+        value: function intercept(req, next) {
+          this.logger.warn('Just remind: Intercept HTTP{' + this.constructor.name + '}', req);
+          return this.isSupported(req) ? this.doIntercept(req, next) : next.handle(req);
+        }
+        /**
+         * Get a boolean value indicating the specified {HttpRequest} should be filtered.
+         * TODO Children classes should override this method if they wanna filter request. Default is TRUE
+         * @param req to check
+         */
+
+      }, {
+        key: "isSupported",
+        value: function isSupported(req) {
+          return !Object(util__WEBPACK_IMPORTED_MODULE_5__["isNullOrUndefined"])(req);
+        }
+      }, {
+        key: "logger",
+        get: function get() {
+          return this._logger;
+        }
+      }]);
+
+      return AbstractHttpInterceptor;
+    }(_nebular_auth__WEBPACK_IMPORTED_MODULE_4__["NbAuthSimpleInterceptor"]);
+
+    AbstractHttpInterceptor.ctorParameters = function () {
+      return [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
+        }]
+      }, {
+        type: String
+      }];
+    };
+
+    AbstractHttpInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], String])], AbstractHttpInterceptor);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/interceptors/auth.interceptor.ts":
+  /*!***********************************************************!*\
+    !*** ./src/app/services/interceptors/auth.interceptor.ts ***!
+    \***********************************************************/
+
+  /*! exports provided: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, NbxAuthInterceptor */
+
+  /***/
+  function srcAppServicesInterceptorsAuthInterceptorTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM", function () {
+      return NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_COMPANY_HEADER", function () {
+      return NBX_AUTH_INTERCEPTOR_COMPANY_HEADER;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "NbxAuthInterceptor", function () {
+      return NbxAuthInterceptor;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _nebular_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @nebular/auth */
+    "./node_modules/@nebular/auth/fesm2015/index.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _config_request_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../../config/request.config */
+    "./src/app/config/request.config.ts");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ./abstract.http.interceptor */
+    "./src/app/services/interceptors/abstract.http.interceptor.ts");
+
+    var NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Access Token Parameter');
+    var NBX_AUTH_INTERCEPTOR_COMPANY_HEADER = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Company Header Parameter');
+
+    var NbxAuthInterceptor = /*#__PURE__*/function (_abstract_http_interc) {
+      _inherits(NbxAuthInterceptor, _abstract_http_interc);
+
+      var _super71 = _createSuper(NbxAuthInterceptor);
+
+      function NbxAuthInterceptor(_injector, _logger) {
+        var _this86;
+
+        var headerName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_AUTH_AUTHORIZATION_HEADER"];
+        var companyHeaderName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : _config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_COMPANY_HEADER"];
+        var accessTokenParamName = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : _config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_AUTH_ACCESS_TOKEN_PARAM"];
+
+        _classCallCheck(this, NbxAuthInterceptor);
+
+        _this86 = _super71.call(this, _injector, _logger, headerName);
+        _this86.headerName = headerName;
+        _this86.companyHeaderName = companyHeaderName;
+        _this86.accessTokenParamName = accessTokenParamName;
+        return _this86;
+      }
+
+      _createClass(NbxAuthInterceptor, [{
+        key: "isSupported",
+        value: function isSupported(req) {
+          return _get(_getPrototypeOf(NbxAuthInterceptor.prototype), "isSupported", this).call(this, req) && !this.isThirdPartyRequest(req);
+        }
+        /**
+         * Get a boolean value indicating the specified {HttpRequest} whether is third-party API request
+         * @param req to check
+         */
+
+      }, {
+        key: "isThirdPartyRequest",
+        value: function isThirdPartyRequest(req) {
+          return req.headers && req.headers.has(_config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_THIRD_PARTY_CUSTOM_TYPE"]);
+        }
+      }, {
+        key: "doIntercept",
+        value: function doIntercept(req, next) {
+          var _this87 = this;
+
+          return this.authService.getToken().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (token) {
+            // exclude request that already has authorization token such as third-party API
+            if (token && token.getValue() && req && !req.headers.has(_this87.headerName) && !req.headers.hasOwnProperty(_this87.headerName)) {
+              req.headers.set(_this87.headerName, token.getValue());
+              req.headers.set(_this87.companyHeaderName, token.getPayload()['company']);
+              req.params.append(_this87.accessTokenParamName, token.getValue());
+            }
+
+            return next.handle(req);
+          }));
+        }
+      }]);
+
+      return NbxAuthInterceptor;
+    }(_abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_6__["AbstractHttpInterceptor"]);
+
+    NbxAuthInterceptor.ctorParameters = function () {
+      return [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]]
+        }]
+      }, {
+        type: String,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"],
+          args: [_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"]]
+        }]
+      }, {
+        type: String,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"],
+          args: [NBX_AUTH_INTERCEPTOR_COMPANY_HEADER]
+        }]
+      }, {
+        type: String,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"],
+          args: [NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM]
+        }]
+      }];
+    };
+
+    NbxAuthInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_COMPANY_HEADER)), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](4, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], String, String, String])], NbxAuthInterceptor);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/interceptors/headers.interceptor.ts":
+  /*!**************************************************************!*\
+    !*** ./src/app/services/interceptors/headers.interceptor.ts ***!
+    \**************************************************************/
+
+  /*! exports provided: HTTP_REQUEST_HEADERS, RequestHeadersInterceptor */
+
+  /***/
+  function srcAppServicesInterceptorsHeadersInterceptorTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "HTTP_REQUEST_HEADERS", function () {
+      return HTTP_REQUEST_HEADERS;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RequestHeadersInterceptor", function () {
+      return RequestHeadersInterceptor;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ./abstract.http.interceptor */
+    "./src/app/services/interceptors/abstract.http.interceptor.ts");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+
+    var HTTP_REQUEST_HEADERS = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('The default request header to apply such as CORS');
+
+    var RequestHeadersInterceptor = /*#__PURE__*/function (_abstract_http_interc2) {
+      _inherits(RequestHeadersInterceptor, _abstract_http_interc2);
+
+      var _super72 = _createSuper(RequestHeadersInterceptor);
+
+      function RequestHeadersInterceptor(_injector, _logger, _headers) {
+        var _this88;
+
+        _classCallCheck(this, RequestHeadersInterceptor);
+
+        _this88 = _super72.call(this, _injector, _logger, null);
+        _this88._headers = _headers;
+        return _this88;
+      }
+
+      _createClass(RequestHeadersInterceptor, [{
+        key: "doIntercept",
+        value: function doIntercept(req, next) {
+          if (req && this.headers) {
+            var httpHeaders;
+
+            if (this.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]) {
+              httpHeaders = this.headers;
+            } else {
+              httpHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](this.headers);
+            }
+
+            httpHeaders.keys().forEach(function (key) {
+              // remove existed headers for non-overriding
+              if (!req.headers.has(key)) {
+                req.headers.set(key, httpHeaders.get(key));
+              }
+            });
+          }
+
+          return next.handle(req);
+        }
+      }, {
+        key: "headers",
+        get: function get() {
+          return this._headers;
+        }
+      }]);
+
+      return RequestHeadersInterceptor;
+    }(_abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpInterceptor"]);
+
+    RequestHeadersInterceptor.ctorParameters = function () {
+      return [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]]
+        }]
+      }, {
+        type: undefined,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [HTTP_REQUEST_HEADERS]
+        }]
+      }];
+    };
+
+    RequestHeadersInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(HTTP_REQUEST_HEADERS)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], Object])], RequestHeadersInterceptor);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/interceptors/timeout.interceptor.ts":
+  /*!**************************************************************!*\
+    !*** ./src/app/services/interceptors/timeout.interceptor.ts ***!
+    \**************************************************************/
+
+  /*! exports provided: HTTP_REQUEST_TIMEOUT, TimeoutInterceptor */
+
+  /***/
+  function srcAppServicesInterceptorsTimeoutInterceptorTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "HTTP_REQUEST_TIMEOUT", function () {
+      return HTTP_REQUEST_TIMEOUT;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "TimeoutInterceptor", function () {
+      return TimeoutInterceptor;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ./abstract.http.interceptor */
+    "./src/app/services/interceptors/abstract.http.interceptor.ts");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+
+    var HTTP_REQUEST_TIMEOUT = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('The default request timeout to apply');
+
+    var TimeoutInterceptor = /*#__PURE__*/function (_abstract_http_interc3) {
+      _inherits(TimeoutInterceptor, _abstract_http_interc3);
+
+      var _super73 = _createSuper(TimeoutInterceptor);
+
+      function TimeoutInterceptor(_injector, _logger, _timeout) {
+        var _this89;
+
+        _classCallCheck(this, TimeoutInterceptor);
+
+        _this89 = _super73.call(this, _injector, _logger, null);
+        _this89._timeout = _timeout;
+        return _this89;
+      }
+
+      _createClass(TimeoutInterceptor, [{
+        key: "doIntercept",
+        value: function doIntercept(req, next) {
+          var timeoutValue = req.headers.get('timeout') || this.timeout;
+          var timeoutValueNumeric = Number(timeoutValue);
+          return next.handle(req).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(timeoutValueNumeric));
+        }
+      }, {
+        key: "timeout",
+        get: function get() {
+          return Math.max(this._timeout, 0);
+        }
+      }]);
+
+      return TimeoutInterceptor;
+    }(_abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_2__["AbstractHttpInterceptor"]);
+
+    TimeoutInterceptor.ctorParameters = function () {
+      return [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"]]
+        }]
+      }, {
+        type: undefined,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [HTTP_REQUEST_TIMEOUT]
+        }]
+      }];
+    };
+
+    TimeoutInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(HTTP_REQUEST_TIMEOUT)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], Number])], TimeoutInterceptor);
     /***/
   },
 
@@ -21826,6 +21814,1934 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
   },
 
   /***/
+  "./src/app/services/third.party/data.parsers/third.party.data.parser.ts":
+  /*!******************************************************************************!*\
+    !*** ./src/app/services/third.party/data.parsers/third.party.data.parser.ts ***!
+    \******************************************************************************/
+
+  /*! exports provided: ThirdPartyApiDataParserDefinition, AbstractThirdPartyApiDataParser */
+
+  /***/
+  function srcAppServicesThirdPartyDataParsersThirdPartyDataParserTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ThirdPartyApiDataParserDefinition", function () {
+      return ThirdPartyApiDataParserDefinition;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AbstractThirdPartyApiDataParser", function () {
+      return AbstractThirdPartyApiDataParser;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../../../utils/json.utils */
+    "./src/app/utils/json.utils.ts");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! util */
+    "./node_modules/util/util.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_3__);
+    /**
+     * Default third-party API data parser definition
+     */
+
+
+    var ThirdPartyApiDataParserDefinition = function ThirdPartyApiDataParserDefinition(parsers) {
+      _classCallCheck(this, ThirdPartyApiDataParserDefinition);
+
+      this.parsers = parsers;
+    };
+    /**
+     * Abstract third-party API data parser
+     */
+
+
+    var AbstractThirdPartyApiDataParser = /*#__PURE__*/function () {
+      function AbstractThirdPartyApiDataParser(_dataPropertyName) {
+        _classCallCheck(this, AbstractThirdPartyApiDataParser);
+
+        this._dataPropertyName = _dataPropertyName;
+        (_dataPropertyName || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])('Please define the property of the returned third-part API data to parse');
+      }
+
+      _createClass(AbstractThirdPartyApiDataParser, [{
+        key: "parse",
+        value: function parse(data) {
+          var _this90 = this;
+
+          var parsedData;
+          parsedData = null;
+          if (!data || !(data.response || '').length) return parsedData;
+          var receivedEntities;
+          receivedEntities = _utils_json_utils__WEBPACK_IMPORTED_MODULE_2__["default"].parseResponseJson(data.response);
+
+          if (receivedEntities && !Object(util__WEBPACK_IMPORTED_MODULE_3__["isArray"])(receivedEntities)) {
+            receivedEntities = [receivedEntities];
+          }
+
+          if (Object(util__WEBPACK_IMPORTED_MODULE_3__["isArray"])(receivedEntities) && receivedEntities.length) {
+            parsedData = [];
+            receivedEntities.forEach(function (receiveEntity) {
+              if (receiveEntity && receiveEntity.hasOwnProperty(_this90.dataPropertyName) && (receiveEntity[_this90.dataPropertyName] || '').length) {
+                var mappedData = _this90.mappingData(receiveEntity);
+
+                mappedData && parsedData.push(mappedData);
+                !mappedData && window.console.warn(['Could not parse ', receiveEntity, ' data from third-party API!']);
+              }
+            });
+          }
+
+          return parsedData;
+        }
+      }, {
+        key: "dataPropertyName",
+        get: function get() {
+          return this._dataPropertyName;
+        }
+      }]);
+
+      return AbstractThirdPartyApiDataParser;
+    }();
+    /***/
+
+  },
+
+  /***/
+  "./src/app/services/third.party/third.party.api.bridge.service.ts":
+  /*!************************************************************************!*\
+    !*** ./src/app/services/third.party/third.party.api.bridge.service.ts ***!
+    \************************************************************************/
+
+  /*! exports provided: ThirdPartyApiBridgeDbService */
+
+  /***/
+  function srcAppServicesThirdPartyThirdPartyApiBridgeServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ThirdPartyApiBridgeDbService", function () {
+      return ThirdPartyApiBridgeDbService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var ng_connection_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ng-connection-service */
+    "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./third.party.api.datasource */
+    "./src/app/services/third.party/third.party.api.datasource.ts");
+    /* harmony import */
+
+
+    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ngx-indexed-db */
+    "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+    /* harmony import */
+
+
+    var _database_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ../database.service */
+    "./src/app/services/database.service.ts");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! util */
+    "./node_modules/util/util.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_8__);
+
+    var ThirdPartyApiBridgeDbService_1;
+
+    var ThirdPartyApiBridgeDbService = ThirdPartyApiBridgeDbService_1 = /*#__PURE__*/function (_database_service__WE18) {
+      _inherits(ThirdPartyApiBridgeDbService, _database_service__WE18);
+
+      var _super74 = _createSuper(ThirdPartyApiBridgeDbService);
+
+      function ThirdPartyApiBridgeDbService(dbService, logger, connectionService, _thirdPartyApi) {
+        var _this91;
+
+        _classCallCheck(this, ThirdPartyApiBridgeDbService);
+
+        // TODO Not using database store here, because this is just a bridge data-source
+        _this91 = _super74.call(this, dbService, logger, connectionService, 'NOT_USING_STORE_BECAUSE_THIS_JUST_BRIDGE_API');
+        _this91._thirdPartyApi = _thirdPartyApi;
+
+        _this91.deleteExecutor = function (resolve, reject) {
+          for (var _len25 = arguments.length, args = new Array(_len25 > 2 ? _len25 - 2 : 0), _key25 = 2; _key25 < _len25; _key25++) {
+            args[_key25 - 2] = arguments[_key25];
+          }
+
+          if (args && args.length) {
+            _this91.getLogger().debug('Delete data', args, 'First data', args[0]);
+
+            args[0].deletedAt = new Date().getTime();
+            args[0].expiredAt = new Date().getTime();
+
+            _this91.updateExecutor.apply(_assertThisInitialized(_this91), [resolve, reject].concat(args));
+          } else resolve(0);
+        };
+
+        _thirdPartyApi || Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])('Could not inject ThirdPartyApiDatasource instance');
+        return _this91;
+      }
+
+      _createClass(ThirdPartyApiBridgeDbService, [{
+        key: "getAll",
+
+        /**
+         * TODO Not support for getting all data because of performance
+         */
+        value: function getAll() {
+          Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(ThirdPartyApiBridgeDbService_1.EXCEPTION_PERFORMANCE_REASON);
+          return Promise.reject(ThirdPartyApiBridgeDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        }
+        /**
+         * Find API data by the specified parameter
+         * @param param to filter
+         */
+
+      }, {
+        key: "fetch",
+        value: function fetch(param) {
+          var _this92 = this;
+
+          // check valid parameter
+          param && param.dbCacheFilter || Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(ThirdPartyApiBridgeDbService_1.EXCEPTION_PERFORMANCE_REASON);
+          param.callApi && (param.callApi.method || '').length && (typeof this.thirdPartyApi[param.callApi.method] === 'function' || this.thirdPartyApi[param.callApi.method] instanceof Promise || this.thirdPartyApi[param.callApi.method] instanceof rxjs__WEBPACK_IMPORTED_MODULE_7__["Observable"]) || Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(ThirdPartyApiBridgeDbService_1.EXCEPTION_INVALID_API_GATEWAY);
+          return this.getDbService().getAllByIndex(param.dbCacheFilter.dbStore, param.dbCacheFilter.indexName, param.dbCacheFilter.criteria).then(function (value) {
+            // if not found data from database storage;
+            // then calling third-party API to fetch data
+            if (!value || Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(value) && !(value || []).length) {
+              // require third-part entry point
+              var apiGatewayEntry = _this92.thirdPartyApi[param.callApi.method];
+              var apiGatewayEntryPromise;
+
+              if (!(apiGatewayEntry instanceof Promise) && !(apiGatewayEntry instanceof rxjs__WEBPACK_IMPORTED_MODULE_7__["Observable"])) {
+                apiGatewayEntryPromise = new Promise(function (resolve) {
+                  return resolve(apiGatewayEntry['apply'](_this92._thirdPartyApi, param.callApi.args));
+                });
+              } else if (apiGatewayEntry instanceof Promise) {
+                apiGatewayEntryPromise = apiGatewayEntry;
+              } else {
+                apiGatewayEntryPromise = apiGatewayEntry.toPromise();
+              } // invoke third-part API entry point
+
+
+              return apiGatewayEntryPromise.then(param.apiFulfilled, function (reason) {
+                _this92.getLogger().error(reason);
+
+                return [];
+              })["catch"](function (reason) {
+                _this92.getLogger().error(reason);
+
+                return [];
+              });
+            }
+
+            return value && !Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(value) ? Array.of(value) : value ? Array.from(value) : value;
+          }, function (reason) {
+            _this92.getLogger().error(reason);
+
+            return [];
+          })["catch"](function (reason) {
+            _this92.getLogger().error(reason);
+
+            return [];
+          });
+        }
+      }, {
+        key: "thirdPartyApi",
+        get: function get() {
+          return this._thirdPartyApi;
+        }
+      }]);
+
+      return ThirdPartyApiBridgeDbService;
+    }(_database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"]);
+
+    ThirdPartyApiBridgeDbService.EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all data because of performance!';
+    ThirdPartyApiBridgeDbService.EXCEPTION_INVALID_API_GATEWAY = 'Not found the valid API function';
+
+    ThirdPartyApiBridgeDbService.ctorParameters = function () {
+      return [{
+        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"]]
+        }]
+      }, {
+        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"]]
+        }]
+      }, {
+        type: _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"]]
+        }]
+      }];
+    };
+
+    ThirdPartyApiBridgeDbService = ThirdPartyApiBridgeDbService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"], _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"]])], ThirdPartyApiBridgeDbService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/third.party/third.party.api.datasource.ts":
+  /*!********************************************************************!*\
+    !*** ./src/app/services/third.party/third.party.api.datasource.ts ***!
+    \********************************************************************/
+
+  /*! exports provided: THIRDPARTY_API_DATA_PARSER_DEFINITION, ThirdPartyApiDatasource */
+
+  /***/
+  function srcAppServicesThirdPartyThirdPartyApiDatasourceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "THIRDPARTY_API_DATA_PARSER_DEFINITION", function () {
+      return THIRDPARTY_API_DATA_PARSER_DEFINITION;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ThirdPartyApiDatasource", function () {
+      return ThirdPartyApiDatasource;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _datasource_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../datasource.service */
+    "./src/app/services/datasource.service.ts");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./third.party.api.service */
+    "./src/app/services/third.party/third.party.api.service.ts");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! util */
+    "./node_modules/util/util.js");
+    /* harmony import */
+
+
+    var util__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_6__);
+    /* harmony import */
+
+
+    var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! ./data.parsers/third.party.data.parser */
+    "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+
+    var ThirdPartyApiDatasource_1;
+    var THIRDPARTY_API_DATA_PARSER_DEFINITION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('Third-party API data parsers definition');
+
+    var ThirdPartyApiDatasource = ThirdPartyApiDatasource_1 = /*#__PURE__*/function (_datasource_service__16) {
+      _inherits(ThirdPartyApiDatasource, _datasource_service__16);
+
+      var _super75 = _createSuper(ThirdPartyApiDatasource);
+
+      function ThirdPartyApiDatasource(httpService, dbService, logger, _dataParser) {
+        var _this93;
+
+        _classCallCheck(this, ThirdPartyApiDatasource);
+
+        _this93 = _super75.call(this, httpService, dbService, logger);
+        _this93._dataParser = _dataParser;
+        return _this93;
+      }
+      /**
+       * Get the third-party API data parser definition injection instance
+       * @return the third-party API data parser definition injection instance
+       */
+
+
+      _createClass(ThirdPartyApiDatasource, [{
+        key: "dataParser",
+        value: function dataParser() {
+          return this._dataParser || new _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_7__["ThirdPartyApiDataParserDefinition"]([]);
+        }
+      }, {
+        key: "getAll",
+        value: function getAll() {
+          Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(ThirdPartyApiDatasource_1.EXCEPTION_NOT_SUPPORTED);
+          return Promise.reject(ThirdPartyApiDatasource_1.EXCEPTION_NOT_SUPPORTED);
+        }
+        /**
+         * Find data from third-party API
+         * @param <K> application data to parse. it must exist in data parser injection
+         * @param url to call API
+         * @param method request method
+         * @param dataParserType to detect parser injection to parse API data
+         * @param options request options if not found from database offline
+         */
+
+      }, {
+        key: "findData",
+        value: function findData(url, method, dataParserType, options) {
+          (url || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(ThirdPartyApiDatasource_1.EXCEPTION_NOT_SUPPORTED);
+
+          var _this = this;
+
+          var criteria = [_this.getHttpService().config.code, method || 'UNKNOWN', url].join('|');
+          return _this.getDbService().findEntities(ThirdPartyApiDatasource_1.INDEX_NAME_THIRD_PARTY_CODE, criteria).then(function (value) {
+            if (!(value || []).length) {
+              return _this.getHttpService().request(url, method, options).toPromise().then(function (data) {
+                // catch for future from offline database
+                if (data && !Object(util__WEBPACK_IMPORTED_MODULE_6__["isArray"])(data)) {
+                  data = [].concat(data);
+                }
+
+                return _this.getDbService().insertEntities(data).then(function (affected) {
+                  var parsedData;
+                  parsedData = [];
+
+                  if (dataParserType && _this.dataParser() && _this.dataParser().parsers) {
+                    var parser;
+                    parser = _this.getDataParser(dataParserType);
+
+                    if (parser) {
+                      (data || []).forEach(function (dat) {
+                        var parsed = parser.parse(dat);
+
+                        if (parsed && Object(util__WEBPACK_IMPORTED_MODULE_6__["isArray"])(parsed)) {
+                          parsedData = parsedData.concat(parsed);
+                        } else if (parsed) {
+                          parsedData.push(parsed);
+                        }
+                      });
+                    }
+                  }
+
+                  data = _this.filter(data);
+                  data = _this.sort(data);
+
+                  _this.setRecordsNumber((data || []).length);
+
+                  data = _this.paginate(data);
+                  return parsedData;
+                }, function (reason) {
+                  _this.getLogger().error(reason);
+
+                  return [];
+                })["catch"](function (reason) {
+                  _this.getLogger().error(reason);
+
+                  return [];
+                });
+              }, function (reason) {
+                _this.getLogger().error(reason);
+
+                return [];
+              })["catch"](function (reason) {
+                _this.getLogger().error(reason);
+
+                return [];
+              });
+            }
+
+            return value;
+          }, function (reason) {
+            _this.getLogger().error(reason);
+
+            return [];
+          })["catch"](function (reason) {
+            _this.getLogger().error(reason);
+
+            return [];
+          });
+        }
+      }, {
+        key: "getDataParser",
+        value: function getDataParser(dataParserType) {
+          var parser;
+          parser = null;
+
+          if (this.dataParser().parsers && dataParserType) {
+            var _iterator2 = _createForOfIteratorHelper(this.dataParser().parsers),
+                _step2;
+
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var dataParserDef = _step2.value;
+
+                if (dataParserDef && dataParserDef.provide === dataParserType) {
+                  parser = dataParserDef.parser;
+                  break;
+                }
+              }
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+          }
+
+          return parser;
+        }
+      }]);
+
+      return ThirdPartyApiDatasource;
+    }(_datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"]);
+
+    ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED = 'Not support for getting all data because third-party manage data by URL, method and code!';
+    ThirdPartyApiDatasource.INDEX_NAME_THIRD_PARTY_CODE = 'code';
+
+    ThirdPartyApiDatasource.ctorParameters = function () {
+      return [{
+        type: _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"]]
+        }]
+      }, {
+        type: _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"]]
+        }]
+      }, {
+        type: undefined,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [THIRDPARTY_API_DATA_PARSER_DEFINITION]
+        }]
+      }];
+    };
+
+    ThirdPartyApiDatasource = ThirdPartyApiDatasource_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(THIRDPARTY_API_DATA_PARSER_DEFINITION)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"], _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], Object])], ThirdPartyApiDatasource);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/third.party/third.party.api.service.ts":
+  /*!*****************************************************************!*\
+    !*** ./src/app/services/third.party/third.party.api.service.ts ***!
+    \*****************************************************************/
+
+  /*! exports provided: default, THIRDPARTY_AUTHORIZATION_API_CONFIG, ThirdPartyApiExpiredException, ThirdPartyApiDbService, ThirdPartyApiHttpService */
+
+  /***/
+  function srcAppServicesThirdPartyThirdPartyApiServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return ThirdPartyApiConfig;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "THIRDPARTY_AUTHORIZATION_API_CONFIG", function () {
+      return THIRDPARTY_AUTHORIZATION_API_CONFIG;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ThirdPartyApiExpiredException", function () {
+      return ThirdPartyApiExpiredException;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ThirdPartyApiDbService", function () {
+      return ThirdPartyApiDbService;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ThirdPartyApiHttpService", function () {
+      return ThirdPartyApiHttpService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var _http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../http.service */
+    "./src/app/services/http.service.ts");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _response_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ../response.service */
+    "./src/app/services/response.service.ts");
+    /* harmony import */
+
+
+    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ../../utils/json.utils */
+    "./src/app/utils/json.utils.ts");
+    /* harmony import */
+
+
+    var _database_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! ../database.service */
+    "./src/app/services/database.service.ts");
+    /* harmony import */
+
+
+    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! ngx-indexed-db */
+    "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+    /* harmony import */
+
+
+    var _config_db_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ../../config/db.config */
+    "./src/app/config/db.config.ts");
+    /* harmony import */
+
+
+    var ng_connection_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ng-connection-service */
+    "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var _utils_object_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! ../../utils/object.utils */
+    "./src/app/utils/object.utils.ts");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _config_request_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! ../../config/request.config */
+    "./src/app/config/request.config.ts");
+    /* harmony import */
+
+
+    var ngx_cacheable__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    /*! ngx-cacheable */
+    "./node_modules/ngx-cacheable/esm2015/index.js");
+
+    var ThirdPartyApiHttpService_1;
+    /**
+     * Default third-party API authentication configuration
+     */
+
+    var ThirdPartyApiConfig = function ThirdPartyApiConfig(code, tokenUrl, tokenParam, method) {
+      _classCallCheck(this, ThirdPartyApiConfig);
+
+      this.code = code;
+      this.tokenUrl = tokenUrl;
+      this.tokenParam = tokenParam;
+      this.method = method;
+    };
+
+    var THIRDPARTY_AUTHORIZATION_API_CONFIG = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('Third-party API authorization token configuration');
+    /**
+     * Expired exception of third-party API
+     */
+
+    var ThirdPartyApiExpiredException = /*#__PURE__*/function (_Error) {
+      _inherits(ThirdPartyApiExpiredException, _Error);
+
+      var _super76 = _createSuper(ThirdPartyApiExpiredException);
+
+      function ThirdPartyApiExpiredException(_code, _cause) {
+        var _this94;
+
+        _classCallCheck(this, ThirdPartyApiExpiredException);
+
+        _this94 = _super76.call(this);
+        _this94._code = _code;
+        _this94._cause = _cause;
+        return _this94;
+      }
+
+      _createClass(ThirdPartyApiExpiredException, [{
+        key: "code",
+        get: function get() {
+          return this._code;
+        }
+      }, {
+        key: "cause",
+        get: function get() {
+          return this._cause;
+        }
+      }]);
+
+      return ThirdPartyApiExpiredException;
+    }( /*#__PURE__*/_wrapNativeSuper(Error));
+
+    var ThirdPartyApiDbService = /*#__PURE__*/function (_database_service__WE19) {
+      _inherits(ThirdPartyApiDbService, _database_service__WE19);
+
+      var _super77 = _createSuper(ThirdPartyApiDbService);
+
+      function ThirdPartyApiDbService(dbService, logger, connectionService) {
+        var _this95;
+
+        _classCallCheck(this, ThirdPartyApiDbService);
+
+        _this95 = _super77.call(this, dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_9__["DB_STORE"].third_party);
+
+        _this95.deleteExecutor = function (resolve, reject) {
+          for (var _len26 = arguments.length, args = new Array(_len26 > 2 ? _len26 - 2 : 0), _key26 = 2; _key26 < _len26; _key26++) {
+            args[_key26 - 2] = arguments[_key26];
+          }
+
+          if (args && args.length) {
+            _this95.getLogger().debug('Delete data', args, 'First data', args[0]);
+
+            args[0].deletedAt = new Date().getTime();
+            args[0].expiredAt = new Date().getTime();
+
+            _this95.updateExecutor.apply(_assertThisInitialized(_this95), [resolve, reject].concat(args));
+          } else resolve(0);
+        };
+
+        return _this95;
+      }
+
+      _createClass(ThirdPartyApiDbService, [{
+        key: "getAll",
+        value: function getAll() {
+          var _this96 = this;
+
+          return _get(_getPrototypeOf(ThirdPartyApiDbService.prototype), "getAll", this).call(this).then(function (value) {
+            (value || []).length && _this96._ensureNonExpiredData.apply(_this96, _toConsumableArray(value));
+            return value;
+          }, function (reason) {
+            _this96.getLogger().error(reason);
+
+            return [];
+          });
+        }
+      }, {
+        key: "findEntities",
+        value: function findEntities(indexName, criteria) {
+          var _this97 = this;
+
+          return _get(_getPrototypeOf(ThirdPartyApiDbService.prototype), "findEntities", this).call(this, indexName, criteria).then(function (value) {
+            (value || []).length && _this97._ensureNonExpiredData.apply(_this97, _toConsumableArray(value));
+            return value;
+          }, function (reason) {
+            _this97.getLogger().error(reason);
+
+            return [];
+          });
+        }
+      }, {
+        key: "findById",
+        value: function findById(id) {
+          var _this98 = this;
+
+          return _get(_getPrototypeOf(ThirdPartyApiDbService.prototype), "findById", this).call(this, id).then(function (value) {
+            value && _this98._ensureNonExpiredData(value);
+            return value;
+          }, function (reason) {
+            _this98.getLogger().error(reason);
+
+            return null;
+          });
+        }
+        /**
+         * Check valid non-expired data.
+         * If at least one data has expired, then {ThirdPartyApiExpiredException} will be thrown
+         * @param entities to check
+         * @private
+         */
+
+      }, {
+        key: "_ensureNonExpiredData",
+        value: function _ensureNonExpiredData() {
+          var currentDate = new Date();
+
+          for (var _len27 = arguments.length, entities = new Array(_len27), _key27 = 0; _key27 < _len27; _key27++) {
+            entities[_key27] = arguments[_key27];
+          }
+
+          (entities || []).forEach(function (entity) {
+            if (entity && entity.expiredAt !== 0 && new Date(entity.expiredAt) >= currentDate) {
+              Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(new ThirdPartyApiExpiredException(entity.code, new Error('Third party data has been expired!')));
+            }
+          });
+        }
+      }]);
+
+      return ThirdPartyApiDbService;
+    }(_database_service__WEBPACK_IMPORTED_MODULE_7__["AbstractBaseDbService"]);
+
+    ThirdPartyApiDbService.ctorParameters = function () {
+      return [{
+        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
+        }]
+      }, {
+        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"]]
+        }]
+      }];
+    };
+
+    ThirdPartyApiDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"]])], ThirdPartyApiDbService);
+
+    var ThirdPartyApiHttpService = ThirdPartyApiHttpService_1 = /*#__PURE__*/function (_http_service__WEBPAC16) {
+      _inherits(ThirdPartyApiHttpService, _http_service__WEBPAC16);
+
+      var _super78 = _createSuper(ThirdPartyApiHttpService);
+
+      function ThirdPartyApiHttpService(http, logger, dbService, apiConfig) {
+        var _this99;
+
+        _classCallCheck(this, ThirdPartyApiHttpService);
+
+        _this99 = _super78.call(this, http, logger, dbService);
+        _this99.apiConfig = apiConfig;
+        apiConfig || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject third-party API configuration');
+        (apiConfig.code || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Third-party API configuration code must be not undefined');
+        return _this99;
+      }
+
+      _createClass(ThirdPartyApiHttpService, [{
+        key: "parseResponse",
+        value: function parseResponse(serviceResponse) {
+          if (!serviceResponse || !serviceResponse.getResponse() || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
+            return undefined;
+          }
+
+          var data = _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].parseResponseJson(serviceResponse.getResponse().body);
+
+          data.code = this.config.code.concat('|', this.apiConfig.method || 'UNKNOWN', '|', serviceResponse.getResponse().url);
+
+          if (Math.max(this.config.expiredIn, 0) > 0) {
+            data.expiredAt = new Date().getTime() + this.config.expiredIn;
+          }
+
+          return data;
+        }
+      }, {
+        key: "handleOfflineMode",
+        value: function handleOfflineMode(url, method, res, options) {
+          return undefined;
+        }
+      }, {
+        key: "configHeaders",
+        value: function configHeaders(defaultValue) {
+          return this.config.tokenParam && this.config.tokenParam.type === 'header' ? this.config.tokenParam.values : defaultValue;
+        }
+      }, {
+        key: "configParams",
+        value: function configParams(defaultValue) {
+          return this.config.tokenParam && this.config.tokenParam.type === 'param' ? this.config.tokenParam.values : defaultValue;
+        }
+      }, {
+        key: "configBody",
+        value: function configBody(defaultValue) {
+          return this.config.tokenParam && this.config.tokenParam.type === 'body' ? this.config.tokenParam.values : defaultValue;
+        }
+      }, {
+        key: "configResponseType",
+        value: function configResponseType(defaultValue) {
+          return this.config.tokenParam ? this.config.tokenParam.responseType : defaultValue;
+        }
+      }, {
+        key: "configObserve",
+        value: function configObserve(defaultValue) {
+          return this.config.tokenParam ? this.config.tokenParam.observe : defaultValue;
+        }
+      }, {
+        key: "handleResponseError",
+        value: function handleResponseError(url, method, res, options) {
+          /** check whether is un-authorized/expired */
+          if (url !== this.config.tokenUrl && this.isUnauthorizedOrExpired(res)) {
+            !(this.config.tokenUrl || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Please provide third-party authorization configuration to require access token!');
+            return this.handleUnauthorizedExpired(url, method, options);
+          }
+
+          return _get(_getPrototypeOf(ThirdPartyApiHttpService.prototype), "handleResponseError", this).call(this, url, method, options);
+        }
+      }, {
+        key: "isUnauthorizedOrExpired",
+        value: function isUnauthorizedOrExpired(res) {
+          return false;
+        }
+        /**
+         * Handle the un-authorized/expired token case via {IThirdPartyApiConfig},
+         * by sending another request to require authorization token
+         * @param url original URL
+         * @param method original request method
+         * @param res original request response error
+         * @param options original request options
+         */
+
+      }, {
+        key: "handleUnauthorizedExpired",
+        value: function handleUnauthorizedExpired(url, method, res, options) {
+          // prepare options for authorization request
+          var clonedOptions = _utils_object_utils__WEBPACK_IMPORTED_MODULE_12__["default"].deepCopy(options || {});
+
+          clonedOptions.headers = this.configHeaders();
+          clonedOptions.params = this.configParams();
+          clonedOptions.body = this.configBody();
+          clonedOptions.observe = this.configObserve();
+          clonedOptions.responseType = this.configResponseType();
+
+          if (this.config.tokenParam && this.config.tokenParam.type === 'custom') {
+            clonedOptions = this.customAuthorizeRequestOptions(clonedOptions);
+            clonedOptions = clonedOptions || {};
+          } // create authorization request to require token or authorize
+
+
+          var _this = this;
+
+          return _this.getHttp().request(_this.config.method, _this.config.tokenUrl, clonedOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(function (accessTokenResp) {
+            _this.getLogger().debug('Access Token Response', accessTokenResp);
+
+            return accessTokenResp;
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(function (accessTokenResp) {
+            var httpResp = accessTokenResp;
+
+            _this.ensureVaidResponse(httpResp, _this.config.tokenUrl, _this.config.method, clonedOptions);
+
+            var accessToken = _this.parseAccessToken(httpResp);
+
+            _this.config[ThirdPartyApiHttpService_1.THIRD_PARTY_LATEST_ACCESS_TOKEN] = accessToken;
+
+            if (!accessToken) {
+              Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpErrorResponse"]({
+                url: url,
+                headers: options.headers,
+                status: 401,
+                statusText: 'Unauthorized',
+                error: 'Token has been expired! But could not require/parse new token again!'
+              }));
+            }
+
+            return accessToken;
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(function (accessToken) {
+            // include new token to original request to request again
+            return _this.updateRequestOptionsBeforeRequest(options);
+          }), // TODO this is way to call an observer in another observer
+          Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["flatMap"])(function (tokenOptions) {
+            return _this.getHttp().request(method, url, tokenOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(function (apiDataResp) {
+              if (apiDataResp instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"]) {
+                var httpResp = apiDataResp;
+
+                _this.ensureVaidResponse(httpResp, url, method, tokenOptions);
+              } else {
+                apiDataResp = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"]({
+                  body: JSON.stringify(apiDataResp),
+                  headers: tokenOptions && tokenOptions.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"] ? tokenOptions.headers : new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]((tokenOptions || {}).headers),
+                  status: 200,
+                  url: url
+                });
+              }
+
+              return _this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](true, apiDataResp, tokenOptions.redirectSuccess, [], tokenOptions.messages));
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["catchError"])(_this.processRequestError(url, method, options)));
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["catchError"])(_this.processRequestError(url, method, options)));
+        }
+        /**
+         * Custom the authorization/access token request options if {IThirdPartyApiConfig#tokenParam#type} is 'custom'.
+         * TODO Children class should override this method if necessary customization
+         * @param options original options to customize
+         */
+
+      }, {
+        key: "customAuthorizeRequestOptions",
+        value: function customAuthorizeRequestOptions(options) {
+          return options;
+        }
+        /**
+         * Parse authorization/access token from the specified {HttpResponse} for applying into original request.
+         * TODO Children class should override this method and cache token again for later
+         * @param httpResponse to parse
+         */
+
+      }, {
+        key: "parseAccessToken",
+        value: function parseAccessToken(httpResponse) {
+          var source = httpResponse instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? httpResponse.body : httpResponse;
+          return _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].safeParseJson(source);
+        }
+        /**
+         * Process the response token into the specified original request options
+         * to re-request again with including new access token.
+         * TODO Children class should override this method to apply new access token to request options
+         * @param tokenValue token that has returned from authorization request
+         * @param options original request options to include token
+         */
+
+      }, {
+        key: "processAccessToken",
+        value: function processAccessToken(tokenValue, options) {
+          return options;
+        }
+        /**
+         * Update X-Values header for request options to specified this request from third-party
+         * @param options to update
+         * @private
+         */
+
+      }, {
+        key: "updateRequestOptionsBeforeRequest",
+        value: function updateRequestOptionsBeforeRequest(options) {
+          // include the check flag to original request to avoid loop stack
+          options = Object.assign({}, options || {});
+          options.headers = options.headers || {};
+
+          if (options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]) {
+            options.headers.set(_config_request_config__WEBPACK_IMPORTED_MODULE_14__["RC_THIRD_PARTY_CUSTOM_TYPE"], this.config.code);
+          } else {
+            options.headers[_config_request_config__WEBPACK_IMPORTED_MODULE_14__["RC_THIRD_PARTY_CUSTOM_TYPE"]] = this.config.code;
+          }
+
+          return this.processAccessToken(this.config[ThirdPartyApiHttpService_1.THIRD_PARTY_LATEST_ACCESS_TOKEN], options);
+        }
+      }, {
+        key: "request",
+        value: function request(url, method, options) {
+          // apply latest token if necessary
+          options = options || {};
+          options = this.updateRequestOptionsBeforeRequest(options);
+          return _get(_getPrototypeOf(ThirdPartyApiHttpService.prototype), "request", this).call(this, url, method, options);
+        }
+      }, {
+        key: "config",
+        get: function get() {
+          return this.apiConfig;
+        }
+      }, {
+        key: "latestToken",
+        get: function get() {
+          return this.config[ThirdPartyApiHttpService_1.THIRD_PARTY_LATEST_ACCESS_TOKEN];
+        }
+      }]);
+
+      return ThirdPartyApiHttpService;
+    }(_http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"]);
+
+    ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN = 'XThirdPartyToken';
+
+    ThirdPartyApiHttpService.ctorParameters = function () {
+      return [{
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
+        }]
+      }, {
+        type: ThirdPartyApiDbService,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ThirdPartyApiDbService]
+        }]
+      }, {
+        type: undefined,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [THIRDPARTY_AUTHORIZATION_API_CONFIG]
+        }]
+      }];
+    };
+
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(ngx_cacheable__WEBPACK_IMPORTED_MODULE_15__["Cacheable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [String, String, Object]), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:returntype", rxjs__WEBPACK_IMPORTED_MODULE_11__["Observable"])], ThirdPartyApiHttpService.prototype, "request", null);
+    ThirdPartyApiHttpService = ThirdPartyApiHttpService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ThirdPartyApiDbService)), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(THIRDPARTY_AUTHORIZATION_API_CONFIG)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ThirdPartyApiDbService, Object])], ThirdPartyApiHttpService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/third.party/universal/data.parsers/city.data.parser.ts":
+  /*!*********************************************************************************!*\
+    !*** ./src/app/services/third.party/universal/data.parsers/city.data.parser.ts ***!
+    \*********************************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppServicesThirdPartyUniversalDataParsersCityDataParserTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return UniversalApiCityDataParser;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../data.parsers/third.party.data.parser */
+    "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+    /* harmony import */
+
+
+    var _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../../../../@core/data/system/province */
+    "./src/app/@core/data/system/province.ts");
+    /* harmony import */
+
+
+    var _config_generator_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../../../../config/generator.config */
+    "./src/app/config/generator.config.ts");
+    /**
+     * Universal third-party API cities data parser
+     */
+
+
+    var UniversalApiCityDataParser = /*#__PURE__*/function (_data_parsers_third_p) {
+      _inherits(UniversalApiCityDataParser, _data_parsers_third_p);
+
+      var _super79 = _createSuper(UniversalApiCityDataParser);
+
+      function UniversalApiCityDataParser() {
+        _classCallCheck(this, UniversalApiCityDataParser);
+
+        return _super79.call(this, UniversalApiCityDataParser.DATA_PROPERTY_CITY_NAME);
+      }
+
+      _createClass(UniversalApiCityDataParser, [{
+        key: "mappingData",
+        value: function mappingData(entity) {
+          var id = _config_generator_config__WEBPACK_IMPORTED_MODULE_3__["IdGenerators"].oid.generate();
+
+          var name = entity[this.dataPropertyName];
+          return new _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__["default"](id, name.left(UniversalApiCityDataParser.CITY_CODE_FROM_NAME_LENGTH), name);
+        }
+      }]);
+
+      return UniversalApiCityDataParser;
+    }(_data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__["AbstractThirdPartyApiDataParser"]);
+
+    UniversalApiCityDataParser.DATA_PROPERTY_CITY_NAME = 'city_name';
+    UniversalApiCityDataParser.CITY_CODE_FROM_NAME_LENGTH = 3;
+    /***/
+  },
+
+  /***/
+  "./src/app/services/third.party/universal/data.parsers/data.parsers.ts":
+  /*!*****************************************************************************!*\
+    !*** ./src/app/services/third.party/universal/data.parsers/data.parsers.ts ***!
+    \*****************************************************************************/
+
+  /*! exports provided: UNIVERSAL_DATA_PARSERS, UniversalApiDataParserDefinition */
+
+  /***/
+  function srcAppServicesThirdPartyUniversalDataParsersDataParsersTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UNIVERSAL_DATA_PARSERS", function () {
+      return UNIVERSAL_DATA_PARSERS;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UniversalApiDataParserDefinition", function () {
+      return UniversalApiDataParserDefinition;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _core_data_system_province__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../../../@core/data/system/province */
+    "./src/app/@core/data/system/province.ts");
+    /* harmony import */
+
+
+    var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../../data.parsers/third.party.data.parser */
+    "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+    /* harmony import */
+
+
+    var _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../../../../@core/data/system/city */
+    "./src/app/@core/data/system/city.ts");
+    /* harmony import */
+
+
+    var _province_data_parser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./province.data.parser */
+    "./src/app/services/third.party/universal/data.parsers/province.data.parser.ts");
+    /* harmony import */
+
+
+    var _city_data_parser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ./city.data.parser */
+    "./src/app/services/third.party/universal/data.parsers/city.data.parser.ts");
+
+    var UNIVERSAL_DATA_PARSERS = [{
+      provide: _core_data_system_province__WEBPACK_IMPORTED_MODULE_1__["default"],
+      parser: new _province_data_parser__WEBPACK_IMPORTED_MODULE_4__["default"]()
+    }, {
+      provide: _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__["default"],
+      parser: new _city_data_parser__WEBPACK_IMPORTED_MODULE_5__["default"]()
+    }];
+    /**
+     * Universal third-party API data parser definition
+     */
+
+    var UniversalApiDataParserDefinition = /*#__PURE__*/function (_data_parsers_third_p2) {
+      _inherits(UniversalApiDataParserDefinition, _data_parsers_third_p2);
+
+      var _super80 = _createSuper(UniversalApiDataParserDefinition);
+
+      function UniversalApiDataParserDefinition() {
+        _classCallCheck(this, UniversalApiDataParserDefinition);
+
+        return _super80.call(this, UNIVERSAL_DATA_PARSERS);
+      }
+
+      return UniversalApiDataParserDefinition;
+    }(_data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_2__["ThirdPartyApiDataParserDefinition"]);
+    /***/
+
+  },
+
+  /***/
+  "./src/app/services/third.party/universal/data.parsers/province.data.parser.ts":
+  /*!*************************************************************************************!*\
+    !*** ./src/app/services/third.party/universal/data.parsers/province.data.parser.ts ***!
+    \*************************************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppServicesThirdPartyUniversalDataParsersProvinceDataParserTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return UniversalApiProvinceDataParser;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../data.parsers/third.party.data.parser */
+    "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+    /* harmony import */
+
+
+    var _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../../../../@core/data/system/province */
+    "./src/app/@core/data/system/province.ts");
+    /* harmony import */
+
+
+    var _config_generator_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../../../../config/generator.config */
+    "./src/app/config/generator.config.ts");
+    /**
+     * Universal third-party API provinces data parser
+     */
+
+
+    var UniversalApiProvinceDataParser = /*#__PURE__*/function (_data_parsers_third_p3) {
+      _inherits(UniversalApiProvinceDataParser, _data_parsers_third_p3);
+
+      var _super81 = _createSuper(UniversalApiProvinceDataParser);
+
+      function UniversalApiProvinceDataParser() {
+        _classCallCheck(this, UniversalApiProvinceDataParser);
+
+        return _super81.call(this, UniversalApiProvinceDataParser.DATA_PROPERTY_PROVINCE_NAME);
+      }
+
+      _createClass(UniversalApiProvinceDataParser, [{
+        key: "mappingData",
+        value: function mappingData(entity) {
+          var id = _config_generator_config__WEBPACK_IMPORTED_MODULE_3__["IdGenerators"].oid.generate();
+
+          var name = entity[this.dataPropertyName];
+          return new _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__["default"](id, name.left(UniversalApiProvinceDataParser.PROVINCE_CODE_FROM_NAME_LENGTH), name);
+        }
+      }]);
+
+      return UniversalApiProvinceDataParser;
+    }(_data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__["AbstractThirdPartyApiDataParser"]);
+
+    UniversalApiProvinceDataParser.DATA_PROPERTY_PROVINCE_NAME = 'state_name';
+    UniversalApiProvinceDataParser.PROVINCE_CODE_FROM_NAME_LENGTH = 3;
+    /***/
+  },
+
+  /***/
+  "./src/app/services/third.party/universal/universal.api.bridge.service.ts":
+  /*!********************************************************************************!*\
+    !*** ./src/app/services/third.party/universal/universal.api.bridge.service.ts ***!
+    \********************************************************************************/
+
+  /*! exports provided: UniversalApiBridgeDbService */
+
+  /***/
+  function srcAppServicesThirdPartyUniversalUniversalApiBridgeServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UniversalApiBridgeDbService", function () {
+      return UniversalApiBridgeDbService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var ng_connection_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ng-connection-service */
+    "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ngx-indexed-db */
+    "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+    /* harmony import */
+
+
+    var _third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ../third.party.api.bridge.service */
+    "./src/app/services/third.party/third.party.api.bridge.service.ts");
+    /* harmony import */
+
+
+    var _universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ./universal.api.datasource */
+    "./src/app/services/third.party/universal/universal.api.datasource.ts");
+
+    var UniversalApiBridgeDbService = /*#__PURE__*/function (_third_party_api_brid) {
+      _inherits(UniversalApiBridgeDbService, _third_party_api_brid);
+
+      var _super82 = _createSuper(UniversalApiBridgeDbService);
+
+      function UniversalApiBridgeDbService(dbService, logger, connectionService, _thirdPartyApi) {
+        _classCallCheck(this, UniversalApiBridgeDbService);
+
+        return _super82.call(this, dbService, logger, connectionService, _thirdPartyApi);
+      }
+
+      return UniversalApiBridgeDbService;
+    }(_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_5__["ThirdPartyApiBridgeDbService"]);
+
+    UniversalApiBridgeDbService.ctorParameters = function () {
+      return [{
+        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"]]
+        }]
+      }, {
+        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"]]
+        }]
+      }, {
+        type: _universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"]]
+        }]
+      }];
+    };
+
+    UniversalApiBridgeDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"], _universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"]])], UniversalApiBridgeDbService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/third.party/universal/universal.api.datasource.ts":
+  /*!****************************************************************************!*\
+    !*** ./src/app/services/third.party/universal/universal.api.datasource.ts ***!
+    \****************************************************************************/
+
+  /*! exports provided: UNIVERSAL_API_DATA_PARSER_DEFINITION, UniversalApiDatasource */
+
+  /***/
+  function srcAppServicesThirdPartyUniversalUniversalApiDatasourceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UNIVERSAL_API_DATA_PARSER_DEFINITION", function () {
+      return UNIVERSAL_API_DATA_PARSER_DEFINITION;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UniversalApiDatasource", function () {
+      return UniversalApiDatasource;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var _universal_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ./universal.api.service */
+    "./src/app/services/third.party/universal/universal.api.service.ts");
+    /* harmony import */
+
+
+    var _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../third.party.api.datasource */
+    "./src/app/services/third.party/third.party.api.datasource.ts");
+    /* harmony import */
+
+
+    var _data_parsers_data_parsers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ./data.parsers/data.parsers */
+    "./src/app/services/third.party/universal/data.parsers/data.parsers.ts");
+
+    var UNIVERSAL_API_DATA_PARSER_DEFINITION = new _data_parsers_data_parsers__WEBPACK_IMPORTED_MODULE_5__["UniversalApiDataParserDefinition"]();
+    /**
+     * Universal third-party API data source
+     */
+
+    var UniversalApiDatasource = /*#__PURE__*/function (_third_party_api_data) {
+      _inherits(UniversalApiDatasource, _third_party_api_data);
+
+      var _super83 = _createSuper(UniversalApiDatasource);
+
+      function UniversalApiDatasource(httpService, dbService, logger) {
+        _classCallCheck(this, UniversalApiDatasource);
+
+        return _super83.call(this, httpService, dbService, logger, UNIVERSAL_API_DATA_PARSER_DEFINITION);
+      }
+
+      return UniversalApiDatasource;
+    }(_third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"]);
+
+    UniversalApiDatasource.ctorParameters = function () {
+      return [{
+        type: _universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"]]
+        }]
+      }, {
+        type: _universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
+        }]
+      }];
+    };
+
+    UniversalApiDatasource = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"], _universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]])], UniversalApiDatasource);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/third.party/universal/universal.api.service.ts":
+  /*!*************************************************************************!*\
+    !*** ./src/app/services/third.party/universal/universal.api.service.ts ***!
+    \*************************************************************************/
+
+  /*! exports provided: TOKEN_EXPIRED_ERROR_NAME, TOKEN_UNPROVIDED_ERROR_NAME, UNIVERSAL_API_CONFIG, UniversalApiDbService, UniversalApiHttpService */
+
+  /***/
+  function srcAppServicesThirdPartyUniversalUniversalApiServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "TOKEN_EXPIRED_ERROR_NAME", function () {
+      return TOKEN_EXPIRED_ERROR_NAME;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "TOKEN_UNPROVIDED_ERROR_NAME", function () {
+      return TOKEN_UNPROVIDED_ERROR_NAME;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UNIVERSAL_API_CONFIG", function () {
+      return UNIVERSAL_API_CONFIG;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UniversalApiDbService", function () {
+      return UniversalApiDbService;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UniversalApiHttpService", function () {
+      return UniversalApiHttpService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ngx-logger */
+    "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _utils_json_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../../../utils/json.utils */
+    "./src/app/utils/json.utils.ts");
+    /* harmony import */
+
+
+    var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ngx-indexed-db */
+    "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+    /* harmony import */
+
+
+    var ng_connection_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ng-connection-service */
+    "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+    /* harmony import */
+
+
+    var _core_data_system_api_third_party__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! ../../../@core/data/system/api.third.party */
+    "./src/app/@core/data/system/api.third.party.ts");
+    /* harmony import */
+
+
+    var _third_party_api_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! ../third.party.api.service */
+    "./src/app/services/third.party/third.party.api.service.ts");
+    /* harmony import */
+
+
+    var _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ../../../config/third.party.api */
+    "./src/app/config/third.party.api.ts");
+    /* harmony import */
+
+
+    var _config_request_config__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ../../../config/request.config */
+    "./src/app/config/request.config.ts");
+    /* harmony import */
+
+
+    var _config_generator_config__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! ../../../config/generator.config */
+    "./src/app/config/generator.config.ts");
+
+    var UniversalApiHttpService_1;
+    /**
+     * { 'error': {
+     *      'name': 'TokenExpiredError',
+     *      'message': 'jwt expired',
+     *      'expiredAt': '2020-02-18T17:55:22.000Z'
+     * } }
+     * { 'error': {
+     *      'name': 'JsonWebTokenError',
+     *      'message': 'jwt must be provided'
+     * } }
+     */
+
+    var TOKEN_EXPIRED_ERROR_NAME = 'TokenExpiredError';
+    var TOKEN_UNPROVIDED_ERROR_NAME = 'JsonWebTokenError';
+    var UNIVERSAL_API_CONFIG = {
+      code: _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.code,
+      baseUrl: _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.baseUrl,
+      tokenUrl: _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.tokenUrl,
+      method: 'GET',
+      tokenParam: {
+        type: 'header',
+        values: {
+          'api-token': _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.vapid_public_key,
+          'user-email': _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.email
+        }
+      }
+    };
+
+    var UniversalApiDbService = /*#__PURE__*/function (_third_party_api_serv) {
+      _inherits(UniversalApiDbService, _third_party_api_serv);
+
+      var _super84 = _createSuper(UniversalApiDbService);
+
+      function UniversalApiDbService(dbService, logger, connectionService) {
+        _classCallCheck(this, UniversalApiDbService);
+
+        return _super84.call(this, dbService, logger, connectionService);
+      }
+
+      return UniversalApiDbService;
+    }(_third_party_api_service__WEBPACK_IMPORTED_MODULE_8__["ThirdPartyApiDbService"]);
+
+    UniversalApiDbService.ctorParameters = function () {
+      return [{
+        type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
+        }]
+      }, {
+        type: ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"]]
+        }]
+      }];
+    };
+
+    UniversalApiDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"]])], UniversalApiDbService);
+
+    var UniversalApiHttpService = UniversalApiHttpService_1 = /*#__PURE__*/function (_third_party_api_serv2) {
+      _inherits(UniversalApiHttpService, _third_party_api_serv2);
+
+      var _super85 = _createSuper(UniversalApiHttpService);
+
+      // -------------------------------------------------
+      // CONSTRUCTION
+      // -------------------------------------------------
+      function UniversalApiHttpService(http, logger, dbService) {
+        _classCallCheck(this, UniversalApiHttpService);
+
+        return _super85.call(this, http, logger, dbService, UNIVERSAL_API_CONFIG);
+      }
+
+      _createClass(UniversalApiHttpService, [{
+        key: "parseResponse",
+        value: function parseResponse(serviceResponse) {
+          if (!serviceResponse || !serviceResponse.getResponse() || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
+            return undefined;
+          }
+
+          var data = new _core_data_system_api_third_party__WEBPACK_IMPORTED_MODULE_7__["UniversalApiThirdParty"]();
+          data.id = data.id || _config_generator_config__WEBPACK_IMPORTED_MODULE_11__["IdGenerators"].oid.generate();
+          data.code = [this.config.code, this.config.method || 'UNKNOWN', serviceResponse.getResponse().url].join('|');
+          data.response = serviceResponse.getResponse().body;
+          return data;
+        }
+      }, {
+        key: "isUnauthorizedOrExpired",
+        value: function isUnauthorizedOrExpired(res) {
+          if (res && res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpErrorResponse"] && (res.status === 500 || res.status === 401)) {
+            var respErr = res;
+
+            if (respErr.error) {
+              var errorResp = _utils_json_utils__WEBPACK_IMPORTED_MODULE_4__["default"].safeParseJson(respErr.error);
+
+              return errorResp && errorResp.error && [TOKEN_EXPIRED_ERROR_NAME, TOKEN_UNPROVIDED_ERROR_NAME].indexOf(errorResp.error.name) >= 0;
+            }
+          }
+
+          return _get(_getPrototypeOf(UniversalApiHttpService.prototype), "isUnauthorizedOrExpired", this).call(this, res);
+        }
+      }, {
+        key: "parseAccessToken",
+        value: function parseAccessToken(httpResponse) {
+          var token = _get(_getPrototypeOf(UniversalApiHttpService.prototype), "parseAccessToken", this).call(this, httpResponse);
+
+          return (token || {})[UniversalApiHttpService_1.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME];
+        }
+      }, {
+        key: "processAccessToken",
+        value: function processAccessToken(tokenValue, options) {
+          // accept invalid token for expired/unauthorized case
+          var authTokenValue = [_config_request_config__WEBPACK_IMPORTED_MODULE_10__["RC_AUTH_AUTHORIZATION_BEARER_TYPE"], tokenValue || ''].join(' ');
+          options = options || {};
+          options.headers = options.headers || {};
+
+          if (options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]) {
+            options.headers.set(_config_request_config__WEBPACK_IMPORTED_MODULE_10__["RC_AUTH_AUTHORIZATION_HEADER"], authTokenValue);
+          } else {
+            options.headers[_config_request_config__WEBPACK_IMPORTED_MODULE_10__["RC_AUTH_AUTHORIZATION_HEADER"]] = authTokenValue;
+          }
+
+          return options;
+        }
+      }]);
+
+      return UniversalApiHttpService;
+    }(_third_party_api_service__WEBPACK_IMPORTED_MODULE_8__["ThirdPartyApiHttpService"]);
+
+    UniversalApiHttpService.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME = 'auth_token';
+
+    UniversalApiHttpService.ctorParameters = function () {
+      return [{
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]]
+        }]
+      }, {
+        type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]]
+        }]
+      }, {
+        type: UniversalApiDbService,
+        decorators: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+          args: [UniversalApiDbService]
+        }]
+      }];
+    };
+
+    UniversalApiHttpService = UniversalApiHttpService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(UniversalApiDbService)), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], UniversalApiDbService])], UniversalApiHttpService);
+    /***/
+  },
+
+  /***/
   "./src/app/sw/push.service.ts":
   /*!************************************!*\
     !*** ./src/app/sw/push.service.ts ***!
@@ -21896,20 +23812,20 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var AbstractPushService = /*#__PURE__*/function (_services_http_servic2) {
       _inherits(AbstractPushService, _services_http_servic2);
 
-      var _super66 = _createSuper(AbstractPushService);
+      var _super86 = _createSuper(AbstractPushService);
 
       function AbstractPushService(http, logger, swPush) {
-        var _this161;
+        var _this100;
 
         var swVapidPublicKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'VAPID_PUBLIC_KEY';
         var dbService = arguments.length > 4 ? arguments[4] : undefined;
 
         _classCallCheck(this, AbstractPushService);
 
-        _this161 = _super66.call(this, http, logger, dbService);
-        _this161.swPush = swPush;
-        _this161.swVapidPublicKey = swVapidPublicKey;
-        return _this161;
+        _this100 = _super86.call(this, http, logger, dbService);
+        _this100.swPush = swPush;
+        _this100.swVapidPublicKey = swVapidPublicKey;
+        return _this100;
       }
 
       _createClass(AbstractPushService, [{
@@ -21925,14 +23841,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "subscribe",
         value: function subscribe() {
-          var _this162 = this;
+          var _this101 = this;
 
           this.getSwPush().requestSubscription({
             serverPublicKey: this.getSwVapidPublicKey()
           }).then(function (subscription) {
-            return _this162.pushSubscription(subscription);
+            return _this101.pushSubscription(subscription);
           })["catch"](function (err) {
-            return _this162.getLogger().error('Could not subscribe to notifications', err);
+            return _this101.getLogger().error('Could not subscribe to notifications', err);
           });
         }
       }]);
@@ -22019,7 +23935,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
          * @return the components list
          */
         value: function queryComponents(queryList, callback) {
-          var _this163 = this;
+          var _this102 = this;
 
           var components;
           components = [];
@@ -22027,7 +23943,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           if (queryList) {
             queryList.forEach(function (component) {
               components.push(component);
-              callback && callback.apply(_this163, [component]);
+              callback && callback.apply(_this102, [component]);
             });
           }
 
@@ -22043,7 +23959,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "queryComponent",
         value: function queryComponent(queryList, callback) {
-          var _this164 = this;
+          var _this103 = this;
 
           var component;
           component = undefined;
@@ -22051,7 +23967,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           if (queryList) {
             queryList.map(function (comp) {
               component = comp;
-              callback && callback.apply(_this164, [component]);
+              callback && callback.apply(_this103, [component]);
             });
           }
 
@@ -22155,8 +24071,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           var encrypted;
           encrypted = '';
 
-          for (var _len25 = arguments.length, values = new Array(_len25 > 1 ? _len25 - 1 : 0), _key25 = 1; _key25 < _len25; _key25++) {
-            values[_key25 - 1] = arguments[_key25];
+          for (var _len28 = arguments.length, values = new Array(_len28 > 1 ? _len28 - 1 : 0), _key28 = 1; _key28 < _len28; _key28++) {
+            values[_key28 - 1] = arguments[_key28];
           }
 
           if (values && values.length) {
@@ -22191,8 +24107,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           var encryptedValues;
           encryptedValues = [];
 
-          for (var _len26 = arguments.length, values = new Array(_len26 > 1 ? _len26 - 1 : 0), _key26 = 1; _key26 < _len26; _key26++) {
-            values[_key26 - 1] = arguments[_key26];
+          for (var _len29 = arguments.length, values = new Array(_len29 > 1 ? _len29 - 1 : 0), _key29 = 1; _key29 < _len29; _key29++) {
+            values[_key29 - 1] = arguments[_key29];
           }
 
           if (values && values.length) {
@@ -22338,7 +24254,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "buildFlatToHierarchyTree",
         value: function buildFlatToHierarchyTree(entities, entityIdPropertyName, entityParentIdPropertyName, parent, builtType, parentBuilt, childrenBuiltPropertyName, entityMapper) {
-          var _this165 = this;
+          var _this104 = this;
 
           (entityIdPropertyName || '').length && (entityParentIdPropertyName || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not build hierarchy that not specify property names to detect child/parent!');
           builtType || entityMapper || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not build hierarchy that not specify the built type or `entityMapper` method!');
@@ -22354,7 +24270,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               builtItem = HierarchyUtils.buildFlatHierarchyItem(entity, builtType, parentBuilt, childrenBuiltPropertyName, entityMapper);
               !parentBuilt && items.push(builtItem);
 
-              _this165.buildFlatToHierarchyTree(entities, entityIdPropertyName, entityParentIdPropertyName, entity, builtType, builtItem, childrenBuiltPropertyName, entityMapper);
+              _this104.buildFlatToHierarchyTree(entities, entityIdPropertyName, entityParentIdPropertyName, entity, builtType, builtItem, childrenBuiltPropertyName, entityMapper);
             }
           });
           return items;
@@ -22430,7 +24346,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "buildHierarchyTree",
         value: function buildHierarchyTree(entities, builtType, parent, childrenEntityPropertyName, parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper) {
-          var _this166 = this;
+          var _this105 = this;
 
           builtType || entityMapper || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not build hierarchy that not specify the built type or `entityMapper` method!');
           var items;
@@ -22443,7 +24359,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               items.push(builtItem);
 
               if ((childrenEntityPropertyName || '').length && Object(util__WEBPACK_IMPORTED_MODULE_3__["isArray"])(entity[childrenEntityPropertyName]) && Array.from(entity[childrenEntityPropertyName]).length) {
-                _this166.buildHierarchyTree(Array.from(entity[childrenEntityPropertyName]), builtType, builtItem, childrenEntityPropertyName, parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper);
+                _this105.buildHierarchyTree(Array.from(entity[childrenEntityPropertyName]), builtType, builtItem, childrenEntityPropertyName, parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper);
               }
             });
           }
@@ -22776,20 +24692,18 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
          * @param data HTTP response data to parse
          */
         value: function parseResponseJson(data) {
-          if (typeof data === 'string') {
-            try {
-              data = JSON.parse(data);
-            } catch (e) {}
-          }
+          data = this.safeParseJson(data);
 
-          var isValid;
-          isValid = Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data) && Object.keys(data).length > 0;
-          isValid = isValid && Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data['status']) && data['status']['code'] === 200;
-          isValid = isValid && Object(util__WEBPACK_IMPORTED_MODULE_1__["isBoolean"])(data['status']['success']) && (data['status']['success'] || false);
-          isValid = isValid && Object(util__WEBPACK_IMPORTED_MODULE_1__["isArray"])(data['elements']) && Array.from(data['elements']).length > 0;
+          if (data) {
+            var isValid;
+            isValid = Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data) && Object.keys(data).length > 0;
+            isValid = isValid && Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data['status']) && data['status']['code'] === 200;
+            isValid = isValid && Object(util__WEBPACK_IMPORTED_MODULE_1__["isBoolean"])(data['status']['success']) && (data['status']['success'] || false);
+            isValid = isValid && Object(util__WEBPACK_IMPORTED_MODULE_1__["isArray"])(data['elements']) && Array.from(data['elements']).length > 0;
 
-          if (isValid) {
-            data = Array.from(data['elements']);
+            if (isValid) {
+              data = Array.from(data['elements']);
+            }
           }
 
           return data;
@@ -22824,9 +24738,28 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return undefined;
           }
 
+          var data;
+          data = this.safeParseJson(source);
+          return data ? Object.assign(new type(), data) : undefined;
+        }
+        /**
+         * Alias of {JSON#parse} in safety mode.
+         * If invalid JSON source or could not parse; then an undefined value will be returned
+         * @param source to convert
+         * @return the converted value or undefined
+         */
+
+      }, {
+        key: "safeParseJson",
+        value: function safeParseJson(source) {
+          if (!source) {
+            return undefined;
+          }
+
           try {
-            return Object.assign(new type(), JSON.parse(source));
+            return JSON.parse(typeof source === 'string' ? source : JSON.stringify(source));
           } catch (e) {
+            window.console.error(['Could not parse JSON', source, e]);
             return undefined;
           }
         }
@@ -22889,8 +24822,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
          * @return true for the event whether came from one of the specified keys; else false
          */
         value: function isSpecifiedKey(e) {
-          for (var _len27 = arguments.length, detectedKeys = new Array(_len27 > 1 ? _len27 - 1 : 0), _key27 = 1; _key27 < _len27; _key27++) {
-            detectedKeys[_key27 - 1] = arguments[_key27];
+          for (var _len30 = arguments.length, detectedKeys = new Array(_len30 > 1 ? _len30 - 1 : 0), _key30 = 1; _key30 < _len30; _key30++) {
+            detectedKeys[_key30 - 1] = arguments[_key30];
           }
 
           if (!e || !detectedKeys || !detectedKeys.length) {
@@ -23160,8 +25093,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "createInstanceWithArguments",
         value: function createInstanceWithArguments(type) {
-          for (var _len28 = arguments.length, args = new Array(_len28 > 1 ? _len28 - 1 : 0), _key28 = 1; _key28 < _len28; _key28++) {
-            args[_key28 - 1] = arguments[_key28];
+          for (var _len31 = arguments.length, args = new Array(_len31 > 1 ? _len31 - 1 : 0), _key31 = 1; _key31 < _len31; _key31++) {
+            args[_key31 - 1] = arguments[_key31];
           }
 
           return new type(args);
@@ -23200,7 +25133,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "deepCopy",
         value: function deepCopy(target) {
-          var _this167 = this;
+          var _this106 = this;
 
           if (target === null) {
             return target;
@@ -23216,7 +25149,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
               cp.push(v);
             });
             return cp.map(function (n) {
-              return _this167.deepCopy(n);
+              return _this106.deepCopy(n);
             });
           }
 
@@ -23224,7 +25157,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             var _cp = Object.assign({}, target);
 
             Object.keys(_cp).forEach(function (k) {
-              _cp[k] = _this167.deepCopy(_cp[k]);
+              _cp[k] = _this106.deepCopy(_cp[k]);
             });
             return _cp;
           }
@@ -23240,8 +25173,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }, {
         key: "ifDefined",
         value: function ifDefined() {
-          for (var _len29 = arguments.length, args = new Array(_len29), _key29 = 0; _key29 < _len29; _key29++) {
-            args[_key29] = arguments[_key29];
+          for (var _len32 = arguments.length, args = new Array(_len32), _key32 = 0; _key32 < _len32; _key32++) {
+            args[_key32] = arguments[_key32];
           }
 
           for (var _i3 = 0, _args = args; _i3 < _args.length; _i3++) {
@@ -23609,6 +25542,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var environment = {
       production: false,
       databaseName: 'HiDemo',
+      offline: true,
       baseHref: 'https://hainguyen81.github.io/ngx-admin/'
     };
     /***/

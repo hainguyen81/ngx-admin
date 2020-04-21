@@ -379,6 +379,115 @@ CoreModule = CoreModule_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/@core/data/base.ts":
+/*!************************************!*\
+  !*** ./src/app/@core/data/base.ts ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BaseModel; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class BaseModel {
+    // readonly upToDated: () => boolean;
+    constructor(id) {
+        this.id = id;
+        // this.upToDated = () => (!this.deletedAt
+        //     && (!this.expiredAt || new Date(this.expiredAt) <= new Date()));
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/@core/data/system/api.third.party.ts":
+/*!******************************************************!*\
+  !*** ./src/app/@core/data/system/api.third.party.ts ***!
+  \******************************************************/
+/*! exports provided: default, UniversalApiThirdParty */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ApiThirdParty; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UniversalApiThirdParty", function() { return UniversalApiThirdParty; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base */ "./src/app/@core/data/base.ts");
+/* harmony import */ var _config_third_party_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../config/third.party.api */ "./src/app/config/third.party.api.ts");
+
+
+
+class ApiThirdParty extends _base__WEBPACK_IMPORTED_MODULE_1__["default"] {
+    constructor(id, code) {
+        super(id);
+        this.id = id;
+        this.code = code;
+    }
+}
+class UniversalApiThirdParty extends ApiThirdParty {
+    constructor() {
+        super(null, _config_third_party_api__WEBPACK_IMPORTED_MODULE_2__["THIRD_PARTY_API"].universal.code);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/@core/data/system/city.ts":
+/*!*******************************************!*\
+  !*** ./src/app/@core/data/system/city.ts ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return City; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base */ "./src/app/@core/data/base.ts");
+
+
+class City extends _base__WEBPACK_IMPORTED_MODULE_1__["default"] {
+    constructor(id, code, name) {
+        super(id);
+        this.id = id;
+        this.code = code;
+        this.name = name;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/@core/data/system/province.ts":
+/*!***********************************************!*\
+  !*** ./src/app/@core/data/system/province.ts ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Province; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base */ "./src/app/@core/data/base.ts");
+
+
+class Province extends _base__WEBPACK_IMPORTED_MODULE_1__["default"] {
+    constructor(id, code, name) {
+        super(id);
+        this.id = id;
+        this.code = code;
+        this.name = name;
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/app/@core/mock/mock.data.module.ts":
 /*!************************************************!*\
   !*** ./src/app/@core/mock/mock.data.module.ts ***!
@@ -400,19 +509,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/implementation/system/user/user.service */ "./src/app/services/implementation/system/user/user.service.ts");
 /* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
 /* harmony import */ var _core_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core.module */ "./src/app/@core/core.module.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var _system_customers_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./system/customers.service */ "./src/app/@core/mock/system/customers.service.ts");
-/* harmony import */ var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../services/implementation/system/customer/customer.service */ "./src/app/services/implementation/system/customer/customer.service.ts");
-/* harmony import */ var _system_organization_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./system/organization.service */ "./src/app/@core/mock/system/organization.service.ts");
-/* harmony import */ var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/implementation/system/organization/organization.service */ "./src/app/services/implementation/system/organization/organization.service.ts");
-/* harmony import */ var _warehouse_category_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./warehouse/category.service */ "./src/app/@core/mock/warehouse/category.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../services/implementation/warehouse/warehouse.category/warehouse.category.service */ "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.service.ts");
-/* harmony import */ var _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./warehouse/warehouse.service */ "./src/app/@core/mock/warehouse/warehouse.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../services/implementation/warehouse/warehouse/warehouse.service */ "./src/app/services/implementation/warehouse/warehouse/warehouse.service.ts");
-/* harmony import */ var _system_country_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./system/country.service */ "./src/app/@core/mock/system/country.service.ts");
-/* harmony import */ var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../services/implementation/system/country/country.service */ "./src/app/services/implementation/system/country/country.service.ts");
+/* harmony import */ var _config_app_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../config/app.config */ "./src/app/config/app.config.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _system_customers_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./system/customers.service */ "./src/app/@core/mock/system/customers.service.ts");
+/* harmony import */ var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../services/implementation/system/customer/customer.service */ "./src/app/services/implementation/system/customer/customer.service.ts");
+/* harmony import */ var _system_organization_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./system/organization.service */ "./src/app/@core/mock/system/organization.service.ts");
+/* harmony import */ var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../services/implementation/system/organization/organization.service */ "./src/app/services/implementation/system/organization/organization.service.ts");
+/* harmony import */ var _warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./warehouse/category.service */ "./src/app/@core/mock/warehouse/category.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../services/implementation/warehouse/warehouse.category/warehouse.category.service */ "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.service.ts");
+/* harmony import */ var _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./warehouse/warehouse.service */ "./src/app/@core/mock/warehouse/warehouse.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../services/implementation/warehouse/warehouse/warehouse.service */ "./src/app/services/implementation/warehouse/warehouse/warehouse.service.ts");
+/* harmony import */ var _system_country_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./system/country.service */ "./src/app/@core/mock/system/country.service.ts");
+/* harmony import */ var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../services/implementation/system/country/country.service */ "./src/app/services/implementation/system/country/country.service.ts");
 
 var MockDataModule_1;
+
 
 
 
@@ -437,26 +548,26 @@ const MOCK_DATA_PROVIDERS = [
         deps: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_5__["UserDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
     },
     {
-        provide: _system_customers_service__WEBPACK_IMPORTED_MODULE_9__["MockCustomerService"], useClass: _system_customers_service__WEBPACK_IMPORTED_MODULE_9__["MockCustomerService"],
-        deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_10__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
+        provide: _system_customers_service__WEBPACK_IMPORTED_MODULE_10__["MockCustomerService"], useClass: _system_customers_service__WEBPACK_IMPORTED_MODULE_10__["MockCustomerService"],
+        deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_11__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
     },
     {
-        provide: _system_organization_service__WEBPACK_IMPORTED_MODULE_11__["MockOrganizationService"], useClass: _system_organization_service__WEBPACK_IMPORTED_MODULE_11__["MockOrganizationService"],
-        deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_12__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
+        provide: _system_organization_service__WEBPACK_IMPORTED_MODULE_12__["MockOrganizationService"], useClass: _system_organization_service__WEBPACK_IMPORTED_MODULE_12__["MockOrganizationService"],
+        deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_13__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
     },
     {
-        provide: _system_country_service__WEBPACK_IMPORTED_MODULE_17__["MockCountryService"], useClass: _system_country_service__WEBPACK_IMPORTED_MODULE_17__["MockCountryService"],
-        deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_18__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
+        provide: _system_country_service__WEBPACK_IMPORTED_MODULE_18__["MockCountryService"], useClass: _system_country_service__WEBPACK_IMPORTED_MODULE_18__["MockCountryService"],
+        deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_19__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
     },
 ];
 const MOCK_WAREHOUSE_DATA_PROVIDERS = [
     {
-        provide: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_15__["MockWarehouseStorageService"], useClass: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_15__["MockWarehouseStorageService"],
-        deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
+        provide: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__["MockWarehouseStorageService"], useClass: _warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_16__["MockWarehouseStorageService"],
+        deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_17__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
     },
     {
-        provide: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_13__["MockWarehouseCategoryService"], useClass: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_13__["MockWarehouseCategoryService"],
-        deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
+        provide: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__["MockWarehouseCategoryService"], useClass: _warehouse_category_service__WEBPACK_IMPORTED_MODULE_14__["MockWarehouseCategoryService"],
+        deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_15__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_6__["NGXLogger"]],
     },
 ];
 const MOCK_PROVIDERS = _config_app_providers__WEBPACK_IMPORTED_MODULE_3__["CommonProviders"]
@@ -479,13 +590,13 @@ let MockDataModule = MockDataModule_1 = class MockDataModule {
         };
     }
     getService(token) {
-        this.moduleInjector || Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["throwError"])('Could not create injector to inject mock services!');
+        this.moduleInjector || Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["throwError"])('Could not create injector to inject mock services!');
         return this.moduleInjector.get(token);
     }
     initialization() {
-        // if (AppConfig.Env.production) {
-        //     return;
-        // }
+        if (!_config_app_config__WEBPACK_IMPORTED_MODULE_8__["AppConfig"].Env.offline) {
+            return;
+        }
         /** Common data providers */
         [].concat(MOCK_DATA_PROVIDERS)
             .concat(MOCK_WAREHOUSE_DATA_PROVIDERS)
@@ -877,7 +988,7 @@ const MockModuleOrganization = {
     children: [],
 };
 const MockModuleSystem = {
-    code: 'SYSTEM',
+    code: 'SYSTEM_MODULE',
     name: 'system.menu.module',
     apiId: null,
     api: null,
@@ -923,7 +1034,10 @@ const MockModuleWarehouseMaster = {
     api: null,
     id: _config_generator_config__WEBPACK_IMPORTED_MODULE_2__["IdGenerators"].oid.generate(),
     icon: { icon: 'cog', pack: 'fas' },
-    children: [],
+    children: [
+        MockModuleWarehouseStorage,
+        MockModuleWarehouseCategory,
+    ],
 };
 const MockModuleWarehouseFeatures = {
     code: 'WAREHOUSE_MODULE',
@@ -933,8 +1047,6 @@ const MockModuleWarehouseFeatures = {
     id: _config_generator_config__WEBPACK_IMPORTED_MODULE_2__["IdGenerators"].oid.generate(),
     icon: { icon: 'briefcase', pack: 'fas' },
     children: [
-        MockModuleWarehouseStorage,
-        MockModuleWarehouseCategory,
         MockModuleWarehouseItem,
     ],
 };
@@ -4222,7 +4334,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _theme_theme_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./@theme/theme.module */ "./src/app/@theme/theme.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _prototypes_array_prototypes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./prototypes/array.prototypes */ "./src/app/prototypes/array.prototypes.ts");
+/* harmony import */ var _config_prototypes_import__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./config/prototypes.import */ "./src/app/config/prototypes.import.ts");
 /* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @nebular/theme */ "./node_modules/@nebular/theme/fesm2015/index.js");
 /* harmony import */ var _config_app_config__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./config/app.config */ "./src/app/config/app.config.ts");
 /* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @nebular/auth */ "./node_modules/@nebular/auth/fesm2015/index.js");
@@ -4495,79 +4607,6 @@ AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
-/***/ "./src/app/auth/auth.interceptor.ts":
-/*!******************************************!*\
-  !*** ./src/app/auth/auth.interceptor.ts ***!
-  \******************************************/
-/*! exports provided: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, NBX_AUTH_AUTHORIZATION_HEADER, NBX_AUTH_COMPANY_HEADER, NBX_AUTH_ACCESS_TOKEN_PARAM, NBX_AUTH_REFRESH_TOKEN_PARAM, NBX_AUTH_AUTHORIZATION_TYPE, NbxAuthInterceptor */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM", function() { return NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_COMPANY_HEADER", function() { return NBX_AUTH_INTERCEPTOR_COMPANY_HEADER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_AUTHORIZATION_HEADER", function() { return NBX_AUTH_AUTHORIZATION_HEADER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_COMPANY_HEADER", function() { return NBX_AUTH_COMPANY_HEADER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_ACCESS_TOKEN_PARAM", function() { return NBX_AUTH_ACCESS_TOKEN_PARAM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_REFRESH_TOKEN_PARAM", function() { return NBX_AUTH_REFRESH_TOKEN_PARAM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_AUTHORIZATION_TYPE", function() { return NBX_AUTH_AUTHORIZATION_TYPE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NbxAuthInterceptor", function() { return NbxAuthInterceptor; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nebular/auth */ "./node_modules/@nebular/auth/fesm2015/index.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
-
-
-
-
-const NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Access Token Parameter');
-const NBX_AUTH_INTERCEPTOR_COMPANY_HEADER = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Company Header Parameter');
-const NBX_AUTH_AUTHORIZATION_HEADER = 'Authorization';
-const NBX_AUTH_COMPANY_HEADER = 'Company';
-const NBX_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
-const NBX_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
-const NBX_AUTH_AUTHORIZATION_TYPE = 'Basic';
-let NbxAuthInterceptor = class NbxAuthInterceptor extends _nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NbAuthSimpleInterceptor"] {
-    constructor(injector, headerName = NBX_AUTH_AUTHORIZATION_HEADER, companyHeaderName = NBX_AUTH_COMPANY_HEADER, accessTokenParamName = NBX_AUTH_ACCESS_TOKEN_PARAM) {
-        super(injector, headerName);
-        this.headerName = headerName;
-        this.companyHeaderName = companyHeaderName;
-        this.accessTokenParamName = accessTokenParamName;
-    }
-    intercept(req, next) {
-        return this.authService.getToken()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])((token) => {
-            if (token && token.getValue()) {
-                req = req.clone({
-                    setHeaders: {
-                        [this.headerName]: token.getValue(),
-                        [this.companyHeaderName]: token.getPayload()['company'],
-                    },
-                });
-                req.params.append(this.accessTokenParamName, token.getValue());
-            }
-            return next.handle(req);
-        }));
-    }
-};
-NbxAuthInterceptor.ctorParameters = () => [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"] },
-    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"],] }] },
-    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,] }] },
-    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,] }] }
-];
-NbxAuthInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_COMPANY_HEADER)),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM)),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], String, String, String])
-], NbxAuthInterceptor);
-
-
-
-/***/ }),
-
 /***/ "./src/app/auth/auth.oauth2.service.ts":
 /*!*********************************************!*\
   !*** ./src/app/auth/auth.oauth2.service.ts ***!
@@ -4589,12 +4628,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _services_response_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../services/response.service */ "./src/app/services/response.service.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var _auth_interceptor__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./auth.interceptor */ "./src/app/auth/auth.interceptor.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/encryption.utils */ "./src/app/utils/encryption.utils.ts");
-/* harmony import */ var _utils_promise_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/promise.utils */ "./src/app/utils/promise.utils.ts");
-/* harmony import */ var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../services/implementation/system/user/user.service */ "./src/app/services/implementation/system/user/user.service.ts");
-/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/json.utils */ "./src/app/utils/json.utils.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/encryption.utils */ "./src/app/utils/encryption.utils.ts");
+/* harmony import */ var _utils_promise_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/promise.utils */ "./src/app/utils/promise.utils.ts");
+/* harmony import */ var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../services/implementation/system/user/user.service */ "./src/app/services/implementation/system/user/user.service.ts");
+/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/json.utils */ "./src/app/utils/json.utils.ts");
+/* harmony import */ var _config_request_config__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../config/request.config */ "./src/app/config/request.config.ts");
 
 
 
@@ -4643,7 +4682,7 @@ NbxOAuth2AuthDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let NbxOAuth2AuthHttpService = class NbxOAuth2AuthHttpService extends _services_http_service__WEBPACK_IMPORTED_MODULE_6__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject authentication database service for offline mode');
+        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject authentication database service for offline mode');
     }
     setCreateTokenDelegate(createTokenDelegate) {
         this.createTokenDelegate = createTokenDelegate;
@@ -4657,40 +4696,40 @@ let NbxOAuth2AuthHttpService = class NbxOAuth2AuthHttpService extends _services_
     handleOfflineMode(url, method, res, options) {
         let headers;
         headers = (options && options.headers ? options.headers : undefined);
-        if (headers && headers.has(_auth_interceptor__WEBPACK_IMPORTED_MODULE_10__["NBX_AUTH_AUTHORIZATION_HEADER"])) {
+        if (headers && headers.has(_config_request_config__WEBPACK_IMPORTED_MODULE_15__["RC_AUTH_AUTHORIZATION_HEADER"])) {
             let dbService;
             dbService = this.getDbService();
             let authorization;
-            authorization = headers.get(_auth_interceptor__WEBPACK_IMPORTED_MODULE_10__["NBX_AUTH_AUTHORIZATION_HEADER"]);
+            authorization = headers.get(_config_request_config__WEBPACK_IMPORTED_MODULE_15__["RC_AUTH_AUTHORIZATION_HEADER"]);
             this.getLogger().debug('Check authentication', authorization);
-            return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_13__["default"].promiseToObservable(dbService.getAll().then((users) => {
+            return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_12__["default"].promiseToObservable(dbService.getAll().then((users) => {
                 let token;
                 if (users && users.length) {
                     let foundUsers;
                     foundUsers = users.filter((u) => {
                         let encryptedToken;
-                        encryptedToken = _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_12__["default"].base64Encode(':', u.username || '', u.password || '');
-                        encryptedToken = [_auth_interceptor__WEBPACK_IMPORTED_MODULE_10__["NBX_AUTH_AUTHORIZATION_TYPE"], encryptedToken].join(' ');
+                        encryptedToken = _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_11__["default"].base64Encode(':', u.username || '', u.password || '');
+                        encryptedToken = [_config_request_config__WEBPACK_IMPORTED_MODULE_15__["RC_AUTH_AUTHORIZATION_BASIC_TYPE"], encryptedToken].join(' ');
                         return (authorization.toLowerCase() === encryptedToken.toLowerCase());
                     });
                     if (foundUsers && foundUsers.length) {
                         let u;
                         u = foundUsers[0];
                         let tokenValue;
-                        tokenValue = _utils_json_utils__WEBPACK_IMPORTED_MODULE_15__["default"].parseFisrtResponseJson(JSON.stringify(u));
+                        tokenValue = _utils_json_utils__WEBPACK_IMPORTED_MODULE_14__["default"].parseFisrtResponseJson(JSON.stringify(u));
                         delete tokenValue['password'];
                         token = this.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](true, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                             body: JSON.stringify(tokenValue),
                             headers: headers,
                             status: 200, url: url,
-                        }), options.redirectSuccess, options.errors, options.messages));
+                        }), (options || {}).redirectSuccess, (options || {}).errors, (options || {}).messages));
                     }
                 }
                 if (!token) {
                     token = this.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                         body: '', headers: headers,
                         status: 401, url: url,
-                    }), options.redirectFailure, options.errors, options.messages));
+                    }), (options || {}).redirectFailure, (options || {}).errors, (options || {}).messages));
                 }
                 return token;
             }, (errors) => {
@@ -4698,31 +4737,31 @@ let NbxOAuth2AuthHttpService = class NbxOAuth2AuthHttpService extends _services_
                 return this.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                     body: '', headers: headers,
                     status: 401, url: url,
-                }), options.redirectFailure, options.errors, options.messages));
+                }), (options || {}).redirectFailure, (options || {}).errors, (options || {}).messages));
             }).catch((errors) => {
                 this.getLogger().error('Not found any valid token', errors);
                 return this.parseResponse(new _services_response_service__WEBPACK_IMPORTED_MODULE_8__["ServiceResponse"](false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpResponse"]({
                     body: '', headers: headers,
                     status: 401, url: url,
-                }), options.redirectFailure, options.errors, options.messages));
+                }), (options || {}).redirectFailure, (options || {}).errors, (options || {}).messages));
             }));
         }
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["of"])(undefined);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["of"])(undefined);
     }
 };
 NbxOAuth2AuthHttpService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"],] }] },
     { type: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"],] }] },
-    { type: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"],] }] }
+    { type: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"],] }] }
 ];
 NbxOAuth2AuthHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"],
         ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"],
-        _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_14__["UserDbService"]])
+        _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_13__["UserDbService"]])
 ], NbxOAuth2AuthHttpService);
 
 
@@ -4754,7 +4793,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_internal_compatibility__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/internal-compatibility */ "./node_modules/rxjs/_esm2015/internal-compatibility/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/encryption.utils */ "./src/app/utils/encryption.utils.ts");
-/* harmony import */ var _auth_interceptor__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./auth.interceptor */ "./src/app/auth/auth.interceptor.ts");
+/* harmony import */ var _config_request_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../config/request.config */ "./src/app/config/request.config.ts");
 
 var NbxOAuth2AuthStrategy_1;
 
@@ -4786,7 +4825,7 @@ let NbxOAuth2AuthStrategy = NbxOAuth2AuthStrategy_1 = class NbxOAuth2AuthStrateg
             headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"](oauth2.getOption(`${module}.headers`) || {});
             let authorization;
             authorization = _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_13__["default"].base64Encode(':', data['email'] || '', _utils_encryption_utils__WEBPACK_IMPORTED_MODULE_13__["default"].md5Encode(':', data['password']));
-            headers = headers.set('Authorization', [_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_AUTHORIZATION_TYPE"], authorization].join(' '));
+            headers = headers.set('Authorization', [_config_request_config__WEBPACK_IMPORTED_MODULE_14__["RC_AUTH_AUTHORIZATION_BASIC_TYPE"], authorization].join(' '));
             let method;
             method = oauth2.getOption(`${module}.method`);
             let url;
@@ -4968,6 +5007,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API", function() { return API; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
+/**
+ * Application API configuration
+ */
 const API = {
     headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -5006,14 +5048,14 @@ const API = {
         baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
-        client: '/dashboard/warehouse/features/storage',
+        client: '/dashboard/warehouse/settings/storage',
     },
     warehouseCategory: {
         code: 'WAREHOUSE_CATEGORY_API',
         baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
         login: '/oauth/token?grant_type=client_credentials',
         method: 'POST',
-        client: '/dashboard/warehouse/features/category',
+        client: '/dashboard/warehouse/settings/category',
     },
     warehouseItem: {
         code: 'WAREHOUSE_ITEM_API',
@@ -5079,7 +5121,7 @@ const AppConfig = {
 /*!*****************************************!*\
   !*** ./src/app/config/app.providers.ts ***!
   \*****************************************/
-/*! exports provided: BaseHrefProvider, BASE_HREF, HttpLoaderFactory, CommonProviders, I18NProviders, UserProviders, CustomerProviders, OrganizationProviders, CountryProviders, WarehouseProviders, InterceptorProviders, AuthenticationProviders, MenuProviders, ExampleProviders, Providers */
+/*! exports provided: BaseHrefProvider, BASE_HREF, HttpLoaderFactory, CommonProviders, InterceptorProviders, AuthenticationProviders, ThirdPartyApiProviders, I18NProviders, UserProviders, CustomerProviders, OrganizationProviders, CountryProviders, WarehouseProviders, MenuProviders, ExampleProviders, Providers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5088,78 +5130,89 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BASE_HREF", function() { return BASE_HREF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HttpLoaderFactory", function() { return HttpLoaderFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommonProviders", function() { return CommonProviders; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InterceptorProviders", function() { return InterceptorProviders; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthenticationProviders", function() { return AuthenticationProviders; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThirdPartyApiProviders", function() { return ThirdPartyApiProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I18NProviders", function() { return I18NProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserProviders", function() { return UserProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomerProviders", function() { return CustomerProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrganizationProviders", function() { return OrganizationProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CountryProviders", function() { return CountryProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WarehouseProviders", function() { return WarehouseProviders; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InterceptorProviders", function() { return InterceptorProviders; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthenticationProviders", function() { return AuthenticationProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MenuProviders", function() { return MenuProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExampleProviders", function() { return ExampleProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Providers", function() { return Providers; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
-/* harmony import */ var _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../auth/auth.guard.service */ "./src/app/auth/auth.guard.service.ts");
-/* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @nebular/auth */ "./node_modules/@nebular/auth/fesm2015/index.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_empty_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../services/empty.service */ "./src/app/services/empty.service.ts");
-/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
-/* harmony import */ var _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../auth/auth.oauth2.service */ "./src/app/auth/auth.oauth2.service.ts");
-/* harmony import */ var _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../auth/auth.oauth2.strategy */ "./src/app/auth/auth.oauth2.strategy.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../auth/auth.interceptor */ "./src/app/auth/auth.interceptor.ts");
-/* harmony import */ var _sw_push_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../sw/push.service */ "./src/app/sw/push.service.ts");
-/* harmony import */ var _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../services/implementation/menu.service */ "./src/app/services/implementation/menu.service.ts");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
-/* harmony import */ var _common_config__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./common.config */ "./src/app/config/common.config.ts");
-/* harmony import */ var _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../services/implementation/module.service */ "./src/app/services/implementation/module.service.ts");
-/* harmony import */ var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../services/implementation/system/user/user.service */ "./src/app/services/implementation/system/user/user.service.ts");
-/* harmony import */ var _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../services/implementation/system/user/user.datasource */ "./src/app/services/implementation/system/user/user.datasource.ts");
-/* harmony import */ var ngx_contextmenu__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ngx-contextmenu */ "./node_modules/ngx-contextmenu/fesm2015/ngx-contextmenu.js");
-/* harmony import */ var ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ng2-smart-table/lib/data-source/data-source */ "./node_modules/ng2-smart-table/lib/data-source/data-source.js");
-/* harmony import */ var ng2_smart_table__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng2-smart-table */ "./node_modules/ng2-smart-table/index.js");
-/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../services/implementation/system/customer/customer.service */ "./src/app/services/implementation/system/customer/customer.service.ts");
-/* harmony import */ var _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../services/implementation/system/customer/customer.datasource */ "./src/app/services/implementation/system/customer/customer.datasource.ts");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
-/* harmony import */ var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../services/implementation/system/organization/organization.service */ "./src/app/services/implementation/system/organization/organization.service.ts");
-/* harmony import */ var _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../services/implementation/system/organization/organization.datasource */ "./src/app/services/implementation/system/organization/organization.datasource.ts");
-/* harmony import */ var _services_header_service__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../services/header.service */ "./src/app/services/header.service.ts");
-/* harmony import */ var _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../pages/pages.guard.service */ "./src/app/pages/pages.guard.service.ts");
-/* harmony import */ var _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../services/implementation/global.errors.handler */ "./src/app/services/implementation/global.errors.handler.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse/warehouse.service */ "./src/app/services/implementation/warehouse/warehouse/warehouse.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse/warehouse.datasource */ "./src/app/services/implementation/warehouse/warehouse/warehouse.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order/warehouse.order.service */ "./src/app/services/implementation/warehouse/warehouse.order/warehouse.order.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order/warehouse.order.datasource */ "./src/app/services/implementation/warehouse/warehouse.order/warehouse.order.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service */ "./src/app/services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource */ "./src/app/services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.item/warehouse.item.service */ "./src/app/services/implementation/warehouse/warehouse.item/warehouse.item.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.item/warehouse.item.datasource */ "./src/app/services/implementation/warehouse/warehouse.item/warehouse.item.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service */ "./src/app/services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource */ "./src/app/services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service */ "./src/app/services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource */ "./src/app/services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.category/warehouse.category.service */ "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.category/warehouse.category.datasource */ "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service */ "./src/app/services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource */ "./src/app/services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service */ "./src/app/services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service.ts");
-/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource */ "./src/app/services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource.ts");
-/* harmony import */ var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../services/implementation/system/country/country.service */ "./src/app/services/implementation/system/country/country.service.ts");
-/* harmony import */ var _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../services/implementation/system/country/country.datasource */ "./src/app/services/implementation/system/country/country.datasource.ts");
-/* harmony import */ var _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../services/implementation/system/city/city.service */ "./src/app/services/implementation/system/city/city.service.ts");
-/* harmony import */ var _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../services/implementation/system/city/city.datasource */ "./src/app/services/implementation/system/city/city.datasource.ts");
-/* harmony import */ var _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../services/implementation/system/province/province.service */ "./src/app/services/implementation/system/province/province.service.ts");
-/* harmony import */ var _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../services/implementation/system/province/province.datasource */ "./src/app/services/implementation/system/province/province.datasource.ts");
-/* harmony import */ var _prototypes_string_prototype__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../prototypes/string.prototype */ "./src/app/prototypes/string.prototype.ts");
+/* harmony import */ var _prototypes_import__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./prototypes.import */ "./src/app/config/prototypes.import.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../auth/auth.guard.service */ "./src/app/auth/auth.guard.service.ts");
+/* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @nebular/auth */ "./node_modules/@nebular/auth/fesm2015/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_empty_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../services/empty.service */ "./src/app/services/empty.service.ts");
+/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+/* harmony import */ var _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../auth/auth.oauth2.service */ "./src/app/auth/auth.oauth2.service.ts");
+/* harmony import */ var _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../auth/auth.oauth2.strategy */ "./src/app/auth/auth.oauth2.strategy.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../services/interceptors/auth.interceptor */ "./src/app/services/interceptors/auth.interceptor.ts");
+/* harmony import */ var _sw_push_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../sw/push.service */ "./src/app/sw/push.service.ts");
+/* harmony import */ var _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../services/implementation/menu.service */ "./src/app/services/implementation/menu.service.ts");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var _common_config__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./common.config */ "./src/app/config/common.config.ts");
+/* harmony import */ var _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../services/implementation/module.service */ "./src/app/services/implementation/module.service.ts");
+/* harmony import */ var _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../services/implementation/system/user/user.service */ "./src/app/services/implementation/system/user/user.service.ts");
+/* harmony import */ var _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../services/implementation/system/user/user.datasource */ "./src/app/services/implementation/system/user/user.datasource.ts");
+/* harmony import */ var ngx_contextmenu__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ngx-contextmenu */ "./node_modules/ngx-contextmenu/fesm2015/ngx-contextmenu.js");
+/* harmony import */ var ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng2-smart-table/lib/data-source/data-source */ "./node_modules/ng2-smart-table/lib/data-source/data-source.js");
+/* harmony import */ var ng2_smart_table__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ng2-smart-table */ "./node_modules/ng2-smart-table/index.js");
+/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../services/implementation/system/customer/customer.service */ "./src/app/services/implementation/system/customer/customer.service.ts");
+/* harmony import */ var _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../services/implementation/system/customer/customer.datasource */ "./src/app/services/implementation/system/customer/customer.datasource.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
+/* harmony import */ var _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../services/implementation/system/organization/organization.service */ "./src/app/services/implementation/system/organization/organization.service.ts");
+/* harmony import */ var _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../services/implementation/system/organization/organization.datasource */ "./src/app/services/implementation/system/organization/organization.datasource.ts");
+/* harmony import */ var _services_header_service__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../services/header.service */ "./src/app/services/header.service.ts");
+/* harmony import */ var _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../pages/pages.guard.service */ "./src/app/pages/pages.guard.service.ts");
+/* harmony import */ var _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../services/implementation/global.errors.handler */ "./src/app/services/implementation/global.errors.handler.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse/warehouse.service */ "./src/app/services/implementation/warehouse/warehouse/warehouse.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse/warehouse.datasource */ "./src/app/services/implementation/warehouse/warehouse/warehouse.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order/warehouse.order.service */ "./src/app/services/implementation/warehouse/warehouse.order/warehouse.order.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order/warehouse.order.datasource */ "./src/app/services/implementation/warehouse/warehouse.order/warehouse.order.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service */ "./src/app/services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource */ "./src/app/services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.item/warehouse.item.service */ "./src/app/services/implementation/warehouse/warehouse.item/warehouse.item.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.item/warehouse.item.datasource */ "./src/app/services/implementation/warehouse/warehouse.item/warehouse.item.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service */ "./src/app/services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource */ "./src/app/services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service */ "./src/app/services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource */ "./src/app/services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.category/warehouse.category.service */ "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.category/warehouse.category.datasource */ "./src/app/services/implementation/warehouse/warehouse.category/warehouse.category.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service */ "./src/app/services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource */ "./src/app/services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service */ "./src/app/services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service.ts");
+/* harmony import */ var _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource */ "./src/app/services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource.ts");
+/* harmony import */ var _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../services/implementation/system/country/country.service */ "./src/app/services/implementation/system/country/country.service.ts");
+/* harmony import */ var _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../services/implementation/system/country/country.datasource */ "./src/app/services/implementation/system/country/country.datasource.ts");
+/* harmony import */ var _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../services/implementation/system/city/city.service */ "./src/app/services/implementation/system/city/city.service.ts");
+/* harmony import */ var _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../services/implementation/system/city/city.datasource */ "./src/app/services/implementation/system/city/city.datasource.ts");
+/* harmony import */ var _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../services/implementation/system/province/province.service */ "./src/app/services/implementation/system/province/province.service.ts");
+/* harmony import */ var _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../services/implementation/system/province/province.datasource */ "./src/app/services/implementation/system/province/province.datasource.ts");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+/* harmony import */ var _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../services/third.party/universal/universal.api.service */ "./src/app/services/third.party/universal/universal.api.service.ts");
+/* harmony import */ var _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../services/third.party/universal/universal.api.datasource */ "./src/app/services/third.party/universal/universal.api.datasource.ts");
+/* harmony import */ var _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../services/interceptors/timeout.interceptor */ "./src/app/services/interceptors/timeout.interceptor.ts");
+/* harmony import */ var _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../services/interceptors/headers.interceptor */ "./src/app/services/interceptors/headers.interceptor.ts");
+/* harmony import */ var _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../services/third.party/universal/universal.api.bridge.service */ "./src/app/services/third.party/universal/universal.api.bridge.service.ts");
+
+
+
+
+
 
 
 
@@ -5227,301 +5280,339 @@ function BaseHrefProvider() {
     let href;
     href = (baseElement && baseElement.item(0)
         && baseElement.item(0).hasAttribute('href')
-        ? baseElement.item(0).getAttribute('href') : _environments_environment__WEBPACK_IMPORTED_MODULE_12__["environment"].baseHref);
-    return href;
+        ? baseElement.item(0).getAttribute('href') : _environments_environment__WEBPACK_IMPORTED_MODULE_13__["environment"].baseHref);
+    return (href || '').trimLast('/');
 }
-const BASE_HREF = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('Application baseHref injection');
+const BASE_HREF = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Application baseHref injection');
 // required for AOT compilation
 function HttpLoaderFactory(http, baseHref) {
-    http || Object(rxjs__WEBPACK_IMPORTED_MODULE_28__["throwError"])('Not found HttpClient to create TranslateHttpLoader');
-    return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_29__["TranslateHttpLoader"](http, (baseHref || '').concat('/assets/i18n/'));
+    http || Object(rxjs__WEBPACK_IMPORTED_MODULE_29__["throwError"])('Not found HttpClient to create TranslateHttpLoader');
+    return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_30__["TranslateHttpLoader"](http, (baseHref || '').concat('/assets/i18n/'));
 }
 const CommonProviders = [
-    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"], useValue: document },
-    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_2__["APP_BASE_HREF"], useFactory: BaseHrefProvider, deps: [] },
+    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"], useValue: document },
+    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_3__["APP_BASE_HREF"], useFactory: BaseHrefProvider, deps: [] },
     { provide: BASE_HREF, useFactory: BaseHrefProvider, deps: [] },
-    { provide: _sw_push_service__WEBPACK_IMPORTED_MODULE_14__["SW_VAPID_PUBLIC_KEY"], useValue: _common_config__WEBPACK_IMPORTED_MODULE_17__["COMMON"].sw.vapid_public_key },
-    { provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"], useValue: 'vi' },
-    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_2__["DatePipe"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_2__["DatePipe"], deps: [] },
-    { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"], useExisting: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpXhrBackend"], deps: [] },
-    { provide: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXMapperService"], useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXMapperService"], deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"]] },
-    { provide: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLoggerHttpService"], useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLoggerHttpService"], deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"]] },
-    { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], useClass: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpBackend"]] },
-    { provide: ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_22__["DataSource"], useClass: ng2_smart_table__WEBPACK_IMPORTED_MODULE_23__["LocalDataSource"], deps: [] },
-    { provide: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_21__["ContextMenuService"], useClass: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_21__["ContextMenuService"], deps: [] },
-    { provide: ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"], useClass: ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"], deps: [] },
-    { provide: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Title"], useClass: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Title"], deps: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"]] },
-    { provide: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Meta"], useClass: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Meta"], deps: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["DOCUMENT"]] },
+    { provide: _sw_push_service__WEBPACK_IMPORTED_MODULE_15__["SW_VAPID_PUBLIC_KEY"], useValue: _common_config__WEBPACK_IMPORTED_MODULE_18__["COMMON"].sw.vapid_public_key },
+    { provide: _angular_core__WEBPACK_IMPORTED_MODULE_2__["LOCALE_ID"], useValue: 'vi' },
+    { provide: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"], useClass: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"], deps: [] },
+    { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], useClass: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHandler"]] },
+    { provide: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXMapperService"], useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXMapperService"], deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHandler"]] },
+    { provide: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLoggerHttpService"], useClass: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLoggerHttpService"], deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHandler"]] },
+    { provide: ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_23__["DataSource"], useClass: ng2_smart_table__WEBPACK_IMPORTED_MODULE_24__["LocalDataSource"], deps: [] },
+    { provide: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_22__["ContextMenuService"], useClass: ngx_contextmenu__WEBPACK_IMPORTED_MODULE_22__["ContextMenuService"], deps: [] },
+    { provide: ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], useClass: ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], deps: [] },
+    { provide: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Title"], useClass: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Title"], deps: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"]] },
+    { provide: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Meta"], useClass: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_60__["Meta"], deps: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"]] },
     {
-        provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"], useClass: _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_34__["default"],
-        deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateService"], ngx_toastr__WEBPACK_IMPORTED_MODULE_16__["ToastrService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"]],
+        provide: _angular_core__WEBPACK_IMPORTED_MODULE_2__["ErrorHandler"], useClass: _services_implementation_global_errors_handler__WEBPACK_IMPORTED_MODULE_35__["default"],
+        deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateService"], ngx_toastr__WEBPACK_IMPORTED_MODULE_17__["ToastrService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"]],
+    },
+];
+const InterceptorProviders = [
+    /* Request authentication */
+    { provide: _nebular_auth__WEBPACK_IMPORTED_MODULE_7__["NB_AUTH_INTERCEPTOR_HEADER"], useValue: 'Authorization' },
+    { provide: _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"], useValue: 'Company' },
+    { provide: _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"], useValue: 'access_token' },
+    {
+        provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HTTP_INTERCEPTORS"], useClass: _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NbxAuthInterceptor"],
+        deps: [
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"],
+            _nebular_auth__WEBPACK_IMPORTED_MODULE_7__["NB_AUTH_INTERCEPTOR_HEADER"],
+            _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"],
+            _services_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_14__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"],
+        ],
+        multi: true,
+    },
+    /* Request timeout */
+    { provide: _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__["HTTP_REQUEST_TIMEOUT"], useValue: _common_config__WEBPACK_IMPORTED_MODULE_18__["COMMON"].request.timeout },
+    {
+        provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HTTP_INTERCEPTORS"], useClass: _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__["TimeoutInterceptor"],
+        deps: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_interceptors_timeout_interceptor__WEBPACK_IMPORTED_MODULE_63__["HTTP_REQUEST_TIMEOUT"]],
+        multi: true,
+    },
+    /* Request headers */
+    { provide: _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__["HTTP_REQUEST_HEADERS"], useValue: _common_config__WEBPACK_IMPORTED_MODULE_18__["COMMON"].request.headers },
+    {
+        provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HTTP_INTERCEPTORS"], useClass: _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__["RequestHeadersInterceptor"],
+        deps: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_interceptors_headers_interceptor__WEBPACK_IMPORTED_MODULE_64__["HTTP_REQUEST_HEADERS"]],
+        multi: true,
+    },
+];
+const AuthenticationProviders = [
+    { provide: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"], useClass: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"], deps: [_nebular_auth__WEBPACK_IMPORTED_MODULE_7__["NbAuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"]] },
+    {
+        provide: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"], useClass: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
+    },
+    {
+        provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthDbService"], useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
+    },
+    {
+        provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthHttpService"], useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"]],
+    },
+    {
+        provide: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_12__["NbxOAuth2AuthStrategy"], useClass: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_12__["NbxOAuth2AuthStrategy"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["ActivatedRoute"], _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthHttpService"],
+            _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthDbService"], _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
+    },
+];
+const ThirdPartyApiProviders = [
+    // https://www.universal-tutorial.com/api
+    {
+        provide: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"], useClass: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
+    },
+    {
+        provide: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiHttpService"], useClass: _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"]],
+    },
+    {
+        provide: _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__["UniversalApiDatasource"], useClass: _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__["UniversalApiDatasource"],
+        deps: [_services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiHttpService"], _services_third_party_universal_universal_api_service__WEBPACK_IMPORTED_MODULE_61__["UniversalApiDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
+    },
+    {
+        provide: _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"], useClass: _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], _services_third_party_universal_universal_api_datasource__WEBPACK_IMPORTED_MODULE_62__["UniversalApiDatasource"]],
     },
 ];
 const I18NProviders = [
     {
-        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateLoader"], useFactory: HttpLoaderFactory,
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["APP_BASE_HREF"]],
+        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateLoader"], useFactory: HttpLoaderFactory,
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["APP_BASE_HREF"]],
     },
     {
-        provide: _services_header_service__WEBPACK_IMPORTED_MODULE_32__["PageHeaderService"], useClass: _services_header_service__WEBPACK_IMPORTED_MODULE_32__["PageHeaderService"],
-        deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_header_service__WEBPACK_IMPORTED_MODULE_33__["PageHeaderService"], useClass: _services_header_service__WEBPACK_IMPORTED_MODULE_33__["PageHeaderService"],
+        deps: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
 ];
 const UserProviders = [
     {
-        provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"], useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"], useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserHttpService"], useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"]],
+        provide: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserHttpService"], useClass: _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"]],
     },
     {
-        provide: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_20__["UserDataSource"], useClass: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_20__["UserDataSource"],
-        deps: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserHttpService"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_21__["UserDataSource"], useClass: _services_implementation_system_user_user_datasource__WEBPACK_IMPORTED_MODULE_21__["UserDataSource"],
+        deps: [_services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserHttpService"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
 ];
 const CustomerProviders = [
     {
-        provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerDbService"], useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerDbService"], useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerHttpService"], useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"]],
+        provide: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerHttpService"], useClass: _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_20__["UserDbService"]],
     },
     {
-        provide: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_26__["CustomerDatasource"], useClass: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_26__["CustomerDatasource"],
-        deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerHttpService"], _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_25__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_27__["CustomerDatasource"], useClass: _services_implementation_system_customer_customer_datasource__WEBPACK_IMPORTED_MODULE_27__["CustomerDatasource"],
+        deps: [_services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerHttpService"], _services_implementation_system_customer_customer_service__WEBPACK_IMPORTED_MODULE_26__["CustomerDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
 ];
 const OrganizationProviders = [
     {
-        provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"], useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"], useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationHttpService"], useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"]],
+        provide: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationHttpService"], useClass: _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"]],
     },
     {
-        provide: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_31__["OrganizationDataSource"], useClass: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_31__["OrganizationDataSource"],
-        deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationHttpService"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_30__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_32__["OrganizationDataSource"], useClass: _services_implementation_system_organization_organization_datasource__WEBPACK_IMPORTED_MODULE_32__["OrganizationDataSource"],
+        deps: [_services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationHttpService"], _services_implementation_system_organization_organization_service__WEBPACK_IMPORTED_MODULE_31__["OrganizationDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
 ];
 const CountryProviders = [
     // Country
     {
-        provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"], useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"], useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryHttpService"], useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"]],
+        provide: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryHttpService"], useClass: _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"]],
     },
     {
-        provide: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_54__["CountryDatasource"], useClass: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_54__["CountryDatasource"],
-        deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryHttpService"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_53__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
-    },
-    // City
-    {
-        provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"], useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
-    },
-    {
-        provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityHttpService"], useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"]],
-    },
-    {
-        provide: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_56__["CityDatasource"], useClass: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_56__["CityDatasource"],
-        deps: [_services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityHttpService"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_55__["CityDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_55__["CountryDatasource"], useClass: _services_implementation_system_country_country_datasource__WEBPACK_IMPORTED_MODULE_55__["CountryDatasource"],
+        deps: [_services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryHttpService"], _services_implementation_system_country_country_service__WEBPACK_IMPORTED_MODULE_54__["CountryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Province
     {
-        provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"], useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"], useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"]],
     },
     {
-        provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceHttpService"], useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"]],
+        provide: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceHttpService"], useClass: _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"]],
     },
     {
-        provide: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_58__["ProvinceDatasource"], useClass: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_58__["ProvinceDatasource"],
-        deps: [_services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceHttpService"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_57__["ProvinceDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_59__["ProvinceDatasource"], useClass: _services_implementation_system_province_province_datasource__WEBPACK_IMPORTED_MODULE_59__["ProvinceDatasource"],
+        deps: [_services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceHttpService"], _services_implementation_system_province_province_service__WEBPACK_IMPORTED_MODULE_58__["ProvinceDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
+    },
+    // City
+    {
+        provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"], useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"], _services_third_party_universal_universal_api_bridge_service__WEBPACK_IMPORTED_MODULE_65__["UniversalApiBridgeDbService"]],
+    },
+    {
+        provide: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityHttpService"], useClass: _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"]],
+    },
+    {
+        provide: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_57__["CityDatasource"], useClass: _services_implementation_system_city_city_datasource__WEBPACK_IMPORTED_MODULE_57__["CityDatasource"],
+        deps: [_services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityHttpService"], _services_implementation_system_city_city_service__WEBPACK_IMPORTED_MODULE_56__["CityDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
 ];
 const WarehouseProviders = [
     // Warehouse
     {
-        provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"], useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"], useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseHttpService"], useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseHttpService"], useClass: _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_36__["WarehouseDatasource"], useClass: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_36__["WarehouseDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseHttpService"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_37__["WarehouseDatasource"], useClass: _services_implementation_warehouse_warehouse_warehouse_datasource__WEBPACK_IMPORTED_MODULE_37__["WarehouseDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseHttpService"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Order
     {
-        provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderDbService"], useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDbService"], useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderHttpService"], useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderHttpService"], useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDatasource"], useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderHttpService"], _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_37__["WarehouseOrderDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDatasource"], useClass: _services_implementation_warehouse_warehouse_order_warehouse_order_datasource__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderHttpService"], _services_implementation_warehouse_warehouse_order_warehouse_order_service__WEBPACK_IMPORTED_MODULE_38__["WarehouseOrderDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Order Detail
     {
-        provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailDbService"], useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDbService"], useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailHttpService"], useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailHttpService"], useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDatasource"], useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailHttpService"], _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_39__["WarehouseOrderDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_41__["WarehouseOrderDetailDatasource"], useClass: _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_datasource__WEBPACK_IMPORTED_MODULE_41__["WarehouseOrderDetailDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailHttpService"], _services_implementation_warehouse_warehouse_order_detail_warehouse_order_detail_service__WEBPACK_IMPORTED_MODULE_40__["WarehouseOrderDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Item
     {
-        provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemDbService"], useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDbService"], useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemHttpService"], useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemHttpService"], useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDatasource"], useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemHttpService"], _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_41__["WarehouseItemDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_43__["WarehouseItemDatasource"], useClass: _services_implementation_warehouse_warehouse_item_warehouse_item_datasource__WEBPACK_IMPORTED_MODULE_43__["WarehouseItemDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemHttpService"], _services_implementation_warehouse_warehouse_item_warehouse_item_service__WEBPACK_IMPORTED_MODULE_42__["WarehouseItemDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Inventory
     {
-        provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryDbService"], useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDbService"], useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryHttpService"], useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryHttpService"], useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDatasource"], useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryHttpService"], _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_43__["WarehouseInventoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDatasource"], useClass: _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_datasource__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryHttpService"], _services_implementation_warehouse_warehouse_inventory_warehouse_inventory_service__WEBPACK_IMPORTED_MODULE_44__["WarehouseInventoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Inventory Detail
     {
-        provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailDbService"], useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDbService"], useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailHttpService"], useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailHttpService"], useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDatasource"], useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailHttpService"], _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_45__["WarehouseInventoryDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_47__["WarehouseInventoryDetailDatasource"], useClass: _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_datasource__WEBPACK_IMPORTED_MODULE_47__["WarehouseInventoryDetailDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailHttpService"], _services_implementation_warehouse_warehouse_inventory_detail_warehouse_inventory_detail_service__WEBPACK_IMPORTED_MODULE_46__["WarehouseInventoryDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Category
     {
-        provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryDbService"], useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDbService"], useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryHttpService"], useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryHttpService"], useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDatasource"], useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryHttpService"], _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_47__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_49__["WarehouseCategoryDatasource"], useClass: _services_implementation_warehouse_warehouse_category_warehouse_category_datasource__WEBPACK_IMPORTED_MODULE_49__["WarehouseCategoryDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryHttpService"], _services_implementation_warehouse_warehouse_category_warehouse_category_service__WEBPACK_IMPORTED_MODULE_48__["WarehouseCategoryDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Adjust
     {
-        provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustDbService"], useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDbService"], useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustHttpService"], useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustHttpService"], useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDatasource"], useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustHttpService"], _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_49__["WarehouseAdjustDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDatasource"], useClass: _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_datasource__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustHttpService"], _services_implementation_warehouse_warehouse_adjust_warehouse_adjust_service__WEBPACK_IMPORTED_MODULE_50__["WarehouseAdjustDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
     // Warehouse Adjust Detail
     {
-        provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailDbService"], useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDbService"], useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDbService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailHttpService"], useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_35__["WarehouseDbService"]],
+        provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailHttpService"], useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailHttpService"],
+        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], _services_implementation_warehouse_warehouse_warehouse_service__WEBPACK_IMPORTED_MODULE_36__["WarehouseDbService"]],
     },
     {
-        provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDatasource"], useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDatasource"],
-        deps: [_services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailHttpService"], _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_51__["WarehouseAdjustDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
-    },
-];
-const InterceptorProviders = [
-    { provide: _nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NB_AUTH_INTERCEPTOR_HEADER"], useValue: 'Authorization' },
-    { provide: _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"], useValue: 'Company' },
-    { provide: _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"], useValue: 'access_token' },
-    {
-        provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"], useClass: _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NbxAuthInterceptor"], multi: true,
-        deps: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"], _nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NB_AUTH_INTERCEPTOR_HEADER"],
-            _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_COMPANY_HEADER"],
-            _auth_auth_interceptor__WEBPACK_IMPORTED_MODULE_13__["NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM"]],
-    },
-];
-const AuthenticationProviders = [
-    { provide: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"], useClass: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"], deps: [_nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NbAuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]] },
-    {
-        provide: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"], useClass: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
-    },
-    {
-        provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthDbService"], useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthDbService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
-    },
-    {
-        provide: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthHttpService"], useClass: _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthHttpService"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], _services_implementation_system_user_user_service__WEBPACK_IMPORTED_MODULE_19__["UserDbService"]],
-    },
-    {
-        provide: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthStrategy"], useClass: _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthStrategy"],
-        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"], _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthHttpService"],
-            _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthDbService"], _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_53__["WarehouseAdjustDetailDatasource"], useClass: _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_datasource__WEBPACK_IMPORTED_MODULE_53__["WarehouseAdjustDetailDatasource"],
+        deps: [_services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailHttpService"], _services_implementation_warehouse_warehouse_adjust_detail_warehouse_adjust_detail_service__WEBPACK_IMPORTED_MODULE_52__["WarehouseAdjustDetailDbService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
 ];
 const MenuProviders = [
     {
-        provide: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_15__["MenuService"], useClass: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_15__["MenuService"],
-        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]],
+        provide: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_16__["MenuService"], useClass: _services_implementation_menu_service__WEBPACK_IMPORTED_MODULE_16__["MenuService"],
+        deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]],
     },
     {
-        provide: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_33__["PagesGuard"], useClass: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_33__["PagesGuard"],
-        deps: [_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_18__["ModuleService"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"], ngx_toastr__WEBPACK_IMPORTED_MODULE_16__["ToastrService"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_27__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
+        provide: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_34__["PagesGuard"], useClass: _pages_pages_guard_service__WEBPACK_IMPORTED_MODULE_34__["PagesGuard"],
+        deps: [_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_19__["ModuleService"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"], ngx_toastr__WEBPACK_IMPORTED_MODULE_17__["ToastrService"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_28__["TranslateService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"]],
     },
 ];
 const ExampleProviders = [
-    { provide: _services_empty_service__WEBPACK_IMPORTED_MODULE_8__["EmptyService"], useClass: _services_empty_service__WEBPACK_IMPORTED_MODULE_8__["EmptyService"], deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_24__["ConnectionService"]] },
+    { provide: _services_empty_service__WEBPACK_IMPORTED_MODULE_9__["EmptyService"], useClass: _services_empty_service__WEBPACK_IMPORTED_MODULE_9__["EmptyService"], deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_10__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_25__["ConnectionService"]] },
 ];
 const Providers = CommonProviders
+    .concat(InterceptorProviders)
+    .concat(ThirdPartyApiProviders)
+    .concat(AuthenticationProviders)
     .concat(I18NProviders)
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
     .concat(CountryProviders)
     .concat(WarehouseProviders)
-    .concat(InterceptorProviders)
-    .concat(AuthenticationProviders)
     .concat(MenuProviders)
     .concat(ExampleProviders);
 
@@ -5545,6 +5636,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _log_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./log.config */ "./src/app/config/log.config.ts");
 /* harmony import */ var _pages_components_abstract_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/components/abstract.component */ "./src/app/pages/components/abstract.component.ts");
 /* harmony import */ var _pages_components_toolbar_abstract_toolbar_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/components/toolbar/abstract.toolbar.component */ "./src/app/pages/components/toolbar/abstract.toolbar.component.ts");
+/* harmony import */ var _request_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./request.config */ "./src/app/config/request.config.ts");
+
 
 
 
@@ -5606,7 +5699,13 @@ const COMMON = {
         vapid_public_key: '',
         base_url: 'http://localhost:8089/api-rest-notification/service',
     },
-    itemsPerPage: 10,
+    /* default HTTP request */
+    request: {
+        headers: _request_config__WEBPACK_IMPORTED_MODULE_4__["RC_DEFAULT_HEADERS"],
+        // number (in milliseconds) | date
+        timeout: 300000,
+    },
+    itemsPerPage: 15,
     baseMenu: BaseContextMenu,
     baseToolbarActions: BaseToolbarActions,
     imageFileExtensions: IMAGE_FILE_EXTENSIONS,
@@ -5631,6 +5730,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const DB_STORE = {
+    third_party: 'third_party',
     auth: 'auth',
     module: 'module',
     user: 'user',
@@ -5653,6 +5753,15 @@ const dbConfig = {
     name: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].databaseName,
     version: 1,
     objectStoresMeta: [{
+            store: DB_STORE.third_party,
+            storeConfig: { keyPath: 'uid', autoIncrement: true },
+            storeSchema: [
+                { name: 'id', keypath: 'id', options: { unique: true } },
+                { name: 'code', keypath: 'code', options: { unique: true } },
+                { name: 'response', keypath: 'response', options: { unique: false } },
+                { name: 'expiredAt', keypath: 'expiredAt', options: { unique: false } },
+            ],
+        }, {
             store: DB_STORE.auth,
             storeConfig: { keyPath: 'uid', autoIncrement: true },
             storeSchema: [
@@ -5713,9 +5822,14 @@ const dbConfig = {
                 { name: 'fax', keypath: 'fax', options: { unique: false } },
                 { name: 'website', keypath: 'website', options: { unique: false } },
                 { name: 'address', keypath: 'address', options: { unique: false } },
+                { name: 'district_id', keypath: 'district_id', options: { unique: false } },
+                { name: 'district', keypath: 'district', options: { unique: false } },
+                { name: 'city_id', keypath: 'city_id', options: { unique: false } },
                 { name: 'city', keypath: 'city', options: { unique: false } },
-                { name: 'state_province', keypath: 'state_province', options: { unique: false } },
+                { name: 'province_id', keypath: 'province_id', options: { unique: false } },
+                { name: 'province', keypath: 'province', options: { unique: false } },
                 { name: 'zip_code', keypath: 'zip_code', options: { unique: false } },
+                { name: 'country_id', keypath: 'country_id', options: { unique: false } },
                 { name: 'country', keypath: 'country', options: { unique: false } },
                 { name: 'contact_name', keypath: 'contact_name', options: { unique: false } },
                 { name: 'contact_tel', keypath: 'contact_tel', options: { unique: false } },
@@ -5734,6 +5848,15 @@ const dbConfig = {
                 { name: 'type', keypath: 'type', options: { unique: false } },
                 { name: 'tax', keypath: 'tax', options: { unique: false } },
                 { name: 'address', keypath: 'address', options: { unique: false } },
+                { name: 'district_id', keypath: 'district_id', options: { unique: false } },
+                { name: 'district', keypath: 'district', options: { unique: false } },
+                { name: 'city_id', keypath: 'city_id', options: { unique: false } },
+                { name: 'city', keypath: 'city', options: { unique: false } },
+                { name: 'province_id', keypath: 'province_id', options: { unique: false } },
+                { name: 'province', keypath: 'province', options: { unique: false } },
+                { name: 'zip_code', keypath: 'zip_code', options: { unique: false } },
+                { name: 'country_id', keypath: 'country_id', options: { unique: false } },
+                { name: 'country', keypath: 'country', options: { unique: false } },
                 { name: 'tel', keypath: 'tel', options: { unique: false } },
                 { name: 'fax', keypath: 'fax', options: { unique: false } },
                 { name: 'email', keypath: 'email', options: { unique: false } },
@@ -5752,10 +5875,15 @@ const dbConfig = {
                 { name: 'code', keypath: 'code', options: { unique: true } },
                 { name: 'name', keypath: 'name', options: { unique: false } },
                 { name: 'street_address', keypath: 'street_address', options: { unique: false } },
+                { name: 'district_id', keypath: 'district_id', options: { unique: false } },
+                { name: 'district', keypath: 'district', options: { unique: false } },
+                { name: 'city_id', keypath: 'city_id', options: { unique: false } },
                 { name: 'city', keypath: 'city', options: { unique: false } },
-                { name: 'state_province', keypath: 'state_province', options: { unique: false } },
-                { name: 'zip_code', keypath: 'zip_code', options: { unique: false } },
+                { name: 'province_id', keypath: 'province_id', options: { unique: false } },
+                { name: 'province', keypath: 'province', options: { unique: false } },
+                { name: 'country_id', keypath: 'country_id', options: { unique: false } },
                 { name: 'country', keypath: 'country', options: { unique: false } },
+                { name: 'zip_code', keypath: 'zip_code', options: { unique: false } },
                 { name: 'tel', keypath: 'tel', options: { unique: false } },
                 { name: 'fax', keypath: 'fax', options: { unique: false } },
                 { name: 'email', keypath: 'email', options: { unique: false } },
@@ -5947,8 +6075,8 @@ const dbConfig = {
                 { name: 'name', keypath: 'name', options: { unique: false } },
                 { name: 'zip_code', keypath: 'zip_code', options: { unique: false } },
                 { name: 'image', keypath: 'image', options: { unique: false } },
-                { name: 'country_id', keypath: 'country_id', options: { unique: false } },
-                { name: 'country', keypath: 'country', options: { unique: false } },
+                { name: 'province_id', keypath: 'province_id', options: { unique: false } },
+                { name: 'province', keypath: 'province', options: { unique: false } },
             ],
         }, {
             store: DB_STORE.province,
@@ -5959,8 +6087,8 @@ const dbConfig = {
                 { name: 'name', keypath: 'name', options: { unique: false } },
                 { name: 'zip_code', keypath: 'zip_code', options: { unique: false } },
                 { name: 'image', keypath: 'image', options: { unique: false } },
-                { name: 'city_id', keypath: 'city_id', options: { unique: false } },
-                { name: 'city', keypath: 'city', options: { unique: false } },
+                { name: 'country_id', keypath: 'country_id', options: { unique: false } },
+                { name: 'country', keypath: 'country', options: { unique: false } },
             ],
         }],
 };
@@ -6029,9 +6157,123 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const LogConfig = {
-    level: ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NgxLoggerLevel"].DEBUG,
+    level: ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NgxLoggerLevel"].ERROR,
     serverLogLevel: ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NgxLoggerLevel"].OFF,
     disableConsoleLogging: false,
+};
+
+
+/***/ }),
+
+/***/ "./src/app/config/prototypes.import.ts":
+/*!*********************************************!*\
+  !*** ./src/app/config/prototypes.import.ts ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _prototypes_array_prototypes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../prototypes/array.prototypes */ "./src/app/prototypes/array.prototypes.ts");
+/* harmony import */ var _prototypes_string_prototype__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../prototypes/string.prototype */ "./src/app/prototypes/string.prototype.ts");
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/app/config/request.config.ts":
+/*!******************************************!*\
+  !*** ./src/app/config/request.config.ts ***!
+  \******************************************/
+/*! exports provided: RC_AUTH_AUTHORIZATION_HEADER, RC_COMPANY_HEADER, RC_AUTH_ACCESS_TOKEN_PARAM, RC_AUTH_REFRESH_TOKEN_PARAM, RC_AUTH_AUTHORIZATION_BASIC_TYPE, RC_AUTH_AUTHORIZATION_BEARER_TYPE, RC_THIRD_PARTY_CUSTOM_TYPE, RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL, RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER, RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL, RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER, RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL, RC_DEFAULT_HEADERS */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_AUTH_AUTHORIZATION_HEADER", function() { return RC_AUTH_AUTHORIZATION_HEADER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_COMPANY_HEADER", function() { return RC_COMPANY_HEADER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_AUTH_ACCESS_TOKEN_PARAM", function() { return RC_AUTH_ACCESS_TOKEN_PARAM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_AUTH_REFRESH_TOKEN_PARAM", function() { return RC_AUTH_REFRESH_TOKEN_PARAM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_AUTH_AUTHORIZATION_BASIC_TYPE", function() { return RC_AUTH_AUTHORIZATION_BASIC_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_AUTH_AUTHORIZATION_BEARER_TYPE", function() { return RC_AUTH_AUTHORIZATION_BEARER_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_THIRD_PARTY_CUSTOM_TYPE", function() { return RC_THIRD_PARTY_CUSTOM_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER", function() { return RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL", function() { return RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER", function() { return RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL", function() { return RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER", function() { return RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL", function() { return RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RC_DEFAULT_HEADERS", function() { return RC_DEFAULT_HEADERS; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+const RC_AUTH_AUTHORIZATION_HEADER = 'Authorization';
+const RC_COMPANY_HEADER = 'Company';
+const RC_AUTH_ACCESS_TOKEN_PARAM = 'access_token';
+const RC_AUTH_REFRESH_TOKEN_PARAM = 'refresh_token';
+const RC_AUTH_AUTHORIZATION_BASIC_TYPE = 'Basic';
+const RC_AUTH_AUTHORIZATION_BEARER_TYPE = 'Bearer';
+const RC_THIRD_PARTY_CUSTOM_TYPE = 'X-ThirdParty';
+// CORS headers
+const RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER = 'Access-Control-Allow-Origin';
+const RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL = '*';
+const RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER = 'Access-Control-Allow-Methods';
+const RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL = '*';
+const RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER = 'Access-Control-Allow-Headers';
+const RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL = '*';
+const RC_DEFAULT_HEADERS = {
+    [RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER]: RC_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER_ALL,
+    [RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER]: RC_ACCESS_CONTROL_ALLOW_METHODS_HEADER_ALL,
+    [RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER]: RC_ACCESS_CONTROL_ALLOW_HEADERS_HEADER_ALL,
+};
+
+
+/***/ }),
+
+/***/ "./src/app/config/third.party.api.ts":
+/*!*******************************************!*\
+  !*** ./src/app/config/third.party.api.ts ***!
+  \*******************************************/
+/*! exports provided: THIRD_PARTY_API */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "THIRD_PARTY_API", function() { return THIRD_PARTY_API; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+/**
+ * Third-party API configuration
+ */
+const THIRD_PARTY_API = {
+    // https://www.universal-tutorial.com/rest-apis/free-rest-api-for-country-state-city
+    universal: {
+        code: 'UNIVERSAL',
+        email: 'hainguyenjc@gmail.com',
+        vapid_public_key: 'M70onCyk9pjjPxfwNiM3TyerUYNPGI26ZqBKuqhAP6LmE3Ct2bR91gw8QPg4D5Aom14',
+        // baseUrl: 'https://www.universal-tutorial.com/',
+        baseUrl: null,
+        tokenUrl: 'api/getaccesstoken',
+        api: {
+            country: {
+                // url: 'https://www.universal-tutorial.com/api/countries',
+                url: 'api/countries',
+                method: 'GET',
+            },
+            province: {
+                // url: 'https://www.universal-tutorial.com/api/states',
+                url: 'api/states',
+                method: 'GET',
+            },
+            city: {
+                // url: 'https://www.universal-tutorial.com/api/cities',
+                url: 'api/cities',
+                method: 'GET',
+            },
+        },
+    },
 };
 
 
@@ -7542,7 +7784,7 @@ function __removeIf(array, condition) {
     if (typeof condition === 'function') {
         let index;
         index = 0;
-        while (index < this.length) {
+        while (index < retArray.length) {
             if (condition.apply(retArray, [retArray[index], index])) {
                 retArray.splice(index, 1);
             }
@@ -8094,6 +8336,40 @@ let AbstractDbService = class AbstractDbService {
     invokePromises(defValue, calculateResult, promises) {
         return _utils_promise_utils__WEBPACK_IMPORTED_MODULE_7__["default"].sequencePromises(defValue, calculateResult, promises);
     }
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Open cursor by the specified key range
+     * @param cursorCallback cursor callback for handling
+     * @param keyRange key range for filtering
+     */
+    openCursor(cursorCallback, keyRange) {
+        return this.getDbService().openCursor(this.getDbStore(), cursorCallback, keyRange);
+    }
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Open a cursor by index filter.
+     * @param indexName The index name to filter.
+     * @param keyRange The range value and criteria to apply on the index.
+     * @param cursorCallback A callback called when done.
+     */
+    openCursorByIndex(indexName, keyRange, cursorCallback) {
+        return this.getDbService().openCursorByIndex(this.getDbStore(), indexName, keyRange, cursorCallback);
+    }
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Returns all items by an index.
+     * @param indexName The index name to filter
+     * @param keyRange  The range value and criteria to apply on the index.
+     */
+    getAllByIndex(indexName, keyRange) {
+        return new Promise((resolve, reject) => {
+            this.getDbService().getAllByIndex(this.getDbStore(), indexName, keyRange)
+                .then((value) => resolve(value), (errors) => {
+                this.getLogger().error(errors);
+                reject(errors);
+            });
+        });
+    }
     synchronize() {
         // TODO Override by children class to synchronize offline data to service via HTTP service
         this.getLogger().debug('Synchronize data...');
@@ -8134,12 +8410,13 @@ AbstractBaseDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!************************************************!*\
   !*** ./src/app/services/datasource.service.ts ***!
   \************************************************/
-/*! exports provided: AbstractDataSource */
+/*! exports provided: AbstractDataSource, BaseDataSource */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AbstractDataSource", function() { return AbstractDataSource; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BaseDataSource", function() { return BaseDataSource; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var ng2_smart_table_lib_data_source_data_source__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ng2-smart-table/lib/data-source/data-source */ "./node_modules/ng2-smart-table/lib/data-source/data-source.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
@@ -8315,7 +8592,7 @@ let AbstractDataSource = class AbstractDataSource extends ng2_smart_table_lib_da
         if (this.filterCfg.filters) {
             if (this.filterCfg.andOperator) {
                 this.filterCfg.filters.forEach((fieldConf) => {
-                    if (fieldConf['search'].length > 0) {
+                    if ((fieldConf['search'] || '').length) {
                         data = ng2_smart_table_lib_data_source_local_local_filter__WEBPACK_IMPORTED_MODULE_7__["LocalFilter"].filter(data, fieldConf['field'], fieldConf['search'], fieldConf['filter']);
                     }
                 });
@@ -8323,7 +8600,7 @@ let AbstractDataSource = class AbstractDataSource extends ng2_smart_table_lib_da
             else if (this.filterCfg.filters.length) {
                 let mergedData = [];
                 this.filterCfg.filters.forEach((fieldConf) => {
-                    if (fieldConf['search'].length > 0) {
+                    if ((fieldConf['search'] || '').length) {
                         mergedData = mergedData.concat(ng2_smart_table_lib_data_source_local_local_filter__WEBPACK_IMPORTED_MODULE_7__["LocalFilter"].filter(data, fieldConf['field'], fieldConf['search'], fieldConf['filter']));
                     }
                 });
@@ -8346,6 +8623,93 @@ AbstractDataSource = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [Object, Object, ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]])
 ], AbstractDataSource);
+
+/**
+ * Abstract base data source for table service
+ * @param <T> IndexDb entity type
+ * @param <H> HTTP service type
+ * @param <D> IndexDb service type
+ */
+let BaseDataSource = class BaseDataSource extends AbstractDataSource {
+    constructor(httpService, dbService, logger) {
+        super(httpService, dbService, logger);
+        this.latestCount = 0;
+    }
+    getAll() {
+        return super.getDbService().getAll()
+            .then(this.onFulfilledData(), reason => {
+            this.getLogger().error(reason);
+            return [];
+        }).catch(reason => {
+            this.getLogger().error(reason);
+            return [];
+        });
+    }
+    onFulfilledData() {
+        const _this = this;
+        return (data) => {
+            data = _this.filter(data);
+            data = _this.sort(data);
+            _this.setRecordsNumber((data || []).length);
+            data = _this.paginate(data);
+            return data;
+        };
+    }
+    setRecordsNumber(recNumber) {
+        this.latestCount = recNumber || 0;
+    }
+    getElements() {
+        return this.getAll();
+    }
+    count() {
+        return this.latestCount;
+    }
+    /**
+     * Update new data by old data as key.
+     * TODO remember return Promise of old data for updating view value
+     * @param oldData to filter for updating and returning to update view value
+     * @param newData to update into data source
+     */
+    update(oldData, newData) {
+        return this.getDbService().update(newData).then(() => {
+            this.refresh();
+            return oldData;
+        });
+    }
+    /**
+     * Remove the specified data
+     * @param data to remove
+     * @return effected records number
+     */
+    remove(data) {
+        return this.getDbService().delete(data).then(() => {
+            this.refresh();
+            return 1;
+        });
+    }
+    refresh() {
+        this.getLogger().debug('Refresh data source');
+        super.refresh();
+    }
+    load(data) {
+        this.getLogger().debug('Load data', data);
+        return super.load(data);
+    }
+    prepend(data) {
+        return this.append(data);
+    }
+    append(data) {
+        this.getLogger().debug('New data', data);
+        return this.getDbService().insert(data).then(() => {
+            this.refresh();
+            return 1;
+        });
+    }
+};
+BaseDataSource = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [Object, Object, ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]])
+], BaseDataSource);
 
 
 
@@ -8396,6 +8760,12 @@ let EmptyService = class EmptyService extends _database_service__WEBPACK_IMPORTE
         return new Promise((resolve) => {
             super.getLogger().debug('Call update entity....');
             resolve(0);
+        });
+    }
+    getAll() {
+        return new Promise((resolve) => {
+            super.getLogger().debug('Call get all entities....');
+            resolve(null);
         });
     }
     findById(id) {
@@ -8779,6 +9149,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! util */ "./node_modules/util/util.js");
 /* harmony import */ var util__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var ngx_cacheable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-cacheable */ "./node_modules/ngx-cacheable/esm2015/index.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+
 
 
 
@@ -8823,9 +9195,10 @@ let AbstractHttpService = class AbstractHttpService {
     handleResponseError(url, method, res, options) {
         const errors = [];
         // for handling offline mode
-        if ((res && res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]
-            && (res.status === 0 || res.status > 500) && this.getDbService())
-            || (res && !(res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]))) {
+        if (_environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].offline
+            && ((res && res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]
+                && (res.status === 0 || res.status > 500) && this.getDbService())
+                || (res && !(res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"])))) {
             return typeof this.handleOfflineModeDelegate === 'function'
                 ? this.handleOfflineModeDelegate.apply(this, [url, method, res, options])
                 : this.handleOfflineMode(url, method, res, options);
@@ -8840,7 +9213,7 @@ let AbstractHttpService = class AbstractHttpService {
         else {
             errors.push(res);
         }
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](false, res, options.redirectFailure, errors, [])));
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](false, res, (options || {})['redirectFailure'], errors, [])));
     }
     post(url, options) {
         return this.request(url, 'POST', options);
@@ -8859,19 +9232,67 @@ let AbstractHttpService = class AbstractHttpService {
     }
     request(url, method, options) {
         // detect connection before requesting
-        let _this;
-        _this = this;
-        return _this.getHttp().request(method, url, options)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((res) => {
+        const _this = this;
+        return _this.getHttp().request(method, url, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(res => {
             _this.getLogger().debug('Response', res);
             return res;
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((res) => {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](true, res, options.redirectSuccess, [], options.messages)));
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])((res) => {
-            let observer;
-            observer = (typeof _this.handleResponseErrorDelegate === 'function'
-                ? _this.handleResponseErrorDelegate(url, method, res, options)
-                : _this.handleResponseError(url, method, res, options));
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(res => {
+            if (res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"]) {
+                const httpResp = res;
+                _this.ensureVaidResponse(httpResp, url, method, options);
+            }
+            else {
+                res = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"]({
+                    body: JSON.stringify(res),
+                    headers: (options && options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]
+                        ? options.headers
+                        : new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]((options || {}).headers)),
+                    status: 200, url: url,
+                });
+            }
+            return _this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](true, res, (options || {}).redirectSuccess, [], (options || {}).messages));
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(_this.processRequestError(url, method, options)));
+    }
+    /**
+     * Check for ensuring the specified {HttpResponse} is valid/success
+     * @param httpResponse {HttpResponse}
+     * @param url request URL
+     * @param method request method
+     * @param options request options
+     */
+    ensureVaidResponse(httpResponse, url, method, options) {
+        if (!httpResponse || !httpResponse.ok) {
+            let errorHeaders;
+            if (httpResponse && httpResponse.headers) {
+                errorHeaders = httpResponse.headers;
+            }
+            else if (options && options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]) {
+                errorHeaders = options.headers;
+            }
+            else if (options && options.headers) {
+                errorHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"](options.headers);
+            }
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]({
+                error: (httpResponse ? httpResponse.body : options ? options.body : null),
+                headers: errorHeaders,
+                status: (httpResponse ? httpResponse.status : 0),
+                statusText: (httpResponse ? httpResponse.statusText : null),
+                url: (httpResponse ? httpResponse.url : url),
+            }));
+        }
+    }
+    /**
+     * Process error response from {AbstractHttpService#request} method
+     * @param url request URL
+     * @param method request method
+     * @param options request options
+     */
+    processRequestError(url, method, options) {
+        return (httpErrorResponse) => {
+            this.getLogger().error('Request Error', url, method, options, httpErrorResponse);
+            const observer = (typeof this.handleResponseErrorDelegate === 'function'
+                ? this.handleResponseErrorDelegate(url, method, httpErrorResponse, options)
+                : this.handleResponseError(url, method, httpErrorResponse, options));
             return (observer ? observer.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((value) => {
                 let tokens;
                 tokens = [];
@@ -8886,7 +9307,7 @@ let AbstractHttpService = class AbstractHttpService {
                 }
                 return undefined;
             })) : Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(undefined));
-        }));
+        };
     }
 };
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -9256,65 +9677,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let CityDatasource = class CityDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"] {
+let CityDatasource = class CityDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((cities) => {
-            cities = this.filter(cities);
-            cities = this.sort(cities);
-            this.latestCount = (cities || []).length;
-            cities = this.paginate(cities);
-            return cities;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
     }
     /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
+     * Find all cities by the specified {IProvince}
+     * @param province to filter
      */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
+    findByProvince(province) {
+        return super.getDbService().findByProvince(province)
+            .then(this.onFulfilledData(), reason => {
+            this.getLogger().error(reason);
+            return [];
+        }).catch(reason => {
+            this.getLogger().error(reason);
+            return [];
         });
     }
 };
@@ -9351,14 +9729,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
-/* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../http.service */ "./src/app/services/http.service.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../utils/json.utils */ "./src/app/utils/json.utils.ts");
-/* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../database.service */ "./src/app/services/database.service.ts");
-/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
-/* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
-/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../@core/data/system/city */ "./src/app/@core/data/system/city.ts");
+/* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../http.service */ "./src/app/services/http.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../utils/json.utils */ "./src/app/utils/json.utils.ts");
+/* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../database.service */ "./src/app/services/database.service.ts");
+/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+/* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
+/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../config/third.party.api */ "./src/app/config/third.party.api.ts");
+/* harmony import */ var _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../third.party/third.party.api.bridge.service */ "./src/app/services/third.party/third.party.api.bridge.service.ts");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! util */ "./node_modules/util/util.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_14__);
+
+var CityDbService_1;
 
 
 
@@ -9370,65 +9755,135 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let CityDbService = class CityDbService extends _database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"] {
-    constructor(dbService, logger, connectionService) {
-        super(dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].city);
+
+
+
+let CityDbService = CityDbService_1 = class CityDbService extends _database_service__WEBPACK_IMPORTED_MODULE_7__["AbstractBaseDbService"] {
+    constructor(dbService, logger, connectionService, thirdPartyApiBridge) {
+        super(dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_9__["DB_STORE"].city);
+        this.thirdPartyApiBridge = thirdPartyApiBridge;
         this.deleteExecutor = (resolve, reject, ...args) => {
             if (args && args.length) {
                 this.getLogger().debug('Delete data', args, 'First data', args[0]);
-                args[0].deletedAt = (new Date()).getUTCDate();
+                args[0].deletedAt = (new Date()).getTime();
                 this.updateExecutor.apply(this, [resolve, reject, ...args]);
             }
             else
                 resolve(0);
         };
+        thirdPartyApiBridge || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject ThirdPartyApiBridgeDbService instance');
     }
+    /**
+     * TODO Not support for getting all coutries because of performance
+     */
     getAll() {
-        return super.getAll();
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(CityDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        return Promise.reject(CityDbService_1.EXCEPTION_PERFORMANCE_REASON);
+    }
+    /**
+     * Find all cities by the specified {IProvince}
+     * @param province to filter
+     */
+    findByProvince(province) {
+        province || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(CityDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        const _this = this;
+        const fetchParam = {
+            dbCacheFilter: {
+                dbStore: this.getDbStore(),
+                indexName: CityDbService_1.INDEX_NAME_PROVINCE_ID,
+                criteria: province.id,
+            },
+            callApi: {
+                method: CityDbService_1.THIRD_PARTY_ENTRY_METHOD,
+                args: [
+                    CityDbService_1.THIRD_PARTY_CITY_URL.concat('/', province.name),
+                    CityDbService_1.THIRD_PARTY_CITY_METHOD,
+                    _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__["default"],
+                ],
+            },
+            apiFulfilled: apiData => {
+                // apply province for city API data
+                let cities;
+                const duplicatedCode = {};
+                cities = (Object(util__WEBPACK_IMPORTED_MODULE_14__["isArray"])(apiData) ? apiData : apiData ? [apiData] : []);
+                cities = cities.removeIf(city => Object(util__WEBPACK_IMPORTED_MODULE_14__["isNullOrUndefined"])(city));
+                cities.forEach(city => {
+                    city.province_id = province.id;
+                    // check for duplicated code because API data has no returned code
+                    let cityCode = province.code.concat('|', city.code);
+                    if (duplicatedCode.hasOwnProperty(cityCode)) {
+                        duplicatedCode[cityCode] = duplicatedCode[cityCode] + 1;
+                        cityCode = cityCode.concat('|', duplicatedCode[cityCode].toString());
+                    }
+                    else {
+                        duplicatedCode[cityCode] = 1;
+                    }
+                    city.code = cityCode;
+                });
+                // insert application database for future
+                return _this.insertEntities(cities)
+                    .then(affected => cities, reason => {
+                    _this.getLogger().error(reason);
+                    return [];
+                }).catch(reason => {
+                    _this.getLogger().error(reason);
+                    return [];
+                });
+            },
+        };
+        return _this.thirdPartyApiBridge.fetch(fetchParam);
     }
 };
+CityDbService.EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all cities because of performance!';
+CityDbService.INDEX_NAME_PROVINCE_ID = 'province_id';
+CityDbService.THIRD_PARTY_CITY_URL = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.city.url;
+CityDbService.THIRD_PARTY_CITY_METHOD = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.city.method;
+CityDbService.THIRD_PARTY_ENTRY_METHOD = 'findData';
 CityDbService.ctorParameters = () => [
-    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
+    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],] }] },
     { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
-    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"],] }] }
+    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],] }] },
+    { type: _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"],] }] }
 ];
-CityDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+CityDbService = CityDbService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],
         ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
-        ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"]])
+        ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],
+        _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"]])
 ], CityDbService);
 
-let CityHttpService = class CityHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
+let CityHttpService = class CityHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_4__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
+        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
             || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
             return undefined;
         }
-        return _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__["default"].parseResponseJson(serviceResponse.getResponse().body);
+        return _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].parseResponseJson(serviceResponse.getResponse().body);
     }
     handleOfflineMode(url, method, res, options) {
         return undefined;
     }
 };
 CityHttpService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],] }] },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],] }] },
     { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
     { type: CityDbService, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [CityDbService,] }] }
 ];
 CityHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(CityDbService)),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],
         ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
         CityDbService])
 ], CityHttpService);
@@ -9457,66 +9912,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let CountryDatasource = class CountryDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"] {
+let CountryDatasource = class CountryDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((countries) => {
-            countries = this.filter(countries);
-            countries = this.sort(countries);
-            this.latestCount = (countries || []).length;
-            countries = this.paginate(countries);
-            return countries;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 CountryDatasource.ctorParameters = () => [
@@ -9559,8 +9957,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -9577,15 +9973,12 @@ let CountryDbService = class CountryDbService extends _database_service__WEBPACK
         this.deleteExecutor = (resolve, reject, ...args) => {
             if (args && args.length) {
                 this.getLogger().debug('Delete data', args, 'First data', args[0]);
-                args[0].deletedAt = (new Date()).getUTCDate();
+                args[0].deletedAt = (new Date()).getTime();
                 this.updateExecutor.apply(this, [resolve, reject, ...args]);
             }
             else
                 resolve(0);
         };
-    }
-    getAll() {
-        return super.getAll();
     }
 };
 CountryDbService.ctorParameters = () => [
@@ -9606,7 +9999,6 @@ CountryDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let CountryHttpService = class CountryHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -9658,66 +10050,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let CustomerDatasource = class CustomerDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"] {
+let CustomerDatasource = class CustomerDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 CustomerDatasource.ctorParameters = () => [
@@ -9760,8 +10095,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -9785,9 +10118,6 @@ let CustomerDbService = class CustomerDbService extends _database_service__WEBPA
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 CustomerDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -9807,7 +10137,6 @@ CustomerDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let CustomerHttpService = class CustomerHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -9859,66 +10188,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let OrganizationDataSource = class OrganizationDataSource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let OrganizationDataSource = class OrganizationDataSource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
         super.setSort([{ field: 'uid', direction: 'desc' }]);
-    }
-    getAll() {
-        // sort by uid desc
-        return super.getDbService().getAll().then((data) => {
-            data = this.filter(data);
-            data = this.sort(data);
-            this.latestCount = (data || []).length;
-            data = this.paginate(data);
-            return data;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        data = this.filter(data);
-        data = this.sort(data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 OrganizationDataSource.ctorParameters = () => [
@@ -9961,8 +10234,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -9989,9 +10260,6 @@ let OrganizationDbService = class OrganizationDbService extends _database_servic
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 OrganizationDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -10011,7 +10279,6 @@ OrganizationDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let OrganizationHttpService = class OrganizationHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -10063,65 +10330,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let ProvinceDatasource = class ProvinceDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"] {
+let ProvinceDatasource = class ProvinceDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((provinces) => {
-            provinces = this.filter(provinces);
-            provinces = this.sort(provinces);
-            this.latestCount = (provinces || []).length;
-            provinces = this.paginate(provinces);
-            return provinces;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
     }
     /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
+     * Find all provinces by the specified {ICountry}
+     * @param country to filter
      */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
+    findByCountry(country) {
+        return super.getDbService().findByCountry(country)
+            .then(this.onFulfilledData(), reason => {
+            this.getLogger().error(reason);
+            return [];
+        }).catch(reason => {
+            this.getLogger().error(reason);
+            return [];
         });
     }
 };
@@ -10158,14 +10382,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
-/* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../http.service */ "./src/app/services/http.service.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../utils/json.utils */ "./src/app/utils/json.utils.ts");
-/* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../database.service */ "./src/app/services/database.service.ts");
-/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
-/* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
-/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _core_data_system_province__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../@core/data/system/province */ "./src/app/@core/data/system/province.ts");
+/* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../http.service */ "./src/app/services/http.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../utils/json.utils */ "./src/app/utils/json.utils.ts");
+/* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../database.service */ "./src/app/services/database.service.ts");
+/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+/* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
+/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../config/third.party.api */ "./src/app/config/third.party.api.ts");
+/* harmony import */ var _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../third.party/third.party.api.bridge.service */ "./src/app/services/third.party/third.party.api.bridge.service.ts");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! util */ "./node_modules/util/util.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_14__);
+
+var ProvinceDbService_1;
 
 
 
@@ -10177,65 +10408,134 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let ProvinceDbService = class ProvinceDbService extends _database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"] {
-    constructor(dbService, logger, connectionService) {
-        super(dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_8__["DB_STORE"].province);
+
+
+
+let ProvinceDbService = ProvinceDbService_1 = class ProvinceDbService extends _database_service__WEBPACK_IMPORTED_MODULE_7__["AbstractBaseDbService"] {
+    constructor(dbService, logger, connectionService, thirdPartyApiBridge) {
+        super(dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_9__["DB_STORE"].province);
+        this.thirdPartyApiBridge = thirdPartyApiBridge;
         this.deleteExecutor = (resolve, reject, ...args) => {
             if (args && args.length) {
                 this.getLogger().debug('Delete data', args, 'First data', args[0]);
-                args[0].deletedAt = (new Date()).getUTCDate();
+                args[0].deletedAt = (new Date()).getTime();
                 this.updateExecutor.apply(this, [resolve, reject, ...args]);
             }
             else
                 resolve(0);
         };
+        thirdPartyApiBridge || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject ThirdPartyApiBridgeDbService instance');
     }
+    /**
+     * TODO Not support for getting all provinces because of performance
+     */
     getAll() {
-        return super.getAll();
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(ProvinceDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        return Promise.reject(ProvinceDbService_1.EXCEPTION_PERFORMANCE_REASON);
+    }
+    /**
+     * Find all states/provinces by the specified {ICountry}
+     * @param country to filter
+     */
+    findByCountry(country) {
+        country || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(ProvinceDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        const _this = this;
+        const fetchParam = {
+            dbCacheFilter: {
+                dbStore: this.getDbStore(),
+                indexName: ProvinceDbService_1.INDEX_NAME_COUNTRY_ID,
+                criteria: country.id,
+            },
+            callApi: {
+                method: ProvinceDbService_1.THIRD_PARTY_ENTRY_METHOD,
+                args: [
+                    ProvinceDbService_1.THIRD_PARTY_STATE_URL.concat('/', country.name),
+                    ProvinceDbService_1.THIRD_PARTY_STATE_METHOD,
+                    _core_data_system_province__WEBPACK_IMPORTED_MODULE_3__["default"],
+                ],
+            },
+            apiFulfilled: apiData => {
+                // apply country for province API data
+                let provinces;
+                const duplicatedCode = {};
+                provinces = (Object(util__WEBPACK_IMPORTED_MODULE_14__["isArray"])(apiData) ? apiData : apiData ? [apiData] : []);
+                provinces = provinces.removeIf(province => Object(util__WEBPACK_IMPORTED_MODULE_14__["isNullOrUndefined"])(province));
+                provinces.forEach(province => {
+                    province.country_id = country.id;
+                    // check for duplicated code because API data has no returned code
+                    let provinceCode = country.code.concat('|', province.code);
+                    if (duplicatedCode.hasOwnProperty(provinceCode)) {
+                        duplicatedCode[provinceCode] = duplicatedCode[provinceCode] + 1;
+                        provinceCode = provinceCode.concat('|', duplicatedCode[provinceCode].toString());
+                    }
+                    else {
+                        duplicatedCode[provinceCode] = 1;
+                    }
+                    province.code = provinceCode;
+                });
+                // insert application database for future
+                return _this.insertEntities(provinces)
+                    .then(affected => provinces, reason => {
+                    _this.getLogger().error(reason);
+                    return [];
+                }).catch(reason => {
+                    _this.getLogger().error(reason);
+                    return [];
+                });
+            },
+        };
+        return _this.thirdPartyApiBridge.fetch(fetchParam);
     }
 };
+ProvinceDbService.EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all provinces because of performance!';
+ProvinceDbService.INDEX_NAME_COUNTRY_ID = 'country_id';
+ProvinceDbService.THIRD_PARTY_STATE_URL = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.province.url;
+ProvinceDbService.THIRD_PARTY_STATE_METHOD = _config_third_party_api__WEBPACK_IMPORTED_MODULE_12__["THIRD_PARTY_API"].universal.api.province.method;
+ProvinceDbService.THIRD_PARTY_ENTRY_METHOD = 'findData';
 ProvinceDbService.ctorParameters = () => [
-    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
+    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],] }] },
     { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
-    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"],] }] }
+    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],] }] },
+    { type: _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"],] }] }
 ];
-ProvinceDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+ProvinceDbService = ProvinceDbService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],
         ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
-        ng_connection_service__WEBPACK_IMPORTED_MODULE_9__["ConnectionService"]])
+        ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],
+        _third_party_third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_13__["ThirdPartyApiBridgeDbService"]])
 ], ProvinceDbService);
 
-let ProvinceHttpService = class ProvinceHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
+let ProvinceHttpService = class ProvinceHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_4__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
             || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
             return undefined;
         }
-        return _utils_json_utils__WEBPACK_IMPORTED_MODULE_5__["default"].parseResponseJson(serviceResponse.getResponse().body);
+        return _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].parseResponseJson(serviceResponse.getResponse().body);
     }
     handleOfflineMode(url, method, res, options) {
         return undefined;
     }
 };
 ProvinceHttpService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],] }] },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],] }] },
     { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
     { type: ProvinceDbService, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ProvinceDbService,] }] }
 ];
 ProvinceHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ProvinceDbService)),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],
         ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
         ProvinceDbService])
 ], ProvinceHttpService);
@@ -10264,66 +10564,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let UserDataSource = class UserDataSource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["AbstractDataSource"] {
+let UserDataSource = class UserDataSource extends _datasource_service__WEBPACK_IMPORTED_MODULE_3__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
         super.setSort([{ field: 'uid', direction: 'desc' }]);
-    }
-    getAll() {
-        // sort by uid desc
-        return super.getDbService().getAll().then((users) => {
-            users = this.filter(users);
-            users = this.sort(users);
-            this.latestCount = (users || []).length;
-            users = this.paginate(users);
-            return users;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        data = this.filter(data);
-        data = this.sort(data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 UserDataSource.ctorParameters = () => [
@@ -10366,8 +10610,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -10402,9 +10644,6 @@ let UserDbService = class UserDbService extends _database_service__WEBPACK_IMPOR
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 UserDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -10424,7 +10663,6 @@ UserDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let UserHttpService = class UserHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -10476,66 +10714,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseAdjustDetailDatasource = class WarehouseAdjustDetailDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseAdjustDetailDatasource = class WarehouseAdjustDetailDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseAdjustDetailDatasource.ctorParameters = () => [
@@ -10578,8 +10759,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -10603,9 +10782,6 @@ let WarehouseAdjustDetailDbService = class WarehouseAdjustDetailDbService extend
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseAdjustDetailDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -10625,7 +10801,6 @@ WarehouseAdjustDetailDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"
 let WarehouseAdjustDetailHttpService = class WarehouseAdjustDetailHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -10677,66 +10852,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseAdjustDatasource = class WarehouseAdjustDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseAdjustDatasource = class WarehouseAdjustDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseAdjustDatasource.ctorParameters = () => [
@@ -10779,8 +10897,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -10804,9 +10920,6 @@ let WarehouseAdjustDbService = class WarehouseAdjustDbService extends _database_
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseAdjustDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -10826,7 +10939,6 @@ WarehouseAdjustDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let WarehouseAdjustHttpService = class WarehouseAdjustHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -10878,69 +10990,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseCategoryDatasource = class WarehouseCategoryDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseCategoryDatasource = class WarehouseCategoryDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getById(categoryId) {
-        return super.getDbService().findById(categoryId);
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseCategoryDatasource.ctorParameters = () => [
@@ -10983,8 +11035,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -11008,9 +11058,6 @@ let WarehouseCategoryDbService = class WarehouseCategoryDbService extends _datab
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseCategoryDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -11030,7 +11077,6 @@ WarehouseCategoryDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let WarehouseCategoryHttpService = class WarehouseCategoryHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -11082,66 +11128,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseInventoryDetailDatasource = class WarehouseInventoryDetailDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseInventoryDetailDatasource = class WarehouseInventoryDetailDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseInventoryDetailDatasource.ctorParameters = () => [
@@ -11184,8 +11173,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -11209,9 +11196,6 @@ let WarehouseInventoryDetailDbService = class WarehouseInventoryDetailDbService 
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseInventoryDetailDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -11231,7 +11215,6 @@ WarehouseInventoryDetailDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decora
 let WarehouseInventoryDetailHttpService = class WarehouseInventoryDetailHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -11283,66 +11266,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseInventoryDatasource = class WarehouseInventoryDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseInventoryDatasource = class WarehouseInventoryDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseInventoryDatasource.ctorParameters = () => [
@@ -11385,8 +11311,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -11410,9 +11334,6 @@ let WarehouseInventoryDbService = class WarehouseInventoryDbService extends _dat
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseInventoryDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -11432,7 +11353,6 @@ WarehouseInventoryDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let WarehouseInventoryHttpService = class WarehouseInventoryHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -11484,66 +11404,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseItemDatasource = class WarehouseItemDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseItemDatasource = class WarehouseItemDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseItemDatasource.ctorParameters = () => [
@@ -11586,8 +11449,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -11611,9 +11472,6 @@ let WarehouseItemDbService = class WarehouseItemDbService extends _database_serv
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseItemDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -11633,7 +11491,6 @@ WarehouseItemDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let WarehouseItemHttpService = class WarehouseItemHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -11685,66 +11542,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseOrderDetailDatasource = class WarehouseOrderDetailDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseOrderDetailDatasource = class WarehouseOrderDetailDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseOrderDetailDatasource.ctorParameters = () => [
@@ -11787,8 +11587,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -11812,9 +11610,6 @@ let WarehouseOrderDetailDbService = class WarehouseOrderDetailDbService extends 
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseOrderDetailDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -11834,7 +11629,6 @@ WarehouseOrderDetailDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]
 let WarehouseOrderDetailHttpService = class WarehouseOrderDetailHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -11886,66 +11680,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseOrderDatasource = class WarehouseOrderDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseOrderDatasource = class WarehouseOrderDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseOrderDatasource.ctorParameters = () => [
@@ -11988,8 +11725,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -12013,9 +11748,6 @@ let WarehouseOrderDbService = class WarehouseOrderDbService extends _database_se
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseOrderDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -12035,7 +11767,6 @@ WarehouseOrderDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let WarehouseOrderHttpService = class WarehouseOrderHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -12087,66 +11818,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let WarehouseDatasource = class WarehouseDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["AbstractDataSource"] {
+let WarehouseDatasource = class WarehouseDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
     constructor(httpService, dbService, logger) {
         super(httpService, dbService, logger);
-        this.latestCount = 0;
-    }
-    getAll() {
-        return super.getDbService().getAll().then((customers) => {
-            customers = this.filter(customers);
-            customers = this.sort(customers);
-            this.latestCount = (customers || []).length;
-            customers = this.paginate(customers);
-            return customers;
-        });
-    }
-    getElements() {
-        return this.getAll();
-    }
-    count() {
-        return this.latestCount;
-    }
-    /**
-     * Update new data by old data as key.
-     * TODO remember return Promise of old data for updating view value
-     * @param oldData to filter for updating and returning to update view value
-     * @param newData to update into data source
-     */
-    update(oldData, newData) {
-        return this.getDbService().update(newData).then(() => {
-            this.refresh();
-            return oldData;
-        });
-    }
-    /**
-     * Remove the specified data
-     * @param data to remove
-     * @return effected records number
-     */
-    remove(data) {
-        return this.getDbService().delete(data).then(() => {
-            this.refresh();
-            return 1;
-        });
-    }
-    refresh() {
-        this.getLogger().debug('Refresh data source');
-        super.refresh();
-    }
-    load(data) {
-        this.getLogger().debug('Load data', data);
-        return super.load(data);
-    }
-    prepend(data) {
-        return this.append(data);
-    }
-    append(data) {
-        this.getLogger().debug('New data', data);
-        return this.getDbService().insert(data).then(() => {
-            this.refresh();
-            return 1;
-        });
     }
 };
 WarehouseDatasource.ctorParameters = () => [
@@ -12189,8 +11863,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -12214,9 +11886,6 @@ let WarehouseDbService = class WarehouseDbService extends _database_service__WEB
                 resolve(0);
         };
     }
-    getAll() {
-        return super.getAll();
-    }
 };
 WarehouseDbService.ctorParameters = () => [
     { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_7__["NgxIndexedDBService"],] }] },
@@ -12236,7 +11905,6 @@ WarehouseDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 let WarehouseHttpService = class WarehouseHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
-        dbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["throwError"])('Could not inject user database service for offline mode');
     }
     parseResponse(serviceResponse) {
         if (!serviceResponse || !serviceResponse.getResponse()
@@ -12263,6 +11931,291 @@ WarehouseHttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
         WarehouseDbService])
 ], WarehouseHttpService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/interceptors/abstract.http.interceptor.ts":
+/*!********************************************************************!*\
+  !*** ./src/app/services/interceptors/abstract.http.interceptor.ts ***!
+  \********************************************************************/
+/*! exports provided: AbstractHttpInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AbstractHttpInterceptor", function() { return AbstractHttpInterceptor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nebular/auth */ "./node_modules/@nebular/auth/fesm2015/index.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! util */ "./node_modules/util/util.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+let AbstractHttpInterceptor = class AbstractHttpInterceptor extends _nebular_auth__WEBPACK_IMPORTED_MODULE_4__["NbAuthSimpleInterceptor"] {
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+    /**
+     * Create a new instance of {AbstractHttpInterceptor}
+     * @param _injector {Injector}
+     * @param _logger {NGXLogger}
+     * @param headerName request header name for applying token if necessary
+     */
+    constructor(_injector, _logger, headerName) {
+        super(_injector, headerName);
+        this._injector = _injector;
+        this._logger = _logger;
+        _injector || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject Injector instance');
+        _logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject NGXLogger instance');
+    }
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+    getInjector() {
+        return this._injector;
+    }
+    get logger() {
+        return this._logger;
+    }
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+    /**
+     * Intercept the present specified request {HttpRequest}
+     * @param req to intercept
+     * @param next for next intercept
+     */
+    intercept(req, next) {
+        this.logger.warn('Just remind: Intercept HTTP{' + this.constructor.name + '}', req);
+        return (this.isSupported(req) ? this.doIntercept(req, next) : next.handle(req));
+    }
+    /**
+     * Get a boolean value indicating the specified {HttpRequest} should be filtered.
+     * TODO Children classes should override this method if they wanna filter request. Default is TRUE
+     * @param req to check
+     */
+    isSupported(req) {
+        return !Object(util__WEBPACK_IMPORTED_MODULE_5__["isNullOrUndefined"])(req);
+    }
+};
+AbstractHttpInterceptor.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
+    { type: String }
+];
+AbstractHttpInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], String])
+], AbstractHttpInterceptor);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/interceptors/auth.interceptor.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/services/interceptors/auth.interceptor.ts ***!
+  \***********************************************************/
+/*! exports provided: NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, NbxAuthInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM", function() { return NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NBX_AUTH_INTERCEPTOR_COMPANY_HEADER", function() { return NBX_AUTH_INTERCEPTOR_COMPANY_HEADER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NbxAuthInterceptor", function() { return NbxAuthInterceptor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _nebular_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nebular/auth */ "./node_modules/@nebular/auth/fesm2015/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _config_request_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../config/request.config */ "./src/app/config/request.config.ts");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./abstract.http.interceptor */ "./src/app/services/interceptors/abstract.http.interceptor.ts");
+
+
+
+
+
+
+
+const NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Access Token Parameter');
+const NBX_AUTH_INTERCEPTOR_COMPANY_HEADER = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('Custom Interceptor Company Header Parameter');
+let NbxAuthInterceptor = class NbxAuthInterceptor extends _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_6__["AbstractHttpInterceptor"] {
+    constructor(_injector, _logger, headerName = _config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_AUTH_AUTHORIZATION_HEADER"], companyHeaderName = _config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_COMPANY_HEADER"], accessTokenParamName = _config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_AUTH_ACCESS_TOKEN_PARAM"]) {
+        super(_injector, _logger, headerName);
+        this.headerName = headerName;
+        this.companyHeaderName = companyHeaderName;
+        this.accessTokenParamName = accessTokenParamName;
+    }
+    isSupported(req) {
+        return super.isSupported(req) && !this.isThirdPartyRequest(req);
+    }
+    /**
+     * Get a boolean value indicating the specified {HttpRequest} whether is third-party API request
+     * @param req to check
+     */
+    isThirdPartyRequest(req) {
+        return (req.headers && req.headers.has(_config_request_config__WEBPACK_IMPORTED_MODULE_4__["RC_THIRD_PARTY_CUSTOM_TYPE"]));
+    }
+    doIntercept(req, next) {
+        return this.authService.getToken().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])((token) => {
+            // exclude request that already has authorization token such as third-party API
+            if (token && token.getValue()
+                && req && !req.headers.has(this.headerName)
+                && !req.headers.hasOwnProperty(this.headerName)) {
+                req.headers.set(this.headerName, token.getValue());
+                req.headers.set(this.companyHeaderName, token.getPayload()['company']);
+                req.params.append(this.accessTokenParamName, token.getValue());
+            }
+            return next.handle(req);
+        }));
+    }
+};
+NbxAuthInterceptor.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"],] }] },
+    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"],] }] },
+    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,] }] },
+    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"], args: [NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,] }] }
+];
+NbxAuthInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NB_AUTH_INTERCEPTOR_HEADER"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_COMPANY_HEADER)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](4, Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Inject"])(NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injector"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_5__["NGXLogger"], String, String, String])
+], NbxAuthInterceptor);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/interceptors/headers.interceptor.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/services/interceptors/headers.interceptor.ts ***!
+  \**************************************************************/
+/*! exports provided: HTTP_REQUEST_HEADERS, RequestHeadersInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HTTP_REQUEST_HEADERS", function() { return HTTP_REQUEST_HEADERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequestHeadersInterceptor", function() { return RequestHeadersInterceptor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./abstract.http.interceptor */ "./src/app/services/interceptors/abstract.http.interceptor.ts");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+
+
+
+
+
+const HTTP_REQUEST_HEADERS = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('The default request header to apply such as CORS');
+let RequestHeadersInterceptor = class RequestHeadersInterceptor extends _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpInterceptor"] {
+    constructor(_injector, _logger, _headers) {
+        super(_injector, _logger, null);
+        this._headers = _headers;
+    }
+    get headers() {
+        return this._headers;
+    }
+    doIntercept(req, next) {
+        if (req && this.headers) {
+            let httpHeaders;
+            if (this.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]) {
+                httpHeaders = this.headers;
+            }
+            else {
+                httpHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](this.headers);
+            }
+            httpHeaders.keys().forEach(key => {
+                // remove existed headers for non-overriding
+                if (!req.headers.has(key)) {
+                    req.headers.set(key, httpHeaders.get(key));
+                }
+            });
+        }
+        return next.handle(req);
+    }
+};
+RequestHeadersInterceptor.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"],] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [HTTP_REQUEST_HEADERS,] }] }
+];
+RequestHeadersInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(HTTP_REQUEST_HEADERS)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], Object])
+], RequestHeadersInterceptor);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/interceptors/timeout.interceptor.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/services/interceptors/timeout.interceptor.ts ***!
+  \**************************************************************/
+/*! exports provided: HTTP_REQUEST_TIMEOUT, TimeoutInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HTTP_REQUEST_TIMEOUT", function() { return HTTP_REQUEST_TIMEOUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimeoutInterceptor", function() { return TimeoutInterceptor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./abstract.http.interceptor */ "./src/app/services/interceptors/abstract.http.interceptor.ts");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
+
+
+
+const HTTP_REQUEST_TIMEOUT = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('The default request timeout to apply');
+let TimeoutInterceptor = class TimeoutInterceptor extends _abstract_http_interceptor__WEBPACK_IMPORTED_MODULE_2__["AbstractHttpInterceptor"] {
+    constructor(_injector, _logger, _timeout) {
+        super(_injector, _logger, null);
+        this._timeout = _timeout;
+    }
+    get timeout() {
+        return Math.max(this._timeout, 0);
+    }
+    doIntercept(req, next) {
+        const timeoutValue = req.headers.get('timeout') || this.timeout;
+        const timeoutValueNumeric = Number(timeoutValue);
+        return next.handle(req).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(timeoutValueNumeric));
+    }
+};
+TimeoutInterceptor.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [HTTP_REQUEST_TIMEOUT,] }] }
+];
+TimeoutInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(HTTP_REQUEST_TIMEOUT)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], Number])
+], TimeoutInterceptor);
 
 
 
@@ -12321,6 +12274,1083 @@ class ServiceResponse {
         this.messages = messages;
     }
 }
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/data.parsers/third.party.data.parser.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/services/third.party/data.parsers/third.party.data.parser.ts ***!
+  \******************************************************************************/
+/*! exports provided: ThirdPartyApiDataParserDefinition, AbstractThirdPartyApiDataParser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThirdPartyApiDataParserDefinition", function() { return ThirdPartyApiDataParserDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AbstractThirdPartyApiDataParser", function() { return AbstractThirdPartyApiDataParser; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/json.utils */ "./src/app/utils/json.utils.ts");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! util */ "./node_modules/util/util.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+/**
+ * Default third-party API data parser definition
+ */
+class ThirdPartyApiDataParserDefinition {
+    constructor(parsers) {
+        this.parsers = parsers;
+    }
+}
+/**
+ * Abstract third-party API data parser
+ */
+class AbstractThirdPartyApiDataParser {
+    constructor(_dataPropertyName) {
+        this._dataPropertyName = _dataPropertyName;
+        (_dataPropertyName || '').length
+            || Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])('Please define the property of the returned third-part API data to parse');
+    }
+    get dataPropertyName() {
+        return this._dataPropertyName;
+    }
+    parse(data) {
+        let parsedData;
+        parsedData = null;
+        if (!data || !(data.response || '').length)
+            return parsedData;
+        let receivedEntities;
+        receivedEntities = _utils_json_utils__WEBPACK_IMPORTED_MODULE_2__["default"].parseResponseJson(data.response);
+        if (receivedEntities && !Object(util__WEBPACK_IMPORTED_MODULE_3__["isArray"])(receivedEntities)) {
+            receivedEntities = [receivedEntities];
+        }
+        if (Object(util__WEBPACK_IMPORTED_MODULE_3__["isArray"])(receivedEntities) && receivedEntities.length) {
+            parsedData = [];
+            receivedEntities.forEach(receiveEntity => {
+                if (receiveEntity && receiveEntity.hasOwnProperty(this.dataPropertyName)
+                    && (receiveEntity[this.dataPropertyName] || '').length) {
+                    const mappedData = this.mappingData(receiveEntity);
+                    mappedData && parsedData.push(mappedData);
+                    !mappedData && window.console.warn(['Could not parse ', receiveEntity, ' data from third-party API!']);
+                }
+            });
+        }
+        return parsedData;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/third.party.api.bridge.service.ts":
+/*!************************************************************************!*\
+  !*** ./src/app/services/third.party/third.party.api.bridge.service.ts ***!
+  \************************************************************************/
+/*! exports provided: ThirdPartyApiBridgeDbService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThirdPartyApiBridgeDbService", function() { return ThirdPartyApiBridgeDbService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./third.party.api.datasource */ "./src/app/services/third.party/third.party.api.datasource.ts");
+/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+/* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../database.service */ "./src/app/services/database.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! util */ "./node_modules/util/util.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_8__);
+
+var ThirdPartyApiBridgeDbService_1;
+
+
+
+
+
+
+
+
+let ThirdPartyApiBridgeDbService = ThirdPartyApiBridgeDbService_1 = class ThirdPartyApiBridgeDbService extends _database_service__WEBPACK_IMPORTED_MODULE_6__["AbstractBaseDbService"] {
+    constructor(dbService, logger, connectionService, _thirdPartyApi) {
+        // TODO Not using database store here, because this is just a bridge data-source
+        super(dbService, logger, connectionService, 'NOT_USING_STORE_BECAUSE_THIS_JUST_BRIDGE_API');
+        this._thirdPartyApi = _thirdPartyApi;
+        this.deleteExecutor = (resolve, reject, ...args) => {
+            if (args && args.length) {
+                this.getLogger().debug('Delete data', args, 'First data', args[0]);
+                args[0].deletedAt = (new Date()).getTime();
+                args[0].expiredAt = (new Date()).getTime();
+                this.updateExecutor.apply(this, [resolve, reject, ...args]);
+            }
+            else
+                resolve(0);
+        };
+        _thirdPartyApi || Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])('Could not inject ThirdPartyApiDatasource instance');
+    }
+    get thirdPartyApi() {
+        return this._thirdPartyApi;
+    }
+    /**
+     * TODO Not support for getting all data because of performance
+     */
+    getAll() {
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(ThirdPartyApiBridgeDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        return Promise.reject(ThirdPartyApiBridgeDbService_1.EXCEPTION_PERFORMANCE_REASON);
+    }
+    /**
+     * Find API data by the specified parameter
+     * @param param to filter
+     */
+    fetch(param) {
+        // check valid parameter
+        (param && param.dbCacheFilter)
+            || Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(ThirdPartyApiBridgeDbService_1.EXCEPTION_PERFORMANCE_REASON);
+        (param.callApi && (param.callApi.method || '').length
+            && (typeof this.thirdPartyApi[param.callApi.method] === 'function'
+                || this.thirdPartyApi[param.callApi.method] instanceof Promise
+                || this.thirdPartyApi[param.callApi.method] instanceof rxjs__WEBPACK_IMPORTED_MODULE_7__["Observable"]))
+            || Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(ThirdPartyApiBridgeDbService_1.EXCEPTION_INVALID_API_GATEWAY);
+        return this.getDbService().getAllByIndex(param.dbCacheFilter.dbStore, param.dbCacheFilter.indexName, param.dbCacheFilter.criteria)
+            .then((value) => {
+            // if not found data from database storage;
+            // then calling third-party API to fetch data
+            if (!value || (Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(value) && !(value || []).length)) {
+                // require third-part entry point
+                const apiGatewayEntry = this.thirdPartyApi[param.callApi.method];
+                let apiGatewayEntryPromise;
+                if (!(apiGatewayEntry instanceof Promise) && !(apiGatewayEntry instanceof rxjs__WEBPACK_IMPORTED_MODULE_7__["Observable"])) {
+                    apiGatewayEntryPromise = new Promise(resolve => resolve(apiGatewayEntry['apply'](this._thirdPartyApi, param.callApi.args)));
+                }
+                else if (apiGatewayEntry instanceof Promise) {
+                    apiGatewayEntryPromise = apiGatewayEntry;
+                }
+                else {
+                    apiGatewayEntryPromise = apiGatewayEntry.toPromise();
+                }
+                // invoke third-part API entry point
+                return apiGatewayEntryPromise.then(param.apiFulfilled, reason => {
+                    this.getLogger().error(reason);
+                    return [];
+                }).catch(reason => {
+                    this.getLogger().error(reason);
+                    return [];
+                });
+            }
+            return (value && !Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(value) ? Array.of(value) : value ? Array.from(value) : value);
+        }, reason => {
+            this.getLogger().error(reason);
+            return [];
+        }).catch(reason => {
+            this.getLogger().error(reason);
+            return [];
+        });
+    }
+};
+ThirdPartyApiBridgeDbService.EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all data because of performance!';
+ThirdPartyApiBridgeDbService.EXCEPTION_INVALID_API_GATEWAY = 'Not found the valid API function';
+ThirdPartyApiBridgeDbService.ctorParameters = () => [
+    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],] }] },
+    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"],] }] },
+    { type: _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"],] }] }
+];
+ThirdPartyApiBridgeDbService = ThirdPartyApiBridgeDbService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],
+        ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"],
+        _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"]])
+], ThirdPartyApiBridgeDbService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/third.party.api.datasource.ts":
+/*!********************************************************************!*\
+  !*** ./src/app/services/third.party/third.party.api.datasource.ts ***!
+  \********************************************************************/
+/*! exports provided: THIRDPARTY_API_DATA_PARSER_DEFINITION, ThirdPartyApiDatasource */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "THIRDPARTY_API_DATA_PARSER_DEFINITION", function() { return THIRDPARTY_API_DATA_PARSER_DEFINITION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThirdPartyApiDatasource", function() { return ThirdPartyApiDatasource; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _datasource_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../datasource.service */ "./src/app/services/datasource.service.ts");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./third.party.api.service */ "./src/app/services/third.party/third.party.api.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! util */ "./node_modules/util/util.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./data.parsers/third.party.data.parser */ "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+
+var ThirdPartyApiDatasource_1;
+
+
+
+
+
+
+
+const THIRDPARTY_API_DATA_PARSER_DEFINITION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('Third-party API data parsers definition');
+let ThirdPartyApiDatasource = ThirdPartyApiDatasource_1 = class ThirdPartyApiDatasource extends _datasource_service__WEBPACK_IMPORTED_MODULE_2__["BaseDataSource"] {
+    constructor(httpService, dbService, logger, _dataParser) {
+        super(httpService, dbService, logger);
+        this._dataParser = _dataParser;
+    }
+    /**
+     * Get the third-party API data parser definition injection instance
+     * @return the third-party API data parser definition injection instance
+     */
+    dataParser() {
+        return this._dataParser || new _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_7__["ThirdPartyApiDataParserDefinition"]([]);
+    }
+    getAll() {
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(ThirdPartyApiDatasource_1.EXCEPTION_NOT_SUPPORTED);
+        return Promise.reject(ThirdPartyApiDatasource_1.EXCEPTION_NOT_SUPPORTED);
+    }
+    /**
+     * Find data from third-party API
+     * @param <K> application data to parse. it must exist in data parser injection
+     * @param url to call API
+     * @param method request method
+     * @param dataParserType to detect parser injection to parse API data
+     * @param options request options if not found from database offline
+     */
+    findData(url, method, dataParserType, options) {
+        (url || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(ThirdPartyApiDatasource_1.EXCEPTION_NOT_SUPPORTED);
+        const _this = this;
+        const criteria = [
+            _this.getHttpService().config.code,
+            (method || 'UNKNOWN'),
+            url,
+        ].join('|');
+        return _this.getDbService().findEntities(ThirdPartyApiDatasource_1.INDEX_NAME_THIRD_PARTY_CODE, criteria)
+            .then(value => {
+            if (!(value || []).length) {
+                return _this.getHttpService().request(url, method, options).toPromise()
+                    .then((data) => {
+                    // catch for future from offline database
+                    if (data && !Object(util__WEBPACK_IMPORTED_MODULE_6__["isArray"])(data)) {
+                        data = [].concat(data);
+                    }
+                    return _this.getDbService().insertEntities(data)
+                        .then(affected => {
+                        let parsedData;
+                        parsedData = [];
+                        if (dataParserType && _this.dataParser() && _this.dataParser().parsers) {
+                            let parser;
+                            parser = _this.getDataParser(dataParserType);
+                            if (parser) {
+                                (data || []).forEach(dat => {
+                                    const parsed = parser.parse(dat);
+                                    if (parsed && Object(util__WEBPACK_IMPORTED_MODULE_6__["isArray"])(parsed)) {
+                                        parsedData = parsedData.concat(parsed);
+                                    }
+                                    else if (parsed) {
+                                        parsedData.push(parsed);
+                                    }
+                                });
+                            }
+                        }
+                        data = _this.filter(data);
+                        data = _this.sort(data);
+                        _this.setRecordsNumber((data || []).length);
+                        data = _this.paginate(data);
+                        return parsedData;
+                    }, reason => {
+                        _this.getLogger().error(reason);
+                        return [];
+                    }).catch(reason => {
+                        _this.getLogger().error(reason);
+                        return [];
+                    });
+                }, reason => {
+                    _this.getLogger().error(reason);
+                    return [];
+                }).catch(reason => {
+                    _this.getLogger().error(reason);
+                    return [];
+                });
+            }
+            return value;
+        }, reason => {
+            _this.getLogger().error(reason);
+            return [];
+        }).catch(reason => {
+            _this.getLogger().error(reason);
+            return [];
+        });
+    }
+    getDataParser(dataParserType) {
+        let parser;
+        parser = null;
+        if (this.dataParser().parsers && dataParserType) {
+            for (const dataParserDef of this.dataParser().parsers) {
+                if (dataParserDef && dataParserDef.provide === dataParserType) {
+                    parser = dataParserDef.parser;
+                    break;
+                }
+            }
+        }
+        return parser;
+    }
+};
+ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED = 'Not support for getting all data because third-party manage data by URL, method and code!';
+ThirdPartyApiDatasource.INDEX_NAME_THIRD_PARTY_CODE = 'code';
+ThirdPartyApiDatasource.ctorParameters = () => [
+    { type: _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"],] }] },
+    { type: _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [THIRDPARTY_API_DATA_PARSER_DEFINITION,] }] }
+];
+ThirdPartyApiDatasource = ThirdPartyApiDatasource_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(THIRDPARTY_API_DATA_PARSER_DEFINITION)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiHttpService"],
+        _third_party_api_service__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDbService"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], Object])
+], ThirdPartyApiDatasource);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/third.party.api.service.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/services/third.party/third.party.api.service.ts ***!
+  \*****************************************************************/
+/*! exports provided: default, THIRDPARTY_AUTHORIZATION_API_CONFIG, ThirdPartyApiExpiredException, ThirdPartyApiDbService, ThirdPartyApiHttpService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ThirdPartyApiConfig; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "THIRDPARTY_AUTHORIZATION_API_CONFIG", function() { return THIRDPARTY_AUTHORIZATION_API_CONFIG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThirdPartyApiExpiredException", function() { return ThirdPartyApiExpiredException; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThirdPartyApiDbService", function() { return ThirdPartyApiDbService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThirdPartyApiHttpService", function() { return ThirdPartyApiHttpService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../http.service */ "./src/app/services/http.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _response_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../response.service */ "./src/app/services/response.service.ts");
+/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/json.utils */ "./src/app/utils/json.utils.ts");
+/* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../database.service */ "./src/app/services/database.service.ts");
+/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+/* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../config/db.config */ "./src/app/config/db.config.ts");
+/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _utils_object_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/object.utils */ "./src/app/utils/object.utils.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _config_request_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../config/request.config */ "./src/app/config/request.config.ts");
+/* harmony import */ var ngx_cacheable__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-cacheable */ "./node_modules/ngx-cacheable/esm2015/index.js");
+
+var ThirdPartyApiHttpService_1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Default third-party API authentication configuration
+ */
+class ThirdPartyApiConfig {
+    constructor(code, tokenUrl, tokenParam, method) {
+        this.code = code;
+        this.tokenUrl = tokenUrl;
+        this.tokenParam = tokenParam;
+        this.method = method;
+    }
+}
+const THIRDPARTY_AUTHORIZATION_API_CONFIG = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["InjectionToken"]('Third-party API authorization token configuration');
+/**
+ * Expired exception of third-party API
+ */
+class ThirdPartyApiExpiredException extends Error {
+    constructor(_code, _cause) {
+        super();
+        this._code = _code;
+        this._cause = _cause;
+    }
+    get code() {
+        return this._code;
+    }
+    get cause() {
+        return this._cause;
+    }
+}
+let ThirdPartyApiDbService = class ThirdPartyApiDbService extends _database_service__WEBPACK_IMPORTED_MODULE_7__["AbstractBaseDbService"] {
+    constructor(dbService, logger, connectionService) {
+        super(dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_9__["DB_STORE"].third_party);
+        this.deleteExecutor = (resolve, reject, ...args) => {
+            if (args && args.length) {
+                this.getLogger().debug('Delete data', args, 'First data', args[0]);
+                args[0].deletedAt = (new Date()).getTime();
+                args[0].expiredAt = (new Date()).getTime();
+                this.updateExecutor.apply(this, [resolve, reject, ...args]);
+            }
+            else
+                resolve(0);
+        };
+    }
+    getAll() {
+        return super.getAll()
+            .then(value => {
+            (value || []).length && this._ensureNonExpiredData(...value);
+            return value;
+        }, (reason) => {
+            this.getLogger().error(reason);
+            return [];
+        });
+    }
+    findEntities(indexName, criteria) {
+        return super.findEntities(indexName, criteria)
+            .then((value) => {
+            (value || []).length && this._ensureNonExpiredData(...value);
+            return value;
+        }, reason => {
+            this.getLogger().error(reason);
+            return [];
+        });
+    }
+    findById(id) {
+        return super.findById(id)
+            .then((value) => {
+            value && this._ensureNonExpiredData(value);
+            return value;
+        }, reason => {
+            this.getLogger().error(reason);
+            return null;
+        });
+    }
+    /**
+     * Check valid non-expired data.
+     * If at least one data has expired, then {ThirdPartyApiExpiredException} will be thrown
+     * @param entities to check
+     * @private
+     */
+    _ensureNonExpiredData(...entities) {
+        const currentDate = new Date();
+        (entities || []).forEach((entity) => {
+            if (entity && (entity.expiredAt !== 0 && new Date(entity.expiredAt) >= currentDate)) {
+                Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(new ThirdPartyApiExpiredException(entity.code, new Error('Third party data has been expired!')));
+            }
+        });
+    }
+};
+ThirdPartyApiDbService.ctorParameters = () => [
+    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
+    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"],] }] }
+];
+ThirdPartyApiDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_8__["NgxIndexedDBService"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        ng_connection_service__WEBPACK_IMPORTED_MODULE_10__["ConnectionService"]])
+], ThirdPartyApiDbService);
+
+let ThirdPartyApiHttpService = ThirdPartyApiHttpService_1 = class ThirdPartyApiHttpService extends _http_service__WEBPACK_IMPORTED_MODULE_3__["AbstractHttpService"] {
+    constructor(http, logger, dbService, apiConfig) {
+        super(http, logger, dbService);
+        this.apiConfig = apiConfig;
+        apiConfig || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Could not inject third-party API configuration');
+        (apiConfig.code || '').length || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Third-party API configuration code must be not undefined');
+    }
+    get config() {
+        return this.apiConfig;
+    }
+    get latestToken() {
+        return this.config[ThirdPartyApiHttpService_1.THIRD_PARTY_LATEST_ACCESS_TOKEN];
+    }
+    parseResponse(serviceResponse) {
+        if (!serviceResponse || !serviceResponse.getResponse()
+            || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
+            return undefined;
+        }
+        const data = _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].parseResponseJson(serviceResponse.getResponse().body);
+        data.code = this.config.code
+            .concat('|', this.apiConfig.method || 'UNKNOWN', '|', serviceResponse.getResponse().url);
+        if (Math.max(this.config.expiredIn, 0) > 0) {
+            data.expiredAt = (new Date()).getTime() + this.config.expiredIn;
+        }
+        return data;
+    }
+    handleOfflineMode(url, method, res, options) {
+        return undefined;
+    }
+    configHeaders(defaultValue) {
+        return (this.config.tokenParam && this.config.tokenParam.type === 'header'
+            ? this.config.tokenParam.values : defaultValue);
+    }
+    configParams(defaultValue) {
+        return (this.config.tokenParam && this.config.tokenParam.type === 'param'
+            ? this.config.tokenParam.values : defaultValue);
+    }
+    configBody(defaultValue) {
+        return (this.config.tokenParam && this.config.tokenParam.type === 'body'
+            ? this.config.tokenParam.values : defaultValue);
+    }
+    configResponseType(defaultValue) {
+        return (this.config.tokenParam ? this.config.tokenParam.responseType : defaultValue);
+    }
+    configObserve(defaultValue) {
+        return (this.config.tokenParam ? this.config.tokenParam.observe : defaultValue);
+    }
+    handleResponseError(url, method, res, options) {
+        /** check whether is un-authorized/expired */
+        if (url !== this.config.tokenUrl && this.isUnauthorizedOrExpired(res)) {
+            !(this.config.tokenUrl || '').length
+                || Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])('Please provide third-party authorization configuration to require access token!');
+            return this.handleUnauthorizedExpired(url, method, options);
+        }
+        return super.handleResponseError(url, method, options);
+    }
+    isUnauthorizedOrExpired(res) {
+        return false;
+    }
+    /**
+     * Handle the un-authorized/expired token case via {IThirdPartyApiConfig},
+     * by sending another request to require authorization token
+     * @param url original URL
+     * @param method original request method
+     * @param res original request response error
+     * @param options original request options
+     */
+    handleUnauthorizedExpired(url, method, res, options) {
+        // prepare options for authorization request
+        let clonedOptions = _utils_object_utils__WEBPACK_IMPORTED_MODULE_12__["default"].deepCopy(options || {});
+        clonedOptions.headers = this.configHeaders();
+        clonedOptions.params = this.configParams();
+        clonedOptions.body = this.configBody();
+        clonedOptions.observe = this.configObserve();
+        clonedOptions.responseType = this.configResponseType();
+        if (this.config.tokenParam && this.config.tokenParam.type === 'custom') {
+            clonedOptions = this.customAuthorizeRequestOptions(clonedOptions);
+            clonedOptions = (clonedOptions || {});
+        }
+        // create authorization request to require token or authorize
+        const _this = this;
+        return _this.getHttp().request(_this.config.method, _this.config.tokenUrl, clonedOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(accessTokenResp => {
+            _this.getLogger().debug('Access Token Response', accessTokenResp);
+            return accessTokenResp;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(accessTokenResp => {
+            const httpResp = accessTokenResp;
+            _this.ensureVaidResponse(httpResp, _this.config.tokenUrl, _this.config.method, clonedOptions);
+            const accessToken = _this.parseAccessToken(httpResp);
+            _this.config[ThirdPartyApiHttpService_1.THIRD_PARTY_LATEST_ACCESS_TOKEN] = accessToken;
+            if (!accessToken) {
+                Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["throwError"])(new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpErrorResponse"]({
+                    url: url,
+                    headers: options.headers,
+                    status: 401,
+                    statusText: 'Unauthorized',
+                    error: 'Token has been expired! But could not require/parse new token again!',
+                }));
+            }
+            return accessToken;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(accessToken => {
+            // include new token to original request to request again
+            return _this.updateRequestOptionsBeforeRequest(options);
+        }), 
+        // TODO this is way to call an observer in another observer
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["flatMap"])(tokenOptions => {
+            return _this.getHttp().request(method, url, tokenOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["map"])(apiDataResp => {
+                if (apiDataResp instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"]) {
+                    const httpResp = apiDataResp;
+                    _this.ensureVaidResponse(httpResp, url, method, tokenOptions);
+                }
+                else {
+                    apiDataResp = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"]({
+                        body: JSON.stringify(apiDataResp),
+                        headers: (tokenOptions && tokenOptions.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]
+                            ? tokenOptions.headers
+                            : new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]((tokenOptions || {}).headers)),
+                        status: 200, url: url,
+                    });
+                }
+                return _this.parseResponse(new _response_service__WEBPACK_IMPORTED_MODULE_5__["ServiceResponse"](true, apiDataResp, tokenOptions.redirectSuccess, [], tokenOptions.messages));
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["catchError"])(_this.processRequestError(url, method, options)));
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_13__["catchError"])(_this.processRequestError(url, method, options)));
+    }
+    /**
+     * Custom the authorization/access token request options if {IThirdPartyApiConfig#tokenParam#type} is 'custom'.
+     * TODO Children class should override this method if necessary customization
+     * @param options original options to customize
+     */
+    customAuthorizeRequestOptions(options) {
+        return options;
+    }
+    /**
+     * Parse authorization/access token from the specified {HttpResponse} for applying into original request.
+     * TODO Children class should override this method and cache token again for later
+     * @param httpResponse to parse
+     */
+    parseAccessToken(httpResponse) {
+        const source = (httpResponse instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpResponse"] ? httpResponse.body : httpResponse);
+        return _utils_json_utils__WEBPACK_IMPORTED_MODULE_6__["default"].safeParseJson(source);
+    }
+    /**
+     * Process the response token into the specified original request options
+     * to re-request again with including new access token.
+     * TODO Children class should override this method to apply new access token to request options
+     * @param tokenValue token that has returned from authorization request
+     * @param options original request options to include token
+     */
+    processAccessToken(tokenValue, options) {
+        return options;
+    }
+    /**
+     * Update X-Values header for request options to specified this request from third-party
+     * @param options to update
+     * @private
+     */
+    updateRequestOptionsBeforeRequest(options) {
+        // include the check flag to original request to avoid loop stack
+        options = Object.assign({}, options || {});
+        options.headers = (options.headers || {});
+        if (options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]) {
+            options.headers.set(_config_request_config__WEBPACK_IMPORTED_MODULE_14__["RC_THIRD_PARTY_CUSTOM_TYPE"], this.config.code);
+        }
+        else {
+            options.headers[_config_request_config__WEBPACK_IMPORTED_MODULE_14__["RC_THIRD_PARTY_CUSTOM_TYPE"]] = this.config.code;
+        }
+        return this.processAccessToken(this.config[ThirdPartyApiHttpService_1.THIRD_PARTY_LATEST_ACCESS_TOKEN], options);
+    }
+    request(url, method, options) {
+        // apply latest token if necessary
+        options = (options || {});
+        options = this.updateRequestOptionsBeforeRequest(options);
+        return super.request(url, method, options);
+    }
+};
+ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN = 'XThirdPartyToken';
+ThirdPartyApiHttpService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
+    { type: ThirdPartyApiDbService, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ThirdPartyApiDbService,] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [THIRDPARTY_AUTHORIZATION_API_CONFIG,] }] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(ngx_cacheable__WEBPACK_IMPORTED_MODULE_15__["Cacheable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [String, String, Object]),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:returntype", rxjs__WEBPACK_IMPORTED_MODULE_11__["Observable"])
+], ThirdPartyApiHttpService.prototype, "request", null);
+ThirdPartyApiHttpService = ThirdPartyApiHttpService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ThirdPartyApiDbService)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(THIRDPARTY_AUTHORIZATION_API_CONFIG)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        ThirdPartyApiDbService, Object])
+], ThirdPartyApiHttpService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/universal/data.parsers/city.data.parser.ts":
+/*!*********************************************************************************!*\
+  !*** ./src/app/services/third.party/universal/data.parsers/city.data.parser.ts ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UniversalApiCityDataParser; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data.parsers/third.party.data.parser */ "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+/* harmony import */ var _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../@core/data/system/province */ "./src/app/@core/data/system/province.ts");
+/* harmony import */ var _config_generator_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../config/generator.config */ "./src/app/config/generator.config.ts");
+
+
+
+
+/**
+ * Universal third-party API cities data parser
+ */
+class UniversalApiCityDataParser extends _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__["AbstractThirdPartyApiDataParser"] {
+    constructor() {
+        super(UniversalApiCityDataParser.DATA_PROPERTY_CITY_NAME);
+    }
+    mappingData(entity) {
+        const id = _config_generator_config__WEBPACK_IMPORTED_MODULE_3__["IdGenerators"].oid.generate();
+        const name = entity[this.dataPropertyName];
+        return new _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__["default"](id, name.left(UniversalApiCityDataParser.CITY_CODE_FROM_NAME_LENGTH), name);
+    }
+}
+UniversalApiCityDataParser.DATA_PROPERTY_CITY_NAME = 'city_name';
+UniversalApiCityDataParser.CITY_CODE_FROM_NAME_LENGTH = 3;
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/universal/data.parsers/data.parsers.ts":
+/*!*****************************************************************************!*\
+  !*** ./src/app/services/third.party/universal/data.parsers/data.parsers.ts ***!
+  \*****************************************************************************/
+/*! exports provided: UNIVERSAL_DATA_PARSERS, UniversalApiDataParserDefinition */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNIVERSAL_DATA_PARSERS", function() { return UNIVERSAL_DATA_PARSERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UniversalApiDataParserDefinition", function() { return UniversalApiDataParserDefinition; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _core_data_system_province__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../@core/data/system/province */ "./src/app/@core/data/system/province.ts");
+/* harmony import */ var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data.parsers/third.party.data.parser */ "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+/* harmony import */ var _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../@core/data/system/city */ "./src/app/@core/data/system/city.ts");
+/* harmony import */ var _province_data_parser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./province.data.parser */ "./src/app/services/third.party/universal/data.parsers/province.data.parser.ts");
+/* harmony import */ var _city_data_parser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./city.data.parser */ "./src/app/services/third.party/universal/data.parsers/city.data.parser.ts");
+
+
+
+
+
+
+const UNIVERSAL_DATA_PARSERS = [{
+        provide: _core_data_system_province__WEBPACK_IMPORTED_MODULE_1__["default"],
+        parser: new _province_data_parser__WEBPACK_IMPORTED_MODULE_4__["default"](),
+    }, {
+        provide: _core_data_system_city__WEBPACK_IMPORTED_MODULE_3__["default"],
+        parser: new _city_data_parser__WEBPACK_IMPORTED_MODULE_5__["default"](),
+    }];
+/**
+ * Universal third-party API data parser definition
+ */
+class UniversalApiDataParserDefinition extends _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_2__["ThirdPartyApiDataParserDefinition"] {
+    constructor() {
+        super(UNIVERSAL_DATA_PARSERS);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/universal/data.parsers/province.data.parser.ts":
+/*!*************************************************************************************!*\
+  !*** ./src/app/services/third.party/universal/data.parsers/province.data.parser.ts ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UniversalApiProvinceDataParser; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data.parsers/third.party.data.parser */ "./src/app/services/third.party/data.parsers/third.party.data.parser.ts");
+/* harmony import */ var _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../@core/data/system/province */ "./src/app/@core/data/system/province.ts");
+/* harmony import */ var _config_generator_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../config/generator.config */ "./src/app/config/generator.config.ts");
+
+
+
+
+/**
+ * Universal third-party API provinces data parser
+ */
+class UniversalApiProvinceDataParser extends _data_parsers_third_party_data_parser__WEBPACK_IMPORTED_MODULE_1__["AbstractThirdPartyApiDataParser"] {
+    constructor() {
+        super(UniversalApiProvinceDataParser.DATA_PROPERTY_PROVINCE_NAME);
+    }
+    mappingData(entity) {
+        const id = _config_generator_config__WEBPACK_IMPORTED_MODULE_3__["IdGenerators"].oid.generate();
+        const name = entity[this.dataPropertyName];
+        return new _core_data_system_province__WEBPACK_IMPORTED_MODULE_2__["default"](id, name.left(UniversalApiProvinceDataParser.PROVINCE_CODE_FROM_NAME_LENGTH), name);
+    }
+}
+UniversalApiProvinceDataParser.DATA_PROPERTY_PROVINCE_NAME = 'state_name';
+UniversalApiProvinceDataParser.PROVINCE_CODE_FROM_NAME_LENGTH = 3;
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/universal/universal.api.bridge.service.ts":
+/*!********************************************************************************!*\
+  !*** ./src/app/services/third.party/universal/universal.api.bridge.service.ts ***!
+  \********************************************************************************/
+/*! exports provided: UniversalApiBridgeDbService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UniversalApiBridgeDbService", function() { return UniversalApiBridgeDbService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+/* harmony import */ var _third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../third.party.api.bridge.service */ "./src/app/services/third.party/third.party.api.bridge.service.ts");
+/* harmony import */ var _universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./universal.api.datasource */ "./src/app/services/third.party/universal/universal.api.datasource.ts");
+
+
+
+
+
+
+
+let UniversalApiBridgeDbService = class UniversalApiBridgeDbService extends _third_party_api_bridge_service__WEBPACK_IMPORTED_MODULE_5__["ThirdPartyApiBridgeDbService"] {
+    constructor(dbService, logger, connectionService, _thirdPartyApi) {
+        super(dbService, logger, connectionService, _thirdPartyApi);
+    }
+};
+UniversalApiBridgeDbService.ctorParameters = () => [
+    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],] }] },
+    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"],] }] },
+    { type: _universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"],] }] }
+];
+UniversalApiBridgeDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"],
+        ng_connection_service__WEBPACK_IMPORTED_MODULE_2__["ConnectionService"],
+        _universal_api_datasource__WEBPACK_IMPORTED_MODULE_6__["UniversalApiDatasource"]])
+], UniversalApiBridgeDbService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/universal/universal.api.datasource.ts":
+/*!****************************************************************************!*\
+  !*** ./src/app/services/third.party/universal/universal.api.datasource.ts ***!
+  \****************************************************************************/
+/*! exports provided: UNIVERSAL_API_DATA_PARSER_DEFINITION, UniversalApiDatasource */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNIVERSAL_API_DATA_PARSER_DEFINITION", function() { return UNIVERSAL_API_DATA_PARSER_DEFINITION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UniversalApiDatasource", function() { return UniversalApiDatasource; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _universal_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./universal.api.service */ "./src/app/services/third.party/universal/universal.api.service.ts");
+/* harmony import */ var _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../third.party.api.datasource */ "./src/app/services/third.party/third.party.api.datasource.ts");
+/* harmony import */ var _data_parsers_data_parsers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./data.parsers/data.parsers */ "./src/app/services/third.party/universal/data.parsers/data.parsers.ts");
+
+
+
+
+
+
+const UNIVERSAL_API_DATA_PARSER_DEFINITION = new _data_parsers_data_parsers__WEBPACK_IMPORTED_MODULE_5__["UniversalApiDataParserDefinition"]();
+/**
+ * Universal third-party API data source
+ */
+let UniversalApiDatasource = class UniversalApiDatasource extends _third_party_api_datasource__WEBPACK_IMPORTED_MODULE_4__["ThirdPartyApiDatasource"] {
+    constructor(httpService, dbService, logger) {
+        super(httpService, dbService, logger, UNIVERSAL_API_DATA_PARSER_DEFINITION);
+    }
+};
+UniversalApiDatasource.ctorParameters = () => [
+    { type: _universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"],] }] },
+    { type: _universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] }
+];
+UniversalApiDatasource = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiHttpService"],
+        _universal_api_service__WEBPACK_IMPORTED_MODULE_3__["UniversalApiDbService"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]])
+], UniversalApiDatasource);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/third.party/universal/universal.api.service.ts":
+/*!*************************************************************************!*\
+  !*** ./src/app/services/third.party/universal/universal.api.service.ts ***!
+  \*************************************************************************/
+/*! exports provided: TOKEN_EXPIRED_ERROR_NAME, TOKEN_UNPROVIDED_ERROR_NAME, UNIVERSAL_API_CONFIG, UniversalApiDbService, UniversalApiHttpService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOKEN_EXPIRED_ERROR_NAME", function() { return TOKEN_EXPIRED_ERROR_NAME; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOKEN_UNPROVIDED_ERROR_NAME", function() { return TOKEN_UNPROVIDED_ERROR_NAME; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNIVERSAL_API_CONFIG", function() { return UNIVERSAL_API_CONFIG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UniversalApiDbService", function() { return UniversalApiDbService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UniversalApiHttpService", function() { return UniversalApiHttpService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _utils_json_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/json.utils */ "./src/app/utils/json.utils.ts");
+/* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
+/* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var _core_data_system_api_third_party__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../@core/data/system/api.third.party */ "./src/app/@core/data/system/api.third.party.ts");
+/* harmony import */ var _third_party_api_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../third.party.api.service */ "./src/app/services/third.party/third.party.api.service.ts");
+/* harmony import */ var _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../config/third.party.api */ "./src/app/config/third.party.api.ts");
+/* harmony import */ var _config_request_config__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../config/request.config */ "./src/app/config/request.config.ts");
+/* harmony import */ var _config_generator_config__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../config/generator.config */ "./src/app/config/generator.config.ts");
+
+var UniversalApiHttpService_1;
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * { 'error': {
+ *      'name': 'TokenExpiredError',
+ *      'message': 'jwt expired',
+ *      'expiredAt': '2020-02-18T17:55:22.000Z'
+ * } }
+ * { 'error': {
+ *      'name': 'JsonWebTokenError',
+ *      'message': 'jwt must be provided'
+ * } }
+ */
+const TOKEN_EXPIRED_ERROR_NAME = 'TokenExpiredError';
+const TOKEN_UNPROVIDED_ERROR_NAME = 'JsonWebTokenError';
+const UNIVERSAL_API_CONFIG = {
+    code: _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.code,
+    baseUrl: _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.baseUrl,
+    tokenUrl: _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.tokenUrl,
+    method: 'GET',
+    tokenParam: {
+        type: 'header',
+        values: {
+            'api-token': _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.vapid_public_key,
+            'user-email': _config_third_party_api__WEBPACK_IMPORTED_MODULE_9__["THIRD_PARTY_API"].universal.email,
+        },
+    },
+};
+let UniversalApiDbService = class UniversalApiDbService extends _third_party_api_service__WEBPACK_IMPORTED_MODULE_8__["ThirdPartyApiDbService"] {
+    constructor(dbService, logger, connectionService) {
+        super(dbService, logger, connectionService);
+    }
+};
+UniversalApiDbService.ctorParameters = () => [
+    { type: ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
+    { type: ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"],] }] }
+];
+UniversalApiDbService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_5__["NgxIndexedDBService"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"]])
+], UniversalApiDbService);
+
+let UniversalApiHttpService = UniversalApiHttpService_1 = class UniversalApiHttpService extends _third_party_api_service__WEBPACK_IMPORTED_MODULE_8__["ThirdPartyApiHttpService"] {
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+    constructor(http, logger, dbService) {
+        super(http, logger, dbService, UNIVERSAL_API_CONFIG);
+    }
+    parseResponse(serviceResponse) {
+        if (!serviceResponse || !serviceResponse.getResponse()
+            || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
+            return undefined;
+        }
+        const data = new _core_data_system_api_third_party__WEBPACK_IMPORTED_MODULE_7__["UniversalApiThirdParty"]();
+        data.id = (data.id || _config_generator_config__WEBPACK_IMPORTED_MODULE_11__["IdGenerators"].oid.generate());
+        data.code = [this.config.code, this.config.method || 'UNKNOWN', serviceResponse.getResponse().url].join('|');
+        data.response = serviceResponse.getResponse().body;
+        return data;
+    }
+    isUnauthorizedOrExpired(res) {
+        if (res && res instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpErrorResponse"]
+            && (res.status === 500 || res.status === 401)) {
+            const respErr = res;
+            if (respErr.error) {
+                const errorResp = _utils_json_utils__WEBPACK_IMPORTED_MODULE_4__["default"].safeParseJson(respErr.error);
+                return (errorResp && errorResp.error
+                    && [TOKEN_EXPIRED_ERROR_NAME, TOKEN_UNPROVIDED_ERROR_NAME]
+                        .indexOf(errorResp.error.name) >= 0);
+            }
+        }
+        return super.isUnauthorizedOrExpired(res);
+    }
+    parseAccessToken(httpResponse) {
+        const token = super.parseAccessToken(httpResponse);
+        return (token || {})[UniversalApiHttpService_1.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME];
+    }
+    processAccessToken(tokenValue, options) {
+        // accept invalid token for expired/unauthorized case
+        const authTokenValue = [_config_request_config__WEBPACK_IMPORTED_MODULE_10__["RC_AUTH_AUTHORIZATION_BEARER_TYPE"], (tokenValue || '')].join(' ');
+        options = (options || {});
+        options.headers = (options.headers || {});
+        if (options.headers instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]) {
+            options.headers.set(_config_request_config__WEBPACK_IMPORTED_MODULE_10__["RC_AUTH_AUTHORIZATION_HEADER"], authTokenValue);
+        }
+        else {
+            options.headers[_config_request_config__WEBPACK_IMPORTED_MODULE_10__["RC_AUTH_AUTHORIZATION_HEADER"]] = authTokenValue;
+        }
+        return options;
+    }
+};
+UniversalApiHttpService.UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME = 'auth_token';
+UniversalApiHttpService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],] }] },
+    { type: ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],] }] },
+    { type: UniversalApiDbService, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [UniversalApiDbService,] }] }
+];
+UniversalApiHttpService = UniversalApiHttpService_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(UniversalApiDbService)),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+        ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"],
+        UniversalApiDbService])
+], UniversalApiHttpService);
+
 
 
 /***/ }),
@@ -12943,20 +13973,16 @@ class JsonUtils {
      * @param data HTTP response data to parse
      */
     static parseResponseJson(data) {
-        if (typeof data === 'string') {
-            try {
-                data = JSON.parse(data);
+        data = this.safeParseJson(data);
+        if (data) {
+            let isValid;
+            isValid = (Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data) && Object.keys(data).length > 0);
+            isValid = isValid && (Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data['status']) && data['status']['code'] === 200);
+            isValid = isValid && (Object(util__WEBPACK_IMPORTED_MODULE_1__["isBoolean"])(data['status']['success']) && (data['status']['success'] || false));
+            isValid = isValid && (Object(util__WEBPACK_IMPORTED_MODULE_1__["isArray"])(data['elements']) && Array.from(data['elements']).length > 0);
+            if (isValid) {
+                data = Array.from(data['elements']);
             }
-            catch (e) {
-            }
-        }
-        let isValid;
-        isValid = (Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data) && Object.keys(data).length > 0);
-        isValid = isValid && (Object(util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(data['status']) && data['status']['code'] === 200);
-        isValid = isValid && (Object(util__WEBPACK_IMPORTED_MODULE_1__["isBoolean"])(data['status']['success']) && (data['status']['success'] || false));
-        isValid = isValid && (Object(util__WEBPACK_IMPORTED_MODULE_1__["isArray"])(data['elements']) && Array.from(data['elements']).length > 0);
-        if (isValid) {
-            data = Array.from(data['elements']);
         }
         return data;
     }
@@ -12981,10 +14007,25 @@ class JsonUtils {
         if (!source) {
             return undefined;
         }
+        let data;
+        data = this.safeParseJson(source);
+        return (data ? Object.assign(new type(), data) : undefined);
+    }
+    /**
+     * Alias of {JSON#parse} in safety mode.
+     * If invalid JSON source or could not parse; then an undefined value will be returned
+     * @param source to convert
+     * @return the converted value or undefined
+     */
+    static safeParseJson(source) {
+        if (!source) {
+            return undefined;
+        }
         try {
-            return Object.assign(new type(), JSON.parse(source));
+            return JSON.parse(typeof source === 'string' ? source : JSON.stringify(source));
         }
         catch (e) {
+            window.console.error(['Could not parse JSON', source, e]);
             return undefined;
         }
     }
@@ -13474,6 +14515,7 @@ __webpack_require__.r(__webpack_exports__);
 const environment = {
     production: false,
     databaseName: 'HiDemo',
+    offline: true,
     baseHref: 'https://hainguyen81.github.io/ngx-admin/',
 };
 
