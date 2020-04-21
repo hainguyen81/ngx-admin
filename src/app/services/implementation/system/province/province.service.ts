@@ -86,9 +86,9 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
                     // check for duplicated code because API data has no returned code
                     let provinceCode: string = country.code.concat('|', province.code);
                     if (duplicatedCode.hasOwnProperty(provinceCode)) {
+                        duplicatedCode[provinceCode] = (duplicatedCode[provinceCode] as number) + 1;
                         provinceCode = provinceCode.concat('|',
                             (duplicatedCode[provinceCode] as number).toString());
-                        duplicatedCode[provinceCode] = (duplicatedCode[provinceCode] as number) + 1;
                     } else {
                         duplicatedCode[provinceCode] = 1;
                     }
