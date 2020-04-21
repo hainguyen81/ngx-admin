@@ -1,13 +1,13 @@
 import BaseModel, {IModel} from '../base';
-import {ICountry} from './country';
+import {IProvince} from './province';
 
 export interface ICity extends IModel {
     code: string;
     name: string;
     image?: string | null;
     zip_code?: string | null;
-    country_id?: string | null;
-    country?: ICountry | null;
+    province_id?: string | null;
+    province?: IProvince | null;
 }
 
 export default class City extends BaseModel implements ICity {

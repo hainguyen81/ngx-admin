@@ -10,6 +10,7 @@ import {CityDatasource} from '../../services/implementation/system/city/city.dat
 import ModelUtils from './model.utils';
 import {IModel} from '../../@core/data/base';
 import {ProvinceDatasource} from '../../services/implementation/system/province/province.datasource';
+import {IProvince} from '../../@core/data/system/province';
 
 export default class SystemDataUtils {
 
@@ -42,17 +43,17 @@ export default class SystemDataUtils {
     }
 
     /**
-     * Get all cities by the specified country
+     * Get all cities by the specified state/province
      * @param cityDatasource to invoke
-     * @param country to filter
+     * @param province to filter
      */
-    public static invokeAllCities(cityDatasource: CityDatasource, country: ICountry): Promise<any[]> {
+    public static invokeAllCities(cityDatasource: CityDatasource, province: IProvince): Promise<any[]> {
         cityDatasource
         || throwError('CityDatasource is required to invoke!');
         return (<CityDatasource>cityDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
-            .findByCountry(country).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
+            .findByProvince(province).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
     }
 
     /**

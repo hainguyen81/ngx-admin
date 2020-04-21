@@ -338,8 +338,8 @@ export const dbConfig: DBConfig = {
             {name: 'name', keypath: 'name', options: {unique: false}},
             {name: 'zip_code', keypath: 'zip_code', options: {unique: false}},
             {name: 'image', keypath: 'image', options: {unique: false}},
-            {name: 'country_id', keypath: 'country_id', options: {unique: false}},
-            {name: 'country', keypath: 'country', options: {unique: false}},
+            {name: 'province_id', keypath: 'province_id', options: {unique: false}},
+            {name: 'province', keypath: 'province', options: {unique: false}},
         ],
     }, {
         store: DB_STORE.province,

@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import City, {ICity} from '../../../../@core/data/system/city';
+import {ICity} from '../../../../@core/data/system/city';
 import {AbstractHttpService} from '../../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../../response.service';
@@ -10,25 +10,30 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
-import {ICountry} from '../../../../@core/data/system/country';
-import {ThirdPartyApiDatasource} from '../../../third.party/third.party.api.datasource';
-import {IApiThirdParty} from '../../../../@core/data/system/api.third.party';
 import {THIRD_PARTY_API} from '../../../../config/third.party.api';
+import Province, {IProvince} from '../../../../@core/data/system/province';
+import {
+    IThirdPartyApiDataBridgeParam,
+    ThirdPartyApiBridgeDbService,
+} from '../../../third.party/third.party.api.bridge.service';
+import {isArray, isNullOrUndefined} from 'util';
 
 @Injectable()
 export class CityDbService extends AbstractBaseDbService<ICity> {
 
-    private static EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all countries because of performance!';
-    private static INDEX_NAME_COUNTRY_ID = 'country_id';
+    private static EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all cities because of performance!';
+    private static INDEX_NAME_PROVINCE_ID = 'province_id';
     private static THIRD_PARTY_CITY_URL = THIRD_PARTY_API.universal.api.city.url;
     private static THIRD_PARTY_CITY_METHOD = THIRD_PARTY_API.universal.api.city.method;
+    private static THIRD_PARTY_ENTRY_METHOD = 'findData';
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService,
-                @Inject(ThirdPartyApiDatasource) private thirdPartyApi: ThirdPartyApiDatasource<IApiThirdParty>) {
+                @Inject(ThirdPartyApiBridgeDbService)
+                private thirdPartyApiBridge: ThirdPartyApiBridgeDbService<IProvince>) {
         super(dbService, logger, connectionService, DB_STORE.city);
-        thirdPartyApi || throwError('Could not inject ThirdPartyApiDatasource instance');
+        thirdPartyApiBridge || throwError('Could not inject ThirdPartyApiBridgeDbService instance');
     }
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
@@ -49,47 +54,59 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
     }
 
     /**
-     * Find all cities by the specified {ICountry}
-     * @param country to filter
+     * Find all cities by the specified {IProvince}
+     * @param province to filter
      */
-    findByCountry(country?: ICountry | null): Promise<ICity | ICity[]> {
-        country || throwError(CityDbService.EXCEPTION_PERFORMANCE_REASON);
-        return this.findEntities(CityDbService.INDEX_NAME_COUNTRY_ID, country.id)
-            .then(value => {
-                if (!(value || []).length) {
-                    const url: string = [
-                        CityDbService.THIRD_PARTY_CITY_URL,
-                        country.name,
-                    ].join('/');
-                    return this.thirdPartyApi.findData(url, CityDbService.THIRD_PARTY_CITY_METHOD, City)
-                        .then((data: City[]) => {
-                            // apply country for city API data
-                            let cities: ICity[];
-                            cities = data as ICity[];
-                            cities = (cities || []).removeIf(city => !city);
-                            cities.forEach(city => {
-                                city.country_id = country.id;
-                            });
+    findByProvince(province?: IProvince | null): Promise<ICity | ICity[]> {
+        province || throwError(CityDbService.EXCEPTION_PERFORMANCE_REASON);
+        const _this: CityDbService = this;
+        const fecthParam: IThirdPartyApiDataBridgeParam<ICity> = {
+            dbCacheFilter: {
+                dbStore: this.getDbStore(),
+                indexName: CityDbService.INDEX_NAME_PROVINCE_ID,
+                criteria: province.id,
+            },
+            callApi: {
+                method: CityDbService.THIRD_PARTY_ENTRY_METHOD,
+                args: [
+                    CityDbService.THIRD_PARTY_CITY_URL.concat('/', province.name),
+                    CityDbService.THIRD_PARTY_CITY_METHOD,
+                    Province,
+                ],
+            },
+            apiFulfilled: apiData => {
+                // apply province for city API data
+                let cities: ICity[];
+                const duplicatedCode: any = {};
+                cities = (isArray(apiData) ? apiData as ICity[] : apiData ? [apiData as ICity] : []);
+                cities = cities.removeIf(city => isNullOrUndefined(city));
+                cities.forEach(city => {
+                    city.province_id = province.id;
 
-                            // insert application database for future
-                            return this.insertEntities(cities)
-                                .then(affected => cities, reason => {
-                                    this.getLogger().error(reason);
-                                    return [];
-                                }).catch(reason => {
-                                    this.getLogger().error(reason);
-                                    return [];
-                                });
+                    // check for duplicated code because API data has no returned code
+                    let cityCode: string = province.code.concat('|', city.code);
+                    if (duplicatedCode.hasOwnProperty(cityCode)) {
+                        duplicatedCode[cityCode] = (duplicatedCode[cityCode] as number) + 1;
+                        cityCode = cityCode.concat('|',
+                            (duplicatedCode[cityCode] as number).toString());
+                    } else {
+                        duplicatedCode[cityCode] = 1;
+                    }
+                    city.code = cityCode;
+                });
 
-                        }, reason => {
-                            this.getLogger().error(reason);
-                            return [];
-                        }).catch(reason => {
-                            this.getLogger().error(reason);
-                            return [];
-                        });
-                }
-            });
+                // insert application database for future
+                return _this.insertEntities(cities)
+                    .then(affected => cities, reason => {
+                        _this.getLogger().error(reason);
+                        return [];
+                    }).catch(reason => {
+                        _this.getLogger().error(reason);
+                        return [];
+                    });
+            },
+        };
+        return _this.thirdPartyApiBridge.fetch(fecthParam);
     }
 }
 

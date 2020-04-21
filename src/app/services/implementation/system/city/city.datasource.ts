@@ -3,7 +3,7 @@ import {CityDbService, CityHttpService} from './city.service';
 import {BaseDataSource} from '../../../datasource.service';
 import {ICity} from '../../../../@core/data/system/city';
 import {NGXLogger} from 'ngx-logger';
-import {ICountry} from '../../../../@core/data/system/country';
+import {IProvince} from '../../../../@core/data/system/province';
 
 @Injectable()
 export class CityDatasource extends BaseDataSource<ICity, CityHttpService, CityDbService> {
@@ -15,11 +15,11 @@ export class CityDatasource extends BaseDataSource<ICity, CityHttpService, CityD
     }
 
     /**
-     * Find all cities by the specified {ICountry}
-     * @param country to filter
+     * Find all cities by the specified {IProvince}
+     * @param province to filter
      */
-    findByCountry(country?: ICountry): Promise<ICity[] | ICity> {
-        return super.getDbService().findByCountry(country)
+    findByProvince(province?: IProvince): Promise<ICity[] | ICity> {
+        return super.getDbService().findByProvince(province)
             .then(this.onFulfilledData(), reason => {
                 this.getLogger().error(reason);
                 return [];

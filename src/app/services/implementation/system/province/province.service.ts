@@ -75,7 +75,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
                 ],
             },
             apiFulfilled: apiData => {
-                // apply country for city API data
+                // apply country for province API data
                 let provinces: IProvince[];
                 const duplicatedCode: any = {};
                 provinces = (isArray(apiData) ? apiData as IProvince[] : apiData ? [apiData as IProvince] : []);
