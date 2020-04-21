@@ -11253,21 +11253,22 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         vapid_public_key: 'M70onCyk9pjjPxfwNiM3TyerUYNPGI26ZqBKuqhAP6LmE3Ct2bR91gw8QPg4D5Aom14',
         // baseUrl: 'https://www.universal-tutorial.com/',
         baseUrl: null,
-        tokenUrl: 'api/getaccesstoken',
+        tokenUrl: 'https://www.universal-tutorial.com/api/getaccesstoken',
+        // tokenUrl: 'api/getaccesstoken',
         api: {
           country: {
-            // url: 'https://www.universal-tutorial.com/api/countries',
-            url: 'api/countries',
+            url: 'https://www.universal-tutorial.com/api/countries',
+            // url: 'api/countries',
             method: 'GET'
           },
           province: {
-            // url: 'https://www.universal-tutorial.com/api/states',
-            url: 'api/states',
+            url: 'https://www.universal-tutorial.com/api/states',
+            // url: 'api/states',
             method: 'GET'
           },
           city: {
-            // url: 'https://www.universal-tutorial.com/api/cities',
-            url: 'api/cities',
+            url: 'https://www.universal-tutorial.com/api/cities',
+            // url: 'api/cities',
             method: 'GET'
           }
         }
