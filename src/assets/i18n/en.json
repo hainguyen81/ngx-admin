@@ -337,11 +337,15 @@
                     "label": "Address",
                     "placeholder": "Address"
                 },
+                "district": {
+                    "label": "District/Town",
+                    "placeholder": "District/Town"
+                },
                 "city": {
                     "label": "City",
                     "placeholder": "City"
                 },
-                "state_province": {
+                "province": {
                     "label": "State/Province",
                     "placeholder": "State/Province"
                 },

@@ -73,8 +73,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
-                                key: 'country',
+                                className: 'w-30 pl-0 pr-2',
+                                key: 'country_id',
                                 type: 'select-ex-country',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.country.label',
@@ -82,9 +82,23 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'w-30 pl-1 pr-1',
+                                key: 'province_id',
+                                type: 'select-ex-province',
+                                templateOptions: {
+                                    label: 'warehouse.storage.form.province.label',
+                                    placeholder: 'warehouse.storage.form.province.placeholder',
+                                    disabled: true,
+                                },
+                                expressionProperties: {
+                                    'templateOptions.disabled':
+                                        model => (!model || !(model['country_id'] || '').length),
+                                },
+                            },
+                            {
+                                className: 'w-30 pl-2 pr-0',
                                 key: 'city',
-                                type: 'select',
+                                type: 'select-ex-city',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.city.label',
                                     placeholder: 'warehouse.storage.form.city.placeholder',
@@ -92,7 +106,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                                 expressionProperties: {
                                     'templateOptions.disabled':
-                                            model => (!model || !(model['country_id'] || '').length),
+                                            model => (!model || !(model['province_id'] || '').length),
                                 },
                             },
                         ],
@@ -102,23 +116,9 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
-                                key: 'state_province',
-                                type: 'select',
-                                templateOptions: {
-                                    label: 'warehouse.storage.form.state_province.label',
-                                    placeholder: 'warehouse.storage.form.state_province.placeholder',
-                                    disabled: true,
-                                },
-                                expressionProperties: {
-                                    'templateOptions.disabled':
-                                        model => (!model || !(model['country_id'] || '').length),
-                                },
-                            },
-                            {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'w-30 pl-0 pr-2',
                                 key: 'zip_code',
-                                type: 'input',
+                                type: 'select',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.zip_code.label',
                                     placeholder: 'warehouse.storage.form.zip_code.placeholder',
@@ -129,14 +129,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                         model => (!model || !(model['country_id'] || '').length),
                                 },
                             },
-                        ],
-                    },
-                    {
-                        className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
-                        fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'w-30 pl-1 pr-1',
                                 key: 'tel',
                                 type: 'input',
                                 templateOptions: {
@@ -145,7 +139,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'w-30 pl-2 pr-0',
                                 key: 'fax',
                                 type: 'input',
                                 templateOptions: {
@@ -154,6 +148,13 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                     options: [],
                                 },
                             },
+                        ],
+                    },
+                    {
+                        className: 'w-100',
+                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroup: [
+
                         ],
                     },
                     {
