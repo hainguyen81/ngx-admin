@@ -57,7 +57,7 @@
              (error)="itemImage.style.visibility = 'hidden'"
              (load)="itemImage.style.visibility = 'visible'"
              (click)="openAlbumLightbox(getOptionImages(option), itemImage.src); preventEvent($event)">
-        <span class="ngx-select-option-selected_option-label" [innerHtml]="text"></span>
+        <span class="ngx-select-option-selected_option-label option-label" [innerHtml]="text"></span>
     </ng-template>
 
     <ng-template ngx-select-option let-option let-text="text">
@@ -67,11 +67,11 @@
              (error)="itemImage.style.visibility = 'hidden'"
              (load)="itemImage.style.visibility = 'visible'"
              (click)="openAlbumLightbox(getOptionImages(option), itemImage.src); preventEvent($event)">
-        <span class="ngx-select-option_option-label" [innerHtml]="text"></span>
+        <span class="ngx-select-option_option-label option-label" [innerHtml]="text"></span>
     </ng-template>
 
     <ng-template ngx-select-option-not-found>
-        <span class="ngx-select-option-not-found_option-label">{{getConfig().noResultsFound | translate}}</span>
+        <span class="ngx-select-option-not-found_option-label option-label">{{getConfig().noResultsFound | translate}}</span>
         <button *ngIf="configValue('showAddNewOptionIfNotFound', false) && configValue('addNewOptionConfig', null)"
                 nbButton
                 [id]="addNewActionConfig().id"
