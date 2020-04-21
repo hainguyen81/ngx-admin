@@ -475,31 +475,28 @@ export class OrganizationFormlyComponent
      * Observe model fields for applying values
      */
     private observeFields(): void {
-        let fields: FormlyFieldConfig[];
-        fields = this.getFields();
-        if (fields.length > 4 && fields[4].fieldGroup.length) {
-            fields[4].fieldGroup[0].expressionProperties = {
-                'country_id': (model: IOrganization) => {
-                    if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {
-                        this.observeCountryField(model);
-                    }
-                },
-                'province_id': (model: IOrganization) => {
-                    if ((model.province_id || '') !== ((model.province || {})['id'] || '')) {
-                        this.observeProvinceField(model);
-                    }
-                },
-            };
-        }
+        const fields: FormlyFieldConfig[] = this.getFields();
+        fields[0].expressionProperties = {
+            'country_id': (model: IOrganization) => {
+                if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {
+                    this.observeCountryField(fields, model);
+                }
+            },
+            'province_id': (model: IOrganization) => {
+                if ((model.province_id || '') !== ((model.province || {})['id'] || '')) {
+                    this.observeProvinceField(fields, model);
+                }
+            },
+        };
     }
 
     /**
      * Observe country field to apply model country
-     * @param field to observe
+     * @param fields to observe
      * @param model form model
      */
-    private observeCountryField(model?: IOrganization | null): void {
-        const countryField: FormlyFieldConfig = this.getFields()[4].fieldGroup[0];
+    private observeCountryField(fields: FormlyFieldConfig[], model: IOrganization): void {
+        const countryField: FormlyFieldConfig = fields[4].fieldGroup[0];
         const countryFieldComponent: AppCountryFormlySelectExFieldComponent =
             super.getFormFieldComponent(countryField, AppCountryFormlySelectExFieldComponent);
         if (countryFieldComponent) {
@@ -509,7 +506,7 @@ export class OrganizationFormlyComponent
             model.country = null;
         }
 
-        const provinceField: FormlyFieldConfig = this.getFields()[4].fieldGroup[1];
+        const provinceField: FormlyFieldConfig = fields[4].fieldGroup[1];
         const provinceFieldComponent: AppProvinceFormlySelectExFieldComponent =
             super.getFormFieldComponent(provinceField, AppProvinceFormlySelectExFieldComponent);
         if (provinceFieldComponent) {
@@ -519,11 +516,11 @@ export class OrganizationFormlyComponent
 
     /**
      * Observe city field to apply model province
-     * @param field to observe
+     * @param fields to observe
      * @param model form model
      */
-    private observeProvinceField(model?: IOrganization | null): void {
-        const provinceField: FormlyFieldConfig = this.getFields()[4].fieldGroup[1];
+    private observeProvinceField(fields: FormlyFieldConfig[], model: IOrganization): void {
+        const provinceField: FormlyFieldConfig = fields[4].fieldGroup[1];
         const provinceFieldComponent: AppProvinceFormlySelectExFieldComponent =
             super.getFormFieldComponent(provinceField, AppProvinceFormlySelectExFieldComponent);
         if (provinceFieldComponent) {
@@ -533,7 +530,7 @@ export class OrganizationFormlyComponent
             model.province = null;
         }
 
-        const cityField: FormlyFieldConfig = this.getFields()[5].fieldGroup[0];
+        const cityField: FormlyFieldConfig = fields[5].fieldGroup[0];
         const cityFieldComponent: AppCityFormlySelectExFieldComponent =
             super.getFormFieldComponent(cityField, AppCityFormlySelectExFieldComponent);
         if (cityFieldComponent) {

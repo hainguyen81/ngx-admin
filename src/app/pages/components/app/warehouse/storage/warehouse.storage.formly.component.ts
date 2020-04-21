@@ -1,10 +1,9 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -20,6 +19,15 @@ import {AppFormlyComponent} from '../../components/app.formly.component';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
 import {API} from '../../../../../config/api.config';
+import {
+    AppCountryFormlySelectExFieldComponent,
+} from '../../components/common/app.country.formly.select.ex.field.component';
+import {
+    AppProvinceFormlySelectExFieldComponent,
+} from '../../components/common/app.province.formly.select.ex.field.component';
+import {
+    AppCityFormlySelectExFieldComponent,
+} from '../../components/common/app.city.formly.select.ex.field.component';
 
 /* default warehouse storage formly config */
 export const WarehouseStorageFormConfig: FormlyConfig = new FormlyConfig();
@@ -73,7 +81,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
-                                className: 'w-30 pl-0 pr-2',
+                                className: 'w-50 pl-0 pr-2',
                                 key: 'country_id',
                                 type: 'select-ex-country',
                                 templateOptions: {
@@ -82,7 +90,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-30 pl-1 pr-1',
+                                className: 'w-50 pl-2 pr-0',
                                 key: 'province_id',
                                 type: 'select-ex-province',
                                 templateOptions: {
@@ -95,9 +103,15 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                         model => (!model || !(model['country_id'] || '').length),
                                 },
                             },
+                        ],
+                    },
+                    {
+                        className: 'w-100',
+                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroup: [
                             {
-                                className: 'w-30 pl-2 pr-0',
-                                key: 'city',
+                                className: 'w-50 pl-0 pr-2',
+                                key: 'city_id',
                                 type: 'select-ex-city',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.city.label',
@@ -106,7 +120,21 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                                 expressionProperties: {
                                     'templateOptions.disabled':
-                                            model => (!model || !(model['province_id'] || '').length),
+                                        model => (!model || !(model['province_id'] || '').length),
+                                },
+                            },
+                            {
+                                className: 'w-50 pl-2 pr-0',
+                                key: 'district_id',
+                                type: 'select',
+                                templateOptions: {
+                                    label: 'warehouse.storage.form.district.label',
+                                    placeholder: 'warehouse.storage.form.district.placeholder',
+                                    disabled: true,
+                                },
+                                expressionProperties: {
+                                    'templateOptions.disabled':
+                                        model => (!model || !(model['city_id'] || '').length),
                                 },
                             },
                         ],
@@ -118,15 +146,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'w-30 pl-0 pr-2',
                                 key: 'zip_code',
-                                type: 'select',
+                                type: 'input',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.zip_code.label',
                                     placeholder: 'warehouse.storage.form.zip_code.placeholder',
-                                    disabled: true,
-                                },
-                                expressionProperties: {
-                                    'templateOptions.disabled':
-                                        model => (!model || !(model['country_id'] || '').length),
                                 },
                             },
                             {
@@ -199,7 +222,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseStorageFormlyComponent
     extends AppFormlyComponent<IWarehouse, WarehouseDatasource>
-    implements AfterViewInit {
+    implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -240,5 +263,91 @@ export class WarehouseStorageFormlyComponent
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(WarehouseStorageFormConfig);
         super.setFields(WarehouseStorageFormFieldsConfig);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        // observer fields for applying values
+        this.observeFields();
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Observe model fields for applying values
+     */
+    private observeFields(): void {
+        const fields: FormlyFieldConfig[] = this.getFields();
+        fields[0].expressionProperties = {
+            'country_id': (model: IWarehouse) => {
+                if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {
+                    this.observeCountryField(fields, model);
+                }
+            },
+            'province_id': (model: IWarehouse) => {
+                if ((model.province_id || '') !== ((model.province || {})['id'] || '')) {
+                    this.observeProvinceField(fields, model);
+                }
+            },
+        };
+    }
+
+    /**
+     * Observe country field to apply model country
+     * @param fields to observe
+     * @param model form model
+     */
+    private observeCountryField(fields: FormlyFieldConfig[], model: IWarehouse): void {
+        const countryField: FormlyFieldConfig =
+            fields[0].fieldGroup[0].fieldGroup[2].fieldGroup[0];
+        const countryFieldComponent: AppCountryFormlySelectExFieldComponent =
+            super.getFormFieldComponent(countryField, AppCountryFormlySelectExFieldComponent);
+        if (countryFieldComponent) {
+            model.country = ((countryFieldComponent.selectedValues || []).length
+                ? countryFieldComponent.selectedValues[0] : null);
+        } else {
+            model.country = null;
+        }
+
+        const provinceField: FormlyFieldConfig =
+            fields[0].fieldGroup[0].fieldGroup[2].fieldGroup[1];
+        const provinceFieldComponent: AppProvinceFormlySelectExFieldComponent =
+            super.getFormFieldComponent(provinceField, AppProvinceFormlySelectExFieldComponent);
+        if (provinceFieldComponent) {
+            provinceFieldComponent.country = model.country;
+        }
+    }
+
+    /**
+     * Observe city field to apply model province
+     * @param fields to observe
+     * @param model form model
+     */
+    private observeProvinceField(fields: FormlyFieldConfig[], model: IWarehouse): void {
+        const provinceField: FormlyFieldConfig =
+            fields[0].fieldGroup[0].fieldGroup[2].fieldGroup[1];
+        const provinceFieldComponent: AppProvinceFormlySelectExFieldComponent =
+            super.getFormFieldComponent(provinceField, AppProvinceFormlySelectExFieldComponent);
+        if (provinceFieldComponent) {
+            model.province = ((provinceFieldComponent.selectedValues || []).length
+                ? provinceFieldComponent.selectedValues[0] : null);
+        } else {
+            model.province = null;
+        }
+
+        const cityField: FormlyFieldConfig =
+            fields[0].fieldGroup[0].fieldGroup[3].fieldGroup[0];
+        const cityFieldComponent: AppCityFormlySelectExFieldComponent =
+            super.getFormFieldComponent(cityField, AppCityFormlySelectExFieldComponent);
+        if (cityFieldComponent) {
+            cityFieldComponent.province = model.province;
+        }
     }
 }
