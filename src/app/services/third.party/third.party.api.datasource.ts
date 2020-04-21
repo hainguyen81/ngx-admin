@@ -42,11 +42,11 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
         return this._dataParser || new ThirdPartyApiDataParserDefinition([]);
     }
 
-    constructor(@Inject(ThirdPartyApiHttpService) httpService: ThirdPartyApiHttpService<T>,
-                @Inject(ThirdPartyApiDbService) dbService: ThirdPartyApiDbService<T>,
-                @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(THIRDPARTY_API_DATA_PARSER_DEFINITION)
-                private _dataParser: IThirdPartyApiDataParserDefinition<T>) {
+    protected constructor(@Inject(ThirdPartyApiHttpService) httpService: ThirdPartyApiHttpService<T>,
+                          @Inject(ThirdPartyApiDbService) dbService: ThirdPartyApiDbService<T>,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(THIRDPARTY_API_DATA_PARSER_DEFINITION)
+                          private _dataParser: IThirdPartyApiDataParserDefinition<T>) {
         super(httpService, dbService, logger);
     }
 
@@ -80,28 +80,29 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
             messages?: any;
         }): Promise<K | K[]> {
         (url || '').length || throwError(ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED);
+        const _this: ThirdPartyApiDatasource<T> = this;
         const criteria: string = [
-            this.getHttpService().config.code,
+            _this.getHttpService().config.code,
             (method || 'UNKNOWN'),
             url,
         ].join('|');
-        return this.getDbService().findEntities(ThirdPartyApiDatasource.INDEX_NAME_THIRD_PARTY_CODE, criteria)
+        return _this.getDbService().findEntities(ThirdPartyApiDatasource.INDEX_NAME_THIRD_PARTY_CODE, criteria)
             .then(value => {
                 if (!(value || []).length) {
-                    return this.getHttpService().request(url, method, options).toPromise()
+                    return _this.getHttpService().request(url, method, options).toPromise()
                         .then((data: T[]) => {
                             // catch for future from offline database
                             if (!isArray(data)) {
                                 data = [].concat(data);
                             }
 
-                            return this.getDbService().insertEntities(data)
+                            return _this.getDbService().insertEntities(data)
                                 .then(affected => {
                                     let parsedData: K[];
                                     parsedData = [];
-                                    if (dataParserType && this.dataParser() && this.dataParser().parsers) {
+                                    if (dataParserType && _this.dataParser() && _this.dataParser().parsers) {
                                         let parser: IThirdPartyApiDataParser<T, any>;
-                                        parser = this.getDataParser(dataParserType);
+                                        parser = _this.getDataParser(dataParserType);
                                         if (parser) {
                                             (data || []).forEach(dat => {
                                                 const parsed: K | K[] = parser.parse(dat);
@@ -114,35 +115,35 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
                                         }
                                     }
 
-                                    data = this.filter(data);
-                                    data = this.sort(data);
-                                    this.setRecordsNumber((data || []).length);
-                                    data = this.paginate(data);
+                                    data = _this.filter(data);
+                                    data = _this.sort(data);
+                                    _this.setRecordsNumber((data || []).length);
+                                    data = _this.paginate(data);
                                     return parsedData as K[];
 
                                 }, reason => {
-                                    this.getLogger().error(reason);
+                                    _this.getLogger().error(reason);
                                     return [];
                                 }).catch(reason => {
-                                    this.getLogger().error(reason);
+                                    _this.getLogger().error(reason);
                                     return [];
                                 });
 
                         }, reason => {
-                            this.getLogger().error(reason);
+                            _this.getLogger().error(reason);
                             return [];
                         }).catch(reason => {
-                            this.getLogger().error(reason);
+                            _this.getLogger().error(reason);
                             return [];
                         });
                 }
                 return value;
 
             }, reason => {
-                this.getLogger().error(reason);
+                _this.getLogger().error(reason);
                 return [];
             }).catch(reason => {
-                this.getLogger().error(reason);
+                _this.getLogger().error(reason);
                 return [];
             });
     }

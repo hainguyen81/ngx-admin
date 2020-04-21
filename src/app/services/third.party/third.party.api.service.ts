@@ -322,8 +322,8 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
             map(accessTokenResp => {
                 const httpResp: HttpResponse<any> = <HttpResponse<any>>(<any>accessTokenResp);
                 _this.ensureVaidResponse(httpResp, _this.config.tokenUrl, _this.config.method, clonedOptions);
-                const accessToken: any = this.parseAccessToken(httpResp);
-                this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN] = accessToken;
+                const accessToken: any = _this.parseAccessToken(httpResp);
+                _this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN] = accessToken;
                 if (!accessToken) {
                     throwError(new HttpErrorResponse({
                         url: url,
