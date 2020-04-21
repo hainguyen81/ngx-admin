@@ -16,14 +16,14 @@ export const THIRD_PARTY_API = {
                 url: 'api/countries',
                 method: 'GET',
             },
-            city: {
-                // url: 'https://www.universal-tutorial.com/api/cities',
-                url: 'api/states',
-                method: 'GET',
-            },
             province: {
                 // url: 'https://www.universal-tutorial.com/api/states',
                 url: 'api/states',
+                method: 'GET',
+            },
+            city: {
+                // url: 'https://www.universal-tutorial.com/api/cities',
+                url: 'api/cities',
                 method: 'GET',
             },
         },
