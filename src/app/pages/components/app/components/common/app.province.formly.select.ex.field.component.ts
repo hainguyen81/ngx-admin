@@ -73,7 +73,6 @@ export class AppProvinceFormlySelectExFieldComponent
                     let nonProvince: IProvince;
                     nonProvince = new Province(null, null, null);
                     nonProvince['text'] = this.getConfig().placeholder;
-                    window.console.error(['Fetch data', provinces]);
                     this.setItems([nonProvince].concat(provinces));
                 });
         }
