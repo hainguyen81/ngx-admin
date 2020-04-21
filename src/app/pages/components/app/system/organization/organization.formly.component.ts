@@ -196,15 +196,15 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             },
             {
                 className: 'col-6',
-                key: 'zip_code',
+                key: 'district_id',
                 type: 'input',
                 templateOptions: {
-                    label: 'system.organization.form.zip_code.label',
-                    placeholder: 'system.organization.form.zip_code.placeholder',
+                    label: 'system.organization.form.district.label',
+                    placeholder: 'system.organization.form.district.placeholder',
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['country_id'] || '').length),
+                    'templateOptions.disabled': model => (!model || !(model['city_id'] || '').length),
                 },
             },
         ],
@@ -213,7 +213,20 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-6',
+                className: 'col-3',
+                key: 'zip_code',
+                type: 'input',
+                templateOptions: {
+                    label: 'system.organization.form.zip_code.label',
+                    placeholder: 'system.organization.form.zip_code.placeholder',
+                    disabled: true,
+                },
+                expressionProperties: {
+                    'templateOptions.disabled': model => (!model || !(model['city_id'] || '').length),
+                },
+            },
+            {
+                className: 'col-3',
                 key: 'tel',
                 type: 'input',
                 templateOptions: {
@@ -222,7 +235,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 },
             },
             {
-                className: 'col-6',
+                className: 'col-3',
                 key: 'fax',
                 type: 'input',
                 templateOptions: {

@@ -1,4 +1,8 @@
 import BaseModel, {IModel} from '../base';
+import {IDistrict} from '../system/district';
+import {ICity} from '../system/city';
+import {IProvince} from '../system/province';
+import {ICountry} from '../system/country';
 
 export interface IWarehouse extends IModel {
     // Mã kho
@@ -9,14 +13,20 @@ export interface IWarehouse extends IModel {
     image?: string[] | null;
     // Địa chỉ
     street_address: string;
+    // Quận/Huyện
+    district_id?: string | null;
+    district?: IDistrict | null;
     // Thành phố
-    city?: string | null;
+    city_id?: string | null;
+    city?: ICity | null;
     // Tỉnh
-    state_province?: string | null;
+    province_id?: string | null;
+    province?: IProvince | null;
     // Zip code
     zip_code?: string | null;
     // Quốc gia
-    country?: string | null;
+    country_id?: string | null;
+    country?: ICountry | null;
     // Điện thoại
     tel?: string | null;
     // Fax
