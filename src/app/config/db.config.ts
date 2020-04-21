@@ -354,8 +354,8 @@ export const dbConfig: DBConfig = {
             {name: 'name', keypath: 'name', options: {unique: false}},
             {name: 'zip_code', keypath: 'zip_code', options: {unique: false}},
             {name: 'image', keypath: 'image', options: {unique: false}},
-            {name: 'city_id', keypath: 'city_id', options: {unique: false}},
-            {name: 'city', keypath: 'city', options: {unique: false}},
+            {name: 'country_id', keypath: 'country_id', options: {unique: false}},
+            {name: 'country', keypath: 'country', options: {unique: false}},
         ],
     }],
 };
