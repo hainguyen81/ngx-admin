@@ -40,7 +40,7 @@ export const MockModuleOrganization: IModule = {
 };
 
 export const MockModuleSystem: IModule = {
-    code: 'SYSTEM',
+    code: 'SYSTEM_MODULE',
     name: 'system.menu.module',
     apiId: null,
     api: null,
@@ -92,6 +92,8 @@ export const MockModuleWarehouseMaster: IModule = {
     id: IdGenerators.oid.generate(),
     icon: {icon: 'cog', pack: 'fas'},
     children: [
+        MockModuleWarehouseStorage,
+        MockModuleWarehouseCategory,
     ],
 };
 
@@ -103,8 +105,6 @@ export const MockModuleWarehouseFeatures: IModule = {
     id: IdGenerators.oid.generate(),
     icon: {icon: 'briefcase', pack: 'fas'},
     children: [
-        MockModuleWarehouseStorage,
-        MockModuleWarehouseCategory,
         MockModuleWarehouseItem,
     ],
 };
