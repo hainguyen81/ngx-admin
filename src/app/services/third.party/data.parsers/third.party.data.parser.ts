@@ -47,6 +47,8 @@ export abstract class AbstractThirdPartyApiDataParser<T extends IApiThirdParty, 
                     && (receiveEntity[this.dataPropertyName] || '').length) {
                     const mappedData: K = this.mappingData(receiveEntity);
                     mappedData && parsedData.push(mappedData);
+                    !mappedData && window.console.warn(
+                        ['Could not parse ', receiveEntity, ' data from third-party API!']);
                 }
             });
         }
