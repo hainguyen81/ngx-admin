@@ -92,7 +92,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
                     return _this.getHttpService().request(url, method, options).toPromise()
                         .then((data: T[]) => {
                             // catch for future from offline database
-                            if (!isArray(data)) {
+                            if (data && !isArray(data)) {
                                 data = [].concat(data);
                             }
 

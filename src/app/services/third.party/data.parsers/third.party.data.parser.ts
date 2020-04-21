@@ -41,6 +41,7 @@ export abstract class AbstractThirdPartyApiDataParser<T extends IApiThirdParty, 
             receivedEntities = [receivedEntities];
         }
         if (isArray(receivedEntities) && receivedEntities.length) {
+            parsedData = [];
             receivedEntities.forEach(receiveEntity => {
                 if (receiveEntity && receiveEntity.hasOwnProperty(this.dataPropertyName)
                     && (receiveEntity[this.dataPropertyName] || '').length) {

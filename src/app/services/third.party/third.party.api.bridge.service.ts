@@ -94,7 +94,7 @@ export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBase
                     if (!(apiGatewayEntry instanceof Promise) && !(apiGatewayEntry instanceof Observable)) {
                         apiGatewayEntryPromise = new Promise(
                             resolve => resolve(
-                                apiGatewayEntry['apply'](this._thirdPartyApi, [param.callApi.args])));
+                                apiGatewayEntry['apply'](this._thirdPartyApi, param.callApi.args)));
 
                     } else if (apiGatewayEntry instanceof Promise) {
                         apiGatewayEntryPromise = (<Promise<any>>apiGatewayEntry);

@@ -68,7 +68,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
             callApi: {
                 method: ProvinceDbService.THIRD_PARTY_ENTRY_METHOD,
                 args: [
-                    ProvinceDbService.THIRD_PARTY_STATE_URL,
+                    ProvinceDbService.THIRD_PARTY_STATE_URL.concat('/', country.name),
                     ProvinceDbService.THIRD_PARTY_STATE_METHOD,
                     Province,
                 ],
