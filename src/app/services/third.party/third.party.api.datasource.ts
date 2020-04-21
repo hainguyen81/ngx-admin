@@ -6,11 +6,13 @@ import {ThirdPartyApiDbService, ThirdPartyApiHttpService} from './third.party.ap
 import {throwError} from 'rxjs';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {isArray} from 'util';
+import {IModel} from '../../@core/data/base';
+import {ThirdPartyApiDataParserDefinition} from './data.parsers/third.party.data.parser';
 
 /**
  * Third-party API data parser interface
  */
-export interface IThirdPartyApiDataParser<T extends IApiThirdParty, K> {
+export interface IThirdPartyApiDataParser<T extends IApiThirdParty, K extends IModel> {
     parse(data: T): K | K[];
 }
 
@@ -19,16 +21,6 @@ export interface IThirdPartyApiDataParser<T extends IApiThirdParty, K> {
  */
 export interface IThirdPartyApiDataParserDefinition<T extends IApiThirdParty> {
     parsers: { provide: Type<any>, parser: IThirdPartyApiDataParser<T, any> }[];
-}
-
-/**
- * Default third-party API data parser definition
- */
-export class ThirdPartyApiDataParserDefinition<T extends IApiThirdParty>
-    implements IThirdPartyApiDataParserDefinition<T> {
-
-    constructor(public parsers: { provide: Type<any>; parser: IThirdPartyApiDataParser<T, any> }[]) {
-    }
 }
 
 export const THIRDPARTY_API_DATA_PARSER_DEFINITION: InjectionToken<IThirdPartyApiDataParserDefinition<any>>
@@ -108,7 +100,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
                                     let parsedData: K[];
                                     parsedData = [];
                                     if (dataParserType && this.dataParser() && this.dataParser().parsers) {
-                                        let parser: IThirdPartyApiDataParser<T, K>;
+                                        let parser: IThirdPartyApiDataParser<T, any>;
                                         parser = this.getDataParser(dataParserType);
                                         if (parser) {
                                             (data || []).forEach(dat => {
@@ -155,8 +147,8 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
             });
     }
 
-    private getDataParser<K>(dataParserType?: Type<K>): IThirdPartyApiDataParser<T, K> {
-        let parser: IThirdPartyApiDataParser<T, K>;
+    private getDataParser<K>(dataParserType?: Type<K>): IThirdPartyApiDataParser<T, any> {
+        let parser: IThirdPartyApiDataParser<T, any>;
         parser = null;
         if (this.dataParser().parsers && dataParserType) {
             for (const dataParserDef of this.dataParser().parsers) {

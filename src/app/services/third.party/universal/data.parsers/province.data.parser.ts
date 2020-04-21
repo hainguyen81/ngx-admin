@@ -4,21 +4,21 @@ import Province, {IProvince} from '../../../../@core/data/system/province';
 import {IdGenerators} from '../../../../config/generator.config';
 
 /**
- * Universal third-party API cities data parser
+ * Universal third-party API provinces data parser
  */
-export default class UniversalApiCityDataParser
+export default class UniversalApiProvinceDataParser
     extends AbstractThirdPartyApiDataParser<UniversalApiThirdParty, IProvince> {
 
-    private static DATA_PROPERTY_CITY_NAME: string = 'city_name';
-    private static CITY_CODE_FROM_NAME_LENGTH: number = 3;
+    private static DATA_PROPERTY_PROVINCE_NAME: string = 'state_name';
+    private static PROVINCE_CODE_FROM_NAME_LENGTH: number = 3;
 
     constructor() {
-        super(UniversalApiCityDataParser.DATA_PROPERTY_CITY_NAME);
+        super(UniversalApiProvinceDataParser.DATA_PROPERTY_PROVINCE_NAME);
     }
 
     protected mappingData(entity: any): IProvince {
         const id: string = IdGenerators.oid.generate();
         const name: string = entity[this.dataPropertyName];
-        return new Province(id, name.left(UniversalApiCityDataParser.CITY_CODE_FROM_NAME_LENGTH), name);
+        return new Province(id, name.left(UniversalApiProvinceDataParser.PROVINCE_CODE_FROM_NAME_LENGTH), name);
     }
 }
