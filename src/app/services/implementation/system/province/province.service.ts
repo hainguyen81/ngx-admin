@@ -91,6 +91,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
                             duplicatedCode.lastIndexOf(provinceCode).toString());
                     }
                     province.code = provinceCode;
+                    duplicatedCode.push(provinceCode);
                 });
 
                 // insert application database for future
