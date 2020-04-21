@@ -189,6 +189,11 @@
 					"placeholder": "Address",
 					"description": "Address"
 				},
+                "district": {
+                    "label": "District/Town",
+                    "placeholder": "District/Town",
+                    "description": "District/Town"
+                },
                 "city": {
                     "label": "City",
                     "placeholder": "City",

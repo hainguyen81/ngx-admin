@@ -189,15 +189,20 @@
 					"placeholder": "Địa chỉ",
 					"description": "Địa chỉ"
 				},
+                "district": {
+                    "label": "Quận/Huyện",
+                    "placeholder": "Quận/Huyện",
+                    "description": "Quận/Huyện"
+                },
                 "city": {
                     "label": "Thành phố",
                     "placeholder": "Thành phố",
                     "description": "Thành phố"
                 },
                 "state_province": {
-                    "label": "Quận/Huyện",
-                    "placeholder": "Quận/Huyện",
-                    "description": "Quận/Huyện"
+                    "label": "Tỉnh/Khu vực",
+                    "placeholder": "Tỉnh/Khu vực",
+                    "description": "Tỉnh/Khu vực"
                 },
                 "zip_code": {
                     "label": "Zip",
