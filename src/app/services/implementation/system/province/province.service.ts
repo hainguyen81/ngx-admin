@@ -60,7 +60,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
     findByCountry(country?: ICountry | null): Promise<IProvince | IProvince[]> {
         country || throwError(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
         const _this: ProvinceDbService = this;
-        const fecthParam: IThirdPartyApiDataBridgeParam<IProvince> = {
+        const fetchParam: IThirdPartyApiDataBridgeParam<IProvince> = {
             dbCacheFilter: {
                 dbStore: this.getDbStore(),
                 indexName: ProvinceDbService.INDEX_NAME_COUNTRY_ID,
@@ -106,7 +106,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
                     });
             },
         };
-        return _this.thirdPartyApiBridge.fetch(fecthParam);
+        return _this.thirdPartyApiBridge.fetch(fetchParam);
     }
 }
 

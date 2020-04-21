@@ -60,7 +60,7 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
     findByProvince(province?: IProvince | null): Promise<ICity | ICity[]> {
         province || throwError(CityDbService.EXCEPTION_PERFORMANCE_REASON);
         const _this: CityDbService = this;
-        const fecthParam: IThirdPartyApiDataBridgeParam<ICity> = {
+        const fetchParam: IThirdPartyApiDataBridgeParam<ICity> = {
             dbCacheFilter: {
                 dbStore: this.getDbStore(),
                 indexName: CityDbService.INDEX_NAME_PROVINCE_ID,
@@ -106,7 +106,7 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
                     });
             },
         };
-        return _this.thirdPartyApiBridge.fetch(fecthParam);
+        return _this.thirdPartyApiBridge.fetch(fetchParam);
     }
 }
 
