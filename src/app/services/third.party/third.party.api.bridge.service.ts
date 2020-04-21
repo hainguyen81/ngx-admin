@@ -113,6 +113,8 @@ export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBase
                             return [];
                         });
                 }
+
+                return (value && !isArray(value) ? Array.of(value) : value ? Array.from(value) : value);
             }, reason => {
                 this.getLogger().error(reason);
                 return [];
