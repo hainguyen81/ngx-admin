@@ -219,7 +219,6 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'system.organization.form.zip_code.label',
                     placeholder: 'system.organization.form.zip_code.placeholder',
-                    disabled: true,
                 },
             },
             {
@@ -295,7 +294,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-6',
+                className: 'col-4',
                 key: 'business_license',
                 type: 'input',
                 templateOptions: {
@@ -304,7 +303,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 },
             },
             {
-                className: 'col-6',
+                className: 'col-4',
                 key: 'business_license_dt',
                 type: 'datepicker',
                 templateOptions: {
@@ -312,13 +311,8 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'system.organization.form.business_license_dt.placeholder',
                 },
             },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
             {
-                className: 'col-6',
+                className: 'col-4',
                 key: 'date_incorporation',
                 type: 'datepicker',
                 templateOptions: {
@@ -332,7 +326,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-6',
+                className: 'col-4',
                 key: 'bank_company',
                 type: 'input',
                 templateOptions: {
@@ -341,7 +335,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 },
             },
             {
-                className: 'col-6',
+                className: 'col-4',
                 key: 'bank_company_at',
                 type: 'input',
                 templateOptions: {
@@ -349,13 +343,8 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'system.organization.form.bank_company_at.placeholder',
                 },
             },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
             {
-                className: 'col-6',
+                className: 'col-4',
                 key: 'bank_company_account',
                 type: 'input',
                 templateOptions: {
