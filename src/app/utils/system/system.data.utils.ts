@@ -9,6 +9,7 @@ import {ICountry} from '../../@core/data/system/country';
 import {CityDatasource} from '../../services/implementation/system/city/city.datasource';
 import ModelUtils from './model.utils';
 import {IModel} from '../../@core/data/base';
+import {ProvinceDatasource} from '../../services/implementation/system/province/province.datasource';
 
 export default class SystemDataUtils {
 
@@ -28,6 +29,20 @@ export default class SystemDataUtils {
     }
 
     /**
+     * Get all provinces by the specified country
+     * @param provinceDatasource to invoke
+     * @param country to filter
+     */
+    public static invokeAllProvinces(provinceDatasource: ProvinceDatasource, country: ICountry): Promise<any[]> {
+        provinceDatasource
+        || throwError('ProvinceDatasource is required to invoke!');
+        return (<ProvinceDatasource>provinceDatasource
+            .setPaging(1, undefined, false)
+            .setFilter([{ country: country }], false, false))
+            .findByCountry(country).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
+    }
+
+    /**
      * Get all cities by the specified country
      * @param cityDatasource to invoke
      * @param country to filter
@@ -38,9 +53,7 @@ export default class SystemDataUtils {
         return (<CityDatasource>cityDatasource
             .setPaging(1, undefined, false)
             .setFilter([{ country: country }], false, false))
-            .findByCountry(country).then(values => {
-                return ModelUtils.buildModelForSelectOption(values as IModel[]);
-            });
+            .findByCountry(country).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
     }
 
     /**

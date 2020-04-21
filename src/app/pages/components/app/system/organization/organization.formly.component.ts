@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
@@ -32,13 +31,12 @@ import {
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {API} from '../../../../../config/api.config';
-import {of} from 'rxjs';
 import {
     AppCountryFormlySelectExFieldComponent,
 } from '../../components/common/app.country.formly.select.ex.field.component';
 import {
-    AppCityFormlySelectExFieldComponent,
-} from '../../components/common/app.city.formly.select.ex.field.component';
+    AppProvinceFormlySelectExFieldComponent,
+} from '../../components/common/app.province.formly.select.ex.field.component';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -164,11 +162,11 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             },
             {
                 className: 'col-6',
-                key: 'city_id',
-                type: 'select-ex-city',
+                key: 'province_id',
+                type: 'select-ex-province',
                 templateOptions: {
-                    label: 'system.organization.form.city.label',
-                    placeholder: 'system.organization.form.city.placeholder',
+                    label: 'system.organization.form.state_province.label',
+                    placeholder: 'system.organization.form.state_province.placeholder',
                     disabled: true,
                 },
                 expressionProperties: {
@@ -182,15 +180,15 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-6',
-                key: 'state_province_id',
-                type: 'input',
+                key: 'city_id',
+                type: 'select-ex-city',
                 templateOptions: {
-                    label: 'system.organization.form.state_province.label',
-                    placeholder: 'system.organization.form.state_province.placeholder',
+                    label: 'system.organization.form.city.label',
+                    placeholder: 'system.organization.form.city.placeholder',
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['country_id'] || '').length),
+                    'templateOptions.disabled': model => (!model || !(model['province_id'] || '').length),
                 },
             },
             {
@@ -504,11 +502,11 @@ export class OrganizationFormlyComponent
             model.country = null;
         }
 
-        const cityField: FormlyFieldConfig = this.getFields()[4].fieldGroup[1];
-        const cityFieldComponent: AppCityFormlySelectExFieldComponent =
-            super.getFormFieldComponent(cityField, AppCityFormlySelectExFieldComponent);
-        if (cityFieldComponent) {
-            cityFieldComponent.country = model.country;
+        const provinceField: FormlyFieldConfig = this.getFields()[4].fieldGroup[1];
+        const provinceFieldComponent: AppProvinceFormlySelectExFieldComponent =
+            super.getFormFieldComponent(provinceField, AppProvinceFormlySelectExFieldComponent);
+        if (provinceFieldComponent) {
+            provinceFieldComponent.country = model.country;
         }
     }
 

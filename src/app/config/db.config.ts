@@ -1,5 +1,9 @@
 import {DBConfig} from 'ngx-indexed-db';
 import {environment} from '../../environments/environment';
+import {IDistrict} from "../@core/data/system/district";
+import {ICity} from "../@core/data/system/city";
+import {IProvince} from "../@core/data/system/province";
+import {ICountry} from "../@core/data/system/country";
 
 export const DB_STORE: any = {
     third_party: 'third_party',
@@ -116,6 +120,15 @@ export const dbConfig: DBConfig = {
             {name: 'type', keypath: 'type', options: {unique: false}},
             {name: 'tax', keypath: 'tax', options: {unique: false}},
             {name: 'address', keypath: 'address', options: {unique: false}},
+            {name: 'district_id', keypath: 'district_id', options: {unique: false}},
+            {name: 'district', keypath: 'district', options: {unique: false}},
+            {name: 'city_id', keypath: 'city_id', options: {unique: false}},
+            {name: 'city', keypath: 'city', options: {unique: false}},
+            {name: 'province_id', keypath: 'province_id', options: {unique: false}},
+            {name: 'province', keypath: 'province', options: {unique: false}},
+            {name: 'zip_code', keypath: 'zip_code', options: {unique: false}},
+            {name: 'country_id', keypath: 'country_id', options: {unique: false}},
+            {name: 'country', keypath: 'country', options: {unique: false}},
             {name: 'tel', keypath: 'tel', options: {unique: false}},
             {name: 'fax', keypath: 'fax', options: {unique: false}},
             {name: 'email', keypath: 'email', options: {unique: false}},

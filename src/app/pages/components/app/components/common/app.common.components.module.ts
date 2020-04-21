@@ -26,6 +26,7 @@ import {AppCountryFormlySelectExFieldComponent} from './app.country.formly.selec
 import {NgxSelectModule} from 'ngx-select-ex';
 import {ComponentsModule} from '../../../components.module';
 import {AppCityFormlySelectExFieldComponent} from './app.city.formly.select.ex.field.component';
+import {AppProvinceFormlySelectExFieldComponent} from './app.province.formly.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -77,6 +78,11 @@ import {AppCityFormlySelectExFieldComponent} from './app.city.formly.select.ex.f
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'select-ex-province',
+                    component: AppProvinceFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'select-ex-city',
                     component: AppCityFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -102,14 +108,17 @@ import {AppCityFormlySelectExFieldComponent} from './app.city.formly.select.ex.f
     ],
     entryComponents: [
         AppCountryFormlySelectExFieldComponent,
+        AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
     ],
     exports: [
         AppCountryFormlySelectExFieldComponent,
+        AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
     ],
     declarations: [
         AppCountryFormlySelectExFieldComponent,
+        AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
     ],
 })

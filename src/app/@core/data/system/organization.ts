@@ -2,6 +2,7 @@ import BaseModel, {IModel} from '../base';
 import {ICity} from './city';
 import {IProvince} from './province';
 import {ICountry} from './country';
+import {IDistrict} from './district';
 
 export const enum ORGANIZTAION_TYPE {
     HEAD_CENTER,
@@ -35,12 +36,15 @@ export interface IOrganization extends IModel {
     type: ORGANIZTAION_TYPE;
     tax?: string | null;
     address?: string | null;
+    // Quận/Huyện
+    district_id?: string | null;
+    district?: IDistrict | null;
     // Thành phố
     city_id?: string | null;
     city?: ICity | null;
     // Tỉnh
-    state_province_id?: string | null;
-    state_province?: IProvince | null;
+    province_id?: string | null;
+    province?: IProvince | null;
     // Zip code
     zip_code?: string | null;
     // Quốc gia

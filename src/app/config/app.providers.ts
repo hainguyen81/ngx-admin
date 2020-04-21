@@ -114,6 +114,8 @@ import {UniversalApiDbService, UniversalApiHttpService} from '../services/third.
 import {UniversalApiDatasource} from '../services/third.party/universal/universal.api.datasource';
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
 import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/interceptors/headers.interceptor';
+import {ThirdPartyApiBridgeDbService} from "../services/third.party/third.party.api.bridge.service";
+import {UniversalApiBridgeDbService} from "../services/third.party/universal/universal.api.bridge.service";
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -210,6 +212,7 @@ export const AuthenticationProviders: StaticProvider[] = [
 ];
 
 export const ThirdPartyApiProviders: StaticProvider[] = [
+    // https://www.universal-tutorial.com/api
     {
         provide: UniversalApiDbService, useClass: UniversalApiDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -221,6 +224,10 @@ export const ThirdPartyApiProviders: StaticProvider[] = [
     {
         provide: UniversalApiDatasource, useClass: UniversalApiDatasource,
         deps: [UniversalApiHttpService, UniversalApiDbService, NGXLogger],
+    },
+    {
+        provide: UniversalApiBridgeDbService, useClass: UniversalApiBridgeDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService, UniversalApiDatasource],
     },
 ];
 
@@ -312,7 +319,7 @@ export const CountryProviders: StaticProvider[] = [
     // Province
     {
         provide: ProvinceDbService, useClass: ProvinceDbService,
-        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService, UniversalApiBridgeDbService],
     },
     {
         provide: ProvinceHttpService, useClass: ProvinceHttpService,

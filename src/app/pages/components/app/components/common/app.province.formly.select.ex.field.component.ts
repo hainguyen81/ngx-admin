@@ -1,15 +1,15 @@
-import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {Component, Inject, Renderer2} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
-import City, {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
-import {of, throwError} from 'rxjs';
+import {throwError} from 'rxjs';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
-import {CityDatasource} from '../../../../../services/implementation/system/city/city.datasource';
-import Country, {ICountry} from '../../../../../@core/data/system/country';
+import {ICountry} from '../../../../../@core/data/system/country';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
+import Province, {IProvince} from '../../../../../@core/data/system/province';
+import {ProvinceDatasource} from '../../../../../services/implementation/system/province/province.datasource';
 
-export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
+export const AppProvincesSelectOptions: INgxSelectExOptions = Object.assign({
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
@@ -28,15 +28,15 @@ export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
 }, DefaultNgxSelectOptions);
 
 /**
- * Custom city formly field for selecting special
+ * Custom state/province formly field for selecting special
  */
 @Component({
-    selector: 'ngx-select-ex-app-city',
+    selector: 'ngx-select-ex-app-province',
     templateUrl: '../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export class AppCityFormlySelectExFieldComponent
-    extends AppFormlySelectExFieldComponent<ICity> {
+export class AppProvinceFormlySelectExFieldComponent
+    extends AppFormlySelectExFieldComponent<IProvince> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -46,16 +46,16 @@ export class AppCityFormlySelectExFieldComponent
      * Create a new instance of {AppFormlySelectExFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param cityDataSource {CityDatasource}
+     * @param provinceDataSource {ProvinceDatasource}
      * @param _logger {NGXLogger}
      */
-    constructor(@Inject(CityDatasource) private cityDataSource: CityDatasource,
+    constructor(@Inject(ProvinceDatasource) private provinceDataSource: ProvinceDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger) {
         super(_translateService, _renderer, _logger);
-        cityDataSource || throwError('Could not inject CityDatasource instance');
-        super.setConfig(AppCitiesSelectOptions);
+        provinceDataSource || throwError('Could not inject ProvinceDatasource instance');
+        super.setConfig(AppProvincesSelectOptions);
     }
 
     // -------------------------------------------------
@@ -66,13 +66,14 @@ export class AppCityFormlySelectExFieldComponent
         if (!country || !(country.id || '').length
             || !(country.code || '').length || !(country.name || '').length) {
             this.getItems().clear();
+
         } else {
-            SystemDataUtils.invokeAllCities(this.cityDataSource, country)
-                .then(cities => {
-                    let noneCity: ICity;
-                    noneCity = new City(null, null, null);
-                    noneCity['text'] = this.getConfig().placeholder;
-                    this.setItems([noneCity].concat(cities));
+            SystemDataUtils.invokeAllProvinces(this.provinceDataSource, country)
+                .then(provinces => {
+                    let nonProvince: IProvince;
+                    nonProvince = new Province(null, null, null);
+                    nonProvince['text'] = this.getConfig().placeholder;
+                    this.setItems([nonProvince].concat(provinces));
                 });
         }
     }

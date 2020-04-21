@@ -43,7 +43,7 @@ export class AppCountryFormlySelectExFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AppFormlyTreeviewDropdownFieldComponent} class
+     * Create a new instance of {AppFormlySelectExFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param countryDataSource {CountryDatasource}

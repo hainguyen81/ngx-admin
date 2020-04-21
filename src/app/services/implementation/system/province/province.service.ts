@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {IProvince} from '../../../../@core/data/system/province';
+import Province, {IProvince} from '../../../../@core/data/system/province';
 import {AbstractHttpService} from '../../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../../response.service';
@@ -10,14 +10,30 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
+import {ICountry} from '../../../../@core/data/system/country';
+import {THIRD_PARTY_API} from '../../../../config/third.party.api';
+import {
+    IThirdPartyApiDataBridgeParam,
+    ThirdPartyApiBridgeDbService,
+} from '../../../third.party/third.party.api.bridge.service';
+import {isArray, isNullOrUndefined} from 'util';
 
 @Injectable()
 export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
 
+    private static EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all provinces because of performance!';
+    private static INDEX_NAME_COUNTRY_ID = 'country_id';
+    private static THIRD_PARTY_STATE_URL = THIRD_PARTY_API.universal.api.province.url;
+    private static THIRD_PARTY_STATE_METHOD = THIRD_PARTY_API.universal.api.province.method;
+    private static THIRD_PARTY_ENTRY_METHOD = 'findData';
+
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(ConnectionService) connectionService: ConnectionService) {
+                @Inject(ConnectionService) connectionService: ConnectionService,
+                @Inject(ThirdPartyApiBridgeDbService)
+                private thirdPartyApiBridge: ThirdPartyApiBridgeDbService<IProvince>) {
         super(dbService, logger, connectionService, DB_STORE.province);
+        thirdPartyApiBridge || throwError('Could not inject ThirdPartyApiBridgeDbService instance');
     }
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
@@ -27,6 +43,57 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
             args[0].deletedAt = (new Date()).getTime();
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
+    }
+
+    /**
+     * TODO Not support for getting all provinces because of performance
+     */
+    getAll(): Promise<IProvince[]> {
+        throwError(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
+        return Promise.reject(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
+    }
+
+    /**
+     * Find all states/provinces by the specified {ICountry}
+     * @param country to filter
+     */
+    findByCountry(country?: ICountry | null): Promise<IProvince | IProvince[]> {
+        country || throwError(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
+        const fecthParam: IThirdPartyApiDataBridgeParam<IProvince> = {
+            dbCacheFilter: {
+                dbStore: this.getDbStore(),
+                indexName: ProvinceDbService.INDEX_NAME_COUNTRY_ID,
+                criteria: country.id,
+            },
+            callApi: {
+                method: ProvinceDbService.THIRD_PARTY_ENTRY_METHOD,
+                args: [
+                    ProvinceDbService.THIRD_PARTY_STATE_URL,
+                    ProvinceDbService.THIRD_PARTY_STATE_METHOD,
+                    Province,
+                ],
+            },
+            apiFulfilled: apiData => {
+                // apply country for city API data
+                let provinces: IProvince[];
+                provinces = (isArray(apiData) ? apiData as IProvince[] : apiData ? [apiData as IProvince] : []);
+                provinces = provinces.removeIf(province => isNullOrUndefined(province));
+                provinces.forEach(province => {
+                    province.country_id = country.id;
+                });
+
+                // insert application database for future
+                return this.insertEntities(provinces)
+                    .then(affected => provinces, reason => {
+                        this.getLogger().error(reason);
+                        return [];
+                    }).catch(reason => {
+                        this.getLogger().error(reason);
+                        return [];
+                    });
+            },
+        };
+        return this.thirdPartyApiBridge.fetch(fecthParam);
     }
 }
 

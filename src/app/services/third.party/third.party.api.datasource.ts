@@ -35,7 +35,7 @@ export const THIRDPARTY_API_DATA_PARSER_DEFINITION: InjectionToken<IThirdPartyAp
     = new InjectionToken<IThirdPartyApiDataParserDefinition<any>>('Third-party API data parsers definition');
 
 @Injectable()
-export class ThirdPartyApiDatasource<T extends IApiThirdParty>
+export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
     extends BaseDataSource<T, ThirdPartyApiHttpService<T>, ThirdPartyApiDbService<T>> {
 
     private static EXCEPTION_NOT_SUPPORTED: string =
