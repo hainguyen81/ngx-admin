@@ -59,6 +59,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
      */
     findByCountry(country?: ICountry | null): Promise<IProvince | IProvince[]> {
         country || throwError(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
+        const _this: ProvinceDbService = this;
         const fecthParam: IThirdPartyApiDataBridgeParam<IProvince> = {
             dbCacheFilter: {
                 dbStore: this.getDbStore(),
@@ -80,20 +81,21 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
                 provinces = provinces.removeIf(province => isNullOrUndefined(province));
                 provinces.forEach(province => {
                     province.country_id = country.id;
+                    province.code = country.code.concat('|', province.code);
                 });
 
                 // insert application database for future
-                return this.insertEntities(provinces)
+                return _this.insertEntities(provinces)
                     .then(affected => provinces, reason => {
-                        this.getLogger().error(reason);
+                        _this.getLogger().error(reason);
                         return [];
                     }).catch(reason => {
-                        this.getLogger().error(reason);
+                        _this.getLogger().error(reason);
                         return [];
                     });
             },
         };
-        return this.thirdPartyApiBridge.fetch(fecthParam);
+        return _this.thirdPartyApiBridge.fetch(fecthParam);
     }
 }
 

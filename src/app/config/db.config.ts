@@ -1,9 +1,5 @@
 import {DBConfig} from 'ngx-indexed-db';
 import {environment} from '../../environments/environment';
-import {IDistrict} from "../@core/data/system/district";
-import {ICity} from "../@core/data/system/city";
-import {IProvince} from "../@core/data/system/province";
-import {ICountry} from "../@core/data/system/country";
 
 export const DB_STORE: any = {
     third_party: 'third_party',

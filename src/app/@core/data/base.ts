@@ -6,7 +6,7 @@ export interface IModel {
     updatedUser?: string | null;
     deletedAt?: number | string | null;
     expiredAt?: number | null;
-    readonly upToDated?: () => boolean | false;
+    // readonly upToDated?: () => boolean | false;
 }
 
 export default class BaseModel implements IModel {
@@ -16,10 +16,10 @@ export default class BaseModel implements IModel {
     updatedUser?: string | null;
     deletedAt?: number | string | null;
     expiredAt?: number | null;
-    readonly upToDated: () => boolean;
+    // readonly upToDated: () => boolean;
 
     constructor(public id: string) {
-        this.upToDated = () => (!this.deletedAt
-            && (!this.expiredAt || new Date(this.expiredAt) <= new Date()));
+        // this.upToDated = () => (!this.deletedAt
+        //     && (!this.expiredAt || new Date(this.expiredAt) <= new Date()));
     }
 }
