@@ -213,7 +213,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-3',
+                className: 'col-4',
                 key: 'zip_code',
                 type: 'input',
                 templateOptions: {
@@ -221,12 +221,9 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'system.organization.form.zip_code.placeholder',
                     disabled: true,
                 },
-                expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['city_id'] || '').length),
-                },
             },
             {
-                className: 'col-3',
+                className: 'col-4',
                 key: 'tel',
                 type: 'input',
                 templateOptions: {
@@ -235,7 +232,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 },
             },
             {
-                className: 'col-3',
+                className: 'col-4',
                 key: 'fax',
                 type: 'input',
                 templateOptions: {
