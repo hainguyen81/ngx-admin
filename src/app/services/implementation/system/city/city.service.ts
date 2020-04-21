@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {ICity} from '../../../../@core/data/system/city';
+import City, {ICity} from '../../../../@core/data/system/city';
 import {AbstractHttpService} from '../../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../../response.service';
@@ -11,7 +11,7 @@ import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
 import {THIRD_PARTY_API} from '../../../../config/third.party.api';
-import Province, {IProvince} from '../../../../@core/data/system/province';
+import {IProvince} from '../../../../@core/data/system/province';
 import {
     IThirdPartyApiDataBridgeParam,
     ThirdPartyApiBridgeDbService,
@@ -31,7 +31,7 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService,
                 @Inject(ThirdPartyApiBridgeDbService)
-                private thirdPartyApiBridge: ThirdPartyApiBridgeDbService<IProvince>) {
+                private thirdPartyApiBridge: ThirdPartyApiBridgeDbService<ICity>) {
         super(dbService, logger, connectionService, DB_STORE.city);
         thirdPartyApiBridge || throwError('Could not inject ThirdPartyApiBridgeDbService instance');
     }
@@ -71,7 +71,7 @@ export class CityDbService extends AbstractBaseDbService<ICity> {
                 args: [
                     CityDbService.THIRD_PARTY_CITY_URL.concat('/', province.name),
                     CityDbService.THIRD_PARTY_CITY_METHOD,
-                    Province,
+                    City,
                 ],
             },
             apiFulfilled: apiData => {
