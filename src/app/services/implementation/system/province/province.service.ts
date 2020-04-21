@@ -77,8 +77,7 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
             apiFulfilled: apiData => {
                 // apply country for city API data
                 let provinces: IProvince[];
-                let duplicatedCode: string[];
-                duplicatedCode = [];
+                const duplicatedCode: any = {};
                 provinces = (isArray(apiData) ? apiData as IProvince[] : apiData ? [apiData as IProvince] : []);
                 provinces = provinces.removeIf(province => isNullOrUndefined(province));
                 provinces.forEach(province => {
@@ -86,12 +85,14 @@ export class ProvinceDbService extends AbstractBaseDbService<IProvince> {
 
                     // check for duplicated code because API data has no returned code
                     let provinceCode: string = country.code.concat('|', province.code);
-                    if (duplicatedCode.lastIndexOf(provinceCode) >= 0) {
+                    if (duplicatedCode.hasOwnProperty(provinceCode)) {
                         provinceCode = provinceCode.concat('|',
-                            duplicatedCode.lastIndexOf(provinceCode).toString());
+                            (duplicatedCode[provinceCode] as number).toString());
+                        duplicatedCode[provinceCode] = (duplicatedCode[provinceCode] as number) + 1;
+                    } else {
+                        duplicatedCode[provinceCode] = 1;
                     }
                     province.code = provinceCode;
-                    duplicatedCode.push(provinceCode);
                 });
 
                 // insert application database for future
