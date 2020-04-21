@@ -39,10 +39,7 @@ export default class SystemDataUtils {
         return (<ProvinceDatasource>provinceDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
-            .findByCountry(country).then(values => {
-                window.console.error(['AAAAAAAAAAAAAA', values]);
-                return ModelUtils.buildModelForSelectOption(values as IModel[]);
-            });
+            .findByCountry(country).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
     }
 
     /**
@@ -69,9 +66,7 @@ export default class SystemDataUtils {
         return organizationDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false)
-            .getAll().then(values => {
-                return OrganizationUtils.buildOrganization(values as IOrganization[]);
-            });
+            .getAll().then(values => OrganizationUtils.buildOrganization(values as IOrganization[]));
     }
 
     /**
