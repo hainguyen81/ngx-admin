@@ -37,6 +37,9 @@ import {
 import {
     AppProvinceFormlySelectExFieldComponent,
 } from '../../components/common/app.province.formly.select.ex.field.component';
+import {
+    AppCityFormlySelectExFieldComponent,
+} from '../../components/common/app.city.formly.select.ex.field.component';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -482,6 +485,11 @@ export class OrganizationFormlyComponent
                         this.observeCountryField(model);
                     }
                 },
+                'province_id': (model: IOrganization) => {
+                    if ((model.province_id || '') !== ((model.province || {})['id'] || '')) {
+                        this.observeProvinceField(model);
+                    }
+                },
             };
         }
     }
@@ -507,6 +515,30 @@ export class OrganizationFormlyComponent
             super.getFormFieldComponent(provinceField, AppProvinceFormlySelectExFieldComponent);
         if (provinceFieldComponent) {
             provinceFieldComponent.country = model.country;
+        }
+    }
+
+    /**
+     * Observe city field to apply model province
+     * @param field to observe
+     * @param model form model
+     */
+    private observeProvinceField(model?: IOrganization | null): void {
+        const provinceField: FormlyFieldConfig = this.getFields()[4].fieldGroup[1];
+        const provinceFieldComponent: AppProvinceFormlySelectExFieldComponent =
+            super.getFormFieldComponent(provinceField, AppProvinceFormlySelectExFieldComponent);
+        if (provinceFieldComponent) {
+            model.province = ((provinceFieldComponent.selectedValues || []).length
+                ? provinceFieldComponent.selectedValues[0] : null);
+        } else {
+            model.province = null;
+        }
+
+        const cityField: FormlyFieldConfig = this.getFields()[5].fieldGroup[0];
+        const cityFieldComponent: AppCityFormlySelectExFieldComponent =
+            super.getFormFieldComponent(cityField, AppCityFormlySelectExFieldComponent);
+        if (cityFieldComponent) {
+            cityFieldComponent.province = model.province;
         }
     }
 

@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {Component, Inject, Renderer2} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
 import City, {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
 import {of, throwError} from 'rxjs';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {CityDatasource} from '../../../../../services/implementation/system/city/city.datasource';
-import Country, {ICountry} from '../../../../../@core/data/system/country';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
+import {IProvince} from '../../../../../@core/data/system/province';
 
 export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
     /**
@@ -62,12 +62,12 @@ export class AppCityFormlySelectExFieldComponent
     // FUNCTIONS
     // -------------------------------------------------
 
-    set country(country: ICountry) {
-        if (!country || !(country.id || '').length
-            || !(country.code || '').length || !(country.name || '').length) {
+    set province(province: IProvince) {
+        if (!province || !(province.id || '').length
+            || !(province.code || '').length || !(province.name || '').length) {
             this.getItems().clear();
         } else {
-            SystemDataUtils.invokeAllCities(this.cityDataSource, country)
+            SystemDataUtils.invokeAllCities(this.cityDataSource, province)
                 .then(cities => {
                     let noneCity: ICity;
                     noneCity = new City(null, null, null);
