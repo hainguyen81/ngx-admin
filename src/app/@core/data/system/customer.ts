@@ -1,4 +1,8 @@
 import BaseModel, {IModel} from '../base';
+import {IDistrict} from './district';
+import {ICity} from './city';
+import {IProvince} from './province';
+import {ICountry} from './country';
 
 export const enum CUSTOMER_STATUS {
     NOT_ACTIVATED,
@@ -73,10 +77,20 @@ export interface ICustomer extends IModel {
     fax?: string | null;
     website?: string | null;
     address?: string | null;
-    city?: string | null;
-    state_province?: string | null;
+    // Quận/Huyện
+    district_id?: string | null;
+    district?: IDistrict | null;
+    // Thành phố
+    city_id?: string | null;
+    city?: ICity | null;
+    // Tỉnh
+    province_id?: string | null;
+    province?: IProvince | null;
+    // Zip code
     zip_code?: string | null;
-    country?: string | null;
+    // Quốc gia
+    country_id?: string | null;
+    country?: ICountry | null;
     contact_name?: string | null;
     contact_tel?: string | null;
     contact_fax?: string | null;
