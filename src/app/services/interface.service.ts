@@ -110,4 +110,29 @@ export declare interface IDbService<T> {
      * @return the number of records in database
      */
     count(): Promise<number>;
+
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Open cursor by the specified key range
+     * @param cursorCallback cursor callback for handling
+     * @param keyRange key range for filtering
+     */
+    openCursor(cursorCallback: (event: Event) => void, keyRange?: IDBKeyRange): Promise<void>;
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Open a cursor by index filter.
+     * @param indexName The index name to filter.
+     * @param keyRange The range value and criteria to apply on the index.
+     * @param cursorCallback A callback called when done.
+     */
+    openCursorByIndex(indexName: string,
+                      keyRange: IDBKeyRange,
+                      cursorCallback: (event: Event) => void): Promise<void>;
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Returns all items by an index.
+     * @param indexName The index name to filter
+     * @param keyRange  The range value and criteria to apply on the index.
+     */
+    getAllByIndex(indexName: string, keyRange: IDBKeyRange): Promise<T[]>;
 }

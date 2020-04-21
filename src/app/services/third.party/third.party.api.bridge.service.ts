@@ -82,7 +82,7 @@ export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBase
             || this.thirdPartyApi[param.callApi.method] instanceof Promise
             || this.thirdPartyApi[param.callApi.method] instanceof Observable))
         || throwError(ThirdPartyApiBridgeDbService.EXCEPTION_INVALID_API_GATEWAY);
-        return this.getDbService().getByIndex(
+        return this.getDbService().getAllByIndex(
             param.dbCacheFilter.dbStore, param.dbCacheFilter.indexName, param.dbCacheFilter.criteria)
             .then((value: any) => {
                 // if not found data from database storage;

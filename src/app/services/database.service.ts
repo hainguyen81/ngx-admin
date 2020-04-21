@@ -213,6 +213,46 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
         return PromiseUtils.sequencePromises(defValue, calculateResult, promises);
     }
 
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Open cursor by the specified key range
+     * @param cursorCallback cursor callback for handling
+     * @param keyRange key range for filtering
+     */
+    openCursor(cursorCallback: (event: Event) => void, keyRange?: IDBKeyRange): Promise<void> {
+        return this.getDbService().openCursor(this.getDbStore(), cursorCallback, keyRange);
+    }
+
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Open a cursor by index filter.
+     * @param indexName The index name to filter.
+     * @param keyRange The range value and criteria to apply on the index.
+     * @param cursorCallback A callback called when done.
+     */
+    openCursorByIndex(indexName: string,
+                      keyRange: IDBKeyRange,
+                      cursorCallback: (event: Event) => void): Promise<void> {
+        return this.getDbService().openCursorByIndex(
+            this.getDbStore(), indexName, keyRange, cursorCallback);
+    }
+
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Returns all items by an index.
+     * @param indexName The index name to filter
+     * @param keyRange  The range value and criteria to apply on the index.
+     */
+    getAllByIndex(indexName: string, keyRange: IDBKeyRange): Promise<T[]> {
+        return new Promise((resolve, reject) => {
+            this.getDbService().getAllByIndex(this.getDbStore(), indexName, keyRange)
+                .then((value: T[]) => resolve(value), (errors) => {
+                    this.getLogger().error(errors);
+                    reject(errors);
+                });
+        });
+    }
+
     synchronize() {
         // TODO Override by children class to synchronize offline data to service via HTTP service
         this.getLogger().debug('Synchronize data...');
