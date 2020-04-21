@@ -38,8 +38,11 @@ export default class SystemDataUtils {
         || throwError('ProvinceDatasource is required to invoke!');
         return (<ProvinceDatasource>provinceDatasource
             .setPaging(1, undefined, false)
-            .setFilter([{ country: country }], false, false))
-            .findByCountry(country).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
+            .setFilter([], false, false))
+            .findByCountry(country).then(values => {
+                window.console.error(['AAAAAAAAAAAAAA', values]);
+                return ModelUtils.buildModelForSelectOption(values as IModel[]);
+            });
     }
 
     /**
@@ -52,7 +55,7 @@ export default class SystemDataUtils {
         || throwError('CityDatasource is required to invoke!');
         return (<CityDatasource>cityDatasource
             .setPaging(1, undefined, false)
-            .setFilter([{ country: country }], false, false))
+            .setFilter([], false, false))
             .findByCountry(country).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
     }
 

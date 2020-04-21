@@ -243,10 +243,10 @@ export abstract class BaseDataSource<T, H extends IHttpService<T>, D extends IDb
             });
     }
 
-    protected onFulfilledData() {
+    protected onFulfilledData():
+        ((value: T | T[] | any) => (T | T[] | any) | PromiseLike<T | T[] | any>) | undefined | null {
         const _this: BaseDataSource<T, H, D> = this;
         return (data: T[]) => {
-            window.console.error(['[', (<Object>_this).constructor.name, '] Fetch data', data]);
             data = _this.filter(data);
             data = _this.sort(data);
             _this.setRecordsNumber((data || []).length);
