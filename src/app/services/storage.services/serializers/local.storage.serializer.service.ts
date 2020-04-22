@@ -32,7 +32,7 @@ export class LocalStorageSerializerService implements StorageSerializer {
                 : _cryptoInst['stringify']['apply'](this, [value]));
         } catch (e) {
             this.logger.warn('Could not encrypt data to local storage!', e);
-            return EncryptionUtils.base64Encode(value);
+            return EncryptionUtils.base64Encode(':', value);
         }
     }
 
