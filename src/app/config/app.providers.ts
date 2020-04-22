@@ -115,7 +115,9 @@ import {UniversalApiDatasource} from '../services/third.party/universal/universa
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
 import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/interceptors/headers.interceptor';
 import {UniversalApiBridgeDbService} from '../services/third.party/universal/universal.api.bridge.service';
-import {LocalStorageSerializerService} from '../services/storage.services/serializers/local.storage.serializer.service';
+import {
+    DefaultLocalStorageSerializerService,
+} from '../services/storage.services/serializers/local.storage.serializer.service';
 import {
     NgxLocalStorageService,
     NgxLocalStorageEncryptionService,
@@ -170,7 +172,7 @@ export const CommonProviders: StaticProvider[] = [
     // local storage
     {provide: TOKEN_STORAGE_CONFIG, useValue: StorageConfiguration, deps: []},
     {provide: TOKEN_SECURE_ENCRYPTION_CONFIG, useValue: SecureStorageConfiguration, deps: []},
-    {provide: TOKEN_STORAGE_SERIALIZER, useClass: LocalStorageSerializerService, deps: [NGXLogger]},
+    {provide: TOKEN_STORAGE_SERIALIZER, useClass: DefaultLocalStorageSerializerService, deps: [NGXLogger]},
     {
         provide: NgxLocalStorageService, useClass: NgxLocalStorageService,
         deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG],

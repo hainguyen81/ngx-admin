@@ -10,11 +10,7 @@ import EncryptionUtils from '../../../utils/encryption.utils';
  * Local storage serializer/deserializer service
  */
 @Injectable()
-export class LocalStorageSerializerService implements StorageSerializer {
-
-    private _crypto(): any {
-        return CryptoEncUtf8Service;
-    }
+export class DefaultLocalStorageSerializerService implements StorageSerializer {
 
     protected get logger(): NGXLogger {
         return this._logger;
@@ -25,14 +21,37 @@ export class LocalStorageSerializerService implements StorageSerializer {
     }
 
     serialize(value: any): string {
+        return EncryptionUtils.base64Encode(':', value);
+    }
+
+    deserialize(storedValue: string): any {
+        return EncryptionUtils.base64Decode(storedValue);
+    }
+}
+
+/**
+ * Local storage serializer/deserializer service
+ */
+@Injectable()
+export class LocalStorageSerializerService extends DefaultLocalStorageSerializerService {
+
+    private _crypto(): any {
+        return CryptoEncUtf8Service;
+    }
+
+    constructor(@Inject(NGXLogger) _logger: NGXLogger) {
+        super(_logger);
+    }
+
+    serialize(value: any): string {
         try {
             const _cryptoInst: any = this._crypto();
             return (isNullOrUndefined(_cryptoInst)
             || typeof _cryptoInst['stringify'] !== 'function' ? null
                 : _cryptoInst['stringify']['apply'](this, [value]));
         } catch (e) {
-            this.logger.warn('Could not encrypt data to local storage!', e);
-            return EncryptionUtils.base64Encode(':', value);
+            this.logger.warn('Could not serialize data to local storage!', e);
+            return super.serialize(value);
         }
     }
 
@@ -43,8 +62,8 @@ export class LocalStorageSerializerService implements StorageSerializer {
             || typeof _cryptoInst['parse'] !== 'function' ? null
                 : _cryptoInst['parse']['apply'](this, [storedValue]));
         } catch (e) {
-            this.logger.warn('Could not descrypt data from local storage!', e);
-            return EncryptionUtils.base64Decode(storedValue);
+            this.logger.warn('Could not deserialize data from local storage!', e);
+            return super.deserialize(storedValue);
         }
     }
 }

@@ -148,8 +148,8 @@ export class NgxLocalStorageEncryptionService {
 
     get(key: string, isAllKeysData?: boolean): any {
         const data: any = this.internalSecuredStorage.get(this._transformKey(key), isAllKeysData);
-        this.logger.warn('Get data from local storage', key, this._transformKey(key), data,
-            this.serializer.deserialize(data));
+        // this.logger.warn('Get data from local storage', key, this._transformKey(key), data,
+        //     this.serializer.deserialize(data));
         return (isNullOrUndefined(data) ? data : this.serializer.deserialize(data));
     }
 
@@ -159,8 +159,8 @@ export class NgxLocalStorageEncryptionService {
     }
 
     set(key: string, data: any): void {
-        this.logger.warn('Set data to local storage', key, this._transformKey(key), data,
-            this.serializer.serialize(data));
+        // this.logger.warn('Set data to local storage', key, this._transformKey(key), data,
+        //     this.serializer.serialize(data));
         ((isNullOrUndefined(data) && this.storageConfig.allowNull)
             || !isNullOrUndefined(data))
         && this.internalSecuredStorage.set(this._transformKey(key),
