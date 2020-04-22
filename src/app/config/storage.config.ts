@@ -28,8 +28,9 @@ export const SecureStorageConfig: {
     encryptionNamespace?: string | null;
 } =  {
     isCompression: true,
-    encodingType: 'base64',
+    encodingType: 'rc4',
     encryptionNamespace: 'hi-system',
+    encryptionSecret: 's3cr3tPa$$w0rd@h1System',
 };
 export const SecureStorageConfiguration: ISecureEncryptionConfig =
     new SecuredLocalStorageEncryptionConfig(
