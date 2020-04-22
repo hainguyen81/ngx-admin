@@ -69,6 +69,8 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 /* Select-ex */
 import {NgxSelectModule} from 'ngx-select-ex';
+/* Local storage */
+import {NgxLocalStorageModule} from 'ngx-localstorage';
 
 @NgModule({
     declarations: [AppComponent],
@@ -77,6 +79,9 @@ import {NgxSelectModule} from 'ngx-select-ex';
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
+
+        /* local storage */
+        NgxLocalStorageModule.forRoot(),
 
         /* Angular material modules */
         AppMaterialModule,
