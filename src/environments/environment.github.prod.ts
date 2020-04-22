@@ -9,10 +9,10 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-    github: false,
-    production: false,
-    databaseName: 'HiDemo',
+    github: true,
+    production: true,
+    databaseName: 'HiGithub',
     offline: true,
-    baseHref: '/',
-    useProxy: true,
+    baseHref: 'https://hainguyen81.github.io/ngx-admin/',
+    useProxy: false,
 };

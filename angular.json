@@ -62,6 +62,34 @@
                             "sourceMap": false,
                             "extractCss": true,
                             "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ]
+                        },
+                        "dev": {
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": false
+                        },
+                        "github_dev": {
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
                             "aot": false,
                             "extractLicenses": true,
                             "vendorChunk": false,
@@ -69,7 +97,24 @@
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
+                                    "with": "src/environments/environment.github.ts"
+                                }
+                            ]
+                        },
+                        "github_prod": {
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.github.prod.ts"
                                 }
                             ]
                         }
@@ -78,11 +123,21 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "ngx-admin:build",
-                        "proxyConfig": "proxy.conf.json"
+                        "browserTarget": "ngx-admin:build"
                     },
                     "configurations": {
                         "production": {
+                            "browserTarget": "ngx-admin:build:production",
+                            "proxyConfig": "proxy.conf.json"
+                        },
+                        "dev": {
+                            "browserTarget": "ngx-admin:build:production",
+                            "proxyConfig": "proxy.conf.json"
+                        },
+                        "github_dev": {
+                            "browserTarget": "ngx-admin:build"
+                        },
+                        "github_prod": {
                             "browserTarget": "ngx-admin:build:production"
                         }
                     }
