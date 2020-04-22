@@ -32,7 +32,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
 
     private static EXCEPTION_NOT_SUPPORTED: string =
         'Not support for getting all data because third-party manage data by URL, method and code!';
-    private static INDEX_NAME_THIRD_PARTY_CODE = 'code';
+    private static INDEX_NAME_THIRD_PARTY_CODE: string = 'code';
 
     /**
      * Get the third-party API data parser definition injection instance

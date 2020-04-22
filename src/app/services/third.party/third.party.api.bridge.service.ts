@@ -35,8 +35,8 @@ export interface IThirdPartyApiDataBridgeParam<T extends IModel> {
 @Injectable()
 export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBaseDbService<T> {
 
-    private static EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all data because of performance!';
-    private static EXCEPTION_INVALID_API_GATEWAY = 'Not found the valid API function';
+    private static EXCEPTION_PERFORMANCE_REASON: string = 'Not support for getting all data because of performance!';
+    private static EXCEPTION_INVALID_API_GATEWAY: string = 'Not found the valid API function';
 
     protected get thirdPartyApi(): ThirdPartyApiDatasource<IApiThirdParty> {
         return this._thirdPartyApi;

@@ -21,11 +21,11 @@ import {isArray, isNullOrUndefined} from 'util';
 @Injectable()
 export class CityDbService extends AbstractBaseDbService<ICity> {
 
-    private static EXCEPTION_PERFORMANCE_REASON = 'Not support for getting all cities because of performance!';
-    private static INDEX_NAME_PROVINCE_ID = 'province_id';
-    private static THIRD_PARTY_CITY_URL = THIRD_PARTY_API.universal.api.city.url;
-    private static THIRD_PARTY_CITY_METHOD = THIRD_PARTY_API.universal.api.city.method;
-    private static THIRD_PARTY_ENTRY_METHOD = 'findData';
+    private static EXCEPTION_PERFORMANCE_REASON: string = 'Not support for getting all cities because of performance!';
+    private static INDEX_NAME_PROVINCE_ID: string = 'province_id';
+    private static THIRD_PARTY_CITY_URL: string = THIRD_PARTY_API.universal.api.city.url.call(undefined);
+    private static THIRD_PARTY_CITY_METHOD: string = THIRD_PARTY_API.universal.api.city.method;
+    private static THIRD_PARTY_ENTRY_METHOD: string = 'findData';
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
