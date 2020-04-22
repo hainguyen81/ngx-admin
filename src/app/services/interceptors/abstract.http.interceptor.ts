@@ -48,7 +48,8 @@ export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor im
      * @param next for next intercept
      */
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.logger.warn('Just remind: Intercept HTTP{' + (<Object>this).constructor.name + '}', req);
+        this.logger.warn('Just remind: Intercept HTTP{'
+            + Reflect.getPrototypeOf(this).constructor.name + '}', req);
         return (this.isSupported(req) ? this.doIntercept(req, next) : next.handle(req));
     }
 
