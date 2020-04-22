@@ -117,15 +117,16 @@ import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/inter
 import {UniversalApiBridgeDbService} from '../services/third.party/universal/universal.api.bridge.service';
 import {LocalStorageSerializerService} from '../services/storage.services/serializers/local.storage.serializer.service';
 import {
-    LocalStorageConfiguration,
-    LocalStorageService,
-    SecuredLocalStorageEncryptionConfig,
+    NgxLocalStorageService,
+    NgxLocalStorageEncryptionService,
     TOKEN_SECURE_ENCRYPTION_CONFIG,
     TOKEN_STORAGE_CONFIG,
     TOKEN_STORAGE_SERIALIZER,
 } from '../services/storage.services/local.storage.services';
-import {AppConfig} from './app.config';
-import LocalStorageEncryptionService from '../services/storage.services/local.storage.services';
+import {
+    SecureStorageConfiguration,
+    StorageConfiguration,
+} from './storage.config';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -167,29 +168,15 @@ export const CommonProviders: StaticProvider[] = [
     },
 
     // local storage
-    {
-        provide: TOKEN_STORAGE_CONFIG, useClass: LocalStorageConfiguration,
-        deps: [
-            AppConfig.Storage.config.prefix,
-            AppConfig.Storage.config.allowNull,
-        ],
-    },
-    {
-        provide: TOKEN_SECURE_ENCRYPTION_CONFIG, useClass: SecuredLocalStorageEncryptionConfig,
-        deps: [
-            AppConfig.Storage.secureConfig.isCompression,
-            AppConfig.Storage.secureConfig.encodingType,
-            AppConfig.Storage.secureConfig.encryptionSecret,
-            AppConfig.Storage.secureConfig.encryptionNamespace,
-        ],
-    },
+    {provide: TOKEN_STORAGE_CONFIG, useValue: StorageConfiguration, deps: []},
+    {provide: TOKEN_SECURE_ENCRYPTION_CONFIG, useValue: SecureStorageConfiguration, deps: []},
     {provide: TOKEN_STORAGE_SERIALIZER, useClass: LocalStorageSerializerService, deps: []},
     {
-        provide: LocalStorageService, useClass: LocalStorageService,
+        provide: NgxLocalStorageService, useClass: NgxLocalStorageService,
         deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG],
     },
     {
-        provide: LocalStorageEncryptionService, useClass: LocalStorageEncryptionService,
+        provide: NgxLocalStorageEncryptionService, useClass: NgxLocalStorageEncryptionService,
         deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG, TOKEN_SECURE_ENCRYPTION_CONFIG],
     },
 ];
@@ -256,7 +243,7 @@ export const ThirdPartyApiProviders: StaticProvider[] = [
     },
     {
         provide: UniversalApiHttpService, useClass: UniversalApiHttpService,
-        deps: [HttpClient, NGXLogger, UniversalApiDbService, LocalStorageEncryptionService],
+        deps: [HttpClient, NGXLogger, UniversalApiDbService, NgxLocalStorageEncryptionService],
     },
     {
         provide: UniversalApiDatasource, useClass: UniversalApiDatasource,

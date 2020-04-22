@@ -1,10 +1,14 @@
-import {LocalStorageService as LSS, NgxLocalstorageConfiguration, StorageSerializer} from 'ngx-localstorage';
+import {
+    LocalStorageService,
+    NgxLocalstorageConfiguration,
+    StorageSerializer,
+} from 'ngx-localstorage';
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
-import {DefaultSerializer} from 'ngx-localstorage/lib/classes/default-serializer';
 import {isNullOrUndefined} from 'util';
 import * as SecureLS from 'secure-ls';
+import JsonUtils from '../../utils/json.utils';
 
 /**
  * Secure configuration
@@ -24,6 +28,17 @@ export class SecuredLocalStorageEncryptionConfig implements ISecureEncryptionCon
     }
 }
 
+export class DefaultStorageSerializer implements StorageSerializer {
+
+    serialize(value: any): string {
+        return JSON.stringify(value);
+    }
+
+    deserialize(storedValue: string): any {
+        return JsonUtils.safeParseJson(storedValue);
+    }
+}
+
 export class LocalStorageConfiguration implements NgxLocalstorageConfiguration {
     constructor(public prefix?: string | null, public allowNull?: boolean | false) {
     }
@@ -40,7 +55,7 @@ export const TOKEN_STORAGE_SERIALIZER: InjectionToken<StorageSerializer>
  * Local storage service
  */
 @Injectable()
-export class LocalStorageService extends LSS {
+export class NgxLocalStorageService extends LocalStorageService {
 
     protected get logger(): NGXLogger {
         return this._logger;
@@ -53,11 +68,11 @@ export class LocalStorageService extends LSS {
     constructor(@Inject(NGXLogger) private _logger: NGXLogger,
                 @Inject(TOKEN_STORAGE_SERIALIZER) private _serializer?: StorageSerializer | null,
                 @Inject(TOKEN_STORAGE_CONFIG) _storageConfig?: NgxLocalstorageConfiguration | null) {
-        super(_serializer || new DefaultSerializer(),
+        super(_serializer || new DefaultStorageSerializer(),
             _storageConfig || new LocalStorageConfiguration());
         _logger || throwError('Could not inject NGXLogger instance');
         _serializer || _logger.warn('Not inject serializer configuration! The default serializer will be used!');
-        _serializer = (_serializer || new DefaultSerializer());
+        _serializer = (_serializer || new DefaultStorageSerializer());
         _storageConfig || _logger.warn(
             'Not inject storage configuration! The default configuration will be used!');
     }
@@ -67,7 +82,7 @@ export class LocalStorageService extends LSS {
  * Local storage secure service
  */
 @Injectable()
-export default class LocalStorageEncryptionService {
+export class NgxLocalStorageEncryptionService {
 
     readonly _internalSecuredStorage: SecureLS;
 

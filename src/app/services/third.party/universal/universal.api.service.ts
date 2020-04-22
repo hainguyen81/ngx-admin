@@ -18,7 +18,7 @@ import {
     RC_AUTH_AUTHORIZATION_HEADER, RC_THIRD_PARTY_CUSTOM_TYPE,
 } from '../../../config/request.config';
 import {IdGenerators} from '../../../config/generator.config';
-import LocalStorageEncryptionService from '../../storage.services/local.storage.services';
+import {NgxLocalStorageEncryptionService} from '../../storage.services/local.storage.services';
 
 /**
  * { 'error': {
@@ -77,7 +77,7 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(UniversalApiDbService) dbService: UniversalApiDbService,
-                @Inject(LocalStorageEncryptionService) secureStorage: LocalStorageEncryptionService) {
+                @Inject(NgxLocalStorageEncryptionService) secureStorage: NgxLocalStorageEncryptionService) {
         super(http, logger, dbService, secureStorage, UNIVERSAL_API_CONFIG);
     }
 

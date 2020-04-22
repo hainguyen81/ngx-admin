@@ -1,3 +1,10 @@
+import {
+    ISecureEncryptionConfig,
+    LocalStorageConfiguration,
+    SecuredLocalStorageEncryptionConfig,
+} from '../services/storage.services/local.storage.services';
+import {NgxLocalstorageConfiguration} from 'ngx-localstorage';
+
 export const StorageConfig: {
     /**
      * Determines the key prefix. (Default: null)
@@ -11,6 +18,8 @@ export const StorageConfig: {
     prefix: 'hi_system_',
     allowNull: false,
 };
+export const StorageConfiguration: NgxLocalstorageConfiguration =
+    new LocalStorageConfiguration(StorageConfig.prefix, StorageConfig.allowNull);
 
 export const SecureStorageConfig: {
     isCompression?: boolean | false;
@@ -22,3 +31,9 @@ export const SecureStorageConfig: {
     encodingType: 'base64',
     encryptionNamespace: 'hi-system',
 };
+export const SecureStorageConfiguration: ISecureEncryptionConfig =
+    new SecuredLocalStorageEncryptionConfig(
+        SecureStorageConfig.isCompression,
+        SecureStorageConfig.encodingType,
+        SecureStorageConfig.encryptionSecret,
+        SecureStorageConfig.encryptionNamespace);

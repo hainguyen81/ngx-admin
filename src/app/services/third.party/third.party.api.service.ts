@@ -14,7 +14,7 @@ import ObjectUtils from '../../utils/object.utils';
 import {catchError, flatMap, map} from 'rxjs/operators';
 import {RC_THIRD_PARTY_CUSTOM_TYPE} from '../../config/request.config';
 import {Cacheable} from 'ngx-cacheable';
-import LocalStorageEncryptionService from '../storage.services/local.storage.services';
+import {NgxLocalStorageEncryptionService} from '../storage.services/local.storage.services';
 
 /**
  * The third-party API authorization configuration interface
@@ -173,7 +173,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         return this.apiConfig;
     }
 
-    protected get secureStorage(): LocalStorageEncryptionService {
+    protected get secureStorage(): NgxLocalStorageEncryptionService {
         return this._secureStorage;
     }
 
@@ -191,8 +191,8 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
     protected constructor(@Inject(HttpClient) http: HttpClient,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(ThirdPartyApiDbService) dbService: ThirdPartyApiDbService<T>,
-                          @Inject(LocalStorageEncryptionService)
-                          private _secureStorage: LocalStorageEncryptionService,
+                          @Inject(NgxLocalStorageEncryptionService)
+                          private _secureStorage: NgxLocalStorageEncryptionService,
                           @Inject(TOKEN_THIRD_PARTY_API_CONFIG)
                           private apiConfig: IThirdPartyApiConfig) {
         super(http, logger, dbService);
