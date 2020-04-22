@@ -19,4 +19,6 @@ export const SecureStorageConfig: {
     encryptionNamespace?: string | null;
 } =  {
     isCompression: true,
+    encodingType: 'base64',
+    encryptionNamespace: 'hi-system',
 };
