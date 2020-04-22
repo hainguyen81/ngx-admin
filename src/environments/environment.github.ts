@@ -10,8 +10,8 @@
 
 export const environment = {
     production: false,
-    databaseName: 'HiDemo',
+    databaseName: 'HiGithub',
     offline: true,
-    baseHref: '/',
-    useProxy: true,
+    baseHref: 'https://hainguyen81.github.io/ngx-admin/',
+    useProxy: false,
 };
