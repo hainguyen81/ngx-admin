@@ -115,6 +115,7 @@ import {UniversalApiDatasource} from '../services/third.party/universal/universa
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
 import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/interceptors/headers.interceptor';
 import {UniversalApiBridgeDbService} from '../services/third.party/universal/universal.api.bridge.service';
+import {LocalStorageService} from "ngx-localstorage";
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -154,6 +155,9 @@ export const CommonProviders: StaticProvider[] = [
         provide: ErrorHandler, useClass: GlobalErrorsHandler,
         deps: [TranslateService, ToastrService, NGXLogger, Injector],
     },
+
+    // local storage
+    {provide: LocalStorageService, useClass: LocalStorageService, deps: []},
 ];
 
 export const InterceptorProviders = [
