@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import {CoreModule} from './@core/core.module';
-import {BrowserModule, Meta, Title} from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
