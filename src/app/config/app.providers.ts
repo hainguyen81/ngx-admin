@@ -256,7 +256,7 @@ export const ThirdPartyApiProviders: StaticProvider[] = [
     },
     {
         provide: UniversalApiHttpService, useClass: UniversalApiHttpService,
-        deps: [HttpClient, NGXLogger, UniversalApiDbService],
+        deps: [HttpClient, NGXLogger, UniversalApiDbService, LocalStorageEncryptionService],
     },
     {
         provide: UniversalApiDatasource, useClass: UniversalApiDatasource,

@@ -14,6 +14,7 @@ import ObjectUtils from '../../utils/object.utils';
 import {catchError, flatMap, map} from 'rxjs/operators';
 import {RC_THIRD_PARTY_CUSTOM_TYPE} from '../../config/request.config';
 import {Cacheable} from 'ngx-cacheable';
+import LocalStorageEncryptionService from '../storage.services/local.storage.services';
 
 /**
  * The third-party API authorization configuration interface
@@ -172,13 +173,19 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         return this.apiConfig;
     }
 
+    protected get secureStorage(): LocalStorageEncryptionService {
+        return this._secureStorage;
+    }
+
     get latestToken(): any {
-        return this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN];
+        return this.secureStorage.get(ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN);
     }
 
     protected constructor(@Inject(HttpClient) http: HttpClient,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(ThirdPartyApiDbService) dbService: ThirdPartyApiDbService<T>,
+                          @Inject(LocalStorageEncryptionService)
+                          private _secureStorage: LocalStorageEncryptionService,
                           @Inject(TOKEN_THIRD_PARTY_API_CONFIG)
                           private apiConfig: IThirdPartyApiConfig) {
         super(http, logger, dbService);
@@ -333,7 +340,8 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
                     _this.config.token.tokenUrl,
                     _this.config.token.method || 'GET', clonedOptions);
                 const accessToken: any = _this.parseAccessToken(httpResp);
-                _this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN] = accessToken;
+                // save token to local storage for using in future
+                _this.secureStorage.set(ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN, accessToken);
                 if (!accessToken) {
                     throwError(new HttpErrorResponse({
                         url: url,
@@ -493,8 +501,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         } else {
             options.headers[RC_THIRD_PARTY_CUSTOM_TYPE] = this.config.code;
         }
-        return this.processAccessToken(
-            this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN], options);
+        return this.processAccessToken(this.latestToken, options);
     }
 
     @Cacheable()

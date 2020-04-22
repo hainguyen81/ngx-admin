@@ -5,7 +5,6 @@ import {ServiceResponse} from '../../response.service';
 import JsonUtils from '../../../utils/json.utils';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable} from 'rxjs';
 import {IApiThirdParty, UniversalApiThirdParty} from '../../../@core/data/system/api.third.party';
 import {
     IThirdPartyApiConfig,
@@ -14,12 +13,12 @@ import {
 } from '../third.party.api.service';
 import {IModel} from '../../../@core/data/base';
 import {THIRD_PARTY_API} from '../../../config/third.party.api';
-import {Cacheable} from 'ngx-cacheable';
 import {
     RC_AUTH_AUTHORIZATION_BEARER_TYPE,
     RC_AUTH_AUTHORIZATION_HEADER, RC_THIRD_PARTY_CUSTOM_TYPE,
 } from '../../../config/request.config';
 import {IdGenerators} from '../../../config/generator.config';
+import LocalStorageEncryptionService from '../../storage.services/local.storage.services';
 
 /**
  * { 'error': {
@@ -77,8 +76,9 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
 
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
-                @Inject(UniversalApiDbService) dbService: UniversalApiDbService) {
-        super(http, logger, dbService, UNIVERSAL_API_CONFIG);
+                @Inject(UniversalApiDbService) dbService: UniversalApiDbService,
+                @Inject(LocalStorageEncryptionService) secureStorage: LocalStorageEncryptionService) {
+        super(http, logger, dbService, secureStorage, UNIVERSAL_API_CONFIG);
     }
 
     parseResponse(serviceResponse?: ServiceResponse): UniversalApiThirdParty {
