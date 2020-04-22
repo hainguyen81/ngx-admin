@@ -86,7 +86,7 @@
         "ngx-echarts": "^4.2.2",
         "ngx-indexed-db": "^5.0.2",
         "ngx-lightbox": "^2.1.2",
-        "ngx-localstorage": "^2.4.1",
+        "ngx-localstorage": "^3.1.0",
         "ngx-logger": "^4.1.4",
         "ngx-material-popup": "^1.0.3",
         "ngx-modal-dialog": "^3.0.0",
