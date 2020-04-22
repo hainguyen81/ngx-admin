@@ -12,11 +12,6 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    convertOrganizationTypeToDisplay,
-    IOrganization,
-    ORGANIZTAION_TYPE,
-} from '../../../../../@core/data/system/organization';
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
@@ -40,6 +35,10 @@ import {
 import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
+import {Constants} from '../../../../../@core/data/constants/organization.constants';
+import ORGANIZATION_TYPE = Constants.OrganizationConstants.ORGANIZATION_TYPE;
+import convertOrganizationTypeToDisplay = Constants.OrganizationConstants.convertOrganizationTypeToDisplay;
+import {IOrganization} from '../../../../../@core/data/system/organization';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -73,28 +72,28 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'system.organization.form.type.placeholder',
                     options: [
                         {
-                            value: ORGANIZTAION_TYPE.HEAD_CENTER,
-                            label: convertOrganizationTypeToDisplay(ORGANIZTAION_TYPE.HEAD_CENTER),
+                            value: ORGANIZATION_TYPE.HEAD_CENTER,
+                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.HEAD_CENTER),
                         },
                         {
-                            value: ORGANIZTAION_TYPE.BRANCH,
-                            label: convertOrganizationTypeToDisplay(ORGANIZTAION_TYPE.BRANCH),
+                            value: ORGANIZATION_TYPE.BRANCH,
+                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.BRANCH),
                         },
                         {
-                            value: ORGANIZTAION_TYPE.DIVISION,
-                            label: convertOrganizationTypeToDisplay(ORGANIZTAION_TYPE.DIVISION),
+                            value: ORGANIZATION_TYPE.DIVISION,
+                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.DIVISION),
                         },
                         {
-                            value: ORGANIZTAION_TYPE.UNIT,
-                            label: convertOrganizationTypeToDisplay(ORGANIZTAION_TYPE.UNIT),
+                            value: ORGANIZATION_TYPE.UNIT,
+                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.UNIT),
                         },
                         {
-                            value: ORGANIZTAION_TYPE.DEPARTMENT,
-                            label: convertOrganizationTypeToDisplay(ORGANIZTAION_TYPE.DEPARTMENT),
+                            value: ORGANIZATION_TYPE.DEPARTMENT,
+                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.DEPARTMENT),
                         },
                         {
-                            value: ORGANIZTAION_TYPE.TEAM_GROUP,
-                            label: convertOrganizationTypeToDisplay(ORGANIZTAION_TYPE.TEAM_GROUP),
+                            value: ORGANIZATION_TYPE.TEAM_GROUP,
+                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.TEAM_GROUP),
                         },
                     ],
                     required: true,

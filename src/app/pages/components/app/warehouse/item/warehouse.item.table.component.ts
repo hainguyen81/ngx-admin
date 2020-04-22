@@ -17,12 +17,17 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {convertItemStatusToDisplay, ITEM_STATUS} from '../../../../../@core/data/warehouse/warehouse.item';
-import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {
+    WarehouseItemDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {API} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/warehouse.item.constants';
+import ITEM_STATUS = Constants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
+import convertItemStatusToDisplay =
+    Constants.WarehouseConstants.WarehouseItemConstants.convertItemStatusToDisplay;
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {

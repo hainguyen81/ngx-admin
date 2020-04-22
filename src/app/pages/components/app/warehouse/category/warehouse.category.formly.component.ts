@@ -16,11 +16,6 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {
-    CATEGORY_TYPE,
-    convertWarehouseCategoryTypeToDisplay,
-    IWarehouseCategory,
-} from '../../../../../@core/data/warehouse/warehouse.category';
-import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {
@@ -30,6 +25,11 @@ import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.ut
 import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {API} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/warehouse.category.constants';
+import CATEGORY_TYPE = Constants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
+import convertWarehouseCategoryTypeToDisplay =
+    Constants.WarehouseConstants.WarehouseCategoryConstants.convertWarehouseCategoryTypeToDisplay;
+import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();

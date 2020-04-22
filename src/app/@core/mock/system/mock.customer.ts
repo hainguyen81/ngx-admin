@@ -1,6 +1,10 @@
-import {CUSTOMER_LEVEL, CUSTOMER_STATUS, CUSTOMER_TYPE, ICustomer} from '../../data/system/customer';
 import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
+import {Constants} from '../../data/constants/customer.constants';
+import CUSTOMER_STATUS = Constants.CustomerConstants.CUSTOMER_STATUS;
+import {ICustomer} from '../../data/system/customer';
+import CUSTOMER_TYPE = Constants.CustomerConstants.CUSTOMER_TYPE;
+import CUSTOMER_LEVEL = Constants.CustomerConstants.CUSTOMER_LEVEL;
 
 export const MAXIMUM_MOCK_CUSTOMERS: number = 100;
 

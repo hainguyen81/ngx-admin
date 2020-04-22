@@ -1,22 +1,7 @@
 import BaseModel, {IModel} from '../base';
 import {IWarehouseCategory} from './warehouse.category';
-
-export const enum ITEM_STATUS {
-    NOT_ACTIVATED,
-    ACTIVATED,
-    LOCKED,
-}
-
-export function convertItemStatusToDisplay(value: ITEM_STATUS): string {
-    switch (value) {
-        case ITEM_STATUS.ACTIVATED:
-            return 'common.enum.warehouseItemStatus.activated';
-        case ITEM_STATUS.LOCKED:
-            return 'common.enum.warehouseItemStatus.locked';
-        default:
-            return 'common.enum.warehouseItemStatus.notActivated';
-    }
-}
+import {Constants} from '../constants/warehouse.item.constants';
+import ITEM_STATUS = Constants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
 
 export interface IWarehouseItem extends IModel {
     // Mã hàng hóa

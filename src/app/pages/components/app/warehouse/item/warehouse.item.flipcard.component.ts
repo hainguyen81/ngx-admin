@@ -20,7 +20,6 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component';
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
-import WarehouseItem, {ITEM_STATUS, IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {
@@ -32,6 +31,9 @@ import {
 import {ACTION_BACK} from './warehouse.item.toolbar.component';
 import {ConfirmPopupConfig} from 'ngx-material-popup/lib/configs/confirm-popup.config';
 import {API} from '../../../../../config/api.config';
+import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import {Constants} from '../../../../../@core/data/constants/warehouse.item.constants';
+import ITEM_STATUS = Constants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
 
 @Component({
     moduleId: API.warehouseItem.code,

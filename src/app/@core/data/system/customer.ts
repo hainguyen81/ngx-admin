@@ -3,63 +3,10 @@ import {IDistrict} from './district';
 import {ICity} from './city';
 import {IProvince} from './province';
 import {ICountry} from './country';
-
-export const enum CUSTOMER_STATUS {
-    NOT_ACTIVATED,
-    ACTIVATED,
-    LOCKED,
-}
-
-export const enum CUSTOMER_TYPE {
-    CUSTOMER,
-    VENDOR,
-    ALL,
-}
-
-export const enum CUSTOMER_LEVEL {
-    NEW,
-    BRONZE,
-    SILVER,
-    GOLD,
-    PLATINUM,
-}
-
-export function convertCustomerStatusToDisplay(value: CUSTOMER_STATUS): string {
-    switch (value) {
-        case CUSTOMER_STATUS.ACTIVATED:
-            return 'common.enum.customerStatus.activated';
-        case CUSTOMER_STATUS.LOCKED:
-            return 'common.enum.customerStatus.locked';
-        default:
-            return 'common.enum.customerStatus.notActivated';
-    }
-}
-
-export function convertCustomerTypeToDisplay(value: CUSTOMER_TYPE): string {
-    switch (value) {
-        case CUSTOMER_TYPE.CUSTOMER:
-            return 'common.enum.customerType.customer';
-        case CUSTOMER_TYPE.VENDOR:
-            return 'common.enum.customerType.vendor';
-        default:
-            return 'common.enum.customerType.all';
-    }
-}
-
-export function convertCustomerLevelToDisplay(value: CUSTOMER_LEVEL): string {
-    switch (value) {
-        case CUSTOMER_LEVEL.BRONZE:
-            return 'common.enum.customerLevel.bronze';
-        case CUSTOMER_LEVEL.SILVER:
-            return 'common.enum.customerLevel.silver';
-        case CUSTOMER_LEVEL.GOLD:
-            return 'common.enum.customerLevel.gold';
-        case CUSTOMER_LEVEL.PLATINUM:
-            return 'common.enum.customerLevel.platinum';
-        default:
-            return 'common.enum.customerLevel.new';
-    }
-}
+import {Constants} from '../constants/customer.constants';
+import CUSTOMER_TYPE = Constants.CustomerConstants.CUSTOMER_TYPE;
+import CUSTOMER_STATUS = Constants.CustomerConstants.CUSTOMER_STATUS;
+import CUSTOMER_LEVEL = Constants.CustomerConstants.CUSTOMER_LEVEL;
 
 export interface ICustomer extends IModel {
     // Mã nhà cung cấp/khách hàng

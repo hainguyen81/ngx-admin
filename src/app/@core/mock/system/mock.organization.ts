@@ -1,7 +1,9 @@
 import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
-import {IOrganization, ORGANIZTAION_TYPE} from '../../data/system/organization';
 import {MockUserAdmin} from './mock.user';
+import {IOrganization} from '../../data/system/organization';
+import {Constants} from '../../data/constants/organization.constants';
+import ORGANIZATION_TYPE = Constants.OrganizationConstants.ORGANIZATION_TYPE;
 
 export const MAXIMUM_MOCK_ORGANIZATION_HEAD: number = 10;
 export const MAXIMUM_MOCK_ORGANIZATION_BRANCH: number = 10;
@@ -11,21 +13,21 @@ export const MockOrganizationHeadTemplate: IOrganization = {
     id: 'id',
     code: 'Code',
     name: 'Name',
-    type: ORGANIZTAION_TYPE.HEAD_CENTER,
+    type: ORGANIZATION_TYPE.HEAD_CENTER,
 };
 
 export const MockOrganizationBranchTemplate: IOrganization = {
     id: 'id',
     code: 'Code',
     name: 'Name',
-    type: ORGANIZTAION_TYPE.BRANCH,
+    type: ORGANIZATION_TYPE.BRANCH,
 };
 
 export const MockOrganizationDepartmentTemplate: IOrganization = {
     id: 'id',
     code: 'Code',
     name: 'Name',
-    type: ORGANIZTAION_TYPE.DEPARTMENT,
+    type: ORGANIZATION_TYPE.DEPARTMENT,
 };
 
 export function organizationGenerate(): IOrganization[] {

@@ -19,10 +19,13 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Lightbox} from 'ngx-lightbox';
-import {WarehouseOrderDatasource} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
-import {WAREHOUSE_ORDER_TYPE} from '../../../../../@core/data/warehouse/warehouse.order';
+import {
+    WarehouseOrderDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {API} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/warehouse.order.constants';
+import WAREHOUSE_ORDER_TYPE = Constants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE;
 
 /* warehouse item orders table settings */
 export const WarehouseItemOrdersTableSettings = {

@@ -14,10 +14,13 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {WarehouseOrderDatasource} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
-import {WAREHOUSE_ORDER_TYPE} from '../../../../../@core/data/warehouse/warehouse.order';
+import {
+    WarehouseOrderDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {WarehouseItemOrdersSmartTableComponent} from './warehouse.item.orders.table.component';
 import {API} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/warehouse.order.constants';
+import WAREHOUSE_ORDER_TYPE = Constants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE;
 
 @Component({
     moduleId: API.warehouseItem.code,

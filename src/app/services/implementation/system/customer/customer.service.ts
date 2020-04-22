@@ -1,6 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {CUSTOMER_STATUS, ICustomer} from '../../../../@core/data/system/customer';
 import {AbstractHttpService} from '../../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../../response.service';
@@ -9,7 +8,10 @@ import {AbstractBaseDbService} from '../../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
+import {ICustomer} from '../../../../@core/data/system/customer';
+import {Constants} from '../../../../@core/data/constants/customer.constants';
+import CUSTOMER_STATUS = Constants.CustomerConstants.CUSTOMER_STATUS;
 
 @Injectable()
 export class CustomerDbService extends AbstractBaseDbService<ICustomer> {

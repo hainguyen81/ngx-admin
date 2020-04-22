@@ -1,8 +1,10 @@
-import {IUser, USER_STATUS} from '../../data/system/user';
 import {MockRolesAdmin} from './mock.role';
 import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import EncryptionUtils from '../../../utils/encryption.utils';
+import {IUser} from '../../data/system/user';
+import {Constants} from '../../data/constants/user.constants';
+import USER_STATUS = Constants.UserConstants.USER_STATUS;
 
 export const MAXIMUM_MOCK_USERS: number = 100;
 

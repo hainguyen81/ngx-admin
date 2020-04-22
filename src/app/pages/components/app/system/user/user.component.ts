@@ -7,7 +7,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {convertUserStatusToDisplay, USER_STATUS} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -22,6 +21,9 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {API} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/user.constants';
+import USER_STATUS = Constants.UserConstants.USER_STATUS;
+import convertUserStatusToDisplay = Constants.UserConstants.convertUserStatusToDisplay;
 
 /* users table settings */
 export const UserTableSettings = {

@@ -1,22 +1,7 @@
 import {IRolesGroup} from './roles.group';
 import BaseModel, {IModel} from '../base';
-
-export const enum USER_STATUS {
-    NOT_ACTIVATED,
-    ACTIVATED,
-    LOCKED,
-}
-
-export function convertUserStatusToDisplay(value: USER_STATUS): string {
-    switch (value) {
-        case USER_STATUS.ACTIVATED:
-            return 'common.enum.userStatus.activated';
-        case USER_STATUS.LOCKED:
-            return 'common.enum.userStatus.locked';
-        default:
-            return 'common.enum.userStatus.notActivated';
-    }
-}
+import {Constants} from '../constants/user.constants';
+import USER_STATUS = Constants.UserConstants.USER_STATUS;
 
 export interface IUser extends IModel {
     access_token: string;

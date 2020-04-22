@@ -1,6 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {IUser, USER_STATUS} from '../../../../@core/data/system/user';
 import {AbstractHttpService} from '../../../http.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ServiceResponse} from '../../../response.service';
@@ -10,6 +9,9 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
+import {IUser} from '../../../../@core/data/system/user';
+import {Constants} from '../../../../@core/data/constants/user.constants';
+import USER_STATUS = Constants.UserConstants.USER_STATUS;
 
 @Injectable()
 export class UserDbService extends AbstractBaseDbService<IUser> {
