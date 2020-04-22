@@ -3,7 +3,7 @@ import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {AfterViewInit, Component, Inject, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import ObjectUtils from '../../../../utils/object.utils';
-import {APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from '../components/app.treeview.i18n';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from '../components/app.treeview.i18n';
 import {IModel} from '../../../../@core/data/base';
 import {NGXLogger} from 'ngx-logger';
 
@@ -16,12 +16,12 @@ import {NGXLogger} from 'ngx-logger';
     styleUrls: ['../../formly/formly.treeview.dropdown.field.component.scss'],
     providers: [
         {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: AppTreeviewI18n,
-            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+            deps: [TranslateService, TOKEN_APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

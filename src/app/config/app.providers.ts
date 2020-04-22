@@ -115,7 +115,17 @@ import {UniversalApiDatasource} from '../services/third.party/universal/universa
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
 import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/interceptors/headers.interceptor';
 import {UniversalApiBridgeDbService} from '../services/third.party/universal/universal.api.bridge.service';
-import {LocalStorageService} from "ngx-localstorage";
+import {LocalStorageSerializerService} from '../services/storage.services/serializers/local.storage.serializer.service';
+import {
+    LocalStorageConfiguration,
+    LocalStorageService,
+    SecuredLocalStorageEncryptionConfig,
+    TOKEN_SECURE_ENCRYPTION_CONFIG,
+    TOKEN_STORAGE_CONFIG,
+    TOKEN_STORAGE_SERIALIZER,
+} from '../services/storage.services/local.storage.services';
+import {AppConfig} from './app.config';
+import LocalStorageEncryptionService from '../services/storage.services/local.storage.services';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -157,7 +167,31 @@ export const CommonProviders: StaticProvider[] = [
     },
 
     // local storage
-    {provide: LocalStorageService, useClass: LocalStorageService, deps: []},
+    {
+        provide: TOKEN_STORAGE_CONFIG, useClass: LocalStorageConfiguration,
+        deps: [
+            AppConfig.Storage.config.prefix,
+            AppConfig.Storage.config.allowNull,
+        ],
+    },
+    {
+        provide: TOKEN_SECURE_ENCRYPTION_CONFIG, useClass: SecuredLocalStorageEncryptionConfig,
+        deps: [
+            AppConfig.Storage.secureConfig.isCompression,
+            AppConfig.Storage.secureConfig.encodingType,
+            AppConfig.Storage.secureConfig.encryptionSecret,
+            AppConfig.Storage.secureConfig.encryptionNamespace,
+        ],
+    },
+    {provide: TOKEN_STORAGE_SERIALIZER, useClass: LocalStorageSerializerService, deps: []},
+    {
+        provide: LocalStorageService, useClass: LocalStorageService,
+        deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG],
+    },
+    {
+        provide: LocalStorageEncryptionService, useClass: LocalStorageEncryptionService,
+        deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG, TOKEN_SECURE_ENCRYPTION_CONFIG],
+    },
 ];
 
 export const InterceptorProviders = [

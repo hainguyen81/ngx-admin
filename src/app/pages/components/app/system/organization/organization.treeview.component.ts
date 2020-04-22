@@ -21,7 +21,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
-import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field.component';
 import {API} from '../../../../../config/api.config';
 
@@ -46,12 +46,12 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
     styleUrls: ['../../../treeview/treeview.component.scss'],
     providers: [
         {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
-            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+            deps: [TranslateService, TOKEN_APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

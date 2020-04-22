@@ -72,9 +72,8 @@ export default class ThirdPartyApiConfig implements IThirdPartyApiConfig {
     }
 }
 
-export const THIRDPARTY_AUTHORIZATION_API_CONFIG: InjectionToken<IThirdPartyApiConfig>
-    = new InjectionToken<IThirdPartyApiConfig>(
-    'Third-party API authorization token configuration');
+export const TOKEN_THIRD_PARTY_API_CONFIG: InjectionToken<IThirdPartyApiConfig>
+    = new InjectionToken<IThirdPartyApiConfig>('Third-party API authorization token configuration');
 
 /**
  * Expired exception of third-party API
@@ -180,7 +179,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
     protected constructor(@Inject(HttpClient) http: HttpClient,
                           @Inject(NGXLogger) logger: NGXLogger,
                           @Inject(ThirdPartyApiDbService) dbService: ThirdPartyApiDbService<T>,
-                          @Inject(THIRDPARTY_AUTHORIZATION_API_CONFIG)
+                          @Inject(TOKEN_THIRD_PARTY_API_CONFIG)
                           private apiConfig: IThirdPartyApiConfig) {
         super(http, logger, dbService);
         apiConfig || throwError('Could not inject third-party API configuration');

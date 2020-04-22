@@ -26,7 +26,7 @@ import {WarehouseDatasource} from '../../../../../services/implementation/wareho
 import {ConfirmPopup} from 'ngx-material-popup';
 import {COMMON} from '../../../../../config/common.config';
 import {TranslateService} from '@ngx-translate/core';
-import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {API} from '../../../../../config/api.config';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
@@ -47,7 +47,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
 export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                @Inject(APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
+                @Inject(TOKEN_APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
         super();
     }
 
@@ -103,12 +103,12 @@ export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
     ],
     providers: [
         {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: WarehouseStorageTreeviewI18n,
-            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+            deps: [TranslateService, TOKEN_APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

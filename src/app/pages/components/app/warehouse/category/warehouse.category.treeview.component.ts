@@ -28,7 +28,7 @@ import WarehouseCategory, {
 } from '../../../../../@core/data/warehouse/warehouse.category';
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
-import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field.component';
 import {API} from '../../../../../config/api.config';
 
@@ -53,12 +53,12 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
     styleUrls: ['../../../treeview/treeview.component.scss'],
     providers: [
         {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
-            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+            deps: [TranslateService, TOKEN_APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

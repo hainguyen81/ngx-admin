@@ -2,7 +2,7 @@ import {TreeviewI18n, TreeviewI18nDefault, TreeviewSelection} from 'ngx-treeview
 import {IOrganization} from '../../../../../@core/data/system/organization';
 import {Component, Inject, Injectable, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {
     AppFormlyTreeviewDropdownFieldComponent,
 } from '../../components/app.formly.treeview.dropdown.field.component';
@@ -16,7 +16,7 @@ import {NGXLogger} from 'ngx-logger';
 export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                @Inject(APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
+                @Inject(TOKEN_APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
         super();
     }
 
@@ -69,12 +69,12 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.component.scss'],
     providers: [
         {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: OrganizationTreeviewI18n,
-            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+            deps: [TranslateService, TOKEN_APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

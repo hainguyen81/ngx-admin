@@ -23,7 +23,7 @@ export interface IThirdPartyApiDataParserDefinition<T extends IApiThirdParty> {
     parsers: { provide: Type<any>, parser: IThirdPartyApiDataParser<T, any> }[];
 }
 
-export const THIRDPARTY_API_DATA_PARSER_DEFINITION: InjectionToken<IThirdPartyApiDataParserDefinition<any>>
+export const TOKEN_THIRD_PARTY_API_DATA_PARSER_DEFINITION: InjectionToken<IThirdPartyApiDataParserDefinition<any>>
     = new InjectionToken<IThirdPartyApiDataParserDefinition<any>>('Third-party API data parsers definition');
 
 @Injectable()
@@ -45,7 +45,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
     protected constructor(@Inject(ThirdPartyApiHttpService) httpService: ThirdPartyApiHttpService<T>,
                           @Inject(ThirdPartyApiDbService) dbService: ThirdPartyApiDbService<T>,
                           @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(THIRDPARTY_API_DATA_PARSER_DEFINITION)
+                          @Inject(TOKEN_THIRD_PARTY_API_DATA_PARSER_DEFINITION)
                           private _dataParser: IThirdPartyApiDataParserDefinition<T>) {
         super(httpService, dbService, logger);
     }

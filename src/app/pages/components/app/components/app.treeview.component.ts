@@ -12,7 +12,7 @@ import {
     Output, Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from './app.treeview.i18n';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from './app.treeview.i18n';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {BaseNgxTreeviewComponent} from '../../treeview/base.treeview.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -31,12 +31,12 @@ import HierarchyUtils from '../../../../utils/hierarchy.utils';
     styleUrls: ['../../treeview/treeview.component.scss'],
     providers: [
         {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: AppTreeviewI18n,
-            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+            deps: [TranslateService, TOKEN_APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

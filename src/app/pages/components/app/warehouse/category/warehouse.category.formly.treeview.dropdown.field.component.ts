@@ -5,7 +5,7 @@ import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.
 import {
     AppFormlyTreeviewDropdownFieldComponent,
 } from '../../components/app.formly.treeview.dropdown.field.component';
-import {APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {API} from '../../../../../config/api.config';
 import {NGXLogger} from 'ngx-logger';
 
@@ -16,7 +16,7 @@ import {NGXLogger} from 'ngx-logger';
 export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                @Inject(APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
+                @Inject(TOKEN_APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {
         super();
     }
 
@@ -69,12 +69,12 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.component.scss'],
     providers: [
         {
-            provide: APP_TREEVIEW_SHOW_ALL, useValue: false,
+            provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
             multi: true,
         },
         {
             provide: TreeviewI18n, useClass: WarehouseCategoryTreeviewI18n,
-            deps: [TranslateService, APP_TREEVIEW_SHOW_ALL],
+            deps: [TranslateService, TOKEN_APP_TREEVIEW_SHOW_ALL],
         },
     ],
 })

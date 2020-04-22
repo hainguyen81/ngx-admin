@@ -7,6 +7,8 @@ import {COMMON} from './common.config';
 import {environment} from '../../environments/environment';
 import {i18n} from './i18n.config';
 import {IdGenerators} from './generator.config';
+import {CryptoService} from './crypto.config';
+import {SecureStorageConfig, StorageConfig} from './storage.config';
 
 export const AppConfig = {
     PageConfig: {
@@ -21,4 +23,9 @@ export const AppConfig = {
     Env: environment,
     i18n: i18n,
     IdGenerators: IdGenerators,
+    Crypto: CryptoService,
+    Storage: {
+        config: StorageConfig,
+        secureConfig: SecureStorageConfig,
+    },
 };
