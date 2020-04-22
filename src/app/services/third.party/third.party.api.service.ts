@@ -177,8 +177,15 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         return this._secureStorage;
     }
 
+    private generateTokenKey(): string {
+        const tokenKey: string = [
+            ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN,
+            this.config.code,
+        ].join('_');
+        return tokenKey;
+    }
     get latestToken(): any {
-        return this.secureStorage.get(ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN);
+        return this.secureStorage.get(this.generateTokenKey());
     }
 
     protected constructor(@Inject(HttpClient) http: HttpClient,
@@ -341,7 +348,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
                     _this.config.token.method || 'GET', clonedOptions);
                 const accessToken: any = _this.parseAccessToken(httpResp);
                 // save token to local storage for using in future
-                _this.secureStorage.set(ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN, accessToken);
+                _this.secureStorage.set(this.generateTokenKey(), accessToken);
                 if (!accessToken) {
                     throwError(new HttpErrorResponse({
                         url: url,
