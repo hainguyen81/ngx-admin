@@ -42,13 +42,16 @@ export interface IUniversalApiExpiredResponse extends IModel {
 export const UNIVERSAL_API_CONFIG: IThirdPartyApiConfig = {
     code: THIRD_PARTY_API.universal.code,
     baseUrl: THIRD_PARTY_API.universal.baseUrl,
-    tokenUrl: THIRD_PARTY_API.universal.tokenUrl,
-    method: 'GET',
+    token: {
+        tokenUrl: THIRD_PARTY_API.universal.api.token.tokenUrl.call(this),
+        method: 'GET',
+        expiredIn: THIRD_PARTY_API.universal.api.token.expiredIn,
+    },
     tokenParam: {
         type: 'header',
         values: {
-            'api-token': THIRD_PARTY_API.universal.vapid_public_key,
-            'user-email': THIRD_PARTY_API.universal.email,
+            'api-token': THIRD_PARTY_API.universal.api.token.vapid_public_key,
+            'user-email': THIRD_PARTY_API.universal.api.token.email,
         },
     },
 };
@@ -85,7 +88,7 @@ export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalA
         }
         const data: UniversalApiThirdParty = new UniversalApiThirdParty();
         data.id = (data.id || IdGenerators.oid.generate());
-        data.code = [this.config.code, this.config.method || 'UNKNOWN', serviceResponse.getResponse().url].join('|');
+        data.code = [this.config.code, this.config.token.method || 'UNKNOWN', serviceResponse.getResponse().url].join('|');
         (<IApiThirdParty>data).response = serviceResponse.getResponse().body;
         return data;
     }

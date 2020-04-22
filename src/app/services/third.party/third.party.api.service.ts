@@ -8,7 +8,7 @@ import {AbstractBaseDbService} from '../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/object.utils';
 import {catchError, flatMap, map} from 'rxjs/operators';
@@ -30,8 +30,15 @@ export interface IThirdPartyApiConfig {
     /**
      * Request access token in expired/un-authorized case
      */
-    tokenUrl: string;
-    method?: 'POST' | 'GET' | 'PUT' | 'PATCH';
+    token: {
+        tokenUrl: string,
+        method?: 'POST' | 'GET' | 'PUT' | 'PATCH',
+        /**
+         * The time (in milliseconds) that token/data has been expired.
+         * 0 for un-expired
+         */
+        expiredIn?: number | 0,
+    };
     /**
      * Parameter for sending to require access/authorization token
      */
@@ -42,11 +49,6 @@ export interface IThirdPartyApiConfig {
         observe?: 'body' | 'events' | 'response' | any,
         responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any,
     };
-    /**
-     * The time (in milliseconds) that token/data has been expired.
-     * 0 for un-expired
-     */
-    expiredIn?: number;
 }
 
 /**
@@ -54,7 +56,11 @@ export interface IThirdPartyApiConfig {
  */
 export default class ThirdPartyApiConfig implements IThirdPartyApiConfig {
     constructor(public code: string,
-                public tokenUrl: string,
+                public token: {
+                    tokenUrl: string,
+                    method?: 'POST' | 'GET' | 'PUT' | 'PATCH',
+                    expiredIn?: number | 0,
+                },
                 public tokenParam: {
                     type: 'header' | 'body' | 'param' | 'custom',
                     values: HttpHeaders | { [header: string]: string | string[]; }
@@ -178,7 +184,8 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
                           private apiConfig: IThirdPartyApiConfig) {
         super(http, logger, dbService);
         apiConfig || throwError('Could not inject third-party API configuration');
-        (apiConfig.code || '').length || throwError('Third-party API configuration code must be not undefined');
+        ((apiConfig.code || '').length && apiConfig.token)
+        || throwError('Third-party API configuration code must be not undefined');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): T {
@@ -188,9 +195,9 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         }
         const data: T = JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as T;
         data.code = this.config.code
-            .concat('|', this.apiConfig.method || 'UNKNOWN', '|', serviceResponse.getResponse().url);
-        if (Math.max(this.config.expiredIn, 0) > 0) {
-            data.expiredAt = (new Date()).getTime() + this.config.expiredIn;
+            .concat('|', this.apiConfig.token.method || 'UNKNOWN', '|', serviceResponse.getResponse().url);
+        if (Math.max(this.config.token.expiredIn, 0) > 0) {
+            data.expiredAt = (new Date()).getTime() + this.config.token.expiredIn;
         }
         return data;
     }
@@ -255,8 +262,8 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         messages?: any;
     }): Observable<T | T[]> {
         /** check whether is un-authorized/expired */
-        if (url !== this.config.tokenUrl && this.isUnauthorizedOrExpired(res)) {
-            !(this.config.tokenUrl || '').length
+        if (url !== this.config.token.tokenUrl && this.isUnauthorizedOrExpired(res)) {
+            !(this.config.token.tokenUrl || '').length
             || throwError('Please provide third-party authorization configuration to require access token!');
             return this.handleUnauthorizedExpired(url, method, options);
         }
@@ -314,14 +321,18 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
 
         // create authorization request to require token or authorize
         const _this: ThirdPartyApiHttpService<T> = this;
-        return _this.getHttp().request(_this.config.method, _this.config.tokenUrl, clonedOptions).pipe(
+        return _this.getHttp().request(
+            _this.config.token.method || 'GET',
+            _this.config.token.tokenUrl, clonedOptions).pipe(
             map(accessTokenResp => {
                 _this.getLogger().debug('Access Token Response', accessTokenResp);
                 return accessTokenResp;
             }),
             map(accessTokenResp => {
                 const httpResp: HttpResponse<any> = <HttpResponse<any>>(<any>accessTokenResp);
-                _this.ensureVaidResponse(httpResp, _this.config.tokenUrl, _this.config.method, clonedOptions);
+                _this.ensureVaidResponse(httpResp,
+                    _this.config.token.tokenUrl,
+                    _this.config.token.method || 'GET', clonedOptions);
                 const accessToken: any = _this.parseAccessToken(httpResp);
                 _this.config[ThirdPartyApiHttpService.THIRD_PARTY_LATEST_ACCESS_TOKEN] = accessToken;
                 if (!accessToken) {
