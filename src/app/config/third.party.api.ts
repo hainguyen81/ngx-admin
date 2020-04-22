@@ -36,7 +36,7 @@ export const THIRD_PARTY_API = {
             city: {
                 url: () => {
                     const _this: any = THIRD_PARTY_API.universal;
-                    return (environment.useProxy ? '' : this.baseUrl).concat('api/cities');
+                    return (environment.useProxy ? '' : _this.baseUrl).concat('api/cities');
                 },
                 method: 'GET',
             },

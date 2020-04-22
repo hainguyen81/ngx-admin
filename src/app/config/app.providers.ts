@@ -170,7 +170,7 @@ export const CommonProviders: StaticProvider[] = [
     // local storage
     {provide: TOKEN_STORAGE_CONFIG, useValue: StorageConfiguration, deps: []},
     {provide: TOKEN_SECURE_ENCRYPTION_CONFIG, useValue: SecureStorageConfiguration, deps: []},
-    {provide: TOKEN_STORAGE_SERIALIZER, useClass: LocalStorageSerializerService, deps: []},
+    {provide: TOKEN_STORAGE_SERIALIZER, useClass: LocalStorageSerializerService, deps: [NGXLogger]},
     {
         provide: NgxLocalStorageService, useClass: NgxLocalStorageService,
         deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG],
