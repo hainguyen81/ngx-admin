@@ -59,7 +59,7 @@ export const RightFormAreaConfig: ISplitAreaConfig = {
 export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     TR extends AppTreeviewComponent<T, D>,
-    F extends AppFormlyComponent<T, D>>
+    F extends AppFormlyComponent<T, D, any>>
     extends BaseSplitPaneComponent<D>
     implements AfterViewInit {
 

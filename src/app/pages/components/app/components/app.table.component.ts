@@ -16,7 +16,6 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {TranslateService} from '@ngx-translate/core';
-import {IModel} from '../../../../@core/data/base';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 
 export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
@@ -26,8 +25,7 @@ export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     templateUrl: '../../smart-table/smart-table.component.html',
     styleUrls: ['../../smart-table/smart-table.component.scss'],
 })
-export abstract class AppSmartTableComponent<T extends IModel, D extends DataSource>
-    extends BaseSmartTableComponent<D> {
+export abstract class AppSmartTableComponent<D extends DataSource> extends BaseSmartTableComponent<D> {
 
     // -------------------------------------------------
     // CONSTRUCTION
