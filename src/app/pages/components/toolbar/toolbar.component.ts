@@ -28,6 +28,32 @@ import {Lightbox} from 'ngx-lightbox';
 export class NgxToolbarComponent extends AbstractToolbarComponent<DataSource> {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _showActions: boolean = true;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Set a boolean value indicating the actions should be shown
+     * @param show true for showing; else false
+     */
+    set showActions(_showActions: boolean) {
+        this._showActions = _showActions;
+    }
+
+    /**
+     * Get a boolean value indicating the actions should be shown
+     * @return true for showing; else false
+     */
+    get showActions(): boolean {
+        return this._showActions;
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 

@@ -56,7 +56,7 @@ export abstract class AppFlipcardComponent<
      * @return true (default) for showing; else false
      */
     protected isShowHeader(): boolean {
-        return (this.toolbarComponentType && this.isFlipped());
+        return true;
     }
 
     /**

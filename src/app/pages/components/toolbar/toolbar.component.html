@@ -13,7 +13,7 @@
             class="separator"></span>
 
         <!-- disabled && not full width -->
-        <div class="btn-group btn-group-justified ngx-toolbar-actions-group">
+        <div class="btn-group btn-group-justified ngx-toolbar-actions-group" *ngIf="showActions">
             <div class="btn-group ngx-toolbar-actions" *ngFor="let action of getActions()">
                 <!-- disabled && not full width -->
                 <button

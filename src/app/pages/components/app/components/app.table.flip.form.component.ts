@@ -85,12 +85,24 @@ export abstract class AppTableFlipFormComponent<
         super.ngAfterViewInit();
 
         // listener
+        if (super.getToolbarComponent()) {
+            super.getToolbarComponent().showActions = false;
+        }
         if (super.getFrontComponent()) {
             (<AppSmartTableComponent<D>>super.getFrontComponent())
-                .setNewItemListener($event => { this.onNewData($event); this.setFlipped(true); });
+                .setNewItemListener($event => {
+                    this.onNewData($event);
+                    super.getToolbarComponent().showActions = true;
+                    this.setFlipped(true);
+                });
             (<AppSmartTableComponent<D>>super.getFrontComponent())
-                .setEditItemListener($event => { this.onEditData($event); this.setFlipped(true); });
-            (<AppSmartTableComponent<D>>super.getFrontComponent()).setDeleteItemListener(this.onDeleteData);
+                .setEditItemListener($event => {
+                    this.onEditData($event);
+                    super.getToolbarComponent().showActions = true;
+                    this.setFlipped(true);
+                });
+            (<AppSmartTableComponent<D>>super.getFrontComponent())
+                .setDeleteItemListener(this.onDeleteData);
         }
     }
 
