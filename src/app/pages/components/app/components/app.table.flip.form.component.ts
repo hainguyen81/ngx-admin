@@ -19,6 +19,7 @@ import {AppSmartTableComponent} from './app.table.component';
 import {AppFormlyComponent} from './app.formly.component';
 import {AppFlipcardComponent} from './app.flipcard.component';
 import {IEvent} from '../../abstract.component';
+import {AppToolbarComponent} from './app.toolbar.component';
 
 @Component({
     selector: 'ngx-flip-card-app-table-form',
@@ -28,9 +29,10 @@ import {IEvent} from '../../abstract.component';
 })
 export abstract class AppTableFlipFormComponent<
     T extends IModel, D extends DataSource,
+    TB extends AppToolbarComponent<D>,
     F extends AppSmartTableComponent<D>,
-    B extends AppFormlyComponent<T, D, any>>
-    extends AppFlipcardComponent<D, F, B> implements AfterViewInit {
+    B extends AppFormlyComponent<T, D>>
+    extends AppFlipcardComponent<D, TB, F, B> implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -65,13 +67,14 @@ export abstract class AppTableFlipFormComponent<
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          toolbarComponentType?: Type<TB> | null,
                           tableComponentType?: Type<F> | null,
                           formComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            tableComponentType, formComponentType);
+            toolbarComponentType, tableComponentType, formComponentType);
     }
 
     // -------------------------------------------------
@@ -88,9 +91,6 @@ export abstract class AppTableFlipFormComponent<
             (<AppSmartTableComponent<D>>super.getFrontComponent())
                 .setEditItemListener($event => { this.onEditData($event); this.setFlipped(true); });
             (<AppSmartTableComponent<D>>super.getFrontComponent()).setDeleteItemListener(this.onDeleteData);
-        }
-        if (super.getBackComponent()) {
-            (<AppFormlyComponent<T, D, any>>super.getBackComponent()).setToolbarActionsListener(this.onToolbarAction);
         }
     }
 

@@ -382,7 +382,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class OrganizationFormlyComponent
-    extends AppFormlyComponent<IOrganization, OrganizationDataSource, any>
+    extends AppFormlyComponent<IOrganization, OrganizationDataSource>
     implements OnInit {
 
     // -------------------------------------------------

@@ -50,7 +50,6 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
 import {NgxSelectModule} from 'ngx-select-ex';
 import {NgxSelectExComponent} from './select-ex/select.ex.component';
 import {SelectExFormFieldComponent} from './formly/formly.select.ex.field.component';
-import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdown.component';
 
 @NgModule({
     imports: [

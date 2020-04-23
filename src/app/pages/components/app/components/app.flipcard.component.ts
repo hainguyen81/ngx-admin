@@ -9,14 +9,22 @@ import {
     Inject, Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
-import {ConfirmPopup} from 'ngx-material-popup';
+import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {BaseFlipcardComponent} from '../../flipcard/base.flipcard.component';
 import {Lightbox} from 'ngx-lightbox';
-import {AbstractComponent} from '../../abstract.component';
+import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
+import {AppToolbarComponent} from './app.toolbar.component';
+import {
+    ACTION_DELETE,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IToolbarActionsConfig,
+} from '../../toolbar/abstract.toolbar.component';
+import {ACTION_BACK} from '../warehouse/item/warehouse.item.toolbar.component';
 
 @Component({
     selector: 'ngx-flip-card-app',
@@ -26,6 +34,7 @@ import {throwError} from 'rxjs';
 })
 export abstract class AppFlipcardComponent<
     D extends DataSource,
+    TB extends AppToolbarComponent<D>,
     F extends AbstractComponent,
     B extends AbstractComponent>
     extends BaseFlipcardComponent<D> implements AfterViewInit {
@@ -34,12 +43,29 @@ export abstract class AppFlipcardComponent<
     // DECLARATION
     // -------------------------------------------------
 
+    private toolbarComponent: TB;
     private frontComponent: F;
     private backComponent: B;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating whether showing panel header
+     * @return true (default) for showing; else false
+     */
+    protected isShowHeader(): boolean {
+        return (this.toolbarComponentType && this.isFlipped());
+    }
+
+    /**
+     * Get the toolbar {AppToolbarComponent} instance
+     * @return the toolbar {AppToolbarComponent} instance
+     */
+    protected getToolbarComponent(): TB {
+        return this.toolbarComponent;
+    }
 
     /**
      * Get the front-flip {AbstractComponent} instance
@@ -90,6 +116,7 @@ export abstract class AppFlipcardComponent<
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          private toolbarComponentType?: Type<TB> | null,
                           private frontComponentType?: Type<F> | null,
                           private backComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
@@ -111,6 +138,46 @@ export abstract class AppFlipcardComponent<
         this.createFlipComponents();
     }
 
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
+     */
+    onClickAction(event: IEvent) {
+        if (!event || !event.$data || !(event.$data as IToolbarActionsConfig)) {
+            return;
+        }
+        let action: IToolbarActionsConfig;
+        action = event.$data as IToolbarActionsConfig;
+        switch (action.id) {
+            case ACTION_SAVE:
+                // TODO Waiting for saving
+                break;
+            case ACTION_RESET:
+                // TODO Waiting for resetting
+                break;
+            case ACTION_DELETE:
+                // TODO Waiting for deleting
+                break;
+            case ACTION_BACK:
+                if (this.isDataChanged()) {
+                    let popupConfig: ConfirmPopupConfig;
+                    popupConfig = {
+                        title: this.translate('app'),
+                        content: this.translate('common.toast.confirm.lose_data.message'),
+                        color: 'warn',
+                        cancelButton: this.translate('common.toast.confirm.lose_data.cancel'),
+                        okButton: this.translate('common.toast.confirm.lose_data.ok'),
+                    };
+                    this.getConfirmPopup().show(popupConfig)
+                        .subscribe(value => value && this.setFlipped(false));
+
+                } else {
+                    this.setFlipped(false);
+                }
+                break;
+        }
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
@@ -120,7 +187,20 @@ export abstract class AppFlipcardComponent<
      */
     private createFlipComponents(): void {
         // create table component
+        this.toolbarComponent = super.setToolbarComponent(this.toolbarComponentType);
+        this.toolbarComponent
+        && this.toolbarComponent.actionListener()
+            .subscribe($event => this.onClickAction($event));
         this.frontComponent = super.setFrontComponent(this.frontComponentType);
         this.backComponent = super.setBackComponent(this.backComponentType);
+    }
+
+    /**
+     * Get a boolean value indicating data that has been changed to shown confirmation dialog while back flip
+     * TODO Children classes should override this method
+     * @return true for changed; else false
+     */
+    protected isDataChanged(): boolean {
+        return false;
     }
 }

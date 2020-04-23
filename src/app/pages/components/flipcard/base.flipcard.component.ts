@@ -74,6 +74,17 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      * @param componentType front component type
      * @return created component
      */
+    protected setToolbarComponent(componentType: Type<any>): any {
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getHeaderViewContainerComponent();
+        return super.createComponentAt(viewContainerRef, componentType);
+    }
+
+    /**
+     * Create the front component dynamically
+     * @param componentType front component type
+     * @return created component
+     */
     protected setFrontComponent(componentType: Type<any>): any {
         let viewContainerRef: ViewContainerRef;
         viewContainerRef = this.getCardFrontComponentViewContainerRef() || this.getFrontComponentViewContainerRef();

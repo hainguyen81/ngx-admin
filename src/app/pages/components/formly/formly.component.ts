@@ -1,13 +1,12 @@
 import {AbstractFormlyComponent} from './abstract.formly.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, QueryList,
-    Renderer2, ViewChildren,
+    Inject,
+    Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -17,7 +16,6 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import ComponentUtils from '../../../utils/component.utils';
 
 /**
  * Form component base on {FormlyModule}
@@ -27,29 +25,17 @@ import ComponentUtils from '../../../utils/component.utils';
     templateUrl: './formly.component.html',
     styleUrls: ['./formly.component.scss'],
 })
-export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource> implements AfterViewInit {
+export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource> {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
-
-    @ViewChildren('headerHolder', {read: ViewContainerRef})
-    private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
-    private headerViewContainerRef: ViewContainerRef;
 
     private model: any = undefined;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
-
-    /**
-     * Get a boolean value indicating whether showing panel header
-     * @return true (default) for showing; else false
-     */
-    protected isShowHeader(): boolean {
-        return false;
-    }
 
     /**
      * Get the form data model
@@ -66,14 +52,6 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
     public setModel(model: any) {
         this.model = model || {};
         this.getFormGroup().reset(this.model);
-    }
-
-    /**
-     * Get the {ViewContainerRef} instance of header panel
-     * @return the {ViewContainerRef} instance of header panel
-     */
-    protected getHeaderViewContainerComponent(): ViewContainerRef {
-        return this.headerViewContainerRef;
     }
 
     // -------------------------------------------------
@@ -113,17 +91,5 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.headerViewContainerRef) {
-            this.headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
-        }
     }
 }

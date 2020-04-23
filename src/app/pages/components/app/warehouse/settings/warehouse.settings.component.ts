@@ -21,6 +21,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
 
 @Component({
     selector: 'ngx-flip-card-app-warehouse-settings',
@@ -34,6 +35,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 export class WarehouseSettingsComponent
     extends AppTableFlipFormComponent<
         IWarehouseSetting, WarehouseSettingsDatasource,
+        WarehouseSettingsToolbarComponent,
         WarehouseSettingsSmartTableComponent,
         WarehouseSettingsFormlyComponent> {
 
@@ -74,7 +76,9 @@ export class WarehouseSettingsComponent
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            WarehouseSettingsSmartTableComponent, WarehouseSettingsFormlyComponent);
+            WarehouseSettingsToolbarComponent,
+            WarehouseSettingsSmartTableComponent,
+            WarehouseSettingsFormlyComponent);
     }
 
     // -------------------------------------------------

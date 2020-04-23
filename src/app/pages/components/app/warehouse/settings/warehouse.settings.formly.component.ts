@@ -25,7 +25,6 @@ import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.s
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
 
 /* default warehouse settings formly config */
 export const WarehouseSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -141,7 +140,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class WarehouseSettingsFormlyComponent
-    extends AppFormlyComponent<IWarehouseSetting, WarehouseSettingsDatasource, WarehouseSettingsToolbarComponent> {
+    extends AppFormlyComponent<IWarehouseSetting, WarehouseSettingsDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -179,8 +178,7 @@ export class WarehouseSettingsFormlyComponent
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox,
-            WarehouseSettingsToolbarComponent);
+            modalDialogService, confirmPopup, lightbox);
         super.setConfig(WarehouseSettingsFormConfig);
         super.setFields(WarehouseSettingsFormFieldsConfig);
     }

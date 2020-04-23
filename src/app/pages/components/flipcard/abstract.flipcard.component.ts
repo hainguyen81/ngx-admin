@@ -87,6 +87,14 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
     }
 
     /**
+     * Get a boolean value indicating this component whether is flipped
+     * @param flipped true for flipped; else false
+     */
+    public isFlipped(): boolean {
+        return (this.flipped || (this.getFlipcardComponent() && this.getFlipcardComponent().flipped));
+    }
+
+    /**
      * Set a boolean value indicating this component whether shows the toggle button to flip
      * @param showToggleButton true for shown; else false
      */
