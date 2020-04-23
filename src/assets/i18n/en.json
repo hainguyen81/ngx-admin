@@ -331,6 +331,32 @@
                 "image": "Image",
                 "order": "Order",
                 "remark": "Remark"
+            },
+            "form": {
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name"
+                },
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type"
+                },
+                "order": {
+                    "label": "Order",
+                    "placeholder": "Order"
+                },
+                "image": {
+                    "label": "Image",
+                    "placeholder": "Image"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                }
             }
         },
         "storage": {

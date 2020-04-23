@@ -331,6 +331,32 @@
                 "image": "Hình ảnh",
                 "order": "Thứ tự",
                 "remark": "Ghi chú"
+            },
+            "form": {
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại"
+                },
+                "order": {
+                    "label": "Thứ tự",
+                    "placeholder": "Thứ tự"
+                },
+                "image": {
+                    "label": "Hình ảnh",
+                    "placeholder": "Hình ảnh"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
             }
         },
         "storage": {
