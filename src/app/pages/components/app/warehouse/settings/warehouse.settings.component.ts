@@ -53,6 +53,16 @@ export const WarehouseSettingsTableSettings = {
             sort: false,
             filter: false,
         },
+        type: {
+            title: 'warehouse.settings.table.type',
+            type: 'string',
+            sort: false,
+            filter: false,
+            editor: {
+                type: 'list',
+                config: {list: []},
+            },
+        },
         image: {
             title: 'warehouse.settings.table.image',
             type: 'string',
@@ -156,9 +166,9 @@ export class WarehouseSettingsSmartTableComponent extends BaseSmartTableComponen
     protected translateSettings(): void {
         super.translateSettings();
 
-        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
+        this.translatedSettings['columns']['type']['valuePrepareFunction'] =
             value => this.convertWarehouseSettingsTypeToDisplay(value);
-        this.translatedSettings['columns']['status']['editor']['config']['list'] = [
+        this.translatedSettings['columns']['type']['editor']['config']['list'] = [
             {
                 value: SETTINGS_TYPE.STATUS,
                 title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.STATUS),
