@@ -9,6 +9,7 @@ import {PagesGuard} from './pages.guard.service';
 import {WarehouseItemFlipcardComponent} from './components/app/warehouse/item/warehouse.item.flipcard.component';
 import {WarehouseCategorySplitPaneComponent} from './components/app/warehouse/category/warehouse.category.component';
 import {WarehouseStorageSplitPaneComponent} from './components/app/warehouse/storage/warehouse.storage.component';
+import {WarehouseSettingsSmartTableComponent} from './components/app/warehouse/settings/warehouse.settings.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
@@ -44,6 +45,10 @@ const routes: Routes = [{
             {
                 path: 'settings',
                 children: [
+                    {
+                        path: 'general',
+                        component: WarehouseSettingsSmartTableComponent,
+                    },
                     {
                         path: 'category',
                         component: WarehouseCategorySplitPaneComponent,
