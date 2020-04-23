@@ -109,6 +109,7 @@ export abstract class AppFlipcardComponent<T extends IModel, D extends DataSourc
         // Create flip components
         this.createFlipComponents();
     }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
