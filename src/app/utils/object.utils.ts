@@ -5,6 +5,8 @@ export type NoParamConstructor<T> = new() => T;
 export type Constructor<T> = new(...args: any[]) => T;
 export const DeepCloner = require('clone-deep');
 
+export type Enum<V> = Record<keyof any, V> & { [k: number]: V };
+
 /**
  * Object utilities
  */
@@ -137,5 +139,23 @@ export default class ObjectUtils {
      */
     public static propertyExists(obj: object, propertyName: string): boolean {
         return (obj && (obj.hasOwnProperty(propertyName) || (propertyName in obj)));
+    }
+
+    /**
+     * Get all keys of the specified enum type
+     * @param enumType to parse
+     * @return all keys of the specified enum type
+     */
+    public static enumKeys<E extends Enum<E>>(enumType: Type<E>): string[] {
+        return Object.keys(enumType).filter(k => typeof enumType[k as any] === 'number');
+    }
+    /**
+     * Get all values of the specified enum type
+     * @param enumType to parse
+     * @return all values of the specified enum type
+     */
+    public static enumValues<E extends Enum<E>>(enumType: Type<E>): number[] {
+        const keys = Object.keys(enumType).filter(k => typeof enumType[k as any] === 'number');
+        return keys.map(k => enumType[k as any]);
     }
 }

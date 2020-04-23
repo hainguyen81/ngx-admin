@@ -31,6 +31,16 @@ export const MockApiOrganization: IApi = {
     id: IdGenerators.oid.generate(),
 };
 
+export const MockApiWarehouseSettings: IApi = {
+    code: 'WAREHOUSE_SETTINGS_API',
+    name: 'warehouse.settings.menu',
+    regexUrl: 'warehouse/**',
+    baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
+    icon: {icon: 'archive', pack: 'fa'},
+    version: '1.0.0',
+    id: IdGenerators.oid.generate(),
+};
+
 export const MockApiWarehouseStorage: IApi = {
     code: 'WAREHOUSE_STORAGE_API',
     name: 'warehouse.storage.menu',
@@ -62,10 +72,19 @@ export const MockApiWarehouseItem: IApi = {
 };
 
 export const MockApi = {
-    user: MockApiUser,
-    customer: MockApiCustomer,
-    organization: MockApiOrganization,
-    warehouseStorage: MockApiWarehouseStorage,
-    warehouseCategory: MockApiWarehouseCategory,
-    warehouseItem: MockApiWarehouseItem,
+    system: {
+        user: MockApiUser,
+        customer: MockApiCustomer,
+        organization: MockApiOrganization,
+    },
+    warehouse: {
+        settings: {
+            warehouseSettings: MockApiWarehouseSettings,
+            warehouseStorage: MockApiWarehouseStorage,
+            warehouseCategory: MockApiWarehouseCategory,
+        },
+        features: {
+            warehouseItem: MockApiWarehouseItem,
+        },
+    },
 };

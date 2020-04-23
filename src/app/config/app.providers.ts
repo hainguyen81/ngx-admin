@@ -129,6 +129,13 @@ import {
     SecureStorageConfiguration,
     StorageConfiguration,
 } from './storage.config';
+import {
+    WarehouseSettingsDbService,
+    WarehouseSettingsHttpService,
+} from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.service';
+import {
+    WarehouseSettingsDatasource,
+} from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -370,6 +377,20 @@ export const WarehouseProviders: StaticProvider[] = [
     {
         provide: WarehouseDatasource, useClass: WarehouseDatasource,
         deps: [WarehouseHttpService, WarehouseDbService, NGXLogger],
+    },
+
+    // Warehouse settings
+    {
+        provide: WarehouseSettingsDbService, useClass: WarehouseSettingsDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseSettingsHttpService, useClass: WarehouseSettingsHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseSettingsDbService],
+    },
+    {
+        provide: WarehouseSettingsDatasource, useClass: WarehouseSettingsDatasource,
+        deps: [WarehouseSettingsHttpService, WarehouseSettingsDbService, NGXLogger],
     },
 
     // Warehouse Order
