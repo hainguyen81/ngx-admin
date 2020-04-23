@@ -82,7 +82,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit {
 
     protected static SMART_TABLE_SELETOR: string = 'ng2-smart-table table';
-    protected static SMART_TABLE_ROW_SELETOR: string = 'ng2-smart-table table tbody tr';
+    protected static SMART_TABLE_BODY_SELETOR: string =
+        [AbstractSmartTableComponent.SMART_TABLE_SELETOR, 'tbody'].join(' ');
+    protected static SMART_TABLE_ROW_SELETOR: string =
+        [AbstractSmartTableComponent.SMART_TABLE_BODY_SELETOR, 'tr'].join(' ');
     protected static SMART_TABLE_CELLS_SELECTOR: string = 'ng2-smart-table-cell';
     protected static SMART_TABLE_CELLS_EDIT_MODE_SELECTOR: string = 'table-cell-edit-mode';
     protected static SEARCH_FIELD_SELECTOR: string = '[type=\'search\']';
@@ -765,7 +768,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         // check whether navigating on context menu
         let targetEl: HTMLElement;
         targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
-        if (targetEl && targetEl.closest(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR)) {
+        if (this.hasClosestElement(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR, targetEl)) {
             return;
         }
 
@@ -854,7 +857,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onKeyDown(event: IEvent): void {
         if (event && event.$event
             && (event.$event.target as Element)
-            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            && this.hasClosestElement(
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.$event.target as Element)) {
             super.onKeyDown(event);
         }
     }
@@ -866,7 +870,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onKeyUp(event: IEvent): void {
         if (event && event.$event
             && (event.$event.target as Element)
-            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            && this.hasClosestElement(
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.$event.target as Element)) {
             super.onKeyUp(event);
         }
     }
@@ -878,7 +883,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onKeyPress(event: IEvent): void {
         if (event && event.$event
             && (event.$event.target as Element)
-            && (event.$event.target as Element).closest(AbstractSmartTableComponent.SMART_TABLE_SELETOR)) {
+            && this.hasClosestElement(
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.$event.target as Element)) {
             super.onKeyPress(event);
         }
     }
@@ -1387,18 +1393,14 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected showHideContextMenuOnRow(row: Row, event?: Event): boolean {
         this.getLogger().debug('showHideContextMenuOnRow', row);
-        if (row) {
-            let rowEl: HTMLTableRowElement;
-            rowEl = this.getRowElement(row);
-            let target: Node;
-            target = (event && event.target instanceof Node
-            && rowEl.contains(event.target as Node) ? event.target : rowEl);
-            return super.showHideContextMenu(event, target, row.getData());
-
-        } else {
-            this.closeContextMenu();
-        }
-        return false;
+        let rowEl: HTMLTableRowElement;
+        rowEl = (row ? this.getRowElement(row) : undefined);
+        let target: Node;
+        target = (event && event.target instanceof Node
+        && rowEl && rowEl.contains(event.target as Node) ? event.target
+            : event && event.target instanceof HTMLElement
+            && super.getElementsBySelector() (<HTMLElement>event.target).closest(AbstractSmartTableComponent.SMART_TABLE_BODY_SELETOR) ? event.target : rowEl);
+        return super.showHideContextMenu(event, target, (row ? row.getData() : undefined));
     }
 
     /**

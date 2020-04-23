@@ -437,7 +437,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         // check whether navigating on context menu
         let targetEl: HTMLElement;
         targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
-        if (targetEl && targetEl.closest(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR)) {
+        if (this.hasClosestElement(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR, targetEl)) {
             return;
         }
 
@@ -479,9 +479,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             } else if (KeyboardUtils.isRightKey(kbEvent) || KeyboardUtils.isLeftKey(kbEvent)) {
                 if (!this.toggleExpandCollapseTreeviewItemElement(hoveredItemEl)) {
                     // toggle selected parent item
-                    let parentEl: HTMLElement;
-                    parentEl = hoveredItemEl.parentElement.closest(
-                        AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement;
+                    const parentEl: Element = this.getClosestElementBySelector(
+                        AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, hoveredItemEl);
                     parentEl && this.toggleTreeviewItemElement(parentEl);
                 }
             }
@@ -718,8 +717,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             .concat(AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR);
         let treeviewItemEl: HTMLElement;
         treeviewItemEl = this.getFirstElementBySelector(treeviewItemElSelector);
-        return (treeviewItemEl ? treeviewItemEl.closest(
-            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR) as HTMLElement : undefined);
+        return this.getClosestElementBySelector(
+            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, treeviewItemEl);
     }
 
     /**

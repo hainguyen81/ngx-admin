@@ -44,6 +44,7 @@ import {AbstractComponentService, BaseComponentService} from '../../services/com
 import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 import {AutoUnsubscribe} from './customization/extend.component';
+import {isNullOrUndefined} from 'util';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -422,7 +423,7 @@ export class AbstractComponent
         let isOnContextMenu: boolean;
         let targetEl: HTMLElement;
         targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
-        isOnContextMenu = (targetEl && !!targetEl.closest(AbstractComponent.CONTEXT_MENU_SELECTOR));
+        isOnContextMenu = this.hasClosestElement(AbstractComponent.CONTEXT_MENU_SELECTOR, targetEl);
         // if action key on context-menu, not handle it
         if (isOnContextMenu) {
             return;
@@ -797,6 +798,30 @@ export class AbstractComponent
             eventType: 'cancel',
             event: keyEvent,
         });
+    }
+
+    /**
+     * Get the closest DOM elements by the specified selector
+     * @return DOM elements or undefined
+     */
+    protected getClosestElementBySelector(selector: string, element?: Element): Element {
+        return HtmlUtils.getClosestElementBySelector(selector, (element || this.getElementRef().nativeElement));
+    }
+
+    /**
+     * Get the closest DOM elements by the specified selector
+     * @return DOM elements or undefined
+     */
+    protected getClosestHtmlElementBySelector(selector: string, element?: Element): HTMLElement {
+        return this.getClosestElementBySelector(selector, element) as HTMLElement;
+    }
+
+    /**
+     * Get the closest DOM elements by the specified selector
+     * @return DOM elements or undefined
+     */
+    protected hasClosestElement(selector: string, element?: Element): boolean {
+        return (element && !isNullOrUndefined(this.getClosestElementBySelector(selector, element)));
     }
 
     /**

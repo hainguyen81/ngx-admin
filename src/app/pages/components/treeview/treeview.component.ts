@@ -204,8 +204,8 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
             let targetEl: Element;
             targetEl = event.$event.target as Element;
             let itemEl: Element;
-            itemEl = (targetEl.tagName === AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR
-                ? targetEl : targetEl.closest(AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR));
+            itemEl = (targetEl.tagName === AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR ? targetEl
+                : this.getClosestElementBySelector(AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, targetEl));
             if (itemEl && !itemEl.classList.contains('selected')) {
                 // clear another selected items
                 let prevSelectedItemEls: NodeListOf<HTMLElement>;

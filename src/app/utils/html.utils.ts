@@ -22,6 +22,20 @@ export default class HtmlUtils {
     }
 
     /**
+     * Get the closest DOM elements by the specified selector
+     * @param selector to find
+     * @param element parent element or document
+     * @return DOM elements or undefined
+     */
+    public static getClosestElementBySelector(selector: string, element?: Element): Element {
+        if (!(selector || '').length) {
+            return undefined;
+        }
+        const castElement: Element = <Element>(element || document);
+        return (castElement ? castElement.closest(selector) : undefined);
+    }
+
+    /**
      * Get the first occurred DOM elements by the specified selector
      * @param selector to find
      * @param element parent element or document
