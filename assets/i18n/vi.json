@@ -44,6 +44,14 @@
                 "department": "Phòng ban",
                 "team_group": "Đội / Nhóm"
             },
+            "warehouseSettings": {
+                "status": "Trạng thái",
+                "brand": "Hãng sản xuất",
+                "color": "Màu sắc",
+                "size": "Kích thước",
+                "material": "Nguyên vật liệu",
+                "others": "Khác"
+            },
             "warehouseCategoryStatus": {
                 "activated": "Đã kích hoạt",
                 "locked": "Khoá",
@@ -311,6 +319,45 @@
             "module": "Quản lý kho",
             "master": "Thiết lập",
             "features": "Tính năng"
+        },
+        "settings": {
+            "title": "Quản lý thiết lập chung",
+            "menu": "Thiết lập chung",
+            "table": {
+                "noData": "Không có bất kỳ thiết lập nào",
+                "code": "Mã",
+                "name": "Tên",
+                "type": "Loại",
+                "image": "Hình ảnh",
+                "order": "Thứ tự",
+                "remark": "Ghi chú"
+            },
+            "form": {
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại"
+                },
+                "order": {
+                    "label": "Thứ tự",
+                    "placeholder": "Thứ tự"
+                },
+                "image": {
+                    "label": "Hình ảnh",
+                    "placeholder": "Hình ảnh"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
+            }
         },
         "storage": {
             "title": "Quản lý kho xưởng",
