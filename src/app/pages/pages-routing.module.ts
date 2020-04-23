@@ -57,6 +57,11 @@ const routes: Routes = [{
                         path: 'storage',
                         component: WarehouseStorageSplitPaneComponent,
                     },
+                    {
+                        path: '',
+                        redirectTo: 'general',
+                        pathMatch: 'full',
+                    },
                 ],
             },
             {
@@ -68,7 +73,7 @@ const routes: Routes = [{
                     },
                     {
                         path: '',
-                        redirectTo: 'category',
+                        redirectTo: 'item',
                         pathMatch: 'full',
                     },
                 ],
