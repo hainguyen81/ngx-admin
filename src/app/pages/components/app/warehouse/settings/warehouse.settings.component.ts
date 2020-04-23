@@ -1,105 +1,48 @@
 import {
-    ChangeDetectorRef,
+    ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver,
-    ElementRef,
+    ComponentFactoryResolver, ElementRef,
     Inject,
-    Renderer2,
-    ViewContainerRef,
+    Renderer2, ViewContainerRef,
 } from '@angular/core';
-import {ContextMenuService} from 'ngx-contextmenu';
-import {NGXLogger} from 'ngx-logger';
-import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
-import {TranslateService} from '@ngx-translate/core';
-import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu} from '../../../abstract.component';
-import {COMMON} from '../../../../../config/common.config';
-import {ToastrService} from 'ngx-toastr';
-import {ModalDialogService} from 'ngx-modal-dialog';
-import {ConfirmPopup} from 'ngx-material-popup';
-import {Lightbox} from 'ngx-lightbox';
-import {API} from '../../../../../config/api.config';
+import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import WarehouseSettings, {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {Constants} from '../../../../../@core/data/constants/warehouse.settings.constants';
-import SETTINGS_TYPE = Constants.WarehouseSettingsConstants.SETTINGS_TYPE;
-import convertWarehouseSettingsTypeToDisplay =
-    Constants.WarehouseSettingsConstants.convertWarehouseSettingsTypeToDisplay;
-
-/* warehouse settings table settings */
-export const WarehouseSettingsTableSettings = {
-    hideSubHeader: true,
-    noDataMessage: 'warehouse.settings.table.noData',
-    actions: {
-        add: false,
-        edit: false,
-        delete: false,
-    },
-    pager: {
-        display: true,
-        perPage: AppConfig.COMMON.itemsPerPage,
-    },
-    columns: {
-        code: {
-            title: 'warehouse.settings.table.code',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        name: {
-            title: 'warehouse.settings.table.name',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        type: {
-            title: 'warehouse.settings.table.type',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
-        },
-        image: {
-            title: 'warehouse.settings.table.image',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        order: {
-            title: 'warehouse.settings.table.order',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        remark: {
-            title: 'warehouse.settings.table.remark',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-    },
-};
-
-export const WarehouseSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
+import {WarehouseSettingsSmartTableComponent} from './warehouse.settings.table.component';
+import {WarehouseSettingsFormlyComponent} from './warehouse.settings.formly.component';
+import {ContextMenuService} from 'ngx-contextmenu';
+import {ToastrService} from 'ngx-toastr';
+import {NGXLogger} from 'ngx-logger';
+import {TranslateService} from '@ngx-translate/core';
+import {ModalDialogService} from 'ngx-modal-dialog';
+import {ConfirmPopup} from 'ngx-material-popup';
+import {Lightbox} from 'ngx-lightbox';
+import {IEvent} from '../../../abstract.component';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 @Component({
-    moduleId: API.warehouse.code,
-    selector: 'ngx-smart-table-warehouse-master',
-    templateUrl: '../../../smart-table/smart-table.component.html',
-    styleUrls: ['../../../smart-table/smart-table.component.scss'],
+    selector: 'ngx-flip-card-app-warehouse-settings',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: '../../../flipcard/flipcard.component.html',
+    styleUrls: [
+        '../../../flipcard/flipcard.component.scss',
+        '../../components/app.flipcard.component.scss',
+    ],
 })
-export class WarehouseSettingsSmartTableComponent extends BaseSmartTableComponent<WarehouseSettingsDatasource> {
+export class WarehouseSettingsComponent
+    extends AppTableFlipFormComponent<
+        IWarehouseSetting, WarehouseSettingsDatasource,
+        WarehouseSettingsSmartTableComponent,
+        WarehouseSettingsFormlyComponent> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseSettingsSmartTableComponent} class
+     * Create a new instance of {WarehouseSettingsComponent} class
      * @param dataSource {WarehouseSettingsDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -130,69 +73,21 @@ export class WarehouseSettingsSmartTableComponent extends BaseSmartTableComponen
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
-        super.setTableHeader('warehouse.settings.title');
-        super.setTableSettings(WarehouseSettingsTableSettings);
-        super.setContextMenu(WarehouseSettingsContextMenu);
-    }
-
-    doSearch(keyword: any): void {
-        this.getDataSource().setFilter([
-            {field: 'code', search: keyword},
-            {field: 'name', search: keyword},
-            {field: 'type', search: keyword},
-            {field: 'order', search: keyword},
-            {field: 'remark', search: keyword},
-        ], false);
-        this.getDataSource().refresh();
+            modalDialogService, confirmPopup, lightbox,
+            WarehouseSettingsSmartTableComponent, WarehouseSettingsFormlyComponent);
     }
 
     // -------------------------------------------------
-    // FUNCTION
+    // EVENTS
     // -------------------------------------------------
 
-    /**
-     * Convert {SETTINGS_TYPE} to the showed translated value
-     * @param value to convert
-     * @return converted value
-     */
-    private convertWarehouseSettingsTypeToDisplay(value: SETTINGS_TYPE): string {
-        return this.translate(convertWarehouseSettingsTypeToDisplay(value));
+    protected onNewData($event: IEvent): void {
+        const newInst: IWarehouseSetting = new WarehouseSettings(null, null, null);
+        super.getBackComponent().setModel(newInst);
     }
 
-    /**
-     * Translate table settings
-     */
-    protected translateSettings(): void {
-        super.translateSettings();
-
-        this.translatedSettings['columns']['type']['valuePrepareFunction'] =
-            value => this.convertWarehouseSettingsTypeToDisplay(value);
-        this.translatedSettings['columns']['type']['editor']['config']['list'] = [
-            {
-                value: SETTINGS_TYPE.STATUS,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.STATUS),
-            },
-            {
-                value: SETTINGS_TYPE.BRAND,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.BRAND),
-            },
-            {
-                value: SETTINGS_TYPE.SIZE,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.SIZE),
-            },
-            {
-                value: SETTINGS_TYPE.COLOR,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.COLOR),
-            },
-            {
-                value: SETTINGS_TYPE.MATERIAL,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.MATERIAL),
-            },
-            {
-                value: SETTINGS_TYPE.OTHERS,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.OTHERS),
-            },
-        ];
+    protected onEditData($event: IEvent): void {
+        const row: Row = ($event.$data && $event.$data['row'] instanceof Row ? $event.$data['row'] : undefined);
+        row && row.getData() && super.getBackComponent().setModel(row.getData() as IWarehouseSetting);
     }
 }

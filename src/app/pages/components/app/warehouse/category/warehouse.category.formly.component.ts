@@ -136,7 +136,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class WarehouseCategoryFormlyComponent
-    extends AppFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource> {
+    extends AppFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource, any> {
 
     // -------------------------------------------------
     // CONSTRUCTION

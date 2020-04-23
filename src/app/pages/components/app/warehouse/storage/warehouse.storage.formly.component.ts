@@ -221,7 +221,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class WarehouseStorageFormlyComponent
-    extends AppFormlyComponent<IWarehouse, WarehouseDatasource>
+    extends AppFormlyComponent<IWarehouse, WarehouseDatasource, any>
     implements OnInit {
 
     // -------------------------------------------------

@@ -201,6 +201,7 @@
                             "src/tsconfig.spec.json"
                         ],
                         "typeCheck": true,
+                        "codeCoverage": true,
                         "exclude": []
                     }
                 }

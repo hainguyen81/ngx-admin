@@ -1,9 +1,9 @@
-import {IContextMenu} from '../../abstract.component';
+import {IContextMenu, IEvent} from '../../abstract.component';
 import {COMMON} from '../../../../config/common.config';
 import {
     ChangeDetectorRef, Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -17,6 +17,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
@@ -26,6 +27,45 @@ export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     styleUrls: ['../../smart-table/smart-table.component.scss'],
 })
 export abstract class AppSmartTableComponent<D extends DataSource> extends BaseSmartTableComponent<D> {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    // raise while insert new table row
+    private newItemDelegate: (event: IEvent) => void;
+    // raise while editing table row
+    private editItemDelegate: (event: IEvent) => void;
+    // raise while editing table row
+    private deleteItemDelegate: (event: IEvent) => void;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Set the item new listener
+     * @param newItemDelegate listener
+     */
+    public setNewItemListener(newItemDelegate: (event: IEvent) => void) {
+        this.newItemDelegate = newItemDelegate;
+    }
+
+    /**
+     * Set the item editing listener
+     * @param editItemDelegate listener
+     */
+    public setEditItemListener(editItemDelegate: (event: IEvent) => void) {
+        this.editItemDelegate = editItemDelegate;
+    }
+
+    /**
+     * Set the item deleting listener
+     * @param deleteItemDelegate listener
+     */
+    public setDeleteItemListener(deleteItemDelegate: (event: IEvent) => void) {
+        this.deleteItemDelegate = deleteItemDelegate;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -70,5 +110,60 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([], false);
         this.getDataSource().refresh();
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Create new Row
+     */
+    protected newRow() {
+        if (this.newItemDelegate && !this.isInEditMode()) {
+            this.newItemDelegate.apply(this, [{}]);
+
+        } else {
+            super.newRow();
+        }
+    }
+
+    /**
+     * Put the specified Cell into editing mode.
+     * It means whole Row will be in editing mode.
+     * @param rowIndex to edit
+     * @param columnIndex to edit. -1 for focus the first cell
+     */
+    protected editCellByIndex(rowIndex: number, columnIndex: number) {
+        if (0 > rowIndex || -1 > columnIndex) {
+            return;
+        }
+
+        let row: Row;
+        row = this.getRowByIndex(rowIndex);
+        if (!row || row.isInEditing || !row.cells || !row.cells.length
+            || columnIndex >= row.cells.length) {
+            return;
+        }
+
+        if (this.editItemDelegate) {
+            this.editItemDelegate.apply(this,
+                [{ data: { rowIndex: rowIndex, columnIndex: columnIndex, row: row } }]);
+        } else {
+            super.editCellByIndex(rowIndex, columnIndex);
+        }
+    }
+
+    /**
+     * Delete the specified Row
+     * @param row to delete
+     */
+    protected deleteRow(row: Row) {
+        if (row && this.deleteItemDelegate) {
+            this.deleteItemDelegate.apply(this,
+                [{ data: { rowIndex: row.index, columnIndex: 0, row: row } }]);
+        } else {
+            super.deleteRow(row);
+        }
     }
 }

@@ -18,6 +18,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AppSmartTableComponent} from './app.table.component';
 import {AppFormlyComponent} from './app.formly.component';
 import {AppFlipcardComponent} from './app.flipcard.component';
+import {IEvent} from '../../abstract.component';
 
 @Component({
     selector: 'ngx-flip-card-app-table-form',
@@ -71,5 +72,57 @@ export abstract class AppTableFlipFormComponent<
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             tableComponentType, formComponentType);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // listener
+        if (super.getFrontComponent()) {
+            (<AppSmartTableComponent<D>>super.getFrontComponent())
+                .setNewItemListener($event => { this.onNewData($event); this.setFlipped(true); });
+            (<AppSmartTableComponent<D>>super.getFrontComponent())
+                .setEditItemListener($event => { this.onEditData($event); this.setFlipped(true); });
+            (<AppSmartTableComponent<D>>super.getFrontComponent()).setDeleteItemListener(this.onDeleteData);
+        }
+        if (super.getBackComponent()) {
+            (<AppFormlyComponent<T, D, any>>super.getBackComponent()).setToolbarActionsListener(this.onToolbarAction);
+        }
+    }
+
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param $event event data {IEvent}
+     */
+    protected onToolbarAction($event: IEvent) {
+        this.getLogger().debug('Flip-form-toolbar wanna perform action', $event);
+    }
+
+    /**
+     * Call when table wanna add new data
+     * @param $event event data {IEvent}
+     */
+    protected onNewData($event: IEvent): void {
+        this.getLogger().debug('Flip-table wanna add new data', $event);
+    }
+
+    /**
+     * Call when table wanna edit data
+     * @param $event event data {IEvent}
+     */
+    protected onEditData($event: IEvent): void {
+        this.getLogger().debug('Flip-table wanna edit data', $event);
+    }
+
+    /**
+     * Call when table wanna delete data
+     * @param $event event data {IEvent}
+     */
+    protected onDeleteData($event: IEvent): void {
+        this.getLogger().debug('Flip-table wanna delete data', $event);
     }
 }

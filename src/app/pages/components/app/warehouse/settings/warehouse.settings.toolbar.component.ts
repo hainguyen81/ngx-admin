@@ -16,41 +16,41 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    WarehouseCategoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {AppToolbarComponent} from '../../components/app.toolbar.component';
 import {API} from '../../../../../config/api.config';
+import {
+    WarehouseSettingsDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 
-/* default warehouse category toolbar header config */
-export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
-    title: 'warehouse.category.title',
-    icon: {icon: 'bars', pack: 'fa'},
+/* default warehouse settings toolbar header config */
+export const WarehouseSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
+    title: 'warehouse.settings.title',
+    icon: {icon: 'cog', pack: 'fa'},
 };
 
-/* default warehouse category toolbar actions config */
-export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
+/* default warehouse settings toolbar actions config */
+export const WarehouseSettingsToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
 
 /**
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: API.warehouseCategory.code,
-    selector: 'ngx-toolbar-app-warehouse-category',
+    moduleId: API.warehouseSettings.code,
+    selector: 'ngx-toolbar-app-warehouse-settings',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',
         '../../components/app.toolbar.component.scss'],
 })
-export class WarehouseCategoryToolbarComponent
-    extends AppToolbarComponent<WarehouseCategoryDatasource> {
+export class WarehouseSettingsToolbarComponent
+    extends AppToolbarComponent<WarehouseSettingsDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseCategoryToolbarComponent} class
-     * @param dataSource {WarehouseCategoryDatasource}
+     * Create a new instance of {WarehouseSettingsToolbarComponent} class
+     * @param dataSource {WarehouseSettingsDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -64,7 +64,7 @@ export class WarehouseCategoryToolbarComponent
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
      */
-    constructor(@Inject(WarehouseCategoryDatasource) dataSource: WarehouseCategoryDatasource,
+    constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -81,7 +81,7 @@ export class WarehouseCategoryToolbarComponent
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
-        super.setToolbarHeader(WarehouseCategoryToolbarHeaderConfig);
-        super.setActions(WarehouseCategoryToolbarActionsConfig);
+        super.setToolbarHeader(WarehouseSettingsToolbarHeaderConfig);
+        super.setActions(WarehouseSettingsToolbarActionsConfig);
     }
 }
