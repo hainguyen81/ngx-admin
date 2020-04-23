@@ -327,6 +327,7 @@
                 "noData": "Not found any settings",
                 "code": "Code",
                 "name": "Name",
+                "type": "Type",
                 "image": "Image",
                 "order": "Order",
                 "remark": "Remark"

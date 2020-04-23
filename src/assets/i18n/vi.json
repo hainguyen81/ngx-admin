@@ -327,6 +327,7 @@
                 "noData": "Không có bất kỳ thiết lập nào",
                 "code": "Mã",
                 "name": "Tên",
+                "type": "Loại",
                 "image": "Hình ảnh",
                 "order": "Thứ tự",
                 "remark": "Ghi chú"
