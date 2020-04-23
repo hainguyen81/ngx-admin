@@ -10,4 +10,14 @@
 
     ::ng-deep nb-flip-card.flipped .flipcard-body .front-container { display: none; }
     ::ng-deep nb-flip-card.flipped .flipcard-body .back-container { display: flex; }
+
+    ::ng-deep nb-flip-card .flipcard-body .front-container {
+        flex: 0.5;
+        nb-card nb-card-body { padding: 0; margin: 0; }
+        *:not(.d-flex) { flex: 1; }
+    }
+    ::ng-deep nb-flip-card .flipcard-body .back-container {
+        nb-card nb-card-body { padding: 0; margin: 0; }
+        *:not(.d-flex) { flex: 1; }
+    }
 }

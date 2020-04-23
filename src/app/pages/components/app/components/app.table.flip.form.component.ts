@@ -25,7 +25,11 @@ import {AppToolbarComponent} from './app.toolbar.component';
     selector: 'ngx-flip-card-app-table-form',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../flipcard/flipcard.component.html',
-    styleUrls: ['../../flipcard/flipcard.component.scss', './app.flipcard.component.scss'],
+    styleUrls: [
+        '../../flipcard/flipcard.component.scss',
+        './app.flipcard.component.scss',
+        './app.table.flip.form.component.scss',
+    ],
 })
 export abstract class AppTableFlipFormComponent<
     T extends IModel, D extends DataSource,
