@@ -77,7 +77,7 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
     protected setToolbarComponent(componentType: Type<any>): any {
         let viewContainerRef: ViewContainerRef;
         viewContainerRef = this.getHeaderViewContainerComponent();
-        return super.createComponentAt(viewContainerRef, componentType);
+        return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 
     /**
