@@ -35,7 +35,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-8',
+                className: 'col-4',
                 fieldGroupClassName: 'row ml-0 mr-0',
                 fieldGroup: [
                     {
