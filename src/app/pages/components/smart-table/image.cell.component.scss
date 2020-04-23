@@ -2,6 +2,7 @@
 
 @include nb-install-component() {
     ::ng-deep .images-album {
+        .primary-image.border,
         .primary-image .primary-image-preview,
         .primary-image .primary-image-preview.border {
             border: none !important;
