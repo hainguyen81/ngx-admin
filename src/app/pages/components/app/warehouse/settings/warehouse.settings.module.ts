@@ -100,6 +100,12 @@ import {AppComponentsModule} from '../../components/app.components.module';
         WarehouseSettingsToolbarComponent,
         WarehouseSettingsComponent,
     ],
+    entryComponents: [
+        WarehouseSettingsSmartTableComponent,
+        WarehouseSettingsFormlyComponent,
+        WarehouseSettingsToolbarComponent,
+        WarehouseSettingsComponent,
+    ],
     providers: [
         {
             provide: WarehouseSettingsDatasource, useClass: WarehouseSettingsDatasource,
