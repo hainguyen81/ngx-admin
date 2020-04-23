@@ -22,7 +22,7 @@ import {OrganizationDbService} from '../../services/implementation/system/organi
 import {MockWarehouseCategoryService} from './warehouse/category.service';
 import {WarehouseCategoryDbService} from '../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
 import {MockWarehouseStorageService} from './warehouse/warehouse.service';
-import {WarehouseDbService} from '../../services/implementation/warehouse/warehouse/warehouse.service';
+import {WarehouseDbService} from '../../services/implementation/warehouse/warehouse.storage/warehouse.service';
 import {MockCountryService} from './system/country.service';
 import {CountryDbService} from '../../services/implementation/system/country/country.service';
 

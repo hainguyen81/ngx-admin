@@ -47,8 +47,8 @@ import GlobalErrorsHandler from '../services/implementation/global.errors.handle
 import {
     WarehouseDbService,
     WarehouseHttpService,
-} from '../services/implementation/warehouse/warehouse/warehouse.service';
-import {WarehouseDatasource} from '../services/implementation/warehouse/warehouse/warehouse.datasource';
+} from '../services/implementation/warehouse/warehouse.storage/warehouse.service';
+import {WarehouseDatasource} from '../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {
     WarehouseOrderDbService,
     WarehouseOrderHttpService,

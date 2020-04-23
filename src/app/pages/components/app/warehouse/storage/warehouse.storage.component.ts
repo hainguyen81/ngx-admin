@@ -18,7 +18,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {WarehouseStorageToolbarComponent} from './warehouse.storage.toolbar.component';
 import {WarehouseStorageTreeviewComponent} from './warehouse.storage.treeview.component';
 import {WarehouseStorageFormlyComponent} from './warehouse.storage.formly.component';
-import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {API} from '../../../../../config/api.config';

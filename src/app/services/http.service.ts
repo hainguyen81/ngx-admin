@@ -9,6 +9,9 @@ import {LogConfig} from '../config/log.config';
 import {isArray} from 'util';
 import {Cacheable} from 'ngx-cacheable';
 import {environment} from '../../environments/environment';
+import JsonUtils from '../utils/json.utils';
+import {IModel} from '../@core/data/base';
+import {BaseDbService} from './database.service';
 
 /**
  * Abstract HTTP service
@@ -361,4 +364,42 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         errors?: any;
         messages?: any;
     }): Observable<T | T[]>;
+}
+
+/**
+ * Base HTTP service
+ * @param <T> entity type
+ */
+export abstract class BaseHttpService<T extends IModel> extends AbstractHttpService<T, T> {
+
+    protected constructor(@Inject(HttpClient) http: HttpClient,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(BaseDbService) dbService: BaseDbService<T>) {
+        super(http, logger, dbService);
+    }
+
+    parseResponse(serviceResponse?: ServiceResponse): T {
+        if (!serviceResponse || !serviceResponse.getResponse()
+            || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
+            return undefined;
+        }
+        return JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as T;
+    }
+
+    handleOfflineMode(url: string, method?: string, res?: any, options?: {
+        body?: any;
+        headers?: HttpHeaders | { [header: string]: string | string[]; };
+        observe?: 'body' | 'events' | 'response' | any;
+        params?: HttpParams | { [param: string]: string | string[]; };
+        reportProgress?: boolean;
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
+        withCredentials?: boolean;
+        redirectSuccess?: any;
+        redirectFailure?: any;
+        errors?: any;
+        messages?: any;
+    }): Observable<T[] | T> {
+        throwError('Please implement this method if you wanna use offline mode!');
+        return undefined;
+    }
 }

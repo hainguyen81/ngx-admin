@@ -6,6 +6,7 @@ import {LogConfig} from '../config/log.config';
 import {IDbService} from './interface.service';
 import {ConnectionService} from 'ng-connection-service';
 import PromiseUtils from '../utils/promise.utils';
+import {IModel} from '../@core/data/base';
 
 /**
  * The delegate Promise function type for delete/update delegate function of IndexDb service
@@ -270,5 +271,28 @@ export abstract class AbstractBaseDbService<T> extends AbstractDbService<T> {
                           @Inject(ConnectionService) connectionService: ConnectionService,
                           dbStore: string) {
         super(dbService, logger, connectionService, dbStore, 'uid');
+    }
+}
+
+/**
+ * Base IndexedDb database service
+ * @param <T> entity type
+ */
+export abstract class BaseDbService<T extends IModel> extends AbstractBaseDbService<T> {
+
+    protected constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
+                          @Inject(NGXLogger) logger: NGXLogger,
+                          @Inject(ConnectionService) connectionService: ConnectionService,
+                          dbStore: string) {
+        super(dbService, logger, connectionService, dbStore);
+    }
+
+    deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
+                      reject: (reason?: any) => void, ...args: T[]) => {
+        if (args && args.length) {
+            this.getLogger().debug('Delete data', args, 'First data', args[0]);
+            args[0].deletedAt = (new Date()).getTime();
+            this.updateExecutor.apply(this, [resolve, reject, ...args]);
+        } else resolve(0);
     }
 }

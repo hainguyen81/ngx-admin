@@ -1,10 +1,10 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {AbstractHttpService} from '../http.service';
+import {AbstractHttpService, BaseHttpService} from '../http.service';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../response.service';
 import JsonUtils from '../../utils/json.utils';
-import {AbstractBaseDbService} from '../database.service';
+import {AbstractBaseDbService, BaseDbService} from '../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
@@ -95,7 +95,7 @@ export class ThirdPartyApiExpiredException extends Error {
 }
 
 @Injectable()
-export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends AbstractBaseDbService<T> {
+export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends BaseDbService<T> {
 
     protected constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                           @Inject(NGXLogger) logger: NGXLogger,
@@ -138,12 +138,8 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends A
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: T[]) => {
-        if (args && args.length) {
-            this.getLogger().debug('Delete data', args, 'First data', args[0]);
-            args[0].deletedAt = (new Date()).getTime();
-            args[0].expiredAt = (new Date()).getTime();
-            this.updateExecutor.apply(this, [resolve, reject, ...args]);
-        } else resolve(0);
+        if (args && args.length) args[0].expiredAt = (new Date()).getTime();
+        return super.deleteExecutor(resolve, reject);
     }
 
     /**
@@ -164,10 +160,11 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends A
 }
 
 @Injectable()
-export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
-    extends AbstractHttpService<T, T> {
+export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty> extends BaseHttpService<T> {
 
     protected static THIRD_PARTY_LATEST_ACCESS_TOKEN: string = 'XThirdPartyToken';
+    private static THIRD_PARTY_REQUIRED_TOKEN_TIMES: string = 'XThirdPartyRequiredToken';
+    private static THIRD_PARTY_REQUIRED_TOKEN_TIMES_MAXIMUM: number = 3;
 
     get config(): IThirdPartyApiConfig {
         return this.apiConfig;
@@ -186,6 +183,25 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
     }
     get latestToken(): any {
         return this.secureStorage.get(this.generateTokenKey());
+    }
+
+    private generateRequiredTokenTimesKey(): string {
+        const requiredTokenTimesKey: string = [
+            ThirdPartyApiHttpService.THIRD_PARTY_REQUIRED_TOKEN_TIMES,
+            this.config.code,
+        ].join('_');
+        return requiredTokenTimesKey;
+    }
+    private requiredTokenTimes(): number {
+        const times: any = this.secureStorage.get(this.generateRequiredTokenTimesKey());
+        return (!isNaN(times) ? parseFloat(times) : 1);
+    }
+    private increaseRequiredTokenTimes(): void {
+        const times: number = this.requiredTokenTimes();
+        this.secureStorage.set(this.generateRequiredTokenTimesKey(), times);
+    }
+    private resetRequiredTokenTimes(): void {
+        this.secureStorage.remove(this.generateRequiredTokenTimesKey());
     }
 
     protected constructor(@Inject(HttpClient) http: HttpClient,
@@ -213,22 +229,6 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
             data.expiredAt = (new Date()).getTime() + this.config.token.expiredIn;
         }
         return data;
-    }
-
-    handleOfflineMode(url: string, method?: string, res?: any, options?: {
-        body?: any;
-        headers?: HttpHeaders | { [header: string]: string | string[]; };
-        observe?: 'body' | 'events' | 'response' | any;
-        params?: HttpParams | { [param: string]: string | string[]; };
-        reportProgress?: boolean;
-        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
-        withCredentials?: boolean;
-        redirectSuccess?: any;
-        redirectFailure?: any;
-        errors?: any;
-        messages?: any;
-    }): Observable<T[] | T> {
-        return undefined;
     }
 
     protected configHeaders(
@@ -275,14 +275,25 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
         messages?: any;
     }): Observable<T | T[]> {
         /** check whether is un-authorized/expired */
-        if (url !== this.config.token.tokenUrl && this.isUnauthorizedOrExpired(res)) {
+        const requiredTokenTimes: number = this.requiredTokenTimes();
+        if (url !== this.config.token.tokenUrl
+            && requiredTokenTimes < ThirdPartyApiHttpService.THIRD_PARTY_REQUIRED_TOKEN_TIMES_MAXIMUM
+            && this.isUnauthorizedOrExpired(res)) {
             !(this.config.token.tokenUrl || '').length
             || throwError('Please provide third-party authorization configuration to require access token!');
+            // increase the required token times
+            this.increaseRequiredTokenTimes();
             return this.handleUnauthorizedExpired(url, method, options);
         }
         return super.handleResponseError(url, method, options);
     }
 
+    /**
+     * Get a boolean value indicating the specified response whether is EXPIRED/UNAUTHORIZED from third-party API,
+     * and need to send re-authorized request to get authorization token ?
+     * TODO Children classes should override this method
+     * @param res to check
+     */
     protected isUnauthorizedOrExpired(res?: any): boolean {
         return false;
     }
@@ -347,8 +358,6 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
                     _this.config.token.tokenUrl,
                     _this.config.token.method || 'GET', clonedOptions);
                 const accessToken: any = _this.parseAccessToken(httpResp);
-                // save token to local storage for using in future
-                _this.secureStorage.set(this.generateTokenKey(), accessToken);
                 if (!accessToken) {
                     throwError(new HttpErrorResponse({
                         url: url,
@@ -358,6 +367,10 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty>
                         error: 'Token has been expired! But could not require/parse new token again!',
                     }));
                 }
+                // save token to local storage for using in future
+                _this.secureStorage.set(this.generateTokenKey(), accessToken);
+                // reset the required token times if token is valid
+                _this.resetRequiredTokenTimes();
                 return accessToken;
             }),
             map(accessToken => {

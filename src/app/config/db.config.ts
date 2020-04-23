@@ -20,6 +20,7 @@ export const DB_STORE: any = {
     warehouse_category: 'warehouse_category',
     warehouse_adjust: 'warehouse_adjust',
     warehouse_adjust_detail: 'warehouse_adjust_detail',
+    warehouse_settings: 'warehouse_settings',
 };
 
 export const dbConfig: DBConfig = {
@@ -362,6 +363,18 @@ export const dbConfig: DBConfig = {
             {name: 'image', keypath: 'image', options: {unique: false}},
             {name: 'country_id', keypath: 'country_id', options: {unique: false}},
             {name: 'country', keypath: 'country', options: {unique: false}},
+        ],
+    }, {
+        store: DB_STORE.warehouse_settings,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'code', keypath: 'code', options: {unique: true}},
+            {name: 'name', keypath: 'name', options: {unique: false}},
+            {name: 'type', keypath: 'type', options: {unique: false}},
+            {name: 'image', keypath: 'image', options: {unique: false}},
+            {name: 'order', keypath: 'order', options: {unique: false}},
+            {name: 'remark', keypath: 'remark', options: {unique: false}},
         ],
     }],
 };

@@ -1,20 +1,17 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {AbstractHttpService} from '../../../http.service';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {ServiceResponse} from '../../../response.service';
-import JsonUtils from '../../../../utils/json.utils';
-import {AbstractBaseDbService} from '../../../database.service';
+import {BaseHttpService} from '../../../http.service';
+import {HttpClient} from '@angular/common/http';
+import {BaseDbService} from '../../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, throwError} from 'rxjs';
 import {IUser} from '../../../../@core/data/system/user';
 import {Constants} from '../../../../@core/data/constants/user.constants';
 import USER_STATUS = Constants.UserConstants.USER_STATUS;
 
 @Injectable()
-export class UserDbService extends AbstractBaseDbService<IUser> {
+export class UserDbService extends BaseDbService<IUser> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -44,35 +41,11 @@ export class UserDbService extends AbstractBaseDbService<IUser> {
 }
 
 @Injectable()
-export class UserHttpService extends AbstractHttpService<IUser, IUser> {
+export class UserHttpService extends BaseHttpService<IUser> {
 
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(UserDbService) dbService: UserDbService) {
         super(http, logger, dbService);
-    }
-
-    parseResponse(serviceResponse?: ServiceResponse): IUser {
-        if (!serviceResponse || !serviceResponse.getResponse()
-            || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
-            return undefined;
-        }
-        return JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as IUser;
-    }
-
-    handleOfflineMode(url: string, method?: string, res?: any, options?: {
-        body?: any;
-        headers?: HttpHeaders | { [header: string]: string | string[]; };
-        observe?: 'body' | 'events' | 'response' | any;
-        params?: HttpParams | { [param: string]: string | string[]; };
-        reportProgress?: boolean;
-        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
-        withCredentials?: boolean;
-        redirectSuccess?: any;
-        redirectFailure?: any;
-        errors?: any;
-        messages?: any;
-    }): Observable<IUser[] | IUser> {
-        return undefined;
     }
 }

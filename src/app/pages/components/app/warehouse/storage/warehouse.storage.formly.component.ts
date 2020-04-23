@@ -17,7 +17,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
-import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {API} from '../../../../../config/api.config';
 import {
     AppCountryFormlySelectExFieldComponent,

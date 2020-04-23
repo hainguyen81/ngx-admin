@@ -1,18 +1,15 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {AbstractHttpService} from '../../../http.service';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {ServiceResponse} from '../../../response.service';
-import JsonUtils from '../../../../utils/json.utils';
-import {AbstractBaseDbService} from '../../../database.service';
+import {BaseHttpService} from '../../../http.service';
+import {HttpClient} from '@angular/common/http';
+import {BaseDbService} from '../../../database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, throwError} from 'rxjs';
 import {IOrganization} from '../../../../@core/data/system/organization';
 
 @Injectable()
-export class OrganizationDbService extends AbstractBaseDbService<IOrganization> {
+export class OrganizationDbService extends BaseDbService<IOrganization> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -34,35 +31,11 @@ export class OrganizationDbService extends AbstractBaseDbService<IOrganization> 
 }
 
 @Injectable()
-export class OrganizationHttpService extends AbstractHttpService<IOrganization, IOrganization> {
+export class OrganizationHttpService extends BaseHttpService<IOrganization> {
 
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(OrganizationDbService) dbService: OrganizationDbService) {
         super(http, logger, dbService);
-    }
-
-    parseResponse(serviceResponse?: ServiceResponse): IOrganization {
-        if (!serviceResponse || !serviceResponse.getResponse()
-            || !serviceResponse.getResponse().body || !serviceResponse.getResponse().ok) {
-            return undefined;
-        }
-        return JsonUtils.parseResponseJson(serviceResponse.getResponse().body) as IOrganization;
-    }
-
-    handleOfflineMode(url: string, method?: string, res?: any, options?: {
-        body?: any;
-        headers?: HttpHeaders | { [header: string]: string | string[]; };
-        observe?: 'body' | 'events' | 'response' | any;
-        params?: HttpParams | { [param: string]: string | string[]; };
-        reportProgress?: boolean;
-        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | any;
-        withCredentials?: boolean;
-        redirectSuccess?: any;
-        redirectFailure?: any;
-        errors?: any;
-        messages?: any;
-    }): Observable<IOrganization[] | IOrganization> {
-        return undefined;
     }
 }

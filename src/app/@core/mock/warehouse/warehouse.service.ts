@@ -3,7 +3,7 @@ import {throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
-import {WarehouseDbService} from '../../../services/implementation/warehouse/warehouse/warehouse.service';
+import {WarehouseDbService} from '../../../services/implementation/warehouse/warehouse.storage/warehouse.service';
 import {IWarehouse} from '../../data/warehouse/warehouse';
 import {warehouseGenerate} from './mock.storage';
 

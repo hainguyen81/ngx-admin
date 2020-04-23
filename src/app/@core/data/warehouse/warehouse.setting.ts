@@ -6,6 +6,7 @@ export interface IWarehouseSetting extends IModel {
     code: string;
     name: string;
     type?: SETTINGS_TYPE | SETTINGS_TYPE.OTHERS;
+    image?: string[] | null;
     order?: number | 0;
     remark?: string | null;
 }

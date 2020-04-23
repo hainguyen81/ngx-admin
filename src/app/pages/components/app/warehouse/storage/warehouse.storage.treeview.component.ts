@@ -22,7 +22,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {IContextMenu} from '../../../abstract.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
-import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse/warehouse.datasource';
+import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {COMMON} from '../../../../../config/common.config';
 import {TranslateService} from '@ngx-translate/core';

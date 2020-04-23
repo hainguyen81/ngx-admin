@@ -1,5 +1,5 @@
 import {throwError} from 'rxjs';
-import {AbstractBaseDbService} from './database.service';
+import {BaseDbService} from './database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {Inject, Injectable} from '@angular/core';
@@ -9,7 +9,7 @@ import {ConnectionService} from 'ng-connection-service';
  * Example empty IndexDb service
  */
 @Injectable()
-export class EmptyService extends AbstractBaseDbService<any> {
+export class EmptyService extends BaseDbService<any> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
                 @Inject(NGXLogger) logger: NGXLogger,
