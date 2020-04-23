@@ -322,7 +322,7 @@
         },
         "settings": {
             "title": "Quản lý thiết lập chung",
-            "menu": "Quản lý thiết lập chung",
+            "menu": "Thiết lập chung",
             "table": {
                 "noData": "Không có bất kỳ thiết lập nào",
                 "code": "Mã",

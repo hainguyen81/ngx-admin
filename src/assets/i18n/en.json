@@ -322,7 +322,7 @@
         },
         "settings": {
             "title": "Warehouse Settings Management",
-            "menu": "Warehouse Settings Management",
+            "menu": "General Settings",
             "table": {
                 "noData": "Not found any settings",
                 "code": "Code",
