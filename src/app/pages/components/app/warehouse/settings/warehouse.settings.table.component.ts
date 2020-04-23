@@ -26,6 +26,7 @@ import SETTINGS_TYPE = Constants.WarehouseSettingsConstants.SETTINGS_TYPE;
 import convertWarehouseSettingsTypeToDisplay =
     Constants.WarehouseSettingsConstants.convertWarehouseSettingsTypeToDisplay;
 import {AppSmartTableComponent} from '../../components/app.table.component';
+import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
@@ -68,6 +69,7 @@ export const WarehouseSettingsTableSettings = {
             type: 'string',
             sort: false,
             filter: false,
+            renderComponent: ImageCellComponent,
         },
         order: {
             title: 'warehouse.settings.table.order',

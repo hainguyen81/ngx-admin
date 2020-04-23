@@ -172,7 +172,12 @@ export abstract class AppFlipcardComponent<
                         okButton: this.translate('common.toast.confirm.lose_data.ok'),
                     };
                     this.getConfirmPopup().show(popupConfig)
-                        .subscribe(value => value && this.setFlipped(false));
+                        .subscribe(value => {
+                            if (value) {
+                                this.doBack();
+                                this.setFlipped(false);
+                            }
+                        });
 
                 } else {
                     this.setFlipped(false);
@@ -226,5 +231,12 @@ export abstract class AppFlipcardComponent<
      */
     protected doDelete(): void {
         this.getLogger().debug('Perform delete action!');
+    }
+
+    /**
+     * Perform going back data
+     */
+    protected doBack(): void {
+        this.getLogger().debug('Perform going back action!');
     }
 }

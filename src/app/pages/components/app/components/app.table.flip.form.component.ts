@@ -182,6 +182,16 @@ export abstract class AppTableFlipFormComponent<
     }
 
     /**
+     * Perform going back data
+     */
+    protected doBack(): void {
+        // back to front
+        this._selectedModel = undefined;
+        super.getToolbarComponent().showActions = false;
+        super.setFlipped(false);
+    }
+
+    /**
      * Perform saving data
      */
     protected doSave(): void {
@@ -201,6 +211,9 @@ export abstract class AppTableFlipFormComponent<
         this.getDataSource().update(this.selectedModel, model)
             .then(() => this.showSaveDataSuccess())
             .catch(() => this.showSaveDataError());
+
+        // back to front
+        this.doBack();
     }
 
     /**
@@ -225,7 +238,7 @@ export abstract class AppTableFlipFormComponent<
                 : this.translate(this.getToolbarComponent().getToolbarHeader().title)),
         }).toPromise().then(value => {
             value && this.getDataSource().remove(this.getBackComponent().getModel())
-                .then(() => this.showDeleteDataSuccess())
+                .then(() => { this.showDeleteDataSuccess(); this.doBack(); })
                 .catch(() => this.showSaveDataError());
         });
     }
