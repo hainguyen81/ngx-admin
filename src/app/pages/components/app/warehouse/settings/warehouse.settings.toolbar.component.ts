@@ -11,12 +11,11 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
-import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {AppToolbarComponent} from '../../components/app.toolbar.component';
+import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
 import {API} from '../../../../../config/api.config';
 import {
     WarehouseSettingsDatasource,
@@ -29,7 +28,7 @@ export const WarehouseSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse settings toolbar actions config */
-export const WarehouseSettingsToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
+export const WarehouseSettingsToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarBackActionsConfig;
 
 /**
  * Toolbar component base on {MatToolbar}
