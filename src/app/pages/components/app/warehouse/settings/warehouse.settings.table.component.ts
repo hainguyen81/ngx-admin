@@ -70,6 +70,10 @@ export const WarehouseSettingsTableSettings = {
             sort: false,
             filter: false,
             renderComponent: ImageCellComponent,
+            editor: {
+                type: 'custom',
+                component: ImageCellComponent,
+            },
         },
         order: {
             title: 'warehouse.settings.table.order',
