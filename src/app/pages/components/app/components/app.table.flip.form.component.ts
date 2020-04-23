@@ -177,6 +177,10 @@ export abstract class AppTableFlipFormComponent<
     // FUNCTIONS
     // -------------------------------------------------
 
+    protected isDataChanged(): boolean {
+        return this.getBackComponent().getFormGroup().dirty;
+    }
+
     /**
      * Perform saving data
      */
