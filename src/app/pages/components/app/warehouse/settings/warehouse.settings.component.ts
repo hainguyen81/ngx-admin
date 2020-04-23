@@ -66,7 +66,7 @@ export const WarehouseSettingsTableSettings = {
             filter: false,
         },
         remark: {
-            title: 'warehouse.settings.table.tel',
+            title: 'warehouse.settings.table.remark',
             type: 'string',
             sort: false,
             filter: false,

@@ -44,6 +44,14 @@
                 "department": "Department",
                 "team_group": "Team/Group"
             },
+            "warehouseSettings": {
+                "status": "Status",
+                "brand": "Brand",
+                "color": "Color",
+                "size": "Size",
+                "material": "Material",
+                "others": "Others"
+            },
             "warehouseCategoryStatus": {
                 "activated": "Activated",
                 "locked": "Locked",
@@ -311,6 +319,18 @@
             "module": "Warehouse Management",
             "master": "Settings",
             "features": "Features"
+        },
+        "settings": {
+            "title": "Warehouse Settings Management",
+            "menu": "Warehouse Settings Management",
+            "table": {
+                "noData": "Not found any settings",
+                "code": "Code",
+                "name": "Name",
+                "image": "Image",
+                "order": "Order",
+                "remark": "Remark"
+            }
         },
         "storage": {
             "title": "Warehouse Archive Management",
