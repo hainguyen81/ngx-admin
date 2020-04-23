@@ -263,8 +263,7 @@ export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSour
         }
 
         // update model if necessary
-        let model: T;
-        model = this.getFormlyComponent().getModel();
+        const model: T = this.getFormlyComponent().getModel();
         this.getDataSource().update(this.getSelectedModel(), model)
             .then(() => this.showSaveDataSuccess())
             .catch(() => this.showSaveDataError());
@@ -274,8 +273,7 @@ export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSour
      * Perform resetting data
      */
     private doReset(): void {
-        let cloned: T;
-        cloned = DeepCloner(this.selectedModel);
+        const cloned: T = DeepCloner(this.selectedModel);
         delete cloned['parent'], cloned['children'];
         this.formlyComponent.setModel(cloned);
     }

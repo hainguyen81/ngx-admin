@@ -20,6 +20,8 @@ import {AppFormlyComponent} from './app.formly.component';
 import {AppFlipcardComponent} from './app.flipcard.component';
 import {IEvent} from '../../abstract.component';
 import {AppToolbarComponent} from './app.toolbar.component';
+import {DeepCloner} from '../../../../utils/object.utils';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 @Component({
     selector: 'ngx-flip-card-app-table-form',
@@ -37,6 +39,24 @@ export abstract class AppTableFlipFormComponent<
     F extends AppSmartTableComponent<D>,
     B extends AppFormlyComponent<T, D>>
     extends AppFlipcardComponent<D, TB, F, B> implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _selectedModel: T;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the current selected data model
+     * @return the current selected data model
+     */
+    protected get selectedModel(): T {
+        return this._selectedModel;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -95,18 +115,29 @@ export abstract class AppTableFlipFormComponent<
         if (super.getFrontComponent()) {
             (<AppSmartTableComponent<D>>super.getFrontComponent())
                 .setNewItemListener($event => {
+                    this._selectedModel = null;
                     this.onNewData($event);
                     super.getToolbarComponent().showActions = true;
                     this.setFlipped(true);
                 });
             (<AppSmartTableComponent<D>>super.getFrontComponent())
                 .setEditItemListener($event => {
+                    this._selectedModel = ($event && $event.$data
+                        && $event.$data['row'] instanceof Row
+                        ? ($event.$data['row'] as Row).getData() as T : undefined);
                     this.onEditData($event);
                     super.getToolbarComponent().showActions = true;
                     this.setFlipped(true);
                 });
             (<AppSmartTableComponent<D>>super.getFrontComponent())
-                .setDeleteItemListener(this.onDeleteData);
+                .setDeleteItemListener($event => {
+                    this._selectedModel = ($event && $event.$data
+                    && $event.$data['row'] instanceof Row
+                        ? ($event.$data['row'] as Row).getData() as T : undefined);
+                    this.onDeleteData($event);
+                    super.getToolbarComponent().showActions = false;
+                    this.setFlipped(false);
+                });
         }
     }
 
@@ -140,5 +171,58 @@ export abstract class AppTableFlipFormComponent<
      */
     protected onDeleteData($event: IEvent): void {
         this.getLogger().debug('Flip-table wanna delete data', $event);
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Perform saving data
+     */
+    protected doSave(): void {
+        this.getBackComponent().getFormGroup().updateValueAndValidity();
+        if (this.getBackComponent().getFormGroup().invalid) {
+            if (this.getToolbarComponent()) {
+                this.showError(this.getToolbarComponent().getToolbarHeader().title,
+                    'common.form.invalid_data');
+            } else {
+                this.showError('app', 'common.form.invalid_data');
+            }
+            return;
+        }
+
+        // update model if necessary
+        const model: T = this.getBackComponent().getModel();
+        this.getDataSource().update(this.selectedModel, model)
+            .then(() => this.showSaveDataSuccess())
+            .catch(() => this.showSaveDataError());
+    }
+
+    /**
+     * Perform resetting data
+     */
+    protected doReset(): void {
+        const cloned: T = DeepCloner(this.selectedModel);
+        delete cloned['parent'], cloned['children'];
+        this.getBackComponent().setModel(cloned);
+    }
+
+    /**
+     * Perform deleting data
+     */
+    protected doDelete(): void {
+        this.getConfirmPopup().show({
+            cancelButton: this.translate('common.toast.confirm.delete.cancel'),
+            color: 'warn',
+            content: this.translate('common.toast.confirm.delete.message'),
+            okButton: this.translate('common.toast.confirm.delete.ok'),
+            title: (!this.getToolbarComponent() ? this.translate('app')
+                : this.translate(this.getToolbarComponent().getToolbarHeader().title)),
+        }).toPromise().then(value => {
+            value && this.getDataSource().remove(this.getBackComponent().getModel())
+                .then(() => this.showDeleteDataSuccess())
+                .catch(() => this.showSaveDataError());
+        });
     }
 }

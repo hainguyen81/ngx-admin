@@ -151,12 +151,15 @@ export abstract class AppFlipcardComponent<
         switch (action.id) {
             case ACTION_SAVE:
                 // TODO Waiting for saving
+                this.doSave();
                 break;
             case ACTION_RESET:
                 // TODO Waiting for resetting
+                this.doReset();
                 break;
             case ACTION_DELETE:
                 // TODO Waiting for deleting
+                this.doDelete();
                 break;
             case ACTION_BACK:
                 if (this.isDataChanged()) {
@@ -202,5 +205,26 @@ export abstract class AppFlipcardComponent<
      */
     protected isDataChanged(): boolean {
         return false;
+    }
+
+    /**
+     * Perform saving data
+     */
+    protected doSave(): void {
+        this.getLogger().debug('Perform save action!');
+    }
+
+    /**
+     * Perform resetting data
+     */
+    protected doReset(): void {
+        this.getLogger().debug('Perform reset action!');
+    }
+
+    /**
+     * Perform deleting data
+     */
+    protected doDelete(): void {
+        this.getLogger().debug('Perform delete action!');
     }
 }
