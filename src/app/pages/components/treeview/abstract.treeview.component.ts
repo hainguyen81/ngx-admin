@@ -481,7 +481,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                     // toggle selected parent item
                     const parentEl: Element = this.getClosestElementBySelector(
                         AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, hoveredItemEl);
-                    parentEl && this.toggleTreeviewItemElement(parentEl);
+                    (parentEl instanceof HTMLElement)
+                    && this.toggleTreeviewItemElement(parentEl as HTMLElement);
                 }
             }
         }
@@ -718,7 +719,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         let treeviewItemEl: HTMLElement;
         treeviewItemEl = this.getFirstElementBySelector(treeviewItemElSelector);
         return this.getClosestElementBySelector(
-            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, treeviewItemEl);
+            AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR,
+            treeviewItemEl) as HTMLElement;
     }
 
     /**

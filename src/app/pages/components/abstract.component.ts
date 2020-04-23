@@ -84,7 +84,7 @@ export interface IEvent {
  * Abstract component
  */
 @AutoUnsubscribe()
-export class AbstractComponent
+export abstract class AbstractComponent
     implements OnChanges, OnInit, DoCheck,
         AfterContentInit, AfterContentChecked,
         AfterViewInit, AfterViewChecked,
