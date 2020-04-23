@@ -16,6 +16,22 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {COMMON} from '../../../../config/common.config';
+
+/* default warehouse item toolbar actions config */
+export const ACTION_BACK: string = 'ACTION_BACK';
+export const AppToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
+export const AppToolbarBackActionsConfig: IToolbarActionsConfig[] =
+    [].concat(AppToolbarActionsConfig)
+        .concat([{
+            id: ACTION_BACK,
+            label: 'common.form.action.back',
+            type: 'button',
+            status: 'default',
+            icon: {icon: 'chevron-circle-left', pack: 'fa'},
+            size: 'small',
+            shape: 'rectangle',
+        }]);
 
 /**
  * Toolbar component base on {MatToolbar}
@@ -67,5 +83,6 @@ export abstract class AppToolbarComponent<D extends DataSource>
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
+        super.setActions(AppToolbarBackActionsConfig);
     }
 }

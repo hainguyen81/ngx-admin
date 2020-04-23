@@ -11,14 +11,16 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {BaseNgxToolbarComponent} from '../../../toolbar/base.toolbar.component';
-import {ACTION_RESET, IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
-import {COMMON} from '../../../../../config/common.config';
+import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {
+    WarehouseItemDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {Lightbox} from 'ngx-lightbox';
 import {API} from '../../../../../config/api.config';
+import {AppToolbarBackActionsConfig} from '../../components/app.toolbar.component';
 
 /* default warehouse item toolbar header config */
 export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -28,17 +30,7 @@ export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
 
 /* default warehouse item toolbar actions config */
 export const ACTION_BACK: string = 'ACTION_BACK';
-export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] =
-    [].concat(COMMON.baseToolbarActions)
-        .concat([{
-            id: ACTION_BACK,
-            label: 'common.form.action.back',
-            type: 'button',
-            status: 'default',
-            icon: {icon: 'chevron-circle-left', pack: 'fa'},
-            size: 'small',
-            shape: 'rectangle',
-        }]);
+export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarBackActionsConfig;
 
 /**
  * Toolbar component base on {MatToolbar}

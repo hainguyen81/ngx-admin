@@ -11,7 +11,6 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
-import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -19,7 +18,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {AppToolbarComponent} from '../../components/app.toolbar.component';
+import {AppToolbarActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
 import {API} from '../../../../../config/api.config';
 
 /* default warehouse category toolbar header config */
@@ -29,7 +28,7 @@ export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse category toolbar actions config */
-export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
+export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarActionsConfig;
 
 /**
  * Toolbar component base on {MatToolbar}
