@@ -22,6 +22,7 @@ import {IEvent} from '../../abstract.component';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {DeepCloner} from '../../../../utils/object.utils';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {IdGenerators} from '../../../../config/generator.config';
 
 @Component({
     selector: 'ngx-flip-card-app-table-form',
@@ -208,12 +209,10 @@ export abstract class AppTableFlipFormComponent<
 
         // update model if necessary
         const model: T = this.getBackComponent().getModel();
+        model.id = model.id || IdGenerators.oid.generate();
         this.getDataSource().update(this.selectedModel, model)
-            .then(() => this.showSaveDataSuccess())
+            .then(() => { this.showSaveDataSuccess(); this.doBack(); })
             .catch(() => this.showSaveDataError());
-
-        // back to front
-        this.doBack();
     }
 
     /**

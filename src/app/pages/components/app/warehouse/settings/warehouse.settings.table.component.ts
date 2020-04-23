@@ -62,6 +62,10 @@ export const WarehouseSettingsTableSettings = {
             sort: false,
             filter: false,
             editable: false,
+            editor: {
+                type: 'list',
+                config: {list: []},
+            },
         },
         image: {
             title: 'warehouse.settings.table.image',
@@ -70,6 +74,10 @@ export const WarehouseSettingsTableSettings = {
             filter: false,
             editable: false,
             renderComponent: ImageCellComponent,
+            editor: {
+                type: 'custom',
+                component: ImageCellComponent,
+            },
         },
         order: {
             title: 'warehouse.settings.table.order',
