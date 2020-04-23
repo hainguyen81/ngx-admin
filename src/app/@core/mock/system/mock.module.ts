@@ -45,7 +45,7 @@ export const MockModuleSystem: IModule = {
     apiId: null,
     api: null,
     id: IdGenerators.oid.generate(),
-    icon: {icon: 'cog', pack: 'fa'},
+    icon: {icon: 'assistive-listening-systems', pack: 'fa'},
     children: [
         MockModuleOrganization,
         MockModuleUser,
@@ -99,7 +99,7 @@ export const MockModuleWarehouseMaster: IModule = {
     apiId: null,
     api: null,
     id: IdGenerators.oid.generate(),
-    icon: {icon: 'cog', pack: 'fas'},
+    icon: {icon: 'cogs', pack: 'fas'},
     children: [
         MockModuleWarehouseSettings,
         MockModuleWarehouseStorage,

@@ -36,7 +36,7 @@ export const MockApiWarehouseSettings: IApi = {
     name: 'warehouse.settings.menu',
     regexUrl: 'warehouse/**',
     baseUrl: 'http://localhost:8082/api-rest-warehouse/service',
-    icon: {icon: 'archive', pack: 'fa'},
+    icon: {icon: 'cog', pack: 'fa'},
     version: '1.0.0',
     id: IdGenerators.oid.generate(),
 };
