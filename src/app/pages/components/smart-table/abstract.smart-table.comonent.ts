@@ -1396,10 +1396,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         let rowEl: HTMLTableRowElement;
         rowEl = (row ? this.getRowElement(row) : undefined);
         let target: Node;
-        target = (event && event.target instanceof Node
-        && rowEl && rowEl.contains(event.target as Node) ? event.target
-            : event && event.target instanceof HTMLElement
-            && super.getElementsBySelector() (<HTMLElement>event.target).closest(AbstractSmartTableComponent.SMART_TABLE_BODY_SELETOR) ? event.target : rowEl);
+        target = (event && event.target instanceof Node && rowEl && rowEl.contains(event.target as Node)
+            ? event.target : !event || !event.target ? rowEl
+                : super.getClosestElementBySelector(
+                    AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, event.target as Element));
         return super.showHideContextMenu(event, target, (row ? row.getData() : undefined));
     }
 
