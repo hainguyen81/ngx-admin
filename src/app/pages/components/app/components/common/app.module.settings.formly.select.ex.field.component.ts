@@ -147,7 +147,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
         } else if ((this.moduleCode || '').length) {
             SystemDataUtils.invokeDatasourceModelsByDatabaseFilter(
                 this.generalSettingsDataSource,
-                'code', IDBKeyRange.only(this.moduleCode),
+                'module_code', IDBKeyRange.only(this.moduleCode),
                 this.translateService)
                 .then(modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
 

@@ -10,6 +10,7 @@ export const MockGeneralSettingsTemplate: IGeneralSettings = {
     name: 'Status',
     value: 'STATUS',
     module_id: null,
+    module_code: null,
     module: null,
 };
 
@@ -20,6 +21,7 @@ export function generalSettingsGenerate(): IGeneralSettings[] {
     mockSetting = ObjectUtils.deepCopy(MockGeneralSettingsTemplate);
     mockSetting.id = IdGenerators.oid.generate();
     mockSetting.module_id = MockModuleSystem.id;
+    mockSetting.module_code = MockModuleSystem.code;
     mockSetting.module = MockModuleSystem;
     mockSettings.push(mockSetting);
     return mockSettings;

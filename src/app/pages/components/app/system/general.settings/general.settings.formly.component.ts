@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -21,6 +21,9 @@ import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {MODULE_CODES} from '../../../../../config/api.config';
+import {
+    AppModuleFormlySelectExFieldComponent,
+} from '../../components/common/app.module.formly.select.ex.field.component';
 
 /* default general settings formly config */
 export const GeneralSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -114,7 +117,8 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class GeneralSettingsFormlyComponent
-    extends AppFormlyComponent<IGeneralSettings, GeneralSettingsDatasource> {
+    extends AppFormlyComponent<IGeneralSettings, GeneralSettingsDatasource>
+    implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -155,5 +159,52 @@ export class GeneralSettingsFormlyComponent
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(GeneralSettingsFormConfig);
         super.setFields(GeneralSettingsFormFieldsConfig);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        this.observeFields();
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Observe model fields for applying values
+     */
+    private observeFields(): void {
+        const fields: FormlyFieldConfig[] = this.getFields();
+        fields[0].expressionProperties = {
+            'module_id': (model: IGeneralSettings) => {
+                if ((model.module_id || '') !== ((model.module || {})['id'] || '')) {
+                    this.observeModuleField(fields, model);
+                }
+            },
+        };
+    }
+
+    /**
+     * Observe module field to apply model module
+     * @param fields to observe
+     * @param model form model
+     */
+    private observeModuleField(fields: FormlyFieldConfig[], model: IGeneralSettings): void {
+        const moduleField: FormlyFieldConfig = fields[0].fieldGroup[0];
+        const moduleFieldComponent: AppModuleFormlySelectExFieldComponent =
+            super.getFormFieldComponent(moduleField, AppModuleFormlySelectExFieldComponent);
+        if (moduleFieldComponent) {
+            model.module = ((moduleFieldComponent.selectedValues || []).length
+                ? moduleFieldComponent.selectedValues[0] : null);
+            model.module_code = model.module.code;
+        } else {
+            model.module = null;
+            model.module_code = null;
+        }
     }
 }

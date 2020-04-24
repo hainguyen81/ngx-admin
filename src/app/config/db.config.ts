@@ -49,6 +49,7 @@ export const dbConfig: DBConfig = {
             {name: 'value', keypath: 'value', options: {unique: false}},
             {name: 'builtin', keypath: 'builtin', options: {unique: false}},
             {name: 'module_id', keypath: 'module_id', options: {unique: false}},
+            {name: 'module_code', keypath: 'module_code', options: {unique: false}},
             {name: 'module', keypath: 'module', options: {unique: false}},
         ],
     }, {
