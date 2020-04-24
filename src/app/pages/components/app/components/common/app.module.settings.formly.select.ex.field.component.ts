@@ -138,18 +138,16 @@ export class AppModuleSettingsFormlySelectExFieldComponent
 
     private doFilter(): void {
         if ((this.moduleId || '').length) {
-            SystemDataUtils.invokeDatasourceModelsByDatabaseFilter(
-                this.generalSettingsDataSource,
-                'module_id', IDBKeyRange.only(this.moduleId),
-                this.translateService)
-                .then(modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+            SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
+                this.generalSettingsDataSource, 'module_id',
+                IDBKeyRange.only(this.moduleId), this.translateService).then(
+                    modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
 
         } else if ((this.moduleCode || '').length) {
-            SystemDataUtils.invokeDatasourceModelsByDatabaseFilter(
-                this.generalSettingsDataSource,
-                'module_code', IDBKeyRange.only(this.moduleCode),
-                this.translateService)
-                .then(modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+            SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
+                this.generalSettingsDataSource, 'module_code',
+                IDBKeyRange.only(this.moduleCode), this.translateService).then(
+                    modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
 
         } else {
             this.setItems([this.noneSettings]);

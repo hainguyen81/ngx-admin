@@ -179,15 +179,9 @@ export class GeneralSettingsSmartTableComponent
 
         this.translatedSettings['columns']['module_id']['valuePrepareFunction'] =
             value => this.translateModuleColumn(value);
-        SystemDataUtils.invokeAllModulesAsSelectOptions(
-            this.moduleDatasource, this.getTranslateService())
-            .then(options => {
-                (options || []).forEach(option => {
-                    option.title = this.translate(option.title);
-                    option.value = this.translate(option.value);
-                });
-                this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options;
-            });
+        SystemDataUtils.invokeAllModelsAsTableSelectOptions(
+            this.moduleDatasource, this.getTranslateService()).then(
+                options => this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options);
     }
     private translateModuleColumn(value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
