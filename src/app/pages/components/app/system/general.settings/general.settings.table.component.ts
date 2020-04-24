@@ -169,7 +169,8 @@ export class GeneralSettingsSmartTableComponent
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        SystemDataUtils.invokeAllModulesAsSelectOptions(this.moduleDatasource)
+        SystemDataUtils.invokeAllModulesAsSelectOptions(
+            this.moduleDatasource, this.getTranslateService())
             .then(options => {
                 (options || []).forEach(option => {
                     option.title = this.translate(option.title);

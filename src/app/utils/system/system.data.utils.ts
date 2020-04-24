@@ -51,9 +51,11 @@ export default class SystemDataUtils {
     /**
      * Get all modules and mapping returned data as the options of select control
      * @param moduleDatasource to invoke
+     * @param translateService need to translate
      */
     public static invokeAllModulesAsSelectOptions(
-        moduleDatasource: ModuleDatasource): Promise<{ value: string, label: string, title: string }[]> {
+        moduleDatasource: ModuleDatasource,
+        translateService?: TranslateService | null): Promise<{ value: string, label: string, title: string }[]> {
         moduleDatasource
         || throwError('ModuleDatasource is required to invoke!');
         return moduleDatasource
@@ -62,7 +64,7 @@ export default class SystemDataUtils {
             .getAll().then(values => {
                 const options: { value: string, label: string, title: string }[] = [];
                 Array.from(values).forEach((value: IModule) => {
-                    SystemDataUtils.mapModuleAsSelectOptions(value, options);
+                    SystemDataUtils.mapModuleAsSelectOptions(value, options, translateService);
                 });
                 return options;
             });
@@ -71,9 +73,12 @@ export default class SystemDataUtils {
      * Map the specified {IModule} into the return options array recursively
      * @param moduleValue to map
      * @param retValues to push returned values
+     * @param translateService need to translate
      */
     private static mapModuleAsSelectOptions(
-        moduleValue: IModule, retValues: { value: string, label: string, title: string }[]): void {
+        moduleValue: IModule,
+        retValues: { value: string, label: string, title: string }[],
+        translateService?: TranslateService | null): void {
         if (!moduleValue) return;
 
         if (!retValues) {
@@ -81,8 +86,10 @@ export default class SystemDataUtils {
         }
         retValues.push({
             value: moduleValue.id,
-            label: moduleValue.name.concat(' (', moduleValue.code, ')'),
-            title: moduleValue.name.concat(' (', moduleValue.code, ')'),
+            label: translateService ? translateService.instant(moduleValue.name)
+                .concat(' (', moduleValue.code, ')') : moduleValue.name.concat(' (', moduleValue.code, ')'),
+            title: translateService ? translateService.instant(moduleValue.name)
+                .concat(' (', moduleValue.code, ')') : moduleValue.name.concat(' (', moduleValue.code, ')'),
         });
     }
 
@@ -109,7 +116,8 @@ export default class SystemDataUtils {
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByCountry(country).then(values =>
-                ModelUtils.buildModelForSelectOption(values as IProvince[], translateService, false));
+                ModelUtils.buildModelForSelectOption(
+                    values as IProvince[], translateService, false));
     }
 
     /**
@@ -127,7 +135,8 @@ export default class SystemDataUtils {
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByProvince(province).then(values =>
-                ModelUtils.buildModelForSelectOption(values as ICity[], translateService, false));
+                ModelUtils.buildModelForSelectOption(
+                    values as ICity[], translateService, false));
     }
 
     /**
