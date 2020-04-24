@@ -35,7 +35,7 @@ export default class SystemDataUtils {
         dbService
         || throwError('DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
-            ModelUtils.buildModelForSelectOption(values as T[], translateService));
+            ModelUtils.buildModelsForSelectOption(values as T[], translateService));
     }
 
     /**
@@ -55,7 +55,7 @@ export default class SystemDataUtils {
         datasource.setPaging(1, undefined, false);
         datasource.setFilter([], false, false);
         return datasource.getAllByIndex(indexName, keyRange).then(values =>
-            ModelUtils.buildModelForSelectOption(values as T[], translateService));
+            ModelUtils.buildModelsForSelectOption(values as T[], translateService));
     }
 
     /**
@@ -73,7 +73,7 @@ export default class SystemDataUtils {
         datasource.setPaging(1, undefined, false);
         datasource.setFilter(conf || [], andOperator, false);
         return datasource.getAll().then(values =>
-            ModelUtils.buildModelForSelectOption(values as T[], translateService));
+            ModelUtils.buildModelsForSelectOption(values as T[], translateService));
     }
 
     /**
@@ -102,7 +102,7 @@ export default class SystemDataUtils {
             .getAll().then(values => {
                 const options: { value: string, label: string, title: string }[] = [];
                 Array.from(values).forEach((value: IModule) => {
-                    SystemDataUtils.mapModuleAsSelectOptions(value, options);
+                    SystemDataUtils.mapModuleAsSelectOptions(value, options, translateService);
                 });
                 return options;
             });
@@ -154,7 +154,7 @@ export default class SystemDataUtils {
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByCountry(country).then(values =>
-                ModelUtils.buildModelForSelectOption(
+                ModelUtils.buildModelsForSelectOption(
                     values as IProvince[], translateService, false));
     }
 
@@ -173,7 +173,7 @@ export default class SystemDataUtils {
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByProvince(province).then(values =>
-                ModelUtils.buildModelForSelectOption(
+                ModelUtils.buildModelsForSelectOption(
                     values as ICity[], translateService, false));
     }
 
