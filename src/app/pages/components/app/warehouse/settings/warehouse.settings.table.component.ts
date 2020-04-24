@@ -196,7 +196,7 @@ export class WarehouseSettingsSmartTableComponent
     }
     private translateModuleColumn(value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
-            this.translatedSettings['columns']['module_id']['editor']['config']['list'];
+            this.translatedSettings['columns']['type']['editor']['config']['list'];
         if (!isNullOrUndefined(options) && isArray(options)) {
             for (const option of options) {
                 if (option.value === value) {
