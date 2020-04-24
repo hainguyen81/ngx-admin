@@ -31,6 +31,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     // -------------------------------------------------
 
     @Input('showAlbum') private isShowAlbum: boolean | true;
+    @Input('onlyPrimary') private isOnlyPrimary: boolean | false;
     @Input('allowModified') private isAllowModified: boolean | false;
     @Input('images') private images: string[];
     @Output() private onChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -112,6 +113,21 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      */
     public setShowAlbum(showAlbum: boolean): void {
         this.isShowAlbum = showAlbum;
+    }
+
+    /**
+     * Get a boolean value indicating whether allows showing only primary image in album
+     */
+    public onlyPrimary(): boolean {
+        return this.isOnlyPrimary;
+    }
+
+    /**
+     * Set a boolean value indicating whether allows showing only primary image in album
+     * @param isOnlyPrimary to apply
+     */
+    public setOnlyPrimary(isOnlyPrimary: boolean): void {
+        this.isOnlyPrimary = isOnlyPrimary;
     }
 
     // -------------------------------------------------
