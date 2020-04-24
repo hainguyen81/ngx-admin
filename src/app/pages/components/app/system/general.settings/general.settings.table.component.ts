@@ -99,8 +99,7 @@ export const GeneralSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseM
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class GeneralSettingsSmartTableComponent
-    extends AppSmartTableComponent<GeneralSettingsDatasource>
-    implements AfterViewInit {
+    extends AppSmartTableComponent<GeneralSettingsDatasource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -171,8 +170,12 @@ export class GeneralSettingsSmartTableComponent
         this.getDataSource().refresh();
     }
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    protected translateSettings(): void {
+        super.translateSettings();
 
         this.translatedSettings['columns']['module_id']['valuePrepareFunction'] =
             value => this.translateModuleColumn(value);
@@ -186,11 +189,6 @@ export class GeneralSettingsSmartTableComponent
                 this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options;
             });
     }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
     private translateModuleColumn(value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
             this.translatedSettings['columns']['module_id']['editor']['config']['list'];
