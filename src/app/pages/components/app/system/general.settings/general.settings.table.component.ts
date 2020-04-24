@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -27,6 +27,7 @@ import {ModuleDatasource} from '../../../../../services/implementation/module.se
 import {throwError} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {MODULE_CODES} from '../../../../../config/api.config';
+import {isArray, isNullOrUndefined} from 'util';
 
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {
@@ -157,6 +158,10 @@ export class GeneralSettingsSmartTableComponent
         super.setContextMenu(GeneralSettingsContextMenu);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
             {field: 'code', search: keyword},
@@ -169,6 +174,8 @@ export class GeneralSettingsSmartTableComponent
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        this.translatedSettings['columns']['module_id']['valuePrepareFunction'] =
+            value => this.translateModuleColumn(value);
         SystemDataUtils.invokeAllModulesAsSelectOptions(
             this.moduleDatasource, this.getTranslateService())
             .then(options => {
@@ -178,5 +185,22 @@ export class GeneralSettingsSmartTableComponent
                 });
                 this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options;
             });
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    private translateModuleColumn(value?: string | null): string {
+        const options: { value: string, label: string, title: string }[] =
+            this.translatedSettings['columns']['module_id']['editor']['config']['list'];
+        if (!isNullOrUndefined(options) && isArray(options)) {
+            for (const option of options) {
+                if (option.value === value) {
+                    return option.label;
+                }
+            }
+        }
+        return '';
     }
 }
