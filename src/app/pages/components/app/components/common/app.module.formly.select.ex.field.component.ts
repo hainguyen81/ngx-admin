@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
@@ -37,7 +37,7 @@ export const AppModulesSelectOptions: INgxSelectExOptions = Object.assign({
 })
 export class AppModuleFormlySelectExFieldComponent
     extends AppFormlySelectExFieldComponent<IModule>
-    implements OnInit {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -74,6 +74,12 @@ export class AppModuleFormlySelectExFieldComponent
                 });
         });
         this.moduleDataSource.refresh();
+    }
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+        super.selectExComponent
+        && super.selectExComponent.setEnabledItemImage(false);
     }
 
     protected valueFormatter(value: any): any {
