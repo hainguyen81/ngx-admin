@@ -5,6 +5,7 @@ export interface IGeneralSettings extends IModel {
     code: string;
     name: string;
     value: number | string;
+    builtin?: boolean | false;
     module_id?: string | null;
     module?: IModule | null;
 }
