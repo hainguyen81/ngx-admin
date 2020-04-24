@@ -2,6 +2,7 @@ import {DBConfig} from 'ngx-indexed-db';
 import {environment} from '../../environments/environment';
 
 export const DB_STORE: any = {
+    // System modules
     third_party: 'third_party',
     auth: 'auth',
     module: 'module',
@@ -11,6 +12,9 @@ export const DB_STORE: any = {
     city: 'city',
     province: 'province',
     organization: 'organization',
+    general_settings: 'general_settings',
+
+    // Warehouse modules
     warehouse: 'warehouse',
     warehouse_item: 'warehouse_item',
     warehouse_order: 'warehouse_order',
@@ -34,6 +38,18 @@ export const dbConfig: DBConfig = {
             {name: 'code', keypath: 'code', options: {unique: true}},
             {name: 'response', keypath: 'response', options: {unique: false}},
             {name: 'expiredAt', keypath: 'expiredAt', options: {unique: false}},
+        ],
+    }, {
+        store: DB_STORE.general_settings,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'code', keypath: 'code', options: {unique: true}},
+            {name: 'name', keypath: 'name', options: {unique: false}},
+            {name: 'value', keypath: 'value', options: {unique: false}},
+            {name: 'builtin', keypath: 'builtin', options: {unique: false}},
+            {name: 'module_id', keypath: 'module_id', options: {unique: false}},
+            {name: 'module', keypath: 'module', options: {unique: false}},
         ],
     }, {
         store: DB_STORE.auth,
