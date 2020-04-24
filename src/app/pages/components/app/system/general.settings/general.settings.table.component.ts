@@ -170,6 +170,12 @@ export class GeneralSettingsSmartTableComponent
         super.ngAfterViewInit();
 
         SystemDataUtils.invokeAllModulesAsSelectOptions(this.moduleDatasource)
-            .then(options => this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options);
+            .then(options => {
+                (options || []).forEach(option => {
+                    option.title = this.translate(option.title);
+                    option.value = this.translate(option.value);
+                });
+                this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options;
+            });
     }
 }
