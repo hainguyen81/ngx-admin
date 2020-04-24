@@ -167,7 +167,6 @@ export class GeneralSettingsSmartTableComponent
             {field: 'name', search: keyword},
             {field: 'value', search: keyword},
         ], false);
-        this.getDataSource().refresh();
     }
 
     // -------------------------------------------------
@@ -181,7 +180,10 @@ export class GeneralSettingsSmartTableComponent
             value => this.translateModuleColumn(value);
         SystemDataUtils.invokeAllModelsAsTableSelectOptions(
             this.moduleDatasource, this.getTranslateService()).then(
-                options => this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options);
+                options => {
+                    this.translatedSettings['columns']['module_id']['editor']['config']['list'] = options;
+                    this.getDataSource().refresh();
+                });
     }
     private translateModuleColumn(value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =

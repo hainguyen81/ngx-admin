@@ -166,6 +166,10 @@ export class WarehouseSettingsSmartTableComponent
         super.setContextMenu(WarehouseSettingsContextMenu);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
             {field: 'code', search: keyword},
@@ -174,7 +178,6 @@ export class WarehouseSettingsSmartTableComponent
             {field: 'order', search: keyword},
             {field: 'remark', search: keyword},
         ], false);
-        this.getDataSource().refresh();
     }
 
     // -------------------------------------------------
@@ -192,7 +195,10 @@ export class WarehouseSettingsSmartTableComponent
         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
             this.generalSettingsDatasource, 'module_code',
             IDBKeyRange.only(MODULE_CODES.WAREHOUSE), this.getTranslateService()).then(
-                options => this.translatedSettings['columns']['type']['editor']['config']['list'] = options);
+                options => {
+                    this.translatedSettings['columns']['type']['editor']['config']['list'] = options;
+                    this.getDataSource().refresh();
+                });
     }
     private translateModuleColumn(value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
