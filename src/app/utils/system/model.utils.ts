@@ -1,5 +1,6 @@
 import {IModel} from '../../@core/data/base';
 import {TranslateService} from '@ngx-translate/core';
+import {isNullOrUndefined} from 'util';
 
 /**
  * {IModel} utilities
@@ -12,7 +13,7 @@ export default class ModelUtils {
      * @param translateService {TranslateService}
      * @param includedCode specify whether including model code in text
      */
-    public static buildModelsForSelectOption<T extends IModel>(
+    public static buildModelsForSelectOptions<T extends IModel>(
         models: T[], translateService?: TranslateService | null, includedCode?: boolean | true): T[] {
         (models || []).forEach((model: T) => {
             const modelName: string = model['name'] || '';
@@ -25,5 +26,55 @@ export default class ModelUtils {
             }
         });
         return models;
+    }
+
+    /**
+     * Map the specified {IModel} array to the table column select options array
+     * @param models {IModel[]}
+     * @param translateService {TranslateService}
+     * @param includedCode specify whether including model code in text
+     * @param keysMapper mappers to map model to option value key
+     */
+    public static buildModelsForTableSelectOptions<T extends IModel>(
+        models: T[], translateService?: TranslateService | null, includedCode?: boolean | true,
+        keysMapper?: { [key: string]: (model: T) => string | string[] }):
+        { [key: string]: string | string[]; }[] {
+        const options: { [key: string]: string | string[]; }[] = [];
+        if (Object.keys(keysMapper).length) {
+            (models || []).forEach((model: T) => {
+                const option: { [key: string]: string | string[]; } = {};
+                for (const [key, mapper] of Object.entries(keysMapper)) {
+                    if ((key || '').length && !isNullOrUndefined(mapper)) {
+                        option[key] = mapper.apply(this, [model]);
+                    }
+                }
+            });
+        }
+        return options;
+    }
+    /**
+     * Map the specified {IModel} array to the table column select options array
+     * @param models {IModel[]}
+     * @param translateService {TranslateService}
+     * @param includedCode specify whether including model code in text
+     */
+    public static buildModelsForDefaultTableSelectOptions<T extends IModel>(
+        models: T[], translateService?: TranslateService | null, includedCode?: boolean | true):
+        { [key: string]: string | string[]; }[] {
+        const labelTitleTextMapper: (model: T) => string | string[] = model => {
+            if (includedCode) {
+                return translateService ? translateService.instant(model['name'])
+                    .concat(' (', model['code'], ')') : model['name'].concat(' (', model['code'], ')');
+            } else {
+                return translateService ? translateService.instant(model['name']) : model['name'];
+            }
+        };
+        return this.buildModelsForTableSelectOptions(
+            models, translateService, includedCode, {
+                'value': model => model['id'],
+                'label': labelTitleTextMapper,
+                'title': labelTitleTextMapper,
+                'text': labelTitleTextMapper,
+            });
     }
 }

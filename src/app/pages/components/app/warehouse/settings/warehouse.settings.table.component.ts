@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -27,6 +27,13 @@ import convertWarehouseSettingsTypeToDisplay =
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {MODULE_CODES} from '../../../../../config/api.config';
+import {isArray, isNullOrUndefined} from 'util';
+import SystemDataUtils from '../../../../../utils/system/system.data.utils';
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {
+    GeneralSettingsDatasource,
+} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {throwError} from 'rxjs';
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
@@ -104,7 +111,8 @@ export const WarehouseSettingsContextMenu: IContextMenu[] = [].concat(COMMON.bas
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
-export class WarehouseSettingsSmartTableComponent extends AppSmartTableComponent<WarehouseSettingsDatasource> {
+export class WarehouseSettingsSmartTableComponent
+    extends AppSmartTableComponent<WarehouseSettingsDatasource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -146,11 +154,13 @@ export class WarehouseSettingsSmartTableComponent extends AppSmartTableComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
+        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setTableHeader('warehouse.settings.title');
         super.setTableSettings(WarehouseSettingsTableSettings);
         super.setContextMenu(WarehouseSettingsContextMenu);
@@ -172,47 +182,28 @@ export class WarehouseSettingsSmartTableComponent extends AppSmartTableComponent
     // -------------------------------------------------
 
     /**
-     * Convert {SETTINGS_TYPE} to the showed translated value
-     * @param value to convert
-     * @return converted value
-     */
-    private convertWarehouseSettingsTypeToDisplay(value: SETTINGS_TYPE): string {
-        return this.translate(convertWarehouseSettingsTypeToDisplay(value));
-    }
-
-    /**
      * Translate table settings
      */
     protected translateSettings(): void {
         super.translateSettings();
 
         this.translatedSettings['columns']['type']['valuePrepareFunction'] =
-            value => this.convertWarehouseSettingsTypeToDisplay(value);
-        this.translatedSettings['columns']['type']['editor']['config']['list'] = [
-            {
-                value: SETTINGS_TYPE.STATUS,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.STATUS),
-            },
-            {
-                value: SETTINGS_TYPE.BRAND,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.BRAND),
-            },
-            {
-                value: SETTINGS_TYPE.SIZE,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.SIZE),
-            },
-            {
-                value: SETTINGS_TYPE.COLOR,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.COLOR),
-            },
-            {
-                value: SETTINGS_TYPE.MATERIAL,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.MATERIAL),
-            },
-            {
-                value: SETTINGS_TYPE.OTHERS,
-                title: this.convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.OTHERS),
-            },
-        ];
+            value => this.translateModuleColumn(value);
+        SystemDataUtils.invokeDatasourceModelsByDatabaseFilter(
+            this.generalSettingsDatasource,
+            'module_code', IDBKeyRange.only(MODULE_CODES.WAREHOUSE),
+            this.getTranslateService())
+            .then(settings => this.translatedSettings['columns']['type']['editor']['config']['list'] = settings);
+    }
+    private translateModuleColumn(value?: string | null): string {
+        const settings: IGeneralSettings[] = this.translatedSettings['columns']['type']['editor']['config']['list'];
+        if (!isNullOrUndefined(settings) && isArray(settings)) {
+            for (const setting of settings) {
+                if (setting.id === value) {
+                    return setting['text'];
+                }
+            }
+        }
+        return '';
     }
 }
