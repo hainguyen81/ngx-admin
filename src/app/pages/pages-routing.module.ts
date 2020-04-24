@@ -22,6 +22,20 @@ const routes: Routes = [{
         path: 'system',
         children: [
             {
+                path: 'general',
+                children: [
+                    {
+                        path: 'settings',
+                        component: NotFoundComponent,
+                    },
+                    {
+                        path: '',
+                        redirectTo: 'settings',
+                        pathMatch: 'full',
+                    },
+                ],
+            },
+            {
                 path: 'organization',
                 component: OrganizationSplitPaneComponent,
             },
