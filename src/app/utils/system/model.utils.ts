@@ -37,7 +37,7 @@ export default class ModelUtils {
      */
     public static buildModelsForTableSelectOptions<T extends IModel>(
         models: T[], translateService?: TranslateService | null, includedCode?: boolean | true,
-        keysMapper?: { [key: string]: (model: T) => string | string[] }):
+        keysMapper?: { [key: string]: (model: T) => string | string[] } | null):
         { [key: string]: string | string[]; }[] {
         const options: { [key: string]: string | string[]; }[] = [];
         if (Object.keys(keysMapper).length) {
