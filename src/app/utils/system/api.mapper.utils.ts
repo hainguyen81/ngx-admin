@@ -56,8 +56,8 @@ export default class ApiMapperUtils {
             return (clientLink || '');
         }
 
+        clientLink = undefined;
         if (api.hasOwnProperty('children') && isObject(api['children'])) {
-            clientLink = undefined;
             for (const [k, v] of Object.entries(<Object>api['children'])) {
                 clientLink = this.findClientLinkRecursive(code, v);
                 if (!isNullOrUndefined(clientLink)) {
