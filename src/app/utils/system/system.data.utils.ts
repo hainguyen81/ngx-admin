@@ -23,16 +23,29 @@ export default class SystemDataUtils {
     /**
      * Get all models
      * @param datasource to invoke
+     * @param conf to filter
+     * @param andOperator filter operation
+     * @param translateService need to translate
+     */
+    public static invokeModelsByFilter<D extends DataSource, T extends IModel>(
+        datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
+        translateService?: TranslateService | null): Promise<T[]> {
+        datasource
+        || throwError('DataSource is required to invoke!');
+        datasource.setPaging(1, undefined, false);
+        datasource.setFilter(conf || [], andOperator, false);
+        return datasource.getAll().then(values =>
+            ModelUtils.buildModelForSelectOption(values as T[], translateService));
+    }
+
+    /**
+     * Get all models
+     * @param datasource to invoke
      * @param translateService need to translate
      */
     public static invokeAllModels<D extends DataSource, T extends IModel>(
         datasource: D, translateService?: TranslateService | null): Promise<T[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
-        datasource.setPaging(1, undefined, false);
-        datasource.setFilter([], false, false);
-        return datasource.getAll().then(values =>
-            ModelUtils.buildModelForSelectOption(values as T[], translateService));
+        return this.invokeModelsByFilter(datasource, [], false, translateService);
     }
 
     /**
