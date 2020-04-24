@@ -56,7 +56,10 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     }
 
     public set module(_moduleId: string) {
-        this._moduleId = _moduleId;
+        if (this._moduleId !== _moduleId) {
+            this._moduleId = _moduleId;
+            this.doFilter();
+        }
     }
 
     protected get noneSettings(): IGeneralSettings {
