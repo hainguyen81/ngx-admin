@@ -48,6 +48,7 @@ export default class ModelUtils {
                         option[key] = mapper.apply(this, [model]);
                     }
                 }
+                options.push(option);
             });
         }
         return options;
