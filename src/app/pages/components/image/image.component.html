@@ -8,7 +8,7 @@
             <img #imagePreview [src]="getImage()" [width]="200" [height]="200"
                  (error)="imagePreview.style.visibility = 'hidden'"
                  (load)="imagePreview.style.visibility = 'visible'"
-                 (click)="showLightbox(imagePreview.src)">
+                 (click)="showLightbox(imagePreview.src); preventEvent($event);">
         </div>
     </div>
     <div [class.d-table-row]="true" *ngIf="showAlbum() || allowModified()" class="images-gallery">
@@ -27,13 +27,13 @@
                  [class.d-none]="!(image || '').length"
                  [class.float-left]="true"
                  [class.mr-1]="true"
-                 (click)="imagePreview.src = image">
+                 (click)="imagePreview.src = image; preventEvent($event);">
             <nb-icon *ngIf="allowModified()"
                      pack="fa" icon="times"
                      [class.d-block]="true"
                      [class.position-absolute]="true"
                      class="images-gallery-item-remover"
-                     (click)="removeImage(image)">
+                     (click)="removeImage(image); preventEvent($event);">
             </nb-icon>
         </div>
         <nb-icon *ngIf="allowModified()"
@@ -42,7 +42,7 @@
                  [class.pt-2]="true"
                  [class.float-left]="true"
                  class="images-gallery-item-pluser"
-                 (click)="file.click()">
+                 (click)="file.click(); preventEvent($event);">
             <input #file type="file" [multiple]="true" (change)="onSelectFile({ $event: $event }); file.value = '';">
         </nb-icon>
     </div>
