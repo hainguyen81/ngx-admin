@@ -22,6 +22,7 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {GeneralSettingsSmartTableComponent} from './general.settings.table.component';
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
+import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
 
 @Component({
     moduleId: API.generalSettings.code,
