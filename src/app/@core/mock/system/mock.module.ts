@@ -1,10 +1,17 @@
 import {IModule} from '../../data/system/module';
 import {
-    MockApiCustomer, MockApiGeneralSettings,
-    MockApiOrganization,
-    MockApiUser,
-    MockApiWarehouseCategory,
-    MockApiWarehouseItem, MockApiWarehouseSettings, MockApiWarehouseStorage,
+    MockApiSystem,
+    MockApiSystemCustomer,
+    MockApiSystemGeneralSettings,
+    MockApiSystemOrganization,
+    MockApiSystemUser,
+    MockApiWarehouse,
+    MockApiWarehouseFeatures,
+    MockApiWarehouseFeaturesItem,
+    MockApiWarehouseSettings,
+    MockApiWarehouseSettingsCategory,
+    MockApiWarehouseSettingsGeneral,
+    MockApiWarehouseSettingsStorage,
 } from './mock.api';
 import {IdGenerators} from '../../../config/generator.config';
 
@@ -12,132 +19,128 @@ import {IdGenerators} from '../../../config/generator.config';
 // SYSTEM
 // -------------------------------------------------
 
-export const MockModuleGeneralSettings: IModule = {
-    code: 'GENERAL_SETTINGS_MODULE',
-    name: 'system.general.settings.menu',
-    apiId: MockApiGeneralSettings.id,
-    api: MockApiGeneralSettings,
+export const MockModuleSystemGeneralSettings: IModule = {
+    code: MockApiSystemGeneralSettings.code,
+    name: MockApiSystemGeneralSettings.name,
+    apiId: MockApiSystemGeneralSettings.id,
+    api: MockApiSystemGeneralSettings,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleUser: IModule = {
-    code: 'USER_MODULE',
-    name: 'system.user.menu',
-    apiId: MockApiUser.id,
-    api: MockApiUser,
+export const MockModuleSystemUser: IModule = {
+    code: MockApiSystemUser.code,
+    name: MockApiSystemUser.name,
+    apiId: MockApiSystemUser.id,
+    api: MockApiSystemUser,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleCustomer: IModule = {
-    code: 'CUSTOMER_MODULE',
-    name: 'system.customer.menu',
-    apiId: MockApiCustomer.id,
-    api: MockApiCustomer,
+export const MockModuleSystemCustomer: IModule = {
+    code: MockApiSystemCustomer.code,
+    name: MockApiSystemCustomer.name,
+    apiId: MockApiSystemCustomer.id,
+    api: MockApiSystemCustomer,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleOrganization: IModule = {
-    code: 'ORGANIZATION_MODULE',
-    name: 'system.organization.menu',
-    apiId: MockApiOrganization.id,
-    api: MockApiOrganization,
+export const MockModuleSystemOrganization: IModule = {
+    code: MockApiSystemOrganization.code,
+    name: MockApiSystemOrganization.name,
+    apiId: MockApiSystemOrganization.id,
+    api: MockApiSystemOrganization,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleSystem: IModule = {
-    code: 'SYSTEM_MODULE',
-    name: 'system.menu.module',
-    apiId: null,
-    api: null,
-    id: IdGenerators.oid.generate(),
-    icon: {icon: 'assistive-listening-systems', pack: 'fa'},
-    children: [
-        MockModuleGeneralSettings,
-        MockModuleOrganization,
-        MockModuleUser,
-        MockModuleCustomer,
-    ],
-};
+    export const MockModuleSystem: IModule = {
+        code: MockApiSystem.code,
+        name: MockApiSystem.name,
+        apiId: MockApiSystem.id,
+        api: MockApiSystem,
+        id: IdGenerators.oid.generate(),
+        children: [
+            MockModuleSystemGeneralSettings,
+            MockModuleSystemUser,
+            MockModuleSystemCustomer,
+            MockModuleSystemOrganization,
+        ],
+    };
 
 // -------------------------------------------------
 // WAREHOUSE
 // -------------------------------------------------
 
-export const MockModuleWarehouseSettings: IModule = {
-    code: 'WAREHOUSE_SETTINGS_MODULE',
-    name: 'warehouse.settings.menu',
-    apiId: MockApiWarehouseSettings.id,
-    api: MockApiWarehouseSettings,
+export const MockModuleWarehouseSettingsGeneral: IModule = {
+    code: MockApiWarehouseSettingsGeneral.code,
+    name: MockApiWarehouseSettingsGeneral.name,
+    apiId: MockApiWarehouseSettingsGeneral.id,
+    api: MockApiWarehouseSettingsGeneral,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleWarehouseStorage: IModule = {
-    code: 'WAREHOUSE_STORAGE_MODULE',
-    name: 'warehouse.storage.menu',
-    apiId: MockApiWarehouseStorage.id,
-    api: MockApiWarehouseStorage,
+export const MockModuleWarehouseSettingsStorage: IModule = {
+    code: MockApiWarehouseSettingsStorage.code,
+    name: MockApiWarehouseSettingsStorage.name,
+    apiId: MockApiWarehouseSettingsStorage.id,
+    api: MockApiWarehouseSettingsStorage,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleWarehouseCategory: IModule = {
-    code: 'WAREHOUSE_CATEGORY_MODULE',
-    name: 'warehouse.category.menu',
-    apiId: MockApiWarehouseCategory.id,
-    api: MockApiWarehouseCategory,
+export const MockModuleWarehouseSettingsCategory: IModule = {
+    code: MockApiWarehouseSettingsCategory.code,
+    name: MockApiWarehouseSettingsCategory.name,
+    apiId: MockApiWarehouseSettingsCategory.id,
+    api: MockApiWarehouseSettingsCategory,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleWarehouseItem: IModule = {
-    code: 'WAREHOUSE_ITEM_MODULE',
-    name: 'warehouse.item.menu',
-    apiId: MockApiWarehouseItem.id,
-    api: MockApiWarehouseItem,
+    export const MockModuleWarehouseSettings: IModule = {
+        code: MockApiWarehouseSettings.code,
+        name: MockApiWarehouseSettings.name,
+        apiId: MockApiWarehouseSettings.id,
+        api: MockApiWarehouseSettings,
+        id: IdGenerators.oid.generate(),
+        children: [
+            MockModuleWarehouseSettingsGeneral,
+            MockModuleWarehouseSettingsStorage,
+            MockModuleWarehouseSettingsCategory,
+        ],
+    };
+
+export const MockModuleWarehouseFeaturesItem: IModule = {
+    code: MockApiWarehouseFeaturesItem.code,
+    name: MockApiWarehouseFeaturesItem.name,
+    apiId: MockApiWarehouseFeaturesItem.id,
+    api: MockApiWarehouseFeaturesItem,
     id: IdGenerators.oid.generate(),
     children: [],
 };
 
-export const MockModuleWarehouseMaster: IModule = {
-    code: 'WAREHOUSE_MASTER_MODULE',
-    name: 'warehouse.menu.master',
-    apiId: null,
-    api: null,
-    id: IdGenerators.oid.generate(),
-    icon: {icon: 'cogs', pack: 'fas'},
-    children: [
-        MockModuleWarehouseSettings,
-        MockModuleWarehouseStorage,
-        MockModuleWarehouseCategory,
-    ],
-};
-
-export const MockModuleWarehouseFeatures: IModule = {
-    code: 'WAREHOUSE_MODULE',
-    name: 'warehouse.menu.features',
-    apiId: null,
-    api: null,
-    id: IdGenerators.oid.generate(),
-    icon: {icon: 'briefcase', pack: 'fas'},
-    children: [
-        MockModuleWarehouseItem,
-    ],
-};
+    export const MockModuleWarehouseFeatures: IModule = {
+        code: MockApiWarehouseFeatures.code,
+        name: MockApiWarehouseFeatures.name,
+        apiId: MockApiWarehouseFeatures.id,
+        api: MockApiWarehouseFeatures,
+        id: IdGenerators.oid.generate(),
+        children: [
+            MockModuleWarehouseFeaturesItem,
+        ],
+    };
 
 export const MockModuleWarehouse: IModule = {
-    code: 'WAREHOUSE_MODULE',
-    name: 'warehouse.menu.module',
-    apiId: null,
-    api: null,
+    code: MockApiWarehouse.code,
+    name: MockApiWarehouse.name,
+    apiId: MockApiWarehouse.id,
+    api: MockApiWarehouse,
     id: IdGenerators.oid.generate(),
-    icon: {icon: 'warehouse', pack: 'fas'},
     children: [
-        MockModuleWarehouseMaster,
+        MockModuleWarehouseSettings,
         MockModuleWarehouseFeatures,
     ],
 };

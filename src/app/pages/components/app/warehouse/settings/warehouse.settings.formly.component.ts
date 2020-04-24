@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -17,14 +18,11 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {API} from '../../../../../config/api.config';
-import {Constants} from '../../../../../@core/data/constants/warehouse.settings.constants';
-import SETTINGS_TYPE = Constants.WarehouseSettingsConstants.SETTINGS_TYPE;
-import convertWarehouseSettingsTypeToDisplay =
-    Constants.WarehouseSettingsConstants.convertWarehouseSettingsTypeToDisplay;
 import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {AppModuleSettingsFormlySelectExFieldComponent} from "../../components/common/app.module.settings.formly.select.ex.field.component";
 
 /* default warehouse settings formly config */
 export const WarehouseSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -41,40 +39,10 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     {
                         className: 'w-100',
                         key: 'type',
-                        type: 'select',
+                        type: 'select-ex-general-settings',
                         templateOptions: {
                             label: 'warehouse.settings.form.type.label',
                             placeholder: 'warehouse.settings.form.type.placeholder',
-                            options: [
-                                {
-                                    value: null,
-                                    label: 'warehouse.settings.form.type.placeholder',
-                                },
-                                {
-                                    value: SETTINGS_TYPE.STATUS,
-                                    label: convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.STATUS),
-                                },
-                                {
-                                    value: SETTINGS_TYPE.BRAND,
-                                    label: convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.BRAND),
-                                },
-                                {
-                                    value: SETTINGS_TYPE.COLOR,
-                                    label: convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.COLOR),
-                                },
-                                {
-                                    value: SETTINGS_TYPE.SIZE,
-                                    label: convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.SIZE),
-                                },
-                                {
-                                    value: SETTINGS_TYPE.MATERIAL,
-                                    label: convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.MATERIAL),
-                                },
-                                {
-                                    value: SETTINGS_TYPE.OTHERS,
-                                    label: convertWarehouseSettingsTypeToDisplay(SETTINGS_TYPE.OTHERS),
-                                },
-                            ],
                             required: true,
                         },
                     },
@@ -140,7 +108,8 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class WarehouseSettingsFormlyComponent
-    extends AppFormlyComponent<IWarehouseSetting, WarehouseSettingsDatasource> {
+    extends AppFormlyComponent<IWarehouseSetting, WarehouseSettingsDatasource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -181,5 +150,27 @@ export class WarehouseSettingsFormlyComponent
             modalDialogService, confirmPopup, lightbox);
         super.setConfig(WarehouseSettingsFormConfig);
         super.setFields(WarehouseSettingsFormFieldsConfig);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    private doApplyGeneralSettings() {
+        const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
+            super.getFormFieldComponent(this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                AppModuleSettingsFormlySelectExFieldComponent);
+        settingsFieldComponent
+        && settingsFieldComponent.module = Module
     }
 }

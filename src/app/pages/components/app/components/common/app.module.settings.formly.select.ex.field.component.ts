@@ -112,6 +112,10 @@ export class AppModuleSettingsFormlySelectExFieldComponent
         return options || [];
     }
 
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
     private doFilter(): void {
         if ((this.module || '').length) {
             SystemDataUtils.invokeModelsByFilter(
