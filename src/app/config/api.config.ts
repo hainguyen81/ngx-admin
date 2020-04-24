@@ -6,6 +6,25 @@ export const API = {
         'Content-Type': 'application/json; charset=utf-8',
         'Company': 'hsg',
     },
+    login: {
+        code: () => 'API_AUTHORIZATION',
+        name: () => 'app',
+        api: {
+            method: 'POST',
+            url: () => 'http://localhost:8082/api-rest-oauth2/service',
+            login: () => {
+                const parent: any = API.login.api;
+                return parent.url.call(undefined)
+                    .concat('/oauth/token?grant_type=client_credentials');
+            },
+            regexUrl: 'oauth/**',
+            version: '1.0.0',
+        },
+        client: {
+            icon: {icon: 'sign-in', pack: 'fa'},
+            url: () => '/dashboard',
+        },
+    },
     system: {
         code: () => 'API_SYSTEM',
         name: () => 'system.menu.module',

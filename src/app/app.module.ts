@@ -143,7 +143,7 @@ import {NgxLocalStorageModule} from 'ngx-localstorage';
             strategies: [
                 NbxOAuth2AuthStrategy.setup({
                     name: 'email',
-                    baseEndpoint: AppConfig.API.user.baseUrl,
+                    baseEndpoint: AppConfig.API.login.api.login.call(undefined),
 
                     token: {
                         class: NbxAuthOAuth2Token,
@@ -151,8 +151,8 @@ import {NgxLocalStorageModule} from 'ngx-localstorage';
                     },
 
                     login: {
-                        endpoint: AppConfig.API.user.login,
-                        method: AppConfig.API.user.method,
+                        endpoint: AppConfig.API.login.api.login.call(undefined),
+                        method: AppConfig.API.login.api.method,
                         headers: AppConfig.API.headers,
                         redirect: {
                             success: '/dashboard',
