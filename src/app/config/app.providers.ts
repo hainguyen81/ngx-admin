@@ -24,7 +24,7 @@ import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
 import {ToastrService} from 'ngx-toastr';
 import {COMMON} from './common.config';
-import {ModuleService} from '../services/implementation/module.service';
+import {ModuleDatasource, ModuleHttpService, ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/system/user/user.service';
 import {UserDataSource} from '../services/implementation/system/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -136,6 +136,13 @@ import {
 import {
     WarehouseSettingsDatasource,
 } from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {
+    GeneralSettingsDbService,
+    GeneralSettingsHttpService,
+} from '../services/implementation/system/general.settings/general.settings.service';
+import {
+    GeneralSettingsDatasource,
+} from '../services/implementation/system/general.settings/general.settings.datasource';
 
 export function BaseHrefProvider(): string {
     let baseElement: HTMLCollectionBase;
@@ -230,6 +237,14 @@ export const AuthenticationProviders: StaticProvider[] = [
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
     {
+        provide: ModuleHttpService, useClass: ModuleHttpService,
+        deps: [HttpClient, NGXLogger, ModuleService],
+    },
+    {
+        provide: ModuleDatasource, useClass: ModuleDatasource,
+        deps: [ModuleHttpService, ModuleService, NGXLogger],
+    },
+    {
         provide: NbxOAuth2AuthDbService, useClass: NbxOAuth2AuthDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
     },
@@ -302,6 +317,21 @@ export const CustomerProviders: StaticProvider[] = [
     {
         provide: CustomerDatasource, useClass: CustomerDatasource,
         deps: [CustomerHttpService, CustomerDbService, NGXLogger],
+    },
+];
+
+export const GeneralSettingsProviders: StaticProvider[] = [
+    {
+        provide: GeneralSettingsDbService, useClass: GeneralSettingsDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: GeneralSettingsHttpService, useClass: GeneralSettingsHttpService,
+        deps: [HttpClient, NGXLogger, GeneralSettingsDbService],
+    },
+    {
+        provide: GeneralSettingsDatasource, useClass: GeneralSettingsDatasource,
+        deps: [GeneralSettingsHttpService, GeneralSettingsDbService, NGXLogger],
     },
 ];
 
@@ -526,6 +556,7 @@ export const Providers: StaticProvider[] = CommonProviders
     .concat(ThirdPartyApiProviders)
     .concat(AuthenticationProviders)
     .concat(I18NProviders)
+    .concat(GeneralSettingsProviders)
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)

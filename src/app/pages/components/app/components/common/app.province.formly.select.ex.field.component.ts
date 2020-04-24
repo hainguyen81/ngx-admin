@@ -73,7 +73,7 @@ export class AppProvinceFormlySelectExFieldComponent
                     let nonProvince: IProvince;
                     nonProvince = new Province(null, null, null);
                     nonProvince['text'] = this.getConfig().placeholder;
-                    this.setItems([nonProvince].concat(provinces));
+                    this.setItems([nonProvince].concat(provinces as IProvince[]));
                 });
         }
     }

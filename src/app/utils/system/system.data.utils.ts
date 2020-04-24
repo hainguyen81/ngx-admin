@@ -11,20 +11,70 @@ import ModelUtils from './model.utils';
 import {IModel} from '../../@core/data/base';
 import {ProvinceDatasource} from '../../services/implementation/system/province/province.datasource';
 import {IProvince} from '../../@core/data/system/province';
+import {ModuleDatasource} from '../../services/implementation/module.service';
+import {IModule} from '../../@core/data/system/module';
+import {TreeviewItem} from 'ngx-treeview';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {ICity} from '../../@core/data/system/city';
 
 export default class SystemDataUtils {
+
+    /**
+     * Get all models
+     * @param datasource to invoke
+     */
+    public static invokeAllModels<D extends DataSource, T extends IModel>(datasource: D): Promise<T[]> {
+        datasource
+        || throwError('DataSource is required to invoke!');
+        datasource.setPaging(1, undefined, false);
+        datasource.setFilter([], false, false);
+        return datasource.getAll().then(values => ModelUtils.buildModelForSelectOption(values as T[]));
+    }
+
+    /**
+     * Get all modules and mapping returned data as the options of select control
+     * @param moduleDatasource to invoke
+     */
+    public static invokeAllModulesAsSelectOptions(
+        moduleDatasource: ModuleDatasource): Promise<{ value: string, label: string, title: string }[]> {
+        moduleDatasource
+        || throwError('ModuleDatasource is required to invoke!');
+        return moduleDatasource
+            .setPaging(1, undefined, false)
+            .setFilter([], false, false)
+            .getAll().then(values => {
+                const options: { value: string, label: string, title: string }[] = [];
+                Array.from(values).forEach((value: IModule) => {
+                    SystemDataUtils.mapModuleAsSelectOptions(value, options);
+                });
+                return options;
+            });
+    }
+    /**
+     * Map the specified {IModule} into the return options array recursively
+     * @param moduleValue to map
+     * @param retValues to push returned values
+     */
+    private static mapModuleAsSelectOptions(
+        moduleValue: IModule, retValues: { value: string, label: string, title: string }[]): void {
+        if (!moduleValue) return;
+
+        if (!retValues) {
+            retValues = [];
+        }
+        retValues.push({
+            value: moduleValue.id,
+            label: moduleValue.name.concat(' (', moduleValue.code, ')'),
+            title: moduleValue.name.concat(' (', moduleValue.code, ')'),
+        });
+    }
 
     /**
      * Get all countries
      * @param countryDatasource to invoke
      */
-    public static invokeAllCountries(countryDatasource: CountryDatasource): Promise<any[]> {
-        countryDatasource
-        || throwError('CountryDatasource is required to invoke!');
-        return countryDatasource
-            .setPaging(1, undefined, false)
-            .setFilter([], false, false)
-            .getAll().then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
+    public static invokeAllCountries(countryDatasource: CountryDatasource): Promise<ICountry[]> {
+        return this.invokeAllModels(countryDatasource);
     }
 
     /**
@@ -32,14 +82,14 @@ export default class SystemDataUtils {
      * @param provinceDatasource to invoke
      * @param country to filter
      */
-    public static invokeAllProvinces(provinceDatasource: ProvinceDatasource, country: ICountry): Promise<any[]> {
+    public static invokeAllProvinces(provinceDatasource: ProvinceDatasource, country: ICountry): Promise<IProvince[]> {
         provinceDatasource
         || throwError('ProvinceDatasource is required to invoke!');
         return (<ProvinceDatasource>provinceDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByCountry(country).then(values =>
-                ModelUtils.buildModelForSelectOption(values as IModel[], false));
+                ModelUtils.buildModelForSelectOption(values as IProvince[], false));
     }
 
     /**
@@ -47,20 +97,22 @@ export default class SystemDataUtils {
      * @param cityDatasource to invoke
      * @param province to filter
      */
-    public static invokeAllCities(cityDatasource: CityDatasource, province: IProvince): Promise<any[]> {
+    public static invokeAllCities(cityDatasource: CityDatasource, province: IProvince): Promise<ICity[]> {
         cityDatasource
         || throwError('CityDatasource is required to invoke!');
         return (<CityDatasource>cityDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
-            .findByProvince(province).then(values => ModelUtils.buildModelForSelectOption(values as IModel[]));
+            .findByProvince(province).then(values =>
+                ModelUtils.buildModelForSelectOption(values as ICity[], false));
     }
 
     /**
      * Get all organization
      * @param organizationDatasource to invoke
      */
-    public static invokeAllOrganization(organizationDatasource: OrganizationDataSource): Promise<any[]> {
+    public static invokeAllOrganization(
+        organizationDatasource: OrganizationDataSource): Promise<TreeviewItem[]> {
         organizationDatasource
         || throwError('OrganizationDataSource is required to invoke!');
         return organizationDatasource
@@ -73,7 +125,8 @@ export default class SystemDataUtils {
      * Get all users and mapping returned data as the options of select control
      * @param organizationDatasource to invoke
      */
-    public static invokeAllUsersAsSelectOptions(userDatasource: UserDataSource): Promise<any[]> {
+    public static invokeAllUsersAsSelectOptions(
+        userDatasource: UserDataSource): Promise<{ value: string, label: string }[]> {
         userDatasource
         || throwError('UserDataSource is required to invoke!');
         return userDatasource
@@ -93,7 +146,8 @@ export default class SystemDataUtils {
      * @param userValue to map
      * @param retValues to push returned values
      */
-    private static mapUserAsSelectOptions(userValue: IUser, retValues: { value: string, label: string }[]): void {
+    private static mapUserAsSelectOptions(
+        userValue: IUser, retValues: { value: string, label: string }[]): void {
         if (!userValue) return;
 
         if (!retValues) {

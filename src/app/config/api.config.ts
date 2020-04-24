@@ -6,6 +6,13 @@ export const API = {
         'Content-Type': 'application/json; charset=utf-8',
         'Company': 'hsg',
     },
+    generalSettings: {
+        code: 'GENERAL_SETTINGS_API',
+        baseUrl: 'http://localhost:8082/api-rest-general/service',
+        login: '/oauth/token?grant_type=client_credentials',
+        method: 'POST',
+        client: '/dashboard/system/general/settings',
+    },
     organization: {
         code: 'ORGANIZATION_API',
         baseUrl: 'http://localhost:8082/api-rest-organization/service',

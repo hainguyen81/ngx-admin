@@ -72,7 +72,7 @@ export class AppCityFormlySelectExFieldComponent
                     let noneCity: ICity;
                     noneCity = new City(null, null, null);
                     noneCity['text'] = this.getConfig().placeholder;
-                    this.setItems([noneCity].concat(cities));
+                    this.setItems([noneCity].concat(cities as ICity[]));
                 });
         }
     }
