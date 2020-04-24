@@ -23,11 +23,11 @@ import {
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
-import {API} from '../../../../../config/api.config';
 import {Constants} from '../../../../../@core/data/constants/warehouse.item.constants';
 import ITEM_STATUS = Constants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
 import convertItemStatusToDisplay =
     Constants.WarehouseConstants.WarehouseItemConstants.convertItemStatusToDisplay;
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {
@@ -242,7 +242,7 @@ export const WarehouseItemTableSettings = {
 export const WarehouseItemContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: API.warehouseItem.code,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-warehouse-item',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

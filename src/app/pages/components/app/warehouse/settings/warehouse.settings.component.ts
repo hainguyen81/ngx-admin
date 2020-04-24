@@ -22,8 +22,10 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 @Component({
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-flip-card-app-warehouse-settings',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

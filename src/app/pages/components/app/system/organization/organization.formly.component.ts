@@ -25,7 +25,6 @@ import {
 } from './organization.formly.treeview.dropdown.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {API} from '../../../../../config/api.config';
 import {
     AppCountryFormlySelectExFieldComponent,
 } from '../../components/common/app.country.formly.select.ex.field.component';
@@ -39,6 +38,7 @@ import {Constants} from '../../../../../@core/data/constants/organization.consta
 import ORGANIZATION_TYPE = Constants.OrganizationConstants.ORGANIZATION_TYPE;
 import convertOrganizationTypeToDisplay = Constants.OrganizationConstants.convertOrganizationTypeToDisplay;
 import {IOrganization} from '../../../../../@core/data/system/organization';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -373,7 +373,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: API.organization.code,
+    moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-formly-form-app-organization',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss',

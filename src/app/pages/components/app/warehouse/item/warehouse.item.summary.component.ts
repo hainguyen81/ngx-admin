@@ -17,12 +17,12 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {AppConfig} from '../../../../../config/app.config';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
-import {API} from '../../../../../config/api.config';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
 @Component({
-    moduleId: API.warehouseItem.code,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-warehouse-item-summary',
     templateUrl: './warehouse.item.summary.component.html',
     styleUrls: ['./warehouse.item.summary.component.scss'],

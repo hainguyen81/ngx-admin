@@ -24,12 +24,12 @@ import {
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {API} from '../../../../../config/api.config';
 import {Constants} from '../../../../../@core/data/constants/warehouse.category.constants';
 import CATEGORY_TYPE = Constants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import convertWarehouseCategoryTypeToDisplay =
     Constants.WarehouseConstants.WarehouseCategoryConstants.convertWarehouseCategoryTypeToDisplay;
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -127,7 +127,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: API.warehouseCategory.code,
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-formly-form-app-warehouse-category',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss',

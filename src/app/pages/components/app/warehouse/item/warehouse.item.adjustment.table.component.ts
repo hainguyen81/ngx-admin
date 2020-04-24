@@ -21,7 +21,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Lightbox} from 'ngx-lightbox';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {WarehouseAdjustDatasource} from '../../../../../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
-import {API} from '../../../../../config/api.config';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* warehouse item adjustments table settings */
 export const WarehouseItemAdjustmentTableSettings = {
@@ -85,7 +85,7 @@ export const WarehouseItemAdjustmentTableSettings = {
 export const WarehouseItemAdjustmentContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: API.warehouseItem.code,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-warehouse-item-adjustment',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

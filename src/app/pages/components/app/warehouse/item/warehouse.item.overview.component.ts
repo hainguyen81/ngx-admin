@@ -4,7 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -28,7 +28,7 @@ import {
 } from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
-import {API} from '../../../../../config/api.config';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -346,7 +346,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: API.warehouseItem.code,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-formly-form-warehouse-item-overview',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss'],

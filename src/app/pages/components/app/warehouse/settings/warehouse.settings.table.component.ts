@@ -17,7 +17,6 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {API} from '../../../../../config/api.config';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
@@ -27,6 +26,7 @@ import convertWarehouseSettingsTypeToDisplay =
     Constants.WarehouseSettingsConstants.convertWarehouseSettingsTypeToDisplay;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
@@ -99,7 +99,7 @@ export const WarehouseSettingsTableSettings = {
 export const WarehouseSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: API.warehouseSettings.code,
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-smart-table-warehouse-settings',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

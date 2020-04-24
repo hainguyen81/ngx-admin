@@ -10,6 +10,7 @@ import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/syste
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {IModule} from '../../../../../@core/data/system/module';
 
 export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign({
     /**
@@ -46,18 +47,38 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     // -------------------------------------------------
 
     private _moduleId: string;
+    private _moduleCode: string;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    public get module(): string {
+    public get moduleId(): string {
         return this._moduleId;
     }
 
-    public set module(_moduleId: string) {
+    public set moduleId(_moduleId: string) {
         if (this._moduleId !== _moduleId) {
             this._moduleId = _moduleId;
+            this.doFilter();
+        }
+    }
+
+    public set module(_module: IModule) {
+        if (this._moduleId !== (_module || {})['id']) {
+            this._moduleId = _module.id;
+            this._moduleCode = _module.code;
+            this.doFilter();
+        }
+    }
+
+    public get moduleCode(): string {
+        return this._moduleCode;
+    }
+
+    public set moduleCode(_moduleCode: string) {
+        if (this._moduleCode !== _moduleCode) {
+            this._moduleCode = _moduleCode;
             this.doFilter();
         }
     }
@@ -117,12 +138,20 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     // -------------------------------------------------
 
     private doFilter(): void {
-        if ((this.module || '').length) {
+        if ((this.moduleId || '').length) {
             SystemDataUtils.invokeModelsByFilter(
                 this.generalSettingsDataSource,
-                [{field: 'module_id', search: this.module}],
+                [{field: 'module_id', search: this.moduleId}],
                 true, this.translateService).then(
                 modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+
+        } else if ((this.moduleCode || '').length) {
+            SystemDataUtils.invokeModelsByFilter(
+                this.generalSettingsDataSource,
+                [{field: 'code', search: this.moduleCode}],
+                true, this.translateService).then(
+                modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+
         } else {
             this.setItems([this.noneSettings]);
         }

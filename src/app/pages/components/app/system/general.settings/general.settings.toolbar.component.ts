@@ -16,10 +16,10 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
-import {API} from '../../../../../config/api.config';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* default general settings toolbar header config */
 export const GeneralSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -34,7 +34,7 @@ export const GeneralSettingsToolbarActionsConfig: IToolbarActionsConfig[] = AppT
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: API.generalSettings.code,
+    moduleId: MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-toolbar-app-system-general-settings',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

@@ -23,9 +23,9 @@ import {
     WarehouseOrderDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {API} from '../../../../../config/api.config';
 import {Constants} from '../../../../../@core/data/constants/warehouse.order.constants';
 import WAREHOUSE_ORDER_TYPE = Constants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE;
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* warehouse item orders table settings */
 export const WarehouseItemOrdersTableSettings = {
@@ -89,7 +89,7 @@ export const WarehouseItemOrdersTableSettings = {
 export const WarehouseItemOrdersContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: API.warehouseItem.code,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-warehouse-item-orders',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

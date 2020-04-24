@@ -6,8 +6,8 @@ import {
     AppFormlyTreeviewDropdownFieldComponent,
 } from '../../components/app.formly.treeview.dropdown.field.component';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
-import {API} from '../../../../../config/api.config';
 import {NGXLogger} from 'ngx-logger';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /**
  * Multi language for treeview field
@@ -63,7 +63,7 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
  * Custom warehouse category formly field for selecting parent category
  */
 @Component({
-    moduleId: API.warehouseCategory.code,
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-formly-treeview-dropdown-app-warehouse-category',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.component.html',
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.component.scss'],

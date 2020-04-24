@@ -19,8 +19,8 @@ import {
     WarehouseItemDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {Lightbox} from 'ngx-lightbox';
-import {API} from '../../../../../config/api.config';
 import {AppToolbarBackActionsConfig} from '../../components/app.toolbar.component';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* default warehouse item toolbar header config */
 export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -36,7 +36,7 @@ export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] = AppToo
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: API.warehouseItem.code,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-toolbar-warehouse-item',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss', './warehouse.item.toolbar.component.scss'],

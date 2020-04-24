@@ -23,7 +23,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field.component';
-import {API} from '../../../../../config/api.config';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,
@@ -40,7 +40,7 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    moduleId: API.organization.code,
+    moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-tree-view-app-organization',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],

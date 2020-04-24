@@ -30,13 +30,13 @@ import {
 } from '../../../toolbar/abstract.toolbar.component';
 import {ACTION_BACK} from './warehouse.item.toolbar.component';
 import {ConfirmPopupConfig} from 'ngx-material-popup/lib/configs/confirm-popup.config';
-import {API} from '../../../../../config/api.config';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Constants} from '../../../../../@core/data/constants/warehouse.item.constants';
 import ITEM_STATUS = Constants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 @Component({
-    moduleId: API.warehouseItem.code,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-flip-card-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

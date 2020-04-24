@@ -20,10 +20,10 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 import {Lightbox} from 'ngx-lightbox';
-import {API} from '../../../../../config/api.config';
 import {Constants} from '../../../../../@core/data/constants/user.constants';
 import USER_STATUS = Constants.UserConstants.USER_STATUS;
 import convertUserStatusToDisplay = Constants.UserConstants.convertUserStatusToDisplay;
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -92,7 +92,7 @@ export const UserTableSettings = {
 export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: API.organization.code,
+    moduleId: MODULE_CODES.SYSTEM_USER,
     selector: 'ngx-smart-table-users',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

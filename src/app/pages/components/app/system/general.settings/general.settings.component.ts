@@ -15,7 +15,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import {API} from '../../../../../config/api.config';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {
     GeneralSettingsDatasource,
@@ -23,9 +22,10 @@ import {
 import {GeneralSettingsSmartTableComponent} from './general.settings.table.component';
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 @Component({
-    moduleId: API.generalSettings.code,
+    moduleId: MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-flip-card-app-system-general-settings',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

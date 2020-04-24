@@ -21,13 +21,13 @@ import {WarehouseStorageFormlyComponent} from './warehouse.storage.formly.compon
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
-import {API} from '../../../../../config/api.config';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /**
  * Warehouse Storage split-pane component base on {AngularSplitModule}
  */
 @Component({
-    moduleId: API.warehouseStorage.code,
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
     selector: 'ngx-split-pane-app-warehouse-storage',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss'],

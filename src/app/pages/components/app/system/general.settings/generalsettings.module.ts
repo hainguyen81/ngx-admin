@@ -14,13 +14,6 @@ import {CommonModule} from '@angular/common';
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {
-    WarehouseSettingsDbService,
-    WarehouseSettingsHttpService,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.service';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppMaterialModule} from '../../../../../app.material.module';

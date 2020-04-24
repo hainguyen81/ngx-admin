@@ -17,12 +17,14 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {API} from '../../../../../config/api.config';
 import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {AppModuleSettingsFormlySelectExFieldComponent} from "../../components/common/app.module.settings.formly.select.ex.field.component";
+import {
+    AppModuleSettingsFormlySelectExFieldComponent,
+} from '../../components/common/app.module.settings.formly.select.ex.field.component';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* default warehouse settings formly config */
 export const WarehouseSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -99,7 +101,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: API.warehouseSettings.code,
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-formly-form-app-warehouse-settings',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [
@@ -170,7 +172,8 @@ export class WarehouseSettingsFormlyComponent
         const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
             super.getFormFieldComponent(this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
                 AppModuleSettingsFormlySelectExFieldComponent);
-        settingsFieldComponent
-        && settingsFieldComponent.module = Module
+        if (settingsFieldComponent) {
+            settingsFieldComponent.moduleCode = MODULE_CODES.WAREHOUSE;
+        }
     }
 }

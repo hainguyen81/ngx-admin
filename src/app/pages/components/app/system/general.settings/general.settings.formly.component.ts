@@ -16,11 +16,11 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {API} from '../../../../../config/api.config';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* default general settings formly config */
 export const GeneralSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -105,7 +105,7 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: API.generalSettings.code,
+    moduleId: MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-formly-form-app-system-general-settings',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

@@ -16,10 +16,10 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
-import {API} from '../../../../../config/api.config';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {MODULE_CODES} from '../../../../../config/api.config';
 
 /* default warehouse settings toolbar header config */
 export const WarehouseSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -34,7 +34,7 @@ export const WarehouseSettingsToolbarActionsConfig: IToolbarActionsConfig[] = Ap
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: API.warehouseSettings.code,
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-toolbar-app-warehouse-settings',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',
