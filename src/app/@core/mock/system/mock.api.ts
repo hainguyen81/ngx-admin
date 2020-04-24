@@ -1,6 +1,16 @@
 import {IApi} from '../../data/system/api';
 import {IdGenerators} from '../../../config/generator.config';
 
+export const MockApiGeneralSettings: IApi = {
+    code: 'GENERAL_SETTINGS_API',
+    name: 'system.general.settings.menu',
+    regexUrl: 'general/**',
+    baseUrl: 'http://localhost:8082/api-rest-general/service',
+    icon: { icon: 'wrench', pack: 'fa' },
+    version: '1.0.0',
+    id: IdGenerators.oid.generate(),
+};
+
 export const MockApiUser: IApi = {
     code: 'USER_API',
     name: 'system.user.menu',

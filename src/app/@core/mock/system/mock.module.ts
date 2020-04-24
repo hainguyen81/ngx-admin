@@ -1,6 +1,6 @@
 import {IModule} from '../../data/system/module';
 import {
-    MockApiCustomer,
+    MockApiCustomer, MockApiGeneralSettings,
     MockApiOrganization,
     MockApiUser,
     MockApiWarehouseCategory,
@@ -11,6 +11,15 @@ import {IdGenerators} from '../../../config/generator.config';
 // -------------------------------------------------
 // SYSTEM
 // -------------------------------------------------
+
+export const MockModuleGeneralSettings: IModule = {
+    code: 'GENERAL_SETTINGS_MODULE',
+    name: 'system.general.settings.menu',
+    apiId: MockApiGeneralSettings.id,
+    api: MockApiGeneralSettings,
+    id: IdGenerators.oid.generate(),
+    children: [],
+};
 
 export const MockModuleUser: IModule = {
     code: 'USER_MODULE',
@@ -47,6 +56,7 @@ export const MockModuleSystem: IModule = {
     id: IdGenerators.oid.generate(),
     icon: {icon: 'assistive-listening-systems', pack: 'fa'},
     children: [
+        MockModuleGeneralSettings,
         MockModuleOrganization,
         MockModuleUser,
         MockModuleCustomer,
