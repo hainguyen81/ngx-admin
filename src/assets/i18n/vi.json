@@ -179,6 +179,7 @@
                 },
                 "table": {
                     "noData": "Không có bất kỳ thiết lập nào",
+                    "module": "Gói",
                     "code": "Mã",
                     "name": "Tên",
                     "value": "Giá trị",

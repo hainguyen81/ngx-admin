@@ -179,6 +179,7 @@
                 },
                 "table": {
                     "noData": "Not found any settings",
+                    "module": "Module",
                     "code": "Code",
                     "name": "Name",
                     "value": "Value",
