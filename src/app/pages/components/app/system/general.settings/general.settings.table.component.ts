@@ -31,7 +31,7 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {
     hideSubHeader: true,
-    noDataMessage: 'general.settings.table.noData',
+    noDataMessage: 'system.general.settings.table.noData',
     actions: {
         add: false,
         edit: false,
