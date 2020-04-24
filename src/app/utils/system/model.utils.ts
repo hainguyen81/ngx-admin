@@ -1,4 +1,5 @@
 import {IModel} from '../../@core/data/base';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * {IModel} utilities
@@ -9,15 +10,16 @@ export default class ModelUtils {
      * Map the specified {IModel} array to the select option {NgxSelectOption} array
      * @param models {IModel[]}
      */
-    public static buildModelForSelectOption<T extends IModel>(models: T[], includedCode?: boolean | true): T[] {
+    public static buildModelForSelectOption<T extends IModel>(
+        models: T[], translateService?: TranslateService | null, includedCode?: boolean | true): T[] {
         (models || []).forEach((model: T) => {
             const modelName: string = model['name'] || '';
             const modelCode: string =
                 ((model['code'] || '').length ? ''.concat('(', model['code'], ')') : '');
             if (includedCode) {
-                model['text'] = [modelName, modelCode].join(' ').trim();
+                model['text'] = [(translateService ? translateService.instant(modelName) : modelName), modelCode].join(' ').trim();
             } else {
-                model['text'] = modelName;
+                model['text'] = (translateService ? translateService.instant(modelName) : modelName);
             }
         });
         return models;

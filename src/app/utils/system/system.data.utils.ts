@@ -16,19 +16,23 @@ import {IModule} from '../../@core/data/system/module';
 import {TreeviewItem} from 'ngx-treeview';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ICity} from '../../@core/data/system/city';
+import {TranslateService} from '@ngx-translate/core';
 
 export default class SystemDataUtils {
 
     /**
      * Get all models
      * @param datasource to invoke
+     * @param translateService need to translate
      */
-    public static invokeAllModels<D extends DataSource, T extends IModel>(datasource: D): Promise<T[]> {
+    public static invokeAllModels<D extends DataSource, T extends IModel>(
+        datasource: D, translateService?: TranslateService | null): Promise<T[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter([], false, false);
-        return datasource.getAll().then(values => ModelUtils.buildModelForSelectOption(values as T[]));
+        return datasource.getAll().then(values =>
+            ModelUtils.buildModelForSelectOption(values as T[], translateService));
     }
 
     /**
@@ -81,30 +85,36 @@ export default class SystemDataUtils {
      * Get all provinces by the specified country
      * @param provinceDatasource to invoke
      * @param country to filter
+     * @param translateService need to translate
      */
-    public static invokeAllProvinces(provinceDatasource: ProvinceDatasource, country: ICountry): Promise<IProvince[]> {
+    public static invokeAllProvinces(
+        provinceDatasource: ProvinceDatasource,
+        country: ICountry, translateService?: TranslateService | null): Promise<IProvince[]> {
         provinceDatasource
         || throwError('ProvinceDatasource is required to invoke!');
         return (<ProvinceDatasource>provinceDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByCountry(country).then(values =>
-                ModelUtils.buildModelForSelectOption(values as IProvince[], false));
+                ModelUtils.buildModelForSelectOption(values as IProvince[], translateService, false));
     }
 
     /**
      * Get all cities by the specified state/province
      * @param cityDatasource to invoke
      * @param province to filter
+     * @param translateService need to translate
      */
-    public static invokeAllCities(cityDatasource: CityDatasource, province: IProvince): Promise<ICity[]> {
+    public static invokeAllCities(
+        cityDatasource: CityDatasource,
+        province: IProvince, translateService?: TranslateService | null): Promise<ICity[]> {
         cityDatasource
         || throwError('CityDatasource is required to invoke!');
         return (<CityDatasource>cityDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByProvince(province).then(values =>
-                ModelUtils.buildModelForSelectOption(values as ICity[], false));
+                ModelUtils.buildModelForSelectOption(values as ICity[], translateService, false));
     }
 
     /**
