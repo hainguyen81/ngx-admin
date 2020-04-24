@@ -243,6 +243,17 @@ export abstract class BaseDataSource<T, H extends IHttpService<T>, D extends IDb
             });
     }
 
+    getAllByIndex(indexName: string, keyRange: IDBKeyRange): Promise<T[]> {
+        return super.getDbService().getAllByIndex(indexName, keyRange)
+            .then(this.onFulfilledData(), reason => {
+                this.getLogger().error(reason);
+                return [];
+            }).catch(reason => {
+                this.getLogger().error(reason);
+                return [];
+            });
+    }
+
     protected onFulfilledData():
         ((value: T | T[] | any) => (T | T[] | any) | PromiseLike<T | T[] | any>) | undefined | null {
         const _this: BaseDataSource<T, H, D> = this;

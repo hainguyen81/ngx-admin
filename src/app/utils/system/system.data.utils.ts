@@ -17,8 +17,46 @@ import {TreeviewItem} from 'ngx-treeview';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ICity} from '../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
+import {IDbService, IHttpService} from '../../services/interface.service';
+import {BaseDataSource} from '../../services/datasource.service';
 
 export default class SystemDataUtils {
+
+    /**
+     * Get all models
+     * @param datasource to invoke
+     * @param conf to filter
+     * @param andOperator filter operation
+     * @param translateService need to translate
+     */
+    public static invokeModelsByDatabaseFilter<T extends IModel, D extends IDbService<T>>(
+        dbService: D, indexName: string, keyRange: IDBKeyRange,
+        translateService?: TranslateService | null): Promise<T[]> {
+        dbService
+        || throwError('DbService is required to invoke!');
+        return dbService.getAllByIndex(indexName, keyRange).then(values =>
+            ModelUtils.buildModelForSelectOption(values as T[], translateService));
+    }
+
+    /**
+     * Get all models
+     * @param datasource to invoke
+     * @param conf to filter
+     * @param andOperator filter operation
+     * @param translateService need to translate
+     */
+    public static invokeDatasourceModelsByDatabaseFilter<
+        T extends IModel, H extends IHttpService<T>, D extends IDbService<T>,
+        DS extends BaseDataSource<T, H, D>>(
+        datasource: DS, indexName: string, keyRange: IDBKeyRange,
+        translateService?: TranslateService | null): Promise<T[]> {
+        datasource
+        || throwError('DataSource is required to invoke!');
+        datasource.setPaging(1, undefined, false);
+        datasource.setFilter([], false, false);
+        return datasource.getAllByIndex(indexName, keyRange).then(values =>
+            ModelUtils.buildModelForSelectOption(values as T[], translateService));
+    }
 
     /**
      * Get all models
@@ -64,7 +102,7 @@ export default class SystemDataUtils {
             .getAll().then(values => {
                 const options: { value: string, label: string, title: string }[] = [];
                 Array.from(values).forEach((value: IModule) => {
-                    SystemDataUtils.mapModuleAsSelectOptions(value, options, translateService);
+                    SystemDataUtils.mapModuleAsSelectOptions(value, options);
                 });
                 return options;
             });

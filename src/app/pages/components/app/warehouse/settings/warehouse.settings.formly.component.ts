@@ -161,7 +161,8 @@ export class WarehouseSettingsFormlyComponent
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-
+        // filter by module
+        this.doApplyGeneralSettings();
     }
 
     // -------------------------------------------------

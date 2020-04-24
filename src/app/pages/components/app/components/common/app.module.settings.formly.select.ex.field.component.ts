@@ -2,7 +2,6 @@ import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core
 import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
-import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {NGXLogger} from 'ngx-logger';
@@ -60,7 +59,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     public set moduleId(_moduleId: string) {
         if (this._moduleId !== _moduleId) {
             this._moduleId = _moduleId;
-            this.doFilter();
+            // this.doFilter();
         }
     }
 
@@ -98,7 +97,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
      * Create a new instance of {AppFormlySelectExFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param countryDataSource {CountryDatasource}
+     * @param generalSettingsDataSource {GeneralSettingsDatasource}
      * @param _logger {NGXLogger}
      */
     constructor(@Inject(GeneralSettingsDatasource) private generalSettingsDataSource: GeneralSettingsDatasource,
@@ -139,18 +138,18 @@ export class AppModuleSettingsFormlySelectExFieldComponent
 
     private doFilter(): void {
         if ((this.moduleId || '').length) {
-            SystemDataUtils.invokeModelsByFilter(
+            SystemDataUtils.invokeDatasourceModelsByDatabaseFilter(
                 this.generalSettingsDataSource,
-                [{field: 'module_id', search: this.moduleId}],
-                true, this.translateService).then(
-                modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+                'module_id', IDBKeyRange.only(this.moduleId),
+                this.translateService)
+                .then(modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
 
         } else if ((this.moduleCode || '').length) {
-            SystemDataUtils.invokeModelsByFilter(
+            SystemDataUtils.invokeDatasourceModelsByDatabaseFilter(
                 this.generalSettingsDataSource,
-                [{field: 'code', search: this.moduleCode}],
-                true, this.translateService).then(
-                modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+                'code', IDBKeyRange.only(this.moduleCode),
+                this.translateService)
+                .then(modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
 
         } else {
             this.setItems([this.noneSettings]);
