@@ -151,6 +151,41 @@
         "menu": {
             "module": "Hệ thống"
         },
+        "general": {
+            "settings": {
+                "title": "Thiết lập hệ thống",
+                "menu": "Thiết lập hệ thống",
+                "form": {
+                    "module": {
+                        "label": "Gói",
+                        "placeholder": "Gói",
+                        "description": "Gói"
+                    },
+                    "code": {
+                        "label": "Mã",
+                        "placeholder": "Mã",
+                        "description": "Mã"
+                    },
+                    "name": {
+                        "label": "Tên",
+                        "placeholder": "Tên",
+                        "description": "Tên"
+                    },
+                    "value": {
+                        "label": "Giá trị",
+                        "placeholder": "Giá trị",
+                        "description": "Giá trị"
+                    }
+                },
+                "table": {
+                    "noData": "Không có bất kỳ thiết lập nào",
+                    "code": "Mã",
+                    "name": "Tên",
+                    "value": "Giá trị",
+                    "builtin": "Dựng sẵn"
+                }
+            }
+        },
         "organization": {
             "title": "Quản lý tổ chức",
             "menu": "Tổ chức",

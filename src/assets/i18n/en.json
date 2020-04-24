@@ -151,6 +151,41 @@
         "menu": {
             "module": "System"
         },
+        "general": {
+            "settings": {
+                "title": "General Settings Management",
+                "menu": "General Settings",
+                "form": {
+                    "module": {
+                        "label": "Module",
+                        "placeholder": "Module",
+                        "description": "Module"
+                    },
+                    "code": {
+                        "label": "Code",
+                        "placeholder": "Code",
+                        "description": "Code"
+                    },
+                    "name": {
+                        "label": "Name",
+                        "placeholder": "Name",
+                        "description": "Name"
+                    },
+                    "value": {
+                        "label": "Value",
+                        "placeholder": "Value",
+                        "description": "Value"
+                    }
+                },
+                "table": {
+                    "noData": "Not found any settings",
+                    "code": "Code",
+                    "name": "Name",
+                    "value": "Value",
+                    "builtin": "Built-in"
+                }
+            }
+        },
         "organization": {
             "title": "Organization Management",
             "menu": "Organization",

@@ -43,7 +43,7 @@ export const GeneralSettingsTableSettings = {
     },
     columns: {
         module_id: {
-            title: 'general.settings.table.module',
+            title: 'system.general.settings.table.module',
             type: 'string',
             sort: false,
             filter: false,
@@ -54,28 +54,28 @@ export const GeneralSettingsTableSettings = {
             },
         },
         code: {
-            title: 'general.settings.table.code',
+            title: 'system.general.settings.table.code',
             type: 'string',
             sort: false,
             filter: false,
             editable: false,
         },
         name: {
-            title: 'general.settings.table.name',
+            title: 'system.general.settings.table.name',
             type: 'string',
             sort: false,
             filter: false,
             editable: false,
         },
         value: {
-            title: 'general.settings.table.value',
+            title: 'system.general.settings.table.value',
             type: 'string',
             sort: false,
             filter: false,
             editable: false,
         },
         builtin: {
-            title: 'general.settings.table.builtin',
+            title: 'system.general.settings.table.builtin',
             type: 'custom',
             sort: false,
             filter: false,
@@ -95,10 +95,7 @@ export const GeneralSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseM
     moduleId: API.generalSettings.code,
     selector: 'ngx-smart-table-system-general-settings',
     templateUrl: '../../../smart-table/smart-table.component.html',
-    styleUrls: [
-        '../../../smart-table/smart-table.component.scss',
-        './warehouse.settings.table.component.scss',
-    ],
+    styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class GeneralSettingsSmartTableComponent
     extends AppSmartTableComponent<GeneralSettingsDatasource>
