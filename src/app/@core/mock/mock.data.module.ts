@@ -25,8 +25,14 @@ import {MockWarehouseStorageService} from './warehouse/warehouse.service';
 import {WarehouseDbService} from '../../services/implementation/warehouse/warehouse.storage/warehouse.service';
 import {MockCountryService} from './system/country.service';
 import {CountryDbService} from '../../services/implementation/system/country/country.service';
+import {MockGeneralSettingsService} from './system/general.settings.service';
+import {GeneralSettingsDbService} from '../../services/implementation/system/general.settings/general.settings.service';
 
 export const MOCK_DATA_PROVIDERS = [
+    {
+        provide: MockGeneralSettingsService, useClass: MockGeneralSettingsService,
+        deps: [GeneralSettingsDbService, NGXLogger],
+    },
     {
         provide: MockUserService, useClass: MockUserService,
         deps: [UserDbService, NGXLogger],
