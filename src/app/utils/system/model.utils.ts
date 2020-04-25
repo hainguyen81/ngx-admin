@@ -48,8 +48,7 @@ export default class ModelUtils {
             }
         };
         return this.buildModelsForSelectOptions(
-            models, translateService, includedCode,
-            { 'title': titleTextMapper });
+            models, translateService, includedCode, { 'title': titleTextMapper });
     }
 
     /**

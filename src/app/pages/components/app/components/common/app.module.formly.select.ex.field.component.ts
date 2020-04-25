@@ -65,7 +65,7 @@ export class AppModuleFormlySelectExFieldComponent
 
     ngOnInit(): void {
         this.moduleDataSource.onChanged().subscribe(value => {
-            SystemDataUtils.invokeAllModelsAsSelectOptions(
+            SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(
                 this.moduleDataSource, this.translateService).then(modules => {
                     let noneModule: IModule;
                     noneModule = new Module(null, null, null, null);
