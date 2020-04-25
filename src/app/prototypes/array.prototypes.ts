@@ -94,7 +94,7 @@ export function __remove<T>(array: Array<T> | T[], ...items: T[]) {
     while (itemIdx && (array || []).length) {
         remItem = items[--itemIdx];
         while ((arrayIndex = (array || []).indexOf(remItem)) !== -1) {
-            array.splice(arrayIndex, 1);
+            (array || []).splice(arrayIndex, 1);
         }
     }
 }
@@ -132,7 +132,7 @@ export function __inject<T>(array: Array<T> | T[], index: number, ...items: T[])
         subItems.push(items);
     }
     if (subItems.length && !isNaN(index) && 0 <= index && index < this.length) {
-        array.splice(index + 1, 0, ...subItems);
+        (array || []).splice(index + 1, 0, ...subItems);
     }
 }
 
@@ -171,7 +171,7 @@ export function __diff<T>(a: Array<T> | T[], b: Array<T> | T[]): T[] {
     let diffItems: T[];
     diffItems = [];
     let clonedB: T[];
-    clonedB = (b || []).concat();
+    clonedB = (b || []).concat([]);
     for (let i: number = 0; i < (a || []).length; i++) {
         if (!clonedB.contains(a[i])) {
             diffItems.push(a[i]);
