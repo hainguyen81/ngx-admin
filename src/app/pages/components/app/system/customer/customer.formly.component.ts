@@ -51,18 +51,18 @@ export const CustomerFormConfig: FormlyConfig = new FormlyConfig();
 /* default customer formly fields config */
 export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
     {
-        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroupClassName: 'row ml-0 mr-0 p-0',
         fieldGroup: [
             {
-                className: 'col-8',
-                fieldGroupClassName: 'row ml-0 mr-0',
+                className: 'col-8 ml-0 mr-0 p-0',
+                fieldGroupClassName: 'row ml-0 mr-0 p-0',
                 fieldGroup: [
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-30 pl-0 pr-2',
+                                className: 'col-4',
                                 key: 'type',
                                 type: 'select-ex-general-settings',
                                 templateOptions: {
@@ -72,7 +72,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-30 pl-1 pr-1',
+                                className: 'col-4',
                                 key: 'level',
                                 type: 'select-ex-general-settings',
                                 templateOptions: {
@@ -82,7 +82,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-30 pl-2 pr-0',
+                                className: 'col-4',
                                 key: 'status',
                                 type: 'select-ex-general-settings',
                                 templateOptions: {
@@ -94,10 +94,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'col-6',
                                 key: 'code',
                                 type: 'input',
                                 templateOptions: {
@@ -107,7 +107,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'col-6',
                                 key: 'name',
                                 type: 'input',
                                 templateOptions: {
@@ -120,10 +120,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-100',
+                                className: 'col',
                                 key: 'address',
                                 type: 'input',
                                 templateOptions: {
@@ -135,10 +135,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'col-6',
                                 key: 'country_id',
                                 type: 'select-ex-country',
                                 templateOptions: {
@@ -147,7 +147,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'col-6',
                                 key: 'province_id',
                                 type: 'select-ex-province',
                                 templateOptions: {
@@ -164,10 +164,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'col-6',
                                 key: 'city_id',
                                 type: 'select-ex-city',
                                 templateOptions: {
@@ -181,7 +181,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'col-6',
                                 key: 'district_id',
                                 type: 'input',
                                 templateOptions: {
@@ -198,10 +198,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-30 pl-0 pr-2',
+                                className: 'col-4',
                                 key: 'zip_code',
                                 type: 'input',
                                 templateOptions: {
@@ -210,7 +210,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-30 pl-1 pr-1',
+                                className: 'col-4',
                                 key: 'tel',
                                 type: 'input',
                                 templateOptions: {
@@ -219,7 +219,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-30 pl-2 pr-0',
+                                className: 'col-4',
                                 key: 'fax',
                                 type: 'input',
                                 templateOptions: {
@@ -231,10 +231,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'col-6',
                                 key: 'email',
                                 type: 'input',
                                 templateOptions: {
@@ -246,7 +246,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'col-6',
                                 key: 'website',
                                 type: 'input',
                                 templateOptions: {
@@ -261,10 +261,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-30 pl-0 pr-2',
+                                className: 'col-4',
                                 key: 'contact_name',
                                 type: 'input',
                                 templateOptions: {
@@ -273,7 +273,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-30 pl-1 pr-1',
+                                className: 'col-4',
                                 key: 'contact_tel',
                                 type: 'input',
                                 templateOptions: {
@@ -282,7 +282,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-30 pl-2 pr-0',
+                                className: 'col-4',
                                 key: 'contact_fax',
                                 type: 'input',
                                 templateOptions: {
@@ -294,10 +294,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-100',
+                                className: 'col',
                                 key: 'remark',
                                 type: 'input',
                                 templateOptions: {
