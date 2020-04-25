@@ -2,7 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {PagesComponent} from './pages.component';
 import {NotFoundComponent} from './components/not-found.component';
-import {UserSmartTableComponent} from './components/app/system/user/user.component';
+import {UserComponent} from './components/app/system/user/user.component';
 import {
     OrganizationSplitPaneComponent,
 } from './components/app/system/organization/organization.component';
@@ -54,7 +54,7 @@ const routes: Routes = [{
             },
             {
                 path: 'user',
-                component: UserSmartTableComponent,
+                component: UserComponent,
             },
             {
                 path: 'customer',
