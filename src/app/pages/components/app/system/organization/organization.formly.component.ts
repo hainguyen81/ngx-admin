@@ -34,12 +34,22 @@ import {
 import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
-import {Constants as OrgConstants} from '../../../../../@core/data/constants/organization.constants';
-import ORGANIZATION_TYPE = OrgConstants.OrganizationConstants.ORGANIZATION_TYPE;
-import convertOrganizationTypeToDisplay = OrgConstants.OrganizationConstants.convertOrganizationTypeToDisplay;
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import {Constants, Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {CustomValidators} from 'ngx-custom-validators';
+import PromiseUtils from '../../../../../utils/promise.utils';
+import BaseModel, {IModel} from '../../../../../@core/data/base';
+import {
+    GeneralSettingsDatasource,
+} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {throwError} from 'rxjs';
+import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {
+    AppModuleSettingsFormlySelectExFieldComponent,
+} from '../../components/common/app.module.settings.formly.select.ex.field.component';
+import {isNullOrUndefined} from 'util';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -67,36 +77,11 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'type',
-                type: 'select',
+                type: 'select-ex-general-settings',
                 templateOptions: {
                     label: 'system.organization.form.type.label',
                     placeholder: 'system.organization.form.type.placeholder',
-                    options: [
-                        {
-                            value: ORGANIZATION_TYPE.HEAD_CENTER,
-                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.HEAD_CENTER),
-                        },
-                        {
-                            value: ORGANIZATION_TYPE.BRANCH,
-                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.BRANCH),
-                        },
-                        {
-                            value: ORGANIZATION_TYPE.DIVISION,
-                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.DIVISION),
-                        },
-                        {
-                            value: ORGANIZATION_TYPE.UNIT,
-                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.UNIT),
-                        },
-                        {
-                            value: ORGANIZATION_TYPE.DEPARTMENT,
-                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.DEPARTMENT),
-                        },
-                        {
-                            value: ORGANIZATION_TYPE.TEAM_GROUP,
-                            label: convertOrganizationTypeToDisplay(ORGANIZATION_TYPE.TEAM_GROUP),
-                        },
-                    ],
+                    options: [],
                     required: true,
                 },
             },
@@ -173,7 +158,8 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['country_id'] || '').length),
+                    'templateOptions.disabled':
+                        (model: IOrganization) => (!model || !(model.country_id || '').length),
                 },
             },
         ],
@@ -191,7 +177,8 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['province_id'] || '').length),
+                    'templateOptions.disabled':
+                        (model: IOrganization) => (!model || !(model.province_id || '').length),
                 },
             },
             {
@@ -204,7 +191,8 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['city_id'] || '').length),
+                    'templateOptions.disabled':
+                        (model: IOrganization) => (!model || !(model.city_id || '').length),
                 },
             },
         ],
@@ -253,7 +241,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'system.organization.form.email.placeholder',
                 },
                 validators: {
-                    validation: [EmailValidators.normal],
+                    validation: [CustomValidators.email, EmailValidators.normal],
                 },
             },
             {
@@ -420,11 +408,14 @@ export class OrganizationFormlyComponent
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
-                @Inject(UserDataSource) private userDataSource?: UserDataSource) {
+                @Inject(UserDataSource) private userDataSource?: UserDataSource,
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
+        userDataSource || throwError('Could not inject UserDataSource instance');
+        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         this.setConfig(OrganizationFormConfig);
         this.setFields(OrganizationFormFieldsConfig);
     }
@@ -433,43 +424,84 @@ export class OrganizationFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    protected onModelChanged() {
-        super.onModelChanged();
-
-        // reload belongTo field
-        SystemDataUtils.invokeAllOrganization(<OrganizationDataSource>this.getDataSource())
-            .then(orgValues => {
-                let options: any[];
-                options = [];
-                options.push(OrganizationTreeviewConfig);
-                options.push(orgValues);
-
-                let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-                belongToComponent = this.getFormFieldComponent(
-                    this.getFormlyForm().fields[0].fieldGroup[0],
-                    OrganizationFormlyTreeviewDropdownFieldComponent);
-                belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                this.disableModelFromBelongTo(
-                    this.getFormlyForm().fields[0].fieldGroup[0],
-                    this.getModel());
-
-                SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource)
-                    .then(users => {
-                        this.getFormlyForm().fields[1].fieldGroup[1].templateOptions.options = users;
-                    });
-            });
-    }
-
     ngOnInit(): void {
         super.ngOnInit();
 
-        // observer fields for applying values
+        // observe belongTo/manager fields
+        PromiseUtils.parallelPromises(undefined, undefined,
+            [ this.observeBelongToField(), this.observeManagerField() ]).then(
+                value => this.getLogger().debug('Loading parent organization/manager data successful'),
+                reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
+
+        // observe fields for applying values
         this.observeFields();
     }
 
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Observe belongTo field
+     */
+    private observeBelongToField(): Promise<void> {
+        return SystemDataUtils.invokeAllOrganization(
+            <OrganizationDataSource>this.getDataSource()).then(
+                orgValues => {
+                    let options: any[];
+                    options = [];
+                    options.push(OrganizationTreeviewConfig);
+                    options.push(orgValues);
+
+                    let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
+                    belongToComponent = this.getFormFieldComponent(
+                        this.getFormlyForm().fields[0].fieldGroup[0],
+                        OrganizationFormlyTreeviewDropdownFieldComponent);
+                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                    this.disableModelFromBelongTo(
+                        this.getFormlyForm().fields[0].fieldGroup[0],
+                        this.getModel());
+                });
+    }
+
+    /**
+     * Observe manager field
+     */
+    private observeManagerField(): Promise<any> {
+        return SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource).then(
+            users => this.getFormlyForm().fields[1].fieldGroup[1].templateOptions.options = users);
+    }
+
+    /**
+     * Observe organization type field
+     * @param field organization type field to apply
+     */
+    private observeOrganizationTypeField(field: FormlyFieldConfig) {
+        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
+            this.generalSettingsDatasource, '__general_settings_index_by_module_code',
+            IDBKeyRange.only([MODULE_CODES.SYSTEM, BUILTIN_CODES.ORGANIZATION_TYPE.code]),
+            this.getTranslateService(), {
+                'text': (model: IGeneralSettings) => this.translate(model.value.toString()),
+            }).then((settings: IModel[]) => this.observeOrganizationTypeSettingField(field, settings));
+    }
+    /**
+     * Observe general settings field
+     * @param field to observe
+     * @param options to apply
+     */
+    private observeOrganizationTypeSettingField(field: FormlyFieldConfig, options: IModel[]): void {
+        const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
+            super.getFormFieldComponent(field, AppModuleSettingsFormlySelectExFieldComponent);
+        if (!isNullOrUndefined(options)) {
+            const noneOption: IModel = new BaseModel(null);
+            if (settingsFieldComponent) {
+                settingsFieldComponent.setItems([noneOption].concat(options));
+            } else {
+                settingsFieldComponent.setItems([noneOption]);
+            }
+        }
+    }
 
     /**
      * Observe model fields for applying values
@@ -488,6 +520,7 @@ export class OrganizationFormlyComponent
                 }
             },
         };
+        this.observeOrganizationTypeField(fields[1].fieldGroup[0]);
     }
 
     /**

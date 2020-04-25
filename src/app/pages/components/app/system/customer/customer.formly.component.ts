@@ -45,6 +45,7 @@ import {
 import {isNullOrUndefined} from 'util';
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();
@@ -486,7 +487,7 @@ export class CustomerFormlyComponent
             this.generalSettingsDatasource, '__general_settings_index_by_module_code',
             IDBKeyRange.only([MODULE_CODES.SYSTEM, settingCode]),
             this.getTranslateService(), {
-                'text': model => this.translate(model['value']),
+                'text': (model: IGeneralSettings) => this.translate(model.value.toString()),
             }).then((settings: IModel[]) => this.observeSettingField(field, settings));
     }
     /**
