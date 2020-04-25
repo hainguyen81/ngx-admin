@@ -32,7 +32,7 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
      * @param e {IEvent} as $data is images list
      */
     public onChange(e: IEvent): void {
-        this.value = e.$data || [];
+        this.value = e.data || [];
         this.formControl && this.formControl.setValue(this.value);
     }
 

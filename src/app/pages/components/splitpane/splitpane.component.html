@@ -9,13 +9,13 @@
             [contextMenu]="splitPaneContextMenuComponent"
             unit="percent"
             direction="{{isHorizontal() ? 'horizontal' : 'vertical'}}"
-            (dragEnd)="onDragEnd({ $data: { unit: 'percent', sizes: $event } })"
+            (dragEnd)="onDragEnd({ data: { unit: 'percent', sizes: $event } })"
             #splitComponent="asSplit">
             <as-split-area
                 #area{{index}}
                 *ngFor="let index of getNumberOfAreas() | ngxArrayOfNumbers">
                 <!-- Split area {{index}} content placeholder -->
-                <div class="area-content p-sm-1" (resized)="onResized({ $data: $event })">
+                <div class="area-content p-sm-1" (resized)="onResized({ data: $event })">
                     <ng-template #splitAreaHolder></ng-template>
                 </div>
             </as-split-area>
@@ -29,7 +29,7 @@
                 [visible]="evalContextMenuItem(item, 'visible', false)"
                 [enabled]="evalContextMenuItem(item, 'enabled', false)"
                 [divider]="evalContextMenuItem(item, 'divider', false)"
-                (execute)="onMenuEvent({ $event: $event.event, $data: { item: $event.item, menu: item } })"
+                (execute)="onMenuEvent({ event: $event.event, data: { item: $event.item, menu: item } })"
             >
                 <span><nb-icon [icon]="evalContextMenuItem(item, 'icon')" pack="fa"></nb-icon>
                     {{evalContextMenuItem(item, 'title', '') | translate}}</span>

@@ -244,9 +244,9 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
         this.getLogger().debug('onClickAction', event);
         let fired: boolean;
         fired = false;
-        if (event && event.$data) {
+        if (event && event.data) {
             let action: IToolbarActionsConfig;
-            action = event.$data as IToolbarActionsConfig;
+            action = event.data as IToolbarActionsConfig;
             if (action && typeof action.click === 'function') {
                 action.click.apply(this, [event]);
                 fired = true;

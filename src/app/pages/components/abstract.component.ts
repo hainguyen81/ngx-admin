@@ -76,8 +76,8 @@ export interface IContextMenu {
 
 /* Customize event for abstract component */
 export interface IEvent {
-    $data?: any | null;
-    $event?: Event | void | null;
+    data?: any | null;
+    event?: Event | void | null;
 }
 
 /**
@@ -337,8 +337,8 @@ export abstract class AbstractComponent
         translateService || throwError('Could not inject TranslateService');
         factoryResolver || throwError('Could not inject ComponentFactoryResolver');
         dataSource = dataSource || new LocalDataSource();
-        dataSource.onChanged().subscribe(value => this.onDataSourceChanged({$data: value}));
-        translateService.onLangChange.subscribe(value => this.onLangChange({$event: value}));
+        dataSource.onChanged().subscribe(value => this.onDataSourceChanged({data: value}));
+        translateService.onLangChange.subscribe(value => this.onLangChange({event: value}));
     }
 
     // -------------------------------------------------
@@ -422,27 +422,27 @@ export abstract class AbstractComponent
         // check whether navigating on context menu
         let isOnContextMenu: boolean;
         let targetEl: HTMLElement;
-        targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
+        targetEl = (event && event.event as Event ? (<Event>event.event).target as HTMLElement : null);
         isOnContextMenu = this.hasClosestElement(AbstractComponent.CONTEXT_MENU_SELECTOR, targetEl);
         // if action key on context-menu, not handle it
         if (isOnContextMenu) {
             return;
         }
 
-        if (event && event.$event instanceof KeyboardEvent
-            && KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent)) {
+        if (event && event.event instanceof KeyboardEvent
+            && KeyboardUtils.isNavigateKey(event.event as KeyboardEvent)) {
             // close context menu
             this.closeContextMenu();
 
             // handle navigation keys
             this.onNavigateKeyDown(event);
 
-        } else if (event && event.$event instanceof KeyboardEvent
-            && KeyboardUtils.isContextMenuKey(event.$event)) {
+        } else if (event && event.event instanceof KeyboardEvent
+            && KeyboardUtils.isContextMenuKey(event.event)) {
             // handle context menu key
             this.onContextMenuKeyDown(event);
 
-        } else if (event && event.$event instanceof KeyboardEvent) {
+        } else if (event && event.event instanceof KeyboardEvent) {
             // handle action keydown
             this.onActionKeyDown(event);
         }
@@ -482,11 +482,11 @@ export abstract class AbstractComponent
     onKeyUp(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onKeyUp', event, '[', this.constructor.name, ']');
-        if (event && event.$event instanceof KeyboardEvent
-            && (KeyboardUtils.isNavigateKey(event.$event as KeyboardEvent)
-                || KeyboardUtils.isContextMenuKey(event.$event as KeyboardEvent))) {
+        if (event && event.event instanceof KeyboardEvent
+            && (KeyboardUtils.isNavigateKey(event.event as KeyboardEvent)
+                || KeyboardUtils.isContextMenuKey(event.event as KeyboardEvent))) {
             // stop firing event
-            this.preventEvent(event.$event);
+            this.preventEvent(event.event);
         }
     }
 
@@ -506,11 +506,11 @@ export abstract class AbstractComponent
     onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onContextMenu', event, '[', this.constructor.name, ']');
-        if (event && event.$event instanceof MouseEvent
+        if (event && event.event instanceof MouseEvent
             && ((!this.getContextMenu() || !this.getContextMenu().length)
-                || this.showHideContextMenu(event.$event, event.$event.target, event.$data))) {
+                || this.showHideContextMenu(event.event, event.event.target, event.data))) {
             // stop firing event
-            this.preventEvent(event.$event);
+            this.preventEvent(event.event);
         }
     }
 
@@ -532,16 +532,16 @@ export abstract class AbstractComponent
     onMenuEvent(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onMenuEvent', event, '[', this.constructor.name, ']');
-        if (event && event.$data && event.$data['menu']) {
-            if (typeof event.$data['menu']['click'] === 'function') {
-                event.$data['menu']['click']['apply'](this, [event.$data['item']]);
+        if (event && event.data && event.data['menu']) {
+            if (typeof event.data['menu']['click'] === 'function') {
+                event.data['menu']['click']['apply'](this, [event.data['item']]);
             } else {
                 let menuItem: IContextMenu;
-                menuItem = event.$data['menu'] as IContextMenu;
+                menuItem = event.data['menu'] as IContextMenu;
                 let mnuId: string;
                 mnuId = (menuItem && typeof menuItem.id === 'function'
-                    ? menuItem.id.apply(this, [event.$data['item']]) : menuItem.id);
-                this.doMenuAction(event, mnuId, event.$data['item']);
+                    ? menuItem.id.apply(this, [event.data['item']]) : menuItem.id);
+                this.doMenuAction(event, mnuId, event.data['item']);
             }
         }
     }
@@ -720,13 +720,13 @@ export abstract class AbstractComponent
         componentElement = this.getNativeElement() as Element;
         this.componentKeyDownHandlerService = new BaseElementKeydownHandlerService<Element>(
             (componentElement ? componentElement : document),
-            (e: KeyboardEvent) => this.onKeyDown({$event: e}), this.getLogger());
+            (e: KeyboardEvent) => this.onKeyDown({event: e}), this.getLogger());
         this.componentKeyUpHandlerService = new BaseElementKeyupHandlerService<Element>(
             (componentElement ? componentElement : document),
-            (e: KeyboardEvent) => this.onKeyUp({$event: e}), this.getLogger());
+            (e: KeyboardEvent) => this.onKeyUp({event: e}), this.getLogger());
         this.componentKeyPressHandlerService = new BaseElementKeypressHandlerService<Element>(
             (componentElement ? componentElement : document),
-            (e: KeyboardEvent) => this.onKeyPress({$event: e}), this.getLogger());
+            (e: KeyboardEvent) => this.onKeyPress({event: e}), this.getLogger());
     }
 
     /**

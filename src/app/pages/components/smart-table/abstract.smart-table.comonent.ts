@@ -608,18 +608,18 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     onDoubleClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        if (event && event.$event instanceof MouseEvent) {
+        if (event && event.event instanceof MouseEvent) {
             let cell: Cell;
-            cell = this.getCellByEvent(event.$event);
+            cell = this.getCellByEvent(event.event);
             this.getLogger().debug('onDoubleClick', event, cell);
             if (cell && !this.isInEditMode()) {
                 this.editCell(cell);
             }
-            this.preventEvent(event.$event);
+            this.preventEvent(event.event);
 
-        } else if (event && event.$data && event.$data['data'] && !this.isInEditMode()) {
+        } else if (event && event.data && event.data['data'] && !this.isInEditMode()) {
             this.getLogger().debug('onDoubleClick', event);
-            this.editRow(event.$data['data']);
+            this.editRow(event.data['data']);
         }
     }
 
@@ -708,13 +708,13 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByEvent(event.$event as Event);
+        row = this.getRowByEvent(event.event as Event);
         this.getLogger().debug('onClick', event, row);
         if (row) {
             this.selectRow(row);
 
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
         }
     }
 
@@ -725,11 +725,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
         let row: Row;
-        row = this.getRowByEvent(event.$event as Event);
+        row = this.getRowByEvent(event.event as Event);
         this.getLogger().debug('onContextMenu', event, row);
-        if (this.showHideContextMenuOnRow(row, event.$event as Event)) {
+        if (this.showHideContextMenuOnRow(row, event.event as Event)) {
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
         }
     }
 
@@ -740,13 +740,13 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     onSearch(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSearch', event);
-        if (event && !(event.$data || '').length) {
+        if (event && !(event.data || '').length) {
             this.getDataSource().setFilter(null, false);
             this.getDataSource().refresh();
             return;
         }
 
-        this.doSearch(event.$data);
+        this.doSearch(event.data);
     }
 
     /**
@@ -763,11 +763,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         super.onNavigateKeyDown(event);
 
         let kbEvent: KeyboardEvent;
-        kbEvent = event.$event as KeyboardEvent;
+        kbEvent = event.event as KeyboardEvent;
 
         // check whether navigating on context menu
         let targetEl: HTMLElement;
-        targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
+        targetEl = (event && event.event as Event ? (<Event>event.event).target as HTMLElement : null);
         if (this.hasClosestElement(AbstractSmartTableComponent.SEARCH_FIELD_SELECTOR, targetEl)) {
             return;
         }
@@ -815,7 +815,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 this.toggleElementClass(rows.item(hoveredRowIndex), 'hover', true);
             }
         }
-        this.preventEvent(event.$event as Event);
+        this.preventEvent(event.event as Event);
     }
 
     /**
@@ -833,9 +833,9 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         let row: Row;
         row = (hoveredRows && hoveredRows.length
             ? this.getRowByElement(hoveredRows.item(0)) : undefined);
-        if (this.showHideContextMenuOnRow(row, event.$event as Event)) {
+        if (this.showHideContextMenuOnRow(row, event.event as Event)) {
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
         }
     }
 
@@ -855,10 +855,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param event KeyboardEvent
      */
     onKeyDown(event: IEvent): void {
-        if (event && event.$event
-            && (event.$event.target as Element)
+        if (event && event.event
+            && (event.event.target as Element)
             && this.hasClosestElement(
-                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.$event.target as Element)) {
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.event.target as Element)) {
             super.onKeyDown(event);
         }
     }
@@ -868,10 +868,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
     onKeyUp(event: IEvent): void {
-        if (event && event.$event
-            && (event.$event.target as Element)
+        if (event && event.event
+            && (event.event.target as Element)
             && this.hasClosestElement(
-                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.$event.target as Element)) {
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.event.target as Element)) {
             super.onKeyUp(event);
         }
     }
@@ -881,10 +881,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param event {IEvent} that contains {$event} as KeyboardEvent
      */
     onKeyPress(event: IEvent): void {
-        if (event && event.$event
-            && (event.$event.target as Element)
+        if (event && event.event
+            && (event.event.target as Element)
             && this.hasClosestElement(
-                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.$event.target as Element)) {
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR, event.event.target as Element)) {
             super.onKeyPress(event);
         }
     }

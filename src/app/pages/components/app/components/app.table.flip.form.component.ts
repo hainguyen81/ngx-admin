@@ -123,18 +123,18 @@ export abstract class AppTableFlipFormComponent<
                 });
             (<AppSmartTableComponent<D>>super.getFrontComponent())
                 .setEditItemListener($event => {
-                    this._selectedModel = ($event && $event.$data
-                        && $event.$data['row'] instanceof Row
-                        ? ($event.$data['row'] as Row).getData() as T : undefined);
+                    this._selectedModel = ($event && $event.data
+                        && $event.data['row'] instanceof Row
+                        ? ($event.data['row'] as Row).getData() as T : undefined);
                     this.onEditData($event);
                     super.getToolbarComponent().showActions = true;
                     this.setFlipped(true);
                 });
             (<AppSmartTableComponent<D>>super.getFrontComponent())
                 .setDeleteItemListener($event => {
-                    this._selectedModel = ($event && $event.$data
-                    && $event.$data['row'] instanceof Row
-                        ? ($event.$data['row'] as Row).getData() as T : undefined);
+                    this._selectedModel = ($event && $event.data
+                    && $event.data['row'] instanceof Row
+                        ? ($event.data['row'] as Row).getData() as T : undefined);
                     this.onDeleteData($event);
                     super.getToolbarComponent().showActions = false;
                     this.setFlipped(false);

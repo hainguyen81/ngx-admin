@@ -65,7 +65,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      */
     public setImages(images: string[]): void {
         this.images = images || [];
-        this.onChange && this.onChange.emit({$data: this.images});
+        this.onChange && this.onChange.emit({data: this.images});
     }
 
     /**
@@ -74,7 +74,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      */
     public addImages(images: string[]): void {
         this.images = (this.images || []).concat(images || []);
-        this.onChange && this.onChange.emit({$data: this.images});
+        this.onChange && this.onChange.emit({data: this.images});
     }
 
     /**

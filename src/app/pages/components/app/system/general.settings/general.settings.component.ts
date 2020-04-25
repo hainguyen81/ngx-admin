@@ -24,6 +24,7 @@ import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.compon
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {throwError} from 'rxjs';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_SETTINGS,
@@ -95,7 +96,8 @@ export class GeneralSettingsComponent
     }
 
     protected onEditData($event: IEvent): void {
-        const row: Row = ($event.$data && $event.$data['row'] instanceof Row ? $event.$data['row'] : undefined);
-        row && row.getData() && super.getBackComponent().setModel(row.getData() as IGeneralSettings);
+        const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
+        (row && row.getData()) || throwError('Invalid data to edit');
+        super.getBackComponent().setModel(row.getData() as IGeneralSettings);
     }
 }

@@ -43,7 +43,7 @@
                  [class.float-left]="true"
                  class="images-gallery-item-pluser"
                  (click)="file.click(); preventEvent($event);">
-            <input #file type="file" [multiple]="true" (change)="onSelectFile({ $event: $event }); file.value = '';">
+            <input #file type="file" [multiple]="true" (change)="onSelectFile({ event: $event }); file.value = '';">
         </nb-icon>
     </div>
 </div>

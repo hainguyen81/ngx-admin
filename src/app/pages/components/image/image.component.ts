@@ -81,7 +81,7 @@ export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<Data
      */
     protected onSelectFile(e: IEvent) {
         let files: File[];
-        files = (e && e.$event && e.$event.target && e.$event.target['files'] ? e.$event.target['files'] : []);
+        files = (e && e.event && e.event.target && e.event.target['files'] ? e.event.target['files'] : []);
         if ((files || []).length) {
             let invalidFiles: string[];
             invalidFiles = [];

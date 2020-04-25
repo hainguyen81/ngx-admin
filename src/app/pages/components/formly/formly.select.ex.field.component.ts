@@ -169,7 +169,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     protected onSelect($event: IEvent): void {
-        this.setValue(($event || {}).$data);
+        this.setValue(($event || {}).data);
     }
 
     public get selectedOptions(): NgxSelectOption[] {

@@ -164,7 +164,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         selectedItem = this.setSelectedValue(this.value, false);
 
         // raise event after loading data
-        this.ngAfterLoadData.emit({ $data: selectedItem });
+        this.ngAfterLoadData.emit({ data: selectedItem });
     }
 
     /**
@@ -181,7 +181,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      */
     private onSelectedValue(e: IEvent): void {
         let item: any;
-        item = (e && e.$data && isArray(e.$data) && Array.from(e.$data).length ? e.$data[0] : null);
+        item = (e && e.data && isArray(e.data) && Array.from(e.data).length ? e.data[0] : null);
         if (!item || item instanceof TreeviewItem) {
             this.setTreeviewSelectedItem(item as TreeviewItem, true);
 

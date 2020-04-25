@@ -128,11 +128,11 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
      * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
      */
     onClickAction(event: IEvent) {
-        if (!event || !event.$data || !(event.$data as IToolbarActionsConfig)) {
+        if (!event || !event.data || !(event.data as IToolbarActionsConfig)) {
             return;
         }
         let action: IToolbarActionsConfig;
-        action = event.$data as IToolbarActionsConfig;
+        action = event.data as IToolbarActionsConfig;
         switch (action.id) {
             case ACTION_SAVE:
                 // TODO Waiting for saving

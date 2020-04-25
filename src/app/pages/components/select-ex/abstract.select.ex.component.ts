@@ -199,7 +199,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     protected static SELECT_ITEM_ELEMENT_SELECTOR: string = 'ngx-select__item';
     private SELECT_SEARCH_CALLBACK: SelectSearchCallbackDelegate =
         (search?: string | null, item?: NgxSelectOption) => {
-            return this.onSearchCallback({ $data: { search: search, item: item } });
+            return this.onSearchCallback({ data: { search: search, item: item } });
         }
 
     // -------------------------------------------------
@@ -346,9 +346,9 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
             this.ngxSelectExComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectComponent, component => {
                     component && component.focus.subscribe(
-                        $event => this.onSelectFocus({ $event: $event }));
+                        $event => this.onSelectFocus({ event: $event }));
                     component && component.blur.subscribe(
-                        $event => this.onSelectBlur({ $event: $event }));
+                        $event => this.onSelectBlur({ event: $event }));
                     component && component.subjOptions.subscribe(
                         value => this.finishedLoading.emit(value));
                 });
@@ -387,11 +387,11 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     protected onSearchCallback($event: IEvent): boolean {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSearchCallback', $event);
-        const keyword: string = (!$event || !$event.$data || !$event.$data['search'] ? ''
-            : (<Object>$event.$data['search']).toString().toLowerCase());
-        const optionText: string = (!$event || !$event.$data || !($event.$data['item'] instanceof NgxSelectOption)
-            || !((<NgxSelectOption>$event.$data['item']).text || '').length ? ''
-            : (<NgxSelectOption>$event.$data['item']).text.toLowerCase());
+        const keyword: string = (!$event || !$event.data || !$event.data['search'] ? ''
+            : (<Object>$event.data['search']).toString().toLowerCase());
+        const optionText: string = (!$event || !$event.data || !($event.data['item'] instanceof NgxSelectOption)
+            || !((<NgxSelectOption>$event.data['item']).text || '').length ? ''
+            : (<NgxSelectOption>$event.data['item']).text.toLowerCase());
         return (keyword.length || optionText.length ? optionText.indexOf(keyword) >= 0 : true);
     }
 

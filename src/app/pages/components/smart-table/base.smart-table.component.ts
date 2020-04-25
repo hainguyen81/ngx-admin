@@ -79,7 +79,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
 
         // detect save action
         let kbEvent: KeyboardEvent;
-        kbEvent = event.$event as KeyboardEvent;
+        kbEvent = event.event as KeyboardEvent;
         let actionRow: Row;
         actionRow = this.getRowByEvent(kbEvent);
         let isF2Key: boolean;
@@ -107,14 +107,14 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
             this.saveData(actionRow);
 
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
 
             // enter edit mode by F2
         } else if (isF2Key) {
             this.enterEditMode(actionRow);
 
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
 
             // exit editing mode by Esc
         } else if (isEscKey) {
@@ -124,21 +124,21 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
             this.closeContextMenu();
 
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
 
             // delete row by [DELETE]
         } else if (isDelKey) {
             this.deleteData(actionRow);
 
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
 
             // insert new row by [INSERT]
         } else if (isInsertKey) {
             this.newRow();
 
             // stop firing event
-            this.preventEvent(event.$event as Event);
+            this.preventEvent(event.event as Event);
         }
     }
 
@@ -240,10 +240,10 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                 this.newRow();
                 break;
             case CONTEXT_MENU_EDIT:
-                this.editRowByData(event.$data['item'], 'id');
+                this.editRowByData(event.data['item'], 'id');
                 break;
             case CONTEXT_MENU_DELETE:
-                this.deleteRowByData(event.$data['item'], 'id');
+                this.deleteRowByData(event.data['item'], 'id');
                 break;
         }
     }

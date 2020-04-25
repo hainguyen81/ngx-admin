@@ -44,7 +44,7 @@ export const dbConfig: DBConfig = {
         storeConfig: {keyPath: 'uid', autoIncrement: true},
         storeSchema: [
             {name: 'id', keypath: 'id', options: {unique: true}},
-            {name: 'code', keypath: 'code', options: {unique: true}},
+            {name: 'code', keypath: 'code', options: {unique: false}},
             {name: 'name', keypath: 'name', options: {unique: false}},
             {name: 'value', keypath: 'value', options: {unique: false}},
             {name: 'builtin', keypath: 'builtin', options: {unique: false}},

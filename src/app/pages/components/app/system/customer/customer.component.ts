@@ -94,7 +94,7 @@ export class CustomerComponent
     }
 
     protected onEditData($event: IEvent): void {
-        const row: Row = ($event.$data && $event.$data['row'] instanceof Row ? $event.$data['row'] : undefined);
+        const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
         row && row.getData() && super.getBackComponent().setModel(row.getData() as ICustomer);
     }
 }

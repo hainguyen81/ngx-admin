@@ -130,7 +130,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
     protected onChange(e: IEvent): void {
         this.isChanged = true;
         if (this.getDataModel()) {
-            this.getDataModel().image = e.$data;
+            this.getDataModel().image = e.data;
         }
     }
 
@@ -149,7 +149,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
         }
 
         let files: File[];
-        files = (e && e.$event && e.$event.target && e.$event.target['files'] ? e.$event.target['files'] : []);
+        files = (e && e.event && e.event.target && e.event.target['files'] ? e.event.target['files'] : []);
         if ((files || []).length) {
             let invalidFiles: string[];
             invalidFiles = [];

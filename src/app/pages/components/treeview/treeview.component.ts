@@ -200,9 +200,9 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     onClickItem(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickItem', event);
-        if (event && event.$event && event.$event.target instanceof Element) {
+        if (event && event.event && event.event.target instanceof Element) {
             let targetEl: Element;
-            targetEl = event.$event.target as Element;
+            targetEl = event.event.target as Element;
             let itemEl: Element;
             itemEl = (targetEl.tagName === AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR ? targetEl
                 : this.getClosestElementBySelector(AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, targetEl));

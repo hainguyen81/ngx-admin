@@ -113,7 +113,7 @@ export abstract class AppTreeviewComponent<T extends IModel, D extends DataSourc
     onClickItem(event: IEvent) {
         super.onClickItem(event);
         this.clickItemDelegate
-        && this.clickItemDelegate.apply(this, [event.$event, event.$data]);
+        && this.clickItemDelegate.apply(this, [event.event, event.data]);
     }
 
     /**

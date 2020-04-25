@@ -357,9 +357,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 this.queryTreeviewComponent, (component) => {
                     if (component) {
                         component.selectedChange.subscribe(
-                            value => this.onSelectedChange({$data: value}));
+                            value => this.onSelectedChange({data: value}));
                         component.filterChange.subscribe(
-                            value => this.onFilterChange({$data: value}));
+                            value => this.onFilterChange({data: value}));
                     }
                 });
         }
@@ -368,9 +368,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 this.queryDropdownTreeviewComponent, (component) => {
                     if (component) {
                         component.selectedChange.subscribe(
-                            value => this.onSelectedChange({$data: value}));
+                            value => this.onSelectedChange({data: value}));
                         component.filterChange.subscribe(
-                            value => this.onFilterChange({$data: value}));
+                            value => this.onFilterChange({data: value}));
                     }
                 });
         }
@@ -416,8 +416,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     onDataSourceChanged(event: IEvent) {
         this.getLogger().debug('DataSource has been changed', event);
-        if (event && event.$data && event.$data.hasOwnProperty('elements')) {
-            this.treeviewItems = this.mappingDataSourceToTreeviewItems(event.$data['elements']);
+        if (event && event.data && event.data.hasOwnProperty('elements')) {
+            this.treeviewItems = this.mappingDataSourceToTreeviewItems(event.data['elements']);
 
         } else {
             this.treeviewItems = [];
@@ -432,11 +432,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         super.onNavigateKeyDown(event);
 
         let kbEvent: KeyboardEvent;
-        kbEvent = event.$event as KeyboardEvent;
+        kbEvent = event.event as KeyboardEvent;
 
         // check whether navigating on context menu
         let targetEl: HTMLElement;
-        targetEl = (event && event.$event as Event ? (<Event>event.$event).target as HTMLElement : null);
+        targetEl = (event && event.event as Event ? (<Event>event.event).target as HTMLElement : null);
         if (this.hasClosestElement(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR, targetEl)) {
             return;
         }
@@ -487,7 +487,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             }
         }
 
-        this.preventEvent(event.$event);
+        this.preventEvent(event.event);
     }
 
     // -------------------------------------------------
@@ -507,7 +507,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         switch (menuId || '') {
             case CONTEXT_MENU_ADD:
                 let newItem: TreeviewItem;
-                newItem = this.newItem(event.$data['item']);
+                newItem = this.newItem(event.data['item']);
                 // wait for rendering new item
                 let timer: number;
                 timer = window.setTimeout(() => {
@@ -516,10 +516,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 }, 300);
                 break;
             case CONTEXT_MENU_EDIT:
-                this.toggleTreeviewItem(event.$data['item']);
+                this.toggleTreeviewItem(event.data['item']);
                 break;
             case CONTEXT_MENU_DELETE:
-                this.deleteItem(event.$data['item']);
+                this.deleteItem(event.data['item']);
                 break;
         }
     }
@@ -673,7 +673,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
 
         // toggle selected current element
         this.toggleElementClass(treeviewItemEl, 'selected', true);
-        this.onClickItem({$data: this.getTreeviewItemByElement(treeviewItemEl)});
+        this.onClickItem({data: this.getTreeviewItemByElement(treeviewItemEl)});
     }
 
     /**
