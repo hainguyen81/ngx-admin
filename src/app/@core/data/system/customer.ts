@@ -14,11 +14,12 @@ export interface ICustomer extends IModel {
     // Tên nhà cung cấp/khách hàng
     name: string;
     // Loại khách hàng/nhà cung cấp
-    type?: CUSTOMER_TYPE | CUSTOMER_TYPE.CUSTOMER;
+    type?: string | null;
     // trạng thái
-    status?: CUSTOMER_STATUS | CUSTOMER_STATUS.NOT_ACTIVATED;
+    status?: string | null;
     // cấp bậc khách hàng
-    level?: CUSTOMER_LEVEL | CUSTOMER_LEVEL.NEW;
+    level?: string | null;
+    image?: string | { icon: string, pack: string } | null;
     email: string;
     tel?: string | null;
     fax?: string | null;

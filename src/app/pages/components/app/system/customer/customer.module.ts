@@ -16,6 +16,9 @@ import {CustomerDatasource} from '../../../../../services/implementation/system/
 import {TranslateModule} from '@ngx-translate/core';
 import {CustomerDbService, CustomerHttpService} from '../../../../../services/implementation/system/customer/customer.service';
 import {CustomerSmartTableComponent} from './customer.table.component';
+import {CustomerToolbarComponent} from './customer.toolbar.component';
+import {CustomerFormlyComponent} from './customer.formly.component';
+import {CustomerComponent} from './customer.component';
 
 @NgModule({
     imports: [
@@ -39,6 +42,9 @@ import {CustomerSmartTableComponent} from './customer.table.component';
     ],
     declarations: [
         CustomerSmartTableComponent,
+        CustomerToolbarComponent,
+        CustomerFormlyComponent,
+        CustomerComponent,
     ],
     providers: [
         {

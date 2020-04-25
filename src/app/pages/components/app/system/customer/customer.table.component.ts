@@ -99,7 +99,7 @@ export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM.CUSTOMER,
-    selector: 'ngx-smart-table-customers',
+    selector: 'ngx-smart-table-app-system-customer',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
@@ -174,7 +174,7 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
             value => this.translateColumn('status', value);
         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
             this.generalSettingsDatasource, 'module_code',
-            IDBKeyRange.only(MODULE_CODES.WAREHOUSE), this.getTranslateService()).then(
+            IDBKeyRange.only(MODULE_CODES.SYSTEM_CUSTOMER), this.getTranslateService()).then(
             options => {
                 const levelOptions: { [key: string]: string | string[] | IModel; }[] = [];
                 const statusOptions: { [key: string]: string | string[] | IModel; }[] = [];
