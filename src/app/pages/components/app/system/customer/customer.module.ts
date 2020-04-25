@@ -101,6 +101,12 @@ import {ValidatorsModule} from 'ngx-validators';
         CustomerFormlyComponent,
         CustomerComponent,
     ],
+    entryComponents: [
+        CustomerSmartTableComponent,
+        CustomerToolbarComponent,
+        CustomerFormlyComponent,
+        CustomerComponent,
+    ],
     providers: [
         {
             provide: CustomerDatasource, useClass: CustomerDatasource,

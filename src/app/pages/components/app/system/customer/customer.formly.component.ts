@@ -19,7 +19,6 @@ import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {EmailValidators} from 'ngx-validators';
-import {UrlValidator} from 'ngx-custom-validators/src/app/url/directive';
 import {ICustomer} from '../../../../../@core/data/system/customer';
 import {
     CustomerDatasource,
@@ -44,7 +43,7 @@ import {
     AppModuleSettingsFormlySelectExFieldComponent,
 } from '../../components/common/app.module.settings.formly.select.ex.field.component';
 import {isNullOrUndefined} from 'util';
-import {CustomValidators} from "ngx-custom-validators";
+import {CustomValidators} from 'ngx-custom-validators';
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();

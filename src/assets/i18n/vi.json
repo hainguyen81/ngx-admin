@@ -341,6 +341,7 @@
 			"menu": "Khách hàng",
 			"table": {
                 "noData": "Không có bất kỳ khách hàng nào",
+                "type": "Loại",
                 "code": "Mã",
                 "name": "Tên",
                 "level": "Cấp bậc",
@@ -349,6 +350,108 @@
                 "address": "Địa chỉ",
                 "status": "Trạng thái",
                 "enterprise": "Enterprise"
+            },
+            "form": {
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại",
+                    "description": "Loại"
+                },
+                "level": {
+                    "label": "Cấp bậc",
+                    "placeholder": "Cấp bậc",
+                    "description": "Cấp bậc"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái",
+                    "description": "Trạng thái"
+                },
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã",
+                    "description": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên",
+                    "description": "Tên"
+                },
+                "address": {
+                    "label": "Địa chỉ",
+                    "placeholder": "Địa chỉ",
+                    "description": "Địa chỉ"
+                },
+                "country": {
+                    "label": "Quốc gia",
+                    "placeholder": "Quốc gia",
+                    "description": "Quốc gia"
+                },
+                "state_province": {
+                    "label": "Tỉnh/Khu vực",
+                    "placeholder": "Tỉnh/Khu vực",
+                    "description": "Tỉnh/Khu vực"
+                },
+                "city": {
+                    "label": "Thành phố",
+                    "placeholder": "Thành phố",
+                    "description": "Thành phố"
+                },
+                "district": {
+                    "label": "Quận/Huyện",
+                    "placeholder": "Quận/Huyện",
+                    "description": "Quận/Huyện"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "tel": {
+                    "label": "ĐT",
+                    "placeholder": "ĐT",
+                    "description": "ĐT"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Thư điện tử",
+                    "placeholder": "Thư điện tử",
+                    "description": "Thư điện tử"
+                },
+                "website": {
+                    "label": "Website",
+                    "placeholder": "Website",
+                    "description": "Website"
+                },
+                "contact_name": {
+                    "label": "Liên hệ",
+                    "placeholder": "Liên hệ",
+                    "description": "Liên hệ"
+                },
+                "contact_tel": {
+                    "label": "ĐT liên hệ",
+                    "placeholder": "ĐT liên hệ",
+                    "description": "ĐT liên hệ"
+                },
+                "contact_fax": {
+                    "label": "Fax liên hệ",
+                    "placeholder": "Fax liên hệ",
+                    "description": "Fax liên hệ"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú",
+                    "description": "Ghi chú"
+                },
+                "image": {
+                    "label": "Image",
+                    "placeholder": "Image",
+                    "description": "Image"
+                }
             }
         }
     },

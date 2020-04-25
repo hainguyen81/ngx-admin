@@ -341,6 +341,7 @@
 			"menu": "Customers Management",
 			"table": {
                 "noData": "Not found any customers",
+                "type": "Type",
                 "code": "Code",
                 "name": "Name",
                 "level": "Level",
@@ -349,6 +350,108 @@
                 "address": "Address",
                 "status": "Status",
                 "enterprise": "Enterprise"
+            },
+            "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type",
+                    "description": "Type"
+                },
+                "level": {
+                    "label": "Level",
+                    "placeholder": "Level",
+                    "description": "Level"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status",
+                    "description": "Status"
+                },
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code",
+                    "description": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name",
+                    "description": "Name"
+                },
+                "address": {
+                    "label": "Address",
+                    "placeholder": "Address",
+                    "description": "Address"
+                },
+                "country": {
+                    "label": "Country",
+                    "placeholder": "Country",
+                    "description": "Country"
+                },
+                "state_province": {
+                    "label": "State/Province",
+                    "placeholder": "State/Province",
+                    "description": "State/Province"
+                },
+                "city": {
+                    "label": "City",
+                    "placeholder": "City",
+                    "description": "City"
+                },
+                "district": {
+                    "label": "District/Town",
+                    "placeholder": "District/Town",
+                    "description": "District/Town"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "tel": {
+                    "label": "Tel",
+                    "placeholder": "Tel",
+                    "description": "Tel"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Email",
+                    "description": "Email"
+                },
+                "website": {
+                    "label": "Website",
+                    "placeholder": "Website",
+                    "description": "Website"
+                },
+                "contact_name": {
+                    "label": "Contact Name",
+                    "placeholder": "Contact Name",
+                    "description": "Contact Name"
+                },
+                "contact_tel": {
+                    "label": "Contact Tel",
+                    "placeholder": "Contact Tel",
+                    "description": "Contact Tel"
+                },
+                "contact_fax": {
+                    "label": "Contact Fax",
+                    "placeholder": "Contact Fax",
+                    "description": "Contact Fax"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark",
+                    "description": "Remark"
+                },
+                "image": {
+                    "label": "Image",
+                    "placeholder": "Image",
+                    "description": "Image"
+                }
             }
         }
     },
