@@ -62,7 +62,7 @@ const routes: Routes = [{
             },
             {
                 path: '',
-                redirectTo: 'organization',
+                redirectTo: 'general',
                 pathMatch: 'full',
             },
         ],
