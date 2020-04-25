@@ -20,7 +20,8 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {Lightbox} from 'ngx-lightbox';
 import {AppToolbarBackActionsConfig} from '../../components/app.toolbar.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default warehouse item toolbar header config */
 export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {

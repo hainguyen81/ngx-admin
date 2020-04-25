@@ -19,7 +19,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /**
  * Organization split-pane component base on {AngularSplitModule}

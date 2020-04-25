@@ -1,10 +1,9 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -26,8 +25,9 @@ import {
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
 import {throwError} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {MODULE_CODES} from '../../../../../config/api.config';
 import {isArray, isNullOrUndefined} from 'util';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {

@@ -28,7 +28,8 @@ import {
 } from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 

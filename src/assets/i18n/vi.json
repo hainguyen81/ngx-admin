@@ -20,16 +20,19 @@
                 "notActivated": "Chưa kích hoạt"
             },
             "customerStatus": {
+                "name": "Trạng thái KH",
                 "activated": "Đã kích hoạt",
                 "locked": "Khoá",
                 "notActivated": "Chưa kích hoạt"
             },
             "customerType": {
+                "name": "Loại KH",
                 "customer": "Khách hàng",
                 "vendor": "Nhà cung cấp",
                 "all": "Khách hàng/Nhà cung cấp"
             },
             "customerLevel": {
+                "name": "Cấp KH",
                 "new": "Mới",
                 "bronze": "Hạng đồng",
                 "silver": "Hạng bạc",

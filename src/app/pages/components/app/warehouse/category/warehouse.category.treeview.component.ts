@@ -31,7 +31,8 @@ import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field.component';
 import {Constants} from '../../../../../@core/data/constants/warehouse.category.constants';
 import CATEGORY_TYPE = Constants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,

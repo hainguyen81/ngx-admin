@@ -21,7 +21,8 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Lightbox} from 'ngx-lightbox';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {WarehouseAdjustDatasource} from '../../../../../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* warehouse item adjustments table settings */
 export const WarehouseItemAdjustmentTableSettings = {

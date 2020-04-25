@@ -23,7 +23,8 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,

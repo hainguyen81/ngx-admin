@@ -22,7 +22,8 @@ import {
 import {GeneralSettingsSmartTableComponent} from './general.settings.table.component';
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_SETTINGS,

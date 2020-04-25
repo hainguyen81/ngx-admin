@@ -19,7 +19,8 @@ import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default general settings toolbar header config */
 export const GeneralSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {

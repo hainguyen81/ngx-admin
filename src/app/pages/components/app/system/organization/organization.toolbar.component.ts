@@ -17,7 +17,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppToolbarComponent} from '../../components/app.toolbar.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default organization toolbar header config */
 export const OrganizationToolbarHeaderConfig: IToolbarHeaderConfig = {

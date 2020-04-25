@@ -23,7 +23,8 @@ import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* warehouse item IN/OUT table settings */
 export const WarehouseItemInOutTableSettings = {

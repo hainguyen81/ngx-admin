@@ -19,7 +19,8 @@ import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {AppToolbarActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default warehouse category toolbar header config */
 export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {

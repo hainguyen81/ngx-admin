@@ -17,7 +17,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {AppConfig} from '../../../../../config/app.config';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 

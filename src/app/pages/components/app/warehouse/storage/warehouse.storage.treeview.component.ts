@@ -27,7 +27,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {COMMON} from '../../../../../config/common.config';
 import {TranslateService} from '@ngx-translate/core';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,

@@ -20,10 +20,11 @@ import {IGeneralSettings} from '../../../../../@core/data/system/general.setting
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {MODULE_CODES} from '../../../../../config/api.config';
 import {
     AppModuleFormlySelectExFieldComponent,
 } from '../../components/common/app.module.formly.select.ex.field.component';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default general settings formly config */
 export const GeneralSettingsFormConfig: FormlyConfig = new FormlyConfig();

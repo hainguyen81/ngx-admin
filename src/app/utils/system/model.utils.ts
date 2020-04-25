@@ -37,8 +37,8 @@ export default class ModelUtils {
      */
     public static buildModelsForTableSelectOptions<T extends IModel>(
         models: T[], translateService?: TranslateService | null, includedCode?: boolean | true,
-        keysMapper?: { [key: string]: (model: T) => string | string[] } | null):
-        { [key: string]: string | string[]; }[] {
+        keysMapper?: { [key: string]: (model: T) => string | string[] | IModel } | null):
+        { [key: string]: string | string[] | IModel; }[] {
         const options: { [key: string]: string | string[]; }[] = [];
         if (Object.keys(keysMapper).length) {
             (models || []).forEach((model: T) => {
@@ -61,8 +61,8 @@ export default class ModelUtils {
      */
     public static buildModelsForDefaultTableSelectOptions<T extends IModel>(
         models: T[], translateService?: TranslateService | null, includedCode?: boolean | true):
-        { [key: string]: string | string[]; }[] {
-        const labelTitleTextMapper: (model: T) => string | string[] = model => {
+        { [key: string]: string | string[] | IModel; }[] {
+        const labelTitleTextMapper: (model: T) => string | string[] | IModel = model => {
             if (includedCode) {
                 return translateService ? translateService.instant(model['name'])
                     .concat(' (', model['code'], ')') : model['name'].concat(' (', model['code'], ')');
@@ -76,6 +76,7 @@ export default class ModelUtils {
                 'label': labelTitleTextMapper,
                 'title': labelTitleTextMapper,
                 'text': labelTitleTextMapper,
+                'model': model => model,
             });
     }
 }

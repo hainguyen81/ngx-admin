@@ -28,7 +28,8 @@ import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component'
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {

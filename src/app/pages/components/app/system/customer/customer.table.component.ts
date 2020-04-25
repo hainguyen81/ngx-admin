@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
 import {CustomerDatasource} from '../../../../../services/implementation/system/customer/customer.datasource';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
@@ -19,12 +18,15 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {Constants} from '../../../../../@core/data/constants/customer.constants';
-import convertCustomerStatusToDisplay = Constants.CustomerConstants.convertCustomerStatusToDisplay;
-import CUSTOMER_STATUS = Constants.CustomerConstants.CUSTOMER_STATUS;
-import CUSTOMER_LEVEL = Constants.CustomerConstants.CUSTOMER_LEVEL;
-import convertCustomerLevelToDisplay = Constants.CustomerConstants.convertCustomerLevelToDisplay;
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {AppSmartTableComponent} from '../../components/app.table.component';
+import SystemDataUtils from '../../../../../utils/system/system.data.utils';
+import {isArray, isNullOrUndefined} from 'util';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {throwError} from 'rxjs';
+import {IModel} from '../../../../../@core/data/base';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -101,7 +103,7 @@ export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
-export class CustomerSmartTableComponent extends BaseSmartTableComponent<CustomerDatasource> {
+export class CustomerSmartTableComponent extends AppSmartTableComponent<CustomerDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -135,11 +137,13 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
+        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setTableHeader('system.customer.title');
         super.setTableSettings(CustomerTableSettings);
         super.setContextMenu(CustomerContextMenu);
@@ -161,69 +165,44 @@ export class CustomerSmartTableComponent extends BaseSmartTableComponent<Custome
     // FUNCTION
     // -------------------------------------------------
 
-    /**
-     * Convert {CUSTOMER_STATUS} to the showed translated value
-     * @param value to convert
-     * @return converted value
-     */
-    private convertCustomerStatusToDisplay(value: CUSTOMER_STATUS): string {
-        return this.translate(convertCustomerStatusToDisplay(value));
-    }
-
-    /**
-     * Convert {CUSTOMER_LEVEL} to the showed translated value
-     * @param value to convert
-     * @return converted value
-     */
-    private convertCustomerLevelToDisplay(value: CUSTOMER_LEVEL): string {
-        return this.translate(convertCustomerLevelToDisplay(value));
-    }
-
-    /**
-     * Translate table settings
-     */
     protected translateSettings(): void {
         super.translateSettings();
 
-        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
-            value => this.convertCustomerStatusToDisplay(value);
-        this.translatedSettings['columns']['status']['editor']['config']['list'] = [
-            {
-                value: CUSTOMER_STATUS.NOT_ACTIVATED,
-                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.NOT_ACTIVATED),
-            },
-            {
-                value: CUSTOMER_STATUS.ACTIVATED,
-                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.ACTIVATED),
-            },
-            {
-                value: CUSTOMER_STATUS.LOCKED,
-                title: this.convertCustomerStatusToDisplay(CUSTOMER_STATUS.LOCKED),
-            },
-        ];
         this.translatedSettings['columns']['level']['valuePrepareFunction'] =
-            value => this.convertCustomerStatusToDisplay(value);
-        this.translatedSettings['columns']['level']['editor']['config']['list'] = [
-            {
-                value: CUSTOMER_LEVEL.NEW,
-                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.NEW),
-            },
-            {
-                value: CUSTOMER_LEVEL.BRONZE,
-                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.BRONZE),
-            },
-            {
-                value: CUSTOMER_LEVEL.SILVER,
-                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.SILVER),
-            },
-            {
-                value: CUSTOMER_LEVEL.GOLD,
-                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.GOLD),
-            },
-            {
-                value: CUSTOMER_LEVEL.PLATINUM,
-                title: this.convertCustomerLevelToDisplay(CUSTOMER_LEVEL.PLATINUM),
-            },
-        ];
+            value => this.translateColumn('level', value);
+        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
+            value => this.translateColumn('status', value);
+        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
+            this.generalSettingsDatasource, 'module_code',
+            IDBKeyRange.only(MODULE_CODES.WAREHOUSE), this.getTranslateService()).then(
+            options => {
+                const levelOptions: { [key: string]: string | string[] | IModel; }[] = [];
+                const statusOptions: { [key: string]: string | string[] | IModel; }[] = [];
+                (options || []).forEach(option => {
+                    switch ((option['model'] || {})['code'] || '') {
+                        case BUILTIN_CODES.CUSTOMER_STATUS:
+                            statusOptions.push(option);
+                            break;
+                        case BUILTIN_CODES.CUSTOMER_LEVEL:
+                            levelOptions.push(option);
+                            break;
+                    }
+                });
+                this.translatedSettings['columns']['status']['editor']['config']['list'] = statusOptions;
+                this.translatedSettings['columns']['level']['editor']['config']['list'] = levelOptions;
+                this.getDataSource().refresh();
+            });
+    }
+    private translateColumn(column: string, value?: string | null): string {
+        const options: { value: string, label: string, title: string }[] =
+            this.translatedSettings['columns'][column]['editor']['config']['list'];
+        if (!isNullOrUndefined(options) && isArray(options)) {
+            for (const option of options) {
+                if (option.value === value) {
+                    return option.label;
+                }
+            }
+        }
+        return '';
     }
 }

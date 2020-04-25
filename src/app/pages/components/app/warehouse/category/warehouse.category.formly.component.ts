@@ -29,7 +29,8 @@ import CATEGORY_TYPE = Constants.WarehouseConstants.WarehouseCategoryConstants.C
 import convertWarehouseCategoryTypeToDisplay =
     Constants.WarehouseConstants.WarehouseCategoryConstants.convertWarehouseCategoryTypeToDisplay;
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();

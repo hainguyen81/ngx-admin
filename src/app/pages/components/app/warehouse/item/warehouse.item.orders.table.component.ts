@@ -23,9 +23,10 @@ import {
     WarehouseOrderDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {Constants} from '../../../../../@core/data/constants/warehouse.order.constants';
-import WAREHOUSE_ORDER_TYPE = Constants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE;
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants as OrderConstants} from '../../../../../@core/data/constants/warehouse.order.constants';
+import WAREHOUSE_ORDER_TYPE = OrderConstants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /* warehouse item orders table settings */
 export const WarehouseItemOrdersTableSettings = {

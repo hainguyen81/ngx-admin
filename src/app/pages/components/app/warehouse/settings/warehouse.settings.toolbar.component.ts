@@ -19,7 +19,8 @@ import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default warehouse settings toolbar header config */
 export const WarehouseSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {

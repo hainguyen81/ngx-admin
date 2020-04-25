@@ -25,7 +25,8 @@ import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.p
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /** The number of tabs */
 export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;

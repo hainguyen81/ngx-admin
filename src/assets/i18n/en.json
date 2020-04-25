@@ -20,16 +20,19 @@
                 "notActivated": "Not activated"
             },
             "customerStatus": {
+                "name": "Customer status",
                 "activated": "Activated",
                 "locked": "Locked",
                 "notActivated": "Not activated"
             },
             "customerType": {
+                "name": "Customer type",
                 "customer": "Customer",
                 "vendor": "Vendor",
                 "all": "Customer/Vendor"
             },
             "customerLevel": {
+                "name": "Customer level",
                 "new": "New",
                 "bronze": "Bronze",
                 "silver": "Silver",

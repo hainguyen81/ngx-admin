@@ -38,7 +38,8 @@ import {Constants} from '../../../../../@core/data/constants/organization.consta
 import ORGANIZATION_TYPE = Constants.OrganizationConstants.ORGANIZATION_TYPE;
 import convertOrganizationTypeToDisplay = Constants.OrganizationConstants.convertOrganizationTypeToDisplay;
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();

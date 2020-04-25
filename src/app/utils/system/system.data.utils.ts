@@ -45,7 +45,8 @@ export default class SystemDataUtils {
     public static invokeModelsByDatabaseFilterAsTableSelectOptions<
         T extends IModel, D extends IDbService<T>>(
             dbService: D, indexName: string, keyRange: IDBKeyRange,
-            translateService?: TranslateService | null): Promise<{ [key: string]: string | string[]; }[]> {
+            translateService?: TranslateService | null):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         dbService
         || throwError('DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
@@ -64,7 +65,7 @@ export default class SystemDataUtils {
             dbService: D, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] } | null):
-        Promise<{ [key: string]: string | string[]; }[]> {
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         dbService
         || throwError('DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
@@ -102,7 +103,8 @@ export default class SystemDataUtils {
         T extends IModel, H extends IHttpService<T>, D extends IDbService<T>,
         DS extends BaseDataSource<T, H, D>>(
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
-            translateService?: TranslateService | null): Promise<{ [key: string]: string | string[]; }[]> {
+            translateService?: TranslateService | null):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -123,8 +125,8 @@ export default class SystemDataUtils {
         DS extends BaseDataSource<T, H, D>>(
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null,
-            keysMapper?: { [key: string]: (model: T) => string | string[] } | null):
-        Promise<{ [key: string]: string | string[]; }[]> {
+            keysMapper?: { [key: string]: (model: T) => string | string[] | IModel } | null):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -162,7 +164,8 @@ export default class SystemDataUtils {
     public static invokeModelsByFilterAsTableSelectOptions<
         D extends DataSource, T extends IModel>(
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
-            translateService?: TranslateService | null): Promise<{ [key: string]: string | string[]; }[]> {
+            translateService?: TranslateService | null):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -182,8 +185,8 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
             translateService?: TranslateService | null,
-            keysMapper?: { [key: string]: (model: T) => string | string[] } | null):
-        Promise<{ [key: string]: string | string[]; }[]> {
+            keysMapper?: { [key: string]: (model: T) => string | string[] | IModel } | null):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -212,7 +215,8 @@ export default class SystemDataUtils {
     public static invokeAllModelsAsTableSelectOptions<
         D extends DataSource, T extends IModel>(
             datasource: D,
-            translateService?: TranslateService | null): Promise<{ [key: string]: string | string[]; }[]> {
+            translateService?: TranslateService | null):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         return this.invokeModelsByFilterAsTableSelectOptions(
             datasource, [], false, translateService);
     }
@@ -226,8 +230,8 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D,
             translateService?: TranslateService | null,
-            keysMapper?: { [key: string]: (model: T) => string | string[] } | null):
-        Promise<{ [key: string]: string | string[]; }[]> {
+            keysMapper?: { [key: string]: (model: T) => string | string[] | IModel } | null):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         return this.invokeModelsByFilterAsOptions(
             datasource, [], false, translateService, keysMapper);
     }
@@ -296,8 +300,8 @@ export default class SystemDataUtils {
      * Get all users and mapping returned data as the options of select control
      * @param userDatasource to invoke
      */
-    public static invokeAllUsersAsSelectOptions(
-        userDatasource: UserDataSource): Promise<{ [key: string]: string | string[]; }[]> {
+    public static invokeAllUsersAsSelectOptions(userDatasource: UserDataSource):
+        Promise<{ [key: string]: string | string[] | IModel; }[]> {
         userDatasource
         || throwError('UserDataSource is required to invoke!');
         return userDatasource
@@ -314,6 +318,7 @@ export default class SystemDataUtils {
                             }
                             return labelOption;
                         },
+                        'model': model => model,
                     }));
     }
 }

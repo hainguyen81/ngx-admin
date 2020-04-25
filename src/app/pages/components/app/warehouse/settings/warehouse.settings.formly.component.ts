@@ -24,7 +24,8 @@ import {
 import {
     AppModuleSettingsFormlySelectExFieldComponent,
 } from '../../components/common/app.module.settings.formly.select.ex.field.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* default warehouse settings formly config */
 export const WarehouseSettingsFormConfig: FormlyConfig = new FormlyConfig();

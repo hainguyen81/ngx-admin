@@ -22,7 +22,8 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,

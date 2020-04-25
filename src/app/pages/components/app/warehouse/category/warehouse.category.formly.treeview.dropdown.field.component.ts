@@ -7,7 +7,8 @@ import {
 } from '../../components/app.formly.treeview.dropdown.field.component';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {NGXLogger} from 'ngx-logger';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /**
  * Multi language for treeview field

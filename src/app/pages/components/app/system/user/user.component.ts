@@ -23,7 +23,8 @@ import {Lightbox} from 'ngx-lightbox';
 import {Constants} from '../../../../../@core/data/constants/user.constants';
 import USER_STATUS = Constants.UserConstants.USER_STATUS;
 import convertUserStatusToDisplay = Constants.UserConstants.convertUserStatusToDisplay;
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* users table settings */
 export const UserTableSettings = {

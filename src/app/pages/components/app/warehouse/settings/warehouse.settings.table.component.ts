@@ -20,20 +20,16 @@ import {Lightbox} from 'ngx-lightbox';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {Constants} from '../../../../../@core/data/constants/warehouse.settings.constants';
-import SETTINGS_TYPE = Constants.WarehouseSettingsConstants.SETTINGS_TYPE;
-import convertWarehouseSettingsTypeToDisplay =
-    Constants.WarehouseSettingsConstants.convertWarehouseSettingsTypeToDisplay;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
 import {isArray, isNullOrUndefined} from 'util';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {

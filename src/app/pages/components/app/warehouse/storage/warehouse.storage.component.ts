@@ -18,10 +18,13 @@ import {Lightbox} from 'ngx-lightbox';
 import {WarehouseStorageToolbarComponent} from './warehouse.storage.toolbar.component';
 import {WarehouseStorageTreeviewComponent} from './warehouse.storage.treeview.component';
 import {WarehouseStorageFormlyComponent} from './warehouse.storage.formly.component';
-import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
+import {
+    WarehouseDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
-import {MODULE_CODES} from '../../../../../config/api.config';
+import {Constants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 
 /**
  * Warehouse Storage split-pane component base on {AngularSplitModule}
