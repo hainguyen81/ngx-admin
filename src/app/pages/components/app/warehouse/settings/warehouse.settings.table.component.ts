@@ -103,7 +103,7 @@ export const WarehouseSettingsContextMenu: IContextMenu[] = [].concat(COMMON.bas
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
-    selector: 'ngx-smart-table-warehouse-settings',
+    selector: 'ngx-smart-table-app-warehouse-settings',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
