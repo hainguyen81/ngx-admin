@@ -25,6 +25,9 @@ import {AppMaterialModule} from '../../../../app.material.module';
 import {AppConfig} from '../../../../config/app.config';
 import {AppCommonComponentsModule} from './common/app.common.components.module';
 import {NgxSelectModule} from 'ngx-select-ex';
+import {CustomFormsModule} from 'ngx-custom-validators';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {ValidatorsModule} from 'ngx-validators';
 
 
 @NgModule({
@@ -80,6 +83,11 @@ import {NgxSelectModule} from 'ngx-select-ex';
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
+
+        /*Validators*/
+        CustomFormsModule,
+        ValidatorsModule,
 
         /* Application components module */
         ComponentsModule,

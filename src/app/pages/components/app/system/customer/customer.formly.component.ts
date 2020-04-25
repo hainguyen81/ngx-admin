@@ -44,6 +44,7 @@ import {
     AppModuleSettingsFormlySelectExFieldComponent,
 } from '../../components/common/app.module.settings.formly.select.ex.field.component';
 import {isNullOrUndefined} from 'util';
+import {CustomValidators} from "ngx-custom-validators";
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();
@@ -242,7 +243,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                     placeholder: 'system.customer.form.email.placeholder',
                                 },
                                 validators: {
-                                    validation: [EmailValidators.normal],
+                                    validation: [CustomValidators.email, EmailValidators.normal],
                                 },
                             },
                             {
@@ -254,7 +255,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                     placeholder: 'system.customer.form.website.placeholder',
                                 },
                                 validators: {
-                                    validation: [UrlValidator],
+                                    validation: [CustomValidators.url],
                                 },
                             },
                         ],

@@ -50,6 +50,8 @@ import {NgxDropdownTreeviewComponent} from './treeview/treeview.dropdown.compone
 import {NgxSelectModule} from 'ngx-select-ex';
 import {NgxSelectExComponent} from './select-ex/select.ex.component';
 import {SelectExFormFieldComponent} from './formly/formly.select.ex.field.component';
+import {CustomFormsModule} from 'ngx-custom-validators';
+import {ValidatorsModule} from 'ngx-validators';
 
 @NgModule({
     imports: [
@@ -136,6 +138,10 @@ import {SelectExFormFieldComponent} from './formly/formly.select.ex.field.compon
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
+
+        /*Validators*/
+        CustomFormsModule,
+        ValidatorsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
