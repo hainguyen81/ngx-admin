@@ -37,6 +37,7 @@ export function generalCustomerSystemSettingsGenerate(): IGeneralSettings[] {
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
+        systemSetting.builtin = true;
         systemSettings.push(systemSetting);
     });
 
@@ -52,6 +53,7 @@ export function generalCustomerSystemSettingsGenerate(): IGeneralSettings[] {
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
+        systemSetting.builtin = true;
         systemSettings.push(systemSetting);
     });
 
@@ -67,6 +69,7 @@ export function generalCustomerSystemSettingsGenerate(): IGeneralSettings[] {
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
+        systemSetting.builtin = true;
         systemSettings.push(systemSetting);
     });
     return systemSettings;

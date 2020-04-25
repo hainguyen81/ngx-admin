@@ -43,6 +43,10 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'system.general.settings.form.module.placeholder',
                     required: true,
                 },
+                expressionProperties: {
+                    'templateOptions.disabled':
+                        (model: IGeneralSettings) => !model || model.builtin,
+                },
             },
         ],
     },
@@ -60,7 +64,9 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['module_id'] || '').length),
+                    'templateOptions.disabled':
+                        (model: IGeneralSettings) =>
+                            !model || model.builtin || !(model.module_id || '').length,
                 },
             },
         ],
@@ -79,7 +85,9 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['module_id'] || '').length),
+                    'templateOptions.disabled':
+                        (model: IGeneralSettings) =>
+                            !model || model.builtin || !(model.module_id || '').length,
                 },
             },
         ],
@@ -98,7 +106,9 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     disabled: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled': model => (!model || !(model['module_id'] || '').length),
+                    'templateOptions.disabled':
+                        (model: IGeneralSettings) =>
+                            !model || model.builtin || !(model.module_id || '').length,
                 },
             },
         ],
