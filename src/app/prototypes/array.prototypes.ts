@@ -107,7 +107,7 @@ if (!Array.prototype.remove) {
 
 if (!Array.prototype.clear) {
     Array.prototype.clear = function<T>() {
-        return this.splice(0, this.length);
+        this.length && this.splice(0, this.length);
     };
 }
 

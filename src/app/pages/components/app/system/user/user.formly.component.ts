@@ -77,7 +77,9 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
                                     placeholder: 'system.user.form.username.placeholder',
                                     required: true,
                                 },
-                                validators: [CustomValidators.email, EmailValidators.normal],
+                                validators: {
+                                    validation: [CustomValidators.email, EmailValidators.normal],
+                                },
                             },
                             {
                                 className: 'col-6',
