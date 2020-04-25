@@ -1,12 +1,12 @@
 export namespace Constants {
     export namespace OrganizationConstants {
-        export const enum ORGANIZATION_TYPE {
-            HEAD_CENTER,
-            BRANCH,
-            DIVISION,
-            UNIT,
-            DEPARTMENT,
-            TEAM_GROUP,
+        export enum ORGANIZATION_TYPE {
+            HEAD_CENTER = 'common.enum.organizationType.head',
+            BRANCH = 'common.enum.organizationType.branch',
+            DIVISION = 'common.enum.organizationType.division',
+            UNIT = 'common.enum.organizationType.unit',
+            DEPARTMENT = 'common.enum.organizationType.department',
+            TEAM_GROUP = 'common.enum.organizationType.team_group',
         }
 
         export function convertOrganizationTypeToDisplay(value: ORGANIZATION_TYPE): string {

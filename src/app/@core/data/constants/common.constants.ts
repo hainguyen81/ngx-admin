@@ -23,9 +23,12 @@ export namespace Constants {
         };
 
         export const BUILTIN_CODES: any = {
+            // customer
             CUSTOMER_STATUS: { code: 'CUSTOMER_STATUS', name: 'common.enum.customerStatus.name' },
             CUSTOMER_LEVEL: { code: 'CUSTOMER_LEVEL', name: 'common.enum.customerLevel.name' },
             CUSTOMER_TYPE: { code: 'CUSTOMER_TYPE', name: 'common.enum.customerType.name' },
+            // organization
+            ORGANIZATION_TYPE: { code: 'ORGANIZATION_TYPE', name: 'common.enum.organizationType.name' },
         };
     }
 }
