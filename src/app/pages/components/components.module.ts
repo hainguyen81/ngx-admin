@@ -52,6 +52,7 @@ import {NgxSelectExComponent} from './select-ex/select.ex.component';
 import {SelectExFormFieldComponent} from './formly/formly.select.ex.field.component';
 import {CustomFormsModule} from 'ngx-custom-validators';
 import {ValidatorsModule} from 'ngx-validators';
+import {PasswordFormFieldComponent} from './formly/formly.password.field.component';
 
 @NgModule({
     imports: [
@@ -125,6 +126,11 @@ import {ValidatorsModule} from 'ngx-validators';
                     component: SelectExFormFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'password',
+                    component: PasswordFormFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -156,6 +162,7 @@ import {ValidatorsModule} from 'ngx-validators';
         DropdownTreeviewFormFieldComponent,
         NgxSelectExComponent,
         SelectExFormFieldComponent,
+        PasswordFormFieldComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -176,6 +183,7 @@ import {ValidatorsModule} from 'ngx-validators';
         DropdownTreeviewFormFieldComponent,
         NgxSelectExComponent,
         SelectExFormFieldComponent,
+        PasswordFormFieldComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -188,6 +196,7 @@ import {ValidatorsModule} from 'ngx-validators';
         DropdownTreeviewFormFieldComponent,
         NgxSelectExComponent,
         SelectExFormFieldComponent,
+        PasswordFormFieldComponent,
     ],
 })
 export class ComponentsModule {
