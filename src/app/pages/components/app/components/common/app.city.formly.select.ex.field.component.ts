@@ -9,7 +9,7 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
 import {IProvince} from '../../../../../@core/data/system/province';
 
-export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
+export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
@@ -25,7 +25,7 @@ export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({
      * {boolean}
      */
     enableOptionImage: false,
-}, DefaultNgxSelectOptions);
+});
 
 /**
  * Custom city formly field for selecting special

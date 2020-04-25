@@ -11,7 +11,7 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {IModule} from '../../../../../@core/data/system/module';
 
-export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign({
+export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
@@ -27,7 +27,7 @@ export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign
      * {boolean}
      */
     enableOptionImage: true,
-}, DefaultNgxSelectOptions);
+});
 
 /**
  * Custom module formly field for selecting special

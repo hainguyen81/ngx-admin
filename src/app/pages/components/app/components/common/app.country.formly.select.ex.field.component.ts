@@ -8,7 +8,7 @@ import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/a
 import Country, {ICountry} from '../../../../../@core/data/system/country';
 import {NGXLogger} from 'ngx-logger';
 
-export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
+export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
@@ -24,7 +24,7 @@ export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({
      * {boolean}
      */
     enableOptionImage: true,
-}, DefaultNgxSelectOptions);
+});
 
 /**
  * Custom country formly field for selecting special

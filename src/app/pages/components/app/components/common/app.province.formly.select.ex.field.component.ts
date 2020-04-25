@@ -9,7 +9,7 @@ import {NGXLogger} from 'ngx-logger';
 import Province, {IProvince} from '../../../../../@core/data/system/province';
 import {ProvinceDatasource} from '../../../../../services/implementation/system/province/province.datasource';
 
-export const AppProvincesSelectOptions: INgxSelectExOptions = Object.assign({
+export const AppProvincesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
@@ -25,7 +25,7 @@ export const AppProvincesSelectOptions: INgxSelectExOptions = Object.assign({
      * {boolean}
      */
     enableOptionImage: false,
-}, DefaultNgxSelectOptions);
+});
 
 /**
  * Custom state/province formly field for selecting special

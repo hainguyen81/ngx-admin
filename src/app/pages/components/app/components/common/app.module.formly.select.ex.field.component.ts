@@ -9,12 +9,12 @@ import {NGXLogger} from 'ngx-logger';
 import Module, {IModule} from '../../../../../@core/data/system/module';
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
 
-export const AppModulesSelectOptions: INgxSelectExOptions = Object.assign({
+export const AppModulesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
      */
-    optionValueField: 'id',
+    optionValueField: 'code',
     /**
      * Provide an opportunity to change the name a text property of objects in the items
      * {string}
@@ -25,7 +25,7 @@ export const AppModulesSelectOptions: INgxSelectExOptions = Object.assign({
      * {boolean}
      */
     enableOptionImage: true,
-}, DefaultNgxSelectOptions);
+});
 
 /**
  * Custom module formly field for selecting special

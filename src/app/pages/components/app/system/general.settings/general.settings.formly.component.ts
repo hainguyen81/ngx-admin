@@ -36,7 +36,7 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col',
-                key: 'module_id',
+                key: 'module_code',
                 type: 'select-ex-module',
                 templateOptions: {
                     label: 'system.general.settings.form.module.label',
@@ -192,8 +192,8 @@ export class GeneralSettingsFormlyComponent
     private observeFields(): void {
         const fields: FormlyFieldConfig[] = this.getFields();
         fields[0].expressionProperties = {
-            'module_id': (model: IGeneralSettings) => {
-                if ((model.module_id || '') !== ((model.module || {})['id'] || '')) {
+            'module_code': (model: IGeneralSettings) => {
+                if ((model.module_code || '') !== ((model.module || {})['code'] || '')) {
                     this.observeModuleField(fields, model);
                 }
             },
@@ -212,10 +212,10 @@ export class GeneralSettingsFormlyComponent
         if (moduleFieldComponent) {
             model.module = ((moduleFieldComponent.selectedValues || []).length
                 ? moduleFieldComponent.selectedValues[0] : null);
-            model.module_code = model.module.code;
+            model.module_id = model.module.id;
         } else {
             model.module = null;
-            model.module_code = null;
+            model.module_id = null;
         }
     }
 }

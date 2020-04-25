@@ -48,7 +48,10 @@ export default class ModelUtils {
             }
         };
         return this.buildModelsForSelectOptions(
-            models, translateService, includedCode, { 'title': titleTextMapper });
+            models, translateService, includedCode, {
+                'title': titleTextMapper,
+                'text': titleTextMapper,
+            });
     }
 
     /**
@@ -95,7 +98,7 @@ export default class ModelUtils {
         };
         return this.buildModelsForTableSelectOptions(
             models, translateService, includedCode, {
-                'value': model => model['id'],
+                'value': model => model['code'],
                 'label': labelTitleTextMapper,
                 'title': labelTitleTextMapper,
                 'text': labelTitleTextMapper,
