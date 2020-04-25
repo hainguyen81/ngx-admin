@@ -66,7 +66,7 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                 expressionProperties: {
                     'templateOptions.disabled':
                         (model: IGeneralSettings) =>
-                            !model || model.builtin || !(model.module_id || '').length,
+                            !model || model.builtin || !(model.module_code || '').length,
                 },
             },
         ],
@@ -87,7 +87,7 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                 expressionProperties: {
                     'templateOptions.disabled':
                         (model: IGeneralSettings) =>
-                            !model || model.builtin || !(model.module_id || '').length,
+                            !model || model.builtin || !(model.module_code || '').length,
                 },
             },
         ],
@@ -108,7 +108,7 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                 expressionProperties: {
                     'templateOptions.disabled':
                         (model: IGeneralSettings) =>
-                            !model || model.builtin || !(model.module_id || '').length,
+                            !model || model.builtin || !(model.module_code || '').length,
                 },
             },
         ],
