@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, Inject, Renderer2, ViewChild} from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
@@ -14,6 +14,12 @@ import {NGXLogger} from 'ngx-logger';
 export class PasswordFormFieldComponent extends AbstractFieldType implements AfterViewInit {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @ViewChild('passwordField', {static: false}) private passwordField;
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -27,5 +33,14 @@ export class PasswordFormFieldComponent extends AbstractFieldType implements Aft
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger) {
         super(_translateService, _renderer, _logger);
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    private toggleShowHidePassword() {
+        this.passwordField.nativeElement.type =
+            (this.passwordField.nativeElement.type === 'password' ? 'text' : 'password');
     }
 }
