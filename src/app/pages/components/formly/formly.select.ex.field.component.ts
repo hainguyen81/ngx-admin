@@ -112,6 +112,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     // -------------------------------------------------
 
     ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
         if (!this.ngxSelectExComponent) {
             // query component
             this.ngxSelectExComponent = ComponentUtils.queryComponent(
@@ -129,8 +131,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     protected onStatusChanges(value: any): void {
-        if (value === 'DISABLED' && this.selectExComponent) {
-            this.getConfig().disabled = this.field.formControl.disabled;
+        if (value === 'DISABLED' && this.selectExComponent && this.config) {
+            this.config.disabled = this.field.formControl.disabled;
         }
     }
 
