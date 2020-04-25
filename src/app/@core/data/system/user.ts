@@ -15,6 +15,7 @@ export interface IUser extends IModel {
     firstName: string;
     lastName: string;
     email: string;
+    image?: string | string[];
     lang?: string | 'en';
     status?: USER_STATUS | USER_STATUS.NOT_ACTIVATED;
     rolesGroupId?: string | null;

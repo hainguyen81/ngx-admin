@@ -93,6 +93,7 @@ export const dbConfig: DBConfig = {
             {name: 'firstName', keypath: 'firstName', options: {unique: false}},
             {name: 'lastName', keypath: 'lastName', options: {unique: false}},
             {name: 'email', keypath: 'email', options: {unique: false}},
+            {name: 'image', keypath: 'image', options: {unique: false}},
             {name: 'status', keypath: 'status', options: {unique: false}},
             {name: 'rolesGroupId', keypath: 'rolesGroupId', options: {unique: false}},
             {name: 'rolesGroup', keypath: 'rolesGroup', options: {unique: false}},
@@ -121,6 +122,7 @@ export const dbConfig: DBConfig = {
             {name: 'firstName', keypath: 'firstName', options: {unique: false}},
             {name: 'lastName', keypath: 'lastName', options: {unique: false}},
             {name: 'email', keypath: 'email', options: {unique: true}},
+            {name: 'image', keypath: 'image', options: {unique: true}},
             {name: 'status', keypath: 'status', options: {unique: false}},
         ],
     }, {

@@ -10,6 +10,8 @@ import CUSTOMER_LEVEL = CustomerConstants.CustomerConstants.CUSTOMER_LEVEL;
 import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
 import {Constants as OrganizationConstants} from '../../data/constants/organization.constants';
 import ORGANIZATION_TYPE = OrganizationConstants.OrganizationConstants.ORGANIZATION_TYPE;
+import {Constants as UserConstants} from '../../data/constants/user.constants';
+import USER_STATUS = UserConstants.UserConstants.USER_STATUS;
 
 export const MockGeneralSettingsTemplate: IGeneralSettings = {
     id: null,
@@ -101,6 +103,30 @@ export function generalOrganizationSystemSettingsGenerate(): IGeneralSettings[] 
     return systemSettings;
 }
 
+export function generalUserSystemSettingsGenerate(): IGeneralSettings[] {
+    let systemSettings: IGeneralSettings[];
+    let systemSetting: IGeneralSettings;
+    systemSettings = [];
+
+    // -------------------------------------------------
+    // USER_STATUS
+    // -------------------------------------------------
+    Object.keys(USER_STATUS).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.USER_STATUS.code;
+        systemSetting.name = k;
+        systemSetting.value = USER_STATUS[k];
+        systemSetting.module_id = MockModuleSystem.id;
+        systemSetting.module_code = MockModuleSystem.code;
+        systemSetting.module = MockModuleSystem;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    return systemSettings;
+}
+
 export function generalSettingsGenerate(): IGeneralSettings[] {
     let mockSettings: IGeneralSettings[];
     mockSettings = [];
@@ -118,6 +144,9 @@ export function generalSettingsGenerate(): IGeneralSettings[] {
 
     // Organization
     mockSettings = mockSettings.concat(generalOrganizationSystemSettingsGenerate());
+
+    // User
+    mockSettings = mockSettings.concat(generalUserSystemSettingsGenerate());
 
     return mockSettings;
 }

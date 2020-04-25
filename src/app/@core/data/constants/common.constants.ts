@@ -29,6 +29,8 @@ export namespace Constants {
             CUSTOMER_TYPE: { code: 'CUSTOMER_TYPE', name: 'common.enum.customerType.name' },
             // organization
             ORGANIZATION_TYPE: { code: 'ORGANIZATION_TYPE', name: 'common.enum.organizationType.name' },
+            // user
+            USER_STATUS: { code: 'USER_STATUS', name: 'common.enum.userStatus.name' },
         };
     }
 }

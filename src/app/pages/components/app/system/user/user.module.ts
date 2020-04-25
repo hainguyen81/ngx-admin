@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {UserSmartTableComponent} from './user.component';
 import {NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbSelectModule} from '@nebular/theme';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -9,6 +8,7 @@ import {UserDbService, UserHttpService} from '../../../../../services/implementa
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
+import {UserSmartTableComponent} from './user.table.component';
 
 @NgModule({
     imports: [
@@ -31,6 +31,9 @@ import {TranslateModule} from '@ngx-translate/core';
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     declarations: [
+        UserSmartTableComponent,
+    ],
+    entryComponents: [
         UserSmartTableComponent,
     ],
     providers: [
