@@ -330,13 +330,56 @@
             "menu": "Người dùng",
             "table": {
                 "noData": "Không có bất kỳ người dùng nào",
+                "image": "Hình đại diện",
                 "username": "Tên đăng nhập",
                 "firstName": "Họ",
                 "lastName": "Tên",
                 "email": "Thư điện tử",
                 "status": "Trạng thái",
 				"enterprise": "Enterprise"
-			}
+			},
+            "form": {
+                "company": {
+                    "label": "Công ty",
+                    "placeholder": "Công ty",
+                    "description": "Công ty"
+                },
+                "username": {
+                    "label": "Tên đang nhập (email)",
+                    "placeholder": "Tên đang nhập (email)",
+                    "description": "Tên đang nhập (email)"
+                },
+                "password": {
+                    "label": "Mật khẩu",
+                    "placeholder": "Mật khẩu",
+                    "description": "Mật khẩu"
+                },
+                "firstName": {
+                    "label": "Họ & tên lót",
+                    "placeholder": "Họ & tên lót",
+                    "description": "Họ & tên lót"
+                },
+                "lastName": {
+                    "label": "Tên",
+                    "placeholder": "Tên",
+                    "description": "Tên"
+                },
+                "lang": {
+                    "label": "Ngôn ngữ",
+                    "placeholder": "Ngôn ngữ",
+                    "description": "Ngôn ngữ"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái",
+                    "description": "Trạng thái"
+                },
+                "enterprise": {
+                    "label": "Enterprise",
+                    "placeholder": "Enterprise",
+                    "description": "Enterprise"
+                }
+            }
 		},
 		"customer": {
 			"title": "Quản lý khách hàng",

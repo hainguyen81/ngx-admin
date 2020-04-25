@@ -330,13 +330,56 @@
             "menu": "Users Management",
             "table": {
                 "noData": "Not found any users",
+                "image": "Avatar",
                 "username": "User Name",
                 "firstName": "First Name",
                 "lastName": "Last Name",
                 "email": "Email",
                 "status": "Status",
 				"enterprise": "Enterprise"
-			}
+			},
+            "form": {
+                "company": {
+                    "label": "Company",
+                    "placeholder": "Company",
+                    "description": "Company"
+                },
+                "username": {
+                    "label": "User name (email)",
+                    "placeholder": "User name (email)",
+                    "description": "User name (email)"
+                },
+                "password": {
+                    "label": "Password",
+                    "placeholder": "Password",
+                    "description": "Password"
+                },
+                "firstName": {
+                    "label": "First name",
+                    "placeholder": "First name",
+                    "description": "First name"
+                },
+                "lastName": {
+                    "label": "Last name",
+                    "placeholder": "Last name",
+                    "description": "Last name"
+                },
+                "lang": {
+                    "label": "Language",
+                    "placeholder": "Language",
+                    "description": "Language"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status",
+                    "description": "Status"
+                },
+                "enterprise": {
+                    "label": "Enterprise",
+                    "placeholder": "Enterprise",
+                    "description": "Enterprise"
+                }
+            }
 		},
 		"customer": {
 			"title": "Customers Management",
