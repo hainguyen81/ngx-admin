@@ -61,10 +61,10 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.general.settings.form.code.label',
                     placeholder: 'system.general.settings.form.code.placeholder',
                     required: true,
-                    disabled: true,
+                    readonly: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled':
+                    'templateOptions.readonly':
                         (model: IGeneralSettings) =>
                             !model || model.builtin || !(model.module_code || '').length,
                 },
@@ -82,10 +82,10 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.general.settings.form.name.label',
                     placeholder: 'system.general.settings.form.name.placeholder',
                     required: true,
-                    disabled: true,
+                    readonly: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled':
+                    'templateOptions.readonly':
                         (model: IGeneralSettings) =>
                             !model || model.builtin || !(model.module_code || '').length,
                 },
@@ -103,10 +103,10 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.general.settings.form.value.label',
                     placeholder: 'system.general.settings.form.value.placeholder',
                     required: true,
-                    disabled: true,
+                    readonly: true,
                 },
                 expressionProperties: {
-                    'templateOptions.disabled':
+                    'templateOptions.readonly':
                         (model: IGeneralSettings) =>
                             !model || model.builtin || !(model.module_code || '').length,
                 },

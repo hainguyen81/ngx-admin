@@ -98,6 +98,9 @@ export class GeneralSettingsComponent
     protected onEditData($event: IEvent): void {
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
         (row && row.getData()) || throwError('Invalid data to edit');
-        super.getBackComponent().setModel(row.getData() as IGeneralSettings);
+        const setting: IGeneralSettings = row.getData() as IGeneralSettings;
+        setting || throwError('Invalid data to edit');
+        if (setting.builtin) setting.value = this.translate(setting.value.toString());
+        super.getBackComponent().setModel(setting);
     }
 }
