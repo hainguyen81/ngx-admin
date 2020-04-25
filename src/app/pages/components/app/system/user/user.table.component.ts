@@ -118,6 +118,14 @@ export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 export class UserSmartTableComponent extends AppSmartTableComponent<UserDataSource> {
 
     // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected isShowHeader(): boolean {
+        return false;
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
