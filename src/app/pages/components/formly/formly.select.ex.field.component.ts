@@ -118,13 +118,25 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
                 this.queryNgxSelectExComponent, component => {
                     component && component.finishedLoading.subscribe(
                         value => this.__applySelectedItems(component, this.value));
-                    this.formControl
-                    && this.formControl.valueChanges.subscribe(
-                        val => this.__applySelectedItems(component, val));
                     this.checkOverrideFormFieldClass(component);
                 });
         }
     }
+
+    protected onValueChanges(value: any): void {
+        this.selectExComponent
+        && this.__applySelectedItems(null, value);
+    }
+
+    protected onStatusChanges(value: any): void {
+        if (value === 'DISABLED' && this.selectExComponent) {
+            this.getConfig().disabled = this.field.formControl.disabled;
+        }
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
 
     /**
      * Check for adding/removing form field class for customizing

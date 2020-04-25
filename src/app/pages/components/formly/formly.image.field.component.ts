@@ -36,6 +36,10 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
         this.formControl && this.formControl.setValue(this.value);
     }
 
+    public get allowModified(): boolean {
+        return !this.field || !this.field.formControl || !this.field.formControl.disabled;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------

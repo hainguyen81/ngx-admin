@@ -1,7 +1,7 @@
 <div class="form-field form-images-gallery-file">
     <ngx-image-gallery #imageGallery
                        [showAlbum]="true"
-                       [allowModified]="true"
+                       [allowModified]="allowModified"
                        [images]="getImages()"
                        (onChange)="onChange($event)"
     ></ngx-image-gallery>

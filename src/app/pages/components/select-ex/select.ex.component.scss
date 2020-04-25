@@ -12,5 +12,8 @@
             cursor: pointer;
             padding: 2px;
         }
+        .ngx-select__disabled {
+            background-color: transparent;
+        }
     }
 }

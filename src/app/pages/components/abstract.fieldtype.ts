@@ -1,12 +1,13 @@
-import {AfterViewInit, Inject, OnDestroy, Renderer2} from '@angular/core';
+import {AfterViewInit, EventEmitter, Inject, OnDestroy, Output, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {Observable, of, throwError} from 'rxjs';
+import {of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
+import {ControlValueAccessor} from '@angular/forms';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
-    extends FieldType<F> implements OnDestroy, AfterViewInit {
+    extends FieldType<F> implements OnDestroy, AfterViewInit, ControlValueAccessor {
 
     // -------------------------------------------------
     // DECLARATION
@@ -97,12 +98,40 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         && this.field.expressionProperties.hasOwnProperty(this.expressionPropertyObserver())
         && of(this.field.expressionProperties[this.expressionPropertyObserver()])
             .subscribe(value => this.subscribeExpressionProperty(value));
+        this.formControl
+        && this.formControl.valueChanges.subscribe(value => this.onValueChanges(value));
+        this.formControl
+        && this.formControl.statusChanges.subscribe(value => this.onStatusChanges(value));
     }
 
     ngOnDestroy(): void {
         if (this.field && this.field.templateOptions) {
             delete this._field.templateOptions['componentRef'];
         }
+    }
+
+    protected onValueChanges(value: any): void {
+        this.logger.debug('onValueChanges', value);
+    }
+
+    protected onStatusChanges(value: any): void {
+        this.logger.debug('onStatusChanges', value);
+    }
+
+    registerOnChange(fn: any): void {
+        this.logger.debug('registerOnChange', fn);
+    }
+
+    registerOnTouched(fn: any): void {
+        this.logger.debug('registerOnTouched', fn);
+    }
+
+    setDisabledState(isDisabled: boolean): void {
+        this.logger.debug('setDisabledState', isDisabled);
+    }
+
+    writeValue(obj: any): void {
+        this.logger.debug('writeValue', obj);
     }
 
     // -------------------------------------------------
