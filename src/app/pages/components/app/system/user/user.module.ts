@@ -9,6 +9,8 @@ import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {UserSmartTableComponent} from './user.table.component';
+import {UserFormlyComponent} from './user.formly.component';
+import {UserToolbarComponent} from './user.toolbar.component';
 
 @NgModule({
     imports: [
@@ -32,9 +34,13 @@ import {UserSmartTableComponent} from './user.table.component';
     ],
     declarations: [
         UserSmartTableComponent,
+        UserFormlyComponent,
+        UserToolbarComponent,
     ],
     entryComponents: [
         UserSmartTableComponent,
+        UserFormlyComponent,
+        UserToolbarComponent,
     ],
     providers: [
         {
