@@ -24,13 +24,13 @@ import {
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {Constants} from '../../../../../@core/data/constants/warehouse.category.constants';
-import CATEGORY_TYPE = Constants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
+import {Constants as WcConstants} from '../../../../../@core/data/constants/warehouse.category.constants';
+import CATEGORY_TYPE = WcConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import convertWarehouseCategoryTypeToDisplay =
-    Constants.WarehouseConstants.WarehouseCategoryConstants.convertWarehouseCategoryTypeToDisplay;
+    WcConstants.WarehouseConstants.WarehouseCategoryConstants.convertWarehouseCategoryTypeToDisplay;
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();

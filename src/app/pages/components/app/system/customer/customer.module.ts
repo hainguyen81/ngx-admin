@@ -12,10 +12,10 @@ import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
-import {CustomerSmartTableComponent} from './customer.component';
 import {CustomerDatasource} from '../../../../../services/implementation/system/customer/customer.datasource';
 import {TranslateModule} from '@ngx-translate/core';
 import {CustomerDbService, CustomerHttpService} from '../../../../../services/implementation/system/customer/customer.service';
+import {CustomerSmartTableComponent} from './customer.table.component';
 
 @NgModule({
     imports: [

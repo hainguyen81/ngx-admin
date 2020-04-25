@@ -34,12 +34,12 @@ import {
 import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
-import {Constants} from '../../../../../@core/data/constants/organization.constants';
-import ORGANIZATION_TYPE = Constants.OrganizationConstants.ORGANIZATION_TYPE;
-import convertOrganizationTypeToDisplay = Constants.OrganizationConstants.convertOrganizationTypeToDisplay;
+import {Constants as OrgConstants} from '../../../../../@core/data/constants/organization.constants';
+import ORGANIZATION_TYPE = OrgConstants.OrganizationConstants.ORGANIZATION_TYPE;
+import convertOrganizationTypeToDisplay = OrgConstants.OrganizationConstants.convertOrganizationTypeToDisplay;
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();

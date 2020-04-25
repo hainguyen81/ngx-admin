@@ -20,11 +20,11 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 import {Lightbox} from 'ngx-lightbox';
-import {Constants} from '../../../../../@core/data/constants/user.constants';
-import USER_STATUS = Constants.UserConstants.USER_STATUS;
-import convertUserStatusToDisplay = Constants.UserConstants.convertUserStatusToDisplay;
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as UserConstants} from '../../../../../@core/data/constants/user.constants';
+import USER_STATUS = UserConstants.UserConstants.USER_STATUS;
+import convertUserStatusToDisplay = UserConstants.UserConstants.convertUserStatusToDisplay;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /* users table settings */
 export const UserTableSettings = {
