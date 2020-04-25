@@ -42,7 +42,7 @@ export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu
  */
 @Component({
     moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
-    selector: 'ngx-tree-view-app-organization',
+    selector: 'ngx-tree-view-app-system-organization',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
     providers: [

@@ -27,7 +27,7 @@ import MODULE_CODES = Constants.COMMON.MODULE_CODES;
  */
 @Component({
     moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
-    selector: 'ngx-split-pane-app-organization',
+    selector: 'ngx-split-pane-app-system-organization',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })

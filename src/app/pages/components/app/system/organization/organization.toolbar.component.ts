@@ -34,7 +34,7 @@ export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].conc
  */
 @Component({
     moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
-    selector: 'ngx-toolbar-app-organization',
+    selector: 'ngx-toolbar-app-system-organization',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss', '../../components/app.toolbar.component.scss'],
 })
