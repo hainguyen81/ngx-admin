@@ -44,6 +44,7 @@ import {
 } from '../../components/common/app.module.settings.formly.select.ex.field.component';
 import {isNullOrUndefined} from 'util';
 import {CustomValidators} from 'ngx-custom-validators';
+import PromiseUtils from '../../../../../utils/promise.utils';
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();
@@ -410,12 +411,17 @@ export class CustomerFormlyComponent
         };
 
         // customer status
-        this.observeSettingFieldByCode(
-            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], BUILTIN_CODES.CUSTOMER_STATUS.code);
-        this.observeSettingFieldByCode(
-            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1], BUILTIN_CODES.CUSTOMER_LEVEL.code);
-        this.observeSettingFieldByCode(
-            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2], BUILTIN_CODES.CUSTOMER_TYPE.code);
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            this.observeSettingFieldByCode(
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], BUILTIN_CODES.CUSTOMER_STATUS.code),
+            this.observeSettingFieldByCode(
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1], BUILTIN_CODES.CUSTOMER_LEVEL.code),
+            this.observeSettingFieldByCode(
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2], BUILTIN_CODES.CUSTOMER_TYPE.code),
+            ]).then(
+                value => this.getLogger().debug('Loading settings successful'),
+                reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
     }
 
     /**
@@ -475,16 +481,13 @@ export class CustomerFormlyComponent
      * @param field to observe
      * @param settingCode to filter
      */
-    private observeSettingFieldByCode(field: FormlyFieldConfig, settingCode: string) {
-        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
+    private observeSettingFieldByCode(field: FormlyFieldConfig, settingCode: string): Promise<void> {
+        return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
             this.generalSettingsDatasource, '__general_settings_index_by_module_code',
             IDBKeyRange.only([MODULE_CODES.SYSTEM, settingCode]),
             this.getTranslateService(), {
                 'text': model => this.translate(model['value']),
-            }).then(
-            (settings: IModel[]) => {
-                this.observeSettingField(field, settings);
-            });
+            }).then((settings: IModel[]) => this.observeSettingField(field, settings));
     }
     /**
      * Observe general settings field

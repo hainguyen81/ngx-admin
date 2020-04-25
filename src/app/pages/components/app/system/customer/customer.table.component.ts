@@ -23,10 +23,11 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {isArray, isNullOrUndefined} from 'util';
 import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import {IModel} from '../../../../../@core/data/base';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import PromiseUtils from '../../../../../utils/promise.utils';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -194,30 +195,32 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
             value => this.translateColumn('status', value);
         this.translatedSettings['columns']['type']['valuePrepareFunction'] =
             value => this.translateColumn('type', value);
-        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
-            this.generalSettingsDatasource, 'module_code',
-            IDBKeyRange.only(MODULE_CODES.SYSTEM_CUSTOMER), this.getTranslateService()).then(
-            options => {
-                const levelOptions: { [key: string]: string | string[] | IModel; }[] = [];
-                const statusOptions: { [key: string]: string | string[] | IModel; }[] = [];
-                const typeOptions: { [key: string]: string | string[] | IModel; }[] = [];
-                (options || []).forEach(option => {
-                    switch ((option['model'] || {})['code'] || '') {
-                        case BUILTIN_CODES.CUSTOMER_STATUS:
-                            statusOptions.push(option);
-                            break;
-                        case BUILTIN_CODES.CUSTOMER_LEVEL:
-                            levelOptions.push(option);
-                            break;
-                        case BUILTIN_CODES.CUSTOMER_TYPE:
-                            typeOptions.push(option);
-                            break;
-                    }
-                });
-                this.translatedSettings['columns']['status']['editor']['config']['list'] = statusOptions;
-                this.translatedSettings['columns']['level']['editor']['config']['list'] = levelOptions;
-                this.translatedSettings['columns']['type']['editor']['config']['list'] = typeOptions;
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            this.observeSettingFieldByCode(BUILTIN_CODES.CUSTOMER_STATUS.code, 'status'),
+            this.observeSettingFieldByCode(BUILTIN_CODES.CUSTOMER_LEVEL.code, 'level'),
+            this.observeSettingFieldByCode(BUILTIN_CODES.CUSTOMER_TYPE.code, 'type'),
+        ]).then(
+            value => {
+                this.getLogger().debug('Loading settings successful');
                 this.getDataSource().refresh();
+            },
+            reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
+    }
+    /**
+     * Observe general setting field by setting code
+     * @param settingCode to filter
+     * @param column to apply
+     */
+    private observeSettingFieldByCode(settingCode: string, column: string): Promise<void> {
+        return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsOptions(
+            this.generalSettingsDatasource, '__general_settings_index_by_module_code',
+            IDBKeyRange.only([MODULE_CODES.SYSTEM, settingCode]),
+            this.getTranslateService(), {
+                'value': model => model.id,
+                'label': model => this.translate(model['value']),
+            }).then((settings: { [key: string]: string | string[] | IGeneralSettings; }[]) => {
+                this.translatedSettings['columns'][column]['editor']['config']['list'] = settings;
             });
     }
     private translateColumn(column: string, value?: string | null): string {

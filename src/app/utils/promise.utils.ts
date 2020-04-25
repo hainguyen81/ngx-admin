@@ -29,7 +29,7 @@ export default class PromiseUtils {
     public static sequencePromises<K>(initialValue: K,
                                       calculateResult: (result: K, value: K) => K,
                                       promises: Promise<K>[]): Promise<K> {
-        if (!promises || !promises.length || !calculateResult) {
+        if (!promises || !promises.length) {
             return Promise.resolve(initialValue);
         }
 
@@ -37,9 +37,10 @@ export default class PromiseUtils {
         result = initialValue;
         return promises.reduce((previousValue, currentValue, currentIndex) => {
             return previousValue.then((prevValue) => {
-                result = calculateResult(result, prevValue);
+                result = (calculateResult ? calculateResult(result, prevValue) : prevValue);
                 return currentValue.then((curValue) => {
-                    return Promise.resolve(calculateResult(result, curValue));
+                    return Promise.resolve(
+                        calculateResult ? calculateResult(result, curValue) : result);
 
                 }).catch((errors) => {
                     return Promise.resolve(result);
@@ -63,14 +64,14 @@ export default class PromiseUtils {
     public static parallelPromises<K>(initialValue: K,
                                       calculateResult: (result: K, value: K) => K,
                                       promises: Promise<K>[]): Promise<K> {
-        if (!promises || !promises.length || !calculateResult) {
+        if (!promises || !promises.length) {
             return Promise.resolve(initialValue);
         }
 
         return Promise.all(promises).then((values: K[]) => {
             let result: K;
             result = initialValue;
-            (values || []).forEach(value => result = calculateResult(result, value));
+            calculateResult && (values || []).forEach(value => result = calculateResult(result, value));
             return result;
 
         }).catch((errors) => {
