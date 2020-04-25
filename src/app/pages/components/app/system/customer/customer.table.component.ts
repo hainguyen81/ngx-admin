@@ -42,6 +42,16 @@ export const CustomerTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
+        type: {
+            title: 'system.customer.table.type',
+            type: 'string',
+            sort: false,
+            filter: false,
+            editor: {
+                type: 'list',
+                config: {list: []},
+            },
+        },
         code: {
             title: 'system.customer.table.code',
             type: 'string',
@@ -151,11 +161,13 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
+            {field: 'type', search: keyword},
             {field: 'code', search: keyword},
             {field: 'name', search: keyword},
+            {field: 'level', search: keyword},
             {field: 'email', search: keyword},
-            {field: 'title', search: keyword},
             {field: 'tel', search: keyword},
+            {field: 'fax', search: keyword},
             {field: 'address', search: keyword},
         ], false);
         this.getDataSource().refresh();
@@ -172,12 +184,15 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
             value => this.translateColumn('level', value);
         this.translatedSettings['columns']['status']['valuePrepareFunction'] =
             value => this.translateColumn('status', value);
+        this.translatedSettings['columns']['type']['valuePrepareFunction'] =
+            value => this.translateColumn('type', value);
         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
             this.generalSettingsDatasource, 'module_code',
             IDBKeyRange.only(MODULE_CODES.SYSTEM_CUSTOMER), this.getTranslateService()).then(
             options => {
                 const levelOptions: { [key: string]: string | string[] | IModel; }[] = [];
                 const statusOptions: { [key: string]: string | string[] | IModel; }[] = [];
+                const typeOptions: { [key: string]: string | string[] | IModel; }[] = [];
                 (options || []).forEach(option => {
                     switch ((option['model'] || {})['code'] || '') {
                         case BUILTIN_CODES.CUSTOMER_STATUS:
@@ -186,10 +201,14 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
                         case BUILTIN_CODES.CUSTOMER_LEVEL:
                             levelOptions.push(option);
                             break;
+                        case BUILTIN_CODES.CUSTOMER_TYPE:
+                            typeOptions.push(option);
+                            break;
                     }
                 });
                 this.translatedSettings['columns']['status']['editor']['config']['list'] = statusOptions;
                 this.translatedSettings['columns']['level']['editor']['config']['list'] = levelOptions;
+                this.translatedSettings['columns']['type']['editor']['config']['list'] = typeOptions;
                 this.getDataSource().refresh();
             });
     }
