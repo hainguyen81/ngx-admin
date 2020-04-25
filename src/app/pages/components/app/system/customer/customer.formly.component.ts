@@ -409,30 +409,13 @@ export class CustomerFormlyComponent
             },
         };
 
-        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
-            this.generalSettingsDatasource, 'module_code',
-            IDBKeyRange.only(MODULE_CODES.SYSTEM_SETTINGS), this.getTranslateService()).then(
-            (settings: IModel[]) => {
-                const levelSettings: IModel[] = [];
-                const typeSettings: IModel[] = [];
-                const statusSettings: IModel[] = [];
-                (settings || []).forEach(setting => {
-                    switch ((setting || {})['code'] || '') {
-                        case BUILTIN_CODES.CUSTOMER_STATUS:
-                            statusSettings.push(setting);
-                            break;
-                        case BUILTIN_CODES.CUSTOMER_LEVEL:
-                            levelSettings.push(setting);
-                            break;
-                        case BUILTIN_CODES.CUSTOMER_TYPE:
-                            typeSettings.push(setting);
-                            break;
-                    }
-                });
-                this.observeSettingFields(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], typeSettings);
-                this.observeSettingFields(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1], levelSettings);
-                this.observeSettingFields(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2], statusSettings);
-            });
+        // customer status
+        this.observeSettingFieldByCode(
+            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], BUILTIN_CODES.CUSTOMER_STATUS.code);
+        this.observeSettingFieldByCode(
+            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1], BUILTIN_CODES.CUSTOMER_LEVEL.code);
+        this.observeSettingFieldByCode(
+            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2], BUILTIN_CODES.CUSTOMER_TYPE.code);
     }
 
     /**
@@ -488,11 +471,27 @@ export class CustomerFormlyComponent
     }
 
     /**
-     * Observe general settings fields
+     * Observe general setting field by setting code
+     * @param field to observe
+     * @param settingCode to filter
+     */
+    private observeSettingFieldByCode(field: FormlyFieldConfig, settingCode: string) {
+        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
+            this.generalSettingsDatasource, '__general_settings_index_by_module_code',
+            IDBKeyRange.only([MODULE_CODES.SYSTEM, settingCode]),
+            this.getTranslateService(), {
+                'text': model => this.translate(model['value']),
+            }).then(
+            (settings: IModel[]) => {
+                this.observeSettingField(field, settings);
+            });
+    }
+    /**
+     * Observe general settings field
      * @param field to observe
      * @param options to apply
      */
-    private observeSettingFields(field: FormlyFieldConfig, options: IModel[]): void {
+    private observeSettingField(field: FormlyFieldConfig, options: IModel[]): void {
         const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
             super.getFormFieldComponent(field, AppModuleSettingsFormlySelectExFieldComponent);
         if (!isNullOrUndefined(options)) {

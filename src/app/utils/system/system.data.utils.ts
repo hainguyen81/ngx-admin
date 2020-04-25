@@ -26,14 +26,33 @@ export default class SystemDataUtils {
      * @param keyRange to filter
      * @param translateService need to translate
      */
-    public static invokeModelsByDatabaseFilterAsSelectOptions<
+    public static invokeModelsByDatabaseFilterAsDefaultSelectOptions<
         T extends IModel, D extends IDbService<T>>(
             dbService: D, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null): Promise<T[]> {
         dbService
         || throwError('DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
-            ModelUtils.buildModelsForSelectOptions(values as T[], translateService));
+            ModelUtils.buildModelsForDefaultSelectOptions(values as T[], translateService));
+    }
+    /**
+     * Get all models as {NgxSelectOption} options
+     * @param dbService to invoke
+     * @param indexName to filter
+     * @param keyRange to filter
+     * @param translateService need to translate
+     * @param keysMapper mappers to map model to option value key
+     */
+    public static invokeModelsByDatabaseFilterAsSelectOptions<
+        T extends IModel, D extends IDbService<T>>(
+            dbService: D, indexName: string, keyRange: IDBKeyRange,
+            translateService?: TranslateService | null,
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
+        dbService
+        || throwError('DbService is required to invoke!');
+        return dbService.getAllByIndex(indexName, keyRange).then(values =>
+            ModelUtils.buildModelsForSelectOptions(
+                values as T[], translateService, true, keysMapper));
     }
     /**
      * Get all models as table column select options
@@ -46,7 +65,7 @@ export default class SystemDataUtils {
         T extends IModel, D extends IDbService<T>>(
             dbService: D, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         dbService
         || throwError('DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
@@ -64,8 +83,8 @@ export default class SystemDataUtils {
         T extends IModel, D extends IDbService<T>>(
             dbService: D, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null,
-            keysMapper?: { [key: string]: (model: T) => string | string[] } | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         dbService
         || throwError('DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
@@ -80,7 +99,7 @@ export default class SystemDataUtils {
      * @param keyRange to filter
      * @param translateService need to translate
      */
-    public static invokeDatasourceModelsByDatabaseFilterAsSelectOptions<
+    public static invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions<
         T extends IModel, H extends IHttpService<T>, D extends IDbService<T>,
         DS extends BaseDataSource<T, H, D>>(
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
@@ -90,7 +109,29 @@ export default class SystemDataUtils {
         datasource.setPaging(1, undefined, false);
         datasource.setFilter([], false, false);
         return datasource.getAllByIndex(indexName, keyRange).then(values =>
-            ModelUtils.buildModelsForSelectOptions(values as T[], translateService));
+            ModelUtils.buildModelsForDefaultSelectOptions(values as T[], translateService));
+    }
+    /**
+     * Get all models as {NgxSelectOption} options
+     * @param datasource to invoke
+     * @param indexName to filter
+     * @param keyRange to filter
+     * @param translateService need to translate
+     * @param keysMapper mappers to map model to option value key
+     */
+    public static invokeDatasourceModelsByDatabaseFilterAsSelectOptions<
+        T extends IModel, H extends IHttpService<T>, D extends IDbService<T>,
+        DS extends BaseDataSource<T, H, D>>(
+        datasource: DS, indexName: string, keyRange: IDBKeyRange,
+        translateService?: TranslateService | null,
+        keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
+        datasource
+        || throwError('DataSource is required to invoke!');
+        datasource.setPaging(1, undefined, false);
+        datasource.setFilter([], false, false);
+        return datasource.getAllByIndex(indexName, keyRange).then(values =>
+            ModelUtils.buildModelsForSelectOptions(
+                values as T[], translateService, true, keysMapper));
     }
     /**
      * Get all models as table column select options
@@ -104,7 +145,7 @@ export default class SystemDataUtils {
         DS extends BaseDataSource<T, H, D>>(
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -125,8 +166,8 @@ export default class SystemDataUtils {
         DS extends BaseDataSource<T, H, D>>(
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null,
-            keysMapper?: { [key: string]: (model: T) => string | string[] | IModel } | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -143,7 +184,7 @@ export default class SystemDataUtils {
      * @param andOperator filter operation
      * @param translateService need to translate
      */
-    public static invokeModelsByFilterAsSelectOptions<
+    public static invokeModelsByFilterAsDefaultSelectOptions<
         D extends DataSource, T extends IModel>(
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
             translateService?: TranslateService | null): Promise<T[]> {
@@ -152,7 +193,27 @@ export default class SystemDataUtils {
         datasource.setPaging(1, undefined, false);
         datasource.setFilter(conf || [], andOperator, false);
         return datasource.getAll().then(values =>
-            ModelUtils.buildModelsForSelectOptions(values as T[], translateService));
+            ModelUtils.buildModelsForDefaultSelectOptions(values as T[], translateService));
+    }
+    /**
+     * Get all models as {NgxSelectOption} options
+     * @param datasource to invoke
+     * @param conf to filter
+     * @param andOperator filter operation
+     * @param translateService need to translate
+     */
+    public static invokeModelsByFilterAsSelectOptions<
+        D extends DataSource, T extends IModel>(
+            datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
+            translateService?: TranslateService | null,
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
+        datasource
+        || throwError('DataSource is required to invoke!');
+        datasource.setPaging(1, undefined, false);
+        datasource.setFilter(conf || [], andOperator, false);
+        return datasource.getAll().then(values =>
+            ModelUtils.buildModelsForSelectOptions(
+                values as T[], translateService, true, keysMapper));
     }
     /**
      * Get all models as table column select options
@@ -165,7 +226,7 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
             translateService?: TranslateService | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -185,8 +246,8 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
             translateService?: TranslateService | null,
-            keysMapper?: { [key: string]: (model: T) => string | string[] | IModel } | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
@@ -201,11 +262,24 @@ export default class SystemDataUtils {
      * @param datasource to invoke
      * @param translateService need to translate
      */
-    public static invokeAllModelsAsSelectOptions<
+    public static invokeAllModelsAsDefaultSelectOptions<
         D extends DataSource, T extends IModel>(
             datasource: D, translateService?: TranslateService | null): Promise<T[]> {
-        return this.invokeModelsByFilterAsSelectOptions(
+        return this.invokeModelsByFilterAsDefaultSelectOptions(
             datasource, [], false, translateService);
+    }
+    /**
+     * Get all models as {NgxSelectOption} options
+     * @param datasource to invoke
+     * @param translateService need to translate
+     * @param keysMapper mappers to map model to option value key
+     */
+    public static invokeAllModelsAsSelectOptions<
+        D extends DataSource, T extends IModel>(
+            datasource: D, translateService?: TranslateService | null,
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
+        return this.invokeModelsByFilterAsSelectOptions(
+            datasource, [], false, translateService, keysMapper);
     }
     /**
      * Get all models as table column select options
@@ -216,7 +290,7 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D,
             translateService?: TranslateService | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         return this.invokeModelsByFilterAsTableSelectOptions(
             datasource, [], false, translateService);
     }
@@ -230,8 +304,8 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D,
             translateService?: TranslateService | null,
-            keysMapper?: { [key: string]: (model: T) => string | string[] | IModel } | null):
-        Promise<{ [key: string]: string | string[] | IModel; }[]> {
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
+        Promise<{ [key: string]: string | string[] | T; }[]> {
         return this.invokeModelsByFilterAsOptions(
             datasource, [], false, translateService, keysMapper);
     }
@@ -259,7 +333,7 @@ export default class SystemDataUtils {
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByCountry(country).then(values =>
-                ModelUtils.buildModelsForSelectOptions(
+                ModelUtils.buildModelsForDefaultSelectOptions(
                     values as IProvince[], translateService, false));
     }
 
@@ -278,7 +352,7 @@ export default class SystemDataUtils {
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
             .findByProvince(province).then(values =>
-                ModelUtils.buildModelsForSelectOptions(
+                ModelUtils.buildModelsForDefaultSelectOptions(
                     values as ICity[], translateService, false));
     }
 

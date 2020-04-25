@@ -2,6 +2,8 @@ import {DBConfig} from 'ngx-indexed-db';
 import {environment} from '../../environments/environment';
 
 export const DB_STORE: any = {
+    version: 1,
+
     // System modules
     third_party: 'third_party',
     auth: 'auth',
@@ -27,9 +29,32 @@ export const DB_STORE: any = {
     warehouse_settings: 'warehouse_settings',
 };
 
+// Ahead of time compiles requires an exported function for factories
+export function indexFactory() {
+    // The animal table was added with version 2 but none of the existing tables or data needed
+    // to be modified so a migrator for that version is not included.
+    return {
+        1: (db, transaction) => {
+            const store = transaction.objectStore(DB_STORE.general_settings);
+            store.createIndex(
+                '__general_settings_index_by_id',
+                ['id', 'module_id', 'code'],
+                { unique: true });
+            store.createIndex(
+                '__general_settings_index_by_code',
+                ['id', 'module_code', 'code'],
+                { unique: true });
+            store.createIndex(
+                '__general_settings_index_by_module_code',
+                ['module_code', 'code'],
+                { unique: false });
+        },
+    };
+}
+
 export const dbConfig: DBConfig = {
     name: environment.databaseName,
-    version: 1,
+    version: DB_STORE.version,
     objectStoresMeta: [{
         store: DB_STORE.third_party,
         storeConfig: {keyPath: 'uid', autoIncrement: true},
@@ -394,4 +419,6 @@ export const dbConfig: DBConfig = {
             {name: 'remark', keypath: 'remark', options: {unique: false}},
         ],
     }],
+    // provide the migration factory to the DBConfig
+    migrationFactory: indexFactory,
 };
