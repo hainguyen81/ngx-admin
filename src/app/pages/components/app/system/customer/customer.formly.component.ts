@@ -413,11 +413,11 @@ export class CustomerFormlyComponent
         // customer status
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeSettingFieldByCode(
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], BUILTIN_CODES.CUSTOMER_STATUS.code),
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], BUILTIN_CODES.CUSTOMER_TYPE.code),
             this.observeSettingFieldByCode(
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1], BUILTIN_CODES.CUSTOMER_LEVEL.code),
             this.observeSettingFieldByCode(
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2], BUILTIN_CODES.CUSTOMER_TYPE.code),
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2], BUILTIN_CODES.CUSTOMER_STATUS.code),
             ]).then(
                 value => this.getLogger().debug('Loading settings successful'),
                 reason => this.getLogger().error(reason))
