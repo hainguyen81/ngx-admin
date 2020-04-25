@@ -333,7 +333,7 @@ export const API = {
                             icon: {icon: 'boxes', pack: 'fa'},
                             url: () => {
                                 const parent: any = API.warehouse.children.features.client;
-                                return parent.url.call(undefined).concat('/general');
+                                return parent.url.call(undefined).concat('/item');
                             },
                         },
                     },

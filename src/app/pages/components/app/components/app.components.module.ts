@@ -29,7 +29,6 @@ import {CustomFormsModule} from 'ngx-custom-validators';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {ValidatorsModule} from 'ngx-validators';
 
-
 @NgModule({
     imports: [
         CommonModule,

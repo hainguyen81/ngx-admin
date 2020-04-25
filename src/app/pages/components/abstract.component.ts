@@ -766,6 +766,12 @@ export abstract class AbstractComponent
         kbEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
         let eventTarget: Element | EventTarget;
         eventTarget = (target ? target : event && event.target instanceof Node ? event.target : undefined);
+        if ((<HTMLElement>target) && event && (<HTMLElement>event.target)
+            && target !== event.target
+            && ((<HTMLElement>target).contains(<HTMLElement>event.target)
+                || (<HTMLElement>event.target).contains(<HTMLElement>target))) {
+            eventTarget = event.target;
+        }
         eventTarget && this.getContextMenuService().show.next({
             // Optional - if unspecified, all context menu components will open
             contextMenu: this.getContextMenuComponent(),

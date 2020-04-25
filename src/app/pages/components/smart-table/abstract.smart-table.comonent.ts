@@ -1400,7 +1400,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             ? event.target : !event || !event.target ? rowEl
                 : super.getClosestElementBySelector(
                     AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, event.target as Element));
-        return super.showHideContextMenu(event, target, (row ? row.getData() : undefined));
+        if (target) {
+            return super.showHideContextMenu(event, target, (row ? row.getData() : undefined));
+        }
+        this.closeContextMenu();
+        return true;
     }
 
     /**
