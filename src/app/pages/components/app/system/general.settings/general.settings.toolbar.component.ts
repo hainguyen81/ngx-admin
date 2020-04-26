@@ -15,7 +15,10 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
+import {
+    AppToolbarComponent,
+    AppToolbarDeleteDbActionsConfig,
+} from '../../components/app.toolbar.component';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
@@ -29,7 +32,7 @@ export const GeneralSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default general settings toolbar actions config */
-export const GeneralSettingsToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarBackActionsConfig;
+export const GeneralSettingsToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarDeleteDbActionsConfig;
 
 /**
  * Toolbar component base on {MatToolbar}

@@ -2,7 +2,7 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2, ViewContainerRef,
 } from '@angular/core';
 import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
@@ -25,6 +25,9 @@ import {GeneralSettingsFormlyComponent} from './general.settings.formly.componen
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {throwError} from 'rxjs';
+import {isNullOrUndefined} from 'util';
+import {IToolbarActionsConfig} from '../../../toolbar/abstract.toolbar.component';
+import {ACTION_DELETE_DATABASE, ACTION_IMPORT} from '../../components/app.toolbar.component';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_SETTINGS,
@@ -41,7 +44,8 @@ export class GeneralSettingsComponent
         IGeneralSettings, GeneralSettingsDatasource,
         GeneralSettingsToolbarComponent,
         GeneralSettingsSmartTableComponent,
-        GeneralSettingsFormlyComponent> {
+        GeneralSettingsFormlyComponent>
+    implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -89,6 +93,12 @@ export class GeneralSettingsComponent
     // EVENTS
     // -------------------------------------------------
 
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        this.onFlipped.subscribe(value => this._applyActionsOnFlipped());
+    }
+
     protected onNewData($event: IEvent): void {
         const newInst: IGeneralSettings = new GeneralSettings(null, null, null, null);
         newInst.builtin = false;
@@ -102,5 +112,28 @@ export class GeneralSettingsComponent
         setting || throwError('Invalid data to edit');
         if (setting.builtin) setting.value = this.translate(setting.value.toString());
         super.getBackComponent().setModel(setting);
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    private _applyActionsOnFlipped() {
+        if (isNullOrUndefined(this.getToolbarComponent())) return;
+
+        const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
+        (actions || []).forEach(action => {
+            switch (action.id) {
+                case ACTION_DELETE_DATABASE:
+                case ACTION_IMPORT: {
+                    action.visible = !super.isFlipped();
+                    break;
+                }
+                default: {
+                    action.visible = super.isFlipped();
+                    break;
+                }
+            }
+        });
     }
 }

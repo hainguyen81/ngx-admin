@@ -20,6 +20,8 @@ import {COMMON} from '../../../../config/common.config';
 
 /* default warehouse item toolbar actions config */
 export const ACTION_BACK: string = 'ACTION_BACK';
+export const ACTION_IMPORT: string = 'ACTION_IMPORT';
+export const ACTION_DELETE_DATABASE: string = 'ACTION_DELETE_DATABASE';
 export const AppToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
 export const AppToolbarBackActionsConfig: IToolbarActionsConfig[] =
     [].concat(AppToolbarActionsConfig)
@@ -32,6 +34,26 @@ export const AppToolbarBackActionsConfig: IToolbarActionsConfig[] =
             size: 'small',
             shape: 'rectangle',
         }]);
+export const AppToolbarImportActionsConfig: IToolbarActionsConfig[] =
+    [].concat([{
+        id: ACTION_IMPORT,
+        label: 'common.form.action.import',
+        type: 'button',
+        status: 'default',
+        icon: {icon: 'upload', pack: 'fa'},
+        size: 'small',
+        shape: 'rectangle',
+    }]).concat(AppToolbarBackActionsConfig);
+export const AppToolbarDeleteDbActionsConfig: IToolbarActionsConfig[] =
+    [].concat([{
+        id: ACTION_DELETE_DATABASE,
+        label: 'common.form.action.deletedb',
+        type: 'button',
+        status: 'default',
+        icon: {icon: 'eraser', pack: 'fa'},
+        size: 'small',
+        shape: 'rectangle',
+    }]).concat(AppToolbarBackActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}

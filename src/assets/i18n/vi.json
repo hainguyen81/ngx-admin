@@ -134,7 +134,9 @@
                 "save": "Lưu",
                 "reset": "Reset",
                 "delete": "Xóa",
-                "back": "Quay lại"
+                "back": "Quay lại",
+                "import": "Import",
+                "deletedb": "Xóa DB"
             },
             "treeview": {
                 "not_selection": "",
