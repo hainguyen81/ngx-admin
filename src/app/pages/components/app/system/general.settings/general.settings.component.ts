@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
@@ -45,7 +46,7 @@ export class GeneralSettingsComponent
         GeneralSettingsToolbarComponent,
         GeneralSettingsSmartTableComponent,
         GeneralSettingsFormlyComponent>
-    implements OnInit {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -96,7 +97,15 @@ export class GeneralSettingsComponent
     ngOnInit(): void {
         super.ngOnInit();
 
+        // listener while flipping for apply toolbar actions settings
         this.onFlipped.subscribe(value => this._applyActionsOnFlipped());
+    }
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // toolbar actions settings at start-up
+        this._applyActionsOnFlipped();
     }
 
     protected onNewData($event: IEvent): void {
