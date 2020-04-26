@@ -191,5 +191,8 @@ export function generalSettingsGenerate(): IGeneralSettings[] {
     // User
     mockSettings = mockSettings.concat(generalUserSystemSettingsGenerate());
 
+    // Warehouse
+    mockSettings = mockSettings.concat(generalWarehouseCategorySystemSettingsGenerate());
+
     return mockSettings;
 }
