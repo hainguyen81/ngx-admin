@@ -1,11 +1,11 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractComponent} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef,
-    Inject,
+    ElementRef, EventEmitter,
+    Inject, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -47,6 +47,9 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
     private readonly queryFlipcardBackComponent: QueryList<NbCardBackComponent>;
     private flipcardBackComponent: NbCardBackComponent;
 
+    // raise when flipping
+    @Output() protected onFlipped: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
@@ -84,6 +87,11 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
         if (this.getFlipcardComponent()) {
             this.getFlipcardComponent().flipped = this.flipped;
         }
+        this.onFlipped.emit({ data: {
+            'front': this.getFlipcardFrontComponent(),
+            'back': this.getFlipcardBackComponent(),
+            'flipped': flipped,
+        } });
     }
 
     /**
