@@ -92,10 +92,10 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        fieldGroupClassName: 'row ml-0 mr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
                             {
-                                className: 'w-50 pl-0 pr-2',
+                                className: 'col-6',
                                 key: 'code',
                                 type: 'input',
                                 templateOptions: {
@@ -105,7 +105,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'w-50 pl-2 pr-0',
+                                className: 'col-6',
                                 key: 'name',
                                 type: 'input',
                                 templateOptions: {
@@ -118,12 +118,18 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                     },
                     {
                         className: 'w-100',
-                        key: 'remark',
-                        type: 'textarea',
-                        templateOptions: {
-                            label: 'warehouse.category.form.remark.label',
-                            placeholder: 'warehouse.category.form.remark.placeholder',
-                        },
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
+                        fieldGroup: [
+                            {
+                                className: 'col',
+                                key: 'remark',
+                                type: 'textarea',
+                                templateOptions: {
+                                    label: 'warehouse.category.form.remark.label',
+                                    placeholder: 'warehouse.category.form.remark.placeholder',
+                                },
+                            },
+                        ],
                     },
                 ],
             },
