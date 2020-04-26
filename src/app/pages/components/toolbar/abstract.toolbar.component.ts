@@ -86,6 +86,10 @@ export interface IToolbarActionsConfig {
      * Disables the button
      */
     disabled?: boolean | false;
+    /**
+     * Make the button visibility
+     */
+    visible?: boolean | true;
 }
 
 /* toolbar header configuration */

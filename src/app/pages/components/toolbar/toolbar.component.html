@@ -16,7 +16,7 @@
         <div class="btn-group btn-group-justified ngx-toolbar-actions-group" *ngIf="showActions">
             <div class="btn-group ngx-toolbar-actions" *ngFor="let action of getActions()">
                 <!-- disabled && not full width -->
-                <button
+                <button *ngIf="action.visible"
                     nbButton
                     [id]="action.id"
                     [title]="action.description || ''"
