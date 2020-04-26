@@ -231,7 +231,8 @@ export default class AppObserveUtils {
         if (!isNullOrUndefined(options) && isArray(options)) {
             for (const option of options) {
                 if (option.value === value) {
-                    return (option.label ? option.label.toString() : undefined);
+                    return (option.label && option.label.toString().length
+                        ? option.label.toString() : undefined);
                 }
             }
         }
