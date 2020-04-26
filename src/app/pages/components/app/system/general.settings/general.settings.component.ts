@@ -130,6 +130,7 @@ export class GeneralSettingsComponent
     private _applyActionsOnFlipped() {
         if (isNullOrUndefined(this.getToolbarComponent())) return;
 
+        this.getToolbarComponent().showActions = true;
         const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
         (actions || []).forEach(action => {
             switch (action.id) {
