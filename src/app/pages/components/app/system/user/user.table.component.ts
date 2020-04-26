@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -118,7 +117,9 @@ export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
-export class UserSmartTableComponent extends AppSmartTableComponent<UserDataSource> implements AfterViewInit {
+export class UserSmartTableComponent
+    extends AppSmartTableComponent<UserDataSource>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -179,38 +180,20 @@ export class UserSmartTableComponent extends AppSmartTableComponent<UserDataSour
             {field: 'lastName', search: keyword},
             {field: 'email', search: keyword},
         ], false);
-        this.getDataSource().refresh();
     }
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    ngOnInit(): void {
+        super.ngOnInit();
 
+        const settings: any = this.getTableSettings();
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.getTableSettings(),
-                'status', BUILTIN_CODES.USER_STATUS.code, this.getTranslateService()),
+                this.generalSettingsDatasource, settings, 'status',
+                BUILTIN_CODES.USER_STATUS.code, this.getTranslateService()),
         ]).then(value => {
             this.getLogger().debug('Loading settings successful');
-            // this.getDataSource().refresh();
+            this.getDataSource().refresh();
         }, reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));
     }
-
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    // protected translateSettings(): void {
-    //     super.translateSettings();
-    //
-    //     PromiseUtils.parallelPromises(undefined, undefined, [
-    //         AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-    //             this.generalSettingsDatasource, this.translatedSettings,
-    //             'status', BUILTIN_CODES.USER_STATUS.code, this.getTranslateService()),
-    //     ]).then(value => {
-    //         this.getLogger().debug('Loading settings successful');
-    //         // this.getDataSource().refresh();
-    //     }, reason => this.getLogger().error(reason))
-    //         .catch(reason => this.getLogger().error(reason));
-    // }
 }

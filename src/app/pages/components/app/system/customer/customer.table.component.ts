@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -112,7 +112,9 @@ export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
-export class CustomerSmartTableComponent extends AppSmartTableComponent<CustomerDatasource> {
+export class CustomerSmartTableComponent
+    extends AppSmartTableComponent<CustomerDatasource>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -177,26 +179,22 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
             {field: 'fax', search: keyword},
             {field: 'address', search: keyword},
         ], false);
-        this.getDataSource().refresh();
     }
 
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
+    ngOnInit(): void {
+        super.ngOnInit();
 
-    protected translateSettings(): void {
-        super.translateSettings();
-
+        const settings: any = this.getTableSettings();
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.getTableSettings(),
-                'status', BUILTIN_CODES.CUSTOMER_STATUS.code, this.getTranslateService()),
+                this.generalSettingsDatasource, settings, 'status',
+                BUILTIN_CODES.CUSTOMER_STATUS.code, this.getTranslateService()),
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.getTableSettings(),
-                'level', BUILTIN_CODES.CUSTOMER_LEVEL.code, this.getTranslateService()),
+                this.generalSettingsDatasource, settings, 'level',
+                BUILTIN_CODES.CUSTOMER_LEVEL.code, this.getTranslateService()),
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.getTableSettings(),
-                'type', BUILTIN_CODES.CUSTOMER_TYPE.code, this.getTranslateService()),
+                this.generalSettingsDatasource, settings, 'type',
+                BUILTIN_CODES.CUSTOMER_TYPE.code, this.getTranslateService()),
         ]).then(
             value => {
                 this.getLogger().debug('Loading settings successful');

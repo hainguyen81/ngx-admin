@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -99,7 +99,8 @@ export const GeneralSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseM
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class GeneralSettingsSmartTableComponent
-    extends AppSmartTableComponent<GeneralSettingsDatasource> {
+    extends AppSmartTableComponent<GeneralSettingsDatasource>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -169,24 +170,25 @@ export class GeneralSettingsSmartTableComponent
         ], false);
     }
 
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        const settings: any = this.getTableSettings();
+        settings['columns']['module_code']['valuePrepareFunction'] =
+            value => this.translateModuleColumn(settings, value);
+        settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);
+        SystemDataUtils.invokeAllModelsAsTableSelectOptions(
+            this.moduleDatasource, this.getTranslateService()).then(
+            options => {
+                settings['columns']['module_code']['editor']['config']['list'] = options;
+                this.getDataSource().refresh();
+            });
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
 
-    protected translateSettings(): void {
-        super.translateSettings();
-
-        const settings: any = this.getTableSettings();
-        settings['columns']['module_code']['valuePrepareFunction'] =
-                value => this.translateModuleColumn(settings, value);
-        settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);
-        SystemDataUtils.invokeAllModelsAsTableSelectOptions(
-            this.moduleDatasource, this.getTranslateService()).then(
-                options => {
-                    settings['columns']['module_code']['editor']['config']['list'] = options;
-                    this.getDataSource().refresh();
-                });
-    }
     private translateModuleColumn(settings: any, value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
             settings['columns']['module_code']['editor']['config']['list'];

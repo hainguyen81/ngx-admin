@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -108,7 +108,8 @@ export const WarehouseSettingsContextMenu: IContextMenu[] = [].concat(COMMON.bas
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class WarehouseSettingsSmartTableComponent
-    extends AppSmartTableComponent<WarehouseSettingsDatasource> {
+    extends AppSmartTableComponent<WarehouseSettingsDatasource>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -176,15 +177,8 @@ export class WarehouseSettingsSmartTableComponent
         ], false);
     }
 
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    /**
-     * Translate table settings
-     */
-    protected translateSettings(): void {
-        super.translateSettings();
+    ngOnInit(): void {
+        super.ngOnInit();
 
         const settings: any = this.getTableSettings();
         settings['columns']['type']['valuePrepareFunction'] =
@@ -192,11 +186,16 @@ export class WarehouseSettingsSmartTableComponent
         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
             this.generalSettingsDatasource, 'module_code',
             IDBKeyRange.only(MODULE_CODES.WAREHOUSE), this.getTranslateService()).then(
-                options => {
-                    settings['columns']['type']['editor']['config']['list'] = options;
-                    this.getDataSource().refresh();
-                });
+            options => {
+                settings['columns']['type']['editor']['config']['list'] = options;
+                this.getDataSource().refresh();
+            });
     }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
     private translateModuleColumn(settings: any, value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
             settings['columns']['type']['editor']['config']['list'];

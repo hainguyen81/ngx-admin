@@ -217,10 +217,10 @@ export class WarehouseCategoryFormlyComponent
         const fields: FormlyFieldConfig[] = this.getFields();
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeBelongToField(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0]),
-            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0],
                 BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code, this.noneOption, this.getTranslateService()),
-            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[1],
                 BUILTIN_CODES.WAREHOUSE_CATEGORY_STATUS.code, this.noneOption, this.getTranslateService()),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
