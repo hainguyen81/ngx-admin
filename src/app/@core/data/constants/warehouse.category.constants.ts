@@ -1,19 +1,19 @@
 export namespace Constants {
     export namespace WarehouseConstants {
         export namespace WarehouseCategoryConstants {
-            export const enum CATEGORY_TYPE {
+            export enum CATEGORY_TYPE {
                 // Chủng loại
-                CATEGORY,
+                CATEGORY = 'common.enum.warehouseCategoryType.category',
                 // Loại
-                TYPE,
+                TYPE = 'common.enum.warehouseCategoryType.type',
                 // Hãng sản xuất
-                BRAND,
+                BRAND = 'common.enum.warehouseCategoryType.brand',
             }
 
-            export const enum CATEGORY_STATUS {
-                NOT_ACTIVATED,
-                ACTIVATED,
-                LOCKED,
+            export enum CATEGORY_STATUS {
+                NOT_ACTIVATED = 'common.enum.warehouseCategoryStatus.notActivated',
+                ACTIVATED = 'common.enum.warehouseCategoryStatus.activated',
+                LOCKED = 'common.enum.warehouseCategoryStatus.locked',
             }
 
             export function convertWarehouseCategoryTypeToDisplay(value: CATEGORY_TYPE): string {

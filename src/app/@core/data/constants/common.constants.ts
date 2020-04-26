@@ -31,6 +31,9 @@ export namespace Constants {
             ORGANIZATION_TYPE: { code: 'ORGANIZATION_TYPE', name: 'common.enum.organizationType.name' },
             // user
             USER_STATUS: { code: 'USER_STATUS', name: 'common.enum.userStatus.name' },
+            // warehouse category
+            WAREHOUSE_CATEGORY_TYPE: { code: 'CATEGORY_TYPE', name: 'common.enum.warehouseCategoryType.name' },
+            WAREHOUSE_CATEGORY_STATUS: { code: 'CATEGORY_STATUS', name: 'common.enum.warehouseCategoryStatus.name' },
         };
     }
 }

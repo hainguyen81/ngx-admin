@@ -12,6 +12,9 @@ import {Constants as OrganizationConstants} from '../../data/constants/organizat
 import ORGANIZATION_TYPE = OrganizationConstants.OrganizationConstants.ORGANIZATION_TYPE;
 import {Constants as UserConstants} from '../../data/constants/user.constants';
 import USER_STATUS = UserConstants.UserConstants.USER_STATUS;
+import {Constants as WarehouseConstants} from '../../data/constants/warehouse.category.constants';
+import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
+import CATEGORY_STATUS = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_STATUS;
 
 export const MockGeneralSettingsTemplate: IGeneralSettings = {
     id: null,
@@ -117,6 +120,46 @@ export function generalUserSystemSettingsGenerate(): IGeneralSettings[] {
         systemSetting.code = BUILTIN_CODES.USER_STATUS.code;
         systemSetting.name = k;
         systemSetting.value = USER_STATUS[k];
+        systemSetting.module_id = MockModuleSystem.id;
+        systemSetting.module_code = MockModuleSystem.code;
+        systemSetting.module = MockModuleSystem;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    return systemSettings;
+}
+
+export function generalWarehouseCategorySystemSettingsGenerate(): IGeneralSettings[] {
+    let systemSettings: IGeneralSettings[];
+    let systemSetting: IGeneralSettings;
+    systemSettings = [];
+
+    // -------------------------------------------------
+    // CATEGORY_TYPE
+    // -------------------------------------------------
+    Object.keys(CATEGORY_TYPE).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code;
+        systemSetting.name = k;
+        systemSetting.value = CATEGORY_TYPE[k];
+        systemSetting.module_id = MockModuleSystem.id;
+        systemSetting.module_code = MockModuleSystem.code;
+        systemSetting.module = MockModuleSystem;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    // -------------------------------------------------
+    // CATEGORY_STATUS
+    // -------------------------------------------------
+    Object.keys(CATEGORY_STATUS).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.WAREHOUSE_CATEGORY_STATUS.code;
+        systemSetting.name = k;
+        systemSetting.value = CATEGORY_STATUS[k];
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
