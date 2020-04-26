@@ -1,7 +1,7 @@
 import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import GeneralSettings, {IGeneralSettings} from '../../data/system/general.settings';
-import {MockModuleSystem} from './mock.module';
+import {MockModuleSystem, MockModuleWarehouse} from './mock.module';
 import {Constants as CommonConstants} from '../../data/constants/common.constants';
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
@@ -144,9 +144,9 @@ export function generalWarehouseCategorySystemSettingsGenerate(): IGeneralSettin
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code;
         systemSetting.name = k;
         systemSetting.value = CATEGORY_TYPE[k];
-        systemSetting.module_id = MockModuleSystem.id;
-        systemSetting.module_code = MockModuleSystem.code;
-        systemSetting.module = MockModuleSystem;
+        systemSetting.module_id = MockModuleWarehouse.id;
+        systemSetting.module_code = MockModuleWarehouse.code;
+        systemSetting.module = MockModuleWarehouse;
         systemSetting.builtin = true;
         systemSettings.push(systemSetting);
     });
@@ -160,9 +160,9 @@ export function generalWarehouseCategorySystemSettingsGenerate(): IGeneralSettin
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_CATEGORY_STATUS.code;
         systemSetting.name = k;
         systemSetting.value = CATEGORY_STATUS[k];
-        systemSetting.module_id = MockModuleSystem.id;
-        systemSetting.module_code = MockModuleSystem.code;
-        systemSetting.module = MockModuleSystem;
+        systemSetting.module_id = MockModuleWarehouse.id;
+        systemSetting.module_code = MockModuleWarehouse.code;
+        systemSetting.module = MockModuleWarehouse;
         systemSetting.builtin = true;
         systemSettings.push(systemSetting);
     });
