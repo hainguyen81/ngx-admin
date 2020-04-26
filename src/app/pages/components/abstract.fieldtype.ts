@@ -111,27 +111,27 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     }
 
     protected onValueChanges(value: any): void {
-        this.logger.debug('onValueChanges', value);
+        this.logger.debug('onValueChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     protected onStatusChanges(value: any): void {
-        this.logger.debug('onStatusChanges', value);
+        this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     registerOnChange(fn: any): void {
-        this.logger.debug('registerOnChange', fn);
+        this.logger.debug('registerOnChange', fn, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     registerOnTouched(fn: any): void {
-        this.logger.debug('registerOnTouched', fn);
+        this.logger.debug('registerOnTouched', fn, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.logger.debug('setDisabledState', isDisabled);
+        this.logger.debug('setDisabledState', isDisabled, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     writeValue(obj: any): void {
-        this.logger.debug('writeValue', obj);
+        this.logger.debug('writeValue', obj, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     // -------------------------------------------------
