@@ -189,7 +189,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
                 && this.getDropdownTreeviewComponent().dropdownDirective
                 && this.getDropdownTreeviewComponent().dropdownDirective.close();
             }
-            this.onClickItem.apply(this, [{$event: $event, $data: item}]);
+            this.onClickItem.apply(this, [{event: $event, data: item}]);
         }
     }
 

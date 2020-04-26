@@ -4,10 +4,9 @@ import {of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
-import {ControlValueAccessor} from '@angular/forms';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
-    extends FieldType<F> implements OnDestroy, AfterViewInit, ControlValueAccessor {
+    extends FieldType<F> implements OnDestroy, AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -116,22 +115,6 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
 
     protected onStatusChanges(value: any): void {
         this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
-    }
-
-    registerOnChange(fn: any): void {
-        this.logger.debug('registerOnChange', fn, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
-    }
-
-    registerOnTouched(fn: any): void {
-        this.logger.debug('registerOnTouched', fn, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
-    }
-
-    setDisabledState(isDisabled: boolean): void {
-        this.logger.debug('setDisabledState', isDisabled, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
-    }
-
-    writeValue(obj: any): void {
-        this.logger.debug('writeValue', obj, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     // -------------------------------------------------

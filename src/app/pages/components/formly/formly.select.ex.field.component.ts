@@ -169,9 +169,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     public setValue(value?: any): void {
         value = this.valueParser(value);
         if (this.value !== value) {
-            this.value = value;
-            this.formControl && this.formControl.setValue(this.value);
-            this.formControl && this.formControl.updateValueAndValidity({onlySelf: true, emitEvent: true});
+            this.formControl && this.formControl.patchValue(
+                value, {onlySelf: true, emitEvent: true});
         }
     }
 
