@@ -153,6 +153,14 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      * Get the {IToolbarActionsConfig} actions array
      * @return the {IToolbarActionsConfig} actions array
      */
+    protected getVisibleActions(): IToolbarActionsConfig[] {
+        return (this.actions || []).filter(action => action.visible);
+    }
+
+    /**
+     * Get the {IToolbarActionsConfig} actions array
+     * @return the {IToolbarActionsConfig} actions array
+     */
     public getActions(): IToolbarActionsConfig[] {
         return this.actions || [];
     }
