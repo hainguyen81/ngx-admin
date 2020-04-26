@@ -162,6 +162,8 @@ export default class AppObserveUtils {
             Object.assign({}, tableSettings['columns'][column]['editor']['config']);
         tableSettings['columns'][column]['editor']['config']['list'] =
             Object.assign({}, tableSettings['columns'][column]['editor']['config']['list']);
+        tableSettings['columns'][column]['valuePrepareFunction'] =
+            value => this.translateColumn(tableSettings, column, value);
         return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsOptions(
             generalSettingsDatasource, '__general_settings_index_by_module_code',
             IDBKeyRange.only([moduleCode, settingCode]), translateService, {
@@ -170,8 +172,6 @@ export default class AppObserveUtils {
                     ? model.value : translateService.instant(model.value.toString())),
             }).then((settings: { [key: string]: string | string[] | IGeneralSettings; }[]) => {
                 tableSettings['columns'][column]['editor']['config']['list'] = settings;
-                tableSettings['columns'][column]['valuePrepareFunction'] =
-                    value => this.translateColumn(tableSettings, column, value);
             });
     }
     /**
