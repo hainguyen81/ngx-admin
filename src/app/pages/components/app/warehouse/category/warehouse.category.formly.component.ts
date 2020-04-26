@@ -246,12 +246,12 @@ export class WarehouseCategoryFormlyComponent
                     options.push(categories);
                     let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
-                        this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                        this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
                         WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
                     if (belongToComponent) {
                         belongToComponent.reloadFieldByOptions(options);
                         this.disableModelFromBelongTo(
-                            this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                            this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
                             this.getFormlyForm().model);
                     }
                 });
