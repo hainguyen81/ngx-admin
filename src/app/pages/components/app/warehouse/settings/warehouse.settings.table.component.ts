@@ -22,14 +22,15 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
-import {isArray, isNullOrUndefined} from 'util';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import PromiseUtils from '../../../../../utils/promise.utils';
+import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
@@ -45,6 +46,17 @@ export const WarehouseSettingsTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
+        type: {
+            title: 'warehouse.settings.table.type',
+            type: 'string',
+            sort: false,
+            filter: false,
+            editable: false,
+            editor: {
+                type: 'list',
+                config: {list: []},
+            },
+        },
         code: {
             title: 'warehouse.settings.table.code',
             type: 'string',
@@ -58,17 +70,6 @@ export const WarehouseSettingsTableSettings = {
             sort: false,
             filter: false,
             editable: false,
-        },
-        type: {
-            title: 'warehouse.settings.table.type',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editable: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
         },
         image: {
             title: 'warehouse.settings.table.image',
@@ -181,31 +182,16 @@ export class WarehouseSettingsSmartTableComponent
         super.ngOnInit();
 
         const settings: any = this.getTableSettings();
-        settings['columns']['type']['valuePrepareFunction'] =
-            value => this.translateModuleColumn(settings, value);
-        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
-            this.generalSettingsDatasource, 'module_code',
-            IDBKeyRange.only(MODULE_CODES.WAREHOUSE), this.getTranslateService()).then(
-            options => {
-                settings['columns']['type']['editor']['config']['list'] = options;
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            AppObserveUtils.observeDefaultWarehouseGeneralSettingsTableColumn(
+                this.generalSettingsDatasource, settings, 'type',
+                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code, this.getTranslateService()),
+        ]).then(
+            value => {
+                this.getLogger().debug('Loading general settings successful');
                 this.getDataSource().refresh();
-            });
-    }
-
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    private translateModuleColumn(settings: any, value?: string | null): string {
-        const options: { value: string, label: string, title: string }[] =
-            settings['columns']['type']['editor']['config']['list'];
-        if (!isNullOrUndefined(options) && isArray(options)) {
-            for (const option of options) {
-                if (option.value === value) {
-                    return option.label;
-                }
-            }
-        }
-        return '';
+            },
+            reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
     }
 }

@@ -15,6 +15,8 @@ import USER_STATUS = UserConstants.UserConstants.USER_STATUS;
 import {Constants as WarehouseConstants} from '../../data/constants/warehouse.category.constants';
 import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import CATEGORY_STATUS = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_STATUS;
+import {Constants as WarehouseSettingsConstants} from '../../data/constants/warehouse.settings.constants';
+import WAREHOUSE_SETTINGS_TYPE = WarehouseSettingsConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 
 export const MockGeneralSettingsTemplate: IGeneralSettings = {
     id: null,
@@ -27,7 +29,7 @@ export const MockGeneralSettingsTemplate: IGeneralSettings = {
     module: null,
 };
 
-export function generalCustomerSystemSettingsGenerate(): IGeneralSettings[] {
+export function generalSystemSettingsCustomerGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
     let systemSetting: IGeneralSettings;
     systemSettings = [];
@@ -82,7 +84,7 @@ export function generalCustomerSystemSettingsGenerate(): IGeneralSettings[] {
     return systemSettings;
 }
 
-export function generalOrganizationSystemSettingsGenerate(): IGeneralSettings[] {
+export function generalSystemSettingsOrganizationGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
     let systemSetting: IGeneralSettings;
     systemSettings = [];
@@ -106,7 +108,7 @@ export function generalOrganizationSystemSettingsGenerate(): IGeneralSettings[] 
     return systemSettings;
 }
 
-export function generalUserSystemSettingsGenerate(): IGeneralSettings[] {
+export function generalSystemSettingsUserGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
     let systemSetting: IGeneralSettings;
     systemSettings = [];
@@ -130,7 +132,31 @@ export function generalUserSystemSettingsGenerate(): IGeneralSettings[] {
     return systemSettings;
 }
 
-export function generalWarehouseCategorySystemSettingsGenerate(): IGeneralSettings[] {
+export function generalWarehouseSettingsSettingsTypeGenerate(): IGeneralSettings[] {
+    let systemSettings: IGeneralSettings[];
+    let systemSetting: IGeneralSettings;
+    systemSettings = [];
+
+    // -------------------------------------------------
+    // WAREHOUSE_SETTINGS_TYPE
+    // -------------------------------------------------
+    Object.keys(WAREHOUSE_SETTINGS_TYPE).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code;
+        systemSetting.name = k;
+        systemSetting.value = WAREHOUSE_SETTINGS_TYPE[k];
+        systemSetting.module_id = MockModuleWarehouse.id;
+        systemSetting.module_code = MockModuleWarehouse.code;
+        systemSetting.module = MockModuleWarehouse;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    return systemSettings;
+}
+
+export function generalWarehouseSettingsCategoryGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
     let systemSetting: IGeneralSettings;
     systemSettings = [];
@@ -183,16 +209,19 @@ export function generalSettingsGenerate(): IGeneralSettings[] {
     mockSettings.push(mockSetting);
 
     // Customer
-    mockSettings = mockSettings.concat(generalCustomerSystemSettingsGenerate());
+    mockSettings = mockSettings.concat(generalSystemSettingsCustomerGenerate());
 
     // Organization
-    mockSettings = mockSettings.concat(generalOrganizationSystemSettingsGenerate());
+    mockSettings = mockSettings.concat(generalSystemSettingsOrganizationGenerate());
 
     // User
-    mockSettings = mockSettings.concat(generalUserSystemSettingsGenerate());
+    mockSettings = mockSettings.concat(generalSystemSettingsUserGenerate());
 
-    // Warehouse
-    mockSettings = mockSettings.concat(generalWarehouseCategorySystemSettingsGenerate());
+    // Warehouse category
+    mockSettings = mockSettings.concat(generalWarehouseSettingsCategoryGenerate());
+
+    // Warehouse settings
+    mockSettings = mockSettings.concat(generalWarehouseSettingsSettingsTypeGenerate());
 
     return mockSettings;
 }

@@ -175,12 +175,6 @@ export class UserFormlyComponent
     implements OnInit {
 
     // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    private noneOption: IModel = new BaseModel(null);
-
-    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 

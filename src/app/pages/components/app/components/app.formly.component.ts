@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {BaseFormlyComponent} from '../../formly/base.formly.component';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {IModel} from '../../../../@core/data/base';
+import BaseModel, {IModel} from '../../../../@core/data/base';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
@@ -26,6 +26,12 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 })
 export abstract class AppFormlyComponent<T extends IModel, D extends DataSource>
     extends BaseFormlyComponent<T, D> implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    protected noneOption: IModel = new BaseModel(null);
 
     // -------------------------------------------------
     // CONSTRUCTION

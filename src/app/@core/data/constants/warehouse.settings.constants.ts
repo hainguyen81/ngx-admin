@@ -1,28 +1,16 @@
 export namespace Constants {
     export namespace WarehouseSettingsConstants {
-        export const enum SETTINGS_TYPE {
-            STATUS,
-            BRAND,
-            COLOR,
-            SIZE,
-            MATERIAL,
-            OTHERS,
+        export enum WAREHOUSE_SETTINGS_TYPE {
+            ITEM_SETTINGS = 'common.enum.warehouseSettings.item.name',
+            OTHERS = 'common.enum.warehouseSettings.others.name',
         }
 
-        export function convertWarehouseSettingsTypeToDisplay(value: SETTINGS_TYPE): string {
+        export function convertWarehouseSettingsTypeToDisplay(value: WAREHOUSE_SETTINGS_TYPE): string {
             switch (value) {
-                case SETTINGS_TYPE.STATUS:
-                    return 'common.enum.warehouseSettings.status';
-                case SETTINGS_TYPE.BRAND:
-                    return 'common.enum.warehouseSettings.brand';
-                case SETTINGS_TYPE.COLOR:
-                    return 'common.enum.warehouseSettings.color';
-                case SETTINGS_TYPE.SIZE:
-                    return 'common.enum.warehouseSettings.size';
-                case SETTINGS_TYPE.MATERIAL:
-                    return 'common.enum.warehouseSettings.material';
+                case WAREHOUSE_SETTINGS_TYPE.ITEM_SETTINGS:
+                    return 'common.enum.warehouseSettings.item.name';
                 default:
-                    return 'common.enum.warehouseSettings.others';
+                    return 'common.enum.warehouseSettings.others.name';
             }
         }
     }

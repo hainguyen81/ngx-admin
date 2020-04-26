@@ -1,7 +1,5 @@
 import {IRolesGroup} from './roles.group';
 import BaseModel, {IModel} from '../base';
-import {Constants} from '../constants/user.constants';
-import USER_STATUS = Constants.UserConstants.USER_STATUS;
 
 export interface IUser extends IModel {
     access_token: string;
@@ -17,7 +15,7 @@ export interface IUser extends IModel {
     email: string;
     image?: string | string[];
     lang?: string | 'en';
-    status?: USER_STATUS | USER_STATUS.NOT_ACTIVATED;
+    status?: string | null;
     rolesGroupId?: string | null;
     rolesGroup?: IRolesGroup | null;
     enterprise?: boolean | false;

@@ -50,12 +50,13 @@
                 "team_group": "Đội / Nhóm"
             },
             "warehouseSettings": {
-                "status": "Trạng thái",
-                "brand": "Hãng sản xuất",
-                "color": "Màu sắc",
-                "size": "Kích thước",
-                "material": "Nguyên vật liệu",
-                "others": "Khác"
+                "name": "Thiếp lập kho",
+                "item": {
+                    "name": "Thiết lập trang thiết bị"
+                },
+                "others": {
+                    "name": "Thiết lập khác"
+                }
             },
             "warehouseCategoryStatus": {
                 "activated": "Đã kích hoạt",

@@ -332,12 +332,6 @@ export class CustomerFormlyComponent
     implements OnInit {
 
     // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    private noneOption: IModel = new BaseModel(null);
-
-    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 

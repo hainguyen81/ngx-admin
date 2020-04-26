@@ -50,12 +50,13 @@
                 "team_group": "Team/Group"
             },
             "warehouseSettings": {
-                "status": "Status",
-                "brand": "Brand",
-                "color": "Color",
-                "size": "Size",
-                "material": "Material",
-                "others": "Others"
+                "name": "Warehouse settings",
+                "item": {
+                    "name": "Item settings"
+                },
+                "others": {
+                    "name": "Other settings"
+                }
             },
             "warehouseCategoryStatus": {
                 "activated": "Activated",

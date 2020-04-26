@@ -29,8 +29,6 @@ import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field.component';
-import {Constants as WcConstants} from '../../../../../@core/data/constants/warehouse.category.constants';
-import CATEGORY_TYPE = WcConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
@@ -124,8 +122,7 @@ export class WarehouseCategoryTreeviewComponent
         newItem = super.newItem(parent, treeItem);
         if (newItem) {
             newItem.text = this.translate('warehouse.category.new');
-            newItem.value = new WarehouseCategory(
-                undefined, undefined, undefined, CATEGORY_TYPE.CATEGORY);
+            newItem.value = new WarehouseCategory(undefined, undefined, undefined);
         }
         return newItem;
     }

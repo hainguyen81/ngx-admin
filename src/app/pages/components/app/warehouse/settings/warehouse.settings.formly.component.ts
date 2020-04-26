@@ -1,10 +1,9 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -21,11 +20,15 @@ import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.s
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {
-    AppModuleSettingsFormlySelectExFieldComponent,
-} from '../../components/common/app.module.settings.formly.select.ex.field.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import PromiseUtils from '../../../../../utils/promise.utils';
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import {
+    GeneralSettingsDatasource,
+} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {throwError} from 'rxjs';
+import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 
 /* default warehouse settings formly config */
 export const WarehouseSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -112,7 +115,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseSettingsFormlyComponent
     extends AppFormlyComponent<IWarehouseSetting, WarehouseSettingsDatasource>
-    implements AfterViewInit {
+    implements OnInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -146,11 +149,13 @@ export class WarehouseSettingsFormlyComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
+        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setConfig(WarehouseSettingsFormConfig);
         super.setFields(WarehouseSettingsFormFieldsConfig);
     }
@@ -159,23 +164,16 @@ export class WarehouseSettingsFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    ngOnInit(): void {
+        super.ngOnInit();
 
-        // filter by module
-        this.doApplyGeneralSettings();
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    private doApplyGeneralSettings() {
-        const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
-            super.getFormFieldComponent(this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
-                AppModuleSettingsFormlySelectExFieldComponent);
-        if (settingsFieldComponent) {
-            settingsFieldComponent.moduleCode = MODULE_CODES.WAREHOUSE;
-        }
+        const fields: FormlyFieldConfig[] = this.getFields();
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
+                this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[0],
+                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code, this.noneOption, this.getTranslateService()),
+        ]).then(value => this.getLogger().debug('Loading general settings successful'),
+            reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
     }
 }

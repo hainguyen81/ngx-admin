@@ -3,10 +3,6 @@ import {IDistrict} from './district';
 import {ICity} from './city';
 import {IProvince} from './province';
 import {ICountry} from './country';
-import {Constants} from '../constants/customer.constants';
-import CUSTOMER_TYPE = Constants.CustomerConstants.CUSTOMER_TYPE;
-import CUSTOMER_STATUS = Constants.CustomerConstants.CUSTOMER_STATUS;
-import CUSTOMER_LEVEL = Constants.CustomerConstants.CUSTOMER_LEVEL;
 
 export interface ICustomer extends IModel {
     // Mã nhà cung cấp/khách hàng
