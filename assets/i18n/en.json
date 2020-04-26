@@ -15,21 +15,25 @@
         },
         "enum": {
             "userStatus": {
+                "name": "User status",
                 "activated": "Activated",
                 "locked": "Locked",
                 "notActivated": "Not activated"
             },
             "customerStatus": {
+                "name": "Customer status",
                 "activated": "Activated",
                 "locked": "Locked",
                 "notActivated": "Not activated"
             },
             "customerType": {
+                "name": "Customer type",
                 "customer": "Customer",
                 "vendor": "Vendor",
                 "all": "Customer/Vendor"
             },
             "customerLevel": {
+                "name": "Customer level",
                 "new": "New",
                 "bronze": "Bronze",
                 "silver": "Silver",
@@ -37,6 +41,7 @@
                 "platinum": "Platinum"
             },
             "organizationType": {
+                "name": "Organization type",
                 "head": "Head Center",
                 "branch": "Branch",
                 "division": "Division",
@@ -150,6 +155,42 @@
         "title": "System",
         "menu": {
             "module": "System"
+        },
+        "general": {
+            "settings": {
+                "title": "General Settings Management",
+                "menu": "General Settings",
+                "form": {
+                    "module": {
+                        "label": "Module",
+                        "placeholder": "Module",
+                        "description": "Module"
+                    },
+                    "code": {
+                        "label": "Code",
+                        "placeholder": "Code",
+                        "description": "Code"
+                    },
+                    "name": {
+                        "label": "Name",
+                        "placeholder": "Name",
+                        "description": "Name"
+                    },
+                    "value": {
+                        "label": "Value",
+                        "placeholder": "Value",
+                        "description": "Value"
+                    }
+                },
+                "table": {
+                    "noData": "Not found any settings",
+                    "module": "Module",
+                    "code": "Code",
+                    "name": "Name",
+                    "value": "Value",
+                    "builtin": "Built-in"
+                }
+            }
         },
         "organization": {
             "title": "Organization Management",
@@ -289,19 +330,63 @@
             "menu": "Users Management",
             "table": {
                 "noData": "Not found any users",
+                "image": "Avatar",
                 "username": "User Name",
                 "firstName": "First Name",
                 "lastName": "Last Name",
                 "email": "Email",
                 "status": "Status",
 				"enterprise": "Enterprise"
-			}
+			},
+            "form": {
+                "company": {
+                    "label": "Company",
+                    "placeholder": "Company",
+                    "description": "Company"
+                },
+                "username": {
+                    "label": "User name (email)",
+                    "placeholder": "User name (email)",
+                    "description": "User name (email)"
+                },
+                "password": {
+                    "label": "Password",
+                    "placeholder": "Password",
+                    "description": "Password"
+                },
+                "firstName": {
+                    "label": "First name",
+                    "placeholder": "First name",
+                    "description": "First name"
+                },
+                "lastName": {
+                    "label": "Last name",
+                    "placeholder": "Last name",
+                    "description": "Last name"
+                },
+                "lang": {
+                    "label": "Language",
+                    "placeholder": "Language",
+                    "description": "Language"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status",
+                    "description": "Status"
+                },
+                "enterprise": {
+                    "label": "Enterprise",
+                    "placeholder": "Enterprise",
+                    "description": "Enterprise"
+                }
+            }
 		},
 		"customer": {
 			"title": "Customers Management",
 			"menu": "Customers Management",
 			"table": {
                 "noData": "Not found any customers",
+                "type": "Type",
                 "code": "Code",
                 "name": "Name",
                 "level": "Level",
@@ -310,6 +395,108 @@
                 "address": "Address",
                 "status": "Status",
                 "enterprise": "Enterprise"
+            },
+            "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type",
+                    "description": "Type"
+                },
+                "level": {
+                    "label": "Level",
+                    "placeholder": "Level",
+                    "description": "Level"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status",
+                    "description": "Status"
+                },
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code",
+                    "description": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name",
+                    "description": "Name"
+                },
+                "address": {
+                    "label": "Address",
+                    "placeholder": "Address",
+                    "description": "Address"
+                },
+                "country": {
+                    "label": "Country",
+                    "placeholder": "Country",
+                    "description": "Country"
+                },
+                "state_province": {
+                    "label": "State/Province",
+                    "placeholder": "State/Province",
+                    "description": "State/Province"
+                },
+                "city": {
+                    "label": "City",
+                    "placeholder": "City",
+                    "description": "City"
+                },
+                "district": {
+                    "label": "District/Town",
+                    "placeholder": "District/Town",
+                    "description": "District/Town"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "tel": {
+                    "label": "Tel",
+                    "placeholder": "Tel",
+                    "description": "Tel"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Email",
+                    "description": "Email"
+                },
+                "website": {
+                    "label": "Website",
+                    "placeholder": "Website",
+                    "description": "Website"
+                },
+                "contact_name": {
+                    "label": "Contact Name",
+                    "placeholder": "Contact Name",
+                    "description": "Contact Name"
+                },
+                "contact_tel": {
+                    "label": "Contact Tel",
+                    "placeholder": "Contact Tel",
+                    "description": "Contact Tel"
+                },
+                "contact_fax": {
+                    "label": "Contact Fax",
+                    "placeholder": "Contact Fax",
+                    "description": "Contact Fax"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark",
+                    "description": "Remark"
+                },
+                "image": {
+                    "label": "Image",
+                    "placeholder": "Image",
+                    "description": "Image"
+                }
             }
         }
     },
@@ -427,6 +614,16 @@
             "menu": "Category",
             "new": "New Category",
             "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type",
+                    "description": "Type"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status",
+                    "description": "Status"
+                },
                 "belongTo": {
                     "label": "Upper Category",
                     "placeholder": "Upper Category",

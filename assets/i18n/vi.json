@@ -15,21 +15,25 @@
         },
         "enum": {
             "userStatus": {
+                "name": "Trạng thái người dùng",
                 "activated": "Đã kích hoạt",
                 "locked": "Khoá",
                 "notActivated": "Chưa kích hoạt"
             },
             "customerStatus": {
+                "name": "Trạng thái KH",
                 "activated": "Đã kích hoạt",
                 "locked": "Khoá",
                 "notActivated": "Chưa kích hoạt"
             },
             "customerType": {
+                "name": "Loại KH",
                 "customer": "Khách hàng",
                 "vendor": "Nhà cung cấp",
                 "all": "Khách hàng/Nhà cung cấp"
             },
             "customerLevel": {
+                "name": "Cấp KH",
                 "new": "Mới",
                 "bronze": "Hạng đồng",
                 "silver": "Hạng bạc",
@@ -37,6 +41,7 @@
                 "platinum": "Hạng bạch kim"
             },
             "organizationType": {
+                "name": "Loại tổ chức",
                 "head": "Hội sở",
                 "branch": "Chi nhánh",
                 "division": "Phân khu",
@@ -150,6 +155,42 @@
         "title": "Hệ thống",
         "menu": {
             "module": "Hệ thống"
+        },
+        "general": {
+            "settings": {
+                "title": "Thiết lập hệ thống",
+                "menu": "Thiết lập hệ thống",
+                "form": {
+                    "module": {
+                        "label": "Gói",
+                        "placeholder": "Gói",
+                        "description": "Gói"
+                    },
+                    "code": {
+                        "label": "Mã",
+                        "placeholder": "Mã",
+                        "description": "Mã"
+                    },
+                    "name": {
+                        "label": "Tên",
+                        "placeholder": "Tên",
+                        "description": "Tên"
+                    },
+                    "value": {
+                        "label": "Giá trị",
+                        "placeholder": "Giá trị",
+                        "description": "Giá trị"
+                    }
+                },
+                "table": {
+                    "noData": "Không có bất kỳ thiết lập nào",
+                    "module": "Gói",
+                    "code": "Mã",
+                    "name": "Tên",
+                    "value": "Giá trị",
+                    "builtin": "Dựng sẵn"
+                }
+            }
         },
         "organization": {
             "title": "Quản lý tổ chức",
@@ -289,19 +330,63 @@
             "menu": "Người dùng",
             "table": {
                 "noData": "Không có bất kỳ người dùng nào",
+                "image": "Hình đại diện",
                 "username": "Tên đăng nhập",
                 "firstName": "Họ",
                 "lastName": "Tên",
                 "email": "Thư điện tử",
                 "status": "Trạng thái",
 				"enterprise": "Enterprise"
-			}
+			},
+            "form": {
+                "company": {
+                    "label": "Công ty",
+                    "placeholder": "Công ty",
+                    "description": "Công ty"
+                },
+                "username": {
+                    "label": "Tên đang nhập (email)",
+                    "placeholder": "Tên đang nhập (email)",
+                    "description": "Tên đang nhập (email)"
+                },
+                "password": {
+                    "label": "Mật khẩu",
+                    "placeholder": "Mật khẩu",
+                    "description": "Mật khẩu"
+                },
+                "firstName": {
+                    "label": "Họ & tên lót",
+                    "placeholder": "Họ & tên lót",
+                    "description": "Họ & tên lót"
+                },
+                "lastName": {
+                    "label": "Tên",
+                    "placeholder": "Tên",
+                    "description": "Tên"
+                },
+                "lang": {
+                    "label": "Ngôn ngữ",
+                    "placeholder": "Ngôn ngữ",
+                    "description": "Ngôn ngữ"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái",
+                    "description": "Trạng thái"
+                },
+                "enterprise": {
+                    "label": "Enterprise",
+                    "placeholder": "Enterprise",
+                    "description": "Enterprise"
+                }
+            }
 		},
 		"customer": {
 			"title": "Quản lý khách hàng",
 			"menu": "Khách hàng",
 			"table": {
                 "noData": "Không có bất kỳ khách hàng nào",
+                "type": "Loại",
                 "code": "Mã",
                 "name": "Tên",
                 "level": "Cấp bậc",
@@ -310,6 +395,108 @@
                 "address": "Địa chỉ",
                 "status": "Trạng thái",
                 "enterprise": "Enterprise"
+            },
+            "form": {
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại",
+                    "description": "Loại"
+                },
+                "level": {
+                    "label": "Cấp bậc",
+                    "placeholder": "Cấp bậc",
+                    "description": "Cấp bậc"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái",
+                    "description": "Trạng thái"
+                },
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã",
+                    "description": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên",
+                    "description": "Tên"
+                },
+                "address": {
+                    "label": "Địa chỉ",
+                    "placeholder": "Địa chỉ",
+                    "description": "Địa chỉ"
+                },
+                "country": {
+                    "label": "Quốc gia",
+                    "placeholder": "Quốc gia",
+                    "description": "Quốc gia"
+                },
+                "state_province": {
+                    "label": "Tỉnh/Khu vực",
+                    "placeholder": "Tỉnh/Khu vực",
+                    "description": "Tỉnh/Khu vực"
+                },
+                "city": {
+                    "label": "Thành phố",
+                    "placeholder": "Thành phố",
+                    "description": "Thành phố"
+                },
+                "district": {
+                    "label": "Quận/Huyện",
+                    "placeholder": "Quận/Huyện",
+                    "description": "Quận/Huyện"
+                },
+                "zip_code": {
+                    "label": "Zip",
+                    "placeholder": "Zip",
+                    "description": "Zip"
+                },
+                "tel": {
+                    "label": "ĐT",
+                    "placeholder": "ĐT",
+                    "description": "ĐT"
+                },
+                "fax": {
+                    "label": "Fax",
+                    "placeholder": "Fax",
+                    "description": "Fax"
+                },
+                "email": {
+                    "label": "Thư điện tử",
+                    "placeholder": "Thư điện tử",
+                    "description": "Thư điện tử"
+                },
+                "website": {
+                    "label": "Website",
+                    "placeholder": "Website",
+                    "description": "Website"
+                },
+                "contact_name": {
+                    "label": "Liên hệ",
+                    "placeholder": "Liên hệ",
+                    "description": "Liên hệ"
+                },
+                "contact_tel": {
+                    "label": "ĐT liên hệ",
+                    "placeholder": "ĐT liên hệ",
+                    "description": "ĐT liên hệ"
+                },
+                "contact_fax": {
+                    "label": "Fax liên hệ",
+                    "placeholder": "Fax liên hệ",
+                    "description": "Fax liên hệ"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú",
+                    "description": "Ghi chú"
+                },
+                "image": {
+                    "label": "Image",
+                    "placeholder": "Image",
+                    "description": "Image"
+                }
             }
         }
     },
@@ -427,6 +614,16 @@
             "menu": "Phân loại",
             "new": "Phân loại mới",
             "form": {
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại",
+                    "description": "Loại"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái",
+                    "description": "Trạng thái"
+                },
                 "belongTo": {
                     "label": "Phân loại cha",
                     "placeholder": "Phân loại cha",
