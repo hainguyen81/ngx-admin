@@ -57,8 +57,8 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                                 key: 'parentId',
                                 type: 'warehouse-category-treeview-dropdown',
                                 templateOptions: {
-                                    label: 'system.user.form.belongTo.label',
-                                    placeholder: 'system.user.form.belongTo.placeholder',
+                                    label: 'warehouse.category.form.belongTo.label',
+                                    placeholder: 'warehouse.category.form.belongTo.placeholder',
                                     required: true,
                                 },
                             },
