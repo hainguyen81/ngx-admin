@@ -32,20 +32,15 @@ import {
 import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
-import {
-    AppModuleSettingsFormlySelectExFieldComponent,
-} from '../../components/common/app.module.settings.formly.select.ex.field.component';
-import {isNullOrUndefined} from 'util';
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();
@@ -337,6 +332,12 @@ export class CustomerFormlyComponent
     implements OnInit {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private noneOption: IModel = new BaseModel(null);
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -413,16 +414,22 @@ export class CustomerFormlyComponent
 
         // customer status
         PromiseUtils.parallelPromises(undefined, undefined, [
-            this.observeSettingFieldByCode(
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], BUILTIN_CODES.CUSTOMER_TYPE.code),
-            this.observeSettingFieldByCode(
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1], BUILTIN_CODES.CUSTOMER_LEVEL.code),
-            this.observeSettingFieldByCode(
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2], BUILTIN_CODES.CUSTOMER_STATUS.code),
-            ]).then(
-                value => this.getLogger().debug('Loading settings successful'),
-                reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource,
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
+                BUILTIN_CODES.CUSTOMER_TYPE.code, this.noneOption, this.getTranslateService()),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource,
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1],
+                BUILTIN_CODES.CUSTOMER_LEVEL.code, this.noneOption, this.getTranslateService()),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource,
+                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2],
+                BUILTIN_CODES.CUSTOMER_STATUS.code, this.noneOption, this.getTranslateService()),
+        ]).then(
+            value => this.getLogger().debug('Loading settings successful'),
+            reason => this.getLogger().error(reason))
+        .catch(reason => this.getLogger().error(reason));
     }
 
     /**
@@ -474,37 +481,6 @@ export class CustomerFormlyComponent
             super.getFormFieldComponent(cityField, AppCityFormlySelectExFieldComponent);
         if (cityFieldComponent) {
             cityFieldComponent.province = model.province;
-        }
-    }
-
-    /**
-     * Observe general setting field by setting code
-     * @param field to observe
-     * @param settingCode to filter
-     */
-    private observeSettingFieldByCode(field: FormlyFieldConfig, settingCode: string): Promise<void> {
-        return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
-            this.generalSettingsDatasource, '__general_settings_index_by_module_code',
-            IDBKeyRange.only([MODULE_CODES.SYSTEM, settingCode]),
-            this.getTranslateService(), {
-                'text': (model: IGeneralSettings) => this.translate(model.value.toString()),
-            }).then((settings: IModel[]) => this.observeSettingField(field, settings));
-    }
-    /**
-     * Observe general settings field
-     * @param field to observe
-     * @param options to apply
-     */
-    private observeSettingField(field: FormlyFieldConfig, options: IModel[]): void {
-        const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
-            super.getFormFieldComponent(field, AppModuleSettingsFormlySelectExFieldComponent);
-        if (!isNullOrUndefined(options)) {
-            const noneOption: IModel = new BaseModel(null);
-            if (settingsFieldComponent) {
-                settingsFieldComponent.setItems([noneOption].concat(options));
-            } else {
-                settingsFieldComponent.setItems([noneOption]);
-            }
         }
     }
 }

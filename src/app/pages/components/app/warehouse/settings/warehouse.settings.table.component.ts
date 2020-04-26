@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';

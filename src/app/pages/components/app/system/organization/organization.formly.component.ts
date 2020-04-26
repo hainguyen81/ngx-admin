@@ -45,11 +45,7 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
-import {
-    AppModuleSettingsFormlySelectExFieldComponent,
-} from '../../components/common/app.module.settings.formly.select.ex.field.component';
-import {isNullOrUndefined} from 'util';
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -375,6 +371,12 @@ export class OrganizationFormlyComponent
     implements OnInit {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private noneOption: IModel = new BaseModel(null);
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -428,9 +430,13 @@ export class OrganizationFormlyComponent
         super.ngOnInit();
 
         // observe belongTo/manager fields
-        PromiseUtils.parallelPromises(undefined, undefined,
-            [ this.observeBelongToField(), this.observeManagerField() ]).then(
-                value => this.getLogger().debug('Loading parent organization/manager data successful'),
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            this.observeBelongToField(),
+            this.observeManagerField(),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource, this.getFields()[1].fieldGroup[0],
+                BUILTIN_CODES.ORGANIZATION_TYPE.code, this.noneOption, this.getTranslateService()),
+        ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));
 
@@ -474,36 +480,6 @@ export class OrganizationFormlyComponent
     }
 
     /**
-     * Observe organization type field
-     * @param field organization type field to apply
-     */
-    private observeOrganizationTypeField(field: FormlyFieldConfig) {
-        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
-            this.generalSettingsDatasource, '__general_settings_index_by_module_code',
-            IDBKeyRange.only([MODULE_CODES.SYSTEM, BUILTIN_CODES.ORGANIZATION_TYPE.code]),
-            this.getTranslateService(), {
-                'text': (model: IGeneralSettings) => this.translate(model.value.toString()),
-            }).then((settings: IModel[]) => this.observeOrganizationTypeSettingField(field, settings));
-    }
-    /**
-     * Observe general settings field
-     * @param field to observe
-     * @param options to apply
-     */
-    private observeOrganizationTypeSettingField(field: FormlyFieldConfig, options: IModel[]): void {
-        const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
-            super.getFormFieldComponent(field, AppModuleSettingsFormlySelectExFieldComponent);
-        if (!isNullOrUndefined(options)) {
-            const noneOption: IModel = new BaseModel(null);
-            if (settingsFieldComponent) {
-                settingsFieldComponent.setItems([noneOption].concat(options));
-            } else {
-                settingsFieldComponent.setItems([noneOption]);
-            }
-        }
-    }
-
-    /**
      * Observe model fields for applying values
      */
     private observeFields(): void {
@@ -520,7 +496,6 @@ export class OrganizationFormlyComponent
                 }
             },
         };
-        this.observeOrganizationTypeField(fields[1].fieldGroup[0]);
     }
 
     /**

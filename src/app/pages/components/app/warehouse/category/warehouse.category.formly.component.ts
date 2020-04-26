@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -24,13 +24,17 @@ import {
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {Constants as WcConstants} from '../../../../../@core/data/constants/warehouse.category.constants';
-import CATEGORY_TYPE = WcConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
-import convertWarehouseCategoryTypeToDisplay =
-    WcConstants.WarehouseConstants.WarehouseCategoryConstants.convertWarehouseCategoryTypeToDisplay;
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import {Constants, Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import PromiseUtils from '../../../../../utils/promise.utils';
+import BaseModel, {IModel} from '../../../../../@core/data/base';
+import {
+    GeneralSettingsDatasource,
+} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {throwError} from 'rxjs';
+import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -41,42 +45,50 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-8 category-info',
-                fieldGroupClassName: 'row ml-0 mr-0',
+                className: 'col-8 ml-0 mr-0 p-0 category-info',
+                fieldGroupClassName: 'row ml-0 mr-0 p-0',
                 fieldGroup: [
                     {
-                        className: 'w-100 belongTo',
-                        key: 'parentId',
-                        type: 'warehouse-category-treeview-dropdown',
-                        templateOptions: {
-                            label: 'warehouse.category.form.belongTo.label',
-                            placeholder: 'warehouse.category.form.belongTo.placeholder',
-                            options: [],
-                        },
+                        className: 'w-100',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
+                        fieldGroup: [
+                            {
+                                className: 'col',
+                                key: 'parentId',
+                                type: 'warehouse-category-treeview-dropdown',
+                                templateOptions: {
+                                    label: 'system.user.form.belongTo.label',
+                                    placeholder: 'system.user.form.belongTo.placeholder',
+                                    required: true,
+                                },
+                            },
+                        ],
                     },
                     {
-                        className: 'w-75',
-                        key: 'type',
-                        type: 'select',
-                        templateOptions: {
-                            label: 'warehouse.category.form.type.label',
-                            placeholder: 'warehouse.category.form.type.placeholder',
-                            options: [
-                                {
-                                    value: CATEGORY_TYPE.TYPE,
-                                    label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.TYPE),
+                        className: 'w-100',
+                        fieldGroupClassName: 'row ml-0 mr-0 p-0',
+                        fieldGroup: [
+                            {
+                                className: 'col-6',
+                                key: 'type',
+                                type: 'select-ex-general-settings',
+                                templateOptions: {
+                                    label: 'system.user.form.type.label',
+                                    placeholder: 'system.user.form.type.placeholder',
+                                    required: true,
                                 },
-                                {
-                                    value: CATEGORY_TYPE.BRAND,
-                                    label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.BRAND),
+                            },
+                            {
+                                className: 'col-6',
+                                key: 'status',
+                                type: 'select-ex-general-settings',
+                                templateOptions: {
+                                    label: 'system.user.form.status.label',
+                                    placeholder: 'system.user.form.status.placeholder',
+                                    required: true,
                                 },
-                                {
-                                    value: CATEGORY_TYPE.CATEGORY,
-                                    label: convertWarehouseCategoryTypeToDisplay(CATEGORY_TYPE.CATEGORY),
-                                },
-                            ],
-                            required: true,
-                        },
+                            },
+                        ],
                     },
                     {
                         className: 'w-100',
@@ -137,7 +149,14 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class WarehouseCategoryFormlyComponent
-    extends AppFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource> {
+    extends AppFormlyComponent<IWarehouseCategory, WarehouseCategoryDatasource>
+    implements OnInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private noneOption: IModel = new BaseModel(null);
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -171,11 +190,13 @@ export class WarehouseCategoryFormlyComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
+        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setConfig(WarehouseCategoryFormConfig);
         super.setFields(WarehouseCategoryFormFieldsConfig);
     }
@@ -184,35 +205,51 @@ export class WarehouseCategoryFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    /**
-     * Raise when the model of form had been changed
-     */
-    protected onModelChanged() {
-        super.onModelChanged();
+    ngOnInit(): void {
+        super.ngOnInit();
 
-        // refresh belongTo field
-        WarehouseDataUtils.invokeAllWarehouseCategories(<WarehouseCategoryDatasource>this.getDataSource())
-            .then(categories => {
-                let options: any[];
-                options = [];
-                options.push(WarehouseCategoryTreeviewConfig);
-                options.push(categories);
-                let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-                belongToComponent = this.getFormFieldComponent(
-                    this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
-                    WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                if (belongToComponent) {
-                    belongToComponent.reloadFieldByOptions(options);
-                    this.disableModelFromBelongTo(
-                        this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
-                        this.getFormlyForm().model);
-                }
-            });
+        // observe belongTo fields
+        const fields: FormlyFieldConfig[] = this.getFields();
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            this.observeBelongToField(),
+            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
+                this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0],
+                BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code, this.noneOption, this.getTranslateService()),
+            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
+                this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[1],
+                BUILTIN_CODES.WAREHOUSE_CATEGORY_STATUS.code, this.noneOption, this.getTranslateService()),
+        ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
+            reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
     }
 
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Observe belongTo field
+     */
+    private observeBelongToField(): Promise<void> {
+        return WarehouseDataUtils.invokeAllWarehouseCategories(
+            <WarehouseCategoryDatasource>this.getDataSource()).then(
+                categories => {
+                    let options: any[];
+                    options = [];
+                    options.push(WarehouseCategoryTreeviewConfig);
+                    options.push(categories);
+                    let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
+                    belongToComponent = this.getFormFieldComponent(
+                        this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                        WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
+                    if (belongToComponent) {
+                        belongToComponent.reloadFieldByOptions(options);
+                        this.disableModelFromBelongTo(
+                            this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0],
+                            this.getFormlyForm().model);
+                    }
+                });
+    }
 
     /**
      * Disable current data model in the belongTo field

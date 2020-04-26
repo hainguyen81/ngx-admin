@@ -285,6 +285,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      */
     protected getFormFieldComponent<C>(field: FormlyFieldConfig, componentType: Type<C>): C {
         return (field && field.templateOptions && field.templateOptions['componentRef']
+            && field.templateOptions['componentRef'] instanceof componentType
             ? <C>field.templateOptions['componentRef'] : null);
     }
 }

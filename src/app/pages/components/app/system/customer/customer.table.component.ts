@@ -19,15 +19,13 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {isArray, isNullOrUndefined} from 'util';
 import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import PromiseUtils from '../../../../../utils/promise.utils';
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -189,16 +187,16 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
     protected translateSettings(): void {
         super.translateSettings();
 
-        this.translatedSettings['columns']['level']['valuePrepareFunction'] =
-            value => this.translateColumn('level', value);
-        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
-            value => this.translateColumn('status', value);
-        this.translatedSettings['columns']['type']['valuePrepareFunction'] =
-            value => this.translateColumn('type', value);
         PromiseUtils.parallelPromises(undefined, undefined, [
-            this.observeSettingFieldByCode(BUILTIN_CODES.CUSTOMER_STATUS.code, 'status'),
-            this.observeSettingFieldByCode(BUILTIN_CODES.CUSTOMER_LEVEL.code, 'level'),
-            this.observeSettingFieldByCode(BUILTIN_CODES.CUSTOMER_TYPE.code, 'type'),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
+                this.generalSettingsDatasource, this.translatedSettings,
+                'status', BUILTIN_CODES.CUSTOMER_STATUS.code, this.getTranslateService()),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
+                this.generalSettingsDatasource, this.translatedSettings,
+                'level', BUILTIN_CODES.CUSTOMER_LEVEL.code, this.getTranslateService()),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
+                this.generalSettingsDatasource, this.translatedSettings,
+                'type', BUILTIN_CODES.CUSTOMER_TYPE.code, this.getTranslateService()),
         ]).then(
             value => {
                 this.getLogger().debug('Loading settings successful');
@@ -206,33 +204,5 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
             },
             reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));
-    }
-    /**
-     * Observe general setting field by setting code
-     * @param settingCode to filter
-     * @param column to apply
-     */
-    private observeSettingFieldByCode(settingCode: string, column: string): Promise<void> {
-        return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsOptions(
-            this.generalSettingsDatasource, '__general_settings_index_by_module_code',
-            IDBKeyRange.only([MODULE_CODES.SYSTEM, settingCode]),
-            this.getTranslateService(), {
-                'value': model => model.id,
-                'label': model => this.translate(model['value']),
-            }).then((settings: { [key: string]: string | string[] | IGeneralSettings; }[]) => {
-                this.translatedSettings['columns'][column]['editor']['config']['list'] = settings;
-            });
-    }
-    private translateColumn(column: string, value?: string | null): string {
-        const options: { value: string, label: string, title: string }[] =
-            this.translatedSettings['columns'][column]['editor']['config']['list'];
-        if (!isNullOrUndefined(options) && isArray(options)) {
-            for (const option of options) {
-                if (option.value === value) {
-                    return option.label;
-                }
-            }
-        }
-        return '';
     }
 }

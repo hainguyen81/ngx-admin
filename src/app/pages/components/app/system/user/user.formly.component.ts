@@ -19,22 +19,17 @@ import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {EmailValidators} from 'ngx-validators';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
-import {
-    AppModuleSettingsFormlySelectExFieldComponent,
-} from '../../components/common/app.module.settings.formly.select.ex.field.component';
-import {isNullOrUndefined} from 'util';
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {IUser} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
 
 /* default user formly config */
 export const UserFormConfig: FormlyConfig = new FormlyConfig();
@@ -180,6 +175,12 @@ export class UserFormlyComponent
     implements OnInit {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private noneOption: IModel = new BaseModel(null);
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -243,42 +244,11 @@ export class UserFormlyComponent
         const fields: FormlyFieldConfig[] = this.getFields();
         // user status
         PromiseUtils.parallelPromises(undefined, undefined, [
-            this.observeSettingFieldByCode(
-                fields[0].fieldGroup[0].fieldGroup[3].fieldGroup[1], BUILTIN_CODES.USER_STATUS.code),
-            ]).then(
-                value => this.getLogger().debug('Loading settings successful'),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[3].fieldGroup[1],
+                BUILTIN_CODES.USER_STATUS.code, this.noneOption, this.getTranslateService()),
+        ]).then(value => this.getLogger().debug('Loading settings successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));
-    }
-
-    /**
-     * Observe general setting field by setting code
-     * @param field to observe
-     * @param settingCode to filter
-     */
-    private observeSettingFieldByCode(field: FormlyFieldConfig, settingCode: string): Promise<void> {
-        return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
-            this.generalSettingsDatasource, '__general_settings_index_by_module_code',
-            IDBKeyRange.only([MODULE_CODES.SYSTEM, settingCode]),
-            this.getTranslateService(), {
-                'text': (model: IGeneralSettings) => this.translate(model.value.toString()),
-            }).then((settings: IModel[]) => this.observeSettingField(field, settings));
-    }
-    /**
-     * Observe general settings field
-     * @param field to observe
-     * @param options to apply
-     */
-    private observeSettingField(field: FormlyFieldConfig, options: IModel[]): void {
-        const settingsFieldComponent: AppModuleSettingsFormlySelectExFieldComponent =
-            super.getFormFieldComponent(field, AppModuleSettingsFormlySelectExFieldComponent);
-        if (!isNullOrUndefined(options)) {
-            const noneOption: IModel = new BaseModel(null);
-            if (settingsFieldComponent) {
-                settingsFieldComponent.setItems([noneOption].concat(options));
-            } else {
-                settingsFieldComponent.setItems([noneOption]);
-            }
-        }
     }
 }
