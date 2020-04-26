@@ -73,8 +73,8 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                                 key: 'type',
                                 type: 'select-ex-general-settings',
                                 templateOptions: {
-                                    label: 'system.user.form.type.label',
-                                    placeholder: 'system.user.form.type.placeholder',
+                                    label: 'warehouse.category.form.type.label',
+                                    placeholder: 'warehouse.category.form.type.placeholder',
                                     required: true,
                                 },
                             },
@@ -83,8 +83,8 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                                 key: 'status',
                                 type: 'select-ex-general-settings',
                                 templateOptions: {
-                                    label: 'system.user.form.status.label',
-                                    placeholder: 'system.user.form.status.placeholder',
+                                    label: 'warehouse.category.form.status.label',
+                                    placeholder: 'warehouse.category.form.status.placeholder',
                                     required: true,
                                 },
                             },

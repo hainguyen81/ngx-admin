@@ -614,6 +614,16 @@
             "menu": "Phân loại",
             "new": "Phân loại mới",
             "form": {
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại",
+                    "description": "Loại"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái",
+                    "description": "Trạng thái"
+                },
                 "belongTo": {
                     "label": "Phân loại cha",
                     "placeholder": "Phân loại cha",

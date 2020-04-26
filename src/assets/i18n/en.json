@@ -614,6 +614,16 @@
             "menu": "Category",
             "new": "New Category",
             "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type",
+                    "description": "Type"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status",
+                    "description": "Status"
+                },
                 "belongTo": {
                     "label": "Upper Category",
                     "placeholder": "Upper Category",
