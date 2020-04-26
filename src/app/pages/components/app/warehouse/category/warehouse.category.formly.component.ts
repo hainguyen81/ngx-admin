@@ -217,7 +217,7 @@ export class WarehouseCategoryFormlyComponent
         // observe belongTo fields
         const fields: FormlyFieldConfig[] = this.getFields();
         PromiseUtils.parallelPromises(undefined, undefined, [
-            this.observeBelongToField(),
+            this.observeBelongToField(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0]),
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0],
                 BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code, this.noneOption, this.getTranslateService()),
@@ -235,8 +235,9 @@ export class WarehouseCategoryFormlyComponent
 
     /**
      * Observe belongTo field
+     * @param field to apply
      */
-    private observeBelongToField(): Promise<void> {
+    private observeBelongToField(field: FormlyFieldConfig): Promise<void> {
         return WarehouseDataUtils.invokeAllWarehouseCategories(
             <WarehouseCategoryDatasource>this.getDataSource()).then(
                 categories => {
@@ -246,13 +247,10 @@ export class WarehouseCategoryFormlyComponent
                     options.push(categories);
                     let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
-                        this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
-                        WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
+                        field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
                     if (belongToComponent) {
                         belongToComponent.reloadFieldByOptions(options);
-                        this.disableModelFromBelongTo(
-                            this.getFormlyForm().fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
-                            this.getFormlyForm().model);
+                        this.disableModelFromBelongTo(field, this.getFormlyForm().model);
                     }
                 });
     }
