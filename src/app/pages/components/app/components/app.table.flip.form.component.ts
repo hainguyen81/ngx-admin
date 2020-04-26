@@ -110,15 +110,11 @@ export abstract class AppTableFlipFormComponent<
         super.ngAfterViewInit();
 
         // listener
-        if (super.getToolbarComponent()) {
-            super.getToolbarComponent().showActions = false;
-        }
         if (super.getFrontComponent()) {
             (<AppSmartTableComponent<D>>super.getFrontComponent())
                 .setNewItemListener($event => {
                     this._selectedModel = null;
                     this.onNewData($event);
-                    super.getToolbarComponent().showActions = true;
                     this.setFlipped(true);
                 });
             (<AppSmartTableComponent<D>>super.getFrontComponent())
@@ -127,7 +123,6 @@ export abstract class AppTableFlipFormComponent<
                         && $event.data['row'] instanceof Row
                         ? ($event.data['row'] as Row).getData() as T : undefined);
                     this.onEditData($event);
-                    super.getToolbarComponent().showActions = true;
                     this.setFlipped(true);
                 });
             (<AppSmartTableComponent<D>>super.getFrontComponent())
@@ -136,7 +131,6 @@ export abstract class AppTableFlipFormComponent<
                     && $event.data['row'] instanceof Row
                         ? ($event.data['row'] as Row).getData() as T : undefined);
                     this.onDeleteData($event);
-                    super.getToolbarComponent().showActions = false;
                     this.setFlipped(false);
                 });
         }
