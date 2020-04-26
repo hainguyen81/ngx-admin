@@ -53,7 +53,7 @@ export const AppToolbarDeleteDbActionsConfig: IToolbarActionsConfig[] =
         icon: {icon: 'eraser', pack: 'fa'},
         size: 'small',
         shape: 'rectangle',
-    }]).concat(AppToolbarBackActionsConfig);
+    }]).concat(AppToolbarImportActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}
