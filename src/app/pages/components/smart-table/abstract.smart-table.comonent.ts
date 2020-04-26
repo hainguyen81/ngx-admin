@@ -26,7 +26,6 @@ import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {DeepCloner} from '../../../utils/object.utils';
 import {Lightbox} from 'ngx-lightbox';
 
 /* default smart table settings */
@@ -96,7 +95,6 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
     tableHeader: string;
     private settings: any = DefaultTableSettings;
-    protected translatedSettings: any = DefaultTableSettings;
 
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
@@ -179,6 +177,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     protected setTableSettings(settings: any) {
         this.settings = settings;
         this.translateSettings();
+    }
+
+    protected getTableSettings(): any {
+        return this.settings;
     }
 
     protected setTableHeader(header: string) {
@@ -1412,26 +1414,26 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected translateSettings(): void {
         // apply translate
-        this.translatedSettings = DeepCloner(this.settings);
-        if (this.translatedSettings && Object.keys(this.translatedSettings).length) {
-            if (this.translatedSettings.hasOwnProperty('noDataMessage')
-                && (this.translatedSettings['noDataMessage'] || '').length) {
-                this.translatedSettings['noDataMessage'] =
-                    this.translate(this.translatedSettings['noDataMessage'] || '');
+        if (this.settings && Object.keys(this.settings).length) {
+            if (!this.settings.hasOwnProperty('noDataMessage:key')) {
+                this.settings['noDataMessage:key'] = this.settings['noDataMessage'];
             }
-            if (this.translatedSettings.hasOwnProperty('columns')) {
-                Object.values(this.translatedSettings['columns']).forEach(column => {
+            this.settings['noDataMessage'] =
+                this.translate(this.settings['noDataMessage:key'] || '');
+            if (this.settings.hasOwnProperty('columns')) {
+                Object.values(this.settings['columns']).forEach(column => {
                     if (column) {
-                        if (column.hasOwnProperty('title') && (column['title'] || '').length) {
-                            column['title'] = this.translate(column['title']);
+                        if (!column.hasOwnProperty('title:key')) {
+                            column['title:key'] = column['title'];
                         }
+                        column['title'] = this.translate(column['title:key' || '']);
                         if (column['editor'] && column['editor']['config']
                             && isArray(column['editor']['config']['list'])) {
                             Array.from(column['editor']['config']['list']).forEach(item => {
-                                if (item && item.hasOwnProperty('title')
-                                    && (item['title'] || '').length) {
-                                    item['title'] = this.translate(item['title'] || '');
+                                if (!item.hasOwnProperty('title:key')) {
+                                    item['title:key'] = column['title'];
                                 }
+                                item['title'] = this.translate(item['title:key' || '']);
                             });
                         }
                     }

@@ -186,19 +186,20 @@ export class WarehouseSettingsSmartTableComponent
     protected translateSettings(): void {
         super.translateSettings();
 
-        this.translatedSettings['columns']['type']['valuePrepareFunction'] =
-            value => this.translateModuleColumn(value);
+        const settings: any = this.getTableSettings();
+        settings['columns']['type']['valuePrepareFunction'] =
+            value => this.translateModuleColumn(settings, value);
         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsTableSelectOptions(
             this.generalSettingsDatasource, 'module_code',
             IDBKeyRange.only(MODULE_CODES.WAREHOUSE), this.getTranslateService()).then(
                 options => {
-                    this.translatedSettings['columns']['type']['editor']['config']['list'] = options;
+                    settings['columns']['type']['editor']['config']['list'] = options;
                     this.getDataSource().refresh();
                 });
     }
-    private translateModuleColumn(value?: string | null): string {
+    private translateModuleColumn(settings: any, value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
-            this.translatedSettings['columns']['type']['editor']['config']['list'];
+            settings['columns']['type']['editor']['config']['list'];
         if (!isNullOrUndefined(options) && isArray(options)) {
             for (const option of options) {
                 if (option.value === value) {

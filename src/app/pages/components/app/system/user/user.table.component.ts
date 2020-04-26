@@ -1,9 +1,10 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -117,7 +118,7 @@ export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
-export class UserSmartTableComponent extends AppSmartTableComponent<UserDataSource> {
+export class UserSmartTableComponent extends AppSmartTableComponent<UserDataSource> implements AfterViewInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -181,21 +182,35 @@ export class UserSmartTableComponent extends AppSmartTableComponent<UserDataSour
         this.getDataSource().refresh();
     }
 
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
+                this.generalSettingsDatasource, this.getTableSettings(),
+                'status', BUILTIN_CODES.USER_STATUS.code, this.getTranslateService()),
+        ]).then(value => {
+            this.getLogger().debug('Loading settings successful');
+            // this.getDataSource().refresh();
+        }, reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
 
-    protected translateSettings(): void {
-        super.translateSettings();
-
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.translatedSettings,
-                'status', BUILTIN_CODES.USER_STATUS.code, this.getTranslateService()),
-        ]).then(value => {
-            this.getLogger().debug('Loading settings successful');
-            this.getDataSource().refresh();
-        }, reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
-    }
+    // protected translateSettings(): void {
+    //     super.translateSettings();
+    //
+    //     PromiseUtils.parallelPromises(undefined, undefined, [
+    //         AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
+    //             this.generalSettingsDatasource, this.translatedSettings,
+    //             'status', BUILTIN_CODES.USER_STATUS.code, this.getTranslateService()),
+    //     ]).then(value => {
+    //         this.getLogger().debug('Loading settings successful');
+    //         // this.getDataSource().refresh();
+    //     }, reason => this.getLogger().error(reason))
+    //         .catch(reason => this.getLogger().error(reason));
+    // }
 }

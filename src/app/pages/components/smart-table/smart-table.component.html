@@ -16,7 +16,7 @@
     <nb-card-body [class.p-0]="!isShowHeader()" [class.m-0]="!isShowHeader()" class="ngx-smart-table-panel-body">
         <ng2-smart-table
             #smartTableComponent
-            [settings]="translatedSettings"
+            [settings]="getTableSettings()"
             [source]="getDataSource()"
             (rowSelect)="onRowSelect({ data: $event })"
             (userRowSelect)="onUserRowSelect( { data: $event })"

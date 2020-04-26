@@ -345,9 +345,10 @@ export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<Wa
     protected translateSettings(): void {
         super.translateSettings();
 
-        this.translatedSettings['columns']['status']['valuePrepareFunction'] =
+        const settings: any = this.getTableSettings();
+        settings['columns']['status']['valuePrepareFunction'] =
             value => this.convertWarehouseItemStatusToDisplay(value);
-        this.translatedSettings['columns']['status']['editor']['config']['list'] = [
+        settings['columns']['status']['editor']['config']['list'] = [
             {
                 value: ITEM_STATUS.NOT_ACTIVATED,
                 title: this.convertWarehouseItemStatusToDisplay(ITEM_STATUS.NOT_ACTIVATED),

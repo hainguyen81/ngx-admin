@@ -189,13 +189,13 @@ export class CustomerSmartTableComponent extends AppSmartTableComponent<Customer
 
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.translatedSettings,
+                this.generalSettingsDatasource, this.getTableSettings(),
                 'status', BUILTIN_CODES.CUSTOMER_STATUS.code, this.getTranslateService()),
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.translatedSettings,
+                this.generalSettingsDatasource, this.getTableSettings(),
                 'level', BUILTIN_CODES.CUSTOMER_LEVEL.code, this.getTranslateService()),
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
-                this.generalSettingsDatasource, this.translatedSettings,
+                this.generalSettingsDatasource, this.getTableSettings(),
                 'type', BUILTIN_CODES.CUSTOMER_TYPE.code, this.getTranslateService()),
         ]).then(
             value => {
