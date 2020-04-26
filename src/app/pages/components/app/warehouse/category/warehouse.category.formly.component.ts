@@ -59,7 +59,6 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                                 templateOptions: {
                                     label: 'warehouse.category.form.belongTo.label',
                                     placeholder: 'warehouse.category.form.belongTo.placeholder',
-                                    required: true,
                                 },
                             },
                         ],
