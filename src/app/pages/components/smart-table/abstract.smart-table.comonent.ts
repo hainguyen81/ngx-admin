@@ -1398,10 +1398,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         let target: Node;
         target = (event && event.target instanceof Node && rowEl && rowEl.contains(event.target as Node)
             ? event.target : !event || !event.target ? rowEl
-                : super.getClosestElementBySelector(
+                : this.getClosestElementBySelector(
                     AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, event.target as Element));
         if (target) {
-            return super.showHideContextMenu(event, target, (row ? row.getData() : undefined));
+            return this.showHideContextMenu(event, target, (row ? row.getData() : undefined));
         }
         this.closeContextMenu();
         return true;

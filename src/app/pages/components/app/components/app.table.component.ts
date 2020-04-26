@@ -1,9 +1,14 @@
-import {IContextMenu, IEvent} from '../../abstract.component';
+import {
+    CONTEXT_MENU_DELETE,
+    CONTEXT_MENU_EDIT,
+    IContextMenu,
+    IEvent,
+} from '../../abstract.component';
 import {COMMON} from '../../../../config/common.config';
 import {
     ChangeDetectorRef, Component,
     ComponentFactoryResolver,
-    ElementRef, EventEmitter,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -18,6 +23,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {IModel} from '../../../../@core/data/base';
 
 export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
@@ -165,5 +171,19 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
         } else {
             super.deleteRow(row);
         }
+    }
+
+    protected showHideContextMenu(event?: Event, target?: Element | EventTarget, data?: any): boolean {
+        const contextMenuItems: IContextMenu[] = this.getContextMenu() || [];
+        contextMenuItems.forEach(contextMenu => {
+            switch (contextMenu.id) {
+                case CONTEXT_MENU_DELETE:
+                case CONTEXT_MENU_EDIT: {
+                    contextMenu.enabled = ((<IModel>data) && ((<IModel>data).id || '').length > 0);
+                    break;
+                }
+            }
+        });
+        return super.showHideContextMenu(event, target, data);
     }
 }
