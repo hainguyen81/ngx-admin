@@ -346,12 +346,7 @@ export abstract class AppFlipcardComponent<
         (actions || []).forEach(action => {
             switch (action.id) {
                 // special actions, then default not visible
-                case ACTION_DELETE_DATABASE: {
-                    action.visible = (!super.isFlipped()
-                        && (!(this.visibleSpecialActionsOnFront() || []).length
-                            || this.visibleSpecialActionsOnFront().contains(action.id)));
-                    break;
-                }
+                case ACTION_DELETE_DATABASE:
                 case ACTION_IMPORT: {
                     action.visible = (!super.isFlipped()
                         && (!(this.visibleSpecialActionsOnFront() || []).length
@@ -359,9 +354,13 @@ export abstract class AppFlipcardComponent<
                     break;
                 }
                 default: {
-                    action.visible = (super.isFlipped()
-                        && (!(this.visibleActionsOnBack() || []).length
-                            || this.visibleActionsOnBack().contains(action.id)));
+                    if (super.isFlipped()) {
+                        action.visible = (!(this.visibleActionsOnBack() || []).length
+                            || this.visibleActionsOnBack().contains(action.id));
+                    } else {
+                        action.visible = (!(this.visibleActionsOnFront() || []).length
+                            || this.visibleActionsOnFront().contains(action.id));
+                    }
                     break;
                 }
             }

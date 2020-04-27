@@ -6,7 +6,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef, Component,
     ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2, Type,
+    Inject, OnInit, Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../splitpane/base.splitpane.component';
@@ -17,7 +17,7 @@ import {
     IToolbarActionsConfig,
 } from '../../toolbar/abstract.toolbar.component';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {AppToolbarComponent} from './app.toolbar.component';
+import {ACTION_DELETE_DATABASE, ACTION_IMPORT, AppToolbarComponent} from './app.toolbar.component';
 import {AppTreeviewComponent} from './app.treeview.component';
 import {IModel} from '../../../../@core/data/base';
 import {DeepCloner} from '../../../../utils/object.utils';
@@ -29,6 +29,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
+import {isNullOrUndefined} from "util";
 
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {
@@ -76,6 +77,20 @@ export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSour
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the special toolbar action identities that need to be visible
+     */
+    protected visibleSpecialActions(): String[] {
+        return [];
+    }
+
+    /**
+     * Get the toolbar action identities that need to be visible
+     */
+    protected visibleActions(): String[] {
+        return [];
+    }
 
     /**
      * Get the selected {IModel} instance
@@ -213,7 +228,9 @@ export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSour
         // create toolbar component
         if (this.toolBarType) {
             this.toolbarComponent = super.setToolbarComponent(this.toolBarType);
+            this.toolbarComponent.showActions = true;
             this.toolbarComponent.actionListener().subscribe((e: IEvent) => this.onClickAction(e));
+            this.doToolbarActionsSettings();
         }
 
         // create tree-view component
@@ -293,6 +310,32 @@ export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSour
             value && this.getDataSource().remove(this.getFormlyComponent().getModel())
                 .then(() => this.showDeleteDataSuccess())
                 .catch(() => this.showSaveDataError());
+        });
+    }
+
+    /**
+     * Apply toolbar actions settings while flipping
+     */
+    protected doToolbarActionsSettings() {
+        if (isNullOrUndefined(this.getToolbarComponent())) return;
+
+        this.getToolbarComponent().showActions = true;
+        const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
+        (actions || []).forEach(action => {
+            switch (action.id) {
+                // special actions, then default not visible
+                case ACTION_DELETE_DATABASE:
+                case ACTION_IMPORT: {
+                    action.visible = (!(this.visibleSpecialActions() || []).length
+                        || this.visibleSpecialActions().contains(action.id));
+                    break;
+                }
+                default: {
+                    action.visible = (!(this.visibleActions() || []).length
+                        || this.visibleActions().contains(action.id));
+                    break;
+                }
+            }
         });
     }
 }
