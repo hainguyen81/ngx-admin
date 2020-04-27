@@ -45,7 +45,6 @@ import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 import {AutoUnsubscribe} from './customization/extend.component';
 import {isNullOrUndefined} from 'util';
-import {BaseHrefProvider} from "../../config/common.config";
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -1105,6 +1104,6 @@ export abstract class AbstractComponent
      * @return the application base href
      */
     public get baseHref(): string {
-        return BaseHrefProvider.call(undefined);
+        return HtmlUtils.getBaseHref();
     }
 }

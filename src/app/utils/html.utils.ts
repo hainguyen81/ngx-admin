@@ -1,3 +1,5 @@
+import {environment} from '../../environments/environment';
+
 /**
  * The HTML focusable elements selector
  */
@@ -170,5 +172,19 @@ export default class HtmlUtils {
      */
     public static previous(element?: Element, selector?: string): Element {
         return this.walk(false, element, selector);
+    }
+
+    /**
+     * Get the application base href
+     * @return the application base href
+     */
+    public static getBaseHref(): string {
+        let baseElement: HTMLCollectionBase;
+        baseElement = <HTMLCollectionBase>document.getElementsByTagName('base');
+        let href: string;
+        href = (baseElement && baseElement.item(0)
+        && baseElement.item(0).hasAttribute('href')
+            ? baseElement.item(0).getAttribute('href') : environment.baseHref);
+        return (href || '').trimLast('/');
     }
 }

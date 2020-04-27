@@ -2,7 +2,7 @@ import {
     ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, Optional,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';

@@ -27,11 +27,11 @@ import {
 import {ACTION_BACK} from '../warehouse/item/warehouse.item.toolbar.component';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import AppUtils from '../../../../utils/app.utils';
-import {Router} from '@angular/router';
 import {AppConfig} from '../../../../config/app.config';
 import {
     NgxLocalStorageEncryptionService,
 } from '../../../../services/storage.services/local.storage.services';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'ngx-flip-card-app',
@@ -280,14 +280,10 @@ export abstract class AppFlipcardComponent<
     private clearData(): void {
         const _this: AbstractComponent = this;
         const indexDbService: NgxIndexedDBService = AppUtils.getService(NgxIndexedDBService);
-        const location: Location = AppUtils.getService(Location);
-        const router: Router = AppUtils.getService(Router);
         const localStorage: NgxLocalStorageEncryptionService =
             AppUtils.getService(NgxLocalStorageEncryptionService);
         const logger: NGXLogger = this.getLogger();
         indexDbService || throwError('Could not inject NgxIndexedDBService instance');
-        location || throwError('Could not inject Location instance');
-        router || throwError('Could not inject Router instance');
         localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
         const indexDbDelRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
         indexDbDelRequest.onerror = function(event) {
@@ -296,8 +292,8 @@ export abstract class AppFlipcardComponent<
         };
         indexDbDelRequest.onsuccess = function(event) {
             localStorage.clear();
-            router.navigate([_this.baseHref]);
-            location.reload();
+            window.location.assign(_this.baseHref);
+            window.location.reload();
         };
     }
 }

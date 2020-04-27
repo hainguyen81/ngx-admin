@@ -22,7 +22,7 @@ import {
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
 import {ToastrService} from 'ngx-toastr';
-import {BaseHrefProvider, COMMON} from './common.config';
+import {COMMON} from './common.config';
 import {ModuleDatasource, ModuleHttpService, ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/system/user/user.service';
 import {UserDataSource} from '../services/implementation/system/user/user.datasource';
@@ -142,6 +142,7 @@ import {
 import {
     GeneralSettingsDatasource,
 } from '../services/implementation/system/general.settings/general.settings.datasource';
+import HtmlUtils from '../utils/html.utils';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -154,8 +155,8 @@ export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
 
 export const CommonProviders: StaticProvider[] = [
     {provide: DOCUMENT, useValue: document},
-    {provide: APP_BASE_HREF, useFactory: BaseHrefProvider, deps: []},
-    {provide: BASE_HREF, useFactory: BaseHrefProvider, deps: []},
+    {provide: APP_BASE_HREF, useFactory: HtmlUtils.getBaseHref, deps: []},
+    {provide: BASE_HREF, useFactory: HtmlUtils.getBaseHref, deps: []},
     {provide: SW_VAPID_PUBLIC_KEY, useValue: COMMON.sw.vapid_public_key},
     {provide: LOCALE_ID, useValue: 'vi'},
     {provide: DatePipe, useClass: DatePipe, deps: []},
