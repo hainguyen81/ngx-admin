@@ -15,12 +15,15 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
+import {
+    AppToolbarComponent,
+    AppToolbarImportActionsConfig,
+} from '../../components/app.toolbar.component';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /* default warehouse settings toolbar header config */
 export const WarehouseSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -29,7 +32,7 @@ export const WarehouseSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse settings toolbar actions config */
-export const WarehouseSettingsToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarBackActionsConfig;
+export const WarehouseSettingsToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarImportActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}

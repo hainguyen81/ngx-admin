@@ -6,7 +6,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef, Component,
     ComponentFactoryResolver, ElementRef,
-    Inject, OnInit, Renderer2, Type,
+    Inject, Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../splitpane/base.splitpane.component';
@@ -29,7 +29,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from 'util';
 
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {
@@ -326,13 +326,11 @@ export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSour
                 // special actions, then default not visible
                 case ACTION_DELETE_DATABASE:
                 case ACTION_IMPORT: {
-                    action.visible = (!(this.visibleSpecialActions() || []).length
-                        || this.visibleSpecialActions().contains(action.id));
+                    action.visible = this.visibleSpecialActions().contains(action.id);
                     break;
                 }
                 default: {
-                    action.visible = (!(this.visibleActions() || []).length
-                        || this.visibleActions().contains(action.id));
+                    action.visible = this.visibleActions().contains(action.id);
                     break;
                 }
             }

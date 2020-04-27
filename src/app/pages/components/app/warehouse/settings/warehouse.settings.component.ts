@@ -24,6 +24,8 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {ACTION_BACK, ACTION_IMPORT} from "../../components/app.toolbar.component";
+import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from "../../../toolbar/abstract.toolbar.component";
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
@@ -41,6 +43,18 @@ export class WarehouseSettingsComponent
         WarehouseSettingsToolbarComponent,
         WarehouseSettingsSmartTableComponent,
         WarehouseSettingsFormlyComponent> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActionsOnFront(): String[] {
+        return [ACTION_IMPORT];
+    }
+
+    protected visibleActionsOnBack(): String[] {
+        return [ACTION_SAVE, ACTION_RESET, ACTION_DELETE, ACTION_BACK];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

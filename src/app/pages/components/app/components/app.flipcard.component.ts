@@ -349,17 +349,14 @@ export abstract class AppFlipcardComponent<
                 case ACTION_DELETE_DATABASE:
                 case ACTION_IMPORT: {
                     action.visible = (!super.isFlipped()
-                        && (!(this.visibleSpecialActionsOnFront() || []).length
-                            || this.visibleSpecialActionsOnFront().contains(action.id)));
+                        && this.visibleSpecialActionsOnFront().contains(action.id));
                     break;
                 }
                 default: {
                     if (super.isFlipped()) {
-                        action.visible = (!(this.visibleActionsOnBack() || []).length
-                            || this.visibleActionsOnBack().contains(action.id));
+                        action.visible = this.visibleActionsOnBack().contains(action.id);
                     } else {
-                        action.visible = (!(this.visibleActionsOnFront() || []).length
-                            || this.visibleActionsOnFront().contains(action.id));
+                        action.visible = this.visibleActionsOnFront().contains(action.id);
                     }
                     break;
                 }
