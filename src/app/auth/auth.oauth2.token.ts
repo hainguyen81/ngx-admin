@@ -16,6 +16,6 @@ export class NbxAuthOAuth2Token extends NbAuthOAuth2Token {
             return false;
         }
         const user: IUser = super.getPayload() as IUser;
-        return (user && user.status === STATUS.ACTIVATED.toString());
+        return (user && user.status === Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED));
     }
 }
