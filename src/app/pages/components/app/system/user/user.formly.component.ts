@@ -16,15 +16,14 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {EmailValidators} from 'ngx-validators';
-import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IUser} from '../../../../../@core/data/system/user';
@@ -240,7 +239,7 @@ export class UserFormlyComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[3].fieldGroup[1],
-                BUILTIN_CODES.USER_STATUS.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code, this.noneOption, this.getTranslateService()),
         ]).then(value => this.getLogger().debug('Loading settings successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

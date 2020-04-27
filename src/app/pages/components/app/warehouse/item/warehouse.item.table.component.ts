@@ -23,10 +23,6 @@ import {
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
-import {Constants as ItemConstants} from '../../../../../@core/data/constants/warehouse.item.constants';
-import ITEM_STATUS = ItemConstants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
-import convertItemStatusToDisplay =
-    ItemConstants.WarehouseConstants.WarehouseItemConstants.convertItemStatusToDisplay;
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
@@ -329,40 +325,6 @@ export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<Wa
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
-
-    /**
-     * Convert {ITEM_STATUS} to the showed translated value
-     * @param value to convert
-     * @return converted value
-     */
-    private convertWarehouseItemStatusToDisplay(value: ITEM_STATUS): string {
-        return this.translate(convertItemStatusToDisplay(value));
-    }
-
-    /**
-     * Translate table settings
-     */
-    protected translateSettings(): void {
-        super.translateSettings();
-
-        const settings: any = this.getTableSettings();
-        settings['columns']['status']['valuePrepareFunction'] =
-            value => this.convertWarehouseItemStatusToDisplay(value);
-        settings['columns']['status']['editor']['config']['list'] = [
-            {
-                value: ITEM_STATUS.NOT_ACTIVATED,
-                title: this.convertWarehouseItemStatusToDisplay(ITEM_STATUS.NOT_ACTIVATED),
-            },
-            {
-                value: ITEM_STATUS.ACTIVATED,
-                title: this.convertWarehouseItemStatusToDisplay(ITEM_STATUS.ACTIVATED),
-            },
-            {
-                value: ITEM_STATUS.LOCKED,
-                title: this.convertWarehouseItemStatusToDisplay(ITEM_STATUS.LOCKED),
-            },
-        ];
-    }
 
     /**
      * Create new Row

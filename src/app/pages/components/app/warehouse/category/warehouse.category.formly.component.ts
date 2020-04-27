@@ -25,15 +25,14 @@ import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.ut
 import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.component';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-import {Constants, Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import PromiseUtils from '../../../../../utils/promise.utils';
-import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 
 /* default warehouse category formly config */
@@ -216,7 +215,7 @@ export class WarehouseCategoryFormlyComponent
                 BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code, this.noneOption, this.getTranslateService()),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[1],
-                BUILTIN_CODES.WAREHOUSE_CATEGORY_STATUS.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code, this.noneOption, this.getTranslateService()),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
             reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

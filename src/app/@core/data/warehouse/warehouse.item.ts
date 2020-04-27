@@ -1,7 +1,5 @@
 import BaseModel, {IModel} from '../base';
 import {IWarehouseCategory} from './warehouse.category';
-import {Constants} from '../constants/warehouse.item.constants';
-import ITEM_STATUS = Constants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
 
 export interface IWarehouseItem extends IModel {
     // Mã hàng hóa
@@ -9,7 +7,7 @@ export interface IWarehouseItem extends IModel {
     // Tên hàng hóa
     name: string;
     // trạng thái
-    status?: ITEM_STATUS | ITEM_STATUS.NOT_ACTIVATED;
+    status?: string | null;
     // Mã vạch
     barcode?: string | null;
     // Serial number

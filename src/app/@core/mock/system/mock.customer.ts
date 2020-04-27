@@ -1,10 +1,11 @@
 import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
-import {Constants} from '../../data/constants/customer.constants';
-import CUSTOMER_STATUS = Constants.CustomerConstants.CUSTOMER_STATUS;
+import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
 import {ICustomer} from '../../data/system/customer';
-import CUSTOMER_TYPE = Constants.CustomerConstants.CUSTOMER_TYPE;
-import CUSTOMER_LEVEL = Constants.CustomerConstants.CUSTOMER_LEVEL;
+import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
+import CUSTOMER_LEVEL = CustomerConstants.CustomerConstants.CUSTOMER_LEVEL;
+import {Constants as CommonConstants} from '../../data/constants/common.constants';
+import STATUS = CommonConstants.COMMON.STATUS;
 
 export const MAXIMUM_MOCK_CUSTOMERS: number = 100;
 
@@ -15,7 +16,7 @@ export const MockCustomerTemplate: ICustomer = {
     email: 'customer1@hsg.com',
     tel: '0916191819',
     address: 'Tan Binh',
-    status: CUSTOMER_STATUS.ACTIVATED,
+    status: STATUS.NOT_ACTIVATED.toString(),
 };
 
 export function customersGenerate(): ICustomer[] {

@@ -7,8 +7,8 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {IUser} from '../../../../@core/data/system/user';
-import {Constants} from '../../../../@core/data/constants/user.constants';
-import USER_STATUS = Constants.UserConstants.USER_STATUS;
+import {Constants as CommonConstants} from '../../../../@core/data/constants/common.constants';
+import STATUS = CommonConstants.COMMON.STATUS;
 
 @Injectable()
 export class UserDbService extends BaseDbService<IUser> {
@@ -25,7 +25,7 @@ export class UserDbService extends BaseDbService<IUser> {
             this.getLogger().debug('Delete data', args, 'First data', args[0]);
             // if existed user
             if ((args[0].id || '').length) {
-                args[0].status = USER_STATUS.LOCKED;
+                args[0].status = STATUS.LOCKED.toString();
                 this.updateExecutor.apply(this, [resolve, reject, ...args]);
 
                 // if new user (invalid user identity)

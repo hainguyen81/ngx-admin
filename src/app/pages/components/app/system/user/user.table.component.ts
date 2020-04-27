@@ -21,10 +21,10 @@ import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.componen
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
@@ -189,7 +189,7 @@ export class UserSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.USER_STATUS.code, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code, this.getTranslateService()),
         ]).then(value => {
             this.getLogger().debug('Loading settings successful');
             this.getDataSource().refresh();

@@ -14,14 +14,8 @@
             "delete": "Delete"
         },
         "enum": {
-            "userStatus": {
+            "status": {
                 "name": "User status",
-                "activated": "Activated",
-                "locked": "Locked",
-                "notActivated": "Not activated"
-            },
-            "customerStatus": {
-                "name": "Customer status",
                 "activated": "Activated",
                 "locked": "Locked",
                 "notActivated": "Not activated"
@@ -58,20 +52,10 @@
                     "name": "Other settings"
                 }
             },
-            "warehouseCategoryStatus": {
-                "activated": "Activated",
-                "locked": "Locked",
-                "notActivated": "Not activated"
-            },
             "warehouseCategoryType": {
                 "category": "Category",
                 "type": "Type",
                 "brand": "Brand"
-            },
-            "warehouseItemStatus": {
-                "activated": "Activated",
-                "locked": "Locked",
-                "notActivated": "Not activated"
             },
             "warehouseInventoryType": {
                 "in": "In",

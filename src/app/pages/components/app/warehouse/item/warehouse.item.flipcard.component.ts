@@ -31,10 +31,9 @@ import {
 import {ACTION_BACK} from './warehouse.item.toolbar.component';
 import {ConfirmPopupConfig} from 'ngx-material-popup/lib/configs/confirm-popup.config';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {Constants as ItemConstants} from '../../../../../@core/data/constants/warehouse.item.constants';
-import ITEM_STATUS = ItemConstants.WarehouseConstants.WarehouseItemConstants.ITEM_STATUS;
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import STATUS = CommonConstants.COMMON.STATUS;
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
@@ -176,7 +175,7 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
         this.warehouseItemTableComponentFront.setNewItemListener(
             ($event) => {
                 const newItem: IWarehouseItem = new WarehouseItem(null, null, null);
-                newItem.status = ITEM_STATUS.NOT_ACTIVATED;
+                newItem.status = STATUS.NOT_ACTIVATED.toString();
                 this.getWarehouseItemSplitPaneComponentBack().setDataModel(newItem);
                 this.setFlipped(true);
             });

@@ -3,8 +3,8 @@ import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import EncryptionUtils from '../../../utils/encryption.utils';
 import {IUser} from '../../data/system/user';
-import {Constants} from '../../data/constants/user.constants';
-import USER_STATUS = Constants.UserConstants.USER_STATUS;
+import {Constants as CommonConstants} from '../../data/constants/common.constants';
+import STATUS = CommonConstants.COMMON.STATUS;
 
 export const MAXIMUM_MOCK_USERS: number = 100;
 
@@ -21,7 +21,7 @@ export const MockUserAdmin: IUser = {
     firstName: 'Administrator First Name',
     lastName: 'Administrator Last Name',
     email: 'admin@hsg.com',
-    status: USER_STATUS.ACTIVATED,
+    status: STATUS.ACTIVATED.toString(),
     rolesGroup: MockRolesAdmin,
     id: '5d5d67786249ab06b4516c45',
     rolesGroupId: '5d766194738fbc23b43a857f',
@@ -39,7 +39,7 @@ export const MockUserTemplate: IUser = {
     firstName: 'User1 First Name',
     lastName: 'User1 Last Name',
     email: 'user1@hsg.com',
-    status: USER_STATUS.ACTIVATED,
+    status: STATUS.ACTIVATED.toString(),
     rolesGroup: MockRolesAdmin,
     id: '5d5d67786249ab06b4516c46',
     rolesGroupId: '5d766194738fbc23b43a857f',

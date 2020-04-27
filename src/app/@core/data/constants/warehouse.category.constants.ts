@@ -10,12 +10,6 @@ export namespace Constants {
                 BRAND = 'common.enum.warehouseCategoryType.brand',
             }
 
-            export enum CATEGORY_STATUS {
-                NOT_ACTIVATED = 'common.enum.warehouseCategoryStatus.notActivated',
-                ACTIVATED = 'common.enum.warehouseCategoryStatus.activated',
-                LOCKED = 'common.enum.warehouseCategoryStatus.locked',
-            }
-
             export function convertWarehouseCategoryTypeToDisplay(value: CATEGORY_TYPE): string {
                 switch (value) {
                     case CATEGORY_TYPE.TYPE:
@@ -24,17 +18,6 @@ export namespace Constants {
                         return 'common.enum.warehouseCategoryType.brand';
                     default:
                         return 'common.enum.warehouseCategoryType.category';
-                }
-            }
-
-            export function convertWarehouseCategoryStatusToDisplay(value: CATEGORY_STATUS): string {
-                switch (value) {
-                    case CATEGORY_STATUS.ACTIVATED:
-                        return 'common.enum.warehouseCategoryStatus.activated';
-                    case CATEGORY_STATUS.LOCKED:
-                        return 'common.enum.warehouseCategoryStatus.locked';
-                    default:
-                        return 'common.enum.warehouseCategoryStatus.notActivated';
                 }
             }
         }

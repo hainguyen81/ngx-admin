@@ -32,7 +32,6 @@ import {
 import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
-import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
@@ -419,7 +418,7 @@ export class CustomerFormlyComponent
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2],
-                BUILTIN_CODES.CUSTOMER_STATUS.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code, this.noneOption, this.getTranslateService()),
         ]).then(
             value => this.getLogger().debug('Loading settings successful'),
             reason => this.getLogger().error(reason))

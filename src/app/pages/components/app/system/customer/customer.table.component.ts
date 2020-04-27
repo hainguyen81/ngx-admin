@@ -21,9 +21,9 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 
@@ -188,7 +188,7 @@ export class CustomerSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.CUSTOMER_STATUS.code, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code, this.getTranslateService()),
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'level',
                 BUILTIN_CODES.CUSTOMER_LEVEL.code, this.getTranslateService()),

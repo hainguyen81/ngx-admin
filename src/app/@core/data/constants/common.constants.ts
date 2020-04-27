@@ -3,6 +3,12 @@ import {API} from '../../../config/api.config';
 export namespace Constants {
     export namespace COMMON {
 
+        export enum STATUS {
+            NOT_ACTIVATED = 'common.enum.status.notActivated',
+            ACTIVATED = 'common.enum.status.activated',
+            LOCKED = 'common.enum.status.locked',
+        }
+
         export const MODULE_CODES: any = {
             SYSTEM: API.system.code.call(undefined),
             SYSTEM_SETTINGS: API.system.children.generalSettings.code.call(undefined),
@@ -23,14 +29,13 @@ export namespace Constants {
         };
 
         export const BUILTIN_CODES: any = {
+            // common
+            STATUS: { code: 'STATUS', name: 'common.enum.status.name' },
             // customer
-            CUSTOMER_STATUS: { code: 'CUSTOMER_STATUS', name: 'common.enum.customerStatus.name' },
             CUSTOMER_LEVEL: { code: 'CUSTOMER_LEVEL', name: 'common.enum.customerLevel.name' },
             CUSTOMER_TYPE: { code: 'CUSTOMER_TYPE', name: 'common.enum.customerType.name' },
             // organization
             ORGANIZATION_TYPE: { code: 'ORGANIZATION_TYPE', name: 'common.enum.organizationType.name' },
-            // user
-            USER_STATUS: { code: 'USER_STATUS', name: 'common.enum.userStatus.name' },
             // warehouse settings
             WAREHOUSE_SETTINGS_TYPE: {
                 code: 'WAREHOUSE_SETTINGS_TYPE',
@@ -38,7 +43,6 @@ export namespace Constants {
             },
             // warehouse category
             WAREHOUSE_CATEGORY_TYPE: { code: 'CATEGORY_TYPE', name: 'common.enum.warehouseCategoryType.name' },
-            WAREHOUSE_CATEGORY_STATUS: { code: 'CATEGORY_STATUS', name: 'common.enum.warehouseCategoryStatus.name' },
         };
     }
 }

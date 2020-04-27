@@ -26,11 +26,11 @@ import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
