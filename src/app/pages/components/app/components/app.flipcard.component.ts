@@ -32,7 +32,6 @@ import {AppConfig} from '../../../../config/app.config';
 import {
     NgxLocalStorageEncryptionService,
 } from '../../../../services/storage.services/local.storage.services';
-import {BaseHrefProvider} from '../../../../config/app.providers';
 
 @Component({
     selector: 'ngx-flip-card-app',
