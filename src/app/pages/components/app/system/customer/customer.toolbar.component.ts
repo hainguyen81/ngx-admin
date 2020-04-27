@@ -15,7 +15,10 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {AppToolbarBackActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
+import {
+    AppToolbarComponent,
+    AppToolbarImportActionsConfig,
+} from '../../components/app.toolbar.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {CustomerDatasource} from '../../../../../services/implementation/system/customer/customer.datasource';
@@ -27,7 +30,7 @@ export const CustomerToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default customer toolbar actions config */
-export const CustomerToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarBackActionsConfig;
+export const CustomerToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarImportActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}

@@ -24,6 +24,8 @@ import {
 import {CustomerSmartTableComponent} from './customer.table.component';
 import {CustomerToolbarComponent} from './customer.toolbar.component';
 import {CustomerFormlyComponent} from './customer.formly.component';
+import {ACTION_BACK, ACTION_IMPORT} from '../../components/app.toolbar.component';
+import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_CUSTOMER,
@@ -41,6 +43,18 @@ export class CustomerComponent
         CustomerToolbarComponent,
         CustomerSmartTableComponent,
         CustomerFormlyComponent> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActionsOnFront(): String[] {
+        return [ACTION_IMPORT];
+    }
+
+    protected visibleActionsOnBack(): String[] {
+        return [ACTION_BACK, ACTION_SAVE, ACTION_RESET, ACTION_DELETE];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

@@ -29,8 +29,10 @@ export function customersGenerate(): ICustomer[] {
         mockCustomer.code = 'Customer-'.concat((i + 1).toString());
         mockCustomer.name = 'Customer '.concat((i + 1).toString());
         mockCustomer.email = 'customer'.concat((i + 1).toString(), '@hsg.com');
-        mockCustomer.type = CUSTOMER_TYPE.CUSTOMER;
-        mockCustomer.level = CUSTOMER_LEVEL.NEW;
+        mockCustomer.type = Object.keys(CUSTOMER_TYPE)
+            .find(key => CUSTOMER_TYPE[key] === CUSTOMER_TYPE.CUSTOMER);
+        mockCustomer.level = Object.keys(CUSTOMER_LEVEL)
+            .find(key => CUSTOMER_LEVEL[key] === CUSTOMER_LEVEL.NEW);
         mockCustomers.push(mockCustomer);
     }
     return mockCustomers;
