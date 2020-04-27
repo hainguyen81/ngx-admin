@@ -116,6 +116,7 @@
         "typeface-exo": "0.0.22",
         "uuid": "^3.4.0",
         "web-animations-js": "github:angular/web-animations-js#release_pr208",
+        "xlsx": "^0.15.6",
         "zone.js": "~0.9.1"
     },
     "devDependencies": {
