@@ -30,7 +30,7 @@ export const UserToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default user toolbar actions config */
-export const UserToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarImportActionsConfig;
+export const UserToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarImportActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}

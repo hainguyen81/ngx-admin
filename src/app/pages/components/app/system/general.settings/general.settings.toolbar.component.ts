@@ -32,7 +32,7 @@ export const GeneralSettingsToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default general settings toolbar actions config */
-export const GeneralSettingsToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarDeleteDbActionsConfig;
+export const GeneralSettingsToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarDeleteDbActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}
