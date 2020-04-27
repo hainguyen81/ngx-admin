@@ -111,6 +111,7 @@
         "smooth-scrollbar": "^8.5.2",
         "socicon": "3.0.5",
         "tinymce": "4.5.7",
+        "ts-enum-util": "^4.0.1",
         "ts-md5": "^1.2.7",
         "tslib": "^1.11.1",
         "typeface-exo": "0.0.22",

@@ -16,7 +16,7 @@ export const MockCustomerTemplate: ICustomer = {
     email: 'customer1@hsg.com',
     tel: '0916191819',
     address: 'Tan Binh',
-    status: STATUS.NOT_ACTIVATED.toString(),
+    status: Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED),
 };
 
 export function customersGenerate(): ICustomer[] {

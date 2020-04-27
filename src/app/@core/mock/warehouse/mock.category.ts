@@ -1,8 +1,10 @@
 import ObjectUtils from '../../../utils/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import {IWarehouseCategory} from '../../data/warehouse/warehouse.category';
-import {Constants} from '../../data/constants/warehouse.category.constants';
-import CATEGORY_TYPE = Constants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
+import {Constants as WarehouseConstants} from '../../data/constants/warehouse.category.constants';
+import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
+import {Constants as CommonConstants} from '../../data/constants/common.constants';
+import STATUS = CommonConstants.COMMON.STATUS;
 
 export const MAXIMUM_MOCK_CATEGORY_CHILDS: number = 10;
 export const MAXIMUM_MOCK_CATEGORY: number = 10;
@@ -11,7 +13,8 @@ export const MockCategoryTemplate: IWarehouseCategory = {
     id: 'id',
     code: 'Code',
     name: 'Name',
-    type: CATEGORY_TYPE.CATEGORY,
+    type: Object.keys(CATEGORY_TYPE).find(key => CATEGORY_TYPE[key] === CATEGORY_TYPE.CATEGORY),
+    status: Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED),
 };
 
 export function categoryGenerate(): IWarehouseCategory[] {

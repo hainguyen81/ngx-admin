@@ -167,7 +167,7 @@ export default class AppObserveUtils {
         return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsOptions(
             generalSettingsDatasource, '__general_settings_index_by_module_code',
             IDBKeyRange.only([moduleCode, settingCode]), translateService, {
-                'value': (model: IGeneralSettings) => model.id,
+                'value': (model: IGeneralSettings) => model.name,
                 'label': (model: IGeneralSettings) => (isNullOrUndefined(translateService)
                     ? model.value : translateService.instant(model.value.toString())),
             }).then((settings: { [key: string]: string | string[] | IGeneralSettings; }[]) => {
