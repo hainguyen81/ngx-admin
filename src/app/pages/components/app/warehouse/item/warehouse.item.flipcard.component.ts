@@ -28,12 +28,12 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../toolbar/abstract.toolbar.component';
-import {ACTION_BACK} from './warehouse.item.toolbar.component';
 import {ConfirmPopupConfig} from 'ngx-material-popup/lib/configs/confirm-popup.config';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import STATUS = CommonConstants.COMMON.STATUS;
+import {ACTION_BACK} from "../../components/app.toolbar.component";
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,

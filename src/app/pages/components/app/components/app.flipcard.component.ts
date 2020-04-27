@@ -6,7 +6,7 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2, Type,
+    Inject, OnInit, Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
@@ -17,21 +17,20 @@ import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
-import {ACTION_DELETE_DATABASE, AppToolbarComponent} from './app.toolbar.component';
+import {ACTION_BACK, ACTION_DELETE_DATABASE, ACTION_IMPORT, AppToolbarComponent} from './app.toolbar.component';
 import {
     ACTION_DELETE,
     ACTION_RESET,
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../toolbar/abstract.toolbar.component';
-import {ACTION_BACK} from '../warehouse/item/warehouse.item.toolbar.component';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import AppUtils from '../../../../utils/app.utils';
 import {AppConfig} from '../../../../config/app.config';
 import {
     NgxLocalStorageEncryptionService,
 } from '../../../../services/storage.services/local.storage.services';
-import {Router} from '@angular/router';
+import {isNullOrUndefined} from 'util';
 
 @Component({
     selector: 'ngx-flip-card-app',
@@ -44,7 +43,8 @@ export abstract class AppFlipcardComponent<
     TB extends AppToolbarComponent<D>,
     F extends AbstractComponent,
     B extends AbstractComponent>
-    extends BaseFlipcardComponent<D> implements AfterViewInit {
+    extends BaseFlipcardComponent<D>
+    implements AfterViewInit, OnInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -57,6 +57,34 @@ export abstract class AppFlipcardComponent<
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the special toolbar action identities that need to be visible on front
+     */
+    protected visibleSpecialActionsOnFront(): String[] {
+        return [];
+    }
+
+    /**
+     * Get the special toolbar action identities that need to be visible on front
+     */
+    protected visibleSpecialActionsOnBack(): String[] {
+        return [];
+    }
+
+    /**
+     * Get the toolbar action identities that need to be visible on front
+     */
+    protected visibleActionsOnFront(): String[] {
+        return [];
+    }
+
+    /**
+     * Get the toolbar action identities that need to be visible on back
+     */
+    protected visibleActionsOnBack(): String[] {
+        return [];
+    }
 
     /**
      * Get a boolean value indicating whether showing panel header
@@ -138,11 +166,21 @@ export abstract class AppFlipcardComponent<
     // EVENTS
     // -------------------------------------------------
 
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        // listener flipping event
+        this.onFlipped.subscribe(value => this.doToolbarActionsSettingsOnFlipped());
+    }
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
         // Create flip components
         this.createFlipComponents();
+
+        // toolbar actions settings on start-up
+        this.doToolbarActionsSettingsOnFlipped();
     }
 
     /**
@@ -295,5 +333,38 @@ export abstract class AppFlipcardComponent<
             window.location.assign(_this.baseHref);
             window.location.reload();
         };
+    }
+
+    /**
+     * Apply toolbar actions settings while flipping
+     */
+    protected doToolbarActionsSettingsOnFlipped() {
+        if (isNullOrUndefined(this.getToolbarComponent())) return;
+
+        this.getToolbarComponent().showActions = true;
+        const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
+        (actions || []).forEach(action => {
+            switch (action.id) {
+                // special actions, then default not visible
+                case ACTION_DELETE_DATABASE: {
+                    action.visible = (!super.isFlipped()
+                        && (!(this.visibleSpecialActionsOnFront() || []).length
+                            || this.visibleSpecialActionsOnFront().indexOf(action.id) > 0));
+                    break;
+                }
+                case ACTION_IMPORT: {
+                    action.visible = (!super.isFlipped()
+                        && (!(this.visibleSpecialActionsOnFront() || []).length
+                            || this.visibleSpecialActionsOnFront().indexOf(action.id) > 0));
+                    break;
+                }
+                default: {
+                    action.visible = (super.isFlipped()
+                        && (!(this.visibleActionsOnBack() || []).length
+                            || this.visibleActionsOnBack().indexOf(action.id) > 0));
+                    break;
+                }
+            }
+        });
     }
 }

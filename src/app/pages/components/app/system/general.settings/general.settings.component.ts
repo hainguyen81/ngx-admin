@@ -49,6 +49,14 @@ export class GeneralSettingsComponent
     implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActionsOnFront(): String[] {
+        return [ACTION_IMPORT, ACTION_DELETE_DATABASE];
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -94,20 +102,6 @@ export class GeneralSettingsComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        // listener while flipping for apply toolbar actions settings
-        this.onFlipped.subscribe(value => this._applyActionsOnFlipped());
-    }
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // toolbar actions settings at start-up
-        this._applyActionsOnFlipped();
-    }
-
     protected onNewData($event: IEvent): void {
         const newInst: IGeneralSettings = new GeneralSettings(null, null, null, null);
         newInst.builtin = false;
@@ -121,29 +115,5 @@ export class GeneralSettingsComponent
         setting || throwError('Invalid data to edit');
         if (setting.builtin) setting.value = this.translate(setting.value.toString());
         super.getBackComponent().setModel(setting);
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    private _applyActionsOnFlipped() {
-        if (isNullOrUndefined(this.getToolbarComponent())) return;
-
-        this.getToolbarComponent().showActions = true;
-        const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
-        (actions || []).forEach(action => {
-            switch (action.id) {
-                case ACTION_DELETE_DATABASE:
-                case ACTION_IMPORT: {
-                    action.visible = !super.isFlipped();
-                    break;
-                }
-                default: {
-                    action.visible = super.isFlipped();
-                    break;
-                }
-            }
-        });
     }
 }

@@ -30,7 +30,6 @@ export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse item toolbar actions config */
-export const ACTION_BACK: string = 'ACTION_BACK';
 export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarBackActionsConfig;
 
 /**

@@ -16,7 +16,7 @@ export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
      */
-    optionValueField: 'id',
+    optionValueField: 'name',
     /**
      * Provide an opportunity to change the name a text property of objects in the items
      * {string}

@@ -22,6 +22,8 @@ import {UserDataSource} from '../../../../../services/implementation/system/user
 import {UserSmartTableComponent} from './user.table.component';
 import {UserToolbarComponent} from './user.toolbar.component';
 import {UserFormlyComponent} from './user.formly.component';
+import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
+import {ACTION_BACK, ACTION_IMPORT} from '../../components/app.toolbar.component';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_USER,
@@ -39,6 +41,18 @@ export class UserComponent
         UserToolbarComponent,
         UserSmartTableComponent,
         UserFormlyComponent> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActionsOnFront(): String[] {
+        return [ACTION_IMPORT];
+    }
+
+    protected visibleActionsOnBack(): String[] {
+        return [ACTION_DELETE, ACTION_RESET, ACTION_SAVE, ACTION_BACK];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

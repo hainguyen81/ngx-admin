@@ -16,7 +16,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {throwError} from 'rxjs';
 import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
-import {ACTION_BACK, WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
+import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {IEvent} from '../../../abstract.component';
 import {
     ACTION_DELETE,
@@ -30,6 +30,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {ACTION_BACK} from '../../components/app.toolbar.component';
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {
