@@ -14,14 +14,8 @@
             "delete": "Xoá"
         },
         "enum": {
-            "userStatus": {
-                "name": "Trạng thái người dùng",
-                "activated": "Đã kích hoạt",
-                "locked": "Khoá",
-                "notActivated": "Chưa kích hoạt"
-            },
-            "customerStatus": {
-                "name": "Trạng thái KH",
+            "status": {
+                "name": "Trạng thái",
                 "activated": "Đã kích hoạt",
                 "locked": "Khoá",
                 "notActivated": "Chưa kích hoạt"
@@ -58,20 +52,10 @@
                     "name": "Thiết lập khác"
                 }
             },
-            "warehouseCategoryStatus": {
-                "activated": "Đã kích hoạt",
-                "locked": "Khoá",
-                "notActivated": "Chưa kích hoạt"
-            },
             "warehouseCategoryType": {
                 "category": "Chủng loại",
                 "type": "Loại",
                 "brand": "Hãng sản xuất"
-            },
-            "warehouseItemStatus": {
-                "activated": "Đã kích hoạt",
-                "locked": "Khoá",
-                "notActivated": "Chưa kích hoạt"
             },
             "warehouseInventoryType": {
                 "in": "Nhập",
