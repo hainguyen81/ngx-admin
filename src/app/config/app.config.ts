@@ -1,4 +1,3 @@
-import {Injector} from '@angular/core';
 import {dbConfig} from './db.config';
 import {Providers} from './app.providers';
 import {TOASTER} from './toaststr.config';
@@ -14,7 +13,7 @@ export const AppConfig = {
     PageConfig: {
         title: 'app',
     },
-    Injector: Injector,
+    Injector: undefined,
     COMMON: COMMON,
     TOASTER: TOASTER,
     API: API,

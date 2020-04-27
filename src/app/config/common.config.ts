@@ -12,6 +12,17 @@ import {
     IToolbarActionsConfig,
 } from '../pages/components/toolbar/abstract.toolbar.component';
 import {RC_DEFAULT_HEADERS} from './request.config';
+import {environment} from '../../environments/environment';
+
+export function BaseHrefProvider(): string {
+    let baseElement: HTMLCollectionBase;
+    baseElement = <HTMLCollectionBase>document.getElementsByTagName('base');
+    let href: string;
+    href = (baseElement && baseElement.item(0)
+    && baseElement.item(0).hasAttribute('href')
+        ? baseElement.item(0).getAttribute('href') : environment.baseHref);
+    return (href || '').trimLast('/');
+}
 
 /* base context menu items */
 export const BaseContextMenu: IContextMenu[] = [{

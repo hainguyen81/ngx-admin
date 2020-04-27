@@ -17,7 +17,7 @@ import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
-import {AppToolbarComponent} from './app.toolbar.component';
+import {ACTION_DELETE_DATABASE, AppToolbarComponent} from './app.toolbar.component';
 import {
     ACTION_DELETE,
     ACTION_RESET,
@@ -25,6 +25,14 @@ import {
     IToolbarActionsConfig,
 } from '../../toolbar/abstract.toolbar.component';
 import {ACTION_BACK} from '../warehouse/item/warehouse.item.toolbar.component';
+import {NgxIndexedDBService} from 'ngx-indexed-db';
+import AppUtils from '../../../../utils/app.utils';
+import {Router} from '@angular/router';
+import {AppConfig} from '../../../../config/app.config';
+import {
+    NgxLocalStorageEncryptionService,
+} from '../../../../services/storage.services/local.storage.services';
+import {BaseHrefProvider} from '../../../../config/app.providers';
 
 @Component({
     selector: 'ngx-flip-card-app',
@@ -183,7 +191,21 @@ export abstract class AppFlipcardComponent<
                     this.setFlipped(false);
                 }
                 break;
+            case ACTION_DELETE_DATABASE:
+                this.doDeleteDatabase();
+                break;
+            default:
+                this.onToolbarAction(event);
+                break;
         }
+    }
+
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param $event event data {IEvent}
+     */
+    protected onToolbarAction($event: IEvent) {
+        this.getLogger().debug('Flip-form-toolbar wanna perform action', $event);
     }
 
     // -------------------------------------------------
@@ -238,5 +260,45 @@ export abstract class AppFlipcardComponent<
      */
     protected doBack(): void {
         this.getLogger().debug('Perform going back action!');
+    }
+
+    /**
+     * Perform deleting database
+     */
+    private doDeleteDatabase() {
+        const _this: AppFlipcardComponent<D, TB, F, B> = this;
+        let popupConfig: ConfirmPopupConfig;
+        popupConfig = {
+            title: this.translate('app'),
+            content: this.translate('common.toast.confirm.delete_database.message'),
+            color: 'warn',
+            cancelButton: this.translate('common.toast.confirm.delete_database.cancel'),
+            okButton: this.translate('common.toast.confirm.delete_database.ok'),
+        };
+        this.getConfirmPopup().show(popupConfig)
+            .subscribe(value => value && _this.clearData());
+    }
+    private clearData(): void {
+        const _this: AbstractComponent = this;
+        const indexDbService: NgxIndexedDBService = AppUtils.getService(NgxIndexedDBService);
+        const location: Location = AppUtils.getService(Location);
+        const router: Router = AppUtils.getService(Router);
+        const localStorage: NgxLocalStorageEncryptionService =
+            AppUtils.getService(NgxLocalStorageEncryptionService);
+        const logger: NGXLogger = this.getLogger();
+        indexDbService || throwError('Could not inject NgxIndexedDBService instance');
+        location || throwError('Could not inject Location instance');
+        router || throwError('Could not inject Router instance');
+        localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
+        const indexDbDelRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
+        indexDbDelRequest.onerror = function(event) {
+            logger && logger.error('Could not delete database!', event);
+            !logger && window.console.error(['Could not delete database!', event]);
+        };
+        indexDbDelRequest.onsuccess = function(event) {
+            localStorage.clear();
+            router.navigate([_this.baseHref]);
+            location.reload();
+        };
     }
 }

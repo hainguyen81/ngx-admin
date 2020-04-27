@@ -14,7 +14,6 @@ import {EmptyService} from '../services/empty.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
 import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
-import {environment} from '../../environments/environment';
 import {
     NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,
     NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
@@ -23,7 +22,7 @@ import {
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
 import {ToastrService} from 'ngx-toastr';
-import {COMMON} from './common.config';
+import {BaseHrefProvider, COMMON} from './common.config';
 import {ModuleDatasource, ModuleHttpService, ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/system/user/user.service';
 import {UserDataSource} from '../services/implementation/system/user/user.datasource';
@@ -143,16 +142,6 @@ import {
 import {
     GeneralSettingsDatasource,
 } from '../services/implementation/system/general.settings/general.settings.datasource';
-
-export function BaseHrefProvider(): string {
-    let baseElement: HTMLCollectionBase;
-    baseElement = <HTMLCollectionBase>document.getElementsByTagName('base');
-    let href: string;
-    href = (baseElement && baseElement.item(0)
-        && baseElement.item(0).hasAttribute('href')
-        ? baseElement.item(0).getAttribute('href') : environment.baseHref);
-    return (href || '').trimLast('/');
-}
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');

@@ -137,14 +137,6 @@ export abstract class AppTableFlipFormComponent<
     }
 
     /**
-     * Raise when toolbar action item has been clicked
-     * @param $event event data {IEvent}
-     */
-    protected onToolbarAction($event: IEvent) {
-        this.getLogger().debug('Flip-form-toolbar wanna perform action', $event);
-    }
-
-    /**
      * Call when table wanna add new data
      * @param $event event data {IEvent}
      */
