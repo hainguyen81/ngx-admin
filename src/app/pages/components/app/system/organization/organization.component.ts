@@ -19,8 +19,10 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
+import {ACTION_IMPORT} from '../../components/app.toolbar.component';
 
 /**
  * Organization split-pane component base on {AngularSplitModule}
@@ -37,6 +39,18 @@ export class OrganizationSplitPaneComponent
         OrganizationToolbarComponent,
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActions(): String[] {
+        return [ACTION_IMPORT];
+    }
+
+    protected visibleActions(): String[] {
+        return [ACTION_DELETE, ACTION_RESET, ACTION_SAVE];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
