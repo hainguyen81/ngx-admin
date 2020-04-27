@@ -18,9 +18,12 @@ import {Lightbox} from 'ngx-lightbox';
 import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {AppToolbarActionsConfig, AppToolbarComponent} from '../../components/app.toolbar.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {
+    AppToolbarComponent,
+    AppToolbarImportActionsConfig,
+} from '../../components/app.toolbar.component';
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /* default warehouse category toolbar header config */
 export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -29,7 +32,7 @@ export const WarehouseCategoryToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse category toolbar actions config */
-export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarActionsConfig;
+export const WarehouseCategoryToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarImportActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}

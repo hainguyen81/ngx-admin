@@ -26,6 +26,8 @@ import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.comp
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {ACTION_IMPORT} from '../../components/app.toolbar.component';
+import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
 
 /**
  * Warehouse Category split-pane component base on {AngularSplitModule}
@@ -42,6 +44,18 @@ export class WarehouseCategorySplitPaneComponent
         WarehouseCategoryToolbarComponent,
         WarehouseCategoryTreeviewComponent,
         WarehouseCategoryFormlyComponent> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActions(): String[] {
+        return [ACTION_IMPORT];
+    }
+
+    protected visibleActions(): String[] {
+        return [ACTION_DELETE, ACTION_RESET, ACTION_SAVE];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

@@ -25,6 +25,8 @@ import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {ACTION_IMPORT} from '../../components/app.toolbar.component';
+import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
 
 /**
  * Warehouse Storage split-pane component base on {AngularSplitModule}
@@ -41,6 +43,18 @@ export class WarehouseStorageSplitPaneComponent
         WarehouseStorageTreeviewComponent,
         WarehouseStorageFormlyComponent>
     implements AfterViewInit {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActions(): String[] {
+        return [ACTION_IMPORT];
+    }
+
+    protected visibleActions(): String[] {
+        return [ACTION_SAVE, ACTION_RESET, ACTION_DELETE];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

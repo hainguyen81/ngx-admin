@@ -17,7 +17,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {
     AppToolbarActionsConfig,
-    AppToolbarComponent,
+    AppToolbarComponent, AppToolbarImportActionsConfig,
 } from '../../components/app.toolbar.component';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
@@ -30,7 +30,7 @@ export const WarehouseStorageToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse storage toolbar actions config */
-export const WarehouseStorageToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarActionsConfig;
+export const WarehouseStorageToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarImportActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}
