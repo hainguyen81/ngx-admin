@@ -124,6 +124,11 @@
                     "message": "Data, has been changed, will not be saved if you continue. Do you want to continue?",
                     "cancel": "Cancel",
                     "ok": "OK"
+                },
+                "delete_database": {
+                    "message": "Database has been deleted. You will must re-login again. Do you want to continue?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
                 }
             },
             "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
