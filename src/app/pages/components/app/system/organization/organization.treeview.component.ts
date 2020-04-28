@@ -14,7 +14,6 @@ import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeItem, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import Organization, {IOrganization} from '../../../../../@core/data/system/organization';
 import OrganizationUtils from '../../../../../utils/system/organization.utils';
-import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -23,8 +22,9 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {OrganizationTreeviewI18n} from './organization.formly.treeview.dropdown.field.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {IContextMenu} from '../../../../../config/context.menu.conf';
 
 export const OrganizationTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,

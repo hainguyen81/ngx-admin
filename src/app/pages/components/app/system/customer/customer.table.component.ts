@@ -12,7 +12,6 @@ import {NGXLogger} from 'ngx-logger';
 import {CustomerDatasource} from '../../../../../services/implementation/system/customer/customer.datasource';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -26,6 +25,7 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import {IContextMenu} from '../../../../../config/context.menu.conf';
 
 /* customers table settings */
 export const CustomerTableSettings = {

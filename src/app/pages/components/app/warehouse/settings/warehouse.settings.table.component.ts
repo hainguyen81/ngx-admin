@@ -11,7 +11,6 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -31,6 +30,7 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import PromiseUtils from '../../../../../utils/promise.utils';
+import {IContextMenu} from '../../../../../config/context.menu.conf';
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {

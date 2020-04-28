@@ -23,12 +23,10 @@ import {
 import {GeneralSettingsSmartTableComponent} from './general.settings.table.component';
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {throwError} from 'rxjs';
-import {isNullOrUndefined} from 'util';
-import {IToolbarActionsConfig} from '../../../toolbar/abstract.toolbar.component';
-import {ACTION_DELETE_DATABASE, ACTION_IMPORT} from '../../components/app.toolbar.component';
+import {ACTION_DELETE_DATABASE, ACTION_IMPORT} from '../../../../../config/toolbar.actions.conf';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_SETTINGS,

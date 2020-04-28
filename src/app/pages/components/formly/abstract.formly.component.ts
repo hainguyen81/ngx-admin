@@ -5,7 +5,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, Input,
+    Inject,
     QueryList,
     Renderer2, Type,
     ViewChildren,
@@ -15,15 +15,15 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
-import {FormGroup, NgForm} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {isArray} from 'util';
 import ComponentUtils from '../../../utils/component.utils';
-import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {FormlyTemplateOptions} from '@ngx-formly/core/lib/components/formly.field.config';
+import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 
 /**
  * Abstract formly component base on {FormlyModule}

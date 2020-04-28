@@ -49,34 +49,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import AppUtils from '../../utils/app.utils';
 import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
 import {AppConfig} from '../../config/app.config';
-
-export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
-export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
-export const CONTEXT_MENU_DELETE: string = 'MENU_DELETE';
-
-/**
- * Invoke the specified {IContextMenu} item
- * @param item to invoke
- * @param property item property to invoke/eval
- * @param args invocation arguments
- * @param defaultValue default value
- */
-export function __evalContextMenuItem(
-    item?: IContextMenu, property?: string, args?: any | null, defaultValue?: any): any {
-    return (item && (property || '').length && typeof item[property] === 'function'
-        ? item[property]['apply'](this, [args]) || defaultValue
-        : item && (property || '').length && typeof item[property] !== 'function'
-            ? item[property] || defaultValue : defaultValue);
-}
-export interface IContextMenu {
-    id?: ((item?: any) => string) | string;
-    icon: ((item?: any) => string) | string;
-    title: ((item?: any) => string) | string;
-    enabled: ((item?: any) => boolean) | boolean;
-    visible: ((item?: any) => boolean) | boolean;
-    divider: ((item?: any) => boolean) | boolean;
-    click?: ((item?: any) => void) | null;
-}
+import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';
 
 /* Customize event for abstract component */
 export interface IEvent {

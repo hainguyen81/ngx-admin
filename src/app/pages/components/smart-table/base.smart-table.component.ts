@@ -15,11 +15,16 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
-import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu, IEvent} from '../abstract.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
+import {IEvent} from '../abstract.component';
+import {
+    CONTEXT_MENU_ADD,
+    CONTEXT_MENU_DELETE,
+    CONTEXT_MENU_EDIT,
+} from '../../../config/context.menu.conf';
 
 /**
  * Base smart table component base on {Ng2SmartTableComponent}

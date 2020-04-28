@@ -1,14 +1,14 @@
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
-import {TreeviewConfig, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
+import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {IContextMenu, IEvent} from '../../abstract.component';
+import {IEvent} from '../../abstract.component';
 import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef, EventEmitter,
-    Inject, Optional,
+    Inject,
     Output, Renderer2,
     ViewContainerRef,
 } from '@angular/core';

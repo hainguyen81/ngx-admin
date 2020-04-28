@@ -1,69 +1,7 @@
 import {LogConfig} from './log.config';
-import {
-    CONTEXT_MENU_ADD,
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
-    IContextMenu,
-} from '../pages/components/abstract.component';
-import {
-    ACTION_DELETE,
-    ACTION_RESET,
-    ACTION_SAVE,
-    IToolbarActionsConfig,
-} from '../pages/components/toolbar/abstract.toolbar.component';
 import {RC_DEFAULT_HEADERS} from './request.config';
-import {environment} from '../../environments/environment';
-
-/* base context menu items */
-export const BaseContextMenu: IContextMenu[] = [{
-    id: CONTEXT_MENU_ADD,
-    icon: 'plus-square',
-    title: 'common.contextMenu.add',
-    enabled: true,
-    visible: true,
-    divider: false,
-}, {
-    id: CONTEXT_MENU_EDIT,
-    icon: 'edit',
-    title: 'common.contextMenu.edit',
-    enabled: true,
-    visible: true,
-    divider: false,
-}, {
-    id: CONTEXT_MENU_DELETE,
-    icon: 'minus-square',
-    title: 'common.contextMenu.delete',
-    enabled: true,
-    visible: true,
-    divider: false,
-}];
-
-/* base toolbar actions */
-export const BaseToolbarActions: IToolbarActionsConfig[] = [{
-    id: ACTION_SAVE,
-    label: 'common.form.action.save',
-    type: 'button',
-    status: 'primary',
-    icon: {icon: 'save', pack: 'fa'},
-    size: 'small',
-    shape: 'rectangle',
-}, {
-    id: ACTION_DELETE,
-    label: 'common.form.action.delete',
-    type: 'button',
-    status: 'danger',
-    icon: {icon: 'trash-alt', pack: 'fa'},
-    size: 'small',
-    shape: 'rectangle',
-}, {
-    id: ACTION_RESET,
-    label: 'common.form.action.reset',
-    type: 'button',
-    status: 'warning',
-    icon: {icon: 'redo', pack: 'fa'},
-    size: 'small',
-    shape: 'rectangle',
-}];
+import {BaseContextMenu} from './context.menu.conf';
+import {BaseToolbarActions} from './toolbar.actions.conf';
 
 export const IMAGE_FILE_EXTENSIONS: string[] = ['jpg', 'jpeg', 'png', 'bmp', 'gif'];
 

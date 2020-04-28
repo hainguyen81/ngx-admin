@@ -17,14 +17,15 @@ import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
-import {ACTION_BACK, ACTION_DELETE_DATABASE, ACTION_IMPORT, AppToolbarComponent} from './app.toolbar.component';
+import {isNullOrUndefined} from 'util';
 import {
-    ACTION_DELETE,
+    ACTION_BACK,
+    ACTION_DELETE, ACTION_DELETE_DATABASE,
     ACTION_RESET,
     ACTION_SAVE,
     IToolbarActionsConfig,
-} from '../../toolbar/abstract.toolbar.component';
-import {isNullOrUndefined} from 'util';
+} from '../../../../config/toolbar.actions.conf';
+import {AppToolbarComponent} from './app.toolbar.component';
 
 @Component({
     selector: 'ngx-flip-card-app',

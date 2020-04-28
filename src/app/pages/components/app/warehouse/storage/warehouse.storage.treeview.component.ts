@@ -19,7 +19,6 @@ import {
     TreeviewSelection,
 } from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {IContextMenu} from '../../../abstract.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
@@ -29,6 +28,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {IContextMenu} from '../../../../../config/context.menu.conf';
 
 export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
     decoupleChildFromParent: false,

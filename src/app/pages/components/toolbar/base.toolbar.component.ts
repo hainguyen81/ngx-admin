@@ -6,14 +6,12 @@ import {
     Inject,
     Renderer2,
     ViewContainerRef,
-    ViewEncapsulation,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NgxToolbarComponent} from './toolbar.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {IToolbarActionsConfig, IToolbarHeaderConfig} from './abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';

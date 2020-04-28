@@ -1,7 +1,6 @@
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {TreeviewItem} from 'ngx-treeview';
 import {
     AfterViewInit,
     ChangeDetectorRef, Component,
@@ -10,14 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../splitpane/base.splitpane.component';
-import {
-    ACTION_DELETE,
-    ACTION_RESET,
-    ACTION_SAVE,
-    IToolbarActionsConfig,
-} from '../../toolbar/abstract.toolbar.component';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {ACTION_DELETE_DATABASE, ACTION_IMPORT, AppToolbarComponent} from './app.toolbar.component';
 import {IModel} from '../../../../@core/data/base';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
@@ -27,6 +19,14 @@ import {throwError} from 'rxjs';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
 import {isNullOrUndefined} from 'util';
+import {
+    ACTION_DELETE,
+    ACTION_DELETE_DATABASE, ACTION_IMPORT,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IToolbarActionsConfig,
+} from '../../../../config/toolbar.actions.conf';
+import {AppToolbarComponent} from './app.toolbar.component';
 
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {

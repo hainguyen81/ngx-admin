@@ -28,7 +28,7 @@ import {
     NgxSelectOption,
 } from 'ngx-select-ex';
 import {BehaviorSubject} from 'rxjs';
-import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
+import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 
 /**
  * The interface of data while searching option items

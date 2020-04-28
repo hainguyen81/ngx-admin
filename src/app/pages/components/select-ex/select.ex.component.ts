@@ -18,7 +18,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
 import {NgxSelectOption} from 'ngx-select-ex';
 import {throwError} from 'rxjs';
-import {IToolbarActionsConfig} from '../toolbar/abstract.toolbar.component';
+import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 
 /**
  * Select component base on {NgxSelectComponent}

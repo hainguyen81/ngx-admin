@@ -10,18 +10,20 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {BaseNgxToolbarComponent} from '../../toolbar/base.toolbar.component';
-import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {COMMON} from '../../../../config/common.config';
+import {
+    ACTION_BACK,
+    ACTION_DELETE_DATABASE,
+    ACTION_IMPORT,
+    IToolbarActionsConfig,
+} from '../../../../config/toolbar.actions.conf';
 
 /* default warehouse item toolbar actions config */
-export const ACTION_BACK: string = 'ACTION_BACK';
-export const ACTION_IMPORT: string = 'ACTION_IMPORT';
-export const ACTION_DELETE_DATABASE: string = 'ACTION_DELETE_DATABASE';
 export const AppToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
 export const AppToolbarBackActionsConfig: IToolbarActionsConfig[] =
     [].concat(AppToolbarActionsConfig)

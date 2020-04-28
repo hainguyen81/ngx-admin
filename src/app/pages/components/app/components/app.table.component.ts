@@ -1,9 +1,3 @@
-import {
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
-    IContextMenu,
-    IEvent,
-} from '../../abstract.component';
 import {COMMON} from '../../../../config/common.config';
 import {
     ChangeDetectorRef, Component,
@@ -24,6 +18,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {IModel} from '../../../../@core/data/base';
+import {
+    CONTEXT_MENU_DELETE,
+    CONTEXT_MENU_EDIT,
+    IContextMenu,
+} from '../../../../config/context.menu.conf';
+import {IEvent} from '../../abstract.component';
 
 export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 

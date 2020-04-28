@@ -3,7 +3,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
-    Inject, Input,
+    Inject,
     Output,
     QueryList,
     Renderer2,
@@ -16,9 +16,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractComponent,
-    CONTEXT_MENU_ADD,
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
     IEvent,
 } from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
@@ -38,6 +35,11 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {TreeviewSelection} from 'ngx-treeview/src/treeview-item';
+import {
+    CONTEXT_MENU_ADD,
+    CONTEXT_MENU_DELETE,
+    CONTEXT_MENU_EDIT,
+} from '../../../config/context.menu.conf';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({

@@ -24,8 +24,13 @@ import {
 import {CustomerSmartTableComponent} from './customer.table.component';
 import {CustomerToolbarComponent} from './customer.toolbar.component';
 import {CustomerFormlyComponent} from './customer.formly.component';
-import {ACTION_BACK, ACTION_IMPORT} from '../../components/app.toolbar.component';
-import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
+import {
+    ACTION_BACK,
+    ACTION_DELETE,
+    ACTION_IMPORT,
+    ACTION_RESET,
+    ACTION_SAVE,
+} from '../../../../../config/toolbar.actions.conf';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_CUSTOMER,

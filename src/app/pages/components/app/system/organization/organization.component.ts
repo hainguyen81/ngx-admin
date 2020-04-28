@@ -20,9 +20,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
-import {ACTION_IMPORT} from '../../components/app.toolbar.component';
 import {AppTreeSplitFormComponent} from '../../components/app.treeview.splitpane.form.component';
+import {ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
 
 /**
  * Organization split-pane component base on {AngularSplitModule}

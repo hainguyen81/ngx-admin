@@ -22,8 +22,13 @@ import {UserDataSource} from '../../../../../services/implementation/system/user
 import {UserSmartTableComponent} from './user.table.component';
 import {UserToolbarComponent} from './user.toolbar.component';
 import {UserFormlyComponent} from './user.formly.component';
-import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
-import {ACTION_BACK, ACTION_IMPORT} from '../../components/app.toolbar.component';
+import {
+    ACTION_BACK,
+    ACTION_DELETE,
+    ACTION_IMPORT,
+    ACTION_RESET,
+    ACTION_SAVE,
+} from '../../../../../config/toolbar.actions.conf';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_USER,

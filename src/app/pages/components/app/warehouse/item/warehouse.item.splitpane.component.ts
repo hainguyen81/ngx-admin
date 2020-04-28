@@ -18,19 +18,19 @@ import {throwError} from 'rxjs';
 import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {IEvent} from '../../../abstract.component';
-import {
-    ACTION_DELETE,
-    ACTION_RESET,
-    ACTION_SAVE,
-    IToolbarActionsConfig,
-} from '../../../toolbar/abstract.toolbar.component';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
-import {ACTION_BACK} from '../../components/app.toolbar.component';
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {
+    ACTION_BACK,
+    ACTION_DELETE,
+    ACTION_RESET,
+    ACTION_SAVE,
+    IToolbarActionsConfig,
+} from '../../../../../config/toolbar.actions.conf';
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {

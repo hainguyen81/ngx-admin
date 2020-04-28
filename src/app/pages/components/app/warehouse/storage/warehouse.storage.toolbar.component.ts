@@ -10,18 +10,18 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {
-    AppToolbarActionsConfig,
-    AppToolbarComponent, AppToolbarImportActionsConfig,
+    AppToolbarComponent,
+    AppToolbarImportActionsConfig,
 } from '../../components/app.toolbar.component';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 
 /* default warehouse storage toolbar header config */
 export const WarehouseStorageToolbarHeaderConfig: IToolbarHeaderConfig = {

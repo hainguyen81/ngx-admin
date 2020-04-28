@@ -11,7 +11,6 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -26,8 +25,9 @@ import {ModuleDatasource} from '../../../../../services/implementation/module.se
 import {throwError} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {isArray, isNullOrUndefined} from 'util';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {IContextMenu} from '../../../../../config/context.menu.conf';
 
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {
