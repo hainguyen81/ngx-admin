@@ -6,9 +6,10 @@ import {LogConfig} from '../../../config/log.config';
 import {CountryDbService} from '../../../services/implementation/system/country/country.service';
 import {countriesGenerate} from './mock.country';
 import {ICountry} from '../../data/system/country';
+import {IMockService} from '../mock.service';
 
 @Injectable()
-export class MockCountryService {
+export class MockCountryService implements IMockService {
 
     constructor(@Inject(CountryDbService) private dbService: CountryDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
@@ -17,13 +18,13 @@ export class MockCountryService {
         logger.updateConfig(LogConfig);
     }
 
-    public initialize(): void {
+    public initialize(): Promise<any> {
         if (environment.production) {
-            return;
+            return Promise.resolve();
         }
 
         // just generate mock data if empty
-        this.dbService.count().then((recNumber: number) => {
+        return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
                 let mockCountries: ICountry[];
                 mockCountries = countriesGenerate();

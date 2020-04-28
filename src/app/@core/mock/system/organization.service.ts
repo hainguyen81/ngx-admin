@@ -6,9 +6,10 @@ import {LogConfig} from '../../../config/log.config';
 import {OrganizationDbService} from '../../../services/implementation/system/organization/organization.service';
 import {IOrganization} from '../../data/system/organization';
 import {organizationGenerate} from './mock.organization';
+import {IMockService} from '../mock.service';
 
 @Injectable()
-export class MockOrganizationService {
+export class MockOrganizationService implements IMockService {
 
     constructor(@Inject(OrganizationDbService) private dbService: OrganizationDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
@@ -17,13 +18,13 @@ export class MockOrganizationService {
         logger.updateConfig(LogConfig);
     }
 
-    public initialize(): void {
+    public initialize(): Promise<any> {
         if (environment.production) {
-            return;
+            return Promise.resolve();
         }
 
         // just generate mock data if empty
-        this.dbService.count().then((recNumber: number) => {
+        return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
                 // generate mock data
                 let mockOrganization: IOrganization[];

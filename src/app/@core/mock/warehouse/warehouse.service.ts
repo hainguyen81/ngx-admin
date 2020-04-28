@@ -6,9 +6,10 @@ import {LogConfig} from '../../../config/log.config';
 import {WarehouseDbService} from '../../../services/implementation/warehouse/warehouse.storage/warehouse.service';
 import {IWarehouse} from '../../data/warehouse/warehouse';
 import {warehouseGenerate} from './mock.storage';
+import {IMockService} from '../mock.service';
 
 @Injectable()
-export class MockWarehouseStorageService {
+export class MockWarehouseStorageService implements IMockService {
 
     constructor(@Inject(WarehouseDbService) private dbService: WarehouseDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
@@ -17,13 +18,13 @@ export class MockWarehouseStorageService {
         logger.updateConfig(LogConfig);
     }
 
-    public initialize(): void {
+    public initialize(): Promise<any> {
         if (environment.production) {
-            return;
+            return Promise.resolve();
         }
 
         // just generate mock data if empty
-        this.dbService.count().then((recNumber: number) => {
+        return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
                 // generate mock data
                 let mockWarehouses: IWarehouse[];

@@ -6,9 +6,10 @@ import {LogConfig} from '../../../config/log.config';
 import {CustomerDbService} from '../../../services/implementation/system/customer/customer.service';
 import {customersGenerate} from './mock.customer';
 import {ICustomer} from '../../data/system/customer';
+import {IMockService} from '../mock.service';
 
 @Injectable()
-export class MockCustomerService {
+export class MockCustomerService implements IMockService {
 
     constructor(@Inject(CustomerDbService) private dbService: CustomerDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
@@ -17,13 +18,13 @@ export class MockCustomerService {
         logger.updateConfig(LogConfig);
     }
 
-    public initialize(): void {
+    public initialize(): Promise<any> {
         if (environment.production) {
-            return;
+            return Promise.resolve();
         }
 
         // just generate mock data if empty
-        this.dbService.count().then((recNumber: number) => {
+        return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
                 // generate mock data
                 let mockCustomers: ICustomer[];

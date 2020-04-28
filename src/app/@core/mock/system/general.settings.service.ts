@@ -6,9 +6,10 @@ import {LogConfig} from '../../../config/log.config';
 import {GeneralSettingsDbService} from '../../../services/implementation/system/general.settings/general.settings.service';
 import {IGeneralSettings} from '../../data/system/general.settings';
 import {generalSettingsGenerate} from './mock.general.settings';
+import {IMockService} from '../mock.service';
 
 @Injectable()
-export class MockGeneralSettingsService {
+export class MockGeneralSettingsService implements IMockService {
 
     constructor(@Inject(GeneralSettingsDbService) private dbService: GeneralSettingsDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
@@ -17,13 +18,13 @@ export class MockGeneralSettingsService {
         logger.updateConfig(LogConfig);
     }
 
-    public initialize(): void {
+    public initialize(): Promise<any> {
         if (environment.production) {
-            return;
+            return Promise.resolve();
         }
 
         // just generate mock data if empty
-        this.dbService.count().then((recNumber: number) => {
+        return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
                 let mockSettings: IGeneralSettings[];
                 mockSettings = generalSettingsGenerate();

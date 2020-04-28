@@ -6,9 +6,10 @@ import {usersGenerate} from './mock.user';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {IUser} from '../../data/system/user';
+import {IMockService} from '../mock.service';
 
 @Injectable()
-export class MockUserService {
+export class MockUserService implements IMockService {
 
     constructor(@Inject(UserDbService) private dbService: UserDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
@@ -17,12 +18,12 @@ export class MockUserService {
         logger.updateConfig(LogConfig);
     }
 
-    public initialize(): void {
+    public initialize(): Promise<any> {
         if (environment.production) {
-            return;
+            return Promise.resolve();
         }
         // just generate mock data if empty
-        this.dbService.count().then((recNumber: number) => {
+        return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
                 // generate mock data
                 let mockUsers: IUser[];

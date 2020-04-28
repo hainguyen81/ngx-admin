@@ -1,9 +1,10 @@
 import {
+    Inject,
     InjectionToken,
     Injector,
     ModuleWithProviders,
     NgModule,
-    Optional, Provider,
+    Optional,
     SkipSelf,
     Type,
 } from '@angular/core';
@@ -27,6 +28,9 @@ import {MockCountryService} from './system/country.service';
 import {CountryDbService} from '../../services/implementation/system/country/country.service';
 import {MockGeneralSettingsService} from './system/general.settings.service';
 import {GeneralSettingsDbService} from '../../services/implementation/system/general.settings/general.settings.service';
+import {IMockService} from './mock.service';
+import {isNullOrUndefined} from 'util';
+import PromiseUtils from '../../utils/promise.utils';
 
 export const MOCK_DATA_PROVIDERS = [
     {
@@ -81,7 +85,8 @@ export class MockDataModule {
     private readonly moduleInjector: Injector;
 
     constructor(@Optional() @SkipSelf() parentModule: MockDataModule,
-                injector: Injector) {
+                injector: Injector,
+                @Inject(NGXLogger) private logger: NGXLogger) {
         throwIfAlreadyLoaded(parentModule, 'MockDataModule');
         // initialize mock data if necessary
         this.moduleInjector = Injector.create({providers: MOCK_PROVIDERS, parent: injector});
@@ -106,12 +111,19 @@ export class MockDataModule {
         }
 
         /** Common data providers */
+        const promises: Promise<any>[] = [];
         [].concat(MOCK_DATA_PROVIDERS)
             .concat(MOCK_WAREHOUSE_DATA_PROVIDERS)
             .forEach(provider => {
-            const mockService: any = this.getService(provider['provide']);
-            mockService && typeof mockService['initialize'] === 'function'
-            && mockService['initialize']['apply'](mockService);
-        });
+                const mockService: IMockService = this.getService(provider['provide']);
+                const serviceName: string = (isNullOrUndefined(mockService) ? 'NULL'
+                    : Reflect.getPrototypeOf(mockService).constructor.name);
+                mockService && promises.push(mockService.initialize());
+            });
+        PromiseUtils.parallelPromises(
+            undefined, undefined, Array.from(promises.values()))
+            .then(value => this.logger.debug('SUCCESS: Initialize database successful'),
+                reason => this.logger.error('ERROR: Initialize database failed', reason))
+            .catch(reason => this.logger.error('ERROR: Initialize database failed', reason));
     }
 }

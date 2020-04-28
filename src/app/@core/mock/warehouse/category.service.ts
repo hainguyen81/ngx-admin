@@ -6,9 +6,10 @@ import {LogConfig} from '../../../config/log.config';
 import {WarehouseCategoryDbService} from '../../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
 import {IWarehouseCategory} from '../../data/warehouse/warehouse.category';
 import {categoryGenerate} from './mock.category';
+import {IMockService} from '../mock.service';
 
 @Injectable()
-export class MockWarehouseCategoryService {
+export class MockWarehouseCategoryService implements IMockService {
 
     constructor(@Inject(WarehouseCategoryDbService) private dbService: WarehouseCategoryDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
@@ -17,13 +18,13 @@ export class MockWarehouseCategoryService {
         logger.updateConfig(LogConfig);
     }
 
-    public initialize(): void {
+    public initialize(): Promise<any> {
         if (environment.production) {
-            return;
+            return Promise.resolve();
         }
 
         // just generate mock data if empty
-        this.dbService.count().then((recNumber: number) => {
+        return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {
                 // generate mock data
                 let mockCategories: IWarehouseCategory[];
