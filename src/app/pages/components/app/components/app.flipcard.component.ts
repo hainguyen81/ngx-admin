@@ -20,7 +20,7 @@ import {throwError} from 'rxjs';
 import {isNullOrUndefined} from 'util';
 import {
     ACTION_BACK,
-    ACTION_DELETE, ACTION_DELETE_DATABASE,
+    ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT,
     ACTION_RESET,
     ACTION_SAVE,
     IToolbarActionsConfig,
