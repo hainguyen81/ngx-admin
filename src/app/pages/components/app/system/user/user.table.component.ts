@@ -12,7 +12,6 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -28,6 +27,7 @@ import PromiseUtils from '../../../../../utils/promise.utils';
 import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import {IContextMenu} from '../../../../../config/context.menu.conf';
 
 /* users table settings */
 export const UserTableSettings = {
