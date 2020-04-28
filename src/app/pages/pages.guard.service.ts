@@ -2,7 +2,6 @@ import {Inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {ModuleService} from '../services/implementation/module.service';
 import {Observable, throwError} from 'rxjs';
-import PromiseUtils from '../utils/promise.utils';
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';

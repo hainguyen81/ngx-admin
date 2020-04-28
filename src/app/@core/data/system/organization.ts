@@ -3,13 +3,11 @@ import {ICity} from './city';
 import {IProvince} from './province';
 import {ICountry} from './country';
 import {IDistrict} from './district';
-import {Constants} from '../constants/organization.constants';
-import ORGANIZATION_TYPE = Constants.OrganizationConstants.ORGANIZATION_TYPE;
 
 export interface IOrganization extends IModel {
     code: string;
     name: string;
-    type: ORGANIZATION_TYPE;
+    type: string;
     tax?: string | null;
     address?: string | null;
     // Quận/Huyện
@@ -47,7 +45,7 @@ export interface IOrganization extends IModel {
 }
 
 export default class Organization extends BaseModel implements IOrganization {
-    constructor(public id: string, public code: string, public name: string, public type: ORGANIZATION_TYPE) {
+    constructor(public id: string, public code: string, public name: string, public type: string) {
         super(id);
     }
 }

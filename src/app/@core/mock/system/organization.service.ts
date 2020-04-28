@@ -24,9 +24,7 @@ export class MockOrganizationService implements IMockService {
         }
 
         // just generate mock data if empty
-        window.console.error(['MOCK ORGANIZTAION!']);
         return this.dbService.count().then((recNumber: number) => {
-            window.console.error(['COUNT MOCK ORGANIZTAION!']);
             if (recNumber <= 0) {
                 // generate mock data
                 let mockOrganization: IOrganization[];
