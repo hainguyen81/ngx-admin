@@ -44,8 +44,8 @@ export class PagesGuard implements CanActivateChild {
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):
         Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return PromiseUtils.promiseToObservable(this.getModuleService().count()
-            .then(modulesCount => {
+        return this.getModuleService().count().then(
+            modulesCount => {
                 if (!modulesCount || modulesCount <= 0) {
                     this.getToasterService().error(
                         this.getTranslateService().instant('common.toast.unknown'),
@@ -55,6 +55,9 @@ export class PagesGuard implements CanActivateChild {
             }, (errors) => {
                 this.getLogger().error('ERROR - Check child route activate', state, errors);
                 return false;
-            }));
+            }).catch((errors) => {
+                this.getLogger().error('ERROR - Check child route activate', state, errors);
+                return false;
+            });
     }
 }
