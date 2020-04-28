@@ -24,12 +24,6 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../toolbar/abstract.toolbar.component';
-import {NgxIndexedDBService} from 'ngx-indexed-db';
-import AppUtils from '../../../../utils/app.utils';
-import {AppConfig} from '../../../../config/app.config';
-import {
-    NgxLocalStorageEncryptionService,
-} from '../../../../services/storage.services/local.storage.services';
 import {isNullOrUndefined} from 'util';
 
 @Component({
@@ -297,42 +291,6 @@ export abstract class AppFlipcardComponent<
      */
     protected doBack(): void {
         this.getLogger().debug('Perform going back action!');
-    }
-
-    /**
-     * Perform deleting database
-     */
-    private doDeleteDatabase() {
-        const _this: AppFlipcardComponent<D, TB, F, B> = this;
-        let popupConfig: ConfirmPopupConfig;
-        popupConfig = {
-            title: this.translate('app'),
-            content: this.translate('common.toast.confirm.delete_database.message'),
-            color: 'warn',
-            cancelButton: this.translate('common.toast.confirm.delete_database.cancel'),
-            okButton: this.translate('common.toast.confirm.delete_database.ok'),
-        };
-        this.getConfirmPopup().show(popupConfig)
-            .subscribe(value => value && _this.clearData());
-    }
-    private clearData(): void {
-        const _this: AbstractComponent = this;
-        const indexDbService: NgxIndexedDBService = AppUtils.getService(NgxIndexedDBService);
-        const localStorage: NgxLocalStorageEncryptionService =
-            AppUtils.getService(NgxLocalStorageEncryptionService);
-        const logger: NGXLogger = this.getLogger();
-        indexDbService || throwError('Could not inject NgxIndexedDBService instance');
-        localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
-        const indexDbDelRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
-        indexDbDelRequest.onerror = function(event) {
-            logger && logger.error('Could not delete database!', event);
-            !logger && window.console.error(['Could not delete database!', event]);
-        };
-        indexDbDelRequest.onsuccess = function(event) {
-            localStorage.clear();
-            window.location.assign(_this.baseHref);
-            window.location.reload();
-        };
     }
 
     /**

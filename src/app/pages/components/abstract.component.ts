@@ -27,7 +27,7 @@ import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
 import ComponentUtils from '../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
-import {ConfirmPopup} from 'ngx-material-popup';
+import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {
     BaseElementKeydownHandlerService,
@@ -45,6 +45,10 @@ import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 import {AutoUnsubscribe} from './customization/extend.component';
 import {isNullOrUndefined} from 'util';
+import {NgxIndexedDBService} from 'ngx-indexed-db';
+import AppUtils from '../../utils/app.utils';
+import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
+import {AppConfig} from '../../config/app.config';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
 export const CONTEXT_MENU_EDIT: string = 'MENU_EDIT';
@@ -955,17 +959,24 @@ export abstract class AbstractComponent
     }
 
     /**
-     * Show success notification toast about saving data
+     * Show success notification toast about deleting data
      */
     protected showDeleteDataSuccess(): void {
         this.showSuccess('common.toast.delete.success.title', 'common.toast.delete.success.body');
     }
 
     /**
-     * Show success notification toast about saving data
+     * Show error notification toast about deleting data
      */
     protected showDeleteDataError(): void {
         this.showError('common.toast.delete.error.title', 'common.toast.delete.error.body');
+    }
+
+    /**
+     * Show global error notification toast
+     */
+    protected showGlobalError(): void {
+        this.showError('app', 'common.toast.unknown');
     }
 
     /**
@@ -1105,5 +1116,41 @@ export abstract class AbstractComponent
      */
     public get baseHref(): string {
         return HtmlUtils.getBaseHref();
+    }
+
+    /**
+     * Perform deleting database
+     */
+    protected doDeleteDatabase() {
+        const _this: AbstractComponent = this;
+        let popupConfig: ConfirmPopupConfig;
+        popupConfig = {
+            title: this.translate('app'),
+            content: this.translate('common.toast.confirm.delete_database.message'),
+            color: 'warn',
+            cancelButton: this.translate('common.toast.confirm.delete_database.cancel'),
+            okButton: this.translate('common.toast.confirm.delete_database.ok'),
+        };
+        this.getConfirmPopup().show(popupConfig)
+            .subscribe(value => value && _this.clearData());
+    }
+    private clearData(): void {
+        const _this: AbstractComponent = this;
+        const indexDbService: NgxIndexedDBService = AppUtils.getService(NgxIndexedDBService);
+        const localStorage: NgxLocalStorageEncryptionService =
+            AppUtils.getService(NgxLocalStorageEncryptionService);
+        const logger: NGXLogger = this.getLogger();
+        indexDbService || throwError('Could not inject NgxIndexedDBService instance');
+        localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
+        const indexDbDelRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
+        indexDbDelRequest.onerror = function(event) {
+            logger && logger.error('Could not delete database!', event);
+            !logger && window.console.error(['Could not delete database!', event]);
+        };
+        indexDbDelRequest.onsuccess = function(event) {
+            localStorage.clear();
+            window.location.assign(_this.baseHref);
+            window.location.reload();
+        };
     }
 }

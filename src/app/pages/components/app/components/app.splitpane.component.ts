@@ -18,16 +18,13 @@ import {
 } from '../../toolbar/abstract.toolbar.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {ACTION_DELETE_DATABASE, ACTION_IMPORT, AppToolbarComponent} from './app.toolbar.component';
-import {AppTreeviewComponent} from './app.treeview.component';
 import {IModel} from '../../../../@core/data/base';
-import {DeepCloner} from '../../../../utils/object.utils';
 import {ContextMenuService} from 'ngx-contextmenu';
-import {AppFormlyComponent} from './app.formly.component';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
-import {IEvent} from '../../abstract.component';
+import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
 import {isNullOrUndefined} from 'util';
 
@@ -60,8 +57,8 @@ export const RightFormAreaConfig: ISplitAreaConfig = {
 export abstract class AppSplitPaneComponent<
     T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
-    TR extends AppTreeviewComponent<T, D>,
-    F extends AppFormlyComponent<T, D>>
+    L extends AbstractComponent,
+    R extends AbstractComponent>
     extends BaseSplitPaneComponent<D>
     implements AfterViewInit {
 
@@ -70,14 +67,20 @@ export abstract class AppSplitPaneComponent<
     // -------------------------------------------------
 
     private toolbarComponent: TB;
-    private treeviewComponent: TR;
-    private formlyComponent: F;
-    private selectedModel: T | null;
-    private selectedModelItem: TreeviewItem | null;
+    private leftSideComponent: L;
+    protected rightSideComponent: R;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating the right side component should be created at start-up
+     * @return true for should be created; else false
+     */
+    protected shouldAttachRightSideOnStartup(): boolean {
+        return false;
+    }
 
     /**
      * Get the special toolbar action identities that need to be visible
@@ -94,22 +97,6 @@ export abstract class AppSplitPaneComponent<
     }
 
     /**
-     * Get the selected {IModel} instance
-     * @return the selected {IModel} instance
-     */
-    protected getSelectedModel(): T {
-        return this.selectedModel;
-    }
-
-    /**
-     * Get the selected {TreeviewItem} instance
-     * @return the selected {TreeviewItem} instance
-     */
-    protected getSelectedModelItem(): TreeviewItem {
-        return this.selectedModelItem;
-    }
-
-    /**
      * Get the {AppToolbarComponent} instance
      * @return the {AppToolbarComponent} instance
      */
@@ -118,19 +105,11 @@ export abstract class AppSplitPaneComponent<
     }
 
     /**
-     * Get the {AppTreeviewComponent} instance
-     * @return the {AppTreeviewComponent} instance
+     * Get the left side {AbstractComponent} instance
+     * @return the left side {AbstractComponent} instance
      */
-    protected getTreeviewComponent(): TR {
-        return this.treeviewComponent;
-    }
-
-    /**
-     * Get the {AppFormlyComponent} instance
-     * @return the {AppFormlyComponent} instance
-     */
-    protected getFormlyComponent(): F {
-        return this.formlyComponent;
+    protected getLeftSideComponent(): L {
+        return this.leftSideComponent;
     }
 
     // -------------------------------------------------
@@ -167,15 +146,15 @@ export abstract class AppSplitPaneComponent<
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
                           private toolBarType?: Type<TB> | null,
-                          private treeviewType?: Type<TR> | null,
-                          private formType?: Type<F> | null) {
+                          private leftSideType?: Type<L> | null,
+                          private rightRightType?: Type<R> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox);
         confirmPopup || throwError('Could not inject ConfirmPopup');
-        treeviewType || throwError('The left treeview component type is required');
-        formType || throwError('The right formly component type is required');
+        leftSideType || throwError('The left side component type is required');
+        rightRightType || throwError('The right right component type is required');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);
     }
@@ -211,7 +190,21 @@ export abstract class AppSplitPaneComponent<
             case ACTION_DELETE:
                 this.doDelete();
                 break;
+            case ACTION_DELETE_DATABASE:
+                this.doDeleteDatabase();
+                break;
+            default:
+                this.onToolbarAction(event);
+                break;
         }
+    }
+
+    /**
+     * Raise when toolbar action item has been clicked
+     * @param $event event data {IEvent}
+     */
+    protected onToolbarAction($event: IEvent) {
+        this.getLogger().debug('Split-pane-toolbar wanna perform action', $event);
     }
 
     // -------------------------------------------------
@@ -234,11 +227,22 @@ export abstract class AppSplitPaneComponent<
             this.doToolbarActionsSettings();
         }
 
-        // create tree-view component
-        this.treeviewComponent = super.setAreaComponent(0, this.treeviewType);
-        // handle click tree-view item to show form
-        this.treeviewComponent.setClickItemListener(
-            (e, it) => this.doApplyFormModel(it));
+        // create left side component
+        this.leftSideComponent = super.setAreaComponent(0, this.leftSideType);
+        if (this.shouldAttachRightSideOnStartup()) {
+            this.rightSideComponent = super.setAreaComponent(1, this.rightRightType);
+        }
+    }
+
+    /**
+     * Create the right side component if it has ever created yet
+     * @return true if valid; else false
+     */
+    protected createRightSideComponent(): boolean {
+        if (!this.rightSideComponent) {
+            this.rightSideComponent = super.setAreaComponent(1, this.rightRightType);
+        }
+        return !isNullOrUndefined(this.rightSideComponent);
     }
 
     // -------------------------------------------------
@@ -246,60 +250,19 @@ export abstract class AppSplitPaneComponent<
     // -------------------------------------------------
 
     /**
-     * Apply data of the specified {TreeviewItem} to right formly component
-     * @param item to apply
-     */
-    private doApplyFormModel(item?: TreeviewItem): void {
-        this.selectedModelItem = item;
-        if (item && item.value) {
-            let model: T;
-            model = item.value as T;
-            model || throwError('Could not apply undefined model to formly component!');
-
-            this.selectedModel = model;
-            // create formly form component
-            if (!this.formlyComponent) {
-                this.formlyComponent = this.setAreaComponent(1, this.formType);
-            }
-            this.doReset();
-        }
-    }
-
-    /**
      * Perform saving data
      */
-    private doSave(): void {
-        this.getFormlyComponent().getFormGroup().updateValueAndValidity();
-        if (this.getFormlyComponent().getFormGroup().invalid) {
-            if (this.toolbarComponent) {
-                this.showError(this.toolbarComponent.getToolbarHeader().title,
-                    'common.form.invalid_data');
-            } else {
-                this.showError('app', 'common.form.invalid_data');
-            }
-            return;
-        }
-
-        // update model if necessary
-        const model: T = this.getFormlyComponent().getModel();
-        this.getDataSource().update(this.getSelectedModel(), model)
-            .then(() => this.showSaveDataSuccess())
-            .catch(() => this.showSaveDataError());
-    }
+    protected abstract doSave(): void;
 
     /**
      * Perform resetting data
      */
-    private doReset(): void {
-        const cloned: T = DeepCloner(this.selectedModel);
-        delete cloned['parent'], cloned['children'];
-        this.formlyComponent.setModel(cloned);
-    }
+    protected abstract doReset(): void;
 
     /**
      * Perform deleting data
      */
-    private doDelete(): void {
+    protected doDelete(): void {
         this.getConfirmPopup().show({
             cancelButton: this.translate('common.toast.confirm.delete.cancel'),
             color: 'warn',
@@ -308,11 +271,14 @@ export abstract class AppSplitPaneComponent<
             title: (!this.toolbarComponent ? this.translate('app')
                 : this.translate(this.toolbarComponent.getToolbarHeader().title)),
         }).toPromise().then(value => {
-            value && this.getDataSource().remove(this.getFormlyComponent().getModel())
-                .then(() => this.showDeleteDataSuccess())
-                .catch(() => this.showSaveDataError());
+            value && this.performDelete();
         });
     }
+
+    /**
+     * Perform deleting data after YES on confirmation dialog
+     */
+    protected abstract performDelete(): void;
 
     /**
      * Apply toolbar actions settings while flipping

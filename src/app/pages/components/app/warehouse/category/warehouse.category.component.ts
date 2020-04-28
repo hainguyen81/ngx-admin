@@ -23,11 +23,11 @@ import {
 import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
 import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
 import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
-import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ACTION_IMPORT} from '../../components/app.toolbar.component';
 import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
+import {AppTreeSplitFormComponent} from '../../components/app.treeview.splitpane.form.component';
 
 /**
  * Warehouse Category split-pane component base on {AngularSplitModule}
@@ -39,7 +39,7 @@ import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstrac
     styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })
 export class WarehouseCategorySplitPaneComponent
-    extends AppSplitPaneComponent<
+    extends AppTreeSplitFormComponent<
         IWarehouseCategory, WarehouseCategoryDatasource,
         WarehouseCategoryToolbarComponent,
         WarehouseCategoryTreeviewComponent,

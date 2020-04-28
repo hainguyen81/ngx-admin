@@ -22,11 +22,11 @@ import {
     WarehouseDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
-import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ACTION_IMPORT} from '../../components/app.toolbar.component';
 import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstract.toolbar.component';
+import {AppTreeSplitFormComponent} from '../../components/app.treeview.splitpane.form.component';
 
 /**
  * Warehouse Storage split-pane component base on {AngularSplitModule}
@@ -38,7 +38,8 @@ import {ACTION_DELETE, ACTION_RESET, ACTION_SAVE} from '../../../toolbar/abstrac
     styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })
 export class WarehouseStorageSplitPaneComponent
-    extends AppSplitPaneComponent<IWarehouse, WarehouseDatasource,
+    extends AppTreeSplitFormComponent<
+        IWarehouse, WarehouseDatasource,
         WarehouseStorageToolbarComponent,
         WarehouseStorageTreeviewComponent,
         WarehouseStorageFormlyComponent>
