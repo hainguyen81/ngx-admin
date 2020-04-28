@@ -10,7 +10,6 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -18,6 +17,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppToolbarComponent, AppToolbarImportActionsConfig} from '../../components/app.toolbar.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 
 /* default organization toolbar header config */
 export const OrganizationToolbarHeaderConfig: IToolbarHeaderConfig = {
