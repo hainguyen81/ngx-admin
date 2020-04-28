@@ -225,6 +225,9 @@ export abstract class AppSplitPaneComponent<
             this.toolbarComponent.showActions = true;
             this.toolbarComponent.actionListener().subscribe((e: IEvent) => this.onClickAction(e));
             this.doToolbarActionsSettings();
+            // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
+            // TODO after updating toolbar action settings
+            super.getChangeDetectorRef().detectChanges();
         }
 
         // create left side component

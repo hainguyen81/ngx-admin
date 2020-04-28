@@ -161,6 +161,36 @@ export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
     return new TranslateHttpLoader(http, (baseHref || '').concat('/assets/i18n/'));
 }
 
+export const InitializationProviders: StaticProvider[] = [
+    {
+        provide: APP_BOOTSTRAP_LISTENER,
+        useFactory: () => {
+            return (component: ComponentRef<any>) => {
+                window.console.info([
+                    'Bootstrap Listener: Component', component,
+                    'Component Instance', component ? component.instance : 'NULL',
+                    'Component Title', component && component.instance ? component.instance.title : 'NULL',
+                ]);
+            };
+        },
+        deps: [],
+        multi: true,
+    },
+    {
+        provide: APP_INITIALIZER,
+        useFactory: () => {
+            return () => {
+                return new Promise((resolve, reject) => {
+                    window.console.info(['Application Initializer Listener']);
+                    resolve(true);
+                });
+            };
+        },
+        deps: [],
+        multi: true,
+    },
+];
+
 export const CommonProviders: StaticProvider[] = [
     {provide: DOCUMENT, useValue: document},
     {provide: APP_BASE_HREF, useFactory: HtmlUtils.getBaseHref, deps: []},
@@ -549,7 +579,9 @@ export const ExampleProviders: StaticProvider[] = [
     {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
 ];
 
-export const Providers: StaticProvider[] = CommonProviders
+export const Providers: StaticProvider[] = []
+    .concat(InitializationProviders)
+    .concat(CommonProviders)
     .concat(InterceptorProviders)
     .concat(ThirdPartyApiProviders)
     .concat(AuthenticationProviders)
