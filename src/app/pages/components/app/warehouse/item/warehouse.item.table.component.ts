@@ -9,10 +9,9 @@ import {
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {BaseSmartTableComponent} from '../../../smart-table/base.smart-table.component';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../../../../../config/app.config';
-import {IContextMenu, IEvent} from '../../../abstract.component';
+import {IContextMenu} from '../../../abstract.component';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -20,11 +19,11 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {
     WarehouseItemDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {AppSmartTableComponent} from '../../components/app.table.component';
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {
@@ -240,40 +239,12 @@ export const WarehouseItemContextMenu: IContextMenu[] = [].concat(COMMON.baseMen
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-smart-table-warehouse-item',
+    selector: 'ngx-smart-table-app-warehouse-item',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
-export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<WarehouseItemDatasource> {
-
-    // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    // raise while insert new table row
-    private newItemDelegate: (event: IEvent) => void;
-    // raise while editing table row
-    private editItemDelegate: (event: IEvent) => void;
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    /**
-     * Set the item new listener
-     * @param newItemDelegate listener
-     */
-    public setNewItemListener(newItemDelegate: (event: IEvent) => void) {
-        this.newItemDelegate = newItemDelegate;
-    }
-
-    /**
-     * Set the item editing listener
-     * @param editItemDelegate listener
-     */
-    public setEditItemListener(editItemDelegate: (event: IEvent) => void) {
-        this.editItemDelegate = editItemDelegate;
-    }
+export class WarehouseItemSmartTableComponent
+    extends AppSmartTableComponent<WarehouseItemDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -320,47 +291,5 @@ export class WarehouseItemSmartTableComponent extends BaseSmartTableComponent<Wa
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([], false);
         this.getDataSource().refresh();
-    }
-
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    /**
-     * Create new Row
-     */
-    protected newRow() {
-        if (this.newItemDelegate && !this.isInEditMode()) {
-            this.newItemDelegate.apply(this, [{}]);
-
-        } else {
-            super.newRow();
-        }
-    }
-
-    /**
-     * Put the specified Cell into editing mode.
-     * It means whole Row will be in editing mode.
-     * @param rowIndex to edit
-     * @param columnIndex to edit. -1 for focus the first cell
-     */
-    protected editCellByIndex(rowIndex: number, columnIndex: number) {
-        if (0 > rowIndex || -1 > columnIndex) {
-            return;
-        }
-
-        let row: Row;
-        row = this.getRowByIndex(rowIndex);
-        if (!row || row.isInEditing || !row.cells || !row.cells.length
-            || columnIndex >= row.cells.length) {
-            return;
-        }
-
-        if (this.editItemDelegate) {
-            this.editItemDelegate.apply(this,
-                [{ data: { rowIndex: rowIndex, columnIndex: columnIndex, row: row } }]);
-        } else {
-            super.editCellByIndex(rowIndex, columnIndex);
-        }
     }
 }

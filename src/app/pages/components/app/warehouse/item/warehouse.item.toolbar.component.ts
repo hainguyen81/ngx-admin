@@ -10,7 +10,6 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {BaseNgxToolbarComponent} from '../../../toolbar/base.toolbar.component';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../toolbar/abstract.toolbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -19,9 +18,12 @@ import {
     WarehouseItemDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {Lightbox} from 'ngx-lightbox';
-import {AppToolbarBackActionsConfig} from '../../components/app.toolbar.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {
+    AppToolbarComponent,
+    AppToolbarImportActionsConfig,
+} from '../../components/app.toolbar.component';
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /* default warehouse item toolbar header config */
 export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -30,7 +32,7 @@ export const WarehouseItemToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse item toolbar actions config */
-export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] = AppToolbarBackActionsConfig;
+export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarImportActionsConfig);
 
 /**
  * Toolbar component base on {MatToolbar}
@@ -39,9 +41,10 @@ export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] = AppToo
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-toolbar-warehouse-item',
     templateUrl: '../../../toolbar/toolbar.component.html',
-    styleUrls: ['../../../toolbar/toolbar.component.scss', './warehouse.item.toolbar.component.scss'],
+    styleUrls: ['../../../toolbar/toolbar.component.scss'],
 })
-export class WarehouseItemToolbarComponent extends BaseNgxToolbarComponent<WarehouseItemDatasource> {
+export class WarehouseItemToolbarComponent extends AppToolbarComponent<WarehouseItemDatasource> {
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------

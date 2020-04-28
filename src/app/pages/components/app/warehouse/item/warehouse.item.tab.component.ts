@@ -194,7 +194,8 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
     templateUrl: '../../../tab/tab.component.html',
     styleUrls: ['../../../tab/tab.component.scss'],
 })
-export class WarehouseItemTabsetComponent extends BaseTabsetComponent<WarehouseItemDatasource>
+export class WarehouseItemTabsetComponent
+    extends BaseTabsetComponent<WarehouseItemDatasource>
     implements AfterViewInit {
 
     // -------------------------------------------------

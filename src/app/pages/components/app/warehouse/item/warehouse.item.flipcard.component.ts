@@ -9,7 +9,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {BaseFlipcardComponent} from '../../../flipcard/base.flipcard.component';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -21,19 +20,10 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component';
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
 import {Lightbox} from 'ngx-lightbox';
-import {IEvent} from '../../../abstract.component';
-import {
-    ACTION_DELETE,
-    ACTION_RESET,
-    ACTION_SAVE,
-    IToolbarActionsConfig,
-} from '../../../toolbar/abstract.toolbar.component';
-import {ConfirmPopupConfig} from 'ngx-material-popup/lib/configs/confirm-popup.config';
-import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import STATUS = CommonConstants.COMMON.STATUS;
-import {ACTION_BACK} from "../../components/app.toolbar.component";
+import {AppFlipcardComponent} from '../../components/app.flipcard.component';
+import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
@@ -42,35 +32,13 @@ import {ACTION_BACK} from "../../components/app.toolbar.component";
     templateUrl: '../../../flipcard/flipcard.component.html',
     styleUrls: ['../../../flipcard/flipcard.component.scss', './warehouse.item.flipcard.component.scss'],
 })
-export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<WarehouseItemDatasource>
+export class WarehouseItemFlipcardComponent
+    extends AppFlipcardComponent<
+        WarehouseItemDatasource,
+        WarehouseItemToolbarComponent,
+        WarehouseItemSmartTableComponent,
+        WarehouseItemSplitPaneComponent>
     implements AfterViewInit {
-
-    // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    private warehouseItemTableComponentFront: WarehouseItemSmartTableComponent;
-    private warehouseItemSplitPaneComponentBack: WarehouseItemSplitPaneComponent;
-
-    // -------------------------------------------------
-    // GETTERS/SETTERS
-    // -------------------------------------------------
-
-    /**
-     * Get the {WarehouseItemSmartTableComponent} instance
-     * @return the {WarehouseItemSmartTableComponent} instance
-     */
-    protected getWarehouseItemTableComponentFront(): WarehouseItemSmartTableComponent {
-        return this.warehouseItemTableComponentFront;
-    }
-
-    /**
-     * Get the {WarehouseItemSplitPaneComponent} instance
-     * @return the {WarehouseItemSplitPaneComponent} instance
-     */
-    protected getWarehouseItemSplitPaneComponentBack(): WarehouseItemSplitPaneComponent {
-        return this.warehouseItemSplitPaneComponentBack;
-    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -108,78 +76,9 @@ export class WarehouseItemFlipcardComponent extends BaseFlipcardComponent<Wareho
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // Create flip components
-        this.createFlipComponents();
-    }
-
-    /**
-     * Raise when toolbar action item has been clicked
-     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
-     */
-    onClickAction(event: IEvent) {
-        if (!event || !event.data || !(event.data as IToolbarActionsConfig)) {
-            return;
-        }
-        let action: IToolbarActionsConfig;
-        action = event.data as IToolbarActionsConfig;
-        switch (action.id) {
-            case ACTION_SAVE:
-                // TODO Waiting for saving
-                break;
-            case ACTION_RESET:
-                // TODO Waiting for resetting
-                break;
-            case ACTION_DELETE:
-                // TODO Waiting for deleting
-                break;
-            case ACTION_BACK:
-                if (this.getWarehouseItemSplitPaneComponentBack().hasChanged()) {
-                    let popupConfig: ConfirmPopupConfig;
-                    popupConfig = {
-                        title: this.translate('warehouse.item.title'),
-                        content: this.translate('common.toast.confirm.lose_data.message'),
-                        color: 'warn',
-                        cancelButton: this.translate('common.toast.confirm.lose_data.cancel'),
-                        okButton: this.translate('common.toast.confirm.lose_data.ok'),
-                    };
-                    this.getConfirmPopup().show(popupConfig)
-                        .subscribe(value => value && this.setFlipped(false));
-
-                } else {
-                    this.setFlipped(false);
-                }
-                break;
-        }
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    /**
-     * Create flip view components
-     */
-    private createFlipComponents(): void {
-        // create table component
-        this.warehouseItemTableComponentFront = super.setFrontComponent(WarehouseItemSmartTableComponent);
-        this.warehouseItemTableComponentFront.setNewItemListener(
-            ($event) => {
-                const newItem: IWarehouseItem = new WarehouseItem(null, null, null);
-                newItem.status = STATUS.NOT_ACTIVATED.toString();
-                this.getWarehouseItemSplitPaneComponentBack().setDataModel(newItem);
-                this.setFlipped(true);
-            });
-        this.warehouseItemSplitPaneComponentBack = super.setBackComponent(WarehouseItemSplitPaneComponent);
-        this.warehouseItemSplitPaneComponentBack.setToolbarActionsListener((e) => this.onClickAction(e));
+            modalDialogService, confirmPopup, lightbox,
+            WarehouseItemToolbarComponent,
+            WarehouseItemSmartTableComponent,
+            WarehouseItemSplitPaneComponent);
     }
 }

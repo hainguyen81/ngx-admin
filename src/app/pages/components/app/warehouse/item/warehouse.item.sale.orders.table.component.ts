@@ -25,7 +25,7 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-smart-table-warehouse-item-sale-orders',
+    selector: 'ngx-smart-table-app-warehouse-item-sale-orders',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })

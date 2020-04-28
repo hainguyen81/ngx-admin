@@ -57,7 +57,8 @@ export const RightFormAreaConfig: ISplitAreaConfig = {
     templateUrl: '../../splitpane/splitpane.component.html',
     styleUrls: ['../../splitpane/splitpane.component.scss'],
 })
-export abstract class AppSplitPaneComponent<T extends IModel, D extends DataSource,
+export abstract class AppSplitPaneComponent<
+    T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     TR extends AppTreeviewComponent<T, D>,
     F extends AppFormlyComponent<T, D>>

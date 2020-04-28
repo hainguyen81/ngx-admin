@@ -8,7 +8,6 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {BaseFormlyComponent} from '../../../formly/base.formly.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -28,8 +27,9 @@ import {
 } from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {AppFormlyComponent} from '../../components/app.formly.component';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -348,12 +348,12 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-formly-form-warehouse-item-overview',
+    selector: 'ngx-formly-form-app-warehouse-item-overview',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss'],
 })
 export class WarehouseItemOverviewFormlyComponent
-    extends BaseFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
+    extends AppFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
     implements AfterViewInit {
 
     // -------------------------------------------------

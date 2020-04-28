@@ -42,6 +42,7 @@ import {
     WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
 } from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
+import {AppComponentsModule} from '../../components/app.components.module';
 
 @NgModule({
     imports: [
@@ -115,6 +116,7 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
 
         /* Application components module */
         ComponentsModule,
+        AppComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
@@ -134,6 +136,20 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
         WarehouseItemAdjustmentSmartTableComponent,
     ],
     declarations: [
+        WarehouseItemFlipcardComponent,
+        WarehouseItemSmartTableComponent,
+        WarehouseItemTabsetComponent,
+        WarehouseItemSplitPaneComponent,
+        WarehouseItemToolbarComponent,
+        WarehouseItemSummaryComponent,
+        WarehouseItemOverviewFormlyComponent,
+        WarehouseItemOrdersSmartTableComponent,
+        WarehouseItemPurchaseOrdersSmartTableComponent,
+        WarehouseItemSaleOrdersSmartTableComponent,
+        WarehouseItemInOutSmartTableComponent,
+        WarehouseItemAdjustmentSmartTableComponent,
+    ],
+    exports: [
         WarehouseItemFlipcardComponent,
         WarehouseItemSmartTableComponent,
         WarehouseItemTabsetComponent,
