@@ -15,4 +15,5 @@ export const environment = {
     offline: true,
     baseHref: '/',
     useProxy: true,
+    mock: true,
 };

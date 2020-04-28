@@ -9,10 +9,9 @@ import {
     Type,
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CommonProviders, CustomerProviders, OrganizationProviders, UserProviders} from '../../config/app.providers';
 import {MockUserService} from './system/users.service';
 import {UserDbService} from '../../services/implementation/system/user/user.service';
-import {NGXLogger} from 'ngx-logger';
+import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {throwIfAlreadyLoaded} from '../core.module';
 import {AppConfig} from '../../config/app.config';
 import {throwError} from 'rxjs';
@@ -28,9 +27,22 @@ import {MockCountryService} from './system/country.service';
 import {CountryDbService} from '../../services/implementation/system/country/country.service';
 import {MockGeneralSettingsService} from './system/general.settings.service';
 import {GeneralSettingsDbService} from '../../services/implementation/system/general.settings/general.settings.service';
+import {
+    CommonProviders,
+    CountryProviders,
+    CustomerProviders,
+    GeneralSettingsProviders,
+    InterceptorProviders,
+    OrganizationProviders,
+    UserProviders,
+    WarehouseProviders,
+} from '../../config/app.providers';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IMockService} from './mock.service';
-import {isNullOrUndefined} from 'util';
 import PromiseUtils from '../../utils/promise.utils';
+import {HttpClientModule} from '@angular/common/http';
+import {NgxIndexedDBModule} from 'ngx-indexed-db';
+import {BrowserModule} from '@angular/platform-browser';
 
 export const MOCK_DATA_PROVIDERS = [
     {
@@ -66,19 +78,34 @@ export const MOCK_WAREHOUSE_DATA_PROVIDERS = [
     },
 ];
 
-export const MOCK_PROVIDERS = CommonProviders
+export const MOCK_PROVIDERS = []
+    .concat(CommonProviders)
+    .concat(InterceptorProviders)
+    .concat(GeneralSettingsProviders)
     .concat(OrganizationProviders)
     .concat(UserProviders)
     .concat(CustomerProviders)
+    .concat(CountryProviders)
+    .concat(WarehouseProviders)
     .concat(MOCK_DATA_PROVIDERS)
     .concat(MOCK_WAREHOUSE_DATA_PROVIDERS);
 
 @NgModule({
     imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
         CommonModule,
+
+        /* Logger */
+        LoggerModule.forRoot(AppConfig.COMMON.logConfig),
+
+        /* Database */
+        NgxIndexedDBModule.forRoot(AppConfig.Db),
     ],
     exports: [],
     declarations: [],
+    bootstrap: [],
 })
 export class MockDataModule {
 
@@ -116,8 +143,6 @@ export class MockDataModule {
             .concat(MOCK_WAREHOUSE_DATA_PROVIDERS)
             .forEach(provider => {
                 const mockService: IMockService = this.getService(provider['provide']);
-                const serviceName: string = (isNullOrUndefined(mockService) ? 'NULL'
-                    : Reflect.getPrototypeOf(mockService).constructor.name);
                 mockService && promises.push(mockService.initialize());
             });
         PromiseUtils.parallelPromises(

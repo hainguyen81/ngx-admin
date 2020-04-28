@@ -1,5 +1,13 @@
 import './prototypes.import';
-import {ErrorHandler, InjectionToken, Injector, LOCALE_ID, StaticProvider} from '@angular/core';
+import {
+    APP_BOOTSTRAP_LISTENER,
+    APP_INITIALIZER, ComponentRef,
+    ErrorHandler,
+    InjectionToken,
+    Injector,
+    LOCALE_ID,
+    StaticProvider,
+} from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
 import {
     HTTP_INTERCEPTORS,

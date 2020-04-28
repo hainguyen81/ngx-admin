@@ -1,12 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {throwError} from 'rxjs';
-import {environment} from '../../../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {OrganizationDbService} from '../../../services/implementation/system/organization/organization.service';
 import {IOrganization} from '../../data/system/organization';
 import {organizationGenerate} from './mock.organization';
 import {IMockService} from '../mock.service';
+import {COMMON} from '../../../config/common.config';
 
 @Injectable()
 export class MockOrganizationService implements IMockService {
@@ -19,7 +19,7 @@ export class MockOrganizationService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (environment.production) {
+        if (!COMMON.mock) {
             return Promise.resolve();
         }
 

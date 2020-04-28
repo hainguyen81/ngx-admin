@@ -1,12 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {throwError} from 'rxjs';
-import {environment} from '../../../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {WarehouseCategoryDbService} from '../../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
 import {IWarehouseCategory} from '../../data/warehouse/warehouse.category';
 import {categoryGenerate} from './mock.category';
 import {IMockService} from '../mock.service';
+import {COMMON} from '../../../config/common.config';
 
 @Injectable()
 export class MockWarehouseCategoryService implements IMockService {
@@ -19,7 +19,7 @@ export class MockWarehouseCategoryService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (environment.production) {
+        if (!COMMON.mock) {
             return Promise.resolve();
         }
 

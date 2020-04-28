@@ -1,12 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {UserDbService} from '../../../services/implementation/system/user/user.service';
 import {throwError} from 'rxjs';
-import {environment} from '../../../../environments/environment';
 import {usersGenerate} from './mock.user';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {IUser} from '../../data/system/user';
 import {IMockService} from '../mock.service';
+import {COMMON} from '../../../config/common.config';
 
 @Injectable()
 export class MockUserService implements IMockService {
@@ -19,9 +19,10 @@ export class MockUserService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (environment.production) {
+        if (!COMMON.mock) {
             return Promise.resolve();
         }
+
         // just generate mock data if empty
         return this.dbService.count().then((recNumber: number) => {
             if (recNumber <= 0) {

@@ -1,12 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {throwError} from 'rxjs';
-import {environment} from '../../../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {GeneralSettingsDbService} from '../../../services/implementation/system/general.settings/general.settings.service';
 import {IGeneralSettings} from '../../data/system/general.settings';
 import {generalSettingsGenerate} from './mock.general.settings';
 import {IMockService} from '../mock.service';
+import {COMMON} from '../../../config/common.config';
 
 @Injectable()
 export class MockGeneralSettingsService implements IMockService {
@@ -19,7 +19,7 @@ export class MockGeneralSettingsService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (environment.production) {
+        if (!COMMON.mock) {
             return Promise.resolve();
         }
 

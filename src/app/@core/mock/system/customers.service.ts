@@ -1,12 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {throwError} from 'rxjs';
-import {environment} from '../../../../environments/environment';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {CustomerDbService} from '../../../services/implementation/system/customer/customer.service';
 import {customersGenerate} from './mock.customer';
 import {ICustomer} from '../../data/system/customer';
 import {IMockService} from '../mock.service';
+import {COMMON} from '../../../config/common.config';
 
 @Injectable()
 export class MockCustomerService implements IMockService {
@@ -19,7 +19,7 @@ export class MockCustomerService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (environment.production) {
+        if (!COMMON.mock) {
             return Promise.resolve();
         }
 

@@ -6,7 +6,7 @@
 import {CoreModule} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Injector, NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
@@ -44,8 +44,6 @@ import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {TranslateModule} from '@ngx-translate/core';
 /* Toaster */
 import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
-/* Mock data */
-import {MockDataModule} from './@core/mock/mock.data.module';
 /* SplitPane */
 import {AngularSplitModule} from 'angular-split';
 /* Formly for form builder */
@@ -71,6 +69,8 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {NgxSelectModule} from 'ngx-select-ex';
 /* Local storage */
 import {NgxLocalStorageModule} from 'ngx-localstorage';
+/* Mock data while application initialization */
+import {MockDataModule} from './@core/mock/mock.data.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -94,9 +94,6 @@ import {NgxLocalStorageModule} from 'ngx-localstorage';
 
         /* Core Module for layout */
         CoreModule.forRoot(),
-
-        /* Mock Data Module */
-        MockDataModule.forRoot(),
 
         /* Device Detector */
         DeviceDetectorModule.forRoot(),
@@ -206,6 +203,9 @@ import {NgxLocalStorageModule} from 'ngx-localstorage';
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
+
+        /* Mock data module */
+        MockDataModule,
     ],
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],

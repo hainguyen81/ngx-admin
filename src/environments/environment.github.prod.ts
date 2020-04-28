@@ -15,4 +15,5 @@ export const environment = {
     offline: true,
     baseHref: 'https://hainguyen81.github.io/ngx-admin/',
     useProxy: false,
+    mock: true,
 };
