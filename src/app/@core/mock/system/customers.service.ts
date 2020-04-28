@@ -6,7 +6,7 @@ import {CustomerDbService} from '../../../services/implementation/system/custome
 import {customersGenerate} from './mock.customer';
 import {ICustomer} from '../../data/system/customer';
 import {IMockService} from '../mock.service';
-import {COMMON} from '../../../config/common.config';
+import {AppConfig} from '../../../config/app.config';
 
 @Injectable()
 export class MockCustomerService implements IMockService {
@@ -19,7 +19,7 @@ export class MockCustomerService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (!COMMON.mock) {
+        if (!AppConfig.Env.mock) {
             return Promise.resolve();
         }
 

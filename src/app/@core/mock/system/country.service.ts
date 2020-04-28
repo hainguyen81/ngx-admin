@@ -6,7 +6,7 @@ import {CountryDbService} from '../../../services/implementation/system/country/
 import {countriesGenerate} from './mock.country';
 import {ICountry} from '../../data/system/country';
 import {IMockService} from '../mock.service';
-import {COMMON} from '../../../config/common.config';
+import {AppConfig} from '../../../config/app.config';
 
 @Injectable()
 export class MockCountryService implements IMockService {
@@ -19,7 +19,7 @@ export class MockCountryService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (!COMMON.mock) {
+        if (!AppConfig.Env.mock) {
             return Promise.resolve();
         }
 

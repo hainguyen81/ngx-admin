@@ -133,7 +133,7 @@ export class MockDataModule {
     }
 
     protected initialization() {
-        if (!AppConfig.Env.offline) {
+        if (!AppConfig.Env.mock) {
             return;
         }
 

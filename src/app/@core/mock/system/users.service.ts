@@ -6,7 +6,7 @@ import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {IUser} from '../../data/system/user';
 import {IMockService} from '../mock.service';
-import {COMMON} from '../../../config/common.config';
+import {AppConfig} from '../../../config/app.config';
 
 @Injectable()
 export class MockUserService implements IMockService {
@@ -19,7 +19,7 @@ export class MockUserService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (!COMMON.mock) {
+        if (!AppConfig.Env.mock) {
             return Promise.resolve();
         }
 

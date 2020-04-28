@@ -6,7 +6,7 @@ import {OrganizationDbService} from '../../../services/implementation/system/org
 import {IOrganization} from '../../data/system/organization';
 import {organizationGenerate} from './mock.organization';
 import {IMockService} from '../mock.service';
-import {COMMON} from '../../../config/common.config';
+import {AppConfig} from '../../../config/app.config';
 
 @Injectable()
 export class MockOrganizationService implements IMockService {
@@ -19,7 +19,7 @@ export class MockOrganizationService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (!COMMON.mock) {
+        if (!AppConfig.Env.mock) {
             return Promise.resolve();
         }
 

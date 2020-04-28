@@ -6,7 +6,7 @@ import {WarehouseCategoryDbService} from '../../../services/implementation/wareh
 import {IWarehouseCategory} from '../../data/warehouse/warehouse.category';
 import {categoryGenerate} from './mock.category';
 import {IMockService} from '../mock.service';
-import {COMMON} from '../../../config/common.config';
+import {AppConfig} from '../../../config/app.config';
 
 @Injectable()
 export class MockWarehouseCategoryService implements IMockService {
@@ -19,7 +19,7 @@ export class MockWarehouseCategoryService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (!COMMON.mock) {
+        if (!AppConfig.Env.mock) {
             return Promise.resolve();
         }
 

@@ -6,7 +6,7 @@ import {WarehouseDbService} from '../../../services/implementation/warehouse/war
 import {IWarehouse} from '../../data/warehouse/warehouse';
 import {warehouseGenerate} from './mock.storage';
 import {IMockService} from '../mock.service';
-import {COMMON} from '../../../config/common.config';
+import {AppConfig} from '../../../config/app.config';
 
 @Injectable()
 export class MockWarehouseStorageService implements IMockService {
@@ -19,7 +19,7 @@ export class MockWarehouseStorageService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (!COMMON.mock) {
+        if (!AppConfig.Env.mock) {
             return Promise.resolve();
         }
 

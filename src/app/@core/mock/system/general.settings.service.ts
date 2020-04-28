@@ -6,7 +6,7 @@ import {GeneralSettingsDbService} from '../../../services/implementation/system/
 import {IGeneralSettings} from '../../data/system/general.settings';
 import {generalSettingsGenerate} from './mock.general.settings';
 import {IMockService} from '../mock.service';
-import {COMMON} from '../../../config/common.config';
+import {AppConfig} from '../../../config/app.config';
 
 @Injectable()
 export class MockGeneralSettingsService implements IMockService {
@@ -19,7 +19,7 @@ export class MockGeneralSettingsService implements IMockService {
     }
 
     public initialize(): Promise<any> {
-        if (!COMMON.mock) {
+        if (!AppConfig.Env.mock) {
             return Promise.resolve();
         }
 
