@@ -6,7 +6,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef, Component,
     ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2, Type,
+    Inject, OnInit, Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -36,7 +36,7 @@ export abstract class AppTreeSplitFormComponent<
     TR extends AppTreeviewComponent<T, D>,
     F extends AppFormlyComponent<T, D>>
     extends AppSplitPaneComponent<T, D, TB, TR, F>
-    implements AfterViewInit {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -127,6 +127,13 @@ export abstract class AppTreeSplitFormComponent<
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        // refresh data source at strat-up
+        super.getDataSource().refresh();
+    }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
