@@ -130,11 +130,6 @@ export abstract class AppTreeviewComponent<T extends IModel, D extends DataSourc
         }, 300);
     }
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-        this.getDataSource().refresh();
-    }
-
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------

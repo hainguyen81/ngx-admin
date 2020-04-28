@@ -11,6 +11,5 @@ export class UserDataSource extends BaseDataSource<IUser, UserHttpService, UserD
                 @Inject(UserDbService) dbService: UserDbService,
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
-        super.setSort([{field: 'uid', direction: 'desc'}]);
     }
 }

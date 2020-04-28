@@ -12,6 +12,5 @@ export class OrganizationDataSource
                 @Inject(OrganizationDbService) dbService: OrganizationDbService,
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
-        super.setSort([{field: 'uid', direction: 'desc'}]);
     }
 }
