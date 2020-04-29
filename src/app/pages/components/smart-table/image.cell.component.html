@@ -4,3 +4,7 @@
                    [allowModified]="false"
                    [images]="getImages()">
 </ngx-image-gallery>
+<div [class.d-table-cell]="true"
+     *ngIf="(getDescriptor() || '').length"
+     [innerHTML]="getDescriptor()"
+></div>
