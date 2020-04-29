@@ -4,7 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 import {
     AppFormlyTreeviewDropdownFieldComponent,
-} from '../../components/app.formly.treeview.dropdown.field.component';
+} from '../../components/common/app.formly.treeview.dropdown.field.component';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {NGXLogger} from 'ngx-logger';
 import {Constants} from '../../../../../@core/data/constants/common.constants';

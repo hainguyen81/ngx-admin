@@ -57,6 +57,10 @@ const routes: Routes = [{
                 component: UserComponent,
             },
             {
+                path: 'user/:profile',
+                component: UserComponent,
+            },
+            {
                 path: 'customer',
                 component: CustomerComponent,
             },

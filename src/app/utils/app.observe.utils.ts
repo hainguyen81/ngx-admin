@@ -6,7 +6,7 @@ import {isArray, isNullOrUndefined} from 'util';
 import {Type} from '@angular/core';
 import {
     AppFormlySelectExFieldComponent,
-} from '../pages/components/app/components/app.formly.select.ex.field.component';
+} from '../pages/components/app/components/common/app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {
     GeneralSettingsDatasource,

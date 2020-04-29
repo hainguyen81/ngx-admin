@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
@@ -29,7 +30,8 @@ import {
     ACTION_RESET,
     ACTION_SAVE,
 } from '../../../../../config/toolbar.actions.conf';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Observable, throwError} from 'rxjs';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_USER,
@@ -46,7 +48,8 @@ export class UserComponent
         IUser, UserDataSource,
         UserToolbarComponent,
         UserSmartTableComponent,
-        UserFormlyComponent> {
+        UserFormlyComponent>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -111,6 +114,29 @@ export class UserComponent
     // EVENTS
     // -------------------------------------------------
 
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // shortcut for profile
+        const parametersMap: Observable<ParamMap> = super.parametersMap;
+        parametersMap && parametersMap.subscribe(value => {
+            if (value && value.has('profile') && value.get('profile')) {
+                const profileId: string = value.get('profile');
+                const userDataSource: UserDataSource = <UserDataSource>this.getDataSource();
+                userDataSource
+                    .setFilter([{ field: 'id', search: profileId}], false)
+                    .getAll().then(user => {
+                        if (!user) {
+                            this.showGlobalError();
+                        } else {
+                            this.onEditUser(user);
+                        }
+                    }, reason => throwError(reason))
+                    .catch(reason => throwError(reason));
+            }
+        });
+    }
+
     protected onNewData($event: IEvent): void {
         const newInst: IUser = new User(
             null, null, null, null,
@@ -121,6 +147,11 @@ export class UserComponent
 
     protected onEditData($event: IEvent): void {
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
-        row && row.getData() && super.getBackComponent().setModel(row.getData() as IUser);
+        row && row.getData() && this.onEditUser(row.getData() as IUser);
+    }
+    protected onEditUser(user: IUser) {
+        !user && this.showGlobalError();
+        user && super.getBackComponent().setModel(user);
+        user && super.setFlipped(true);
     }
 }

@@ -201,6 +201,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
         }
         switch (item.data) {
             case 'profileMenu': {
+                this.doProfile();
                 break;
             }
             case 'logoutMenu': {
@@ -208,6 +209,11 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
                 break;
             }
         }
+    }
+    private doProfile(): void {
+        const profileLink: string = ['/dashboard/system/user',
+            (this.user['id'] || '').length ? '/'.concat(this.user['id']) : ''].join('');
+        this.getRouter().navigate([profileLink], { skipLocationChange: false });
     }
     private doLogout(): void {
         const popupConfig: ConfirmPopupConfig = {
