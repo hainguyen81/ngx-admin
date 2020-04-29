@@ -45,6 +45,9 @@
             },
             "warehouseSettings": {
                 "name": "Thiếp lập kho",
+                "branch": {
+                    "name": "Thiết lập hãng sản xuất"
+                },
                 "item": {
                     "name": "Thiết lập trang thiết bị"
                 },
