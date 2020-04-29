@@ -1,6 +1,7 @@
 export namespace Constants {
     export namespace WarehouseSettingsConstants {
         export enum WAREHOUSE_SETTINGS_TYPE {
+            BRAND_SETTINGS = 'common.enum.warehouseSettings.brand.name',
             ITEM_SETTINGS = 'common.enum.warehouseSettings.item.name',
             OTHERS = 'common.enum.warehouseSettings.others.name',
         }
