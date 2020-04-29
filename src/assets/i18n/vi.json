@@ -113,6 +113,11 @@
                     "message": "Cơ sở dữ liệu sẽ bị xóa. Bạn sẽ phải đăng nhập lại. Bạn có muốn tiếp tục không?",
                     "cancel": "Bỏ qua",
                     "ok": "Đồng ý"
+                },
+                "logout": {
+                    "message": "Bạn muốn đăng xuất phiên làm việc?",
+                    "cancel": "Bỏ qua",
+                    "ok": "Đồng ý"
                 }
             },
             "unknown": "Bạn không có đủ quyền hoặc dữ liệu đã bị sai! Vui lòng liên hệ Quản trị viên để được hỗ trợ!"
@@ -141,6 +146,9 @@
         },
         "logout": {
             "title": "Đăng xuất"
+        },
+        "profile": {
+            "title": "Tài khoản"
         }
     },
 	"system": {

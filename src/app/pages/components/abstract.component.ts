@@ -21,7 +21,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {LocalDataSource} from 'ng2-smart-table';
 import HtmlUtils from '../../utils/html.utils';
 import KeyboardUtils from '../../utils/keyboard.utils';
@@ -1092,9 +1092,32 @@ export abstract class AbstractComponent
     }
 
     /**
+     * Show confirmation dialog log
+     * @param confirm confirmation configuration
+     */
+    protected showObserveConfirmation(confirm: ConfirmPopupConfig): Observable<boolean> {
+        return this.getConfirmPopup().show(confirm);
+    }
+    /**
+     * Show confirmation dialog log
+     * @param confirm confirmation configuration
+     * @param yesAction yes action
+     * @param noAction no action
+     */
+    protected showActionConfirmation(confirm: ConfirmPopupConfig,
+                               yesAction?: () => void, noAction?: () => void): void {
+        const _this: AbstractComponent = this;
+        this.showObserveConfirmation(confirm)
+            .subscribe(value => {
+                value && yesAction && yesAction.call(_this);
+                !value && noAction && noAction.call(_this);
+            });
+    }
+
+    /**
      * Perform deleting database
      */
-    protected doDeleteDatabase() {
+    protected doDeleteDatabase(): void {
         const _this: AbstractComponent = this;
         let popupConfig: ConfirmPopupConfig;
         popupConfig = {
@@ -1104,8 +1127,7 @@ export abstract class AbstractComponent
             cancelButton: this.translate('common.toast.confirm.delete_database.cancel'),
             okButton: this.translate('common.toast.confirm.delete_database.ok'),
         };
-        this.getConfirmPopup().show(popupConfig)
-            .subscribe(value => value && _this.clearData());
+        this.showActionConfirmation(popupConfig, _this.clearData);
     }
     private clearData(): void {
         const _this: AbstractComponent = this;

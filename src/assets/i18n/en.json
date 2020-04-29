@@ -113,6 +113,11 @@
                     "message": "Database has been deleted. You will must re-login again. Do you want to continue?",
                     "cancel": "Cancel",
                     "ok": "OK"
+                },
+                "logout": {
+                    "message": "Do you want to log out of application?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
                 }
             },
             "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
@@ -141,6 +146,9 @@
         },
         "logout": {
             "title": "Log out"
+        },
+        "profile": {
+            "title": "Profile"
         }
     },
 	"system": {
