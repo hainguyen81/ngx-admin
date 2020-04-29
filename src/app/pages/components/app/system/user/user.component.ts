@@ -155,4 +155,21 @@ export class UserComponent
         user && super.getBackComponent().setModel(user);
         user && super.setFlipped(true);
     }
+
+    protected doBack(): void {
+        const _this: UserComponent = this;
+        const _superDoBack: () => void = super.doBack;
+        const parametersMap: Observable<ParamMap> = super.parametersMap;
+        parametersMap && parametersMap.subscribe(value => {
+            if (value && value.has('profile') && value.get('profile')) {
+                const userDataSource: UserDataSource = <UserDataSource>_this.getDataSource();
+                userDataSource.reset(true);
+                _this.getRouter().navigate(['/dashboard/system/user'], { replaceUrl: true });
+
+            } else {
+                _superDoBack.call(_this);
+            }
+        });
+        !parametersMap && _superDoBack.call(_this);
+    }
 }
