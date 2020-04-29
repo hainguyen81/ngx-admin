@@ -45,7 +45,7 @@
             },
             "warehouseSettings": {
                 "name": "Warehouse settings",
-                "branch": {
+                "brand": {
                     "name": "Branch settings"
                 },
                 "item": {
