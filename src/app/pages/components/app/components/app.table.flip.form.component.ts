@@ -180,7 +180,6 @@ export abstract class AppTableFlipFormComponent<
     protected doBack(): void {
         // back to front
         this._selectedModel = undefined;
-        super.setFlipped(false);
     }
 
     /**

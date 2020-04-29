@@ -226,6 +226,7 @@ export abstract class AppFlipcardComponent<
                         });
 
                 } else {
+                    this.doBack();
                     this.setFlipped(false);
                 }
                 break;

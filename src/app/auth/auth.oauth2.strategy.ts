@@ -17,6 +17,7 @@ import {isObject} from 'rxjs/internal-compatibility';
 import {map} from 'rxjs/operators';
 import EncryptionUtils from '../utils/encryption.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
+import JsonUtils from '../utils/json.utils';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -99,8 +100,16 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     }
 
     createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
+        // TODO remove all profile images, just keep the first one
+        // TODO because of maximum quota exceed
+        const tokenJson: any = JsonUtils.safeParseJson(value);
+        if (tokenJson && tokenJson.hasOwnProperty('image')) {
+            delete tokenJson['image'];
+        }
+
+        // create token
         let token: T;
-        token = super.createToken(value, this.getOption(`login.failWhenInvalidToken`));
+        token = super.createToken(tokenJson, this.getOption(`login.failWhenInvalidToken`));
         this.storeDb(token).then((t: T) => token = t, (errors) => this.getLogger().error(errors));
         return token;
     }

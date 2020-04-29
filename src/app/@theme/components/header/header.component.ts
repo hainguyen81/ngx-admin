@@ -31,8 +31,9 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {NgxLocalStorageEncryptionService} from '../../../services/storage.services/local.storage.services';
-import {isNullOrUndefined} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 import {ActivatedRoute, Router} from '@angular/router';
+import {UserDbService} from '../../../services/implementation/system/user/user.service';
 
 @Component({
     selector: 'ngx-header',
@@ -90,7 +91,8 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
                 @Inject(NbMediaBreakpointsService) private breakpointService?: NbMediaBreakpointsService,
                 @Inject(NbAuthService) private authService?: NbAuthService,
                 @Inject(NbxOAuth2AuthDbService) private authDbService?: NbxOAuth2AuthDbService<NbAuthToken>,
-                @Inject(NgxLocalStorageEncryptionService) private localStorage?: NgxLocalStorageEncryptionService) {
+                @Inject(NgxLocalStorageEncryptionService) private localStorage?: NgxLocalStorageEncryptionService,
+                @Inject(UserDbService) private userDbService?: UserDbService) {
         super(dataSource, contextMenuService, toasterService, logger, renderer,
             translateService, factoryResolver, viewContainerRef, changeDetectorRef,
             elementRef, modalDialogService, confirmPopup, lightbox,
@@ -102,6 +104,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
         authService || throwError('Could not inject NbAuthService instance');
         authDbService || throwError('Could not inject NbxOAuth2AuthDbService instance');
         localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
+        userDbService || throwError('Could not inject UserDbService instance');
         router || throwError('Could not inject Router instance');
     }
 
@@ -167,6 +170,16 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
             .pipe(filter(({ tag }) => tag === this.userMenuTag),
                 map(({item}) => item))
             .subscribe(value => this.onMenuClick(value));
+
+        this.userDbService.findEntities('id', IDBKeyRange.only(this.user['id']))
+            .then(value => {
+                this.user['image'] = (value || {})['image'] || [];
+            }, reason => {
+                this.getLogger().error(reason);
+            })
+            .catch(reason => {
+                this.getLogger().error(reason);
+            });
     }
 
     changeTheme(themeName: string) {
@@ -231,5 +244,15 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
                 this.localStorage.clear();
                 this.getRouter().navigate(['/auth'], { replaceUrl: true });
             });
+    }
+
+    private getProfileImage(): string {
+        if (!this.user || !this.user['image']) return '';
+        if (isArray(this.user['image']) && Array.from(this.user['image']).length) {
+            return Array.from(this.user['image'])[0] as string;
+
+        } else if (this.user['image']) {
+            return this.user['image'];
+        }
     }
 }
