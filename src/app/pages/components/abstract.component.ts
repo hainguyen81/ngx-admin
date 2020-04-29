@@ -1201,27 +1201,42 @@ export abstract class AbstractComponent
         const indexDbService: NgxIndexedDBService = _this.getService(NgxIndexedDBService);
         const localStorage: NgxLocalStorageEncryptionService =
             _this.getService(NgxLocalStorageEncryptionService);
-        const logger: NGXLogger = this.getLogger();
         indexDbService || throwError('Could not inject NgxIndexedDBService instance');
         localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
+        const timer: number = window.setTimeout(
+            () => {
+                _this.freeze();
+                _this.__deleteDatabase(timer);
+                _this.melt();
+            }, 200);
+    }
+    private __deleteDatabase(timer: number): void {
+        const _this: AbstractComponent = this;
+        const logger: NGXLogger = this.getLogger();
         const indexDbDelRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
-        indexDbDelRequest.transaction.abort();
+        if (typeof indexDbDelRequest['close'] === 'function') {
+            (<Function>indexDbDelRequest['close']).call(indexDbDelRequest);
+        }
         indexDbDelRequest.onblocked = function(event) {
             logger && logger.warn('Could not delete database because database has been blocked!', event);
             !logger && window.console.warn(['Could not delete database because database has been blocked!', event]);
+            window.clearTimeout(timer);
         };
         indexDbDelRequest.onupgradeneeded = function(event) {
             logger && logger.warn('Database needs to upgrade!', event);
             !logger && window.console.warn(['Database needs to upgrade!', event]);
+            window.clearTimeout(timer);
         };
         indexDbDelRequest.onerror = function(event) {
             logger && logger.error('Could not delete database!', event);
             !logger && window.console.error(['Could not delete database!', event]);
+            window.clearTimeout(timer);
         };
         indexDbDelRequest.onsuccess = function(event) {
             localStorage.clear();
             window.location.assign(_this.baseHref);
             window.location.reload();
+            window.clearTimeout(timer);
         };
     }
 
@@ -1232,5 +1247,19 @@ export abstract class AbstractComponent
      */
     protected getService<K>(token: any): K {
         return AppUtils.getService(token);
+    }
+
+    /**
+     * Freeze component
+     */
+    protected freeze(): void {
+        this.getChangeDetectorRef() && this.getChangeDetectorRef().detach();
+    }
+
+    /**
+     * Melt component
+     */
+    protected melt(): void {
+        this.getChangeDetectorRef() && this.getChangeDetectorRef().reattach();
     }
 }
