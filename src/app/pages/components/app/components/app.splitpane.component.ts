@@ -27,6 +27,7 @@ import {
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {
@@ -131,6 +132,8 @@ export abstract class AppSplitPaneComponent<
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -145,13 +148,16 @@ export abstract class AppSplitPaneComponent<
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                           private toolBarType?: Type<TB> | null,
                           private leftSideType?: Type<L> | null,
                           private rightRightType?: Type<R> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         confirmPopup || throwError('Could not inject ConfirmPopup');
         leftSideType || throwError('The left side component type is required');
         rightRightType || throwError('The right right component type is required');

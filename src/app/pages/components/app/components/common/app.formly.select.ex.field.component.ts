@@ -1,6 +1,6 @@
 import {Component, Inject, Renderer2} from '@angular/core';
-import {IModel} from '../../../../@core/data/base';
-import {SelectExFormFieldComponent} from '../../formly/formly.select.ex.field.component';
+import {IModel} from '../../../../../@core/data/base';
+import {SelectExFormFieldComponent} from '../../../formly/formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 
@@ -9,8 +9,8 @@ import {NGXLogger} from 'ngx-logger';
  */
 @Component({
     selector: 'ngx-select-ex-app',
-    templateUrl: '../../formly/formly.select.ex.field.component.html',
-    styleUrls: ['../../formly/formly.select.ex.field.component.scss'],
+    templateUrl: '../../../formly/formly.select.ex.field.component.html',
+    styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export abstract class AppFormlySelectExFieldComponent<T extends IModel>
     extends SelectExFormFieldComponent {

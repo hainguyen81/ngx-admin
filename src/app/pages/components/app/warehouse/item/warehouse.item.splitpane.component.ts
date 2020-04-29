@@ -31,6 +31,7 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {
@@ -155,6 +156,8 @@ export class WarehouseItemSplitPaneComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -168,11 +171,14 @@ export class WarehouseItemSplitPaneComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         confirmPopup || throwError('Could not inject ConfirmPopup');
         super.setHorizontal(true);
         super.setNumberOfAreas(2);

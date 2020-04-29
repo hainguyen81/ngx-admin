@@ -22,6 +22,7 @@ import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* default user toolbar header config */
 export const UserToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -64,6 +65,8 @@ export class UserToolbarComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(UserDataSource) dataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -77,11 +80,14 @@ export class UserToolbarComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         super.setToolbarHeader(UserToolbarHeaderConfig);
         super.setActions(UserToolbarActionsConfig);
     }

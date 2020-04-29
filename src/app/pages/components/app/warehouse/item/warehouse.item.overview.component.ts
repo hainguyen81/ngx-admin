@@ -30,6 +30,7 @@ import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.tr
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppFormlyComponent} from '../../components/app.formly.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -375,6 +376,8 @@ export class WarehouseItemOverviewFormlyComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      * @param categoryDatasource {WarehouseCategoryDatasource}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
@@ -390,11 +393,14 @@ export class WarehouseItemOverviewFormlyComponent
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         super.setConfig(WarehouseItemOverviewFormConfig);
         super.setFields(WarehouseItemOverviewFormFieldsConfig);
     }

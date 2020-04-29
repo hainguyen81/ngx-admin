@@ -1,5 +1,7 @@
 import {AbstractComponent, IEvent} from '../../../abstract.component';
-import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {
+    WarehouseItemDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {
     ChangeDetectorRef, Component,
     ComponentFactoryResolver,
@@ -19,6 +21,7 @@ import {AppConfig} from '../../../../../config/app.config';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {ActivatedRoute, Router} from '@angular/router';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
@@ -100,6 +103,8 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -113,10 +118,13 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver, viewContainerRef,
-            changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox);
+            changeDetectorRef, elementRef, modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
     }
 
     // -------------------------------------------------

@@ -31,6 +31,7 @@ import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
@@ -139,6 +140,8 @@ export class WarehouseSettingsSmartTableComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -153,11 +156,14 @@ export class WarehouseSettingsSmartTableComponent
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setTableHeader('warehouse.settings.title');
         super.setTableSettings(WarehouseSettingsTableSettings);

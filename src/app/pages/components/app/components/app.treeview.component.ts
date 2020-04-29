@@ -21,6 +21,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {IModel} from '../../../../@core/data/base';
 import HierarchyUtils from '../../../../utils/hierarchy.utils';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /**
  * Base tree-view component base on {TreeviewComponent}
@@ -82,6 +83,8 @@ export abstract class AppTreeviewComponent<T extends IModel, D extends DataSourc
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -95,11 +98,14 @@ export abstract class AppTreeviewComponent<T extends IModel, D extends DataSourc
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox) {
+                          @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
     }
 
     // -------------------------------------------------

@@ -19,6 +19,7 @@ import {IEvent} from '../abstract.component';
 import {NgxSelectOption} from 'ngx-select-ex';
 import {throwError} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /**
  * Select component base on {NgxSelectComponent}
@@ -98,6 +99,8 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -111,11 +114,14 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute,
             undefined);
     }
 

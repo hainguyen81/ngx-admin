@@ -27,6 +27,7 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {throwError} from 'rxjs';
 import {ACTION_DELETE_DATABASE, ACTION_IMPORT} from '../../../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_SETTINGS,
@@ -73,6 +74,8 @@ export class GeneralSettingsComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(GeneralSettingsDatasource) dataSource: GeneralSettingsDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -86,11 +89,14 @@ export class GeneralSettingsComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute,
             GeneralSettingsToolbarComponent,
             GeneralSettingsSmartTableComponent,
             GeneralSettingsFormlyComponent);

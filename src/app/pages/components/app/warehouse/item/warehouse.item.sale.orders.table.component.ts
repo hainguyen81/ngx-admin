@@ -22,6 +22,7 @@ import {Constants as OrderConstants} from '../../../../../@core/data/constants/w
 import WAREHOUSE_ORDER_TYPE = OrderConstants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE;
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
@@ -62,6 +63,8 @@ export class WarehouseItemSaleOrdersSmartTableComponent extends WarehouseItemOrd
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(WarehouseOrderDatasource) dataSource: WarehouseOrderDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -75,10 +78,13 @@ export class WarehouseItemSaleOrdersSmartTableComponent extends WarehouseItemOrd
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
     }
 }

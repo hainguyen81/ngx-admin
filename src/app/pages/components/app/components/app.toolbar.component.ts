@@ -22,6 +22,7 @@ import {
     ACTION_IMPORT,
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* default warehouse item toolbar actions config */
 export const AppToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(COMMON.baseToolbarActions);
@@ -87,6 +88,8 @@ export abstract class AppToolbarComponent<D extends DataSource>
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      * @param headerConfig {IToolbarHeaderConfig}
      * @param actionsConfig {IToolbarActionsConfig}
      */
@@ -102,11 +105,14 @@ export abstract class AppToolbarComponent<D extends DataSource>
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox) {
+                          @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         super.setActions(AppToolbarBackActionsConfig);
     }
 }

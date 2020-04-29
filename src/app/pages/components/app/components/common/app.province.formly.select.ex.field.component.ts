@@ -1,5 +1,5 @@
 import {Component, Inject, Renderer2} from '@angular/core';
-import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
+import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';

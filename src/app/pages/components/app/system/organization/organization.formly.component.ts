@@ -46,6 +46,7 @@ import {
 import {throwError} from 'rxjs';
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -389,6 +390,8 @@ export class OrganizationFormlyComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      * @param userDataSource to searching all organization managers
      */
     constructor(@Inject(OrganizationDataSource) dataSource: OrganizationDataSource,
@@ -404,12 +407,15 @@ export class OrganizationFormlyComponent
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(UserDataSource) private userDataSource?: UserDataSource,
                 @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         userDataSource || throwError('Could not inject UserDataSource instance');
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         this.setConfig(OrganizationFormConfig);

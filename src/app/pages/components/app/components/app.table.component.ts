@@ -24,6 +24,7 @@ import {
     IContextMenu,
 } from '../../../../config/context.menu.conf';
 import {IEvent} from '../../abstract.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
@@ -92,6 +93,8 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -105,11 +108,14 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
                           @Inject(ElementRef) elementRef: ElementRef,
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox) {
+                          @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         super.setContextMenu(AppCommonContextMenu);
     }
 

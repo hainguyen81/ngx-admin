@@ -32,7 +32,7 @@ import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {NgxLocalStorageEncryptionService} from '../../../services/storage.services/local.storage.services';
 import {isNullOrUndefined} from 'util';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'ngx-header',
@@ -82,17 +82,19 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(NbSidebarService) private sidebarService?: NbSidebarService,
                 @Inject(NbMenuService) private menuService?: NbMenuService,
                 @Inject(NbThemeService) private themeService?: NbThemeService,
                 @Inject(NbMediaBreakpointsService) private breakpointService?: NbMediaBreakpointsService,
                 @Inject(NbAuthService) private authService?: NbAuthService,
                 @Inject(NbxOAuth2AuthDbService) private authDbService?: NbxOAuth2AuthDbService<NbAuthToken>,
-                @Inject(NgxLocalStorageEncryptionService) private localStorage?: NgxLocalStorageEncryptionService,
-                @Inject(Router) private router?: Router) {
+                @Inject(NgxLocalStorageEncryptionService) private localStorage?: NgxLocalStorageEncryptionService) {
         super(dataSource, contextMenuService, toasterService, logger, renderer,
             translateService, factoryResolver, viewContainerRef, changeDetectorRef,
-            elementRef, modalDialogService, confirmPopup, lightbox);
+            elementRef, modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         sidebarService || throwError('Could not inject NbSidebarService instance');
         menuService || throwError('Could not inject NbMenuService instance');
         themeService || throwError('Could not inject NbThemeService instance');
@@ -221,7 +223,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
         this.authDbService.clear()
             .then(value => {
                 this.localStorage.clear();
-                this.router.navigate(['/auth'], { replaceUrl: true });
+                this.getRouter().navigate(['/auth'], { replaceUrl: true });
             });
     }
 }

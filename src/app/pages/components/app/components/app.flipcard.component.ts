@@ -26,6 +26,7 @@ import {
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'ngx-flip-card-app',
@@ -132,6 +133,8 @@ export abstract class AppFlipcardComponent<
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -146,13 +149,16 @@ export abstract class AppFlipcardComponent<
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                           private toolbarComponentType?: Type<TB> | null,
                           private frontComponentType?: Type<F> | null,
                           private backComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         frontComponentType || throwError('The front-flip component type is required');
         backComponentType || throwError('The back-flip component type is required');
     }

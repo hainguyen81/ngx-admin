@@ -28,6 +28,7 @@ import {GeneralSettingsDatasource} from '../../../../../services/implementation/
 import {throwError} from 'rxjs';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -148,6 +149,8 @@ export class UserSmartTableComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(UserDataSource) dataSource: UserDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -162,11 +165,14 @@ export class UserSmartTableComponent
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setTableHeader('system.user.title');
         super.setTableSettings(UserTableSettings);

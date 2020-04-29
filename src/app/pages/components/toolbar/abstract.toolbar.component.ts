@@ -24,6 +24,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /**
  * Abstract toolbar component base on {MatToolbar}
@@ -137,6 +138,8 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      * @param lightbox {Lightbox}
      * @param header {IToolbarHeaderConfig}
      * @param actions {IToolbarActionsConfig}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -151,12 +154,15 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                           private header?: IToolbarHeaderConfig,
                           private actions?: IToolbarActionsConfig[]) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
     }
 
     ngAfterViewInit(): void {

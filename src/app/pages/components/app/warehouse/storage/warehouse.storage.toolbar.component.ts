@@ -22,6 +22,7 @@ import {WarehouseDatasource} from '../../../../../services/implementation/wareho
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* default warehouse storage toolbar header config */
 export const WarehouseStorageToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -63,6 +64,8 @@ export class WarehouseStorageToolbarComponent extends AppToolbarComponent<Wareho
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(WarehouseDatasource) dataSource: WarehouseDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -76,11 +79,14 @@ export class WarehouseStorageToolbarComponent extends AppToolbarComponent<Wareho
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         super.setToolbarHeader(WarehouseStorageToolbarHeaderConfig);
         super.setActions(WarehouseStorageToolbarActionsConfig);
     }

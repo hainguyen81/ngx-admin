@@ -5,7 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {
     AppFormlyTreeviewDropdownFieldComponent,
-} from '../../components/app.formly.treeview.dropdown.field.component';
+} from '../../components/common/app.formly.treeview.dropdown.field.component';
 import {NGXLogger} from 'ngx-logger';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;

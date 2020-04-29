@@ -21,6 +21,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {AppSplitPaneComponent} from './app.splitpane.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /**
  * Base split-pane component base on {AngularSplitModule}
@@ -100,6 +101,8 @@ export abstract class AppTreeSplitFormComponent<
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -114,6 +117,8 @@ export abstract class AppTreeSplitFormComponent<
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                           toolBarType?: Type<TB> | null,
                           treeviewType?: Type<TR> | null,
                           formType?: Type<F> | null) {
@@ -121,6 +126,7 @@ export abstract class AppTreeSplitFormComponent<
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute,
             toolBarType, treeviewType, formType);
     }
 

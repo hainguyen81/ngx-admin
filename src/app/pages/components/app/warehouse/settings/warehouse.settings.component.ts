@@ -31,6 +31,7 @@ import {
     ACTION_RESET,
     ACTION_SAVE,
 } from '../../../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
@@ -80,6 +81,8 @@ export class WarehouseSettingsComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -93,11 +96,14 @@ export class WarehouseSettingsComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute,
             WarehouseSettingsToolbarComponent,
             WarehouseSettingsSmartTableComponent,
             WarehouseSettingsFormlyComponent);

@@ -24,6 +24,7 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* warehouse item IN/OUT table settings */
 export const WarehouseItemInOutTableSettings = {
@@ -137,6 +138,8 @@ export class WarehouseItemInOutSmartTableComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(WarehouseInventoryDatasource) dataSource: WarehouseInventoryDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -150,11 +153,14 @@ export class WarehouseItemInOutSmartTableComponent
                 @Inject(ElementRef) elementRef: ElementRef,
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                @Inject(Lightbox) lightbox?: Lightbox) {
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         super.setTableHeader('warehouse.item.title');
         super.setTableSettings(WarehouseItemInOutTableSettings);
         super.setContextMenu(WarehouseItemInOutContextMenu);

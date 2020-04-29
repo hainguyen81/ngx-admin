@@ -29,6 +29,7 @@ import {
 } from 'ngx-select-ex';
 import {BehaviorSubject} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /**
  * The interface of data while searching option items
@@ -311,8 +312,9 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
-     * @param treeviewConfig {TreeviewConfig}
-     * @param dropdown specify using drop-down tree-view or normal tree-view
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
+     * @param config {INgxSelectOptions}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -327,11 +329,14 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                           config?: INgxSelectOptions | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         this.setConfig(config);
     }
 

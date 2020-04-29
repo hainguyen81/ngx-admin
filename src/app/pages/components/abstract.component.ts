@@ -50,6 +50,7 @@ import AppUtils from '../../utils/app.utils';
 import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
 import {AppConfig} from '../../config/app.config';
 import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';
+import {ActivatedRoute, Data, ParamMap, Params, Router} from '@angular/router';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -88,6 +89,59 @@ export abstract class AbstractComponent
     // -------------------------------------------------
     // GETTER/SETTER
     // -------------------------------------------------
+
+    /**
+     * Get the application base href
+     * @return the application base href
+     */
+    public get baseHref(): string {
+        return HtmlUtils.getBaseHref();
+    }
+
+    /**
+     * Get the activated route parameters
+     * @return the activated route parameters
+     */
+    protected get parametersMap(): Observable<ParamMap> {
+        const activatedRoute: ActivatedRoute = this.getActivatedRoute();
+        return (activatedRoute ? activatedRoute.paramMap : undefined);
+    }
+
+    /**
+     * Get the activated route parameters
+     * @return the activated route parameters
+     */
+    protected get parameters(): Observable<Params> {
+        const activatedRoute: ActivatedRoute = this.getActivatedRoute();
+        return (activatedRoute ? activatedRoute.params : undefined);
+    }
+
+    /**
+     * Get the activated route data
+     * @return the activated route data
+     */
+    protected get activatedRouteData(): Observable<Data> {
+        const activatedRoute: ActivatedRoute = this.getActivatedRoute();
+        return (activatedRoute ? activatedRoute.data : undefined);
+    }
+
+    /**
+     * Get the activated route query parameters
+     * @return the activated route query parameters
+     */
+    protected get queryParametersMap(): Observable<ParamMap> {
+        const activatedRoute: ActivatedRoute = this.getActivatedRoute();
+        return (activatedRoute ? activatedRoute.queryParamMap : undefined);
+    }
+
+    /**
+     * Get the activated route data
+     * @return the activated route data
+     */
+    protected get queryParameters(): Observable<Params> {
+        const activatedRoute: ActivatedRoute = this.getActivatedRoute();
+        return (activatedRoute ? activatedRoute.queryParams : undefined);
+    }
 
     /**
      * Get the {ComponentFactoryResolver} instance
@@ -188,6 +242,22 @@ export abstract class AbstractComponent
      */
     protected getLogger(): NGXLogger {
         return this.logger;
+    }
+
+    /**
+     * Get the {Router} instance for navigating
+     * @return the {Router} instance
+     */
+    protected getRouter(): Router {
+        return this.router;
+    }
+
+    /**
+     * Get the {ActivatedRoute} instance for parsing parameters
+     * @return the {ActivatedRoute} instance
+     */
+    protected getActivatedRoute(): ActivatedRoute {
+        return this.activatedRoute;
     }
 
     /**
@@ -293,6 +363,8 @@ export abstract class AbstractComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) private dataSource: DataSource,
                           @Inject(ContextMenuService) private contextMenuService: ContextMenuService,
@@ -306,13 +378,16 @@ export abstract class AbstractComponent
                           @Inject(ElementRef) private elementRef: ElementRef,
                           @Inject(ModalDialogService) private modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) private confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) private lightbox?: Lightbox) {
+                          @Inject(Lightbox) private lightbox?: Lightbox,
+                          @Inject(Router) private router?: Router,
+                          @Inject(ActivatedRoute) private activatedRoute?: ActivatedRoute) {
         contextMenuService || throwError('Could not inject ContextMenuService');
         toasterService || throwError('Could not inject ToastrService');
         logger || throwError('Could not inject NGXLogger');
         renderer || throwError('Could not inject Renderer2');
         translateService || throwError('Could not inject TranslateService');
         factoryResolver || throwError('Could not inject ComponentFactoryResolver');
+        router || throwError('Could not inject Router');
         dataSource = dataSource || new LocalDataSource();
         dataSource.onChanged().subscribe(value => this.onDataSourceChanged({data: value}));
         translateService.onLangChange.subscribe(value => this.onLangChange({event: value}));
@@ -1084,14 +1159,6 @@ export abstract class AbstractComponent
     }
 
     /**
-     * Get the application base href
-     * @return the application base href
-     */
-    public get baseHref(): string {
-        return HtmlUtils.getBaseHref();
-    }
-
-    /**
      * Show confirmation dialog log
      * @param confirm confirmation configuration
      */
@@ -1131,9 +1198,9 @@ export abstract class AbstractComponent
     }
     private clearData(): void {
         const _this: AbstractComponent = this;
-        const indexDbService: NgxIndexedDBService = AppUtils.getService(NgxIndexedDBService);
+        const indexDbService: NgxIndexedDBService = _this.getService(NgxIndexedDBService);
         const localStorage: NgxLocalStorageEncryptionService =
-            AppUtils.getService(NgxLocalStorageEncryptionService);
+            _this.getService(NgxLocalStorageEncryptionService);
         const logger: NGXLogger = this.getLogger();
         indexDbService || throwError('Could not inject NgxIndexedDBService instance');
         localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
@@ -1147,5 +1214,14 @@ export abstract class AbstractComponent
             window.location.assign(_this.baseHref);
             window.location.reload();
         };
+    }
+
+    /**
+     * Get the injection service instance
+     * @param token to parse
+     * @return the injection service instance
+     */
+    protected getService<K>(token: any): K {
+        return AppUtils.getService(token);
     }
 }

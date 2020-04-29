@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
-import {AppFormlySelectExFieldComponent} from '../../components/app.formly.select.ex.field.component';
+import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';

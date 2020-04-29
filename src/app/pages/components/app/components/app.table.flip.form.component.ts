@@ -23,6 +23,7 @@ import {AppToolbarComponent} from './app.toolbar.component';
 import {DeepCloner} from '../../../../utils/object.utils';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {IdGenerators} from '../../../../config/generator.config';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'ngx-flip-card-app-table-form',
@@ -78,6 +79,8 @@ export abstract class AppTableFlipFormComponent<
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -92,6 +95,8 @@ export abstract class AppTableFlipFormComponent<
                           @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
+                          @Inject(Router) router?: Router,
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                           toolbarComponentType?: Type<TB> | null,
                           tableComponentType?: Type<F> | null,
                           formComponentType?: Type<B> | null) {
@@ -99,6 +104,7 @@ export abstract class AppTableFlipFormComponent<
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute,
             toolbarComponentType, tableComponentType, formComponentType);
     }
 

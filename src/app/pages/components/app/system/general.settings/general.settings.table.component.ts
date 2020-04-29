@@ -28,6 +28,7 @@ import {isArray, isNullOrUndefined} from 'util';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {
@@ -133,6 +134,8 @@ export class GeneralSettingsSmartTableComponent
      * @param modalDialogService {ModalDialogService}
      * @param confirmPopup {ConfirmPopup}
      * @param lightbox {Lightbox}
+     * @param router {Router}
+     * @param activatedRoute {ActivatedRoute}
      */
     constructor(@Inject(GeneralSettingsDatasource) dataSource: GeneralSettingsDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -147,11 +150,14 @@ export class GeneralSettingsSmartTableComponent
                 @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(ModuleDatasource) private _moduleDatasource?: ModuleDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
-            modalDialogService, confirmPopup, lightbox);
+            modalDialogService, confirmPopup, lightbox,
+            router, activatedRoute);
         _moduleDatasource || throwError('Could not inject ModuleDatasource instance');
         super.setTableHeader('system.general.settings.title');
         super.setTableSettings(GeneralSettingsTableSettings);
