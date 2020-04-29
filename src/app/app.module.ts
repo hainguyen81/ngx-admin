@@ -140,6 +140,7 @@ import {MockDataModule} from './@core/mock/mock.data.module';
             strategies: [
                 NbxOAuth2AuthStrategy.setup({
                     name: 'email',
+                    baseEndpoint: '',
 
                     token: {
                         class: NbxAuthOAuth2Token,
