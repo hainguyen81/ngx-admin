@@ -1205,6 +1205,15 @@ export abstract class AbstractComponent
         indexDbService || throwError('Could not inject NgxIndexedDBService instance');
         localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
         const indexDbDelRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
+        indexDbDelRequest.transaction.abort();
+        indexDbDelRequest.onblocked = function(event) {
+            logger && logger.warn('Could not delete database because database has been blocked!', event);
+            !logger && window.console.warn(['Could not delete database because database has been blocked!', event]);
+        };
+        indexDbDelRequest.onupgradeneeded = function(event) {
+            logger && logger.warn('Database needs to upgrade!', event);
+            !logger && window.console.warn(['Database needs to upgrade!', event]);
+        };
         indexDbDelRequest.onerror = function(event) {
             logger && logger.error('Could not delete database!', event);
             !logger && window.console.error(['Could not delete database!', event]);
