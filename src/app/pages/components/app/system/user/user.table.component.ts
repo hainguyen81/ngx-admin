@@ -29,6 +29,8 @@ import {throwError} from 'rxjs';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Cell} from 'ng2-smart-table';
+import {IUser} from '../../../../../@core/data/system/user';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -45,7 +47,7 @@ export const UserTableSettings = {
     },
     columns: {
         image: {
-            title: 'system.user.table.image',
+            title: 'system.user.table.username',
             type: 'custom',
             sort: false,
             filter: false,
@@ -55,13 +57,9 @@ export const UserTableSettings = {
                 type: 'custom',
                 component: ImageCellComponent,
             },
-        },
-        username: {
-            title: 'system.user.table.username',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editable: false,
+            descriptorPrepare: (cell: Cell, user: IUser) => {
+                return (user ? user.username || '' : '');
+            },
         },
         firstName: {
             title: 'system.user.table.firstName',
