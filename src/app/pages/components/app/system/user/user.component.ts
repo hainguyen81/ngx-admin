@@ -32,6 +32,7 @@ import {
 } from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
+import {isArray} from 'util';
 
 @Component({
     moduleId: MODULE_CODES.SYSTEM_USER,
@@ -129,7 +130,7 @@ export class UserComponent
                         if (!user) {
                             this.showGlobalError();
                         } else {
-                            this.onEditUser(user);
+                            this.onEditUser(isArray(user) ? Array.from(user)[0] : user);
                         }
                     }, reason => throwError(reason))
                     .catch(reason => throwError(reason));
