@@ -56,9 +56,11 @@ export const UserTableSettings = {
             editor: {
                 type: 'custom',
                 component: ImageCellComponent,
-            },
-            descriptorPrepare: (cell: Cell, user: IUser) => {
-                return (user ? user.username || '' : '');
+                config: {
+                    'descriptorPrepare': (cell: Cell, user: IUser) => {
+                        return (user ? user.username || '' : '');
+                    },
+                },
             },
         },
         firstName: {

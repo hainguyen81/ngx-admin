@@ -14,4 +14,8 @@
             }
         }
     }
+    ::ng-deep ngx-image-gallery {
+        display: table-cell;
+        padding-right: 10px;
+    }
 }
