@@ -1,7 +1,7 @@
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import SystemDataUtils from './system/system.data.utils';
 import {IGeneralSettings} from '../@core/data/system/general.settings';
-import BaseModel, {IModel} from '../@core/data/base';
+import {IModel} from '../@core/data/base';
 import {isArray, isNullOrUndefined} from 'util';
 import {Type} from '@angular/core';
 import {
@@ -24,6 +24,7 @@ export default class AppObserveUtils {
      * @param fieldComponentType the field component type to apply settings values
      * @param moduleCode module code
      * @param settingCode the general settings code
+     * @param settingFilter to filter settings
      * @param noneOption the first none select option. NULL for not using
      * @param translateService need to translate settings values
      */
@@ -31,7 +32,7 @@ export default class AppObserveUtils {
         T extends IModel, FC extends AppFormlySelectExFieldComponent<T>>(
             generalSettingsDatasource: GeneralSettingsDatasource,
             field: FormlyFieldConfig, fieldComponentType: Type<FC>,
-            moduleCode: string, settingCode: string,
+            moduleCode: string, settingCode: string, settingFilter?: (option: T) => boolean,
             noneOption?: T | null, translateService?: TranslateService | null): Promise<void> {
         generalSettingsDatasource || throwError('GeneralSettingsDatasource is required');
         field || throwError('Field is required');
@@ -49,7 +50,8 @@ export default class AppObserveUtils {
                 let options: T[] = [];
                 !isNullOrUndefined(noneOption) && options.push(noneOption);
                 options = options.concat(settings as T[]);
-                this.observeGeneralSettingsFormFieldComponent(field, fieldComponentType, options);
+                this.observeGeneralSettingsFormFieldComponent(
+                    field, settingFilter, fieldComponentType, options);
             });
     }
     /**
@@ -58,16 +60,18 @@ export default class AppObserveUtils {
      * @param field the form field that need to observe
      * @param moduleCode module code
      * @param settingCode the general settings code
+     * @param settingFilter to filter settings
      * @param noneOption the first none select option. NULL for not using
      * @param translateService need to translate settings values
      */
     public static observeDefaultGeneralSettingsFormField<T extends IModel>(
             generalSettingsDatasource: GeneralSettingsDatasource, field: FormlyFieldConfig,
-            moduleCode: string, settingCode: string,
+            moduleCode: string, settingCode: string, settingFilter?: (option: T) => boolean,
             noneOption?: T | null, translateService?: TranslateService | null): Promise<void> {
         return this.observeGeneralSettingsFormField(
             generalSettingsDatasource, field, null,
-            moduleCode, settingCode, noneOption, translateService);
+            moduleCode, settingCode,
+            settingFilter, noneOption, translateService);
     }
     /**
      * Observe the general settings by code to the specified field component
@@ -75,15 +79,18 @@ export default class AppObserveUtils {
      * @param field the form field that need to observe
      * @param moduleCode module code
      * @param settingCode the general settings code
+     * @param settingFilter to filter settings
      * @param noneOption the first none select option. NULL for not using
      * @param translateService need to translate settings values
      */
     public static observeDefaultSystemGeneralSettingsFormField<T extends IModel>(
             generalSettingsDatasource: GeneralSettingsDatasource, field: FormlyFieldConfig,
-            settingCode: string, noneOption?: T | null, translateService?: TranslateService | null): Promise<void> {
+            settingCode: string, settingFilter?: (option: T) => boolean,
+            noneOption?: T | null, translateService?: TranslateService | null): Promise<void> {
         return this.observeGeneralSettingsFormField(
             generalSettingsDatasource, field, null,
-            MODULE_CODES.SYSTEM, settingCode, noneOption, translateService);
+            MODULE_CODES.SYSTEM, settingCode,
+            settingFilter, noneOption, translateService);
     }
     /**
      * Observe the general settings by code to the specified field component
@@ -91,25 +98,31 @@ export default class AppObserveUtils {
      * @param field the form field that need to observe
      * @param moduleCode module code
      * @param settingCode the general settings code
+     * @param settingFilter to filter settings
      * @param noneOption the first none select option. NULL for not using
      * @param translateService need to translate settings values
      */
     public static observeDefaultWarehouseGeneralSettingsFormField<
         T extends IModel, FC extends AppFormlySelectExFieldComponent<T>>(
         generalSettingsDatasource: GeneralSettingsDatasource, field: FormlyFieldConfig,
-        settingCode: string, noneOption?: T | null, translateService?: TranslateService | null): Promise<void> {
+        settingCode: string, settingFilter?: (option: T) => boolean,
+        noneOption?: T | null, translateService?: TranslateService | null): Promise<void> {
         return this.observeGeneralSettingsFormField(
             generalSettingsDatasource, field, null,
-            MODULE_CODES.WAREHOUSE, settingCode, noneOption, translateService);
+            MODULE_CODES.WAREHOUSE, settingCode,
+            settingFilter, noneOption, translateService);
     }
     /**
      * Observe general settings field component
      * @param field to observe
+     * @param settingFilter to filter settings
+     * @param fieldComponentType field editor component
      * @param options to apply
      */
     private static observeGeneralSettingsFormFieldComponent<
         T extends IModel, FC extends AppFormlySelectExFieldComponent<T>>(
-            field: FormlyFieldConfig, fieldComponentType: Type<FC>, options: T[]): void {
+            field: FormlyFieldConfig, settingFilter: (option: T) => boolean,
+            fieldComponentType: Type<FC>, options: T[]): void {
         field || throwError('Field is required');
         const fieldComponentRef: any = (field.templateOptions && field.templateOptions['componentRef']
             ? <FC>field.templateOptions['componentRef'] : null);
@@ -124,7 +137,7 @@ export default class AppObserveUtils {
             settingsFieldComponent = <FC>fieldComponentRef;
         }
         settingsFieldComponent || throwError('Could not parse field component or invalid component type');
-        const noneOption: IModel = new BaseModel(null);
+        options = (isNullOrUndefined(settingFilter) ? options : (options || []).filter(settingFilter));
         if (settingsFieldComponent && !isNullOrUndefined(options)) {
             settingsFieldComponent.setItems(options);
 
@@ -140,12 +153,14 @@ export default class AppObserveUtils {
      * @param column need to apply
      * @param moduleCode module code
      * @param settingCode the general settings code
+     * @param settingFilter to filter settings
      * @param translateService need to translate settings values
      */
     public static observeGeneralSettingsTableColumn(
         generalSettingsDatasource: GeneralSettingsDatasource,
         tableSettings: any, column: string,
         moduleCode: string, settingCode: string,
+        settingFilter?: (setting: { [key: string]: string | string[] | IGeneralSettings; }) => boolean,
         translateService?: TranslateService | null): Promise<void> {
         generalSettingsDatasource || throwError('GeneralSettingsDatasource is required');
         Object.keys(tableSettings || {}).length
@@ -171,7 +186,9 @@ export default class AppObserveUtils {
                 'label': (model: IGeneralSettings) => (isNullOrUndefined(translateService)
                     ? model.value : translateService.instant(model.value.toString())),
             }).then((settings: { [key: string]: string | string[] | IGeneralSettings; }[]) => {
-                tableSettings['columns'][column]['editor']['config']['list'] = settings;
+                const filteredSettings: { [key: string]: string | string[] | IGeneralSettings; }[] =
+                    (isNullOrUndefined(settingFilter) ? settings : settings.filter(settingFilter));
+                tableSettings['columns'][column]['editor']['config']['list'] = filteredSettings;
             });
     }
     /**
@@ -181,15 +198,18 @@ export default class AppObserveUtils {
      * @param column need to apply
      * @param moduleCode module code
      * @param settingCode the general settings code
+     * @param settingFilter to filter settings
      * @param translateService need to translate settings values
      */
     public static observeDefaultSystemGeneralSettingsTableColumn(
         generalSettingsDatasource: GeneralSettingsDatasource,
         tableSettings: any, column: string, settingCode: string,
+        settingFilter?: (setting: { [key: string]: string | string[] | IGeneralSettings; }) => boolean,
         translateService?: TranslateService | null): Promise<void> {
         return this.observeGeneralSettingsTableColumn(
             generalSettingsDatasource, tableSettings, column,
-            MODULE_CODES.SYSTEM, settingCode, translateService);
+            MODULE_CODES.SYSTEM, settingCode,
+            settingFilter, translateService);
     }
     /**
      * Observe general setting column by setting code
@@ -198,15 +218,18 @@ export default class AppObserveUtils {
      * @param column need to apply
      * @param moduleCode module code
      * @param settingCode the general settings code
+     * @param settingFilter to filter settings
      * @param translateService need to translate settings values
      */
     public static observeDefaultWarehouseGeneralSettingsTableColumn(
         generalSettingsDatasource: GeneralSettingsDatasource,
         tableSettings: any, column: string, settingCode: string,
+        settingFilter?: (setting: { [key: string]: string | string[] | IGeneralSettings; }) => boolean,
         translateService?: TranslateService | null): Promise<void> {
         return this.observeGeneralSettingsTableColumn(
             generalSettingsDatasource, tableSettings, column,
-            MODULE_CODES.WAREHOUSE, settingCode, translateService);
+            MODULE_CODES.WAREHOUSE, settingCode,
+            settingFilter, translateService);
     }
     /**
      * Translate the table column value to the display value

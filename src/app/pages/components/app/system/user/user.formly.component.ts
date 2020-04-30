@@ -245,7 +245,8 @@ export class UserFormlyComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[3].fieldGroup[1],
-                BUILTIN_CODES.STATUS.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code,
+                null, this.noneOption, this.getTranslateService()),
         ]).then(value => this.getLogger().debug('Loading settings successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

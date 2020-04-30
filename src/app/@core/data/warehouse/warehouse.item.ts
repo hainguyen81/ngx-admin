@@ -1,6 +1,8 @@
 import BaseModel, {IModel} from '../base';
 import {IWarehouseCategory} from './warehouse.category';
 
+export const WI_VERSION_CODE_SUFFIX: string = 'VER.';
+
 export interface IWarehouseItem extends IModel {
     // Mã hàng hóa
     code: string;
@@ -58,6 +60,8 @@ export interface IWarehouseItem extends IModel {
     description?: string | null;
     // Ghi chú
     remark?: string | null;
+    // the number of versions
+    versions?: number | 0;
 
     // foreign keys
     // Loại hàng hóa
@@ -66,6 +70,13 @@ export interface IWarehouseItem extends IModel {
     // Hãng sản xuất
     brand_id?: String | null;
     brand?: IWarehouseCategory | null;
+}
+
+export function generateWarehouseItemVersionCode(itemCode: string, version?: number | 0) {
+    if (!(itemCode || '').length || version <= 0) {
+        return itemCode;
+    }
+    return [itemCode, [WI_VERSION_CODE_SUFFIX, version].join('')].join('_');
 }
 
 export default class WarehouseItem extends BaseModel implements IWarehouseItem {

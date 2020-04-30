@@ -1,7 +1,7 @@
 import {IdGenerators} from '../../../config/generator.config';
 import GeneralSettings, {IGeneralSettings} from '../../data/system/general.settings';
 import {MockModuleSystem, MockModuleWarehouse} from './mock.module';
-import {Constants as CommonConstants} from '../../data/constants/common.constants';
+import {Constants, Constants as CommonConstants} from '../../data/constants/common.constants';
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import STATUS = CommonConstants.COMMON.STATUS;
 import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
@@ -13,6 +13,7 @@ import {Constants as WarehouseConstants} from '../../data/constants/warehouse.ca
 import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import {Constants as WarehouseSettingsConstants} from '../../data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WarehouseSettingsConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
+import CURRENCY = Constants.COMMON.CURRENCY;
 
 export function generalSystemSettingsStatusGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
@@ -101,6 +102,30 @@ export function generalSystemSettingsOrganizationGenerate(): IGeneralSettings[] 
     return systemSettings;
 }
 
+export function generalSystemSettingsCurrencyGenerate(): IGeneralSettings[] {
+    let systemSettings: IGeneralSettings[];
+    let systemSetting: IGeneralSettings;
+    systemSettings = [];
+
+    // -------------------------------------------------
+    // CURRENCY
+    // -------------------------------------------------
+    Object.keys(CURRENCY).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.CURRENCY.code;
+        systemSetting.name = k;
+        systemSetting.value = CURRENCY[k];
+        systemSetting.module_id = MockModuleSystem.id;
+        systemSetting.module_code = MockModuleSystem.code;
+        systemSetting.module = MockModuleSystem;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    return systemSettings;
+}
+
 export function generalWarehouseSettingsSettingsTypeGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
     let systemSetting: IGeneralSettings;
@@ -155,6 +180,7 @@ export function generalSettingsGenerate(): IGeneralSettings[] {
 
     // Common
     mockSettings = mockSettings.concat(generalSystemSettingsStatusGenerate());
+    mockSettings = mockSettings.concat(generalSystemSettingsCurrencyGenerate());
 
     // Customer
     mockSettings = mockSettings.concat(generalSystemSettingsCustomerGenerate());

@@ -218,10 +218,12 @@ export class WarehouseCategoryFormlyComponent
             this.observeBelongToField(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0]),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0],
-                BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code,
+                null, this.noneOption, this.getTranslateService()),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[1],
-                BUILTIN_CODES.STATUS.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code,
+                null, this.noneOption, this.getTranslateService()),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
             reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

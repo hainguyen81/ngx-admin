@@ -191,7 +191,8 @@ export class WarehouseSettingsSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'type',
-                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code, this.getTranslateService()),
+                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
+                null, this.getTranslateService()),
         ]).then(
             value => {
                 this.getLogger().debug('Loading general settings successful');

@@ -43,6 +43,12 @@
                 "department": "Phòng ban",
                 "team_group": "Đội / Nhóm"
             },
+            "currency": {
+                "name": "Tiền tệ",
+                "usd": "USD",
+                "vnd": "VND",
+                "others": "Khác"
+            },
             "warehouseSettings": {
                 "name": "Thiếp lập kho",
                 "brand": {

@@ -43,6 +43,12 @@
                 "department": "Department",
                 "team_group": "Team/Group"
             },
+            "currency": {
+                "name": "Currency",
+                "usd": "USD",
+                "vnd": "VND",
+                "others": "Others"
+            },
             "warehouseSettings": {
                 "name": "Warehouse settings",
                 "brand": {

@@ -8,6 +8,8 @@ export namespace Constants {
 
         export function convertWarehouseSettingsTypeToDisplay(value: WAREHOUSE_SETTINGS_TYPE): string {
             switch (value) {
+                case WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS:
+                    return 'common.enum.warehouseSettings.brand.name';
                 case WAREHOUSE_SETTINGS_TYPE.ITEM_SETTINGS:
                     return 'common.enum.warehouseSettings.item.name';
                 default:

@@ -195,7 +195,7 @@ export class UserSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.STATUS.code, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code, null, this.getTranslateService()),
         ]).then(value => {
             this.getLogger().debug('Loading settings successful');
             this.getDataSource().refresh();

@@ -3,7 +3,8 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -29,46 +30,23 @@ import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.ut
 import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import PromiseUtils from '../../../../../utils/promise.utils';
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import {
+    GeneralSettingsDatasource,
+} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {throwError} from 'rxjs';
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {Constants as WarehouseConstants} from '../../../../../@core/data/constants/warehouse.settings.constants';
+import WAREHOUSE_SETTINGS_TYPE = WarehouseConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
 /* default warehouse item overview formly fields config */
 export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col belongTo',
-                key: 'categories_id',
-                type: 'warehouse-category-treeview-dropdown',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.category.label',
-                    placeholder: 'warehouse.item.overview.form.category.placeholder',
-                    options: [],
-                    required: true,
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col',
-                key: 'brand_id',
-                type: 'select',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.brand.label',
-                    placeholder: 'warehouse.item.overview.form.brand.placeholder',
-                    options: [],
-                    disabled: false,
-                    required: true,
-                },
-            },
-        ],
-    },
     {
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
@@ -103,23 +81,14 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-6',
-                key: 'barcode',
-                type: 'input',
+                className: 'col belongTo',
+                key: 'categories_id',
+                type: 'warehouse-category-treeview-dropdown',
                 templateOptions: {
-                    label: 'warehouse.item.overview.form.barcode.label',
-                    placeholder: 'warehouse.item.overview.form.barcode.placeholder',
-                    required: false,
-                },
-            },
-            {
-                className: 'col-6',
-                key: 'number_of_prints',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.number_of_prints.label',
-                    placeholder: 'warehouse.item.overview.form.number_of_prints.placeholder',
-                    required: false,
+                    label: 'warehouse.item.overview.form.category.label',
+                    placeholder: 'warehouse.item.overview.form.category.placeholder',
+                    options: [],
+                    required: true,
                 },
             },
         ],
@@ -129,11 +98,61 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col',
-                key: 'serial',
+                key: 'brand_id',
+                type: 'select-ex-general-settings',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.brand.label',
+                    placeholder: 'warehouse.item.overview.form.brand.placeholder',
+                    options: [],
+                },
+            },
+        ],
+    },
+    {
+        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroup: [
+            {
+                className: 'col-6',
+                key: 'dealer_price',
                 type: 'input',
                 templateOptions: {
-                    label: 'warehouse.item.overview.form.serial.label',
-                    placeholder: 'warehouse.item.overview.form.serial.placeholder',
+                    label: 'warehouse.item.overview.form.dealer_price.label',
+                    placeholder: 'warehouse.item.overview.form.dealer_price.placeholder',
+                    required: true,
+                },
+            },
+            {
+                className: 'col-6',
+                key: 'cost_price',
+                type: 'input',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.cost_price.label',
+                    placeholder: 'warehouse.item.overview.form.cost_price.placeholder',
+                    required: true,
+                },
+            },
+        ],
+    },
+    {
+        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroup: [
+            {
+                className: 'col-6',
+                key: 'selling_price',
+                type: 'input',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.selling_price.label',
+                    placeholder: 'warehouse.item.overview.form.selling_price.placeholder',
+                    required: true,
+                },
+            },
+            {
+                className: 'col-6',
+                key: 'currency',
+                type: 'select-ex-general-settings',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.currency.label',
+                    placeholder: 'warehouse.item.overview.form.currency.placeholder',
                     required: false,
                 },
             },
@@ -143,22 +162,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col',
-                key: 'manufacturer',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.manufacturer.label',
-                    placeholder: 'warehouse.item.overview.form.manufacturer.placeholder',
-                    required: false,
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-3',
+                className: 'col-4',
                 key: 'length',
                 type: 'input',
                 templateOptions: {
@@ -168,7 +172,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                 },
             },
             {
-                className: 'col-3',
+                className: 'col-4',
                 key: 'width',
                 type: 'input',
                 templateOptions: {
@@ -178,7 +182,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                 },
             },
             {
-                className: 'col-3',
+                className: 'col-4',
                 key: 'height',
                 type: 'input',
                 templateOptions: {
@@ -269,46 +273,21 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-6',
-                key: 'dealer_price',
+                key: 'manufacturer',
                 type: 'input',
                 templateOptions: {
-                    label: 'warehouse.item.overview.form.dealer_price.label',
-                    placeholder: 'warehouse.item.overview.form.dealer_price.placeholder',
-                    required: true,
+                    label: 'warehouse.item.overview.form.manufacturer.label',
+                    placeholder: 'warehouse.item.overview.form.manufacturer.placeholder',
+                    required: false,
                 },
             },
             {
                 className: 'col-6',
-                key: 'cost_price',
+                key: 'serial',
                 type: 'input',
                 templateOptions: {
-                    label: 'warehouse.item.overview.form.cost_price.label',
-                    placeholder: 'warehouse.item.overview.form.cost_price.placeholder',
-                    required: true,
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-6',
-                key: 'selling_price',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.selling_price.label',
-                    placeholder: 'warehouse.item.overview.form.selling_price.placeholder',
-                    required: true,
-                },
-            },
-            {
-                className: 'col-6',
-                key: 'currency',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.currency.label',
-                    placeholder: 'warehouse.item.overview.form.currency.placeholder',
+                    label: 'warehouse.item.overview.form.serial.label',
+                    placeholder: 'warehouse.item.overview.form.serial.placeholder',
                     required: false,
                 },
             },
@@ -338,6 +317,20 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'warehouse.item.overview.form.description.label',
                     placeholder: 'warehouse.item.overview.form.description.placeholder',
+                },
+            },
+        ],
+    },
+    {
+        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroup: [
+            {
+                className: 'col-3',
+                key: 'status',
+                type: 'select-ex-general-settings',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.status.label',
+                    placeholder: 'warehouse.item.overview.form.status.placeholder',
                 },
             },
         ],
@@ -395,12 +388,15 @@ export class WarehouseItemOverviewFormlyComponent
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource) {
+                @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource,
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+        categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
+        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setConfig(WarehouseItemOverviewFormConfig);
         super.setFields(WarehouseItemOverviewFormFieldsConfig);
     }
@@ -412,6 +408,20 @@ export class WarehouseItemOverviewFormlyComponent
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        // observe fields
+        this.observeFields();
+    }
+
+    // -------------------------------------------------
+    // FUNCTION
+    // -------------------------------------------------
+
+    /**
+     * Observe fields
+     */
+    private observeFields(): void {
+        const fields: FormlyFieldConfig[] = this.getFields();
+
         // listen data model changes for updating
         this.getFormlyForm().modelChange.subscribe(() => {
             WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource)
@@ -422,17 +432,42 @@ export class WarehouseItemOverviewFormlyComponent
                     options.push(categories);
                     let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
-                        this.getFormlyForm().fields[0].fieldGroup[0],
+                        fields[2].fieldGroup[0],
                         WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
                     belongToComponent && belongToComponent.reloadFieldByOptions(options);
                     this.setBelongToSelectedValue(this.getFormlyForm().fields[0].fieldGroup[0], this.getModel());
                 });
         });
+
+        // master settings fields
+        this.observeSettingsFields(fields);
     }
 
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
+    /**
+     * Observe master settings fields
+     * @param fields to observe
+     */
+    private observeSettingsFields(fields: FormlyFieldConfig[]): void {
+        const brandSettings: string = Object.keys(WAREHOUSE_SETTINGS_TYPE)
+            .find(key => WAREHOUSE_SETTINGS_TYPE[key] === WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS);
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource, fields[3].fieldGroup[0],
+                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE,
+                (option: IGeneralSettings) => (option && option.name === brandSettings),
+                this.noneOption, this.getTranslateService()),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource, fields[5].fieldGroup[1],
+                BUILTIN_CODES.CURRENCY,
+                null, this.noneOption, this.getTranslateService()),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+                this.generalSettingsDatasource, fields[13].fieldGroup[0],
+                BUILTIN_CODES.STATUS,
+                null, this.noneOption, this.getTranslateService()),
+        ]).then(value => this.getLogger().debug('Loading settings successful!'),
+                reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
+    }
 
     /**
      * Disable current data model in the belongTo field

@@ -435,7 +435,8 @@ export class OrganizationFormlyComponent
             this.observeManagerField(),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, this.getFields()[1].fieldGroup[0],
-                BUILTIN_CODES.ORGANIZATION_TYPE.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.ORGANIZATION_TYPE.code,
+                null, this.noneOption, this.getTranslateService()),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

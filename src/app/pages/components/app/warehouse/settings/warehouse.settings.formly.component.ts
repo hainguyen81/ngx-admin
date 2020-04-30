@@ -177,7 +177,8 @@ export class WarehouseSettingsFormlyComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[0],
-                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code, this.noneOption, this.getTranslateService()),
+                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
+                null, this.noneOption, this.getTranslateService()),
         ]).then(value => this.getLogger().debug('Loading general settings successful'),
             reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

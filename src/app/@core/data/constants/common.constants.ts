@@ -9,6 +9,12 @@ export namespace Constants {
             LOCKED = 'common.enum.status.locked',
         }
 
+        export enum CURRENCY {
+            USD = 'common.enum.currency.usd',
+            VND = 'common.enum.currency.vnd',
+            OTHERS = 'common.enum.currency.others',
+        }
+
         export const MODULE_CODES: any = {
             SYSTEM: API.system.code.call(undefined),
             SYSTEM_SETTINGS: API.system.children.generalSettings.code.call(undefined),
@@ -31,6 +37,7 @@ export namespace Constants {
         export const BUILTIN_CODES: any = {
             // common
             STATUS: { code: 'STATUS', name: 'common.enum.status.name' },
+            CURRENCY: { code: 'CURRENCY', name: 'common.enum.currency.name' },
             // customer
             CUSTOMER_LEVEL: { code: 'CUSTOMER_LEVEL', name: 'common.enum.customerLevel.name' },
             CUSTOMER_TYPE: { code: 'CUSTOMER_TYPE', name: 'common.enum.customerType.name' },
