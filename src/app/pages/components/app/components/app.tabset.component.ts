@@ -72,7 +72,7 @@ export abstract class AppTabsetComponent<
      * @return all {ITabConfig}
      */
     protected get tabConfigs(): ITabConfig[] {
-        return this.tabConfigs;
+        return this._tabConfigs;
     }
 
     /**
