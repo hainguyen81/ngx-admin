@@ -16,15 +16,14 @@ import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AppSmartTableComponent} from './app.table.component';
-import {AppFormlyComponent} from './app.formly.component';
+import {AppFlipcardComponent} from './app.flipcard.component';
+import {AbstractComponent, IEvent} from '../../abstract.component';
 import {AppToolbarComponent} from './app.toolbar.component';
-import {DeepCloner} from '../../../../utils/object.utils';
-import {IdGenerators} from '../../../../config/generator.config';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppTableFlipComponent} from './app.table.flip.component';
 
 @Component({
-    selector: 'ngx-flip-card-app-table-form',
+    selector: 'ngx-flip-card-app-table',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../flipcard/flipcard.component.html',
     styleUrls: [
@@ -33,12 +32,38 @@ import {AppTableFlipComponent} from './app.table.flip.component';
         './app.table.flip.component.scss',
     ],
 })
-export abstract class AppTableFlipFormComponent<
+export abstract class AppTableFlipComponent<
     T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     F extends AppSmartTableComponent<D>,
-    B extends AppFormlyComponent<T, D>>
-    extends AppTableFlipComponent<T, D, TB, F, B> implements AfterViewInit {
+    B extends AbstractComponent>
+    extends AppFlipcardComponent<D, TB, F, B> implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _selectedModel: T;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the current selected data model
+     * @return the current selected data model
+     */
+    protected get selectedModel(): T {
+        return this._selectedModel;
+    }
+
+    /**
+     * Set the current selected data model
+     * @param _selectedModel to apply
+     */
+    protected set selectedModel(_selectedModel: T) {
+        this._selectedModel = _selectedModel;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -89,60 +114,73 @@ export abstract class AppTableFlipFormComponent<
     }
 
     // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // listener
+        if (super.getFrontComponent()) {
+            (<AppSmartTableComponent<D>>super.getFrontComponent())
+                .setNewItemListener($event => {
+                    this._selectedModel = null;
+                    this.onNewData($event);
+                    this.setFlipped(true);
+                });
+            (<AppSmartTableComponent<D>>super.getFrontComponent())
+                .setEditItemListener($event => {
+                    this._selectedModel = ($event && $event.data
+                        && $event.data['row'] instanceof Row
+                        ? ($event.data['row'] as Row).getData() as T : undefined);
+                    this.onEditData($event);
+                    this.setFlipped(true);
+                });
+            (<AppSmartTableComponent<D>>super.getFrontComponent())
+                .setDeleteItemListener($event => {
+                    this._selectedModel = ($event && $event.data
+                    && $event.data['row'] instanceof Row
+                        ? ($event.data['row'] as Row).getData() as T : undefined);
+                    this.onDeleteData($event);
+                    this.setFlipped(false);
+                });
+        }
+    }
+
+    /**
+     * Call when table wanna add new data
+     * @param $event event data {IEvent}
+     */
+    protected onNewData($event: IEvent): void {
+        this.getLogger().debug('Flip-table wanna add new data', $event);
+    }
+
+    /**
+     * Call when table wanna edit data
+     * @param $event event data {IEvent}
+     */
+    protected onEditData($event: IEvent): void {
+        this.getLogger().debug('Flip-table wanna edit data', $event);
+    }
+
+    /**
+     * Call when table wanna delete data
+     * @param $event event data {IEvent}
+     */
+    protected onDeleteData($event: IEvent): void {
+        this.getLogger().debug('Flip-table wanna delete data', $event);
+    }
+
+    // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
 
-    protected isDataChanged(): boolean {
-        return this.getBackComponent().getFormGroup().dirty;
-    }
-
     /**
-     * Perform saving data
+     * Perform going back data
      */
-    protected doSave(): void {
-        this.getBackComponent().getFormGroup().updateValueAndValidity();
-        if (this.getBackComponent().getFormGroup().invalid) {
-            if (this.getToolbarComponent()) {
-                this.showError(this.getToolbarComponent().getToolbarHeader().title,
-                    'common.form.invalid_data');
-            } else {
-                this.showError('app', 'common.form.invalid_data');
-            }
-            return;
-        }
-
-        // update model if necessary
-        const model: T = this.getBackComponent().getModel();
-        model.id = model.id || IdGenerators.oid.generate();
-        this.getDataSource().update(this.selectedModel, model)
-            .then(() => { this.showSaveDataSuccess(); this.doBack(); })
-            .catch(() => this.showSaveDataError());
-    }
-
-    /**
-     * Perform resetting data
-     */
-    protected doReset(): void {
-        const cloned: T = DeepCloner(this.selectedModel);
-        delete cloned['parent'], cloned['children'];
-        this.getBackComponent().setModel(cloned);
-    }
-
-    /**
-     * Perform deleting data
-     */
-    protected doDelete(): void {
-        this.getConfirmPopup().show({
-            cancelButton: this.translate('common.toast.confirm.delete.cancel'),
-            color: 'warn',
-            content: this.translate('common.toast.confirm.delete.message'),
-            okButton: this.translate('common.toast.confirm.delete.ok'),
-            title: (!this.getToolbarComponent() ? this.translate('app')
-                : this.translate(this.getToolbarComponent().getToolbarHeader().title)),
-        }).toPromise().then(value => {
-            value && this.getDataSource().remove(this.getBackComponent().getModel())
-                .then(() => { this.showDeleteDataSuccess(); this.doBack(); })
-                .catch(() => this.showSaveDataError());
-        });
+    protected doBack(): void {
+        // back to front
+        this._selectedModel = undefined;
+        this.setFlipped(false);
     }
 }

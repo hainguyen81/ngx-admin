@@ -22,20 +22,26 @@ import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.compon
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import {AppFlipcardComponent} from '../../components/app.flipcard.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AppTableFlipComponent} from '../../components/app.table.flip.component';
+import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-flip-card-warehouse-item',
+    selector: 'ngx-flip-card-app-table-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',
-    styleUrls: ['../../../flipcard/flipcard.component.scss', './warehouse.item.flipcard.component.scss'],
+    styleUrls: [
+        '../../../flipcard/flipcard.component.scss',
+        '../../components/app.flipcard.component.scss',
+        '../../components/app.table.flip.component.scss',
+        './warehouse.item.flipcard.component.scss',
+    ],
 })
 export class WarehouseItemFlipcardComponent
-    extends AppFlipcardComponent<
-        WarehouseItemDatasource,
+    extends AppTableFlipComponent<
+        IWarehouseItem, WarehouseItemDatasource,
         WarehouseItemToolbarComponent,
         WarehouseItemSmartTableComponent,
         WarehouseItemSplitPaneComponent>
