@@ -91,6 +91,14 @@ export abstract class AppFlipcardComponent<
     }
 
     /**
+     * Get a boolean value indicating whether creating back-component at start-up
+     * @return true (default) for creating; else false
+     */
+    protected fulfillComponentsAtStartup(): boolean {
+        return true;
+    }
+
+    /**
      * Get the toolbar {AppToolbarComponent} instance
      * @return the toolbar {AppToolbarComponent} instance
      */
@@ -261,7 +269,16 @@ export abstract class AppFlipcardComponent<
         && this.toolbarComponent.actionListener()
             .subscribe($event => this.onClickAction($event));
         this.frontComponent = super.setFrontComponent(this.frontComponentType);
-        this.backComponent = super.setBackComponent(this.backComponentType);
+        this.fulfillComponentsAtStartup() && this.ensureBackComponent();
+    }
+
+    /**
+     * Ensure back-component whether has been created
+     */
+    protected ensureBackComponent(): void {
+        if (!this.backComponent) {
+            this.backComponent = super.setBackComponent(this.backComponentType);
+        }
     }
 
     /**

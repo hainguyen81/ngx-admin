@@ -86,4 +86,15 @@ export abstract class BaseTabsetComponent<T extends DataSource> extends NgxTabse
         viewContainerRef = this.getTabContentHolderViewContainerComponents()[tabIndex];
         return super.createComponentAt(viewContainerRef, componentType);
     }
+
+    /**
+     * Create the front component dynamically
+     * @param componentType front component type
+     * @return created component
+     */
+    protected setToolbarComponent(componentType: Type<any>): any {
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getHeaderViewContainerComponent();
+        return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
+    }
 }

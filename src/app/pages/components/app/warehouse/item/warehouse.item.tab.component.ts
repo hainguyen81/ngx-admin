@@ -1,7 +1,5 @@
-import {BaseTabsetComponent} from '../../../tab/base.tab.component';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
@@ -28,9 +26,10 @@ import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjus
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
-
-/** The number of tabs */
-export const WAREHOUSE_ITEM_TABS_NUMBER: number = 5;
+import {AppTabsetComponent} from '../../components/app.tabset.component';
+import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
+import {AbstractComponent} from '../../../abstract.component';
+import {throwError} from 'rxjs';
 
 export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
     /**
@@ -191,23 +190,19 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-tabset-warehouse-item',
+    selector: 'ngx-tabset-app-warehouse-item',
     templateUrl: '../../../tab/tab.component.html',
     styleUrls: ['../../../tab/tab.component.scss'],
 })
 export class WarehouseItemTabsetComponent
-    extends BaseTabsetComponent<WarehouseItemDatasource>
-    implements AfterViewInit {
+    extends AppTabsetComponent<
+        IWarehouseItem, WarehouseItemDatasource,
+        WarehouseItemToolbarComponent, AbstractComponent> {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    private warehouseItemOverviewTabComponent: WarehouseItemOverviewFormlyComponent;
-    private warehouseItemPurchaseTabComponent: WarehouseItemPurchaseOrdersSmartTableComponent;
-    private warehouseItemSaleTabComponent: WarehouseItemSaleOrdersSmartTableComponent;
-    private warehouseItemInOutTabComponent: WarehouseItemInOutSmartTableComponent;
-    private warehouseItemAdjustmentTabComponent: WarehouseItemAdjustmentSmartTableComponent;
     private dataModel: IWarehouseItem;
 
     // -------------------------------------------------
@@ -248,7 +243,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemOverviewFormlyComponent} instance
      */
     protected getOverviewTab(): WarehouseItemOverviewFormlyComponent {
-        return this.warehouseItemOverviewTabComponent;
+        return this.getTabComponent(0, WarehouseItemOverviewFormlyComponent);
     }
 
     /**
@@ -256,7 +251,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
      */
     protected getPurchaseTab(): WarehouseItemPurchaseOrdersSmartTableComponent {
-        return this.warehouseItemPurchaseTabComponent;
+        return this.getTabComponent(1, WarehouseItemPurchaseOrdersSmartTableComponent);
     }
 
     /**
@@ -264,7 +259,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemSaleOrdersSmartTableComponent} instance
      */
     protected getSaleTab(): WarehouseItemSaleOrdersSmartTableComponent {
-        return this.warehouseItemSaleTabComponent;
+        return this.getTabComponent(2, WarehouseItemSaleOrdersSmartTableComponent);
     }
 
     /**
@@ -272,7 +267,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemInOutSmartTableComponent} instance
      */
     protected getInOutTab(): WarehouseItemInOutSmartTableComponent {
-        return this.warehouseItemInOutTabComponent;
+        return this.getTabComponent(3, WarehouseItemInOutSmartTableComponent);
     }
 
     /**
@@ -280,7 +275,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemAdjustmentSmartTableComponent} instance
      */
     protected getAdjustmentTab(): WarehouseItemAdjustmentSmartTableComponent {
-        return this.warehouseItemAdjustmentTabComponent;
+        return this.getTabComponent(4, WarehouseItemAdjustmentSmartTableComponent);
     }
 
     // -------------------------------------------------
@@ -324,55 +319,30 @@ export class WarehouseItemTabsetComponent
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            router, activatedRoute);
-        super.setNumberOfTabs(WAREHOUSE_ITEM_TABS_NUMBER);
+            router, activatedRoute,
+            WAREHOUSE_ITEM_TAB_CONFIGS,
+            null, [
+                WarehouseItemOverviewFormlyComponent,
+                WarehouseItemPurchaseOrdersSmartTableComponent,
+                WarehouseItemSaleOrdersSmartTableComponent,
+                WarehouseItemInOutSmartTableComponent,
+                WarehouseItemAdjustmentSmartTableComponent,
+            ]);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // create tab components
-        this.createTabComponents();
+    protected doSave(): void {
+        throwError('Not support for saving model from internal component!');
     }
 
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
+    protected doReset(): void {
+        throwError('Not support for resetting model from internal component!');
+    }
 
-    /**
-     * Create tab components
-     */
-    private createTabComponents(): void {
-        let tabIndex: number;
-        tabIndex = 0;
-        // overview tab
-        this.warehouseItemOverviewTabComponent = this.setTabComponent(
-            tabIndex, WarehouseItemOverviewFormlyComponent);
-        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
-        tabIndex += 1;
-        // purchase tab
-        this.warehouseItemPurchaseTabComponent = this.setTabComponent(
-            tabIndex, WarehouseItemPurchaseOrdersSmartTableComponent);
-        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
-        tabIndex += 1;
-        // sale tab
-        this.warehouseItemSaleTabComponent = this.setTabComponent(
-            tabIndex, WarehouseItemSaleOrdersSmartTableComponent);
-        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
-        tabIndex += 1;
-        // in/out tab
-        this.warehouseItemInOutTabComponent = this.setTabComponent(
-            tabIndex, WarehouseItemInOutSmartTableComponent);
-        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
-        tabIndex += 1;
-        // adjustment tab
-        this.warehouseItemAdjustmentTabComponent = this.setTabComponent(
-            tabIndex, WarehouseItemAdjustmentSmartTableComponent);
-        this.configTabByIndex(tabIndex, WAREHOUSE_ITEM_TAB_CONFIGS[tabIndex]);
-        tabIndex += 1;
+    protected performDelete(): void {
+        throwError('Not support for deleting model from internal component!');
     }
 }

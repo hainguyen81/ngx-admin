@@ -812,6 +812,7 @@
             },
             "table": {
                 "noData": "Không có bất kỳ sản phẩm nào trong kho",
+                "no": "STT",
                 "code": "Mã SP",
                 "name": "Tên SP",
                 "status": "Trạng thái",

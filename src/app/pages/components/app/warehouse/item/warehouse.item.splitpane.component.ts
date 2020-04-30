@@ -1,4 +1,3 @@
-import {BaseSplitPaneComponent} from '../../../splitpane/base.splitpane.component';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {
     AfterViewInit,
@@ -14,24 +13,17 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {throwError} from 'rxjs';
 import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
-import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
-import {IEvent} from '../../../abstract.component';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import {
-    ACTION_BACK,
-    ACTION_DELETE,
-    ACTION_RESET,
-    ACTION_SAVE,
-    IToolbarActionsConfig,
-} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
+import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
+import {throwError} from 'rxjs';
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {
@@ -55,24 +47,32 @@ export const WarehouseItemSummaryAreaConfig: ISplitAreaConfig = {
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-split-pane-app-warehouse-item',
     templateUrl: '../../../splitpane/splitpane.component.html',
-    styleUrls: ['../../../splitpane/splitpane.component.scss', './warehouse.item.splitpane.component.scss'],
+    styleUrls: ['../../../splitpane/splitpane.component.scss'],
 })
 export class WarehouseItemSplitPaneComponent
-    extends BaseSplitPaneComponent<WarehouseItemDatasource> implements AfterViewInit {
+    extends AppSplitPaneComponent<
+        IWarehouseItem, WarehouseItemDatasource,
+        WarehouseItemToolbarComponent,
+        WarehouseItemTabsetComponent,
+        WarehouseItemSummaryComponent> implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    private warehouseTabsetComponent: WarehouseItemTabsetComponent;
-    private warehouseSummaryComponent: WarehouseItemSummaryComponent;
-    private warehouseToolbarComponent: WarehouseItemToolbarComponent;
-    private warehouseToolbarActionsListener: (e: IEvent) => void;
     private dataModel: IWarehouseItem;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating the right side component should be created at start-up
+     * @return true for should be created; else false
+     */
+    protected shouldAttachRightSideOnStartup(): boolean {
+        return true;
+    }
 
     /**
      * Get a boolean value indicating the data model whether has been changed
@@ -110,7 +110,7 @@ export class WarehouseItemSplitPaneComponent
      * @return the {WarehouseItemTabsetComponent} instance
      */
     protected getTabsetComponent(): WarehouseItemTabsetComponent {
-        return this.warehouseTabsetComponent;
+        return this.getLeftSideComponent() as WarehouseItemTabsetComponent;
     }
 
     /**
@@ -118,23 +118,7 @@ export class WarehouseItemSplitPaneComponent
      * @return the {WarehouseItemSummaryComponent} instance
      */
     protected getSummaryComponent(): WarehouseItemSummaryComponent {
-        return this.warehouseSummaryComponent;
-    }
-
-    /**
-     * Get the {WarehouseItemToolbarComponent} instance
-     * @return the {WarehouseItemToolbarComponent} instance
-     */
-    protected getToolbarComponent(): WarehouseItemToolbarComponent {
-        return this.warehouseToolbarComponent;
-    }
-
-    /**
-     * Set the toolbar actions listener
-     * @param listener to apply
-     */
-    public setToolbarActionsListener(listener: (e: IEvent) => void): void {
-        this.warehouseToolbarActionsListener = listener;
+        return this.rightSideComponent as WarehouseItemSummaryComponent;
     }
 
     // -------------------------------------------------
@@ -178,69 +162,23 @@ export class WarehouseItemSplitPaneComponent
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            router, activatedRoute);
-        confirmPopup || throwError('Could not inject ConfirmPopup');
-        super.setHorizontal(true);
-        super.setNumberOfAreas(2);
+            router, activatedRoute,
+            null, WarehouseItemTabsetComponent, WarehouseItemSummaryComponent);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // Create left/right component panes
-        this.createPaneComponents();
+    protected doSave(): void {
+        throwError('Not support for saving model from internal component!');
     }
 
-    /**
-     * Raise when toolbar action item has been clicked
-     * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
-     */
-    onClickAction(event: IEvent) {
-        if (!event || !event.data || !(event.data as IToolbarActionsConfig)) {
-            return;
-        }
-        if (!this.warehouseToolbarActionsListener) {
-            let action: IToolbarActionsConfig;
-            action = event.data as IToolbarActionsConfig;
-            switch (action.id) {
-                case ACTION_SAVE:
-                    // TODO Waiting for saving
-                    break;
-                case ACTION_RESET:
-                    // TODO Waiting for resetting
-                    break;
-                case ACTION_DELETE:
-                    // TODO Waiting for deleting
-                    break;
-                case ACTION_BACK:
-                    // TODO Waiting for backing
-                    break;
-            }
-        } else this.warehouseToolbarActionsListener.apply(this, [ event ]);
+    protected doReset(): void {
+        throwError('Not support for resetting model from internal component!');
     }
 
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    /**
-     * Create left/right component panes
-     */
-    private createPaneComponents() {
-        // create toolbar
-        this.warehouseToolbarComponent = super.setToolbarComponent(WarehouseItemToolbarComponent);
-        this.warehouseToolbarComponent.actionListener().subscribe((e: IEvent) => this.onClickAction(e));
-
-        // create tabset component at left side
-        this.warehouseTabsetComponent = super.setAreaComponent(0, WarehouseItemTabsetComponent);
-        this.configAreaByIndex(0, WarehouseItemTabsetAreaConfig);
-
-        // create summary component at the right side
-        this.warehouseSummaryComponent = super.setAreaComponent(1, WarehouseItemSummaryComponent);
-        this.configAreaByIndex(1, WarehouseItemSummaryAreaConfig);
+    protected performDelete(): void {
+        throwError('Not support for deleting model from internal component!');
     }
 }

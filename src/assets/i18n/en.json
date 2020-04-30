@@ -812,6 +812,7 @@
             },
             "table": {
                 "noData": "Not found any item in warehouse",
+                "no": "No.",
                 "code": "Code",
                 "name": "Name",
                 "status": "Status",

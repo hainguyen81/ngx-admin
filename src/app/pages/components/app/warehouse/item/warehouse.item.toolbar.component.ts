@@ -40,9 +40,10 @@ export const WarehouseItemToolbarActionsConfig: IToolbarActionsConfig[] = [].con
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-toolbar-warehouse-item',
+    selector: 'ngx-toolbar-app-warehouse-item',
     templateUrl: '../../../toolbar/toolbar.component.html',
-    styleUrls: ['../../../toolbar/toolbar.component.scss'],
+    styleUrls: ['../../../toolbar/toolbar.component.scss',
+        '../../components/app.toolbar.component.scss'],
 })
 export class WarehouseItemToolbarComponent extends AppToolbarComponent<WarehouseItemDatasource> {
 

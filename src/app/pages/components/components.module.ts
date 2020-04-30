@@ -54,6 +54,8 @@ import {CustomFormsModule} from 'ngx-custom-validators';
 import {ValidatorsModule} from 'ngx-validators';
 import {PasswordFormFieldComponent} from './formly/formly.password.field.component';
 import {SelectTranslateCellComponent} from './smart-table/select.translate.cell.component';
+import {NumberCellComponent} from './smart-table/number.cell.component';
+import {RowNumberCellComponent} from './smart-table/row.number.cell.component';
 
 @NgModule({
     imports: [
@@ -165,6 +167,8 @@ import {SelectTranslateCellComponent} from './smart-table/select.translate.cell.
         NgxSelectExComponent,
         SelectExFormFieldComponent,
         PasswordFormFieldComponent,
+        NumberCellComponent,
+        RowNumberCellComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -172,6 +176,8 @@ import {SelectTranslateCellComponent} from './smart-table/select.translate.cell.
         NgxTreeviewComponent,
         NgxFormlyComponent,
         SelectTranslateCellComponent,
+        NumberCellComponent,
+        RowNumberCellComponent,
         CheckboxCellComponent,
         ImageCellComponent,
         NgxSplitPaneComponent,
@@ -193,6 +199,8 @@ import {SelectTranslateCellComponent} from './smart-table/select.translate.cell.
     ],
     exports: [
         NgxImageGalleryComponent,
+        NumberCellComponent,
+        RowNumberCellComponent,
         ImageGalleryFormFieldComponent,
         NgxTreeviewComponent,
         NgxDropdownTreeviewComponent,

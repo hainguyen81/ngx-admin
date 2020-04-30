@@ -26,6 +26,13 @@ import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component'
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTableFlipComponent} from '../../components/app.table.flip.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import {
+    ACTION_BACK,
+    ACTION_DELETE,
+    ACTION_IMPORT,
+    ACTION_RESET,
+    ACTION_SAVE,
+} from '../../../../../config/toolbar.actions.conf';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
@@ -36,7 +43,6 @@ import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item
         '../../../flipcard/flipcard.component.scss',
         '../../components/app.flipcard.component.scss',
         '../../components/app.table.flip.component.scss',
-        './warehouse.item.flipcard.component.scss',
     ],
 })
 export class WarehouseItemFlipcardComponent
@@ -46,6 +52,18 @@ export class WarehouseItemFlipcardComponent
         WarehouseItemSmartTableComponent,
         WarehouseItemSplitPaneComponent>
     implements AfterViewInit {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSpecialActionsOnFront(): String[] {
+        return [ACTION_IMPORT];
+    }
+
+    protected visibleActionsOnBack(): String[] {
+        return [ACTION_SAVE, ACTION_RESET, ACTION_DELETE, ACTION_BACK];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

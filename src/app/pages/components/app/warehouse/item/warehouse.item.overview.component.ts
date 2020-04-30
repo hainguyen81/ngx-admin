@@ -451,18 +451,18 @@ export class WarehouseItemOverviewFormlyComponent
         const brandSettings: string = Object.keys(WAREHOUSE_SETTINGS_TYPE)
             .find(key => WAREHOUSE_SETTINGS_TYPE[key] === WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS);
         PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[3].fieldGroup[0],
-                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE,
+                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
                 (option: IGeneralSettings) => (option && option.name === brandSettings),
                 this.noneOption),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[5].fieldGroup[1],
-                BUILTIN_CODES.CURRENCY,
+                BUILTIN_CODES.CURRENCY.code,
                 null, this.noneOption),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
+            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[13].fieldGroup[0],
-                BUILTIN_CODES.STATUS,
+                BUILTIN_CODES.STATUS.code,
                 null, this.noneOption),
         ]).then(value => this.getLogger().debug('Loading settings successful!'),
                 reason => this.getLogger().error(reason))

@@ -96,8 +96,7 @@ export default class AppObserveUtils {
      * @param settingFilter to filter settings
      * @param noneOption the first none select option. NULL for not using
      */
-    public static observeDefaultWarehouseGeneralSettingsFormField<
-        T extends IModel, FC extends AppFormlySelectExFieldComponent<T>>(
+    public static observeDefaultWarehouseGeneralSettingsFormField<T extends IModel>(
         generalSettingsDatasource: GeneralSettingsDatasource, field: FormlyFieldConfig,
         settingCode: string, settingFilter?: (option: T) => boolean,
         noneOption?: T | null): Promise<void> {

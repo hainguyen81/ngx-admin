@@ -50,6 +50,14 @@ export abstract class AppTableFlipComponent<
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating whether creating back-component at start-up
+     * @return true (default) for creating; else false
+     */
+    protected fulfillComponentsAtStartup(): boolean {
+        return false;
+    }
+
+    /**
      * Get the current selected data model
      * @return the current selected data model
      */
@@ -125,6 +133,7 @@ export abstract class AppTableFlipComponent<
             (<AppSmartTableComponent<D>>super.getFrontComponent())
                 .setNewItemListener($event => {
                     this._selectedModel = null;
+                    this.ensureBackComponent();
                     this.onNewData($event);
                     this.setFlipped(true);
                 });
@@ -133,6 +142,7 @@ export abstract class AppTableFlipComponent<
                     this._selectedModel = ($event && $event.data
                         && $event.data['row'] instanceof Row
                         ? ($event.data['row'] as Row).getData() as T : undefined);
+                    this.ensureBackComponent();
                     this.onEditData($event);
                     this.setFlipped(true);
                 });
@@ -141,6 +151,7 @@ export abstract class AppTableFlipComponent<
                     this._selectedModel = ($event && $event.data
                     && $event.data['row'] instanceof Row
                         ? ($event.data['row'] as Row).getData() as T : undefined);
+                    this.ensureBackComponent();
                     this.onDeleteData($event);
                     this.setFlipped(false);
                 });

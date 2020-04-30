@@ -25,6 +25,8 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NumberCellComponent} from '../../../smart-table/number.cell.component';
+import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {
@@ -40,198 +42,90 @@ export const WarehouseItemTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
+        no: {
+            title: 'warehouse.item.table.no',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            editable: false,
+            renderComponent: RowNumberCellComponent,
+        },
         code: {
             title: 'warehouse.item.table.code',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
         },
         name: {
             title: 'warehouse.item.table.name',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
         },
         status: {
             title: 'warehouse.item.table.status',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
             editor: {
                 type: 'list',
                 config: {list: []},
             },
-        },
-        category: {
-            title: 'warehouse.item.table.category',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
-        },
-        brand: {
-            title: 'warehouse.item.table.brand',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
-        },
-        barcode: {
-            title: 'warehouse.item.table.barcode',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        serial: {
-            title: 'warehouse.item.table.serial',
-            type: 'string',
-            sort: false,
-            filter: false,
         },
         image: {
             title: 'warehouse.item.table.image',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: ImageCellComponent,
-        },
-        manufacturer: {
-            title: 'warehouse.item.table.manufacturer',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        length: {
-            title: 'warehouse.item.table.length',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        width: {
-            title: 'warehouse.item.table.width',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        height: {
-            title: 'warehouse.item.table.height',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        weight: {
-            title: 'warehouse.item.table.weight',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        size: {
-            title: 'warehouse.item.table.size',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        color: {
-            title: 'warehouse.item.table.color',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        material: {
-            title: 'warehouse.item.table.material',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        unit: {
-            title: 'warehouse.item.table.unit',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        rate_per_unit: {
-            title: 'warehouse.item.table.rate_per_unit',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        dealer_price: {
-            title: 'warehouse.item.table.dealer_price',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        cost_price: {
-            title: 'warehouse.item.table.cost_price',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        selling_price: {
-            title: 'warehouse.item.table.selling_price',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        currency: {
-            title: 'warehouse.item.table.currency',
-            type: 'string',
-            sort: false,
-            filter: false,
         },
         stock_on_hand: {
             title: 'warehouse.item.table.stock_on_hand',
             type: 'string',
             sort: false,
             filter: false,
-        },
-        committed_stock: {
-            title: 'warehouse.item.table.committed_stock',
-            type: 'string',
-            sort: false,
-            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: false,
+            },
         },
         available_stock: {
             title: 'warehouse.item.table.available_stock',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: false,
+            },
         },
-        incoming_stock: {
-            title: 'warehouse.item.table.incoming_stock',
+        cost_price: {
+            title: 'warehouse.item.table.cost_price',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: true,
+            },
+        },
+        selling_price: {
+            title: 'warehouse.item.table.selling_price',
             type: 'string',
             sort: false,
             filter: false,
-        },
-        quantity_shipped: {
-            title: 'warehouse.item.table.quantity_shipped',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        quantity_received: {
-            title: 'warehouse.item.table.quantity_received',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        description: {
-            title: 'warehouse.item.table.description',
-            type: 'string',
-            sort: false,
-            filter: false,
-        },
-        remark: {
-            title: 'warehouse.item.table.remark',
-            type: 'string',
-            sort: false,
-            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: true,
+            },
         },
     },
 };
@@ -246,6 +140,14 @@ export const WarehouseItemContextMenu: IContextMenu[] = [].concat(COMMON.baseMen
 })
 export class WarehouseItemSmartTableComponent
     extends AppSmartTableComponent<WarehouseItemDatasource> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected isShowHeader(): boolean {
+        return false;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -295,7 +197,9 @@ export class WarehouseItemSmartTableComponent
     }
 
     doSearch(keyword: any): void {
-        this.getDataSource().setFilter([], false);
-        this.getDataSource().refresh();
+        this.getDataSource().setFilter([
+            {field: 'code', search: keyword},
+            {field: 'name', search: keyword},
+        ], false);
     }
 }
