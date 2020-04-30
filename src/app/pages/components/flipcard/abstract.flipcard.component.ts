@@ -84,15 +84,19 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * @param flipped true for flipped; else false
      */
     public setFlipped(flipped?: boolean): void {
-        this.flipped = flipped || false;
-        if (this.getFlipcardComponent()) {
-            this.getFlipcardComponent().flipped = this.flipped;
+        if (this.flipped !== (flipped || false)) {
+            this.flipped = flipped || false;
+            if (this.getFlipcardComponent()) {
+                this.getFlipcardComponent().flipped = this.flipped;
+            }
+            this.onFlipped.emit({
+                data: {
+                    'front': this.getFlipcardFrontComponent(),
+                    'back': this.getFlipcardBackComponent(),
+                    'flipped': flipped,
+                },
+            });
         }
-        this.onFlipped.emit({ data: {
-            'front': this.getFlipcardFrontComponent(),
-            'back': this.getFlipcardBackComponent(),
-            'flipped': flipped,
-        } });
     }
 
     /**
