@@ -1036,8 +1036,10 @@ export abstract class AbstractComponent
         if (!(value || '').length || !this.getTranslateService()) {
             return value;
         }
-        return (interpolateParams ? this.getTranslateService().instant(value, interpolateParams)
+        const translatedValue: string = (interpolateParams
+            ? this.getTranslateService().instant(value, interpolateParams)
             : this.getTranslateService().instant(value));
+        return translatedValue;
     }
 
     /**

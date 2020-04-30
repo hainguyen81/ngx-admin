@@ -1,10 +1,15 @@
 import {
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef, EventEmitter,
-    Inject, Input, Output,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    Output,
     Renderer2,
     ViewContainerRef,
+    ViewEncapsulation,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractSelectExComponent} from './abstract.select.ex.component';

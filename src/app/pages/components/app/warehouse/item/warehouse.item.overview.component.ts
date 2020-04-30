@@ -455,15 +455,15 @@ export class WarehouseItemOverviewFormlyComponent
                 this.generalSettingsDatasource, fields[3].fieldGroup[0],
                 BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE,
                 (option: IGeneralSettings) => (option && option.name === brandSettings),
-                this.noneOption, this.getTranslateService()),
+                this.noneOption),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[5].fieldGroup[1],
                 BUILTIN_CODES.CURRENCY,
-                null, this.noneOption, this.getTranslateService()),
+                null, this.noneOption),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[13].fieldGroup[0],
                 BUILTIN_CODES.STATUS,
-                null, this.noneOption, this.getTranslateService()),
+                null, this.noneOption),
         ]).then(value => this.getLogger().debug('Loading settings successful!'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

@@ -1,9 +1,10 @@
-import {AfterViewInit, EventEmitter, Inject, OnDestroy, Output, Renderer2} from '@angular/core';
+import {AfterViewInit, Inject, OnDestroy, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
+import {IEvent} from './abstract.component';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
     extends FieldType<F> implements OnDestroy, AfterViewInit {
@@ -85,6 +86,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         _translateService || throwError('Could not inject TranslateService');
         _renderer || throwError('Could not inject Renderer2');
         _logger || throwError('Could not inject NGXLogger');
+        _translateService.onLangChange.subscribe(value => this.onLangChange({event: value}));
     }
 
     // -------------------------------------------------
@@ -107,6 +109,15 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         if (this.field && this.field.templateOptions) {
             delete this._field.templateOptions['componentRef'];
         }
+    }
+
+    /**
+     * Triggered `languageChange` event
+     * @param event {IEvent} that contains {$event} as LangChangeEvent
+     */
+    onLangChange(event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
     }
 
     protected onValueChanges(value: any): void {

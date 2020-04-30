@@ -178,7 +178,7 @@ export class WarehouseSettingsFormlyComponent
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[0],
                 BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
-                null, this.noneOption, this.getTranslateService()),
+                null, this.noneOption),
         ]).then(value => this.getLogger().debug('Loading general settings successful'),
             reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

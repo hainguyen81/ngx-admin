@@ -417,17 +417,17 @@ export class CustomerFormlyComponent
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
                 BUILTIN_CODES.CUSTOMER_TYPE.code,
-                null, this.noneOption, this.getTranslateService()),
+                null, this.noneOption),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1],
                 BUILTIN_CODES.CUSTOMER_LEVEL.code,
-                null, this.noneOption, this.getTranslateService()),
+                null, this.noneOption),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2],
                 BUILTIN_CODES.STATUS.code,
-                null, this.noneOption, this.getTranslateService()),
+                null, this.noneOption),
         ]).then(
             value => this.getLogger().debug('Loading settings successful'),
             reason => this.getLogger().error(reason))

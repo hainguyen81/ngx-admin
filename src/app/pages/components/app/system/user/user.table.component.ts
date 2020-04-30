@@ -31,6 +31,8 @@ import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Cell} from 'ng2-smart-table';
 import {IUser} from '../../../../../@core/data/system/user';
+import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -57,7 +59,7 @@ export const UserTableSettings = {
                 type: 'custom',
                 component: ImageCellComponent,
                 config: {
-                    'descriptorPrepare': (cell: Cell, user: IUser) => {
+                    'descriptorPrepare': (cell: Cell, row: Row, user: IUser) => {
                         return (user ? user.username || '' : '');
                     },
                 },
@@ -86,12 +88,14 @@ export const UserTableSettings = {
         },
         status: {
             title: 'system.user.table.status',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
+            renderComponent: SelectTranslateCellComponent,
             editor: {
-                type: 'list',
+                type: 'custom',
+                component: SelectTranslateCellComponent,
                 config: {list: []},
             },
         },
@@ -195,7 +199,7 @@ export class UserSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.STATUS.code, null, this.getTranslateService()),
+                BUILTIN_CODES.STATUS.code, null),
         ]).then(value => {
             this.getLogger().debug('Loading settings successful');
             this.getDataSource().refresh();

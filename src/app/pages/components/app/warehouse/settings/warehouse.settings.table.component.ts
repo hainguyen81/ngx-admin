@@ -192,7 +192,7 @@ export class WarehouseSettingsSmartTableComponent
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'type',
                 BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
-                null, this.getTranslateService()),
+                null),
         ]).then(
             value => {
                 this.getLogger().debug('Loading general settings successful');

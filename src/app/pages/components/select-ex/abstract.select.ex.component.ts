@@ -16,7 +16,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractComponent, IEvent,
 } from '../abstract.component';
-import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';

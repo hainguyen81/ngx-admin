@@ -1,8 +1,10 @@
-import {Component, Host} from '@angular/core';
-import {Cell, DefaultEditor, ViewCell} from 'ng2-smart-table';
+import {Component, Host, Inject, Renderer2} from '@angular/core';
+import {Cell} from 'ng2-smart-table';
 import {isArray} from 'util';
 import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mode/custom-view.component';
-import {Column} from 'ng2-smart-table/lib/data-set/column';
+import {AbstractCellEditor} from './abstract.cell.editor';
+import {TranslateService} from '@ngx-translate/core';
+import {NGXLogger} from 'ngx-logger';
 
 /**
  * Smart table image cell component base on {DefaultEditor}
@@ -12,31 +14,24 @@ import {Column} from 'ng2-smart-table/lib/data-set/column';
     templateUrl: './image.cell.component.html',
     styleUrls: ['./image.cell.component.scss'],
 })
-export class ImageCellComponent extends DefaultEditor {
+export class ImageCellComponent extends AbstractCellEditor {
 
     private static DESCRIPTOR_PREPARE: string = 'descriptorPrepare';
 
-    value?: string[] | string | null;
-
-    constructor(@Host() private parentView: CustomViewComponent) {
-        super();
+    get images(): string[] {
+        if (isArray(super.cellValue)) {
+            return Array.from(super.cellValue) as string[];
+        } else if (super.cellValue) {
+            return [super.cellValue] as string[];
+        }
+        return [];
     }
 
-    private getValue(): any {
-        return (this.cell && isArray(this.cell.getValue()) ? Array.from(this.cell.getValue())
-            : this.cell && this.cell.getValue() ? [ this.cell.getValue() ]
-                : this.value && isArray(this.value) ? Array.from(this.value)
-                    : this.value ? [ this.value ] : []);
-    }
-
-    public getImages(): string[] {
-        return this.getValue() as string[];
-    }
-
-    protected getCell(): Cell {
-        if (this.cell) return this.cell;
-        if (this.parentView) return this.parentView.cell;
-        return undefined;
+    constructor(@Host() _parentView: CustomViewComponent,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger) {
+        super(_parentView, _translateService, _renderer, _logger);
     }
 
     /**
@@ -45,16 +40,15 @@ export class ImageCellComponent extends DefaultEditor {
      */
     public getDescriptor(): string {
         let descriptor: string = '';
-        const cell: Cell = this.getCell();
-        const column: Column = (cell ? cell.getColumn() : undefined);
-        if (column && column.getConfig()) {
-            const columnConfig: any = column.getConfig();
-            if (columnConfig.hasOwnProperty(ImageCellComponent.DESCRIPTOR_PREPARE)) {
-                if (typeof columnConfig[ImageCellComponent.DESCRIPTOR_PREPARE] === 'function') {
-                    descriptor = columnConfig[ImageCellComponent.DESCRIPTOR_PREPARE]
-                        .call(undefined, cell, cell.getRow().getData());
+        const cell: Cell = this.cell;
+        const config: any = this.cellColumnConfig;
+        if (config && Object.keys(config).length) {
+            if (config.hasOwnProperty(ImageCellComponent.DESCRIPTOR_PREPARE)) {
+                if (typeof config[ImageCellComponent.DESCRIPTOR_PREPARE] === 'function') {
+                    descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE]
+                        .call(undefined, cell, this.cellRow, this.cellRowData);
                 } else {
-                    descriptor = columnConfig[ImageCellComponent.DESCRIPTOR_PREPARE] || '';
+                    descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE] || '';
                 }
             }
         }
