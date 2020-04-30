@@ -54,7 +54,8 @@ export class WarehouseItemSplitPaneComponent
         IWarehouseItem, WarehouseItemDatasource,
         WarehouseItemToolbarComponent,
         WarehouseItemTabsetComponent,
-        WarehouseItemSummaryComponent> implements AfterViewInit {
+        WarehouseItemSummaryComponent>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -169,6 +170,13 @@ export class WarehouseItemSplitPaneComponent
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        this.configAreaByIndex(0, WarehouseItemTabsetAreaConfig);
+        this.configAreaByIndex(1, WarehouseItemSummaryAreaConfig);
+    }
 
     protected doSave(): void {
         throwError('Not support for saving model from internal component!');
