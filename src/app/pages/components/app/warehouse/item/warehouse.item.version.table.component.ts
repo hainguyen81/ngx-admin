@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -26,8 +26,12 @@ import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
-import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
 import {BarcodeCellComponent} from '../../../smart-table/barcode.cell.component';
+import {IEvent} from '../../../abstract.component';
+import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
+import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {throwError} from 'rxjs';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -93,7 +97,8 @@ export const WarehouseItemVersionContextMenu: IContextMenu[] = [].concat(COMMON.
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class WarehouseItemVersionSmartTableComponent
-    extends AppSmartTableComponent<WarehouseItemDatasource> {
+    extends AppSmartTableComponent<WarehouseItemDatasource>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -150,10 +155,56 @@ export class WarehouseItemVersionSmartTableComponent
         super.setContextMenu(WarehouseItemVersionContextMenu);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
             {field: 'code', search: keyword},
             {field: 'name', search: keyword},
         ], false);
+    }
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        this.setNewItemListener(this.onNewVersion);
+        this.setEditItemListener(this.onEditVersion);
+        this.setDeleteItemListener(this.onDeleteVersion);
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    private onNewVersion($event: IEvent) {
+        this.openModalDialog(new WarehouseItem(null, null, null));
+    }
+
+    private onEditVersion($event: IEvent) {
+        const dataModel: IWarehouseItem = ($event && $event.data && $event.data['row'] instanceof Row
+            ? ($event.data['row'] as Row).getData() as IWarehouseItem : undefined);
+        this.openModalDialog(dataModel);
+    }
+
+    private onDeleteVersion($event: IEvent) {
+        const dataModel: IWarehouseItem = ($event && $event.data && $event.data['row'] instanceof Row
+            ? ($event.data['row'] as Row).getData() as IWarehouseItem : undefined);
+        dataModel || throwError('Could not found the edited data model!');
+    }
+
+    private openModalDialog(dataModel: IWarehouseItem) {
+        dataModel || throwError('Could not found the dialog data model!');
+        dataModel && this.getModalDialogService().openDialog(super.getViewContainerRef(), {
+            title: super.tableHeader,
+            childComponent: WarehouseItemVersionFormlyComponent,
+            data: dataModel,
+            actionButtons: [
+                { text: this.translate('common.form.action.save') },
+                { text: this.translate('common.form.action.reset') },
+                { text: this.translate('common.form.action.close'), onAction: () => true },
+            ],
+        });
     }
 }

@@ -139,7 +139,8 @@
                 "delete": "Delete",
                 "back": "Back",
                 "import": "Import",
-                "deletedb": "Delete DB"
+                "deletedb": "Delete DB",
+                "close": "Close"
             },
             "treeview": {
                 "not_selection": "",

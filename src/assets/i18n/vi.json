@@ -139,7 +139,8 @@
                 "delete": "Xóa",
                 "back": "Quay lại",
                 "import": "Import",
-                "deletedb": "Xóa DB"
+                "deletedb": "Xóa DB",
+                "close": "Đóng"
             },
             "treeview": {
                 "not_selection": "",
