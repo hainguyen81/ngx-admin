@@ -78,7 +78,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      * Tab icon name or icon config object
      * @type {string | NbIconConfig}
      */
-    tabIcon: { icon: 'archive', pack: 'fa' },
+    tabIcon: { icon: 'code-fork', pack: 'fa' },
     /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
