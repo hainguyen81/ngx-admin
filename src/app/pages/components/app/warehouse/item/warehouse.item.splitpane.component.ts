@@ -68,6 +68,14 @@ export class WarehouseItemSplitPaneComponent
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating whether showing panel header
+     * @return true (default) for showing; else false
+     */
+    protected isShowHeader(): boolean {
+        return false;
+    }
+
+    /**
      * Get a boolean value indicating the right side component should be created at start-up
      * @return true for should be created; else false
      */
