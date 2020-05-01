@@ -56,6 +56,9 @@ import {PasswordFormFieldComponent} from './formly/formly.password.field.compone
 import {SelectTranslateCellComponent} from './smart-table/select.translate.cell.component';
 import {NumberCellComponent} from './smart-table/number.cell.component';
 import {RowNumberCellComponent} from './smart-table/row.number.cell.component';
+import {BarcodeCellComponent} from './smart-table/barcode.cell.component';
+import {NgxBarcodeModule} from 'ngx-barcode';
+import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 
 @NgModule({
     imports: [
@@ -152,6 +155,10 @@ import {RowNumberCellComponent} from './smart-table/row.number.cell.component';
         CustomFormsModule,
         ValidatorsModule,
 
+        /* Barcode */
+        NgxBarcodeModule.forRoot(),
+        BarecodeScannerLivestreamModule,
+
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
@@ -169,6 +176,7 @@ import {RowNumberCellComponent} from './smart-table/row.number.cell.component';
         PasswordFormFieldComponent,
         NumberCellComponent,
         RowNumberCellComponent,
+        BarcodeCellComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -193,6 +201,7 @@ import {RowNumberCellComponent} from './smart-table/row.number.cell.component';
         NgxSelectExComponent,
         SelectExFormFieldComponent,
         PasswordFormFieldComponent,
+        BarcodeCellComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -208,6 +217,7 @@ import {RowNumberCellComponent} from './smart-table/row.number.cell.component';
         NgxSelectExComponent,
         SelectExFormFieldComponent,
         PasswordFormFieldComponent,
+        BarcodeCellComponent,
     ],
 })
 export class ComponentsModule {
