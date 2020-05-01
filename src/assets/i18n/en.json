@@ -672,6 +672,9 @@
             "summary": {
                 "not_supported_files": "Only support for image file types! Below file(s) will not be uploaded:<br/>{{files}}"
             },
+            "version": {
+                "title": "Versions"
+            },
             "overview": {
                 "title": "Overview",
                 "form": {

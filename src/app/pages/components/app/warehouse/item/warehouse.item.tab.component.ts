@@ -30,6 +30,7 @@ import {AppTabsetComponent} from '../../components/app.tabset.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {AbstractComponent} from '../../../abstract.component';
 import {throwError} from 'rxjs';
+import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.component';
 
 export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
     /**
@@ -42,6 +43,37 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      * @type {string}
      */
     tabId: 'WAREHOUSE_ITEM_OVERVIEW',
+    /**
+     * Tab icon name or icon config object
+     * @type {string | NbIconConfig}
+     */
+    tabIcon: { icon: 'archive', pack: 'fa' },
+    /**
+     * Item is disabled and cannot be opened.
+     * @type {boolean}
+     */
+    disabled: false,
+    /**
+     * Show only icons when width is smaller than `tabs-icon-only-max-width`
+     * @type {boolean}
+     */
+    responsive: true,
+    /**
+     * Specifies active tab
+     * @returns {boolean}
+     */
+    active: true,
+}, {
+    /**
+     * Tab title
+     * @type {string}
+     */
+    tabTitle: 'warehouse.item.version.title',
+    /**
+     * Tab id
+     * @type {string}
+     */
+    tabId: 'WAREHOUSE_ITEM_VERSION',
     /**
      * Tab icon name or icon config object
      * @type {string | NbIconConfig}
@@ -323,6 +355,7 @@ export class WarehouseItemTabsetComponent
             WAREHOUSE_ITEM_TAB_CONFIGS,
             null, [
                 WarehouseItemOverviewFormlyComponent,
+                WarehouseItemVersionFormlyComponent,
                 WarehouseItemPurchaseOrdersSmartTableComponent,
                 WarehouseItemSaleOrdersSmartTableComponent,
                 WarehouseItemInOutSmartTableComponent,

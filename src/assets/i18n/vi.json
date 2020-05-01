@@ -672,6 +672,9 @@
             "summary": {
                 "not_supported_files": "Chỉ hỗ trợ tệp hình ảnh! Các tệp bên dưới sẽ không được tải lên:<br/>{{files}}"
             },
+            "version": {
+                "title": "Phiên bản"
+            },
             "overview": {
                 "title": "Tổng quát",
                 "form": {

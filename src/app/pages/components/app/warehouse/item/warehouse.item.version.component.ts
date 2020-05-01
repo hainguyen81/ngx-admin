@@ -23,11 +23,6 @@ import {
 import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {
-    WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-} from '../category/warehouse.category.formly.treeview.dropdown.field.component';
-import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
-import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
@@ -40,17 +35,14 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
-import {Constants as WarehouseConstants} from '../../../../../@core/data/constants/warehouse.settings.constants';
-import WAREHOUSE_SETTINGS_TYPE = WarehouseConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 
-export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
+export const WarehouseItemVersionFormConfig: FormlyConfig = new FormlyConfig();
 
-/* default warehouse item overview formly fields config */
-export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
+/* default warehouse item version formly fields config */
+export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
     {
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
@@ -85,39 +77,21 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col belongTo',
-                key: 'categories_id',
-                type: 'warehouse-category-treeview-dropdown',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.category.label',
-                    placeholder: 'warehouse.item.overview.form.category.placeholder',
-                    options: [],
-                    required: true,
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
                 className: 'col-6',
-                key: 'brand_id',
-                type: 'select-ex-general-settings',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.brand.label',
-                    placeholder: 'warehouse.item.overview.form.brand.placeholder',
-                    options: [],
-                },
-            },
-            {
-                className: 'col-6',
-                key: 'manufacturer',
+                key: 'barcode',
                 type: 'input',
                 templateOptions: {
-                    label: 'warehouse.item.overview.form.manufacturer.label',
-                    placeholder: 'warehouse.item.overview.form.manufacturer.placeholder',
-                    required: false,
+                    label: 'warehouse.item.overview.form.barcode.label',
+                    placeholder: 'warehouse.item.overview.form.barcode.placeholder',
+                },
+            },
+            {
+                className: 'col-6',
+                key: 'number_of_prints',
+                type: 'input',
+                templateOptions: {
+                    label: 'warehouse.item.overview.form.number_of_prints.label',
+                    placeholder: 'warehouse.item.overview.form.number_of_prints.placeholder',
                 },
             },
         ],
@@ -310,20 +284,6 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
             },
         ],
     },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-3',
-                key: 'status',
-                type: 'select-ex-general-settings',
-                templateOptions: {
-                    label: 'warehouse.item.overview.form.status.label',
-                    placeholder: 'warehouse.item.overview.form.status.placeholder',
-                },
-            },
-        ],
-    },
 ];
 
 /**
@@ -331,11 +291,11 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-formly-form-app-warehouse-item-overview',
+    selector: 'ngx-formly-form-app-warehouse-item-version',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss'],
 })
-export class WarehouseItemOverviewFormlyComponent
+export class WarehouseItemVersionFormlyComponent
     extends AppFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
     implements AfterViewInit {
 
@@ -388,8 +348,8 @@ export class WarehouseItemOverviewFormlyComponent
         categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         settingsDatasource || throwError('Could not inject WarehouseSettingsDatasource instance');
-        super.setConfig(WarehouseItemOverviewFormConfig);
-        super.setFields(WarehouseItemOverviewFormFieldsConfig);
+        super.setConfig(WarehouseItemVersionFormConfig);
+        super.setFields(WarehouseItemVersionFormFieldsConfig);
     }
 
     // -------------------------------------------------
@@ -413,23 +373,6 @@ export class WarehouseItemOverviewFormlyComponent
     private observeFields(): void {
         const fields: FormlyFieldConfig[] = this.getFields();
 
-        // listen data model changes for updating
-        this.getFormlyForm().modelChange.subscribe(() => {
-            WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource)
-                .then(categories => {
-                    let options: any[];
-                    options = [];
-                    options.push(WarehouseCategoryTreeviewConfig);
-                    options.push(categories);
-                    let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-                    belongToComponent = this.getFormFieldComponent(
-                        fields[2].fieldGroup[0],
-                        WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                    this.setBelongToSelectedValue(this.getFormlyForm().fields[0].fieldGroup[0], this.getModel());
-                });
-        });
-
         // master settings fields
         this.observeSettingsFields(fields);
     }
@@ -439,46 +382,13 @@ export class WarehouseItemOverviewFormlyComponent
      * @param fields to observe
      */
     private observeSettingsFields(fields: FormlyFieldConfig[]): void {
-        const brandSettings: string = Object.keys(WAREHOUSE_SETTINGS_TYPE)
-            .find(key => WAREHOUSE_SETTINGS_TYPE[key] === WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS);
         PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDatasourceFormField(
-                this.settingsDatasource,
-                'type', IDBKeyRange.only(brandSettings),
-                fields[3].fieldGroup[0], null,
-                null, {
-                    'title': (model: IWarehouseSetting) => model.name,
-                    'text': (model: IWarehouseSetting) => model.name,
-                }, this.noneOption),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[5].fieldGroup[1],
                 BUILTIN_CODES.CURRENCY.code,
                 null, this.noneOption as IGeneralSettings),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[12].fieldGroup[0],
-                BUILTIN_CODES.STATUS.code,
-                null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading settings successful!'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));
-    }
-
-    /**
-     * Disable current data model in the belongTo field
-     * @param field to parse field component
-     * @param model to disable
-     */
-    private setBelongToSelectedValue(field: FormlyFieldConfig, model?: IWarehouseItem | null) {
-        model = model || this.getModel();
-        if (!model || !(model.id || '').length) {
-            return;
-        }
-
-        // detect field component
-        let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = this.getFormFieldComponent(field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-
-        // select current model item in treeview
-        belongToComponent && belongToComponent.setSelectedValue(model.categories_id);
     }
 }
