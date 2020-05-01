@@ -27,6 +27,7 @@ import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
+import {BarcodeCellComponent} from '../../../smart-table/barcode.cell.component';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -66,10 +67,11 @@ export const WarehouseItemVersionTableSettings = {
         },
         barcode: {
             title: 'warehouse.item.table.barcode',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
+            renderComponent: BarcodeCellComponent,
         },
         available_stock: {
             title: 'warehouse.item.table.available_stock',
