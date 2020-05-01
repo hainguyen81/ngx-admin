@@ -54,7 +54,7 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
      * @return true (default) for showing; else false
      */
     protected isShowHeader(): boolean {
-        return false;
+        return true;
     }
 
     /**
