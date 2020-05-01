@@ -69,6 +69,9 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {NgxSelectModule} from 'ngx-select-ex';
 /* Local storage */
 import {NgxLocalStorageModule} from 'ngx-localstorage';
+/* Barcode */
+import {NgxBarcodeModule} from 'ngx-barcode';
+import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 /* Mock data while application initialization */
 import {MockDataModule} from './@core/mock/mock.data.module';
 
@@ -203,6 +206,10 @@ import {MockDataModule} from './@core/mock/mock.data.module';
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
+
+        /* Barcode */
+        NgxBarcodeModule.forRoot(),
+        BarecodeScannerLivestreamModule,
 
         /* Mock data module */
         MockDataModule,
