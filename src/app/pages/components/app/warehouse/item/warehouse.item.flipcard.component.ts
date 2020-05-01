@@ -43,6 +43,7 @@ import {
         '../../../flipcard/flipcard.component.scss',
         '../../components/app.flipcard.component.scss',
         '../../components/app.table.flip.component.scss',
+        './warehouse.item.flipcard.component.scss',
     ],
 })
 export class WarehouseItemFlipcardComponent

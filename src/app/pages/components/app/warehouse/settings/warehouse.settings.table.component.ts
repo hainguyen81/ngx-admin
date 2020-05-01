@@ -32,6 +32,7 @@ import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
@@ -49,14 +50,11 @@ export const WarehouseSettingsTableSettings = {
     columns: {
         type: {
             title: 'warehouse.settings.table.type',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
+            renderComponent: SelectTranslateCellComponent,
         },
         code: {
             title: 'warehouse.settings.table.code',
@@ -79,10 +77,6 @@ export const WarehouseSettingsTableSettings = {
             filter: false,
             editable: false,
             renderComponent: ImageCellComponent,
-            editor: {
-                type: 'custom',
-                component: ImageCellComponent,
-            },
         },
         order: {
             title: 'warehouse.settings.table.order',
