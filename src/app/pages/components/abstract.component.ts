@@ -1252,6 +1252,14 @@ export abstract class AbstractComponent
     }
 
     /**
+     * Get the injection root {ViewContainerRef} instance
+     * @return the injection root {ViewContainerRef} instance
+     */
+    protected getRootViewConatinerRef(): ViewContainerRef {
+        return AppUtils.getRootViewRef();
+    }
+
+    /**
      * Freeze component
      */
     protected freeze(): void {

@@ -196,7 +196,8 @@ export class WarehouseItemVersionSmartTableComponent
 
     private openModalDialog(dataModel: IWarehouseItem) {
         dataModel || throwError('Could not found the dialog data model!');
-        dataModel && this.getModalDialogService().openDialog(super.getViewContainerRef(), {
+        dataModel && this.getModalDialogService().openDialog(
+            super.getRootViewConatinerRef(), {
             title: super.tableHeader,
             childComponent: WarehouseItemVersionFormlyComponent,
             data: dataModel,

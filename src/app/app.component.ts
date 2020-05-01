@@ -3,7 +3,7 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AnalyticsService, SeoService} from './@core/services';
 import {throwError} from 'rxjs';
@@ -31,7 +31,8 @@ export class AppComponent implements OnInit {
                 @Inject(TranslateService) private translateService: TranslateService,
                 @Inject(Router) private router: Router,
                 @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
-                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService) {
+                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
+                @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef) {
         analytics || throwError('Could not inject AnalyticsService');
         seoService || throwError('Could not inject SeoService');
         logger || throwError('Could not inject TranslateService');
@@ -39,6 +40,8 @@ export class AppComponent implements OnInit {
         router || throwError('Could not inject Router');
         activatedRoute || throwError('Could not inject ActivatedRoute');
         pageHeaderService || throwError('Could not inject PageHeaderService');
+        viewContainerRef || throwError('Could not inject ViewContainerRef');
+        AppConfig.viewRef = this.viewContainerRef;
     }
 
     ngOnInit(): void {

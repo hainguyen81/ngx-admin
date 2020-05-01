@@ -1,7 +1,15 @@
 import {AppConfig} from '../config/app.config';
-import {Injector} from '@angular/core';
+import {Injector, ViewContainerRef} from '@angular/core';
 
 export default class AppUtils {
+
+    /**
+     * Get the injectable root {ViewContainerRef} instance
+     * @return the injectable root {ViewContainerRef} instance
+     */
+    public static getRootViewRef(): ViewContainerRef {
+        return AppConfig.viewRef;
+    }
 
     /**
      * Get the injectable service instance by the specified service type
