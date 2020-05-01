@@ -26,7 +26,7 @@ export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign
      * Specify whether using image for option
      * {boolean}
      */
-    enableOptionImage: true,
+    enableOptionImage: false,
 });
 
 /**
@@ -116,12 +116,6 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     ngOnInit(): void {
         this.generalSettingsDataSource.onChanged().subscribe(value => this.doFilter());
         this.generalSettingsDataSource.refresh();
-    }
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-        super.selectExComponent
-        && super.selectExComponent.setEnabledItemImage(false);
     }
 
     protected valueFormatter(value: any): any {

@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -7,9 +8,8 @@ import {
     Inject,
     Input,
     Output,
-    Renderer2,
+    Renderer2, ViewChild,
     ViewContainerRef,
-    ViewEncapsulation,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractSelectExComponent} from './abstract.select.ex.component';
@@ -21,10 +21,11 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
-import {NgxSelectOption} from 'ngx-select-ex';
+import {NgxSelectComponent, NgxSelectOption} from 'ngx-select-ex';
 import {throwError} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {isNullOrUndefined} from 'util';
 
 /**
  * Select component base on {NgxSelectComponent}
@@ -34,7 +35,8 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './select.ex.component.html',
     styleUrls: ['./select.ex.component.scss'],
 })
-export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> {
+export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -46,6 +48,8 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
     @Output() select: EventEmitter<IEvent> = new EventEmitter<IEvent>();
     @Output() addNewOption: EventEmitter<IEvent> = new EventEmitter<IEvent>();
     @Input('optionImage') private optionImageParser: (item?: NgxSelectOption) => string[];
+    @ViewChild('addNewOption', {static: false}) private addNewOptionElRef: ElementRef;
+    private __originalEnsureVisibleElement: Function;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -134,6 +138,19 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
     // EVENTS
     // -------------------------------------------------
 
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this.__originalEnsureVisibleElement
+            && this.selectComponent && typeof this.selectComponent['ensureVisibleElement'] === 'function') {
+            const _this: NgxSelectExComponent = this;
+            this.__originalEnsureVisibleElement = this.selectComponent['ensureVisibleElement'];
+            this.selectComponent['ensureVisibleElement'] = (element: HTMLElement): void => {
+                _this.__overrideEnsureVisibleElement(_this, _this.selectComponent, element);
+            };
+        }
+    }
+
     /**
      * Raise by {NgxSelectComponent#typed} event.
      * Fired on changing search input. Returns string with that value.
@@ -219,11 +236,42 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
     // -------------------------------------------------
 
     /**
+     * Override the {ensureVisibleElement} method of {NgxSelectComponent} for customizing `addNewOption`
+     * @param parentComponent current parent component, because this method is accessed from out-side
+     * @param selectComponent {NgxSelectComponent}
+     * @param element {HTMLElement}
+     * @private
+     */
+    private __overrideEnsureVisibleElement(
+        parentComponent: NgxSelectExComponent, selectComponent: NgxSelectComponent, element: HTMLElement) {
+        // check for adding `addNewOption` feature
+        if (selectComponent && selectComponent['choiceMenuElRef'] instanceof ElementRef
+            && parentComponent.addNewOptionElRef) {
+            const choiceMenuElRef: ElementRef = selectComponent['choiceMenuElRef'] as ElementRef;
+            const addNewOptionEl: HTMLElement =
+                parentComponent.getFirstElementBySelector(
+                    '.ngx-select__item_addNewOption', choiceMenuElRef.nativeElement);
+            const shouldShown: boolean = parentComponent.configValue('showAddNewOption', false)
+                && parentComponent.configValue('addNewOptionConfig', null);
+            if (isNullOrUndefined(addNewOptionEl) && choiceMenuElRef && shouldShown) {
+                parentComponent.getRenderer().appendChild(
+                    choiceMenuElRef.nativeElement, parentComponent.addNewOptionElRef.nativeElement);
+                parentComponent.toggleElementClass(
+                    parentComponent.addNewOptionElRef.nativeElement, 'd-none', false);
+            }
+        }
+
+        // invoke original method
+        parentComponent.__originalEnsureVisibleElement
+        && parentComponent.__originalEnsureVisibleElement.apply(selectComponent, [element]);
+    }
+
+    /**
      * Get configuration value for template
      * @param key configuration key
      * @param defaultValue default if not found
      */
-    private configValue(key?: string, defaultValue?: any): any {
+    protected configValue(key?: string, defaultValue?: any): any {
         return (this.getConfig() && (<Object>this.getConfig()).hasOwnProperty(key)
             ? this.getConfig()[key] : defaultValue);
     }
@@ -232,14 +280,14 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
      * @param key configuration key
      * @param value to apply
      */
-    private saveConfigValue(key?: string, value?: any): void {
+    protected saveConfigValue(key?: string, value?: any): void {
         this.getConfig()[key] = value;
     }
 
     /**
      * Alias of {AbstractSelectExComponent#configValue} for 'Add new option' action
      */
-    private addNewActionConfig(): IToolbarActionsConfig {
+    protected addNewActionConfig(): IToolbarActionsConfig {
         return this.configValue('addNewOptionConfig', null) as IToolbarActionsConfig;
     }
 

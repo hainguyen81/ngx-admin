@@ -15,5 +15,8 @@
         .ngx-select__disabled {
             background-color: transparent;
         }
+        .ngx-select__choices .ngx-select__item_addNewOption {
+            padding: 3px 20px;
+        }
     }
 }

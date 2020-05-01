@@ -24,7 +24,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {
     INgxSelectOptions,
     NgxSelectComponent,
-    NgxSelectOption,
+    NgxSelectOption, TSelectOption,
 } from 'ngx-select-ex';
 import {BehaviorSubject} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
@@ -78,7 +78,7 @@ export interface INgxSelectExOptions extends INgxSelectOptions {
      * Shows the 'Add new option' action in case of out of items at all
      * {boolean}
      */
-    showAddNewOptionIfNotFound?: boolean | false;
+    showAddNewOption?: boolean | false;
     /**
      * The configuration of 'Add new option' action
      * {IToolbarActionsConfig}
@@ -196,6 +196,25 @@ export const DefaultNgxSelectOptions: INgxSelectExOptions = {
      * {boolean}
      */
     showOptionNotFoundForEmptyItems: false,
+    /**
+     * Specify whether using image for option
+     * {boolean}
+     */
+    enableOptionImage: true,
+    /**
+     * Shows the 'Add new option' action in case of out of items at all
+     * {boolean}
+     */
+    showAddNewOption: true,
+    /**
+     * The configuration of 'Add new option' action
+     * {IToolbarActionsConfig}
+     */
+    addNewOptionConfig: {
+        id: 'addNewOption',
+        type: 'button',
+        label: 'Add new option',
+    },
 };
 
 /**
@@ -259,7 +278,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * @return the {INgxSelectOptions} instance
      */
     public getConfig(): INgxSelectOptions {
-        return this.config || DefaultNgxSelectOptions;
+        return this.config;
     }
 
     /**
@@ -284,6 +303,24 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      */
     public setItems(items?: any[]): void {
         this.items = (items || []);
+    }
+
+    /**
+     * Get the filtered {TSelectOption} that are being shown
+     * @return the filtered {TSelectOption} that are being shown
+     */
+    protected get optionsFiltered(): TSelectOption[] {
+        return (this.selectComponent ? this.selectComponent.optionsFiltered : []);
+    }
+
+    /**
+     * Get a boolean value indicating the specified option whether is the latest option that are being shown
+     * @param option to check
+     * @return true for latest; else false
+     */
+    private isLatestOption(option: TSelectOption): boolean {
+        const optsLength: number = this.optionsFiltered.length;
+        return this.optionsFiltered.lastIndexOf(option) >= (optsLength - 1);
     }
 
     /**
