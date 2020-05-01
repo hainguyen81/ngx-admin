@@ -1255,7 +1255,7 @@ export abstract class AbstractComponent
      * Get the injection root {ViewContainerRef} instance
      * @return the injection root {ViewContainerRef} instance
      */
-    protected getRootViewConatinerRef(): ViewContainerRef {
+    protected getRootViewContainerRef(): ViewContainerRef {
         return AppUtils.getRootViewRef();
     }
 

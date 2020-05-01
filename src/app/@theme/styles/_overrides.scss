@@ -112,6 +112,16 @@
         padding: 0.1775rem 0;
     }
 
+    /* Modal dialog */
+    .modal-content {
+        max-height: 70%;
+        max-width: 50%;
+
+        .modal-body {
+            overflow: auto;
+        }
+    }
+
     /* Toaster */
 
 }

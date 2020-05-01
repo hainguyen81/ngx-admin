@@ -14,6 +14,7 @@ export const AppConfig = {
         title: 'app',
     },
     Injector: undefined,
+    appRef: undefined,
     viewRef: undefined,
     COMMON: COMMON,
     TOASTER: TOASTER,
