@@ -43,7 +43,8 @@ import {
 } from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
 import {AppComponentsModule} from '../../components/app.components.module';
-import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.component';
+import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
+import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.table.component';
 
 @NgModule({
     imports: [
@@ -135,6 +136,7 @@ import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.comp
         WarehouseItemSaleOrdersSmartTableComponent,
         WarehouseItemInOutSmartTableComponent,
         WarehouseItemAdjustmentSmartTableComponent,
+        WarehouseItemVersionSmartTableComponent,
         WarehouseItemVersionFormlyComponent,
     ],
     declarations: [
@@ -150,6 +152,7 @@ import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.comp
         WarehouseItemSaleOrdersSmartTableComponent,
         WarehouseItemInOutSmartTableComponent,
         WarehouseItemAdjustmentSmartTableComponent,
+        WarehouseItemVersionSmartTableComponent,
         WarehouseItemVersionFormlyComponent,
     ],
     exports: [
@@ -165,6 +168,7 @@ import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.comp
         WarehouseItemSaleOrdersSmartTableComponent,
         WarehouseItemInOutSmartTableComponent,
         WarehouseItemAdjustmentSmartTableComponent,
+        WarehouseItemVersionSmartTableComponent,
         WarehouseItemVersionFormlyComponent,
     ],
     providers: [ WarehouseProviders ],

@@ -30,7 +30,7 @@ import {AppTabsetComponent} from '../../components/app.tabset.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {AbstractComponent} from '../../../abstract.component';
 import {throwError} from 'rxjs';
-import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.component';
+import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.table.component';
 
 export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
     /**
@@ -355,7 +355,7 @@ export class WarehouseItemTabsetComponent
             WAREHOUSE_ITEM_TAB_CONFIGS,
             null, [
                 WarehouseItemOverviewFormlyComponent,
-                WarehouseItemVersionFormlyComponent,
+                WarehouseItemVersionSmartTableComponent,
                 WarehouseItemPurchaseOrdersSmartTableComponent,
                 WarehouseItemSaleOrdersSmartTableComponent,
                 WarehouseItemInOutSmartTableComponent,
