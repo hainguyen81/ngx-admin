@@ -48,6 +48,14 @@
                     }
                 }
             }
+
+            table.current-stock {
+                background-color: #f3f1f1;
+                font-weight: bolder;
+                border-radius: 5px;
+                min-width: 300px;
+                width: 300px;
+            }
         }
     }
 }
