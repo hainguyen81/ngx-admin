@@ -42,6 +42,10 @@ import {throwError} from 'rxjs';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Constants as WarehouseConstants} from '../../../../../@core/data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WarehouseConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
+import {
+    WarehouseSettingsDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -389,7 +393,8 @@ export class WarehouseItemOverviewFormlyComponent
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource,
-                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource,
+                @Inject(WarehouseSettingsDatasource) private settingsDatasource?: WarehouseSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -397,6 +402,7 @@ export class WarehouseItemOverviewFormlyComponent
             router, activatedRoute);
         categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
+        settingsDatasource || throwError('Could not inject WarehouseSettingsDatasource instance');
         super.setConfig(WarehouseItemOverviewFormConfig);
         super.setFields(WarehouseItemOverviewFormFieldsConfig);
     }
@@ -451,19 +457,22 @@ export class WarehouseItemOverviewFormlyComponent
         const brandSettings: string = Object.keys(WAREHOUSE_SETTINGS_TYPE)
             .find(key => WAREHOUSE_SETTINGS_TYPE[key] === WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS);
         PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[3].fieldGroup[0],
-                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
-                (option: IGeneralSettings) => (option && option.name === brandSettings),
-                this.noneOption),
-            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
+            AppObserveUtils.observeDatasourceFormField(
+                this.settingsDatasource,
+                'type', IDBKeyRange.only(brandSettings),
+                fields[3].fieldGroup[0], null,
+                null, {
+                    'title': (model: IWarehouseSetting) => model.name,
+                    'text': (model: IWarehouseSetting) => model.name,
+                }, this.noneOption),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[5].fieldGroup[1],
                 BUILTIN_CODES.CURRENCY.code,
-                null, this.noneOption),
-            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
+                null, this.noneOption as IGeneralSettings),
+            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[13].fieldGroup[0],
                 BUILTIN_CODES.STATUS.code,
-                null, this.noneOption),
+                null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading settings successful!'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

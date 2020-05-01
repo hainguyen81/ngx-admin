@@ -47,6 +47,7 @@ import {throwError} from 'rxjs';
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -436,7 +437,7 @@ export class OrganizationFormlyComponent
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, this.getFields()[1].fieldGroup[0],
                 BUILTIN_CODES.ORGANIZATION_TYPE.code,
-                null, this.noneOption),
+                null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

@@ -30,6 +30,7 @@ import {IUser} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 
 /* default user formly config */
 export const UserFormConfig: FormlyConfig = new FormlyConfig();
@@ -246,7 +247,7 @@ export class UserFormlyComponent
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[3].fieldGroup[1],
                 BUILTIN_CODES.STATUS.code,
-                null, this.noneOption),
+                null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading settings successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

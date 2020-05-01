@@ -30,6 +30,7 @@ import {
 import {throwError} from 'rxjs';
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 
 /* default warehouse settings formly config */
 export const WarehouseSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -178,7 +179,7 @@ export class WarehouseSettingsFormlyComponent
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[0],
                 BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
-                null, this.noneOption),
+                null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading general settings successful'),
             reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

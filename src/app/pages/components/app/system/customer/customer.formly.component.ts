@@ -41,6 +41,7 @@ import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();
@@ -417,17 +418,17 @@ export class CustomerFormlyComponent
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
                 BUILTIN_CODES.CUSTOMER_TYPE.code,
-                null, this.noneOption),
+                null, this.noneOption as IGeneralSettings),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1],
                 BUILTIN_CODES.CUSTOMER_LEVEL.code,
-                null, this.noneOption),
+                null, this.noneOption as IGeneralSettings),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2],
                 BUILTIN_CODES.STATUS.code,
-                null, this.noneOption),
+                null, this.noneOption as IGeneralSettings),
         ]).then(
             value => this.getLogger().debug('Loading settings successful'),
             reason => this.getLogger().error(reason))
