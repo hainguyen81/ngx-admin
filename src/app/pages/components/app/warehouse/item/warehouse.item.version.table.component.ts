@@ -42,14 +42,6 @@ export const WarehouseItemVersionTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
-        no: {
-            title: 'warehouse.item.table.no',
-            type: 'custom',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: RowNumberCellComponent,
-        },
         code: {
             title: 'warehouse.item.table.code',
             type: 'string',
@@ -64,68 +56,28 @@ export const WarehouseItemVersionTableSettings = {
             filter: false,
             editable: false,
         },
-        status: {
-            title: 'warehouse.item.table.status',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editable: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
-        },
         image: {
             title: 'warehouse.item.table.image',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
             renderComponent: ImageCellComponent,
         },
-        stock_on_hand: {
-            title: 'warehouse.item.table.stock_on_hand',
+        barcode: {
+            title: 'warehouse.item.table.barcode',
             type: 'string',
             sort: false,
             filter: false,
             editable: false,
-            renderComponent: NumberCellComponent,
-            config: {
-                isCurrency: false,
-            },
         },
         available_stock: {
             title: 'warehouse.item.table.available_stock',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: NumberCellComponent,
-            config: {
-                isCurrency: false,
-            },
-        },
-        cost_price: {
-            title: 'warehouse.item.table.cost_price',
             type: 'custom',
             sort: false,
             filter: false,
             editable: false,
             renderComponent: NumberCellComponent,
-            config: {
-                isCurrency: true,
-            },
-        },
-        selling_price: {
-            title: 'warehouse.item.table.selling_price',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: NumberCellComponent,
-            config: {
-                isCurrency: true,
-            },
         },
     },
 };

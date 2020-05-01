@@ -27,6 +27,7 @@ import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
+import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {
@@ -66,18 +67,15 @@ export const WarehouseItemTableSettings = {
         },
         status: {
             title: 'warehouse.item.table.status',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
+            renderComponent: SelectTranslateCellComponent,
         },
         image: {
             title: 'warehouse.item.table.image',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
@@ -85,7 +83,7 @@ export const WarehouseItemTableSettings = {
         },
         stock_on_hand: {
             title: 'warehouse.item.table.stock_on_hand',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
@@ -96,7 +94,7 @@ export const WarehouseItemTableSettings = {
         },
         available_stock: {
             title: 'warehouse.item.table.available_stock',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
@@ -118,7 +116,7 @@ export const WarehouseItemTableSettings = {
         },
         selling_price: {
             title: 'warehouse.item.table.selling_price',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
