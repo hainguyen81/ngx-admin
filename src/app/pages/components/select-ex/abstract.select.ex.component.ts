@@ -205,7 +205,7 @@ export const DefaultNgxSelectOptions: INgxSelectExOptions = {
      * Shows the 'Add new option' action in case of out of items at all
      * {boolean}
      */
-    showAddNewOption: true,
+    showAddNewOption: false,
     /**
      * The configuration of 'Add new option' action
      * {IToolbarActionsConfig}
