@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
@@ -39,7 +39,7 @@ export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign
 })
 export class AppModuleSettingsFormlySelectExFieldComponent
     extends AppFormlySelectExFieldComponent<IGeneralSettings>
-    implements OnInit, AfterViewInit {
+    implements OnInit {
 
     // -------------------------------------------------
     // DECLARATION
