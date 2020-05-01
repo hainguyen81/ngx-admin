@@ -364,7 +364,7 @@ export class WarehouseItemVersionFormlyComponent
     }
 
     dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
-        // no processing needed
+        this.getLogger().debug('Dialog Initialization', reference, options);
     }
 
     // -------------------------------------------------
