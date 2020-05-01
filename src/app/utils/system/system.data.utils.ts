@@ -126,9 +126,9 @@ export default class SystemDataUtils {
     public static invokeDatasourceModelsByDatabaseFilterAsSelectOptions<
         T extends IModel, H extends IHttpService<T>, D extends IDbService<T>,
         DS extends BaseDataSource<T, H, D>>(
-        datasource: DS, indexName: string, keyRange: IDBKeyRange,
-        translateService?: TranslateService | null,
-        keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
+            datasource: DS, indexName: string, keyRange: IDBKeyRange,
+            translateService?: TranslateService | null,
+            keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
         datasource
         || throwError('DataSource is required to invoke!');
         keysMapper

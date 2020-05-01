@@ -766,6 +766,10 @@
                     "description": {
                         "label": "Mô tả",
                         "placeholder": "Mô tả"
+                    },
+                    "status": {
+                        "label": "Trạng thái",
+                        "placeholder": "Trạng thái"
                     }
                 }
             },

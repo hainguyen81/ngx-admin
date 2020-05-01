@@ -766,6 +766,10 @@
                     "description": {
                         "label": "Description",
                         "placeholder": "Description"
+                    },
+                    "status": {
+                        "label": "Status",
+                        "placeholder": "Status"
                     }
                 }
             },

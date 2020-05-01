@@ -243,7 +243,7 @@ export abstract class BaseDataSource<T, H extends IHttpService<T>, D extends IDb
             });
     }
 
-    getAllByIndex(indexName: string, keyRange: IDBKeyRange): Promise<T[]> {
+    getAllByIndex(indexName: string, keyRange: IDBKeyRange): Promise<T | T[]> {
         return super.getDbService().getAllByIndex(indexName, keyRange)
             .then(this.onFulfilledData(), reason => {
                 this.getLogger().error(reason);
