@@ -27,6 +27,7 @@ import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -44,13 +45,11 @@ export const CustomerTableSettings = {
     columns: {
         type: {
             title: 'system.customer.table.type',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
+            editable: false,
+            renderComponent: SelectTranslateCellComponent,
         },
         code: {
             title: 'system.customer.table.code',
@@ -66,13 +65,11 @@ export const CustomerTableSettings = {
         },
         level: {
             title: 'system.customer.table.level',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
+            editable: false,
+            renderComponent: SelectTranslateCellComponent,
         },
         email: {
             title: 'system.customer.table.email',
@@ -94,13 +91,11 @@ export const CustomerTableSettings = {
         },
         status: {
             title: 'system.customer.table.status',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
-            editor: {
-                type: 'list',
-                config: {list: []},
-            },
+            editable: false,
+            renderComponent: SelectTranslateCellComponent,
         },
     },
 };
