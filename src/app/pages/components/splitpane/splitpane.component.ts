@@ -50,6 +50,14 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating whether showing panel header
+     * @return true (default) for showing; else false
+     */
+    protected isShowHeader(): boolean {
+        return false;
+    }
+
+    /**
      * Get the {ViewContainerRef} instance of header panel
      * @return the {ViewContainerRef} instance of header panel
      */

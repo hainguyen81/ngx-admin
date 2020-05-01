@@ -1,9 +1,9 @@
-<nb-card>
-    <nb-card-header *ngIf="isShowHeader()">
+<nb-card [class.m-0]="!isShowHeader()" [class.p-0]="!isShowHeader()" class="ngx-tabset-pane">
+    <nb-card-header *ngIf="isShowHeader()" class="ngx-tabset-pane-header">
         <ng-template #headerHolder></ng-template>
     </nb-card-header>
 
-    <nb-card-body>
+    <nb-card-body [class.m-0]="!isShowHeader()" [class.p-0]="!isShowHeader()" class="ngx-tabset-pane-body">
         <nb-tabset #tabset
                    [fullWidth]="isFullWidth()"
                    [routeParam]="getRouteParam()"
