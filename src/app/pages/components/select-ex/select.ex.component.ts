@@ -249,6 +249,9 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource> 
      * @return the specified {NgxSelectOption} image
      */
     public getOptionImages(item?: NgxSelectOption): string[] {
-        return (this.getOptionImageParser() ? this.getOptionImageParser().apply(this, [item]) : null);
+        const optionImageField: string = this.configValue('optionImageField', '');
+        return (this.getOptionImageParser()
+            ? this.getOptionImageParser().apply(this, [item])
+            : optionImageField.length && item.data ? item.data[optionImageField] : null);
     }
 }

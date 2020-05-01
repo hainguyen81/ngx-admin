@@ -55,6 +55,11 @@ export interface INgxSelectExOptions extends INgxSelectOptions {
      */
     enableOptionImage?: boolean | false;
     /**
+     * Provide an opportunity to change the name an image property of objects in the items
+     * {string}
+     */
+    optionImageField?: string | null;
+    /**
      * Automatically activate item when mouse enter on it
      * {boolean}
      */
@@ -105,6 +110,11 @@ export const DefaultNgxSelectOptions: INgxSelectExOptions = {
      * {string}
      */
     optGroupOptionsField: 'options',
+    /**
+     * Provide an opportunity to change the name an image property of objects in the items
+     * {string}
+     */
+    optionImageField: 'image',
     /**
      * Mode of this component. If set true user can select more than one option
      * {boolean}
