@@ -24,6 +24,25 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {throwError} from 'rxjs';
+import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
+
+/* Warehouse item version left area configuration */
+export const WarehouseItemVersionFormAreaConfig: ISplitAreaConfig = {
+    size: 70,
+    /*minSize: 20,*/
+    maxSize: 70,
+    lockSize: false,
+    visible: true,
+};
+
+/* Warehouse item version right area configuration */
+export const WarehouseItemVersionSummaryAreaConfig: ISplitAreaConfig = {
+    size: 30,
+    /*minSize: 50,*/
+    maxSize: 30,
+    lockSize: false,
+    visible: true,
+};
 
 /**
  * Warehouse item version split-pane component base on {AngularSplitModule}
@@ -106,6 +125,8 @@ export class WarehouseItemVersionSplitPaneComponent
 
         // using for item version
         (<WarehouseItemSummaryComponent>this.rightSideComponent).forVersion = true;
+        this.configAreaByIndex(0, WarehouseItemVersionFormAreaConfig);
+        this.configAreaByIndex(1, WarehouseItemVersionSummaryAreaConfig);
     }
 
     dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {

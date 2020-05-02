@@ -113,11 +113,17 @@
     }
 
     /* Modal dialog */
-    .modal-content {
-        max-height: 70%;
+    .modal .modal-dialog {
+        .modal-content {
+            max-height: 70%;
 
-        .modal-body {
-            overflow: auto;
+            .modal-body {
+                overflow: auto;
+            }
+
+            .modal-footer {
+                padding: 0.5rem;
+            }
         }
     }
 
