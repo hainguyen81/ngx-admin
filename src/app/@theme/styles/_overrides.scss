@@ -121,6 +121,14 @@
         .modal-content {
             max-height: 100%;
 
+            .modal-header {
+                padding: 0.5rem 1rem;
+
+                .modal-title {
+                    font-size: 1rem;
+                }
+            }
+
             .modal-body {
                 overflow: auto;
             }
