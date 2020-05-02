@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject, OnDestroy, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -30,11 +30,12 @@ import {BarcodeCellComponent} from '../../../smart-table/barcode.cell.component'
 import {IEvent} from '../../../abstract.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import {throwError} from 'rxjs';
+import {of, Subject, throwError} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {LocalDataSource} from 'ng2-smart-table';
 import {WarehouseItemVersionDatasource} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
+import {IdGenerators} from '../../../../../config/generator.config';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -101,7 +102,7 @@ export const WarehouseItemVersionContextMenu: IContextMenu[] = [].concat(COMMON.
 })
 export class WarehouseItemVersionSmartTableComponent
     extends AppSmartTableComponent<LocalDataSource>
-    implements OnInit {
+    implements OnInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -109,6 +110,7 @@ export class WarehouseItemVersionSmartTableComponent
 
     private dataModel?: IWarehouseItem | null;
     private dataModelVersion?: IWarehouseItem[] = [];
+    private saveSubject: Subject<IWarehouseItem> = new Subject<IWarehouseItem>();
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -199,6 +201,24 @@ export class WarehouseItemVersionSmartTableComponent
         this.setNewItemListener(this.onNewVersion);
         this.setEditItemListener(this.onEditVersion);
         this.setDeleteItemListener(this.onDeleteVersion);
+
+        const _this: WarehouseItemVersionSmartTableComponent = this;
+        this.saveSubject.subscribe(value => {
+            const version: IWarehouseItem = value;
+            if (!(version.id || '').length) {
+                version.id = IdGenerators.oid.generate();
+                version.item_id = _this.getDataModel().id;
+                version.item_code = _this.getDataModel().code;
+                _this.dataModelVersion.unshift(version);
+            }
+            _this.getDataSource().refresh();
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.saveSubject.unsubscribe();
+
+        super.ngOnDestroy();
     }
 
     // -------------------------------------------------
@@ -209,16 +229,17 @@ export class WarehouseItemVersionSmartTableComponent
         this.warehouseItemVersionDatasource.setDataModel(model);
         this.warehouseItemVersionDatasource.onChanged().subscribe(value => {
             this.dataModelVersion = (value ? value['elements'] || [] : []);
-            this.getDataSource().load(this.getVersions()).then(
-                versions => this.getLogger().debug('Loading item versions successful'),
-                reason => this.getLogger().error(reason))
-                .catch(reason => this.getLogger().error(reason));
+            of(this.dataModelVersion).subscribe(nextValue => {
+                this.getDataSource().load(nextValue).then(
+                    versions => this.getLogger().debug('Loading item versions successful'),
+                    reason => this.getLogger().error(reason))
+                    .catch(reason => this.getLogger().error(reason));
+            });
         });
     }
 
     private onNewVersion($event: IEvent) {
         const newVersion: IWarehouseItem = new WarehouseItem(null, null, null);
-        this.dataModelVersion.unshift(newVersion);
         this.openModalDialog(newVersion);
     }
 
@@ -240,7 +261,7 @@ export class WarehouseItemVersionSmartTableComponent
             super.getRootViewContainerRef(), {
             title: this.translate(this.tableHeader),
             childComponent: WarehouseItemVersionSplitPaneComponent,
-            data: dataModel,
+            data: { model: dataModel, subject: this.saveSubject },
             actionButtons: [
                 {
                     text: this.translate('common.form.action.save'),

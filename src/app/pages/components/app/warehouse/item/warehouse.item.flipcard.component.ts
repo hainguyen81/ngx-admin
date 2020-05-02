@@ -25,7 +25,7 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTableFlipComponent} from '../../components/app.table.flip.component';
-import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {
     ACTION_BACK,
     ACTION_DELETE,
@@ -34,6 +34,7 @@ import {
     ACTION_SAVE,
 } from '../../../../../config/toolbar.actions.conf';
 import {IEvent} from '../../../abstract.component';
+import {IdGenerators} from '../../../../../config/generator.config';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
@@ -119,10 +120,11 @@ export class WarehouseItemFlipcardComponent
     // -------------------------------------------------
 
     protected onNewData($event: IEvent): void {
-        super.getBackComponent().setDataModel(super.selectedModel);
+        this.selectedModel = new WarehouseItem(IdGenerators.oid.generate(), null, null);
+        super.getBackComponent().setDataModel(this.selectedModel);
     }
 
     protected onEditData($event: IEvent): void {
-        super.getBackComponent().setDataModel(super.selectedModel);
+        super.getBackComponent().setDataModel(this.selectedModel);
     }
 }

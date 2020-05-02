@@ -15,7 +15,7 @@ import {WarehouseItemDatasource} from '../../../../../services/implementation/wa
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
-import {IModalDialog, IModalDialogOptions, ModalDialogService} from 'ngx-modal-dialog';
+import {IModalDialog, IModalDialogOptions, ModalDialogOnAction, ModalDialogService} from 'ngx-modal-dialog';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -23,7 +23,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {throwError} from 'rxjs';
+import {isObservable, Observable, Subject, throwError} from 'rxjs';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import ObjectUtils from '../../../../../utils/object.utils';
 
@@ -71,6 +71,7 @@ export class WarehouseItemVersionSplitPaneComponent
 
     private dataModel?: IWarehouseItem | null;
     private modifiedDataModel?: IWarehouseItem | null;
+    private saveSubject: Subject<IWarehouseItem>;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -148,16 +149,19 @@ export class WarehouseItemVersionSplitPaneComponent
     }
 
     dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
-        const data: IWarehouseItem = (options ? options.data as IWarehouseItem : undefined);
+        this.getLogger().debug('Dialog Initialization', reference, options);
+        this.saveSubject = (options && options.data['subject'] instanceof Subject
+            ? <Subject<IWarehouseItem>>options.data['subject'] : undefined);
+        const data: IWarehouseItem = (options && options.data['model']
+            ? options.data['model'] as IWarehouseItem : undefined);
+        this.saveSubject || throwError('Could not found parent subject to save data!');
         data || throwError('Could not found dialog data!');
         this.dataModel = data;
         this.modifiedDataModel = ObjectUtils.deepCopy(this.dataModel);
-        options.actionButtons[0].onAction = () => {
-            return this.performSave();
-        };
-        options.actionButtons[1].onAction = () => {
-            return this.performReset();
-        };
+        options.actionButtons[0].onAction =
+            () => (<WarehouseItemVersionSplitPaneComponent>reference.instance).performSave();
+        options.actionButtons[1].onAction =
+            () => (<WarehouseItemVersionSplitPaneComponent>reference.instance).performReset();
     }
 
     protected doSave(): void {
@@ -172,7 +176,8 @@ export class WarehouseItemVersionSplitPaneComponent
         }
 
         // apply modified data to parent model
-        Object.assign(this.dataModel, this.modifiedDataModel);
+        this.dataModel = Object.assign(this.dataModel, this.modifiedDataModel);
+        this.saveSubject.next(this.dataModel);
         return true;
     }
 
@@ -180,7 +185,7 @@ export class WarehouseItemVersionSplitPaneComponent
         throwError('Not support for resetting model from internal component!');
     }
     private performReset(): boolean {
-        Object.assign(this.modifiedDataModel, this.dataModel);
+        this.modifiedDataModel = Object.assign(this.modifiedDataModel, this.dataModel);
         this.getLeftSideComponent().setModel(this.modifiedDataModel);
         (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this.modifiedDataModel);
         return false;
