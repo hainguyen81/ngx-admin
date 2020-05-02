@@ -25,6 +25,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {throwError} from 'rxjs';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
+import ObjectUtils from '../../../../../utils/object.utils';
 
 /* Warehouse item version left area configuration */
 export const WarehouseItemVersionFormAreaConfig: ISplitAreaConfig = {
@@ -69,6 +70,7 @@ export class WarehouseItemVersionSplitPaneComponent
     // -------------------------------------------------
 
     private dataModel?: IWarehouseItem | null;
+    private modifiedDataModel?: IWarehouseItem | null;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -137,8 +139,8 @@ export class WarehouseItemVersionSplitPaneComponent
         super.ngAfterViewInit();
 
         // using for item version
-        this.getLeftSideComponent().setModel(this.dataModel);
-        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this.dataModel);
+        this.getLeftSideComponent().setModel(this.modifiedDataModel);
+        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this.modifiedDataModel);
         (<WarehouseItemSummaryComponent>this.rightSideComponent).forVersion = true;
         this.configAreaByIndex(0, WarehouseItemVersionFormAreaConfig);
         this.configAreaByIndex(1, WarehouseItemVersionSummaryAreaConfig);
@@ -149,20 +151,39 @@ export class WarehouseItemVersionSplitPaneComponent
         const data: IWarehouseItem = (options ? options.data as IWarehouseItem : undefined);
         data || throwError('Could not found dialog data!');
         this.dataModel = data;
+        this.modifiedDataModel = ObjectUtils.deepCopy(this.dataModel);
         options.actionButtons[0].onAction = () => {
-            this.doSave();
+            return this.performSave();
         };
         options.actionButtons[1].onAction = () => {
-            this.doReset();
+            return this.performReset();
         };
     }
 
     protected doSave(): void {
         throwError('Not support for saving model from internal component!');
     }
+    private performSave(): boolean {
+        this.getLeftSideComponent().getFormGroup()
+            .updateValueAndValidity({ onlySelf: true, emitEvent: true });
+        if (this.getLeftSideComponent().getFormGroup().invalid) {
+            this.showError('app', 'common.form.invalid_data');
+            return false;
+        }
+
+        // apply modified data to parent model
+        Object.assign(this.dataModel, this.modifiedDataModel);
+        return true;
+    }
 
     protected doReset(): void {
         throwError('Not support for resetting model from internal component!');
+    }
+    private performReset(): boolean {
+        Object.assign(this.modifiedDataModel, this.dataModel);
+        this.getLeftSideComponent().setModel(this.modifiedDataModel);
+        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this.modifiedDataModel);
+        return false;
     }
 
     protected performDelete(): void {

@@ -153,9 +153,11 @@ import {
 import HtmlUtils from '../utils/html.utils';
 import {
     WarehouseItemVersionDbService,
-    WarehouseItemVersionHttpService
+    WarehouseItemVersionHttpService,
 } from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.service';
-import {WarehouseItemVersionDatasource} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
+import {
+    WarehouseItemVersionDatasource,
+} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');

@@ -108,7 +108,7 @@ export class WarehouseItemVersionSmartTableComponent
     // -------------------------------------------------
 
     private dataModel?: IWarehouseItem | null;
-    private dataModelVersion?: IWarehouseItem[] | [];
+    private dataModelVersion?: IWarehouseItem[] = [];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -209,12 +209,17 @@ export class WarehouseItemVersionSmartTableComponent
         this.warehouseItemVersionDatasource.setDataModel(model);
         this.warehouseItemVersionDatasource.onChanged().subscribe(value => {
             this.dataModelVersion = (value ? value['elements'] || [] : []);
-            this.getDataSource().load(this.getVersions());
+            this.getDataSource().load(this.getVersions()).then(
+                versions => this.getLogger().debug('Loading item versions successful'),
+                reason => this.getLogger().error(reason))
+                .catch(reason => this.getLogger().error(reason));
         });
     }
 
     private onNewVersion($event: IEvent) {
-        this.openModalDialog(new WarehouseItem(null, null, null));
+        const newVersion: IWarehouseItem = new WarehouseItem(null, null, null);
+        this.dataModelVersion.unshift(newVersion);
+        this.openModalDialog(newVersion);
     }
 
     private onEditVersion($event: IEvent) {
