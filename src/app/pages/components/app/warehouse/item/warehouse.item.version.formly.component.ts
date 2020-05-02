@@ -3,7 +3,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ComponentRef,
+    ComponentFactoryResolver,
     ElementRef,
     Inject,
     Renderer2,
@@ -13,7 +13,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {IModalDialog, IModalDialogOptions, ModalDialogService} from 'ngx-modal-dialog';
+import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
@@ -297,7 +297,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseItemVersionFormlyComponent
     extends AppFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
-    implements IModalDialog, AfterViewInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -361,10 +361,6 @@ export class WarehouseItemVersionFormlyComponent
 
         // observe fields
         this.observeFields();
-    }
-
-    dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
-        this.getLogger().debug('Dialog Initialization', reference, options);
     }
 
     // -------------------------------------------------

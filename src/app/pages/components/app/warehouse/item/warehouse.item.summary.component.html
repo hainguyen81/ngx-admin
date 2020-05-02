@@ -6,7 +6,7 @@
                            [images]="getDataModelImages()"
                            (onChange)="onChange($event)"
         ></ngx-image-gallery>
-        <div [class.d-table]="true" [class.pt-4]="true">
+        <div [class.d-table]="true" [class.pt-4]="true" *ngIf="!forVersion">
             <table class="current-stock" [class.border-0]="true" cellpadding="5">
                 <tbody>
                     <tr>

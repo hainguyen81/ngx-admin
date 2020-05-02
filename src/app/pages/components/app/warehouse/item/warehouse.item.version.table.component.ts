@@ -28,10 +28,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {BarcodeCellComponent} from '../../../smart-table/barcode.cell.component';
 import {IEvent} from '../../../abstract.component';
-import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {throwError} from 'rxjs';
+import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -199,7 +199,7 @@ export class WarehouseItemVersionSmartTableComponent
         dataModel && this.getModalDialogService().openDialog(
             super.getRootViewContainerRef(), {
             title: super.tableHeader,
-            childComponent: WarehouseItemVersionFormlyComponent,
+            childComponent: WarehouseItemVersionSplitPaneComponent,
             data: dataModel,
             actionButtons: [
                 { text: this.translate('common.form.action.save') },

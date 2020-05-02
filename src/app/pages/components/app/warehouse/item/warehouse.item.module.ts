@@ -45,6 +45,7 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
 import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.table.component';
+import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 
 @NgModule({
     imports: [
@@ -138,6 +139,7 @@ import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.
         WarehouseItemAdjustmentSmartTableComponent,
         WarehouseItemVersionSmartTableComponent,
         WarehouseItemVersionFormlyComponent,
+        WarehouseItemVersionSplitPaneComponent,
     ],
     declarations: [
         WarehouseItemFlipcardComponent,
@@ -154,6 +156,7 @@ import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.
         WarehouseItemAdjustmentSmartTableComponent,
         WarehouseItemVersionSmartTableComponent,
         WarehouseItemVersionFormlyComponent,
+        WarehouseItemVersionSplitPaneComponent,
     ],
     exports: [
         WarehouseItemFlipcardComponent,
@@ -170,6 +173,7 @@ import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.
         WarehouseItemAdjustmentSmartTableComponent,
         WarehouseItemVersionSmartTableComponent,
         WarehouseItemVersionFormlyComponent,
+        WarehouseItemVersionSplitPaneComponent,
     ],
     providers: [ WarehouseProviders ],
 })

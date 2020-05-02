@@ -64,6 +64,9 @@ export interface IWarehouseItem extends IModel {
     versions?: number | 0;
 
     // foreign keys
+    item_id?: string | null;
+    item_code?: string | null;
+    item?: WarehouseItem | null;
     // Loại hàng hóa
     categories_id?: String | null;
     category?: IWarehouseCategory | null;

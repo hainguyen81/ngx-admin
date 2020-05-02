@@ -39,10 +39,27 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
 
     private dataModel: IWarehouseItem;
     private isChanged: boolean | false;
+    private isVersion: boolean | false;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating the data model whether is item version
+     * @return true for version; else false
+     */
+    get forVersion(): boolean {
+        return this.isVersion;
+    }
+
+    /**
+     * Set a boolean value indicating the data model whether is item version
+     * @param isVersion true for version; else false
+     */
+    set forVersion(isVersion: boolean) {
+        this.isVersion = isVersion;
+    }
 
     /**
      * Get a boolean value indicating the data model whether has been changed

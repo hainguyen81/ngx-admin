@@ -35,19 +35,31 @@ export function indexFactory() {
     // to be modified so a migrator for that version is not included.
     return {
         1: (db, transaction) => {
-            const store = transaction.objectStore(DB_STORE.general_settings);
-            store.createIndex(
+            // general settings
+            const generalSettingsStore = transaction.objectStore(DB_STORE.general_settings);
+            generalSettingsStore.createIndex(
                 '__general_settings_index_by_id',
                 ['id', 'module_id', 'code'],
                 { unique: true });
-            store.createIndex(
+            generalSettingsStore.createIndex(
                 '__general_settings_index_by_code',
                 ['id', 'module_code', 'code'],
                 { unique: true });
-            store.createIndex(
+            generalSettingsStore.createIndex(
                 '__general_settings_index_by_module_code',
                 ['module_code', 'code'],
                 { unique: false });
+
+            // warehouse_item
+            const warehouseItemStore = transaction.objectStore(DB_STORE.warehouse_item);
+            warehouseItemStore.createIndex(
+                '__warehouse_item_index_by_id',
+                ['id', 'item_id'],
+                { unique: true });
+            warehouseItemStore.createIndex(
+                '__warehouse_item_index_by_code',
+                ['code', 'item_code'],
+                { unique: true });
         },
     };
 }
@@ -212,7 +224,7 @@ export const dbConfig: DBConfig = {
         storeConfig: {keyPath: 'uid', autoIncrement: true},
         storeSchema: [
             {name: 'id', keypath: 'id', options: {unique: true}},
-            {name: 'code', keypath: 'code', options: {unique: true}},
+            {name: 'code', keypath: 'code', options: {unique: false}},
             {name: 'name', keypath: 'name', options: {unique: false}},
             {name: 'status', keypath: 'status', options: {unique: false}},
             {name: 'barcode', keypath: 'barcode', options: {unique: false}},
@@ -238,6 +250,10 @@ export const dbConfig: DBConfig = {
             {name: 'quantity_received', keypath: 'quantity_received', options: {unique: false}},
             {name: 'description', keypath: 'description', options: {unique: false}},
             {name: 'remark', keypath: 'remark', options: {unique: false}},
+            {name: 'versions', keypath: 'versions', options: {unique: false}},
+            {name: 'item_id', keypath: 'item_id', options: {unique: false}},
+            {name: 'item_code', keypath: 'item_code', options: {unique: false}},
+            {name: 'item', keypath: 'item', options: {unique: false}},
             {name: 'categories_id', keypath: 'categories_id', options: {unique: false}},
             {name: 'category', keypath: 'category', options: {unique: false}},
             {name: 'brand_id', keypath: 'brand_id', options: {unique: false}},
