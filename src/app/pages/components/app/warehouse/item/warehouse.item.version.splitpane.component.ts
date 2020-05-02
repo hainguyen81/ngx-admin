@@ -65,6 +65,12 @@ export class WarehouseItemVersionSplitPaneComponent
     implements IModalDialog, AfterViewInit {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private dataModel?: IWarehouseItem | null;
+
+    // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
@@ -131,6 +137,8 @@ export class WarehouseItemVersionSplitPaneComponent
         super.ngAfterViewInit();
 
         // using for item version
+        this.getLeftSideComponent().setModel(this.dataModel);
+        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this.dataModel);
         (<WarehouseItemSummaryComponent>this.rightSideComponent).forVersion = true;
         this.configAreaByIndex(0, WarehouseItemVersionFormAreaConfig);
         this.configAreaByIndex(1, WarehouseItemVersionSummaryAreaConfig);
@@ -138,7 +146,15 @@ export class WarehouseItemVersionSplitPaneComponent
     }
 
     dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
-        this.getLogger().debug('Dialog Initialization', reference, options);
+        const data: IWarehouseItem = (options ? options.data as IWarehouseItem : undefined);
+        data || throwError('Could not found dialog data!');
+        this.dataModel = data;
+        options.actionButtons[0].onAction = () => {
+            this.doSave();
+        };
+        options.actionButtons[1].onAction = () => {
+            this.doReset();
+        };
     }
 
     protected doSave(): void {

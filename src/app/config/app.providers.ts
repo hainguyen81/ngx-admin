@@ -151,6 +151,11 @@ import {
     GeneralSettingsDatasource,
 } from '../services/implementation/system/general.settings/general.settings.datasource';
 import HtmlUtils from '../utils/html.utils';
+import {
+    WarehouseItemVersionDbService,
+    WarehouseItemVersionHttpService
+} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.service';
+import {WarehouseItemVersionDatasource} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -458,7 +463,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseOrderHttpService, useClass: WarehouseOrderHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseOrderDbService],
     },
     {
         provide: WarehouseOrderDatasource, useClass: WarehouseOrderDatasource,
@@ -472,7 +477,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseOrderDetailHttpService, useClass: WarehouseOrderDetailHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseOrderDetailDbService],
     },
     {
         provide: WarehouseOrderDetailDatasource, useClass: WarehouseOrderDetailDatasource,
@@ -486,11 +491,25 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseItemHttpService, useClass: WarehouseItemHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseItemDbService],
     },
     {
         provide: WarehouseItemDatasource, useClass: WarehouseItemDatasource,
         deps: [WarehouseItemHttpService, WarehouseItemDbService, NGXLogger],
+    },
+
+    // Warehouse Item Version
+    {
+        provide: WarehouseItemVersionDbService, useClass: WarehouseItemVersionDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseItemVersionHttpService, useClass: WarehouseItemVersionHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseItemVersionDbService],
+    },
+    {
+        provide: WarehouseItemVersionDatasource, useClass: WarehouseItemVersionDatasource,
+        deps: [WarehouseItemVersionHttpService, WarehouseItemVersionDbService, NGXLogger],
     },
 
     // Warehouse Inventory
@@ -500,7 +519,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseInventoryHttpService, useClass: WarehouseInventoryHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseInventoryDbService],
     },
     {
         provide: WarehouseInventoryDatasource, useClass: WarehouseInventoryDatasource,
@@ -514,7 +533,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseInventoryDetailHttpService, useClass: WarehouseInventoryDetailHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseInventoryDetailDbService],
     },
     {
         provide: WarehouseInventoryDetailDatasource, useClass: WarehouseInventoryDetailDatasource,
@@ -528,7 +547,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseCategoryHttpService, useClass: WarehouseCategoryHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseCategoryDbService],
     },
     {
         provide: WarehouseCategoryDatasource, useClass: WarehouseCategoryDatasource,
@@ -542,7 +561,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseAdjustHttpService, useClass: WarehouseAdjustHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseAdjustDbService],
     },
     {
         provide: WarehouseAdjustDatasource, useClass: WarehouseAdjustDatasource,
@@ -556,7 +575,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
     {
         provide: WarehouseAdjustDetailHttpService, useClass: WarehouseAdjustDetailHttpService,
-        deps: [HttpClient, NGXLogger, WarehouseDbService],
+        deps: [HttpClient, NGXLogger, WarehouseAdjustDetailDbService],
     },
     {
         provide: WarehouseAdjustDetailDatasource, useClass: WarehouseAdjustDetailDatasource,

@@ -32,6 +32,9 @@ import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {throwError} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {LocalDataSource} from 'ng2-smart-table';
+import {WarehouseItemVersionDatasource} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -97,8 +100,15 @@ export const WarehouseItemVersionContextMenu: IContextMenu[] = [].concat(COMMON.
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class WarehouseItemVersionSmartTableComponent
-    extends AppSmartTableComponent<WarehouseItemDatasource>
+    extends AppSmartTableComponent<LocalDataSource>
     implements OnInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private dataModel?: IWarehouseItem | null;
+    private dataModelVersion?: IWarehouseItem[] | [];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -106,6 +116,19 @@ export class WarehouseItemVersionSmartTableComponent
 
     protected isShowHeader(): boolean {
         return false;
+    }
+
+    public getDataModel(): IWarehouseItem {
+        return this.dataModel;
+    }
+
+    public setDataModel(dataModel?: WarehouseItem | null) {
+        this.dataModel = dataModel;
+        this.loadVersions(this.dataModel);
+    }
+
+    public getVersions(): IWarehouseItem[] {
+        return this.dataModelVersion;
     }
 
     // -------------------------------------------------
@@ -130,7 +153,7 @@ export class WarehouseItemVersionSmartTableComponent
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      */
-    constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
+    constructor(@Inject(DataSource) dataSource: LocalDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -144,12 +167,16 @@ export class WarehouseItemVersionSmartTableComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                @Inject(WarehouseItemVersionDatasource)
+                private warehouseItemVersionDatasource?: WarehouseItemVersionDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+        warehouseItemVersionDatasource
+        || throwError('Could not inject WarehouseItemVersionDatasource instance');
         super.setTableHeader('warehouse.item.title');
         super.setTableSettings(WarehouseItemVersionTableSettings);
         super.setContextMenu(WarehouseItemVersionContextMenu);
@@ -178,6 +205,14 @@ export class WarehouseItemVersionSmartTableComponent
     // FUNCTIONS
     // -------------------------------------------------
 
+    private loadVersions(model?: IWarehouseItem | null) {
+        this.warehouseItemVersionDatasource.setDataModel(model);
+        this.warehouseItemVersionDatasource.onChanged().subscribe(value => {
+            this.dataModelVersion = (value ? value['elements'] || [] : []);
+            this.getDataSource().load(this.getVersions());
+        });
+    }
+
     private onNewVersion($event: IEvent) {
         this.openModalDialog(new WarehouseItem(null, null, null));
     }
@@ -202,9 +237,19 @@ export class WarehouseItemVersionSmartTableComponent
             childComponent: WarehouseItemVersionSplitPaneComponent,
             data: dataModel,
             actionButtons: [
-                { text: this.translate('common.form.action.save') },
-                { text: this.translate('common.form.action.reset') },
-                { text: this.translate('common.form.action.close'), onAction: () => true },
+                {
+                    text: this.translate('common.form.action.save'),
+                    buttonClass: 'btn-save appearance-filled size-small status-warning shape-rectangle transitions',
+                },
+                {
+                    text: this.translate('common.form.action.reset'),
+                    buttonClass: 'btn-reset appearance-filled size-small status-warning shape-rectangle transitions',
+                },
+                {
+                    text: this.translate('common.form.action.close'),
+                    buttonClass: 'btn-close fa fa-chevron-circle-left',
+                    onAction: () => true,
+                },
             ],
             settings: {
                 modalClass: 'modal ngx-modal version-modal',
