@@ -115,9 +115,11 @@
     /* Modal dialog */
     .modal .modal-dialog {
         max-width: 70%;
+        max-height: 100%;
+        overflow: hidden;
 
         .modal-content {
-            max-height: 80%;
+            max-height: 100%;
 
             .modal-body {
                 overflow: auto;
@@ -125,6 +127,13 @@
 
             .modal-footer {
                 padding: 0.5rem;
+            }
+        }
+    }
+    .modal.version-modal {
+        .modal-dialog.version-dialog {
+            .modal-content .modal-body {
+                padding: 0 1rem;
             }
         }
     }

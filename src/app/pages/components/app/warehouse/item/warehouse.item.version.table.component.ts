@@ -206,6 +206,12 @@ export class WarehouseItemVersionSmartTableComponent
                 { text: this.translate('common.form.action.reset') },
                 { text: this.translate('common.form.action.close'), onAction: () => true },
             ],
+            settings: {
+                modalClass: 'modal ngx-modal version-modal',
+                closeButtonTitle: this.translate('common.form.action.close'),
+                modalDialogClass: 'modal-dialog version-dialog',
+                bodyClass: 'modal-body scrollable',
+            },
         });
     }
 }

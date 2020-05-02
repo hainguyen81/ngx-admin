@@ -51,7 +51,10 @@ export const WarehouseItemVersionSummaryAreaConfig: ISplitAreaConfig = {
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-split-pane-app-warehouse-item-version',
     templateUrl: '../../../splitpane/splitpane.component.html',
-    styleUrls: ['../../../splitpane/splitpane.component.scss'],
+    styleUrls: [
+        '../../../splitpane/splitpane.component.scss',
+        './warehouse.item.version.splitpane.component.scss',
+    ],
 })
 export class WarehouseItemVersionSplitPaneComponent
     extends AppSplitPaneComponent<
@@ -67,6 +70,10 @@ export class WarehouseItemVersionSplitPaneComponent
 
     protected shouldAttachRightSideOnStartup(): boolean {
         return true;
+    }
+
+    protected isShowHeader(): boolean {
+        return false;
     }
 
     // -------------------------------------------------

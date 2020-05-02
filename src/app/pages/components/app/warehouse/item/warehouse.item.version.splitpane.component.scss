@@ -1,0 +1,24 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep nb-card {
+        transform: translate3d(0, 0, 0);
+        border: none;
+        box-shadow: none;
+    }
+    ::ng-deep form {
+        [class*='col'] {
+            padding-left: 0;
+        }
+        .mat-form-field-wrapper {
+            padding-bottom: 0.5rem;
+
+            .mat-form-field-flex {
+                padding: 0;
+            }
+            .mat-form-field-underline {
+                bottom: 0.75em;
+            }
+        }
+    }
+}
