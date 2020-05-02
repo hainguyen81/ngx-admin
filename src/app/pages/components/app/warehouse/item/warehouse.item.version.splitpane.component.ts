@@ -134,6 +134,7 @@ export class WarehouseItemVersionSplitPaneComponent
         (<WarehouseItemSummaryComponent>this.rightSideComponent).forVersion = true;
         this.configAreaByIndex(0, WarehouseItemVersionFormAreaConfig);
         this.configAreaByIndex(1, WarehouseItemVersionSummaryAreaConfig);
+        this.getChangeDetectorRef().detectChanges();
     }
 
     dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
