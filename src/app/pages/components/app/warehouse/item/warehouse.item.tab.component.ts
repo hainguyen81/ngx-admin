@@ -264,6 +264,7 @@ export class WarehouseItemTabsetComponent
     public setDataModel(dataModel: IWarehouseItem): void {
         this.dataModel = dataModel;
         this.getOverviewTab() && this.getOverviewTab().setModel(dataModel);
+        this.getVersionTab() && this.getVersionTab().setDataModel(dataModel);
         this.getPurchaseTab() && this.getPurchaseTab().setModel(dataModel);
         this.getSaleTab() && this.getSaleTab().setModel(dataModel);
         this.getInOutTab() && this.getInOutTab().setModel(dataModel);
@@ -279,11 +280,19 @@ export class WarehouseItemTabsetComponent
     }
 
     /**
+     * Get the {WarehouseItemVersionSmartTableComponent} instance
+     * @return the {WarehouseItemVersionSmartTableComponent} instance
+     */
+    protected getVersionTab(): WarehouseItemVersionSmartTableComponent {
+        return this.getTabComponent(1, WarehouseItemVersionSmartTableComponent);
+    }
+
+    /**
      * Get the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
      * @return the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
      */
     protected getPurchaseTab(): WarehouseItemPurchaseOrdersSmartTableComponent {
-        return this.getTabComponent(1, WarehouseItemPurchaseOrdersSmartTableComponent);
+        return this.getTabComponent(2, WarehouseItemPurchaseOrdersSmartTableComponent);
     }
 
     /**
@@ -291,7 +300,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemSaleOrdersSmartTableComponent} instance
      */
     protected getSaleTab(): WarehouseItemSaleOrdersSmartTableComponent {
-        return this.getTabComponent(2, WarehouseItemSaleOrdersSmartTableComponent);
+        return this.getTabComponent(3, WarehouseItemSaleOrdersSmartTableComponent);
     }
 
     /**
@@ -299,7 +308,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemInOutSmartTableComponent} instance
      */
     protected getInOutTab(): WarehouseItemInOutSmartTableComponent {
-        return this.getTabComponent(3, WarehouseItemInOutSmartTableComponent);
+        return this.getTabComponent(4, WarehouseItemInOutSmartTableComponent);
     }
 
     /**
@@ -307,7 +316,7 @@ export class WarehouseItemTabsetComponent
      * @return the {WarehouseItemAdjustmentSmartTableComponent} instance
      */
     protected getAdjustmentTab(): WarehouseItemAdjustmentSmartTableComponent {
-        return this.getTabComponent(4, WarehouseItemAdjustmentSmartTableComponent);
+        return this.getTabComponent(5, WarehouseItemAdjustmentSmartTableComponent);
     }
 
     // -------------------------------------------------

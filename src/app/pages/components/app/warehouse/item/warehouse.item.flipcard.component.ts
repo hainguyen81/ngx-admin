@@ -33,6 +33,7 @@ import {
     ACTION_RESET,
     ACTION_SAVE,
 } from '../../../../../config/toolbar.actions.conf';
+import {IEvent} from '../../../abstract.component';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
@@ -111,5 +112,17 @@ export class WarehouseItemFlipcardComponent
             WarehouseItemToolbarComponent,
             WarehouseItemSmartTableComponent,
             WarehouseItemSplitPaneComponent);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    protected onNewData($event: IEvent): void {
+        super.getBackComponent().setDataModel(super.selectedModel);
+    }
+
+    protected onEditData($event: IEvent): void {
+        super.getBackComponent().setDataModel(super.selectedModel);
     }
 }
