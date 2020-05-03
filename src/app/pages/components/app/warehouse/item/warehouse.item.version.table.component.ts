@@ -85,6 +85,39 @@ export const WarehouseItemVersionTableSettings = {
             editable: false,
             renderComponent: BarcodeCellComponent,
         },
+        cost_price: {
+            title: 'warehouse.item.table.cost_price',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: true,
+            },
+        },
+        selling_price: {
+            title: 'warehouse.item.table.selling_price',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: true,
+            },
+        },
+        dealer_price: {
+            title: 'warehouse.item.table.dealer_price',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: true,
+            },
+        },
         available_stock: {
             title: 'warehouse.item.table.available_stock',
             type: 'custom',

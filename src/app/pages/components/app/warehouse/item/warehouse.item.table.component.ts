@@ -137,6 +137,17 @@ export const WarehouseItemTableSettings = {
                 isCurrency: true,
             },
         },
+        dealer_price: {
+            title: 'warehouse.item.table.dealer_price',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: true,
+            },
+        },
     },
 };
 

@@ -1,4 +1,11 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
+    ::ng-deep ngx-barcode .barcode {
+        background-color: transparent;
+        svg {
+            max-width: 150px;
+            max-height: 35px;
+        }
+    }
 }
