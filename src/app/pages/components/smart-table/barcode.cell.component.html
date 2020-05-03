@@ -1,3 +1,6 @@
-<span class="d-table-cell text-center barcode-cell">
-    <ngx-barcode [bc-value]="cellValue" [bc-display-value]="true"></ngx-barcode>
+<span class="d-table-cell text-center barcode-cell" [title]="cellValue">
+    <ngx-barcode [bc-value]="cellValue"
+                 [bc-width]="2"
+                 [bc-height]="32"
+                 [bc-display-value]="false"></ngx-barcode>
 </span>
