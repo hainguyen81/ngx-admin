@@ -264,10 +264,11 @@ export abstract class AppFlipcardComponent<
      */
     private createFlipComponents(): void {
         // create table component
+        const _this: AppFlipcardComponent<D, TB, F, B> = this;
         this.toolbarComponent = super.setToolbarComponent(this.toolbarComponentType);
         this.toolbarComponent
         && this.toolbarComponent.actionListener()
-            .subscribe($event => this.onClickAction($event));
+            .subscribe($event => _this.onClickAction($event));
         this.frontComponent = super.setFrontComponent(this.frontComponentType);
         this.fulfillComponentsAtStartup() && this.ensureBackComponent();
     }

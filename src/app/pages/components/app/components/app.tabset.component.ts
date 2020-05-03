@@ -223,11 +223,12 @@ export abstract class AppTabsetComponent<
      * Create tab components
      */
     private createTabComponents(): void {
+        const _this: AppTabsetComponent<T, D, TB, TC> = this;
         // create toolbar component
         if (this._toolbarComponentType) {
             this.toolbarComponent = super.setToolbarComponent(this._toolbarComponentType);
             this.toolbarComponent.showActions = true;
-            this.toolbarComponent.actionListener().subscribe((e: IEvent) => this.onClickAction(e));
+            this.toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e));
             this.doToolbarActionsSettings();
             // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
             // TODO after updating toolbar action settings

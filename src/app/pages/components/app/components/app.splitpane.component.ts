@@ -222,6 +222,7 @@ export abstract class AppSplitPaneComponent<
      */
     private createPaneComponents() {
         // configure areas
+        const _this: AppSplitPaneComponent<T, D, TB, L, R> = this;
         this.configAreaByIndex(0, LeftTreeAreaConfig);
         this.configAreaByIndex(1, RightFormAreaConfig);
 
@@ -229,7 +230,7 @@ export abstract class AppSplitPaneComponent<
         if (this.toolBarType) {
             this.toolbarComponent = super.setToolbarComponent(this.toolBarType);
             this.toolbarComponent.showActions = true;
-            this.toolbarComponent.actionListener().subscribe((e: IEvent) => this.onClickAction(e));
+            this.toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e));
             this.doToolbarActionsSettings();
             // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
             // TODO after updating toolbar action settings
