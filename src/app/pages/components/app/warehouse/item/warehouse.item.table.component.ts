@@ -28,6 +28,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
+import {Cell} from 'ng2-smart-table';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {
@@ -51,12 +54,22 @@ export const WarehouseItemTableSettings = {
             editable: false,
             renderComponent: RowNumberCellComponent,
         },
-        code: {
+        image: {
             title: 'warehouse.item.table.code',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
+            renderComponent: ImageCellComponent,
+            editor: {
+                type: 'custom',
+                component: ImageCellComponent,
+                config: {
+                    'descriptorPrepare': (cell: Cell, row: Row, data: IWarehouseItem) => {
+                        return (data ? data.code || '' : '');
+                    },
+                },
+            },
         },
         name: {
             title: 'warehouse.item.table.name',
@@ -72,14 +85,6 @@ export const WarehouseItemTableSettings = {
             filter: false,
             editable: false,
             renderComponent: SelectTranslateCellComponent,
-        },
-        image: {
-            title: 'warehouse.item.table.image',
-            type: 'custom',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: ImageCellComponent,
         },
         stock_on_hand: {
             title: 'warehouse.item.table.stock_on_hand',
