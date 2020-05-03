@@ -33,8 +33,10 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {of, Subject, throwError} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {LocalDataSource} from 'ng2-smart-table';
-import {WarehouseItemVersionDatasource} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
+import {Cell, LocalDataSource} from 'ng2-smart-table';
+import {
+    WarehouseItemVersionDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 import {IdGenerators} from '../../../../../config/generator.config';
 
 /* warehouse item version table settings */
@@ -51,12 +53,22 @@ export const WarehouseItemVersionTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
-        code: {
+        image: {
             title: 'warehouse.item.table.code',
             type: 'string',
             sort: false,
             filter: false,
             editable: false,
+            renderComponent: ImageCellComponent,
+            editor: {
+                type: 'custom',
+                component: ImageCellComponent,
+                config: {
+                    'descriptorPrepare': (cell: Cell, row: Row, data: IWarehouseItem) => {
+                        return (data ? data.code || '' : '');
+                    },
+                },
+            },
         },
         name: {
             title: 'warehouse.item.table.name',
@@ -64,14 +76,6 @@ export const WarehouseItemVersionTableSettings = {
             sort: false,
             filter: false,
             editable: false,
-        },
-        image: {
-            title: 'warehouse.item.table.image',
-            type: 'custom',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: ImageCellComponent,
         },
         barcode: {
             title: 'warehouse.item.table.barcode',
