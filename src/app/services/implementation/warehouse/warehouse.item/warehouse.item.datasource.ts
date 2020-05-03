@@ -17,7 +17,7 @@ export class WarehouseItemDatasource
         super(httpService, dbService, logger);
     }
 
-    public save(...elements: IWarehouseItem[]): Promise<number> {
+    public save(elements: IWarehouseItem[]): Promise<number> {
         return this.getDbService().saveEntities(elements);
     }
 }

@@ -133,8 +133,9 @@ export class WarehouseItemFlipcardComponent
             return;
         }
 
-        (<WarehouseItemDatasource>this.getDataSource()).save(
-            ...[this.selectedModel].concat(this.getBackComponent().getDataModelVersions()))
+        const data: IWarehouseItem[] = [this.selectedModel]
+            .concat(this.getBackComponent().getDataModelVersions());
+        (<WarehouseItemDatasource>this.getDataSource()).save(data)
             .then(value => {
                 this.showSaveDataSuccess();
                 this.doBack();
