@@ -102,7 +102,10 @@ export const WarehouseItemVersionContextMenu: IContextMenu[] = [].concat(COMMON.
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-app-warehouse-item-version',
     templateUrl: '../../../smart-table/smart-table.component.html',
-    styleUrls: ['../../../smart-table/smart-table.component.scss'],
+    styleUrls: [
+        '../../../smart-table/smart-table.component.scss',
+        './warehouse.item.version.splitpane.component.scss',
+    ],
 })
 export class WarehouseItemVersionSmartTableComponent
     extends AppSmartTableComponent<LocalDataSource>

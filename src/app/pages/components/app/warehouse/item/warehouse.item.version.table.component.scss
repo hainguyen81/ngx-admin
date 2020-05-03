@@ -1,0 +1,7 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep ng2-smart-table table tr td {
+        padding: 0.25rem;
+    }
+}
