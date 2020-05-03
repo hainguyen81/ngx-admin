@@ -140,6 +140,7 @@ export class WarehouseItemFlipcardComponent
             version.item_id = this.selectedModel.id;
             version.item_code = this.selectedModel.code;
             version.is_version = true;
+            version.versions = 0;
         });
 
         const data: IWarehouseItem[] = [this.selectedModel].concat(versions);
