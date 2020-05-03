@@ -10,7 +10,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -22,6 +21,7 @@ import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.compon
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import STATUS = CommonConstants.COMMON.STATUS;
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTableFlipComponent} from '../../components/app.table.flip.component';
@@ -121,6 +121,7 @@ export class WarehouseItemFlipcardComponent
 
     protected onNewData($event: IEvent): void {
         this.selectedModel = new WarehouseItem(IdGenerators.oid.generate(), null, null);
+        this.selectedModel.status = Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED);
         super.getBackComponent().setDataModel(this.selectedModel);
     }
 
