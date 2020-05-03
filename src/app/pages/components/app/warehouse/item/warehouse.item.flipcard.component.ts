@@ -74,7 +74,7 @@ export class WarehouseItemFlipcardComponent
 
     /**
      * Create a new instance of {WarehouseItemFlipcardComponent} class
-     * @param dataSource {DataSource}
+     * @param dataSource {WarehouseItemDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -90,7 +90,7 @@ export class WarehouseItemFlipcardComponent
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      */
-    constructor(@Inject(DataSource) dataSource: WarehouseItemDatasource,
+    constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,

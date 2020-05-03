@@ -115,7 +115,7 @@ import {AppComponentsModule} from '../../components/app.components.module';
         WarehouseCategorySplitPaneComponent,
         WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],
-    providers: [ WarehouseProviders ],
+    providers: WarehouseProviders,
     exports: [
         WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],

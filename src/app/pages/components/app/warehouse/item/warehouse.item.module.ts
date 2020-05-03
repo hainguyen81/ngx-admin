@@ -175,7 +175,7 @@ import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.s
         WarehouseItemVersionFormlyComponent,
         WarehouseItemVersionSplitPaneComponent,
     ],
-    providers: [ WarehouseProviders ],
+    providers: WarehouseProviders,
 })
 export class WarehouseItemModule {
 }

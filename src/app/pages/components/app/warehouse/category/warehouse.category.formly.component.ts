@@ -149,7 +149,8 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-formly-form-app-warehouse-category',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['../../../formly/formly.component.scss',
+    styleUrls: [
+        '../../../formly/formly.component.scss',
         '../../components/app.formly.component.scss',
         './warehouse.category.formly.component.scss',
     ],
