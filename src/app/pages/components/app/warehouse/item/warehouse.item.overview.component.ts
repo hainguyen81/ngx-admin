@@ -406,7 +406,7 @@ export class WarehouseItemOverviewFormlyComponent
         super.onModelChanged();
 
         const fields: FormlyFieldConfig[] = this.getFormlyForm().fields;
-        this.setBelongToSelectedValue(fields[0].fieldGroup[0], this.getModel());
+        this.setBelongToSelectedValue(fields[2].fieldGroup[0], this.getModel());
     }
 
     // -------------------------------------------------
