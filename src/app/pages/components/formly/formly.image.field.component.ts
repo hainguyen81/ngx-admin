@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {IEvent} from '../abstract.component';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import {NGXLogger} from 'ngx-logger';
     styleUrls: ['./formly.image.field.component.scss'],
 })
 export class ImageGalleryFormFieldComponent extends AbstractFieldType
-    implements OnInit {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -67,5 +67,12 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
         if (!this.formControl) {
             this.value = [];
         }
+    }
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        this.field.className = [(this.field.className || ''),
+            'form-field form-images-gallery-file'].join(' ').trim();
     }
 }

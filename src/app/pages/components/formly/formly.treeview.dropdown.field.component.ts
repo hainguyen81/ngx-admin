@@ -110,7 +110,8 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.field.className = 'form-dropdown-treeview '.concat(this.field.className || '');
+        this.field.className = [(this.field.className || ''),
+            'form-field form-dropdown-treeview form-dropdown-treeview-select'].join(' ').trim();
         if (!this.ngxTreeviewComponent) {
             // query component
             this.ngxTreeviewComponent = ComponentUtils.queryComponent(

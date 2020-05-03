@@ -408,6 +408,7 @@ export class WarehouseItemTabsetComponent
         this.getOverviewTab().getFormGroup().updateValueAndValidity({ onlySelf: true, emitEvent: true });
         if (this.getOverviewTab().getFormGroup().invalid) {
             this.getOverviewTab().getFormGroup().markAllAsTouched();
+            this.getTabsetComponent().selectTab(this.getTabsComponent()[0]);
             this.showError('warehouse.title', 'common.form.invalid_data');
             return false;
         }

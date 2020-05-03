@@ -36,6 +36,17 @@ export class PasswordFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        this.field.className = [(this.field.className || ''),
+            'form-field form-password-field'].join(' ').trim();
+    }
+
+    // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
 

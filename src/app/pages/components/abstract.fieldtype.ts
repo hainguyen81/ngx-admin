@@ -94,6 +94,10 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     // -------------------------------------------------
 
     ngAfterViewInit(): void {
+        if (this.field) {
+            this.field.className = [(this.field.className || ''),
+                'custom-form-field'].join(' ').trim();
+        }
         this.field && this.field.expressionProperties
         && (this.expressionPropertyObserver() || '').length
         && this.field.expressionProperties.hasOwnProperty(this.expressionPropertyObserver())

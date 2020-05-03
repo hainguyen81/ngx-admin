@@ -114,6 +114,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        this.field.className = [(this.field.className || ''),
+            'form-field form-select-ex'].join(' ').trim();
         if (!this.ngxSelectExComponent) {
             // query component
             this.ngxSelectExComponent = ComponentUtils.queryComponent(
