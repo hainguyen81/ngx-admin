@@ -55,7 +55,7 @@ export const WarehouseItemVersionTableSettings = {
     columns: {
         image: {
             title: 'warehouse.item.table.code',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
