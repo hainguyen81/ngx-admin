@@ -326,6 +326,15 @@ export abstract class BaseDbService<T extends IModel> extends AbstractBaseDbServ
             (result: number, value: number) => result = result + value, [
                 this.updateEntities(updatedEntities),
                 this.insertEntities(updatedEntities),
-            ]);
+            ]).then(value => {
+                this.getLogger().debug('Save entities', value);
+                return value;
+            }, reason => {
+                this.getLogger().error(reason);
+                return 0;
+            }).catch(reason => {
+                this.getLogger().error(reason);
+                return 0;
+            });
     }
 }
