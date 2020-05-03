@@ -133,6 +133,7 @@ export class WarehouseItemFlipcardComponent
             return;
         }
 
+        this.selectedModel.versions = this.getBackComponent().getDataModelVersions().length;
         const data: IWarehouseItem[] = [this.selectedModel]
             .concat(this.getBackComponent().getDataModelVersions());
         const ds: WarehouseItemDatasource = <WarehouseItemDatasource>this.getDataSource();
