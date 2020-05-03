@@ -75,7 +75,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private dropdownTreeviewComponent: DropdownTreeviewComponent;
 
     /* tree-view items array */
-    private treeviewItems: TreeviewItem[];
+    private treeviewItems: TreeviewItem[] = [];
     /* drop-down button class */
     private buttonClass?: string | null;
 
@@ -210,7 +210,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return the tree-view items array
      */
     public getTreeviewItems(): TreeviewItem[] {
-        return this.treeviewItems || [];
+        return this.treeviewItems;
     }
 
     /**
@@ -218,7 +218,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param items to apply
      */
     public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.treeviewItems = items;
+        this.treeviewItems.clear();
+        this.treeviewItems.push(...(items || []));
     }
 
     /**

@@ -31,7 +31,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // -------------------------------------------------
 
     private config: TreeviewConfig;
-    private items: TreeviewItem[];
+    private items: TreeviewItem[] = [];
     /**
      * Raise after loading items and parsing current selected value
      * @param {IEvent} with $data is current selected item
@@ -83,7 +83,8 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param items to apply
      */
     public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.items = items;
+        this.items.clear();
+        this.items.push(...(items || []));
         this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(this.items);
     }
 
