@@ -325,7 +325,7 @@ export abstract class BaseDbService<T extends IModel> extends AbstractBaseDbServ
         return PromiseUtils.sequencePromises(0,
             (result: number, value: number) => result = result + value, [
                 this.updateEntities(updatedEntities),
-                this.insertEntities(updatedEntities),
+                this.insertEntities(insertedEntities),
             ]).then(value => {
                 this.getLogger().debug('Save entities', value);
                 return value;
