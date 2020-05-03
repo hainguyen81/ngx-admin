@@ -101,6 +101,14 @@ export class WarehouseItemSplitPaneComponent
     }
 
     /**
+     * Get the versions of the data model
+     * @return the versions of the data model
+     */
+    public getDataModelVersions(): IWarehouseItem[] {
+        return this.getTabsetComponent().getDataModelVersions();
+    }
+
+    /**
      * Set the data model
      * @param dataModel to apply
      */
@@ -188,6 +196,7 @@ export class WarehouseItemSplitPaneComponent
 
     protected doSave(): void {
         throwError('Not support for saving model from internal component!');
+
     }
 
     protected doReset(): void {
@@ -196,5 +205,17 @@ export class WarehouseItemSplitPaneComponent
 
     protected performDelete(): void {
         throwError('Not support for deleting model from internal component!');
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Require submit data from all tabs
+     * @return false for error; else true
+     */
+    public submit(): boolean {
+        return this.getTabsetComponent().submit();
     }
 }

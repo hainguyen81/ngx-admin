@@ -258,6 +258,14 @@ export class WarehouseItemTabsetComponent
     }
 
     /**
+     * Get the versions of the data model
+     * @return the versions of the data model
+     */
+    public getDataModelVersions(): IWarehouseItem[] {
+        return this.getVersionTab().getVersions();
+    }
+
+    /**
      * Set the data model
      * @param dataModel to apply
      */
@@ -386,5 +394,24 @@ export class WarehouseItemTabsetComponent
 
     protected performDelete(): void {
         throwError('Not support for deleting model from internal component!');
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Require submit data from all tabs
+     * @return false for error; else true
+     */
+    public submit(): boolean {
+        this.getOverviewTab().getFormGroup().updateValueAndValidity({ onlySelf: true, emitEvent: true });
+        if (this.getOverviewTab().getFormGroup().invalid) {
+            this.getOverviewTab().getFormGroup().markAllAsTouched();
+            this.showError('warehouse.title', 'common.form.invalid_data');
+            return false;
+        }
+
+        return true;
     }
 }

@@ -809,6 +809,7 @@
             "adjustment": {
                 "title": "Adjustments",
                 "table": {
+                    "noData": "Not found any item in warehouse",
                     "date": "Date",
                     "code": "Adjustment",
                     "warehouse": "Warehouse",

@@ -7,6 +7,8 @@ import {IDbService} from './interface.service';
 import {ConnectionService} from 'ng-connection-service';
 import PromiseUtils from '../utils/promise.utils';
 import {IModel} from '../@core/data/base';
+import {IdGenerators} from '../config/generator.config';
+import {isNullOrUndefined} from 'util';
 
 /**
  * The delegate Promise function type for delete/update delegate function of IndexDb service
@@ -167,6 +169,17 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
             promises);
     }
 
+    updateEntities(entities: T[]): Promise<number> {
+        let promises: Promise<number>[];
+        promises = [];
+        if (entities && entities.length) {
+            entities.forEach((entity: T) => promises.push(this.update(entity)));
+        }
+        return this.invokePromises(0,
+            (result: number, value: number) => (result + (value > 0 ? 1 : 0)),
+            promises);
+    }
+
     deleteEntities(entities: T[]): Promise<number> {
         let promises: Promise<number>[];
         promises = [];
@@ -294,5 +307,25 @@ export abstract class BaseDbService<T extends IModel> extends AbstractBaseDbServ
             args[0].deletedAt = (new Date()).getTime();
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
+    }
+
+    saveEntities(entities: T[]): Promise<number> {
+        const insertedEntities: T[] = [];
+        const updatedEntities: T[] = [];
+        (entities || []).forEach(entity => {
+            entity.id = (entity.id || IdGenerators.oid.generate());
+            if (isNullOrUndefined(entity['uid'])) {
+                entity.createdAt = (new Date()).getTime();
+                insertedEntities.push(entity);
+            } else {
+                entity.updatedAt = (new Date()).getTime();
+                updatedEntities.push(entity);
+            }
+        });
+        return PromiseUtils.sequencePromises(0,
+            (result: number, value: number) => result = result + value, [
+                this.updateEntities(updatedEntities),
+                this.insertEntities(updatedEntities),
+            ]);
     }
 }

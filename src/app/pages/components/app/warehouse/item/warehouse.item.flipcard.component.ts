@@ -127,4 +127,18 @@ export class WarehouseItemFlipcardComponent
     protected onEditData($event: IEvent): void {
         super.getBackComponent().setDataModel(this.selectedModel);
     }
+
+    protected doSave(): void {
+        if (!this.getBackComponent().submit()) {
+            return;
+        }
+
+        (<WarehouseItemDatasource>this.getDataSource()).save(
+            ...[this.selectedModel].concat(this.getBackComponent().getDataModelVersions()))
+            .then(value => {
+                this.showSaveDataSuccess();
+                this.doBack();
+            }, reason => this.showSaveDataError())
+            .catch(reason => this.showSaveDataError());
+    }
 }

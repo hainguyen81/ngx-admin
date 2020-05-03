@@ -809,6 +809,7 @@
             "adjustment": {
                 "title": "Điều chỉnh",
                 "table": {
+                    "noData": "Không có bất kỳ sản phẩm nào trong kho",
                     "date": "Ngày",
                     "code": "Mã điều chỉnh",
                     "warehouse": "Kho hàng",

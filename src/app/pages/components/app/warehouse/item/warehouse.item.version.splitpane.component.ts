@@ -172,7 +172,7 @@ export class WarehouseItemVersionSplitPaneComponent
             .updateValueAndValidity({ onlySelf: true, emitEvent: true });
         if (this.getLeftSideComponent().getFormGroup().invalid) {
             this.getLeftSideComponent().getFormGroup().markAllAsTouched();
-            this.showError('app', 'common.form.invalid_data');
+            this.showError('warehouse.title', 'common.form.invalid_data');
             return false;
         }
 
