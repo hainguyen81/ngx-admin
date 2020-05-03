@@ -134,8 +134,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            router, activatedRoute,
-            undefined, false);
+            router, activatedRoute);
     }
 
     // -------------------------------------------------

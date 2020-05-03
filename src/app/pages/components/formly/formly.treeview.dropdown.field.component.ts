@@ -30,8 +30,8 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // DECLARATION
     // -------------------------------------------------
 
-    private config: TreeviewConfig;
-    private items: TreeviewItem[] = [];
+    @Input('config') private config: TreeviewConfig;
+    @Input('items') private items: TreeviewItem[] = [];
     /**
      * Raise after loading items and parsing current selected value
      * @param {IEvent} with $data is current selected item
@@ -67,7 +67,6 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      */
     public setConfig(config: TreeviewConfig): void {
         this.config = config;
-        this.getTreeviewComponent() && this.getTreeviewComponent().setConfig(this.config);
     }
 
     /**
@@ -83,9 +82,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param items to apply
      */
     public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.items.clear();
-        this.items.push(...(items || []));
-        this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(this.items);
+        this.items = items || [];
     }
 
     // -------------------------------------------------
@@ -117,13 +114,10 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
             // query component
             this.ngxTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryNgxTreeviewComponent, component => {
-                    component
-                    && component.getSelectedChangeEvent().subscribe(
+                    component && component.getSelectedChangeEvent().subscribe(
                         (e: IEvent) => this.onSelectedValue(e));
+                    component && this.initialize();
                 });
-
-            // initialization
-            this.initialize();
         }
     }
 
@@ -167,7 +161,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
                 item && items.push(option as TreeviewItem);
             });
         }
-        this.setTreeviewItems([].concat(items));
+        this.setTreeviewItems(items);
 
         // apply selected value
         let selectedItem: TreeviewItem;

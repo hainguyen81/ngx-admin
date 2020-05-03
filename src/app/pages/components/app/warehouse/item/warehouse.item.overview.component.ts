@@ -405,7 +405,7 @@ export class WarehouseItemOverviewFormlyComponent
     protected onModelChanged() {
         super.onModelChanged();
 
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.getFormlyForm().fields;
         this.setBelongToSelectedValue(fields[0].fieldGroup[0], this.getModel());
     }
 
@@ -417,7 +417,7 @@ export class WarehouseItemOverviewFormlyComponent
      * Observe fields
      */
     private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.getFormlyForm().fields;
         this.observeSettingsFields(fields);
     }
 

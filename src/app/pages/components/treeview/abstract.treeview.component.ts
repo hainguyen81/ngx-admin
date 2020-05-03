@@ -3,7 +3,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
-    Inject,
+    Inject, Input,
     Output,
     QueryList,
     Renderer2,
@@ -74,10 +74,14 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private readonly queryDropdownTreeviewComponent: QueryList<DropdownTreeviewComponent>;
     private dropdownTreeviewComponent: DropdownTreeviewComponent;
 
+    /* tree-view config */
+    @Input('config') private treeviewConfig: TreeviewConfig = DefaultTreeviewConfig;
+    /* specify dropdown tree-view */
+    @Input('dropdown') private dropdown: boolean = false;
     /* tree-view items array */
-    private treeviewItems: TreeviewItem[] = [];
+    @Input('items') private treeviewItems: TreeviewItem[] = [];
     /* drop-down button class */
-    private buttonClass?: string | null;
+    @Input('buttonClass') private buttonClass?: string | null;
 
     @Output() private selectedChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private filterChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -218,8 +222,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param items to apply
      */
     public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.treeviewItems.clear();
-        this.treeviewItems.push(...(items || []));
+        this.treeviewItems = items || [];
     }
 
     /**
@@ -347,15 +350,12 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private treeviewConfig?: TreeviewConfig,
-                          private dropdown?: boolean | false) {
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        this.setConfig(treeviewConfig);
     }
 
     ngAfterViewInit(): void {

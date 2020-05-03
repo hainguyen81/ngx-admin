@@ -1,3 +1,7 @@
 <div class="form-field form-dropdown-treeview-select">
-    <ngx-tree-view-dropdown #dropdownTreeview [enabledItemCheck]="false"></ngx-tree-view-dropdown>
+    <ngx-tree-view-dropdown #dropdownTreeview
+                            [enabledItemCheck]="false"
+                            [items]="getTreeviewItems()"
+                            [config]="getConfig()"
+    ></ngx-tree-view-dropdown>
 </div>

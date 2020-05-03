@@ -33,7 +33,8 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     set field(field: F) {
         this._field = field;
-        if (this._field && this._field.templateOptions) {
+        if (this._field) {
+            this._field.templateOptions = (this._field.templateOptions || {});
             this._field.templateOptions['componentRef'] = this;
         }
     }
