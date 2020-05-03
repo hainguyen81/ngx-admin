@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -22,6 +22,7 @@ import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -31,6 +32,12 @@ import {SelectTranslateCellComponent} from '../../../smart-table/select.translat
 import {Cell} from 'ng2-smart-table';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import PromiseUtils from '../../../../../utils/promise.utils';
+import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import {
+    GeneralSettingsDatasource,
+} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {throwError} from 'rxjs';
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {
@@ -142,7 +149,8 @@ export const WarehouseItemContextMenu: IContextMenu[] = [].concat(COMMON.baseMen
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class WarehouseItemSmartTableComponent
-    extends AppSmartTableComponent<WarehouseItemDatasource> {
+    extends AppSmartTableComponent<WarehouseItemDatasource>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -188,21 +196,43 @@ export class WarehouseItemSmartTableComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.setTableHeader('warehouse.item.title');
         super.setTableSettings(WarehouseItemTableSettings);
         super.setContextMenu(WarehouseItemContextMenu);
     }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([
             {field: 'code', search: keyword},
             {field: 'name', search: keyword},
         ], false);
+    }
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        const settings: any = this.getTableSettings();
+        PromiseUtils.parallelPromises(undefined, undefined, [
+            AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
+                this.generalSettingsDatasource, settings, 'status',
+                BUILTIN_CODES.STATUS.code,
+                null),
+        ]).then(value => {
+            this.getLogger().debug('Loading general settings successful');
+            this.getDataSource().refresh();
+        }, reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
     }
 }
