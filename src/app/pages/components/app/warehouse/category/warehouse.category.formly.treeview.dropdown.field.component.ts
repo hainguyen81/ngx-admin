@@ -23,7 +23,11 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 
     getText(selection: TreeviewSelection): string {
         if ((!selection || !(selection.uncheckedItems || []).length) && this.showAll) {
-            return this.getAllCheckboxText();
+            if (selection && (selection.checkedItems || []).length) {
+                return this.getAllCheckboxText();
+            } else {
+                return '';
+            }
         }
 
         switch (((selection || {})['checkedItems'] || []).length) {
