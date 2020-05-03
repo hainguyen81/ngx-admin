@@ -133,9 +133,14 @@ export class WarehouseItemFlipcardComponent
             return;
         }
 
-        this.selectedModel.versions = this.getBackComponent().getDataModelVersions().length;
-        const data: IWarehouseItem[] = [this.selectedModel]
-            .concat(this.getBackComponent().getDataModelVersions());
+        const versions: IWarehouseItem[] = this.getBackComponent().getDataModelVersions() || [];
+        this.selectedModel.versions = versions.length;
+        versions.forEach(version => {
+            version.item_id = this.selectedModel.id;
+            version.item_code = this.selectedModel.code;
+        });
+
+        const data: IWarehouseItem[] = [this.selectedModel].concat(versions);
         const ds: WarehouseItemDatasource = <WarehouseItemDatasource>this.getDataSource();
         ds.save(data).then(value => {
             this.showSaveDataSuccess();
