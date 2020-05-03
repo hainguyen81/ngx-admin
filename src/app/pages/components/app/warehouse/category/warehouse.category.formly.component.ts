@@ -258,10 +258,11 @@ export class WarehouseCategoryFormlyComponent
                     let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
                         field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                    if (belongToComponent) {
-                        belongToComponent.reloadFieldByOptions(options);
-                        this.disableModelFromBelongTo(field, this.getFormlyForm().model);
-                    }
+                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                    belongToComponent
+                    && belongToComponent.ngAfterLoadData.subscribe(value => {
+                        this.disableModelFromBelongTo(field, this.getModel());
+                    });
                 });
     }
 

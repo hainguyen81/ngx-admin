@@ -475,7 +475,10 @@ export class OrganizationFormlyComponent
                         fields[0].fieldGroup[0],
                         OrganizationFormlyTreeviewDropdownFieldComponent);
                     belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                    this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
+                    belongToComponent
+                    && belongToComponent.ngAfterLoadData.subscribe(value => {
+                        this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
+                    });
                 });
     }
 

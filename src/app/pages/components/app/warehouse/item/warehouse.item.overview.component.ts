@@ -403,6 +403,13 @@ export class WarehouseItemOverviewFormlyComponent
         this.observeFields();
     }
 
+    protected onModelChanged() {
+        super.onModelChanged();
+
+        const fields: FormlyFieldConfig[] = this.getFields();
+        this.setBelongToSelectedValue(fields[0].fieldGroup[0], this.getModel());
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -426,7 +433,10 @@ export class WarehouseItemOverviewFormlyComponent
                         fields[2].fieldGroup[0],
                         WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
                     belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                    this.setBelongToSelectedValue(this.getFormlyForm().fields[0].fieldGroup[0], this.getModel());
+                    belongToComponent
+                    && belongToComponent.ngAfterLoadData.subscribe(value => {
+                        this.setBelongToSelectedValue(fields[0].fieldGroup[0], this.getModel());
+                    });
                 });
         });
 
