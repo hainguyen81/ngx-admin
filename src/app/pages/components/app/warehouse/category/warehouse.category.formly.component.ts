@@ -231,6 +231,14 @@ export class WarehouseCategoryFormlyComponent
             .catch(reason => this.getLogger().error(reason));
     }
 
+    protected onModelChanged() {
+        super.onModelChanged();
+
+        const fields: FormlyFieldConfig[] = this.getFields();
+        this.disableModelFromBelongTo(
+            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], this.getModel());
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------

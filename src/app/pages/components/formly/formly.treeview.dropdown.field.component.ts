@@ -126,6 +126,11 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         }
     }
 
+    protected onValueChanges(value: any): void {
+        super.onValueChanges(value);
+        this.getTreeviewComponent() && this.setSelectedValue(value, false);
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
@@ -206,12 +211,19 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @return the affected {TreeviewItem}
      */
     public setSelectedValue(value: any, updateValue?: boolean | false): TreeviewItem {
+        const treeViewComponent: NgxDropdownTreeviewComponent = this.getTreeviewComponent();
+        if (!treeViewComponent) {
+            return;
+        }
+
         // apply selected value
         let selectedValue: TreeviewItem;
         selectedValue = this.valueFormatter(this.value);
         if (selectedValue) {
-            selectedValue.checked = true;
-            selectedValue.collapsed = false;
+            treeViewComponent.internalProperty(
+                selectedValue, 'internalChecked', true);
+            treeViewComponent.internalProperty(
+                selectedValue, 'internalCollapsed', false);
         }
         this.setTreeviewSelectedItem(selectedValue, updateValue);
         return selectedValue;
@@ -223,15 +235,18 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param updateValue true for updating
      */
     public setTreeviewSelectedItem(item?: TreeviewItem, updateValue?: boolean | false): void {
-        if (!this.getTreeviewComponent()) {
+        const treeViewComponent: NgxDropdownTreeviewComponent = this.getTreeviewComponent();
+        if (!treeViewComponent) {
             return;
         }
 
-        this.getTreeviewComponent().setSelectedTreeviewItems(item && item.checked ? [item] : [], true);
-        this.value = (item && item.checked ? this.valueParser(item) : null);
-        if (updateValue) {
-            this.formControl && this.formControl.setValue(this.value);
-            this.formControl && this.formControl.updateValueAndValidity({onlySelf: true, emitEvent: true});
+        const checked: boolean = treeViewComponent.internalPropertyValue(
+            item, 'internalChecked', false);
+        treeViewComponent.setSelectedTreeviewItems(checked ? [item] : [], true);
+        const value: any = (checked ? this.valueParser(item) : null);
+        if (this.value !== value) {
+            this.formControl && this.formControl.patchValue(
+                value, {onlySelf: true, emitEvent: updateValue});
         }
     }
 
@@ -262,10 +277,12 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param disabledItems disabled items to check
      */
     private disableItemsRecursively(item?: TreeviewItem | null, disabledItems?: TreeviewItem[] | []): void {
-        if (!item) return;
-        item.disabled = ((disabledItems || []).indexOf(item) >= 0);
-        if (item.disabled) {
-            item.checked = false;
+        const treeViewComponent: NgxDropdownTreeviewComponent = this.getTreeviewComponent();
+        if (!treeViewComponent || !item) return;
+        const disabled: boolean = ((disabledItems || []).indexOf(item) >= 0);
+        treeViewComponent.internalProperty(item, 'internalDisabled', disabled);
+        if (disabled) {
+            treeViewComponent.internalProperty(item, 'internalChecked', false);
         }
         (item.children || []).forEach(it => this.disableItemsRecursively(it, disabledItems));
     }

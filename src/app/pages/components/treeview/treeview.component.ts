@@ -342,6 +342,17 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     }
 
     /**
+     * Get internal property value for the specified {TreeviewItem}
+     * @param item to apply
+     * @param propertyKey the property key
+     * @return the property value or default if not found
+     */
+    public internalPropertyValue(item?: TreeviewItem, propertyKey?: string, defaultValue?: any | null): any {
+        if (!item || !(propertyKey || '').length) return defaultValue;
+        return item[propertyKey];
+    }
+
+    /**
      * Apply internal checked value for the specified {TreeviewItem}
      * @param item to apply
      * @param checked to apply

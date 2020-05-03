@@ -27,8 +27,8 @@ import {
 import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 
 /* default warehouse storage formly config */

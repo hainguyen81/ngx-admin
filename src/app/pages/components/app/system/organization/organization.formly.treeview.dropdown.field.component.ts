@@ -7,8 +7,8 @@ import {
     AppFormlyTreeviewDropdownFieldComponent,
 } from '../../components/common/app.formly.treeview.dropdown.field.component';
 import {NGXLogger} from 'ngx-logger';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /**
  * Multi language for treeview field

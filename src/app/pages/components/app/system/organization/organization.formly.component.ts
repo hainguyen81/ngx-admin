@@ -39,7 +39,6 @@ import {Constants, Constants as CommonConstants} from '../../../../../@core/data
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
@@ -431,11 +430,12 @@ export class OrganizationFormlyComponent
         super.ngOnInit();
 
         // observe belongTo/manager fields
+        const fields: FormlyFieldConfig[] = this.getFields();
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeBelongToField(),
             this.observeManagerField(),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, this.getFields()[1].fieldGroup[0],
+                this.generalSettingsDatasource, fields[1].fieldGroup[0],
                 BUILTIN_CODES.ORGANIZATION_TYPE.code,
                 null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
@@ -446,6 +446,13 @@ export class OrganizationFormlyComponent
         this.observeFields();
     }
 
+    protected onModelChanged() {
+        super.onModelChanged();
+
+        const fields: FormlyFieldConfig[] = this.getFields();
+        this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -454,6 +461,7 @@ export class OrganizationFormlyComponent
      * Observe belongTo field
      */
     private observeBelongToField(): Promise<void> {
+        const fields: FormlyFieldConfig[] = this.getFields();
         return SystemDataUtils.invokeAllOrganization(
             <OrganizationDataSource>this.getDataSource()).then(
                 orgValues => {
@@ -464,12 +472,10 @@ export class OrganizationFormlyComponent
 
                     let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
-                        this.getFormlyForm().fields[0].fieldGroup[0],
+                        fields[0].fieldGroup[0],
                         OrganizationFormlyTreeviewDropdownFieldComponent);
                     belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                    this.disableModelFromBelongTo(
-                        this.getFormlyForm().fields[0].fieldGroup[0],
-                        this.getModel());
+                    this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
                 });
     }
 
