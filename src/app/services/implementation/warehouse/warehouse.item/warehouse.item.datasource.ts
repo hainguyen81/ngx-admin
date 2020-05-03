@@ -15,6 +15,16 @@ export class WarehouseItemDatasource
     }
 
     public save(elements: IWarehouseItem[]): Promise<number> {
-        return this.getDbService().saveEntities(elements);
+        return this.getDbService().saveEntities(elements)
+            .then(value => {
+                this.refresh();
+                return value;
+            }, reason => {
+                this.getLogger().error(reason);
+                return 0;
+            }).catch(reason => {
+                this.getLogger().error(reason);
+                return 0;
+            });
     }
 }
