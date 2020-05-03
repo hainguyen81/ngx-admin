@@ -12,7 +12,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
+import {TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
 import {IEvent} from '../abstract.component';
 import {ToastrService} from 'ngx-toastr';
@@ -20,6 +20,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {throwError} from 'rxjs';
+import {isNullOrUndefined} from 'util';
 
 /**
  * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
@@ -39,7 +41,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     @Input('enabledItemImage') private enabledItemImage?: boolean | false;
     @Input('itemImage') private itemImageParser: (item?: TreeviewItem) => string[];
     /** backup pointer to generate selection function of treeview component */
-    private origianlGenerateSelection: () => void;
+    private __originalGenerateSelection: () => void;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -147,12 +149,12 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         // unique hack (cheat) for single item selection
         if (this.getTreeviewComponent()
             && typeof this.getTreeviewComponent()['generateSelection'] === 'function') {
-            this.origianlGenerateSelection = this.getTreeviewComponent()['generateSelection'];
+            this.__originalGenerateSelection = this.getTreeviewComponent()['generateSelection'];
             this.getTreeviewComponent()['generateSelection'] = () => this.generateSelection();
         }
         if (this.getDropdownTreeviewComponent() && this.getDropdownTreeviewComponent().treeviewComponent
             && typeof this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] === 'function') {
-            this.origianlGenerateSelection = this.getDropdownTreeviewComponent()
+            this.__originalGenerateSelection = this.getDropdownTreeviewComponent()
                 .treeviewComponent['generateSelection'];
             this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] =
                 () => this.generateSelection();
@@ -262,16 +264,23 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * Override this method of {TreeviewComponent}
      */
     private generateSelection() {
-        if (this.isEnabledItemCheck() && typeof this.origianlGenerateSelection === 'function') {
+        if (this.isEnabledItemCheck() && typeof this.__originalGenerateSelection === 'function') {
             if (this.getTreeviewComponent()) {
-                this.origianlGenerateSelection.apply(this.getTreeviewComponent());
+                this.__originalGenerateSelection.apply(this.getTreeviewComponent());
             }
             if (this.getDropdownTreeviewComponent() && this.getDropdownTreeviewComponent().treeviewComponent) {
-                this.origianlGenerateSelection.apply(this.getDropdownTreeviewComponent().treeviewComponent);
+                this.__originalGenerateSelection.apply(this.getDropdownTreeviewComponent().treeviewComponent);
             }
 
         } else {
-            this.collectSelection();
+            if (this.isDropDown() && this.getDropdownTreeviewComponent()
+                && this.getDropdownTreeviewComponent().treeviewComponent) {
+                this.getDropdownTreeviewComponent().treeviewComponent.selection = this.collectSelection();
+            } else if (!this.isDropDown() && this.getTreeviewComponent()) {
+                this.getTreeviewComponent().selection = this.collectSelection();
+            } else {
+                throwError('Could not initialize tree-view selection while component has not been initialized yet!');
+            }
         }
     }
     private collectSelection(needToCheckedItems?: TreeviewItem[] | null):
@@ -310,14 +319,15 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param reset specify whether reset the current selected items
      */
     public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
+        const currentSelection: TreeviewSelection = this.getTreeviewSelection();
+        if (isNullOrUndefined(currentSelection)) return;
         // un-check previous items
-        (this.getTreeviewSelection().checkedItems || [])
-            .forEach(it => this.internalCheck(it, false));
+        (currentSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
         // collect new item checked
-        let selection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
+        let selection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
         selection = this.collectSelection(items);
-        this.getTreeviewSelection().checkedItems = selection.checkedItems;
-        this.getTreeviewSelection().uncheckedItems = selection.uncheckedItems;
+        currentSelection.checkedItems = selection.checkedItems;
+        currentSelection.uncheckedItems = selection.uncheckedItems;
     }
 
     /**

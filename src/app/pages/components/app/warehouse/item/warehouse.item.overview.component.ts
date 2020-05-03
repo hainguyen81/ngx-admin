@@ -402,13 +402,6 @@ export class WarehouseItemOverviewFormlyComponent
         this.observeFields();
     }
 
-    protected onModelChanged() {
-        super.onModelChanged();
-
-        const fields: FormlyFieldConfig[] = this.getFormlyForm().fields;
-        this.setBelongToSelectedValue(fields[2].fieldGroup[0], this.getModel());
-    }
-
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -462,14 +455,14 @@ export class WarehouseItemOverviewFormlyComponent
                 options = [];
                 options.push(WarehouseCategoryTreeviewConfig);
                 options.push(categories);
+                field.templateOptions.options = options;
                 let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                 belongToComponent = this.getFormFieldComponent(
                     field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                belongToComponent
-                && belongToComponent.ngAfterLoadData.subscribe(value => {
+                belongToComponent && belongToComponent.ngAfterLoadData.subscribe(value => {
                     this.setBelongToSelectedValue(field, this.getModel());
                 });
+                belongToComponent && belongToComponent.reloadFieldByOptions(field.templateOptions.options);
             });
     }
 

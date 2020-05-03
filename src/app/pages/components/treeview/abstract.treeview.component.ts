@@ -75,11 +75,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private dropdownTreeviewComponent: DropdownTreeviewComponent;
 
     /* tree-view config */
-    @Input('config') private treeviewConfig: TreeviewConfig = DefaultTreeviewConfig;
+    @Input('config') private treeviewConfig: TreeviewConfig;
     /* specify dropdown tree-view */
-    @Input('dropdown') private dropdown: boolean = false;
+    @Input('dropdown') private dropdown: boolean;
     /* tree-view items array */
-    @Input('items') private treeviewItems: TreeviewItem[] = [];
+    @Input('items') private treeviewItems: TreeviewItem[];
     /* drop-down button class */
     @Input('buttonClass') private buttonClass?: string | null;
 
@@ -222,7 +222,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param items to apply
      */
     public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.treeviewItems = items || [];
+        this.treeviewItems = items;
     }
 
     /**
@@ -365,10 +365,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             this.treeviewComponent = ComponentUtils.queryComponent(
                 this.queryTreeviewComponent, (component) => {
                     if (component) {
-                        component.selectedChange.subscribe(
-                            value => this.onSelectedChange({data: value}));
-                        component.filterChange.subscribe(
-                            value => this.onFilterChange({data: value}));
+                        // component.selectedChange.subscribe(
+                        //     value => this.onSelectedChange({data: value}));
+                        // component.filterChange.subscribe(
+                        //     value => this.onFilterChange({data: value}));
                     }
                 });
         }
@@ -376,10 +376,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             this.dropdownTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryDropdownTreeviewComponent, (component) => {
                     if (component) {
-                        component.selectedChange.subscribe(
-                            value => this.onSelectedChange({data: value}));
-                        component.filterChange.subscribe(
-                            value => this.onFilterChange({data: value}));
+                        // component.selectedChange.subscribe(
+                        //     value => this.onSelectedChange({data: value}));
+                        // component.filterChange.subscribe(
+                        //     value => this.onFilterChange({data: value}));
                     }
                 });
         }

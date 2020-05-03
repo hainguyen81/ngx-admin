@@ -30,8 +30,6 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // DECLARATION
     // -------------------------------------------------
 
-    @Input('config') private config: TreeviewConfig;
-    @Input('items') private items: TreeviewItem[] = [];
     /**
      * Raise after loading items and parsing current selected value
      * @param {IEvent} with $data is current selected item
@@ -59,14 +57,14 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @return the {TreeviewConfig} instance
      */
     public getConfig(): TreeviewConfig {
-        return this.config;
+        return (this.getTreeviewComponent() ? this.getTreeviewComponent().getConfig() : undefined);
     }
     /**
      * Set the {TreeviewConfig} instance
      * @param config to apply
      */
     public setConfig(config: TreeviewConfig): void {
-        this.config = config;
+        this.getTreeviewComponent() && this.getTreeviewComponent().setConfig(config);
     }
 
     /**
@@ -74,7 +72,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @return the {TreeviewItem} array
      */
     public getTreeviewItems(): TreeviewItem[] {
-        return this.items;
+        return (this.getTreeviewComponent() ? this.getTreeviewComponent().getTreeviewItems() : undefined);
     }
 
     /**
@@ -82,7 +80,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param items to apply
      */
     public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.items = items || [];
+        this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(items);
     }
 
     // -------------------------------------------------
@@ -112,13 +110,13 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
             'form-field form-dropdown-treeview form-dropdown-treeview-select'].join(' ').trim();
         if (!this.ngxTreeviewComponent) {
             // query component
-            this.ngxTreeviewComponent = ComponentUtils.queryComponent(
-                this.queryNgxTreeviewComponent, component => {
-                    component && component.getSelectedChangeEvent().subscribe(
-                        (e: IEvent) => this.onSelectedValue(e));
-                    component && this.initialize();
-                });
+            this.ngxTreeviewComponent = ComponentUtils.queryComponent(this.queryNgxTreeviewComponent);
         }
+
+        this.getTreeviewComponent()
+        && this.getTreeviewComponent().getSelectedChangeEvent().subscribe(
+            (e: IEvent) => this.onSelectedValue(e));
+        this.getTreeviewComponent() && this.initialize();
     }
 
     protected onValueChanges(value: any): void {
@@ -152,23 +150,10 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         this.setConfig(config && Object.keys(config).length ? config : DefaultTreeviewConfig);
 
         // treeview items
-        let items: TreeviewItem[];
-        items = [];
-        if ((options || []).length > 1 && Array.isArray(options[1])) {
-            Array.from(options[1]).forEach(option => {
-                let item: TreeviewItem;
-                item = option as TreeviewItem;
-                item && items.push(option as TreeviewItem);
-            });
-        }
-        this.setTreeviewItems(items);
-
-        // apply selected value
-        let selectedItem: TreeviewItem;
-        selectedItem = this.setSelectedValue(this.value, false);
+        this.setTreeviewItems((options || []).length <= 0 || !isArray(options[1]) ? [] : Array.from(options[1]));
 
         // raise event after loading data
-        this.ngAfterLoadData.emit({ data: selectedItem });
+        this.ngAfterLoadData.emit({ data: this.getTreeviewItems() });
     }
 
     /**
@@ -187,12 +172,12 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         let item: any;
         item = (e && e.data && isArray(e.data) && Array.from(e.data).length ? e.data[0] : null);
         if (!item || item instanceof TreeviewItem) {
-            this.setTreeviewSelectedItem(item as TreeviewItem, true);
+            this.setTreeviewSelectedItem(item as TreeviewItem, false);
 
         } else {
             for (const it of this.getTreeviewItems()) {
                 if (it.value === item) {
-                    this.setTreeviewSelectedItem(it as TreeviewItem, true);
+                    this.setTreeviewSelectedItem(it as TreeviewItem, false);
                     break;
                 }
             }
@@ -213,7 +198,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
 
         // apply selected value
         let selectedValue: TreeviewItem;
-        selectedValue = this.valueFormatter(this.value);
+        selectedValue = this.valueFormatter(value);
         if (selectedValue) {
             treeViewComponent.internalProperty(
                 selectedValue, 'internalChecked', true);

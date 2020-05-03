@@ -231,14 +231,6 @@ export class WarehouseCategoryFormlyComponent
             .catch(reason => this.getLogger().error(reason));
     }
 
-    protected onModelChanged() {
-        super.onModelChanged();
-
-        const fields: FormlyFieldConfig[] = this.getFields();
-        this.disableModelFromBelongTo(
-            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0], this.getModel());
-    }
-
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
@@ -258,11 +250,11 @@ export class WarehouseCategoryFormlyComponent
                     let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
                         field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
                     belongToComponent
                     && belongToComponent.ngAfterLoadData.subscribe(value => {
                         this.disableModelFromBelongTo(field, this.getModel());
                     });
+                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
                 });
     }
 
