@@ -15,7 +15,7 @@ export class WarehouseItemDatasource
     }
 
     getAll(): Promise<IWarehouseItem | IWarehouseItem[]> {
-        return super.getAllByIndex('is_version', IDBKeyRange.only(false));
+        return super.getAllByIndex('__warehouse_item_detect_versions', IDBKeyRange.only(false));
     }
 
     public save(elements: IWarehouseItem[]): Promise<number> {

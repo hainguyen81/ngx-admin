@@ -60,6 +60,14 @@ export function indexFactory() {
                 '__warehouse_item_index_by_code',
                 ['code', 'item_code'],
                 { unique: true });
+            warehouseItemStore.createIndex(
+                '__warehouse_item_versions_by_code',
+                ['item_code'],
+                { unique: false });
+            warehouseItemStore.createIndex(
+                '__warehouse_item_detect_versions',
+                ['is_version'],
+                { unique: false });
         },
     };
 }

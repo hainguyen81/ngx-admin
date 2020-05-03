@@ -45,6 +45,6 @@ export class WarehouseItemVersionDatasource
     getAll(): Promise<IWarehouseItem[] | IWarehouseItem> {
         const modelCode: string = (this.dataModel ? this.dataModel.code : undefined);
         return (!(modelCode || '').length ? Promise.resolve([])
-            : super.getAllByIndex('item_code', IDBKeyRange.only(modelCode)));
+            : super.getAllByIndex('__warehouse_item_versions_by_code', IDBKeyRange.only(modelCode)));
     }
 }
