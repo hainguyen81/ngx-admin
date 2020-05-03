@@ -90,6 +90,16 @@
             background-color: nb-theme(color-basic-focus-border);
         }
     }
+    .form-dropdown-treeview-select ngx-tree-view-dropdown ngx-dropdown-treeview {
+        .btn.dropdown-toggle::after {
+            right: 0;
+        }
+    }
+    .form-dropdown-treeview {
+        .mat-form-field-label-wrapper .mat-form-field-label {
+            top: 1.6125em;
+        }
+    }
 
     /* ngx-select-ex */
     ngx-select {
