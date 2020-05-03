@@ -91,7 +91,6 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'warehouse.item.overview.form.category.label',
                     placeholder: 'warehouse.item.overview.form.category.placeholder',
-                    options: [],
                     required: true,
                 },
             },
@@ -419,28 +418,6 @@ export class WarehouseItemOverviewFormlyComponent
      */
     private observeFields(): void {
         const fields: FormlyFieldConfig[] = this.getFields();
-
-        // listen data model changes for updating
-        this.getFormlyForm().modelChange.subscribe(() => {
-            WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource)
-                .then(categories => {
-                    let options: any[];
-                    options = [];
-                    options.push(WarehouseCategoryTreeviewConfig);
-                    options.push(categories);
-                    let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-                    belongToComponent = this.getFormFieldComponent(
-                        fields[2].fieldGroup[0],
-                        WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
-                    belongToComponent
-                    && belongToComponent.ngAfterLoadData.subscribe(value => {
-                        this.setBelongToSelectedValue(fields[0].fieldGroup[0], this.getModel());
-                    });
-                });
-        });
-
-        // master settings fields
         this.observeSettingsFields(fields);
     }
 
@@ -452,6 +429,7 @@ export class WarehouseItemOverviewFormlyComponent
         const brandSettings: string = Object.keys(WAREHOUSE_SETTINGS_TYPE)
             .find(key => WAREHOUSE_SETTINGS_TYPE[key] === WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS);
         PromiseUtils.parallelPromises(undefined, undefined, [
+            this.observeCategoriesField(fields[2].fieldGroup[0]),
             AppObserveUtils.observeDatasourceFormField(
                 this.settingsDatasource,
                 'type', IDBKeyRange.only(brandSettings),
@@ -471,6 +449,28 @@ export class WarehouseItemOverviewFormlyComponent
         ]).then(value => this.getLogger().debug('Loading settings successful!'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));
+    }
+
+    /**
+     * Observe categories field
+     * @param field to apply
+     */
+    private observeCategoriesField(field: FormlyFieldConfig): Promise<void> {
+        return WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource)
+            .then(categories => {
+                let options: any[];
+                options = [];
+                options.push(WarehouseCategoryTreeviewConfig);
+                options.push(categories);
+                let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
+                belongToComponent = this.getFormFieldComponent(
+                    field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
+                belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                belongToComponent
+                && belongToComponent.ngAfterLoadData.subscribe(value => {
+                    this.setBelongToSelectedValue(field, this.getModel());
+                });
+            });
     }
 
     /**
