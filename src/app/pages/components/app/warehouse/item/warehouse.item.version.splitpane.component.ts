@@ -168,10 +168,7 @@ export class WarehouseItemVersionSplitPaneComponent
         throwError('Not support for saving model from internal component!');
     }
     private performSave(): boolean {
-        this.getLeftSideComponent().getFormGroup()
-            .updateValueAndValidity({ onlySelf: true, emitEvent: true });
-        if (this.getLeftSideComponent().getFormGroup().invalid) {
-            this.getLeftSideComponent().getFormGroup().markAllAsTouched();
+        if (!this.getLeftSideComponent().submit()) {
             this.showError('warehouse.title', 'common.form.invalid_data');
             return false;
         }

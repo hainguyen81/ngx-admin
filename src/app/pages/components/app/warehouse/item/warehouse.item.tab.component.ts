@@ -405,9 +405,7 @@ export class WarehouseItemTabsetComponent
      * @return false for error; else true
      */
     public submit(): boolean {
-        this.getOverviewTab().getFormGroup().updateValueAndValidity({ onlySelf: true, emitEvent: true });
-        if (this.getOverviewTab().getFormGroup().invalid) {
-            this.getOverviewTab().getFormGroup().markAllAsTouched();
+        if (!this.getOverviewTab().submit()) {
             this.getTabsetComponent().selectTab(this.getTabsComponent()[0]);
             this.showError('warehouse.title', 'common.form.invalid_data');
             return false;

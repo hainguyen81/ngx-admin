@@ -224,6 +224,18 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     // -------------------------------------------------
 
     /**
+     * Submit form
+     */
+    public submit(): boolean {
+        this.getFormGroup().updateValueAndValidity({ onlySelf: true, emitEvent: true });
+        if (this.getFormGroup().invalid) {
+            this.getFormGroup().markAllAsTouched();
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Translate form fields configuration
      */
     private translateFormFields(): void {
