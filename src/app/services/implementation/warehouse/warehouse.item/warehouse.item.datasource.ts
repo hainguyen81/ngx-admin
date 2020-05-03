@@ -14,6 +14,10 @@ export class WarehouseItemDatasource
         super(httpService, dbService, logger);
     }
 
+    getAll(): Promise<IWarehouseItem | IWarehouseItem[]> {
+        return super.getAllByIndex('is_version', IDBKeyRange.only(false));
+    }
+
     public save(elements: IWarehouseItem[]): Promise<number> {
         return this.getDbService().saveEntities(elements)
             .then(value => {
