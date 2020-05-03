@@ -188,6 +188,7 @@ export abstract class AppTreeSplitFormComponent<
     protected doSave(): void {
         this.getFormlyComponent().getFormGroup().updateValueAndValidity();
         if (this.getFormlyComponent().getFormGroup().invalid) {
+            this.getFormlyComponent().getFormGroup().markAllAsTouched();
             if (this.getToolbarComponent()) {
                 this.showError(this.getToolbarComponent().getToolbarHeader().title,
                     'common.form.invalid_data');

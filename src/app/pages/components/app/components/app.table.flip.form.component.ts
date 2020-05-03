@@ -102,6 +102,7 @@ export abstract class AppTableFlipFormComponent<
     protected doSave(): void {
         this.getBackComponent().getFormGroup().updateValueAndValidity();
         if (this.getBackComponent().getFormGroup().invalid) {
+            this.getBackComponent().getFormGroup().markAllAsTouched();
             if (this.getToolbarComponent()) {
                 this.showError(this.getToolbarComponent().getToolbarHeader().title,
                     'common.form.invalid_data');
