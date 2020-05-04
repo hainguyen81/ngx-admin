@@ -132,15 +132,15 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Initialize
      */
     private initialize() {
-        if (this.field && this.field.templateOptions) {
-            if (Array.isArray(this.field.templateOptions.options)) {
-                this.initializeTreeviewComponentFromTemplateOptions(this.field.templateOptions.options);
-
-            } else if (isObservable(this.field.templateOptions.options)) {
-                (this.field.templateOptions.options as Observable<any>).subscribe(
-                    options => this.initializeTreeviewComponentFromTemplateOptions(options));
-            }
-        }
+        // if (this.field && this.field.templateOptions) {
+        //     if (Array.isArray(this.field.templateOptions.options)) {
+        //         this.initializeTreeviewComponentFromTemplateOptions(this.field.templateOptions.options);
+        //
+        //     } else if (isObservable(this.field.templateOptions.options)) {
+        //         (this.field.templateOptions.options as Observable<any>).subscribe(
+        //             options => this.initializeTreeviewComponentFromTemplateOptions(options));
+        //     }
+        // }
     }
 
     private initializeTreeviewComponentFromTemplateOptions(options: any[]): void {

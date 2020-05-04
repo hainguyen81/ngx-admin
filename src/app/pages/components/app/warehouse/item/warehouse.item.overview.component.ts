@@ -455,14 +455,13 @@ export class WarehouseItemOverviewFormlyComponent
                 options = [];
                 options.push(WarehouseCategoryTreeviewConfig);
                 options.push(categories);
-                field.templateOptions.options = options;
                 let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                 belongToComponent = this.getFormFieldComponent(
                     field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
                 belongToComponent && belongToComponent.ngAfterLoadData.subscribe(value => {
                     this.setBelongToSelectedValue(field, this.getModel());
                 });
-                belongToComponent && belongToComponent.reloadFieldByOptions(field.templateOptions.options);
+                belongToComponent && belongToComponent.reloadFieldByOptions(options);
             });
     }
 
