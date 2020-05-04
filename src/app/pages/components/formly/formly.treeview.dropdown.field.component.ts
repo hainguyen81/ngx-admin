@@ -7,7 +7,6 @@ import {
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeviewItem} from 'ngx-treeview';
 import ComponentUtils from '../../../utils/component.utils';
-import {isObservable, Observable} from 'rxjs';
 import {IEvent} from '../abstract.component';
 import {NgxDropdownTreeviewComponent} from '../treeview/treeview.dropdown.component';
 import {DefaultTreeviewConfig} from '../treeview/abstract.treeview.component';
@@ -30,11 +29,10 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // DECLARATION
     // -------------------------------------------------
 
-    /**
-     * Raise after loading items and parsing current selected value
-     * @param {IEvent} with $data is current selected item
-     */
-    @Output() readonly ngAfterLoadData: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    /* tree-view config */
+    @Input('config') private treeviewConfig: TreeviewConfig;
+    /* tree-view items array */
+    @Input('items') private treeviewItems: TreeviewItem[];
 
     @ViewChildren(NgxDropdownTreeviewComponent)
     private readonly queryNgxTreeviewComponent: QueryList<NgxDropdownTreeviewComponent>;
@@ -57,14 +55,14 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @return the {TreeviewConfig} instance
      */
     public getConfig(): TreeviewConfig {
-        return (this.getTreeviewComponent() ? this.getTreeviewComponent().getConfig() : undefined);
+        return this.treeviewConfig || DefaultTreeviewConfig;
     }
     /**
      * Set the {TreeviewConfig} instance
      * @param config to apply
      */
     public setConfig(config: TreeviewConfig): void {
-        this.getTreeviewComponent() && this.getTreeviewComponent().setConfig(config);
+        this.treeviewConfig = config ||  DefaultTreeviewConfig;
     }
 
     /**
@@ -72,7 +70,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @return the {TreeviewItem} array
      */
     public getTreeviewItems(): TreeviewItem[] {
-        return (this.getTreeviewComponent() ? this.getTreeviewComponent().getTreeviewItems() : undefined);
+        return this.treeviewItems || [];
     }
 
     /**
@@ -80,7 +78,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param items to apply
      */
     public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.getTreeviewComponent() && this.getTreeviewComponent().setTreeviewItems(items);
+        this.treeviewItems = items || [];
     }
 
     // -------------------------------------------------
@@ -108,15 +106,15 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
 
         this.field.className = [(this.field.className || ''),
             'form-field form-dropdown-treeview form-dropdown-treeview-select'].join(' ').trim();
+        if (this.field && this.field.templateOptions['config'] instanceof TreeviewConfig) {
+            this.setConfig(<TreeviewConfig>this.field.templateOptions['config']);
+        }
         if (!this.ngxTreeviewComponent) {
             // query component
-            this.ngxTreeviewComponent = ComponentUtils.queryComponent(this.queryNgxTreeviewComponent);
+            this.ngxTreeviewComponent = ComponentUtils.queryComponent(this.queryNgxTreeviewComponent, component => {
+                component && component.getSelectedChangeEvent().subscribe((e: IEvent) => this.onSelectedValue(e));
+            });
         }
-
-        this.getTreeviewComponent()
-        && this.getTreeviewComponent().getSelectedChangeEvent().subscribe(
-            (e: IEvent) => this.onSelectedValue(e));
-        this.getTreeviewComponent() && this.initialize();
     }
 
     protected onValueChanges(value: any): void {
@@ -127,42 +125,6 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
-
-    /**
-     * Initialize
-     */
-    private initialize() {
-        // if (this.field && this.field.templateOptions) {
-        //     if (Array.isArray(this.field.templateOptions.options)) {
-        //         this.initializeTreeviewComponentFromTemplateOptions(this.field.templateOptions.options);
-        //
-        //     } else if (isObservable(this.field.templateOptions.options)) {
-        //         (this.field.templateOptions.options as Observable<any>).subscribe(
-        //             options => this.initializeTreeviewComponentFromTemplateOptions(options));
-        //     }
-        // }
-    }
-
-    private initializeTreeviewComponentFromTemplateOptions(options: any[]): void {
-        // treeview configuration
-        let config: TreeviewConfig;
-        config = ((options || []).length ? options[0] as TreeviewConfig : DefaultTreeviewConfig);
-        this.setConfig(config && Object.keys(config).length ? config : DefaultTreeviewConfig);
-
-        // treeview items
-        this.setTreeviewItems((options || []).length <= 0 || !isArray(options[1]) ? [] : Array.from(options[1]));
-
-        // raise event after loading data
-        this.ngAfterLoadData.emit({ data: this.getTreeviewItems() });
-    }
-
-    /**
-     * Reload field by the specified options
-     * @param options to reload with 0 - TreeviewConfig; 1 - TreeviewItem[]
-     */
-    public reloadFieldByOptions(options: any[]): void {
-        this.initializeTreeviewComponentFromTemplateOptions(options);
-    }
 
     /**
      * Raise when the selected value of dropdown treeview has been changed

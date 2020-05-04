@@ -60,6 +60,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                                 templateOptions: {
                                     label: 'warehouse.category.form.belongTo.label',
                                     placeholder: 'warehouse.category.form.belongTo.placeholder',
+                                    'config': WarehouseCategoryTreeviewConfig,
                                 },
                             },
                         ],
@@ -243,18 +244,11 @@ export class WarehouseCategoryFormlyComponent
         return WarehouseDataUtils.invokeAllWarehouseCategories(
             <WarehouseCategoryDatasource>this.getDataSource()).then(
                 categories => {
-                    let options: any[];
-                    options = [];
-                    options.push(WarehouseCategoryTreeviewConfig);
-                    options.push(categories);
                     let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
                         field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent
-                    && belongToComponent.ngAfterLoadData.subscribe(value => {
-                        this.disableModelFromBelongTo(field, this.getModel());
-                    });
-                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                    belongToComponent && belongToComponent.setTreeviewItems(categories);
+                    belongToComponent && this.disableModelFromBelongTo(field, this.getModel());
                 });
     }
 

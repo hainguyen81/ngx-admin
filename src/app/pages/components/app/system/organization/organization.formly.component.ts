@@ -63,7 +63,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'system.organization.form.belongTo.label',
                     placeholder: 'system.organization.form.belongTo.placeholder',
-                    options: [],
+                    'config': OrganizationTreeviewConfig,
                 },
             },
         ],
@@ -464,21 +464,12 @@ export class OrganizationFormlyComponent
         const fields: FormlyFieldConfig[] = this.getFields();
         return SystemDataUtils.invokeAllOrganization(
             <OrganizationDataSource>this.getDataSource()).then(
-                orgValues => {
-                    let options: any[];
-                    options = [];
-                    options.push(OrganizationTreeviewConfig);
-                    options.push(orgValues);
-
+                values => {
                     let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-                    belongToComponent = this.getFormFieldComponent(
-                        fields[0].fieldGroup[0],
+                    belongToComponent = this.getFormFieldComponent(fields[0].fieldGroup[0],
                         OrganizationFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent
-                    && belongToComponent.ngAfterLoadData.subscribe(value => {
-                        this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
-                    });
-                    belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                    belongToComponent && belongToComponent.setTreeviewItems(values);
+                    belongToComponent && this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
                 });
     }
 

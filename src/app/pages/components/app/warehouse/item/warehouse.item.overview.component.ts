@@ -91,6 +91,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                 templateOptions: {
                     label: 'warehouse.item.overview.form.category.label',
                     placeholder: 'warehouse.item.overview.form.category.placeholder',
+                    'config': WarehouseCategoryTreeviewConfig,
                     required: true,
                 },
             },
@@ -449,19 +450,13 @@ export class WarehouseItemOverviewFormlyComponent
      * @param field to apply
      */
     private observeCategoriesField(field: FormlyFieldConfig): Promise<void> {
-        return WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource)
-            .then(categories => {
-                let options: any[];
-                options = [];
-                options.push(WarehouseCategoryTreeviewConfig);
-                options.push(categories);
+        return WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource).then(
+            categories => {
                 let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                 belongToComponent = this.getFormFieldComponent(
                     field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                belongToComponent && belongToComponent.ngAfterLoadData.subscribe(value => {
-                    this.setBelongToSelectedValue(field, this.getModel());
-                });
-                belongToComponent && belongToComponent.reloadFieldByOptions(options);
+                belongToComponent && belongToComponent.setTreeviewItems(categories);
+                belongToComponent && this.setBelongToSelectedValue(field, this.getModel());
             });
     }
 
