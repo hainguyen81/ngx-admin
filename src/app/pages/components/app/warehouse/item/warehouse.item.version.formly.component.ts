@@ -99,6 +99,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                 key: 'number_of_prints',
                 type: 'input',
                 templateOptions: {
+                    type: 'number',
                     label: 'warehouse.item.overview.form.number_of_prints.label',
                     placeholder: 'warehouse.item.overview.form.number_of_prints.placeholder',
                 },
@@ -116,6 +117,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                 key: 'dealer_price',
                 type: 'input',
                 templateOptions: {
+                    type: 'number',
                     label: 'warehouse.item.overview.form.dealer_price.label',
                     placeholder: 'warehouse.item.overview.form.dealer_price.placeholder',
                     required: true,
@@ -129,6 +131,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                 key: 'cost_price',
                 type: 'input',
                 templateOptions: {
+                    type: 'number',
                     label: 'warehouse.item.overview.form.cost_price.label',
                     placeholder: 'warehouse.item.overview.form.cost_price.placeholder',
                     required: true,
@@ -147,6 +150,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                 key: 'selling_price',
                 type: 'input',
                 templateOptions: {
+                    type: 'number',
                     label: 'warehouse.item.overview.form.selling_price.label',
                     placeholder: 'warehouse.item.overview.form.selling_price.placeholder',
                     required: true,
