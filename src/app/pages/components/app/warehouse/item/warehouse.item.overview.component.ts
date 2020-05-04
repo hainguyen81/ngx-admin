@@ -136,7 +136,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                 },
                 validators: {
-                    validation: [CustomValidators.number],
+                    validation: [CustomValidators.number, CustomValidators.min(0)],
                 },
             },
             {
@@ -149,7 +149,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                 },
                 validators: {
-                    validation: [CustomValidators.number],
+                    validation: [CustomValidators.number, CustomValidators.min(0)],
                 },
             },
         ],
@@ -167,7 +167,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                 },
                 validators: {
-                    validation: [CustomValidators.number],
+                    validation: [CustomValidators.number, CustomValidators.min(0)],
                 },
             },
             {

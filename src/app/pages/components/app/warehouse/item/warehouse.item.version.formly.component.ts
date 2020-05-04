@@ -95,7 +95,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'warehouse.item.overview.form.number_of_prints.placeholder',
                 },
                 validators: {
-                    validation: [CustomValidators.number],
+                    validation: [CustomValidators.number, CustomValidators.min(0)],
                 },
             },
         ],
@@ -113,7 +113,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                 },
                 validators: {
-                    validation: [CustomValidators.number],
+                    validation: [CustomValidators.number, CustomValidators.min(0)],
                 },
             },
             {
@@ -126,7 +126,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                 },
                 validators: {
-                    validation: [CustomValidators.number],
+                    validation: [CustomValidators.number, CustomValidators.min(0)],
                 },
             },
         ],
@@ -144,7 +144,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                 },
                 validators: {
-                    validation: [CustomValidators.number],
+                    validation: [CustomValidators.number, CustomValidators.min(0)],
                 },
             },
             {
