@@ -46,6 +46,7 @@ import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
+import {CustomValidators} from 'ngx-custom-validators';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -134,6 +135,9 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                     placeholder: 'warehouse.item.overview.form.dealer_price.placeholder',
                     required: true,
                 },
+                validators: {
+                    validation: [CustomValidators.number],
+                },
             },
             {
                 className: 'col-6',
@@ -143,6 +147,9 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'warehouse.item.overview.form.cost_price.label',
                     placeholder: 'warehouse.item.overview.form.cost_price.placeholder',
                     required: true,
+                },
+                validators: {
+                    validation: [CustomValidators.number],
                 },
             },
         ],
@@ -158,6 +165,9 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'warehouse.item.overview.form.selling_price.label',
                     placeholder: 'warehouse.item.overview.form.selling_price.placeholder',
                     required: true,
+                },
+                validators: {
+                    validation: [CustomValidators.number],
                 },
             },
             {
