@@ -19,10 +19,10 @@ import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.co
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {ITabConfig} from '../../../tab/abstract.tab.component';
 import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
-import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
-import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
-import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
-import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
+// import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
+// import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
+// import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
+// import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
@@ -94,130 +94,130 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      * @returns {boolean}
      */
     active: true,
-}, {
-    /**
-     * Tab title
-     * @type {string}
-     */
-    tabTitle: 'warehouse.item.orders.purchase.title',
-    /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_PURCHASE',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'shopping-cart', pack: 'fa' },
-    /**
-     * Item is disabled and cannot be opened.
-     * @type {boolean}
-     */
-    disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
-    /**
-     * Specifies active tab
-     * @returns {boolean}
-     */
-    active: true,
-}, {
-    /**
-     * Tab title
-     * @type {string}
-     */
-    tabTitle: 'warehouse.item.orders.sale.title',
-    /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_SALE',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'credit-card', pack: 'far' },
-    /**
-     * Item is disabled and cannot be opened.
-     * @type {boolean}
-     */
-    disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
-    /**
-     * Specifies active tab
-     * @returns {boolean}
-     */
-    active: true,
-}, {
-    /**
-     * Tab title
-     * @type {string}
-     */
-    tabTitle: 'warehouse.item.in_out.title',
-    /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_IN_OUT',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'cubes', pack: 'fa' },
-    /**
-     * Item is disabled and cannot be opened.
-     * @type {boolean}
-     */
-    disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
-    /**
-     * Specifies active tab
-     * @returns {boolean}
-     */
-    active: true,
-}, {
-    /**
-     * Tab title
-     * @type {string}
-     */
-    tabTitle: 'warehouse.item.adjustment.title',
-    /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_ADJUSTMENT',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'adjust', pack: 'fa' },
-    /**
-     * Item is disabled and cannot be opened.
-     * @type {boolean}
-     */
-    disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
-    /**
-     * Specifies active tab
-     * @returns {boolean}
-     */
-    active: true,
+// }, {
+//     /**
+//      * Tab title
+//      * @type {string}
+//      */
+//     tabTitle: 'warehouse.item.orders.purchase.title',
+//     /**
+//      * Tab id
+//      * @type {string}
+//      */
+//     tabId: 'WAREHOUSE_ITEM_PURCHASE',
+//     /**
+//      * Tab icon name or icon config object
+//      * @type {string | NbIconConfig}
+//      */
+//     tabIcon: { icon: 'shopping-cart', pack: 'fa' },
+//     /**
+//      * Item is disabled and cannot be opened.
+//      * @type {boolean}
+//      */
+//     disabled: false,
+//     /**
+//      * Show only icons when width is smaller than `tabs-icon-only-max-width`
+//      * @type {boolean}
+//      */
+//     responsive: true,
+//     /**
+//      * Specifies active tab
+//      * @returns {boolean}
+//      */
+//     active: true,
+// }, {
+//     /**
+//      * Tab title
+//      * @type {string}
+//      */
+//     tabTitle: 'warehouse.item.orders.sale.title',
+//     /**
+//      * Tab id
+//      * @type {string}
+//      */
+//     tabId: 'WAREHOUSE_ITEM_SALE',
+//     /**
+//      * Tab icon name or icon config object
+//      * @type {string | NbIconConfig}
+//      */
+//     tabIcon: { icon: 'credit-card', pack: 'far' },
+//     /**
+//      * Item is disabled and cannot be opened.
+//      * @type {boolean}
+//      */
+//     disabled: false,
+//     /**
+//      * Show only icons when width is smaller than `tabs-icon-only-max-width`
+//      * @type {boolean}
+//      */
+//     responsive: true,
+//     /**
+//      * Specifies active tab
+//      * @returns {boolean}
+//      */
+//     active: true,
+// }, {
+//     /**
+//      * Tab title
+//      * @type {string}
+//      */
+//     tabTitle: 'warehouse.item.in_out.title',
+//     /**
+//      * Tab id
+//      * @type {string}
+//      */
+//     tabId: 'WAREHOUSE_ITEM_IN_OUT',
+//     /**
+//      * Tab icon name or icon config object
+//      * @type {string | NbIconConfig}
+//      */
+//     tabIcon: { icon: 'cubes', pack: 'fa' },
+//     /**
+//      * Item is disabled and cannot be opened.
+//      * @type {boolean}
+//      */
+//     disabled: false,
+//     /**
+//      * Show only icons when width is smaller than `tabs-icon-only-max-width`
+//      * @type {boolean}
+//      */
+//     responsive: true,
+//     /**
+//      * Specifies active tab
+//      * @returns {boolean}
+//      */
+//     active: true,
+// }, {
+//     /**
+//      * Tab title
+//      * @type {string}
+//      */
+//     tabTitle: 'warehouse.item.adjustment.title',
+//     /**
+//      * Tab id
+//      * @type {string}
+//      */
+//     tabId: 'WAREHOUSE_ITEM_ADJUSTMENT',
+//     /**
+//      * Tab icon name or icon config object
+//      * @type {string | NbIconConfig}
+//      */
+//     tabIcon: { icon: 'adjust', pack: 'fa' },
+//     /**
+//      * Item is disabled and cannot be opened.
+//      * @type {boolean}
+//      */
+//     disabled: false,
+//     /**
+//      * Show only icons when width is smaller than `tabs-icon-only-max-width`
+//      * @type {boolean}
+//      */
+//     responsive: true,
+//     /**
+//      * Specifies active tab
+//      * @returns {boolean}
+//      */
+//     active: true,
 }];
 
 @Component({
@@ -273,10 +273,10 @@ export class WarehouseItemTabsetComponent
         this.dataModel = dataModel;
         this.getOverviewTab() && this.getOverviewTab().setModel(dataModel);
         this.getVersionTab() && this.getVersionTab().setDataModel(dataModel);
-        this.getPurchaseTab() && this.getPurchaseTab().setModel(dataModel);
-        this.getSaleTab() && this.getSaleTab().setModel(dataModel);
-        this.getInOutTab() && this.getInOutTab().setModel(dataModel);
-        this.getAdjustmentTab() && this.getAdjustmentTab().setModel(dataModel);
+        // this.getPurchaseTab() && this.getPurchaseTab().setModel(dataModel);
+        // this.getSaleTab() && this.getSaleTab().setModel(dataModel);
+        // this.getInOutTab() && this.getInOutTab().setModel(dataModel);
+        // this.getAdjustmentTab() && this.getAdjustmentTab().setModel(dataModel);
     }
 
     /**
@@ -295,37 +295,37 @@ export class WarehouseItemTabsetComponent
         return this.getTabComponent(1, WarehouseItemVersionSmartTableComponent);
     }
 
-    /**
-     * Get the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
-     * @return the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
-     */
-    protected getPurchaseTab(): WarehouseItemPurchaseOrdersSmartTableComponent {
-        return this.getTabComponent(2, WarehouseItemPurchaseOrdersSmartTableComponent);
-    }
-
-    /**
-     * Get the {WarehouseItemSaleOrdersSmartTableComponent} instance
-     * @return the {WarehouseItemSaleOrdersSmartTableComponent} instance
-     */
-    protected getSaleTab(): WarehouseItemSaleOrdersSmartTableComponent {
-        return this.getTabComponent(3, WarehouseItemSaleOrdersSmartTableComponent);
-    }
-
-    /**
-     * Get the {WarehouseItemInOutSmartTableComponent} instance
-     * @return the {WarehouseItemInOutSmartTableComponent} instance
-     */
-    protected getInOutTab(): WarehouseItemInOutSmartTableComponent {
-        return this.getTabComponent(4, WarehouseItemInOutSmartTableComponent);
-    }
-
-    /**
-     * Get the {WarehouseItemAdjustmentSmartTableComponent} instance
-     * @return the {WarehouseItemAdjustmentSmartTableComponent} instance
-     */
-    protected getAdjustmentTab(): WarehouseItemAdjustmentSmartTableComponent {
-        return this.getTabComponent(5, WarehouseItemAdjustmentSmartTableComponent);
-    }
+    // /**
+    //  * Get the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
+    //  * @return the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
+    //  */
+    // protected getPurchaseTab(): WarehouseItemPurchaseOrdersSmartTableComponent {
+    //     return this.getTabComponent(2, WarehouseItemPurchaseOrdersSmartTableComponent);
+    // }
+    //
+    // /**
+    //  * Get the {WarehouseItemSaleOrdersSmartTableComponent} instance
+    //  * @return the {WarehouseItemSaleOrdersSmartTableComponent} instance
+    //  */
+    // protected getSaleTab(): WarehouseItemSaleOrdersSmartTableComponent {
+    //     return this.getTabComponent(3, WarehouseItemSaleOrdersSmartTableComponent);
+    // }
+    //
+    // /**
+    //  * Get the {WarehouseItemInOutSmartTableComponent} instance
+    //  * @return the {WarehouseItemInOutSmartTableComponent} instance
+    //  */
+    // protected getInOutTab(): WarehouseItemInOutSmartTableComponent {
+    //     return this.getTabComponent(4, WarehouseItemInOutSmartTableComponent);
+    // }
+    //
+    // /**
+    //  * Get the {WarehouseItemAdjustmentSmartTableComponent} instance
+    //  * @return the {WarehouseItemAdjustmentSmartTableComponent} instance
+    //  */
+    // protected getAdjustmentTab(): WarehouseItemAdjustmentSmartTableComponent {
+    //     return this.getTabComponent(5, WarehouseItemAdjustmentSmartTableComponent);
+    // }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -373,10 +373,10 @@ export class WarehouseItemTabsetComponent
             null, [
                 WarehouseItemOverviewFormlyComponent,
                 WarehouseItemVersionSmartTableComponent,
-                WarehouseItemPurchaseOrdersSmartTableComponent,
-                WarehouseItemSaleOrdersSmartTableComponent,
-                WarehouseItemInOutSmartTableComponent,
-                WarehouseItemAdjustmentSmartTableComponent,
+                // WarehouseItemPurchaseOrdersSmartTableComponent,
+                // WarehouseItemSaleOrdersSmartTableComponent,
+                // WarehouseItemInOutSmartTableComponent,
+                // WarehouseItemAdjustmentSmartTableComponent,
             ]);
     }
 
