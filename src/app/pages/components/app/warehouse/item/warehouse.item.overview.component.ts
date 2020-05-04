@@ -47,6 +47,8 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 import {CustomValidators} from 'ngx-custom-validators';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -63,6 +65,9 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'warehouse.item.overview.form.code.label',
                     placeholder: 'warehouse.item.overview.form.code.placeholder',
                     required: true,
+                },
+                validators: {
+                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                 },
             },
         ],

@@ -30,6 +30,8 @@ import {
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 /* default warehouse storage formly config */
 export const WarehouseStorageFormConfig: FormlyConfig = new FormlyConfig();
@@ -55,6 +57,9 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                     label: 'warehouse.storage.form.code.label',
                                     placeholder: 'warehouse.storage.form.code.placeholder',
                                     required: true,
+                                },
+                                validators: {
+                                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                                 },
                             },
                             {

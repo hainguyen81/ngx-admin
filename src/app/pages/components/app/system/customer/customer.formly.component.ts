@@ -42,6 +42,8 @@ import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();
@@ -102,6 +104,9 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                     label: 'system.customer.form.code.label',
                                     placeholder: 'system.customer.form.code.placeholder',
                                     required: true,
+                                },
+                                validators: {
+                                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                                 },
                             },
                             {

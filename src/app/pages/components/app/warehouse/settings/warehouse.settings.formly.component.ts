@@ -31,6 +31,8 @@ import {throwError} from 'rxjs';
 import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 /* default warehouse settings formly config */
 export const WarehouseSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -62,6 +64,9 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                             label: 'warehouse.settings.form.code.label',
                             placeholder: 'warehouse.settings.form.code.placeholder',
                             required: true,
+                        },
+                        validators: {
+                            validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                         },
                     },
                     {

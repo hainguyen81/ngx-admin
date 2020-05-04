@@ -47,6 +47,8 @@ import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -105,6 +107,9 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.organization.form.code.label',
                     placeholder: 'system.organization.form.code.placeholder',
                     required: true,
+                },
+                validators: {
+                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                 },
             },
             {

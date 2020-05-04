@@ -26,6 +26,8 @@ import {
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 /* default general settings formly config */
 export const GeneralSettingsFormConfig: FormlyConfig = new FormlyConfig();
@@ -68,6 +70,9 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     'templateOptions.readonly':
                         (model: IGeneralSettings) =>
                             !model || model.builtin || !(model.module_code || '').length,
+                },
+                validators: {
+                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                 },
             },
         ],

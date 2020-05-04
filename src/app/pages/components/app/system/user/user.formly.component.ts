@@ -31,6 +31,8 @@ import {UserDataSource} from '../../../../../services/implementation/system/user
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 /* default user formly config */
 export const UserFormConfig: FormlyConfig = new FormlyConfig();
@@ -86,6 +88,9 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
                                     placeholder: 'system.user.form.password.placeholder',
                                     required: true,
                                 },
+                                validators: {
+                                    validation: [Validators.pattern(ValidationUtils.VALIDATION_PASSWORD_PATTERN)]
+                                }
                             },
                         ],
                     },

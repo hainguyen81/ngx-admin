@@ -35,6 +35,7 @@ import {
 } from '../../../../../config/toolbar.actions.conf';
 import {IEvent} from '../../../abstract.component';
 import {IdGenerators} from '../../../../../config/generator.config';
+import ObjectUtils from '../../../../../utils/object.utils';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
@@ -122,11 +123,15 @@ export class WarehouseItemFlipcardComponent
     protected onNewData($event: IEvent): void {
         this.selectedModel = new WarehouseItem(IdGenerators.oid.generate(), null, null);
         this.selectedModel.status = Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED);
-        super.getBackComponent().setDataModel(this.selectedModel);
+        super.getBackComponent().setDataModel(ObjectUtils.deepCopy(this.selectedModel));
     }
 
     protected onEditData($event: IEvent): void {
-        super.getBackComponent().setDataModel(this.selectedModel);
+        super.getBackComponent().setDataModel(ObjectUtils.deepCopy(this.selectedModel));
+    }
+
+    protected doReset(): void {
+        super.getBackComponent().setDataModel(ObjectUtils.deepCopy(this.selectedModel));
     }
 
     protected doSave(): void {

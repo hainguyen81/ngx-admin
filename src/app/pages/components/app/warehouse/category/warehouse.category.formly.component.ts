@@ -36,6 +36,8 @@ import {throwError} from 'rxjs';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {Validators} from '@angular/forms';
+import ValidationUtils from '../../../../../utils/validation.utils';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -103,6 +105,9 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                                     label: 'warehouse.category.form.code.label',
                                     placeholder: 'warehouse.category.form.code.placeholder',
                                     required: true,
+                                },
+                                validators: {
+                                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                                 },
                             },
                             {
