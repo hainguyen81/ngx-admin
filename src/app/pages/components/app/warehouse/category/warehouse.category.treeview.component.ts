@@ -33,14 +33,13 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
-export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
+export const WarehouseCategoryTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
     decoupleChildFromParent: false,
     hasAllCheckBox: false,
     hasCollapseExpand: false,
-    hasDivider: false,
     hasFilter: true,
     maxHeight: -1,
-};
+});
 
 export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 

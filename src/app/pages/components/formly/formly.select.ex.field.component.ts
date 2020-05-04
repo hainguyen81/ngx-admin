@@ -14,6 +14,7 @@ import {NgxSelectExComponent} from '../select-ex/select.ex.component';
 import {IEvent} from '../abstract.component';
 import {isArray} from 'util';
 import {NGXLogger} from 'ngx-logger';
+import {isObservable} from 'rxjs';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -114,8 +115,21 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        // build field template config and options before query select-ex component
         this.field.className = [(this.field.className || ''),
             'form-field form-select-ex'].join(' ').trim();
+        if (this.field && this.field.templateOptions
+            && isArray(this.field.templateOptions.options)) {
+            this.setItems(this.field.templateOptions.options as any[]);
+
+        } else if (this.field && this.field.templateOptions
+            && isObservable(this.field.templateOptions.options)) {
+            this.field.templateOptions.options.subscribe((items: any[]) => {
+                this.setItems(this.field.templateOptions.options as any[]);
+            });
+        }
+
+        // query select-ex component
         if (!this.ngxSelectExComponent) {
             // query component
             this.ngxSelectExComponent = ComponentUtils.queryComponent(

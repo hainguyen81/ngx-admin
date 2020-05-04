@@ -257,7 +257,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     mappingDataSourceToTreeviewItems(data: any): TreeviewItem[] {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('mappingDataSourceToTreeviewItems', data);
-        return [];
+        return undefined;
     }
 
     /**

@@ -41,6 +41,7 @@ import {
     CONTEXT_MENU_EDIT,
 } from '../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {isArray, isNullOrUndefined} from 'util';
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
@@ -80,6 +81,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     @Input('dropdown') private dropdown: boolean;
     /* tree-view items array */
     @Input('items') private treeviewItems: TreeviewItem[];
+    /* tree-view items array */
+    @Input('itemBuilder') private itemBuilder: (data: any) => TreeviewItem;
     /* drop-down button class */
     @Input('buttonClass') private buttonClass?: string | null;
 
@@ -90,6 +93,22 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the item builder factory to build {TreeviewItem} while data source has been refreshed
+     * @return the item builder factory to build {TreeviewItem}
+     */
+    public getItemBuilder(): (data: any) => TreeviewItem {
+        return this.itemBuilder;
+    }
+
+    /**
+     * Set the item builder factory to build {TreeviewItem} while data source has been refreshed
+     * @param itemBuilder to apply
+     */
+    public setItemBuilder(itemBuilder: (data: any) => TreeviewItem): void {
+        this.itemBuilder = itemBuilder;
+    }
 
     /**
      * Get a boolean value indicating this component whether is drop-down tree-view component
@@ -365,10 +384,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             this.treeviewComponent = ComponentUtils.queryComponent(
                 this.queryTreeviewComponent, (component) => {
                     if (component) {
-                        // component.selectedChange.subscribe(
-                        //     value => this.onSelectedChange({data: value}));
-                        // component.filterChange.subscribe(
-                        //     value => this.onFilterChange({data: value}));
+                        component.selectedChange.subscribe(
+                            value => this.onSelectedChange({data: value}));
+                        component.filterChange.subscribe(
+                            value => this.onFilterChange({data: value}));
                     }
                 });
         }
@@ -376,10 +395,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             this.dropdownTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryDropdownTreeviewComponent, (component) => {
                     if (component) {
-                        // component.selectedChange.subscribe(
-                        //     value => this.onSelectedChange({data: value}));
-                        // component.filterChange.subscribe(
-                        //     value => this.onFilterChange({data: value}));
+                        component.selectedChange.subscribe(
+                            value => this.onSelectedChange({data: value}));
+                        component.filterChange.subscribe(
+                            value => this.onFilterChange({data: value}));
                     }
                 });
         }
@@ -425,11 +444,23 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     onDataSourceChanged(event: IEvent) {
         this.getLogger().debug('DataSource has been changed', event);
-        if (event && event.data && event.data.hasOwnProperty('elements')) {
-            this.treeviewItems = this.mappingDataSourceToTreeviewItems(event.data['elements']);
+        const elements: any[] = (event && event.data
+            && event.data.hasOwnProperty('elements') && isArray(event.data['elements'])
+            ? Array.from(event.data['elements']) : [event.data['elements']]);
+        const itemBuilder: (data: any) => TreeviewItem = this.getItemBuilder();
+        if (!isNullOrUndefined(itemBuilder)) {
+            const items: TreeviewItem[] = [];
+            (elements || []).forEach(element => {
+                const item: TreeviewItem = itemBuilder.apply(this, [element]);
+                item && items.push(item);
+            });
+            this.treeviewItems = items;
 
         } else {
-            this.treeviewItems = [];
+            const items: TreeviewItem[] = this.mappingDataSourceToTreeviewItems(elements);
+            if (!isNullOrUndefined(items)) {
+                this.treeviewItems = items;
+            }
         }
     }
 
