@@ -43,8 +43,17 @@
                 "department": "Department",
                 "team_group": "Team/Group"
             },
+            "currency": {
+                "name": "Currency",
+                "usd": "USD",
+                "vnd": "VND",
+                "others": "Others"
+            },
             "warehouseSettings": {
                 "name": "Warehouse settings",
+                "brand": {
+                    "name": "Branch settings"
+                },
                 "item": {
                     "name": "Item settings"
                 },
@@ -113,6 +122,11 @@
                     "message": "Database has been deleted. You will must re-login again. Do you want to continue?",
                     "cancel": "Cancel",
                     "ok": "OK"
+                },
+                "logout": {
+                    "message": "Do you want to log out of application?",
+                    "cancel": "Cancel",
+                    "ok": "OK"
                 }
             },
             "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
@@ -125,7 +139,8 @@
                 "delete": "Delete",
                 "back": "Back",
                 "import": "Import",
-                "deletedb": "Delete DB"
+                "deletedb": "Delete DB",
+                "close": "Close"
             },
             "treeview": {
                 "not_selection": "",
@@ -141,6 +156,9 @@
         },
         "logout": {
             "title": "Log out"
+        },
+        "profile": {
+            "title": "Profile"
         }
     },
 	"system": {
@@ -655,6 +673,9 @@
             "summary": {
                 "not_supported_files": "Only support for image file types! Below file(s) will not be uploaded:<br/>{{files}}"
             },
+            "version": {
+                "title": "Versions"
+            },
             "overview": {
                 "title": "Overview",
                 "form": {
@@ -749,6 +770,10 @@
                     "description": {
                         "label": "Description",
                         "placeholder": "Description"
+                    },
+                    "status": {
+                        "label": "Status",
+                        "placeholder": "Status"
                     }
                 }
             },
@@ -784,6 +809,7 @@
             "adjustment": {
                 "title": "Adjustments",
                 "table": {
+                    "noData": "Not found any item in warehouse",
                     "date": "Date",
                     "code": "Adjustment",
                     "warehouse": "Warehouse",
@@ -795,6 +821,7 @@
             },
             "table": {
                 "noData": "Not found any item in warehouse",
+                "no": "No.",
                 "code": "Code",
                 "name": "Name",
                 "status": "Status",

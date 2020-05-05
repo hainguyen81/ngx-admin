@@ -43,8 +43,17 @@
                 "department": "Phòng ban",
                 "team_group": "Đội / Nhóm"
             },
+            "currency": {
+                "name": "Tiền tệ",
+                "usd": "USD",
+                "vnd": "VND",
+                "others": "Khác"
+            },
             "warehouseSettings": {
                 "name": "Thiếp lập kho",
+                "brand": {
+                    "name": "Thiết lập hãng sản xuất"
+                },
                 "item": {
                     "name": "Thiết lập trang thiết bị"
                 },
@@ -113,6 +122,11 @@
                     "message": "Cơ sở dữ liệu sẽ bị xóa. Bạn sẽ phải đăng nhập lại. Bạn có muốn tiếp tục không?",
                     "cancel": "Bỏ qua",
                     "ok": "Đồng ý"
+                },
+                "logout": {
+                    "message": "Bạn muốn đăng xuất phiên làm việc?",
+                    "cancel": "Bỏ qua",
+                    "ok": "Đồng ý"
                 }
             },
             "unknown": "Bạn không có đủ quyền hoặc dữ liệu đã bị sai! Vui lòng liên hệ Quản trị viên để được hỗ trợ!"
@@ -125,7 +139,8 @@
                 "delete": "Xóa",
                 "back": "Quay lại",
                 "import": "Import",
-                "deletedb": "Xóa DB"
+                "deletedb": "Xóa DB",
+                "close": "Đóng"
             },
             "treeview": {
                 "not_selection": "",
@@ -141,6 +156,9 @@
         },
         "logout": {
             "title": "Đăng xuất"
+        },
+        "profile": {
+            "title": "Tài khoản"
         }
     },
 	"system": {
@@ -655,6 +673,9 @@
             "summary": {
                 "not_supported_files": "Chỉ hỗ trợ tệp hình ảnh! Các tệp bên dưới sẽ không được tải lên:<br/>{{files}}"
             },
+            "version": {
+                "title": "Phiên bản"
+            },
             "overview": {
                 "title": "Tổng quát",
                 "form": {
@@ -749,6 +770,10 @@
                     "description": {
                         "label": "Mô tả",
                         "placeholder": "Mô tả"
+                    },
+                    "status": {
+                        "label": "Trạng thái",
+                        "placeholder": "Trạng thái"
                     }
                 }
             },
@@ -784,6 +809,7 @@
             "adjustment": {
                 "title": "Điều chỉnh",
                 "table": {
+                    "noData": "Không có bất kỳ sản phẩm nào trong kho",
                     "date": "Ngày",
                     "code": "Mã điều chỉnh",
                     "warehouse": "Kho hàng",
@@ -795,6 +821,7 @@
             },
             "table": {
                 "noData": "Không có bất kỳ sản phẩm nào trong kho",
+                "no": "STT",
                 "code": "Mã SP",
                 "name": "Tên SP",
                 "status": "Trạng thái",
