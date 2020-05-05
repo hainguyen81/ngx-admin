@@ -1,10 +1,9 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, Input,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -20,7 +19,6 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {throwError} from 'rxjs';
 import {isNullOrUndefined} from 'util';
 
 /**
@@ -31,68 +29,27 @@ import {isNullOrUndefined} from 'util';
     templateUrl: './treeview.component.html',
     styleUrls: ['./treeview.component.scss'],
 })
-export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> implements AfterViewInit {
-
-    // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    @Input('enabledItemCheck') private enabledItemCheck?: boolean | false;
-    @Input('enabledItemImage') private enabledItemImage?: boolean | false;
-    @Input('itemImage') private itemImageParser: (item?: TreeviewItem) => string[];
-    /** backup pointer to generate selection function of treeview component */
-    private __originalGenerateSelection: () => void;
+export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
     /**
-     * Get a boolean value indicating this component whether uses checkbox for tree-view item
-     * @return true for using checkbox; else false
+     * Set the selected {TreeviewItem} array
+     * @param items to select
+     * @param reset specify whether reset the current selected items
      */
-    public isEnabledItemCheck(): boolean {
-        return this.enabledItemCheck;
-    }
-
-    /**
-     * Set a boolean value indicating this component whether uses checkbox for tree-view item
-     * @param enabledItemCheck true for using checkbox; else false
-     */
-    public setEnabledItemCheck(enabledItemCheck?: boolean | false): void {
-        this.enabledItemCheck = enabledItemCheck;
-    }
-
-    /**
-     * Get a boolean value indicating this component whether uses image for tree-view item
-     * @return true for using checkbox; else false
-     */
-    public isEnabledItemImage(): boolean {
-        return this.enabledItemImage;
-    }
-
-    /**
-     * Set a boolean value indicating this component whether uses image for tree-view item
-     * @param enabledItemImage true for using image; else false
-     */
-    public setEnabledItemImage(enabledItemImage?: boolean | false): void {
-        this.enabledItemImage = enabledItemImage;
-    }
-
-    /**
-     * Get the parser delegate to parse item image
-     * @return the parser delegate to parse item image
-     */
-    public getItemImageParser(): (item?: TreeviewItem) => string[] {
-        return this.itemImageParser;
-    }
-
-    /**
-     * Set a boolean value indicating this component whether uses image for tree-view item
-     * @param enabledItemImage true for using image; else false
-     */
-    public setItemImageParser(itemImageParser?: (item?: TreeviewItem) => string[] | null): void {
-        this.itemImageParser = itemImageParser;
+    public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
+        const currentSelection: TreeviewSelection = this.getTreeviewSelection();
+        if (isNullOrUndefined(currentSelection)) return;
+        // un-check previous items
+        (currentSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
+        // collect new item checked
+        let selection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
+        selection = this.collectSelection(items);
+        currentSelection.checkedItems = selection.checkedItems;
+        currentSelection.uncheckedItems = selection.uncheckedItems;
     }
 
     // -------------------------------------------------
@@ -142,24 +99,6 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // unique hack (cheat) for single item selection
-        if (this.getTreeviewComponent()
-            && typeof this.getTreeviewComponent()['generateSelection'] === 'function') {
-            this.__originalGenerateSelection = this.getTreeviewComponent()['generateSelection'];
-            this.getTreeviewComponent()['generateSelection'] = () => this.generateSelection();
-        }
-        if (this.getDropdownTreeviewComponent() && this.getDropdownTreeviewComponent().treeviewComponent
-            && typeof this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] === 'function') {
-            this.__originalGenerateSelection = this.getDropdownTreeviewComponent()
-                .treeviewComponent['generateSelection'];
-            this.getDropdownTreeviewComponent().treeviewComponent['generateSelection'] =
-                () => this.generateSelection();
-        }
-    }
 
     /**
      * Raise when tree-view item label has been clicked
@@ -258,160 +197,5 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         // TODO Waiting for implementing from children component
         this.getLogger().debug('mappingDataSourceToTreeviewItems', data);
         return undefined;
-    }
-
-    /**
-     * Override this method of {TreeviewComponent}
-     */
-    private generateSelection() {
-        if (this.isEnabledItemCheck() && typeof this.__originalGenerateSelection === 'function') {
-            if (this.getTreeviewComponent()) {
-                this.__originalGenerateSelection.apply(this.getTreeviewComponent());
-            }
-            if (this.getDropdownTreeviewComponent() && this.getDropdownTreeviewComponent().treeviewComponent) {
-                this.__originalGenerateSelection.apply(this.getDropdownTreeviewComponent().treeviewComponent);
-            }
-
-        } else {
-            if (this.isDropDown() && this.getDropdownTreeviewComponent()
-                && this.getDropdownTreeviewComponent().treeviewComponent) {
-                this.getDropdownTreeviewComponent().treeviewComponent.selection = this.collectSelection();
-            } else if (!this.isDropDown() && this.getTreeviewComponent()) {
-                this.getTreeviewComponent().selection = this.collectSelection();
-            } else {
-                throwError('Could not initialize tree-view selection while component has not been initialized yet!');
-            }
-        }
-    }
-    private collectSelection(needToCheckedItems?: TreeviewItem[] | null):
-        {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]} {
-        let checkedItems: TreeviewItem[];
-        checkedItems = [];
-        if ((needToCheckedItems || []).length) {
-            needToCheckedItems.forEach(it => this.internalCheck(it, true));
-            checkedItems = checkedItems.concat(needToCheckedItems);
-        }
-        let uncheckedItems: TreeviewItem[];
-        uncheckedItems = [];
-
-        let items: TreeviewItem[];
-        items = [].concat(this.getTreeviewItems());
-        items.forEach(item => this.checkSelection(item, checkedItems, uncheckedItems));
-        return  {
-            checkedItems: [].concat(checkedItems),
-            uncheckedItems: [].concat(uncheckedItems),
-        };
-    }
-    private checkSelection(item: TreeviewItem, checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]): void {
-        if (item.checked && checkedItems.indexOf(item) < 0) {
-            checkedItems.push(item);
-        } else if (!item.checked && uncheckedItems.indexOf(item) < 0) {
-            uncheckedItems.push(item);
-        }
-        if ((item.children || []).length) {
-            item.children.forEach(child => this.checkSelection(child, checkedItems, uncheckedItems));
-        }
-    }
-
-    /**
-     * Set the selected {TreeviewItem} array
-     * @param items to select
-     * @param reset specify whether reset the current selected items
-     */
-    public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
-        const currentSelection: TreeviewSelection = this.getTreeviewSelection();
-        if (isNullOrUndefined(currentSelection)) return;
-        // un-check previous items
-        (currentSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
-        // collect new item checked
-        let selection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
-        selection = this.collectSelection(items);
-        currentSelection.checkedItems = selection.checkedItems;
-        currentSelection.uncheckedItems = selection.uncheckedItems;
-    }
-
-    /**
-     * Get the specified {TreeviewItem} image. NULL for not using
-     * @param item to parse
-     * @return the specified {TreeviewItem} image
-     */
-    public getItemImages(item?: TreeviewItem): string[] {
-        return (this.getItemImageParser() ? this.getItemImageParser().apply(this, [item]) : null);
-    }
-
-    /**
-     * Apply internal property value for the specified {TreeviewItem}
-     * @param item to apply
-     * @param propertyKey the property key
-     * @param value to apply
-     */
-    public internalProperty(item?: TreeviewItem, propertyKey?: string, value?: any) {
-        if (!item || !(propertyKey || '').length) return;
-        item[propertyKey] = value;
-    }
-
-    /**
-     * Get internal property value for the specified {TreeviewItem}
-     * @param item to apply
-     * @param propertyKey the property key
-     * @return the property value or default if not found
-     */
-    public internalPropertyValue(item?: TreeviewItem, propertyKey?: string, defaultValue?: any | null): any {
-        if (!item || !(propertyKey || '').length) return defaultValue;
-        return item[propertyKey];
-    }
-
-    /**
-     * Apply internal checked value for the specified {TreeviewItem}
-     * @param item to apply
-     * @param checked to apply
-     */
-    protected internalCheck(item?: TreeviewItem, checked?: boolean | false) {
-        this.internalProperty(item, 'internalChecked', checked);
-    }
-    /**
-     * Revert internal checked value for the specified {TreeviewItem}
-     * @param item to apply
-     */
-    protected revertCheck(item?: TreeviewItem) {
-        this.internalCheck(item,
-            (item && (<Object>item).hasOwnProperty('internalChecked')
-                ? !item['internalChecked'] : false));
-    }
-
-    /**
-     * Apply internal disabled value for the specified {TreeviewItem}
-     * @param item to apply
-     * @param disabled to apply
-     */
-    protected internalDisabled(item?: TreeviewItem, disabled?: boolean | false) {
-        this.internalProperty(item, 'internalDisabled', disabled);
-    }
-    /**
-     * Revert internal disabled value for the specified {TreeviewItem}
-     * @param item to apply
-     */
-    protected revertDisabled(item?: TreeviewItem) {
-        this.internalCheck(item,
-            (item && (<Object>item).hasOwnProperty('internalDisabled')
-                ? !item['internalDisabled'] : false));
-    }
-
-    /**
-     * Apply internal collapsed value for the specified {TreeviewItem}
-     * @param item to apply
-     * @param collapsed to apply
-     */
-    protected internalCollapsed(item?: TreeviewItem, collapsed?: boolean | false) {
-        this.internalProperty(item, 'internalCollapsed', collapsed);
-    }
-    /**
-     * Revert internal collapsed value for the specified {TreeviewItem}
-     * @param item to apply
-     */
-    protected revertCollapsed(item?: TreeviewItem) {
-        this.internalCheck(item,
-            (item && (<Object>item).hasOwnProperty('internalCollapsed')
-                ? !item['internalCollapsed'] : false));
     }
 }
