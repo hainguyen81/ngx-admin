@@ -43,8 +43,45 @@ import {
 import {ActivatedRoute, Router} from '@angular/router';
 import {isArray, isNullOrUndefined} from 'util';
 
+/**
+ * The extended {TreeviewConfig}
+ */
+export class NgxTreeviewConfig extends TreeviewConfig {
+
+    dropdown?: boolean | false;
+    itemBuilder?: (data: any) => TreeviewItem | null;
+    treeBuilder?: (data: any[]) => TreeviewItem[] | null;
+    buttonClass?: string | null;
+    enabledItemCheck?: boolean | false;
+    enabledItemImage?: boolean | false;
+    appendToBody?: boolean | false;
+    itemImageParser: (item?: TreeviewItem) => string[] | string | null;
+
+    static create(fields?: {
+        hasAllCheckBox?: boolean | false;
+        hasFilter?: boolean | false;
+        hasCollapseExpand?: boolean | true;
+        decoupleChildFromParent?: boolean | false;
+        maxHeight?: number | 500;
+        dropdown?: boolean | false;
+        itemBuilder?: (data: any) => TreeviewItem | null;
+        treeBuilder?: (data: any[]) => TreeviewItem[] | null;
+        buttonClass?: string | null;
+        enabledItemCheck?: boolean | false;
+        enabledItemImage?: boolean | false;
+        appendToBody?: boolean | false;
+        itemImageParser?: (item?: TreeviewItem) => string[] | string | null;
+    }): NgxTreeviewConfig {
+        const config: NgxTreeviewConfig = new NgxTreeviewConfig();
+        Object.keys(fields || {}).forEach(k => {
+            config[k] = fields[k];
+        });
+        return config;
+    }
+}
+
 /* default tree-view config */
-export const DefaultTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
+export const DefaultTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     hasAllCheckBox: false,
     hasCollapseExpand: true,
     hasFilter: false,
@@ -75,20 +112,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private readonly queryDropdownTreeviewComponent: QueryList<DropdownTreeviewComponent>;
     private dropdownTreeviewComponent: DropdownTreeviewComponent;
 
-    /* tree-view config */
-    @Input('config') private treeviewConfig: TreeviewConfig;
-    /* specify dropdown tree-view */
-    @Input('dropdown') private dropdown: boolean;
     /* tree-view items array */
-    @Input('items') private treeviewItems: TreeviewItem[];
-    /* tree-view items array */
-    @Input('itemBuilder') private itemBuilder: (data: any) => TreeviewItem;
-    /* drop-down button class */
-    @Input('buttonClass') private buttonClass?: string | null;
-    @Input('enabledItemCheck') private enabledItemCheck?: boolean | false;
-    @Input('enabledItemImage') private enabledItemImage?: boolean | false;
-    @Input('appendToBody') private appendToBody?: boolean | false;
-    @Input('itemImage') private itemImageParser: (item?: TreeviewItem) => string[];
+    @Input('items') private _items: TreeviewItem[];
 
     @Output() private selectedChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private filterChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -101,12 +126,40 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    get config(): NgxTreeviewConfig {
+        const _config: NgxTreeviewConfig = <NgxTreeviewConfig>super.config;
+        return _config || DefaultTreeviewConfig;
+    }
+
+    set config(_config: NgxTreeviewConfig) {
+        super.config = _config || DefaultTreeviewConfig;
+    }
+
+    /**
+     * Get the tree-view items array to show
+     * @return the tree-view items array
+     */
+    get items(): TreeviewItem[] {
+        if (isNullOrUndefined(this._items)) {
+            this._items = [];
+        }
+        return this._items;
+    }
+
+    /**
+     * Set the tree-view items array to show
+     * @param _items to apply
+     */
+    set items(_items: TreeviewItem[]) {
+        this._items = _items;
+    }
+
     /**
      * Get a boolean value indicating this component whether uses checkbox for tree-view item
      * @return true for using checkbox; else false
      */
     public isEnabledItemCheck(): boolean {
-        return this.enabledItemCheck;
+        return this.getConfigValue('enabledItemCheck', false);
     }
 
     /**
@@ -114,7 +167,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param enabledItemCheck true for using checkbox; else false
      */
     public setEnabledItemCheck(enabledItemCheck?: boolean | false): void {
-        this.enabledItemCheck = enabledItemCheck;
+        this.setConfigValue('enabledItemCheck', enabledItemCheck);
     }
 
     /**
@@ -122,7 +175,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return true for appending to body; else false
      */
     public isAppendToBody(): boolean {
-        return this.appendToBody;
+        return this.getConfigValue('appendToBody', false);
     }
 
     /**
@@ -130,7 +183,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param appendToBody true for appending to body; else false
      */
     public setAppendToBody(appendToBody?: boolean | false): void {
-        this.appendToBody = appendToBody;
+        this.setConfigValue('appendToBody', appendToBody);
     }
 
     /**
@@ -138,7 +191,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return true for using checkbox; else false
      */
     public isEnabledItemImage(): boolean {
-        return this.enabledItemImage;
+        return this.getConfigValue('enabledItemImage', false);
     }
 
     /**
@@ -146,23 +199,23 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param enabledItemImage true for using image; else false
      */
     public setEnabledItemImage(enabledItemImage?: boolean | false): void {
-        this.enabledItemImage = enabledItemImage;
+        this.setConfigValue('enabledItemImage', enabledItemImage);
     }
 
     /**
      * Get the parser delegate to parse item image
      * @return the parser delegate to parse item image
      */
-    public getItemImageParser(): (item?: TreeviewItem) => string[] {
-        return this.itemImageParser;
+    public getItemImageParser(): (item?: TreeviewItem) => string[] | string | null {
+        return this.getConfigValue('itemImageParser') as (item?: TreeviewItem) => string[] | string | null;
     }
 
     /**
      * Set a boolean value indicating this component whether uses image for tree-view item
      * @param enabledItemImage true for using image; else false
      */
-    public setItemImageParser(itemImageParser?: (item?: TreeviewItem) => string[] | null): void {
-        this.itemImageParser = itemImageParser;
+    public setItemImageParser(itemImageParser?: (item?: TreeviewItem) => string[] | string | null): void {
+        this.setConfigValue('itemImageParser', itemImageParser);
     }
 
     /**
@@ -170,16 +223,18 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param item to parse
      * @return the specified {TreeviewItem} image
      */
-    public getItemImages(item?: TreeviewItem): string[] {
-        return (this.getItemImageParser() ? this.getItemImageParser().apply(this, [item]) : null);
+    public getItemImages(item?: TreeviewItem): string[] | string | null {
+        const imageParser: any = this.getItemImageParser();
+        return (isNullOrUndefined(imageParser) || typeof imageParser !== 'function'
+            ? null : imageParser.apply(this, [item]));
     }
 
     /**
      * Get the item builder factory to build {TreeviewItem} while data source has been refreshed
      * @return the item builder factory to build {TreeviewItem}
      */
-    public getItemBuilder(): (data: any) => TreeviewItem {
-        return this.itemBuilder;
+    public getItemBuilder(): (data: any) => TreeviewItem | null {
+        return this.getConfigValue('itemBuilder') as (data: any) => TreeviewItem | null;
     }
 
     /**
@@ -187,7 +242,23 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param itemBuilder to apply
      */
     public setItemBuilder(itemBuilder: (data: any) => TreeviewItem): void {
-        this.itemBuilder = itemBuilder;
+        this.setConfigValue('itemBuilder', itemBuilder);
+    }
+
+    /**
+     * Get the items builder factory to build {TreeviewItem} while data source has been refreshed
+     * @return the item builder factory to build {TreeviewItem}
+     */
+    public getTreeBuilder(): (data: any[]) => TreeviewItem[] | null {
+        return this.getConfigValue('treeBuilder') as (data: any[]) => TreeviewItem[] | null;
+    }
+
+    /**
+     * Set the items builder factory to build {TreeviewItem} while data source has been refreshed
+     * @param treeBuilder to apply
+     */
+    public setTreeBuilder(treeBuilder: (data: any[]) => TreeviewItem[] | null): void {
+        this.setConfigValue('treeBuilder', treeBuilder);
     }
 
     /**
@@ -195,7 +266,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return true for drop-down; else false
      */
     public isDropDown(): boolean {
-        return this.dropdown;
+        return this.getConfigValue('dropdown', false);
     }
 
     /**
@@ -203,7 +274,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param dropdown true for drop-down; else false
      */
     protected setDropDown(dropdown?: boolean | false) {
-        this.dropdown = dropdown;
+        this.setConfigValue('dropdown', dropdown);
     }
 
     /**
@@ -211,7 +282,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * return the drop-down button class
      */
     public getButtonClass(): string {
-        return this.buttonClass;
+        return this.getConfigValue('buttonClass');
     }
 
     /**
@@ -219,7 +290,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param buttonClass to apply
      */
     public setButtonClass(buttonClass?: string) {
-        this.buttonClass = buttonClass || '';
+        this.setConfigValue('buttonClass', buttonClass);
     }
 
     /**
@@ -277,22 +348,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     }
 
     /**
-     * Get the {TreeviewConfig} instance for configuring
-     * @return the {TreeviewConfig} instance
-     */
-    public getConfig(): TreeviewConfig {
-        return this.treeviewConfig || DefaultTreeviewConfig;
-    }
-
-    /**
-     * Set the {TreeviewConfig} instance
-     * @param cfg to apply. NULL for default
-     */
-    public setConfig(cfg?: TreeviewConfig) {
-        this.treeviewConfig = cfg || DefaultTreeviewConfig;
-    }
-
-    /**
      * Get the {TreeviewComponent} component
      * @return the {TreeviewComponent} component
      */
@@ -306,22 +361,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     protected getDropdownTreeviewComponent(): DropdownTreeviewComponent {
         return this.dropdownTreeviewComponent;
-    }
-
-    /**
-     * Get the tree-view items array to show
-     * @return the tree-view items array
-     */
-    public getTreeviewItems(): TreeviewItem[] {
-        return this.treeviewItems;
-    }
-
-    /**
-     * Set the tree-view items array to show
-     * @param items to apply
-     */
-    public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.treeviewItems = items;
     }
 
     /**
@@ -380,7 +419,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean | false): void {
         let currentItems: TreeviewItem[];
-        currentItems = this.getTreeviewItems();
+        currentItems = this.items;
         if (!(currentItems || []).length) {
             return;
         }
@@ -539,19 +578,28 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         const elements: any[] = (event && event.data
             && event.data.hasOwnProperty('elements') && isArray(event.data['elements'])
             ? Array.from(event.data['elements']) : [event.data['elements']]);
+        const treeBuilder: (data: any[]) => TreeviewItem[] = this.getTreeBuilder();
         const itemBuilder: (data: any) => TreeviewItem = this.getItemBuilder();
-        if (!isNullOrUndefined(itemBuilder)) {
+        if (!isNullOrUndefined(itemBuilder) && typeof itemBuilder === 'function') {
             const items: TreeviewItem[] = [];
             (elements || []).forEach(element => {
                 const item: TreeviewItem = itemBuilder.apply(this, [element]);
                 item && items.push(item);
             });
-            this.treeviewItems = items;
+            if (items.length) {
+                this._items = items;
+            }
+
+        } else if (!isNullOrUndefined(treeBuilder) && typeof treeBuilder === 'function') {
+            const items: TreeviewItem[] = treeBuilder.apply(this, [elements || []]);
+            if (!isNullOrUndefined(items)) {
+                this._items = items;
+            }
 
         } else {
             const items: TreeviewItem[] = this.mappingDataSourceToTreeviewItems(elements);
             if (!isNullOrUndefined(items)) {
-                this.treeviewItems = items;
+                this._items = items;
             }
         }
     }
@@ -696,7 +744,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         uncheckedItems = [];
 
         let items: TreeviewItem[];
-        items = [].concat(this.getTreeviewItems());
+        items = [].concat(this.items);
         items.forEach(item => this.checkSelection(item, checkedItems, uncheckedItems));
         return  {
             checkedItems: [].concat(checkedItems),
@@ -768,10 +816,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             parent.collapsed = false;
 
         } else {
-            if (!this.treeviewItems) {
-                this.treeviewItems = [];
-            }
-            this.treeviewItems.push(newItem);
+            this.items.push(newItem);
         }
         return newItem;
     }
@@ -787,9 +832,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         }
 
         let itIdx: number;
-        itIdx = this.getTreeviewItems().indexOf(treeviewItem);
+        itIdx = this.items.indexOf(treeviewItem);
         if (itIdx < 0) {
-            for (const it of this.getTreeviewItems()) {
+            for (const it of this.items) {
                 if (it.children && this.doDeleteItem(it, treeviewItem)) {
                     return it;
                 }
@@ -797,7 +842,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
 
         } else {
             let delItems: TreeviewItem[];
-            delItems = this.getTreeviewItems().splice(itIdx, 1);
+            delItems = this.items.splice(itIdx, 1);
             return (delItems && delItems.length > 0 ? delItems[0] : undefined);
         }
     }
@@ -970,7 +1015,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
 
             // search all
         } else {
-            for (const it of this.getTreeviewItems()) {
+            for (const it of this.items) {
                 let found: TreeviewItem;
                 found = this.findTreeviewItemByKey(id, it);
                 if (found) {

@@ -46,10 +46,10 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
         // un-check previous items
         (currentSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
         // collect new item checked
-        let selection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
-        selection = this.collectSelection(items);
-        currentSelection.checkedItems = selection.checkedItems;
-        currentSelection.uncheckedItems = selection.uncheckedItems;
+        let builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
+        builtSelection = this.collectSelection(items);
+        currentSelection.checkedItems = builtSelection.checkedItems;
+        currentSelection.uncheckedItems = builtSelection.uncheckedItems;
     }
 
     // -------------------------------------------------
@@ -121,10 +121,10 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
                 (this.getTreeviewSelection().checkedItems || [])
                     .forEach(it => this.internalCheck(it, false));
                 // collect new item checked
-                let selection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
-                selection = this.collectSelection();
-                this.getTreeviewSelection().checkedItems = selection.checkedItems;
-                this.getTreeviewSelection().uncheckedItems = selection.uncheckedItems;
+                let builtSelection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
+                builtSelection = this.collectSelection();
+                this.getTreeviewSelection().checkedItems = builtSelection.checkedItems;
+                this.getTreeviewSelection().uncheckedItems = builtSelection.uncheckedItems;
                 this.getTreeviewComponent() && this.getTreeviewComponent().selectedChange.emit([item]);
                 this.getDropdownTreeviewComponent()
                 && this.getDropdownTreeviewComponent().treeviewComponent

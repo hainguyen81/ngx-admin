@@ -7,7 +7,7 @@ import {
     ComponentFactoryResolver,
     DoCheck,
     ElementRef,
-    Inject,
+    Inject, Input,
     OnChanges,
     OnDestroy,
     OnInit,
@@ -86,9 +86,46 @@ export abstract class AbstractComponent
     private componentKeyUpHandlerService: AbstractKeyupEventHandlerService<Element>;
     private componentKeyPressHandlerService: AbstractKeypressEventHandlerService<Element>;
 
+    @Input('config') private _config: any;
+
     // -------------------------------------------------
     // GETTER/SETTER
     // -------------------------------------------------
+
+    /**
+     * Get the component configuration
+     * @return the component configuration
+     */
+    get config(): any {
+        return this._config;
+    }
+
+    /**
+     * Set the {NgxTreeviewConfig} instance
+     * @param _config to apply. NULL for default
+     */
+    set config(_config: any) {
+        this._config = _config;
+    }
+
+    /**
+     * Get the configuration value of the specified configuration property key
+     * @param propertyKey configuration key
+     * @param defaultValue default value if not found or undefined
+     */
+    protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
+        const value: any = this.config[propertyKey];
+        return (isNullOrUndefined(value) ? defaultValue : value);
+    }
+
+    /**
+     * Set the configuration value of the specified configuration property key
+     * @param propertyKey configuration key
+     * @param configValue configuration value
+     */
+    protected setConfigValue(propertyKey: string, configValue?: any | null): void {
+        this.config[propertyKey] = configValue;
+    }
 
     /**
      * Get the application base href

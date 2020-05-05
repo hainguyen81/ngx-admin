@@ -1,8 +1,8 @@
 <ngx-treeview
     #treeviewComponent
     *ngIf="!isDropDown()"
-    [config]="getConfig()"
-    [items]="getTreeviewItems()"
+    [config]="config"
+    [items]="items"
     [itemTemplate]="itemTemplate"
     [contextMenu]="treeviewContextMenuComponent"
     (contextmenu)="onContextMenu({ event: $event, data: treeviewComponent })"
@@ -30,8 +30,8 @@
     #dropdownTreeviewComponent
     *ngIf="isDropDown()"
     [buttonClass]="getButtonClass()"
-    [config]="getConfig()"
-    [items]="getTreeviewItems()"
+    [config]="config"
+    [items]="items"
     [itemTemplate]="itemTemplate"
     [contextMenu]="treeviewContextMenuComponent"
     (contextmenu)="onContextMenu({ event: $event, data: dropdownTreeviewComponent })"
