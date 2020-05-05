@@ -50,6 +50,11 @@ export type SelectSearchCallbackDelegate = (search?: string | null, item?: NgxSe
  */
 export interface INgxSelectExOptions extends INgxSelectOptions {
     /**
+     * Specify whether appending options drop-down to body
+     * {boolean}
+     */
+    appendToBody?: boolean | false;
+    /**
      * Specify whether using image for option
      * {boolean}
      */
@@ -196,6 +201,11 @@ export const DefaultNgxSelectOptions: INgxSelectExOptions = {
      * {boolean}
      */
     showOptionNotFoundForEmptyItems: false,
+    /**
+     * Specify whether appending options drop-down to body
+     * {boolean}
+     */
+    appendToBody: true,
     /**
      * Specify whether using image for option
      * {boolean}

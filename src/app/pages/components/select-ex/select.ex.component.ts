@@ -8,7 +8,9 @@ import {
     Inject,
     Input,
     Output,
-    Renderer2, ViewChild,
+    Renderer2,
+    RendererStyleFlags2,
+    ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -247,6 +249,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
         // check for adding `addNewOption` feature
         if (selectComponent && selectComponent['choiceMenuElRef'] instanceof ElementRef
             && parentComponent.addNewOptionElRef) {
+            // append add new option action
             const choiceMenuElRef: ElementRef = selectComponent['choiceMenuElRef'] as ElementRef;
             const addNewOptionEl: HTMLElement =
                 parentComponent.getFirstElementBySelector(
@@ -258,6 +261,24 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
                     choiceMenuElRef.nativeElement, parentComponent.addNewOptionElRef.nativeElement);
                 parentComponent.toggleElementClass(
                     parentComponent.addNewOptionElRef.nativeElement, 'd-none', false);
+
+            }
+
+            // append to body
+            const mainInputElRef: ElementRef = selectComponent['inputElRef'] as ElementRef;
+            const shouldAppendToBody: boolean = parentComponent.configValue('appendToBody', false);
+            if (shouldAppendToBody && choiceMenuElRef && mainInputElRef) {
+                parentComponent.getRenderer().appendChild(
+                    document.body, choiceMenuElRef.nativeElement);
+                const {x, y} = mainInputElRef.nativeElement.getBoundingClientRect();
+                const w: number = mainInputElRef.nativeElement.offsetWidth;
+                const h: number = mainInputElRef.nativeElement.offsetHeight;
+                parentComponent.getRenderer().setStyle(
+                    choiceMenuElRef.nativeElement, 'top', (x + h + 5) + 'px', RendererStyleFlags2.Important);
+                parentComponent.getRenderer().setStyle(
+                    choiceMenuElRef.nativeElement, 'left', y + 'px', RendererStyleFlags2.Important);
+                parentComponent.getRenderer().setStyle(
+                    choiceMenuElRef.nativeElement, 'width', w + 'px', RendererStyleFlags2.Important);
             }
         }
 
