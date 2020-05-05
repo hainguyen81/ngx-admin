@@ -270,15 +270,20 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
             if (shouldAppendToBody && choiceMenuElRef && mainInputElRef) {
                 parentComponent.getRenderer().appendChild(
                     document.body, choiceMenuElRef.nativeElement);
-                const {x, y} = mainInputElRef.nativeElement.getBoundingClientRect();
-                const w: number = mainInputElRef.nativeElement.offsetWidth;
-                const h: number = mainInputElRef.nativeElement.offsetHeight;
+                const offset: { top: number, left: number, width: number, height: number } =
+                    super.offset(mainInputElRef.nativeElement);
                 parentComponent.getRenderer().setStyle(
-                    choiceMenuElRef.nativeElement, 'top', (x + h + 5) + 'px', RendererStyleFlags2.Important);
+                    choiceMenuElRef.nativeElement,
+                    'top', (offset.top + offset.height + 5) + 'px',
+                    RendererStyleFlags2.Important);
                 parentComponent.getRenderer().setStyle(
-                    choiceMenuElRef.nativeElement, 'left', y + 'px', RendererStyleFlags2.Important);
+                    choiceMenuElRef.nativeElement,
+                    'left', offset.left + 'px',
+                    RendererStyleFlags2.Important);
                 parentComponent.getRenderer().setStyle(
-                    choiceMenuElRef.nativeElement, 'width', w + 'px', RendererStyleFlags2.Important);
+                    choiceMenuElRef.nativeElement,
+                    'width', offset.width + 'px',
+                    RendererStyleFlags2.Important);
             }
         }
 

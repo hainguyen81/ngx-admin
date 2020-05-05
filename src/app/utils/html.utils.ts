@@ -1,4 +1,5 @@
 import {environment} from '../../environments/environment';
+import {isNullOrUndefined} from 'util';
 
 /**
  * The HTML focusable elements selector
@@ -186,5 +187,23 @@ export default class HtmlUtils {
         && baseElement.item(0).hasAttribute('href')
             ? baseElement.item(0).getAttribute('href') : environment.baseHref);
         return (href || '').trimLast('/');
+    }
+
+    /**
+     * Calculate the offset of the specified {Element} that relatives with document
+     * @param element to calculate
+     * @return { top: number, left: number, width: number, height: number }
+     */
+    public static offset(element: Element): { top: number, left: number, width: number, height: number } {
+        if (isNullOrUndefined(element)) return { top: -1, left: -1, width: -1, height: -1 };
+        const rect: ClientRect | DOMRect = element.getBoundingClientRect(),
+            scrollLeft: number = (window.pageXOffset || document.documentElement.scrollLeft),
+            scrollTop: number = (window.pageYOffset || document.documentElement.scrollTop);
+        return {
+            top: rect.top + scrollTop,
+            left: rect.left + scrollLeft,
+            width: (element instanceof HTMLElement ? (<HTMLElement>element).offsetWidth : -1),
+            height: (element instanceof HTMLElement ? (<HTMLElement>element).offsetHeight : -1),
+        };
     }
 }

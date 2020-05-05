@@ -917,6 +917,15 @@ export abstract class AbstractComponent
     }
 
     /**
+     * Calculate the offset of the specified {Element} that relatives with document
+     * @param element to calculate
+     * @return { top: number, left: number, width: number, height: number }
+     */
+    protected offset(element: Element): { top: number, left: number, width: number, height: number } {
+        return HtmlUtils.offset(element);
+    }
+
+    /**
      * Toggle the specified class for the specified DOM element
      * @param element to toggle
      * @param className class
