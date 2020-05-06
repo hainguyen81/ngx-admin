@@ -39,6 +39,7 @@ export const WarehouseCategoryTreeviewConfig: NgxTreeviewConfig = NgxTreeviewCon
     hasCollapseExpand: false,
     hasFilter: true,
     maxHeight: -1,
+    appendToBody: true,
 });
 
 export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);

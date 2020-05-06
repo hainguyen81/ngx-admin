@@ -119,6 +119,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     @Output() private selectedChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private filterChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private clickItem: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
     /** backup pointer to generate selection function of treeview component */
     private __originalGenerateSelection: () => void;
     private __originalDropdownOpen: () => void;
@@ -692,6 +693,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 : HtmlUtils.nextSibling(dropdownTreeviewComponent.dropdownDirective.toggleElement, '[ngxDropdownMenu].dropdown-menu'));
         if (!isNullOrUndefined(dropdownMenuEl)) {
             dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] = dropdownMenuEl;
+            this.getRenderer().removeClass(dropdownMenuEl, 'ngx-treeview');
+            this.getRenderer().addClass(dropdownMenuEl, 'ngx-treeview');
             this.getRenderer().appendChild(document.body, dropdownMenuEl);
             this.calculateDropdownPosition(dropdownTreeviewComponent, dropdownMenuEl);
         }
