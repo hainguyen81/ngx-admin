@@ -29,7 +29,7 @@ import {
 /* default warehouse batch no toolbar header config */
 export const WarehouseBatchNoToolbarHeaderConfig: IToolbarHeaderConfig = {
     title: 'warehouse.batch_no.title',
-    icon: {icon: 'archive', pack: 'fa'},
+    icon: {icon: 'clock', pack: 'fas'},
 };
 
 /* default warehouse batch no toolbar actions config */
