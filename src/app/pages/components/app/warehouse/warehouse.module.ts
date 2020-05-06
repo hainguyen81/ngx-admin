@@ -30,6 +30,7 @@ import {WarehouseCategoryModule} from './category/warehouse.category.module';
 import {WarehouseProviders} from '../../../../config/app.providers';
 import {WarehouseStorageModule} from './storage/warehouse.storage.module';
 import {WarehouseSettingsModule} from './settings/warehouse.settings.module';
+import {WarehouseBatchNoModule} from './batchno/warehouse.batch.module';
 
 @NgModule({
     imports: [
@@ -101,6 +102,7 @@ import {WarehouseSettingsModule} from './settings/warehouse.settings.module';
         WarehouseCategoryModule,
         WarehouseStorageModule,
         WarehouseSettingsModule,
+        WarehouseBatchNoModule,
     ],
     providers: [ WarehouseProviders ],
 })

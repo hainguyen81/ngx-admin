@@ -446,6 +446,7 @@ export const dbConfig: DBConfig = {
             {name: 'name', keypath: 'name', options: {unique: false}},
             {name: 'status', keypath: 'status', options: {unique: false}},
             {name: 'mfg_date', keypath: 'mfg_date', options: {unique: false}},
+            {name: 'exp_date', keypath: 'mfg_date', options: {unique: false}},
             {name: 'remark', keypath: 'remark', options: {unique: false}},
             {name: 'expiredAt', keypath: 'expiredAt', options: {unique: false}},
         ],

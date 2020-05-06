@@ -281,6 +281,33 @@ export const API = {
                             },
                         },
                     },
+                    warehouseBatchNo: {
+                        code: () => {
+                            const parent: any = API.warehouse.children.settings;
+                            return parent.code.call(undefined).concat('_BATCH_NO');
+                        },
+                        name: () => 'warehouse.batch_no.menu',
+                        api: {
+                            method: 'POST',
+                            url: () => {
+                                const parent: any = API.warehouse.children.settings.api;
+                                return parent.url.call(undefined).concat('/batchno');
+                            },
+                            login: () => {
+                                const parent: any = API.warehouse.children.settings.api;
+                                return parent.login.call(undefined);
+                            },
+                            regexUrl: 'warehouse/settings/batchno/**',
+                            version: '1.0.0',
+                        },
+                        client: {
+                            icon: {icon: 'clock', pack: 'fas'},
+                            url: () => {
+                                const parent: any = API.warehouse.children.settings.client;
+                                return parent.url.call(undefined).concat('/batchno');
+                            },
+                        },
+                    },
                 },
             },
             features: {

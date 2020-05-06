@@ -145,6 +145,7 @@ export class WarehouseSettingsFormlyComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param generalSettingsDatasource {GeneralSettingsDatasource}
      */
     constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,

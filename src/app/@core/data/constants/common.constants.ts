@@ -29,6 +29,8 @@ export namespace Constants {
                 API.warehouse.children.settings.children.warehouseStorage.code.call(undefined),
             WAREHOUSE_SETTINGS_CATEGORY:
                 API.warehouse.children.settings.children.warehouseCategory.code.call(undefined),
+            WAREHOUSE_SETTINGS_BATCH:
+                API.warehouse.children.settings.children.warehouseBatchNo.code.call(undefined),
             WAREHOUSE_FEATURES: API.warehouse.children.features.code.call(undefined),
             WAREHOUSE_FEATURES_ITEM:
                 API.warehouse.children.features.children.warehouseItem.code.call(undefined),
