@@ -110,6 +110,16 @@ export const MockApiWarehouse: IApi = {
             id: IdGenerators.oid.generate(),
         };
 
+        export const MockApiWarehouseSettingsBatchNo: IApi = {
+            code: API.warehouse.children.settings.children.warehouseBatchNo.code.call(undefined),
+            name: API.warehouse.children.settings.children.warehouseBatchNo.name.call(undefined),
+            regexUrl: API.warehouse.children.settings.children.warehouseBatchNo.api.regexUrl,
+            baseUrl: API.warehouse.children.settings.children.warehouseBatchNo.api.url.call(undefined),
+            icon: API.warehouse.children.settings.children.warehouseBatchNo.client.icon,
+            version: API.warehouse.children.settings.children.warehouseBatchNo.api.version,
+            id: IdGenerators.oid.generate(),
+        };
+
     export const MockApiWarehouseFeatures: IApi = {
         code: API.warehouse.children.features.code.call(undefined),
         name: API.warehouse.children.features.name.call(undefined),
