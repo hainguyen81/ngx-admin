@@ -51,7 +51,7 @@ export const WarehouseBatchNoTableSettings = {
     },
     columns: {
         overdue: {
-            title: 'warehouse.batch_no.table.overdue',
+            title: 'warehouse.batch_no.table.code',
             type: 'string',
             sort: false,
             filter: false,

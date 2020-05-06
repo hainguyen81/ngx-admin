@@ -517,6 +517,45 @@
             "master": "Settings",
             "features": "Features"
         },
+        "batch_no": {
+            "title": "Warehouse Batch No. Management",
+            "menu": "Batch No.",
+            "table": {
+                "noData": "Not found any batch",
+                "code": "Code",
+                "name": "Name",
+                "mfg_date": "MFG Date",
+                "exp_date": "Exp. Date",
+                "status": "Status",
+                "remark": "Remark"
+            },
+            "form": {
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name"
+                },
+                "mfg_date": {
+                    "label": "MFG Date",
+                    "placeholder": "MFG Date"
+                },
+                "exp_date": {
+                    "label": "Exp. Date",
+                    "placeholder": "Exp. Date"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                }
+            }
+        },
         "settings": {
             "title": "Warehouse Settings Management",
             "menu": "General Settings",

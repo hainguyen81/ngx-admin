@@ -91,11 +91,11 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-4',
-                key: 'expiredAt',
+                key: 'exp_date',
                 type: 'input',
                 templateOptions: {
-                    label: 'warehouse.batch_no.form.expiredAt.label',
-                    placeholder: 'warehouse.batch_no.form.expiredAt.placeholder',
+                    label: 'warehouse.batch_no.form.exp_date.label',
+                    placeholder: 'warehouse.batch_no.form.exp_date.placeholder',
                     required: true,
                 },
             },

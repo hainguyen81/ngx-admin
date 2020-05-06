@@ -517,6 +517,45 @@
             "master": "Thiết lập",
             "features": "Tính năng"
         },
+        "batch_no": {
+            "title": "Quản lý lô hàng",
+            "menu": "Lô hàng",
+            "table": {
+                "noData": "Không có bất kỳ thiết lập lô hàng nào",
+                "code": "Mã",
+                "name": "Tên",
+                "mfg_date": "Ngày sản xuất",
+                "exp_date": "Ngày hết hạn",
+                "status": "Trạng thái",
+                "remark": "Ghi chú"
+            },
+            "form": {
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "mfg_date": {
+                    "label": "Ngày sản xuất",
+                    "placeholder": "Ngày sản xuất"
+                },
+                "exp_date": {
+                    "label": "Ngày hết hạn",
+                    "placeholder": "Ngày hết hạn"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
+            }
+        },
         "settings": {
             "title": "Quản lý thiết lập chung",
             "menu": "Thiết lập chung",
