@@ -97,7 +97,7 @@ export abstract class AbstractComponent
      * @return the component configuration
      */
     get config(): any {
-        return this._config;
+        return this._config || {};
     }
 
     /**
@@ -105,7 +105,7 @@ export abstract class AbstractComponent
      * @param _config to apply. NULL for default
      */
     set config(_config: any) {
-        this._config = _config;
+        this._config = _config || {};
     }
 
     /**
