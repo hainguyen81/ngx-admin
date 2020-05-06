@@ -140,8 +140,8 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param config {FormlyConfig}
-     * @param fields {FormlyFieldConfig}
+     * @param _config {FormlyConfig}
+     * @param _fields {FormlyFieldConfig}
      * @param options {FormlyFormOptions}
      * @param actions {IFormActionsConfig}
      */
