@@ -70,8 +70,8 @@ export class WarehouseItemVersionSplitPaneComponent
     // DECLARATION
     // -------------------------------------------------
 
-    private dataModel?: IWarehouseItem | null;
-    private modifiedDataModel?: IWarehouseItem | null;
+    private _dataModel?: IWarehouseItem | null;
+    private _modifiedDataModel?: IWarehouseItem | null;
     private saveSubject: Subject<IWarehouseItem>;
 
     // -------------------------------------------------
@@ -84,6 +84,13 @@ export class WarehouseItemVersionSplitPaneComponent
 
     protected isShowHeader(): boolean {
         return false;
+    }
+
+    protected set dataModel(_dataModel: IWarehouseItem) {
+        this._dataModel = _dataModel;
+        this._modifiedDataModel = ObjectUtils.deepCopy(_dataModel);
+        this.getLeftSideComponent().setModel(this._modifiedDataModel);
+        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this._modifiedDataModel);
     }
 
     // -------------------------------------------------
@@ -141,8 +148,6 @@ export class WarehouseItemVersionSplitPaneComponent
         super.ngAfterViewInit();
 
         // using for item version
-        this.getLeftSideComponent().setModel(this.modifiedDataModel);
-        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this.modifiedDataModel);
         (<WarehouseItemSummaryComponent>this.rightSideComponent).forVersion = true;
         this.configAreaByIndex(0, WarehouseItemVersionFormAreaConfig);
         this.configAreaByIndex(1, WarehouseItemVersionSummaryAreaConfig);
@@ -164,18 +169,17 @@ export class WarehouseItemVersionSplitPaneComponent
         super.onDialogInit(modalDialog, modalDialogElementRef, childComponent, options);
 
         // parse data and save subscription from parent component
+        const _this: WarehouseItemVersionSplitPaneComponent =
+            <WarehouseItemVersionSplitPaneComponent>childComponent;
         this.saveSubject = (options && options.data['subject'] instanceof Subject
             ? <Subject<IWarehouseItem>>options.data['subject'] : undefined);
         const data: IWarehouseItem = (options && options.data['model']
             ? options.data['model'] as IWarehouseItem : undefined);
         this.saveSubject || throwError('Could not found parent subject to save data!');
         data || throwError('Could not found dialog data!');
-        this.dataModel = data;
-        this.modifiedDataModel = ObjectUtils.deepCopy(this.dataModel);
-        options.actionButtons[0].onAction =
-            () => (<WarehouseItemVersionSplitPaneComponent>childComponent).performSave();
-        options.actionButtons[1].onAction =
-            () => (<WarehouseItemVersionSplitPaneComponent>childComponent).performReset();
+        _this.dataModel = data;
+        options.actionButtons[0].onAction = () => _this.performSave();
+        options.actionButtons[1].onAction = () => _this.performReset();
     }
 
     protected doSave(): void {
@@ -188,8 +192,8 @@ export class WarehouseItemVersionSplitPaneComponent
         }
 
         // apply modified data to parent model
-        this.dataModel = Object.assign(this.dataModel, this.modifiedDataModel);
-        this.saveSubject.next(this.dataModel);
+        this._dataModel = Object.assign(this._dataModel, this._modifiedDataModel);
+        this.saveSubject.next(this._dataModel);
         return true;
     }
 
@@ -197,9 +201,9 @@ export class WarehouseItemVersionSplitPaneComponent
         throwError('Not support for resetting model from internal component!');
     }
     private performReset(): boolean {
-        this.modifiedDataModel = Object.assign(this.modifiedDataModel, this.dataModel);
-        this.getLeftSideComponent().setModel(this.modifiedDataModel);
-        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this.modifiedDataModel);
+        this._modifiedDataModel = Object.assign(this._modifiedDataModel, this._dataModel);
+        this.getLeftSideComponent().setModel(this._modifiedDataModel);
+        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this._modifiedDataModel);
         return false;
     }
 
