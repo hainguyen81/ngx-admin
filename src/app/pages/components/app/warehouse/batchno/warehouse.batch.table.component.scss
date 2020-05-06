@@ -1,0 +1,18 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep .html-cell {
+        i {
+            padding-right: 5px;
+            .status-expired {
+                color: #e0a800;
+            }
+            .status-near-expired {
+                color: #2d8ac7;
+            }
+            .status-overdue {
+                color: red;
+            }
+        }
+    }
+}
