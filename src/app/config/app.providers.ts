@@ -158,6 +158,13 @@ import {
 import {
     WarehouseItemVersionDatasource,
 } from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
+import {
+    WarehouseBatchNoDbService,
+    WarehouseBatchNoHttpService,
+} from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
+import {
+    WarehouseBatchNoDatasource,
+} from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -582,6 +589,20 @@ export const WarehouseProviders: StaticProvider[] = [
     {
         provide: WarehouseAdjustDetailDatasource, useClass: WarehouseAdjustDetailDatasource,
         deps: [WarehouseAdjustDetailHttpService, WarehouseAdjustDetailDbService, NGXLogger],
+    },
+
+    // Warehouse Batch No
+    {
+        provide: WarehouseBatchNoDbService, useClass: WarehouseBatchNoDbService,
+        deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
+    },
+    {
+        provide: WarehouseBatchNoHttpService, useClass: WarehouseBatchNoHttpService,
+        deps: [HttpClient, NGXLogger, WarehouseBatchNoDbService],
+    },
+    {
+        provide: WarehouseBatchNoDatasource, useClass: WarehouseBatchNoDatasource,
+        deps: [WarehouseBatchNoHttpService, WarehouseBatchNoDbService, NGXLogger],
     },
 ];
 

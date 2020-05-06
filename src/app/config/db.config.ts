@@ -27,6 +27,7 @@ export const DB_STORE: any = {
     warehouse_adjust: 'warehouse_adjust',
     warehouse_adjust_detail: 'warehouse_adjust_detail',
     warehouse_settings: 'warehouse_settings',
+    warehouse_batch_no: 'warehouse_batch_no',
 };
 
 // Ahead of time compiles requires an exported function for factories
@@ -435,6 +436,18 @@ export const dbConfig: DBConfig = {
             {name: 'image', keypath: 'image', options: {unique: false}},
             {name: 'order', keypath: 'order', options: {unique: false}},
             {name: 'remark', keypath: 'remark', options: {unique: false}},
+        ],
+    }, {
+        store: DB_STORE.warehouse_batch_no,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'code', keypath: 'code', options: {unique: true}},
+            {name: 'name', keypath: 'name', options: {unique: false}},
+            {name: 'status', keypath: 'status', options: {unique: false}},
+            {name: 'mfg_date', keypath: 'mfg_date', options: {unique: false}},
+            {name: 'remark', keypath: 'remark', options: {unique: false}},
+            {name: 'expiredAt', keypath: 'expiredAt', options: {unique: false}},
         ],
     }],
     // provide the migration factory to the DBConfig
