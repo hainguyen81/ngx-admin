@@ -2,7 +2,7 @@
       [formGroup]="getFormGroup()"
       (ngSubmit)="onSubmit({ event: $event, data: getModel() })">
     <formly-form [model]="getModel()"
-                 [fields]="getFields()"
+                 [fields]="fields"
                  [options]="getOptions()"
                  [form]="getFormGroup()">
         <div class="d-flex w-100 justify-content-center" *ngIf="getActions() && getActions().length > 0">
