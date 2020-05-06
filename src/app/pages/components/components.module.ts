@@ -60,6 +60,7 @@ import {BarcodeCellComponent} from './smart-table/barcode.cell.component';
 import {NgxBarcodeModule} from 'ngx-barcode';
 import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 import {ModalDialogModule} from 'ngx-modal-dialog';
+import {HtmlCellComponent} from './smart-table/html.cell.component';
 
 @NgModule({
     imports: [
@@ -181,6 +182,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
         NumberCellComponent,
         RowNumberCellComponent,
         BarcodeCellComponent,
+        HtmlCellComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -206,6 +208,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
         SelectExFormFieldComponent,
         PasswordFormFieldComponent,
         BarcodeCellComponent,
+        HtmlCellComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -222,6 +225,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
         SelectExFormFieldComponent,
         PasswordFormFieldComponent,
         BarcodeCellComponent,
+        HtmlCellComponent,
     ],
 })
 export class ComponentsModule {

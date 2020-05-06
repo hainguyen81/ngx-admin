@@ -42,14 +42,13 @@ export class ImageCellComponent extends AbstractCellEditor {
         let descriptor: string = '';
         const cell: Cell = this.cell;
         const config: any = this.cellColumnConfig;
-        if (config && Object.keys(config).length) {
-            if (config.hasOwnProperty(ImageCellComponent.DESCRIPTOR_PREPARE)) {
-                if (typeof config[ImageCellComponent.DESCRIPTOR_PREPARE] === 'function') {
-                    descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE]
-                        .call(undefined, cell, this.cellRow, this.cellRowData);
-                } else {
-                    descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE] || '';
-                }
+        if (config && Object.keys(config).length
+            && config.hasOwnProperty(ImageCellComponent.DESCRIPTOR_PREPARE)) {
+            if (typeof config[ImageCellComponent.DESCRIPTOR_PREPARE] === 'function') {
+                descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE]
+                    .call(undefined, cell, this.cellRow, this.cellRowData);
+            } else {
+                descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE] || '';
             }
         }
         return descriptor;
