@@ -23,6 +23,7 @@ import {
     GeneralSettingsComponent,
 } from './components/app/system/general.settings/general.settings.component';
 import {CustomerComponent} from './components/app/system/customer/customer.component';
+import {WarehouseBatchNoComponent} from './components/app/warehouse/batchno/warehouse.batch.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
@@ -87,6 +88,10 @@ const routes: Routes = [{
                     {
                         path: 'storage',
                         component: WarehouseStorageSplitPaneComponent,
+                    },
+                    {
+                        path: 'batchno',
+                        component: WarehouseBatchNoComponent,
                     },
                     {
                         path: '',
