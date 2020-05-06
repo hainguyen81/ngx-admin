@@ -346,6 +346,8 @@ export class WarehouseItemVersionFormlyComponent
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      * @param categoryDatasource {WarehouseCategoryDatasource}
+     * @param generalSettingsDatasource {GeneralSettingsDatasource}
+     * @param settingsDatasource {WarehouseSettingsDatasource}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,

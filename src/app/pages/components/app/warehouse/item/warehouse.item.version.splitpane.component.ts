@@ -2,7 +2,9 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ComponentRef, ElementRef,
+    ComponentFactoryResolver,
+    ComponentRef,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -15,7 +17,7 @@ import {WarehouseItemDatasource} from '../../../../../services/implementation/wa
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
-import {IModalDialog, IModalDialogOptions, ModalDialogOnAction, ModalDialogService} from 'ngx-modal-dialog';
+import {IModalDialog, IModalDialogOptions, ModalDialogComponent, ModalDialogService} from 'ngx-modal-dialog';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -23,7 +25,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isObservable, Observable, Subject, throwError} from 'rxjs';
+import {Subject, throwError} from 'rxjs';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import ObjectUtils from '../../../../../utils/object.utils';
 
@@ -63,7 +65,7 @@ export class WarehouseItemVersionSplitPaneComponent
         WarehouseItemToolbarComponent,
         WarehouseItemVersionFormlyComponent,
         WarehouseItemSummaryComponent>
-    implements IModalDialog, AfterViewInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -148,8 +150,21 @@ export class WarehouseItemVersionSplitPaneComponent
         this.getChangeDetectorRef().detectChanges();
     }
 
-    dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
-        this.getLogger().debug('Dialog Initialization', reference, options);
+    /**
+     * Customize modal dialog component if necessary while the present component is child of this modal.
+     * @param modalDialog to customize
+     * @param modalDialogElementRef modal dialog element reference {ElementRef}
+     * @param reference {IModalDialog}
+     * @param options {IModalDialogOptions}
+     */
+    protected onDialogInit(
+        modalDialog: ModalDialogComponent,
+        modalDialogElementRef: ElementRef,
+        reference: ComponentRef<IModalDialog>,
+        options: Partial<IModalDialogOptions<any>>) {
+        super.onDialogInit(modalDialog, modalDialogElementRef, reference, options);
+
+        // parse data and save subscription from parent component
         this.saveSubject = (options && options.data['subject'] instanceof Subject
             ? <Subject<IWarehouseItem>>options.data['subject'] : undefined);
         const data: IWarehouseItem = (options && options.data['model']

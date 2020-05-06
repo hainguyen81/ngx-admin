@@ -4,7 +4,9 @@ import {
     AfterViewChecked,
     AfterViewInit,
     ChangeDetectorRef,
+    ComponentFactory,
     ComponentFactoryResolver,
+    ComponentRef,
     DoCheck,
     ElementRef,
     Inject, Input,
@@ -28,7 +30,7 @@ import KeyboardUtils from '../../utils/keyboard.utils';
 import ComponentUtils from '../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
-import {ModalDialogService} from 'ngx-modal-dialog';
+import {IModalDialog, IModalDialogOptions, ModalDialogComponent, ModalDialogService} from 'ngx-modal-dialog';
 import {
     BaseElementKeydownHandlerService,
     BaseElementKeypressHandlerService,
@@ -44,13 +46,14 @@ import {AbstractComponentService, BaseComponentService} from '../../services/com
 import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 import {AutoUnsubscribe} from './customization/extend.component';
-import {isNullOrUndefined} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import AppUtils from '../../utils/app.utils';
 import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
 import {AppConfig} from '../../config/app.config';
 import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';
 import {ActivatedRoute, Data, ParamMap, Params, Router} from '@angular/router';
+import {ModalDialogInstanceService} from 'ngx-modal-dialog/src/modal-dialog-instance.service';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -66,7 +69,7 @@ export abstract class AbstractComponent
     implements OnChanges, OnInit, DoCheck,
         AfterContentInit, AfterContentChecked,
         AfterViewInit, AfterViewChecked,
-        OnDestroy {
+        OnDestroy, IModalDialog {
 
     protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
 
@@ -74,7 +77,7 @@ export abstract class AbstractComponent
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren(AbstractComponent, { read: ViewContainerRef })
+    @ViewChildren(AbstractComponent, {read: ViewContainerRef})
     private readonly queryViewContainerRef: QueryList<ViewContainerRef>;
 
     @ViewChildren(ContextMenuComponent)
@@ -87,6 +90,9 @@ export abstract class AbstractComponent
     private componentKeyPressHandlerService: AbstractKeypressEventHandlerService<Element>;
 
     @Input('config') private _config: any;
+
+    // unique hack for {ModalDialogService}
+    private __originalOpenDialog: Function;
 
     // -------------------------------------------------
     // GETTER/SETTER
@@ -484,6 +490,9 @@ export abstract class AbstractComponent
 
         // initialize keyboard handlers
         this.initializeKeyboardHandlers();
+
+        // unique hack for modal dialog
+        this.uniqueHackModalDialogService();
     }
 
     ngAfterViewChecked(): void {
@@ -797,9 +806,134 @@ export abstract class AbstractComponent
         this.getLogger().debug('onLangChange', event, '[', this.constructor.name, ']');
     }
 
+    /**
+     * Customize {IModalDialog#dialogInit}. Instead of using {#onDialogInit}
+     * @param reference {IModalDialog}
+     * @param options {IModalDialogOptions}
+     */
+    dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
+        this.getLogger().debug('Dialog Initialization', reference, options);
+
+        const modalDialogService: ModalDialogService = this.getModalDialogService();
+        const modalDialogInstance: ModalDialogInstanceService = (isNullOrUndefined(modalDialogService)
+            ? undefined : modalDialogService['modalDialogInstanceService'] as ModalDialogInstanceService);
+        const modalComponentRefs: ComponentRef<ModalDialogComponent>[] = (isNullOrUndefined(modalDialogInstance)
+            ? undefined : modalDialogInstance['componentRefs'] as ComponentRef<ModalDialogComponent>[]);
+        if (isArray(modalComponentRefs) && Array.from(modalComponentRefs).length) {
+            let modalDialogComponent: ModalDialogComponent;
+            for (const modalComponentRef of Array.from(modalComponentRefs)) {
+                modalDialogComponent = modalComponentRef.instance;
+                if (!isNullOrUndefined(modalDialogComponent) && modalDialogComponent['_childInstance'] === this) {
+                    this.onDialogInit(modalDialogComponent,
+                        modalDialogComponent['dialogElement'] as ElementRef, reference, options);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Customize modal dialog component if necessary while the present component is child of this modal.
+     * TODO Children classes maybe override this method for customizing modal dialog if necessary
+     * @param modalDialog to customize {ModalDialogComponent}
+     * @param modalDialogElementRef modal dialog element reference {ElementRef}
+     * @param reference {IModalDialog}
+     * @param options {IModalDialogOptions}
+     */
+    protected onDialogInit(modalDialog: ModalDialogComponent,
+                           modalDialogElementRef: ElementRef,
+                           reference: ComponentRef<IModalDialog>,
+                           options: Partial<IModalDialogOptions<any>>): void {
+        // add footer button style
+        const dialogElementRef: ElementRef = modalDialogElementRef;
+        const dialogElement: Element =
+            (isNullOrUndefined(dialogElementRef) ? undefined : dialogElementRef.nativeElement);
+        if (!isNullOrUndefined(dialogElement)) {
+            const footerButtons: NodeListOf<HTMLElement> = this.getElementsBySelector('button', dialogElement);
+            if (!isNullOrUndefined(footerButtons) && footerButtons.length) {
+                footerButtons.forEach(footerButton => {
+                    this.getRenderer().setAttribute(footerButton, 'nbbutton', '');
+                });
+            }
+        }
+    }
+
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
+
+    /**
+     * Customize (unique hack) {ModalDialogService}
+     */
+    private uniqueHackModalDialogService(): void {
+        if (isNullOrUndefined(this.getModalDialogService())) return;
+
+        const _this: AbstractComponent = this;
+        const modalDialogService: ModalDialogService = _this.getModalDialogService();
+        if (!(<Object>modalDialogService).hasOwnProperty('close')
+            || typeof modalDialogService['close'] !== 'function') {
+            this.__originalOpenDialog = modalDialogService['openDialog'];
+            this.getModalDialogService()['openDialog'] =
+                (target: ViewContainerRef, options: Partial<IModalDialogOptions<any>> = {}) => {
+                    AbstractComponent.uniqueHackOpenDialogModalDialogService(modalDialogService, target, options);
+                };
+            this.getModalDialogService()['close'] =
+                () => AbstractComponent.uniqueHackCloseDialogModalDialogService(modalDialogService);
+        }
+    }
+
+    /**
+     * Close all dialogs
+     * @param modalDialogService {ModalDialogService}
+     */
+    private static uniqueHackCloseDialogModalDialogService(modalDialogService: ModalDialogService): void {
+        const modalDialogInstanceService: any = (isNullOrUndefined(modalDialogService)
+            ? undefined : modalDialogService['modalDialogInstanceService']);
+        if (modalDialogInstanceService && typeof modalDialogInstanceService['closeAnyExistingModalDialog'] === 'function') {
+            modalDialogInstanceService['closeAnyExistingModalDialog'].apply(modalDialogInstanceService);
+        }
+    }
+    /**
+     * Open dialog in given target element with given options
+     * @param modalDialogService {ModalDialogService}
+     * @param target {ViewContainerRef} target
+     * @param options {IModalDialogOptions} options?
+     */
+    private static uniqueHackOpenDialogModalDialogService<T extends AbstractComponent>(
+        modalDialogService: ModalDialogService,
+        target: ViewContainerRef, options: Partial<IModalDialogOptions<any>> = {}): void {
+        const modalDialogInstanceService: any = (isNullOrUndefined(modalDialogService)
+            ? undefined : modalDialogService['modalDialogInstanceService']);
+        const componentFactoryResolver: ComponentFactoryResolver =
+            (isNullOrUndefined(modalDialogService) ? undefined
+                : modalDialogService['componentFactoryResolver'] as ComponentFactoryResolver);
+
+        if (!options.placeOnTop && !isNullOrUndefined(modalDialogInstanceService)
+            && typeof modalDialogInstanceService['closeAnyExistingModalDialog'] === 'function') {
+            modalDialogInstanceService['closeAnyExistingModalDialog'].apply(modalDialogInstanceService);
+        }
+
+        if (!ModalDialogComponent.prototype['ngAfterViewInit']) {
+            ModalDialogComponent.prototype['ngAfterViewInit'] = function ngAfterViewInit() {
+                const _this: ModalDialogComponent = <ModalDialogComponent>this;
+                if (_this['_childInstance'] instanceof AbstractComponent) {
+                    (<AbstractComponent>_this['_childInstance']).onDialogInit(
+                        _this, _this['dialogElement'] as ElementRef, _this['reference'], options);
+                }
+            };
+        }
+
+        const factory: ComponentFactory<ModalDialogComponent> =
+            (isNullOrUndefined(componentFactoryResolver) ? undefined
+                : componentFactoryResolver.resolveComponentFactory(ModalDialogComponent));
+        const componentRef = (isNullOrUndefined(factory) ? undefined : target.createComponent(factory));
+        if (!isNullOrUndefined(componentRef) && !isNullOrUndefined(modalDialogInstanceService)
+            && typeof modalDialogInstanceService['saveExistingModalDialog'] === 'function') {
+            // save first for customizing dialog on initialization
+            modalDialogInstanceService['saveExistingModalDialog'].apply(modalDialogInstanceService, [componentRef]);
+            componentRef.instance.dialogInit(componentRef, options);
+        }
+    }
 
     /**
      * Initialize keyboard handlers for component or document
@@ -1119,6 +1253,7 @@ export abstract class AbstractComponent
         }
         this.getLightbox().open(album, imageIndex, options);
     }
+
     /**
      * Open the specified image.
      * @param image to show
@@ -1129,6 +1264,7 @@ export abstract class AbstractComponent
         album = [{src: image, thumb: image}];
         this.openLightbox(album, 0, options);
     }
+
     /**
      * Open the specified images album at the specified image index
      * @param album images album
@@ -1145,6 +1281,7 @@ export abstract class AbstractComponent
             this.openLightbox(album, 0);
         }
     }
+
     /**
      * Open the specified images album at the specified image index
      * @param images images album
@@ -1161,6 +1298,7 @@ export abstract class AbstractComponent
             this.openLightbox(album, imageIndex, options);
         }
     }
+
     /**
      * Open the specified images album at the specified image index
      * @param images images album
@@ -1213,6 +1351,7 @@ export abstract class AbstractComponent
     protected showObserveConfirmation(confirm: ConfirmPopupConfig): Observable<boolean> {
         return this.getConfirmPopup().show(confirm);
     }
+
     /**
      * Show confirmation dialog log
      * @param confirm confirmation configuration
@@ -1220,7 +1359,7 @@ export abstract class AbstractComponent
      * @param noAction no action
      */
     protected showActionConfirmation(confirm: ConfirmPopupConfig,
-                               yesAction?: () => void, noAction?: () => void): void {
+                                     yesAction?: () => void, noAction?: () => void): void {
         const _this: AbstractComponent = this;
         this.showObserveConfirmation(confirm)
             .subscribe(value => {
@@ -1244,6 +1383,7 @@ export abstract class AbstractComponent
         };
         this.showActionConfirmation(popupConfig, _this.clearData);
     }
+
     private clearData(): void {
         const _this: AbstractComponent = this;
         const indexDbService: NgxIndexedDBService = _this.getService(NgxIndexedDBService);
@@ -1258,6 +1398,7 @@ export abstract class AbstractComponent
                 _this.melt();
             }, 200);
     }
+
     private __deleteDatabase(timer: number): void {
         const _this: AbstractComponent = this;
         const logger: NGXLogger = this.getLogger();
@@ -1265,22 +1406,22 @@ export abstract class AbstractComponent
         if (typeof indexDbDelRequest['close'] === 'function') {
             (<Function>indexDbDelRequest['close']).call(indexDbDelRequest);
         }
-        indexDbDelRequest.onblocked = function(event) {
+        indexDbDelRequest.onblocked = function (event) {
             logger && logger.warn('Could not delete database because database has been blocked!', event);
             !logger && window.console.warn(['Could not delete database because database has been blocked!', event]);
             window.clearTimeout(timer);
         };
-        indexDbDelRequest.onupgradeneeded = function(event) {
+        indexDbDelRequest.onupgradeneeded = function (event) {
             logger && logger.warn('Database needs to upgrade!', event);
             !logger && window.console.warn(['Database needs to upgrade!', event]);
             window.clearTimeout(timer);
         };
-        indexDbDelRequest.onerror = function(event) {
+        indexDbDelRequest.onerror = function (event) {
             logger && logger.error('Could not delete database!', event);
             !logger && window.console.error(['Could not delete database!', event]);
             window.clearTimeout(timer);
         };
-        indexDbDelRequest.onsuccess = function(event) {
+        indexDbDelRequest.onsuccess = function (event) {
             localStorage.clear();
             window.location.assign(_this.baseHref);
             window.location.reload();

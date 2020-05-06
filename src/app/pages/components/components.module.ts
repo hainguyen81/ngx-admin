@@ -59,6 +59,7 @@ import {RowNumberCellComponent} from './smart-table/row.number.cell.component';
 import {BarcodeCellComponent} from './smart-table/barcode.cell.component';
 import {NgxBarcodeModule} from 'ngx-barcode';
 import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
+import {ModalDialogModule} from 'ngx-modal-dialog';
 
 @NgModule({
     imports: [
@@ -112,6 +113,9 @@ import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 
         /* Select-ex */
         NgxSelectModule,
+
+        /* Modal dialog */
+        ModalDialogModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,
