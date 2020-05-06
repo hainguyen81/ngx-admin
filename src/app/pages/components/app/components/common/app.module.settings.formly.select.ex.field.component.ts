@@ -85,7 +85,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     protected get noneSettings(): IGeneralSettings {
         const _noneSettings: IGeneralSettings =
             new GeneralSettings(null, null, null, null);
-        _noneSettings['text'] = this.getConfig().placeholder;
+        _noneSettings['text'] = this.getConfigValue('placeholder');
         return _noneSettings;
     }
 
@@ -106,7 +106,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
                 @Inject(NGXLogger) _logger: NGXLogger) {
         super(_translateService, _renderer, _logger);
         generalSettingsDataSource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setConfig(AppModuleSettingsSelectOptions);
+        super.config = AppModuleSettingsSelectOptions;
     }
 
     // -------------------------------------------------
@@ -120,8 +120,9 @@ export class AppModuleSettingsFormlySelectExFieldComponent
 
     protected valueFormatter(value: any): any {
         let options: any[];
-        options = this.getItems().filter(opt => {
-            return (opt && ((opt === value) || (opt[this.getConfig().optionValueField] === value)));
+        options = this.items.filter(opt => {
+            return (opt && ((opt === value)
+                || (opt[this.getConfigValue('optionValueField')] === value)));
         });
         return options || [];
     }
@@ -135,16 +136,16 @@ export class AppModuleSettingsFormlySelectExFieldComponent
             SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
                 this.generalSettingsDataSource, 'module_id',
                 IDBKeyRange.only(this.moduleId), this.translateService).then(
-                    modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+                    modules => this.items = [this.noneSettings].concat(modules as IGeneralSettings[]));
 
         } else if ((this.moduleCode || '').length) {
             SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
                 this.generalSettingsDataSource, 'module_code',
                 IDBKeyRange.only(this.moduleCode), this.translateService).then(
-                    modules => this.setItems([this.noneSettings].concat(modules as IGeneralSettings[])));
+                    modules => this.items = [this.noneSettings].concat(modules as IGeneralSettings[]));
 
         } else {
-            this.setItems([this.noneSettings]);
+            this.items = [this.noneSettings];
         }
     }
 }

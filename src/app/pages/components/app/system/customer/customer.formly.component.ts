@@ -381,8 +381,8 @@ export class CustomerFormlyComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setConfig(CustomerFormConfig);
-        super.setFields(CustomerFormFieldsConfig);
+        super.config = CustomerFormConfig;
+        super.fields = CustomerFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -403,7 +403,7 @@ export class CustomerFormlyComponent
      * Observe model fields for applying values
      */
     private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         fields[0].expressionProperties = {
             'country_id': (model: ICustomer) => {
                 if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {

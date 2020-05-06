@@ -49,6 +49,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
+import {isNullOrUndefined} from 'util';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -423,8 +424,8 @@ export class OrganizationFormlyComponent
             router, activatedRoute);
         userDataSource || throwError('Could not inject UserDataSource instance');
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        this.setConfig(OrganizationFormConfig);
-        this.setFields(OrganizationFormFieldsConfig);
+        this.config = OrganizationFormConfig;
+        this.fields = OrganizationFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -435,7 +436,7 @@ export class OrganizationFormlyComponent
         super.ngOnInit();
 
         // observe belongTo/manager fields
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeBelongToField(),
             this.observeManagerField(),
@@ -454,7 +455,7 @@ export class OrganizationFormlyComponent
     protected onModelChanged() {
         super.onModelChanged();
 
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
     }
 
@@ -466,15 +467,17 @@ export class OrganizationFormlyComponent
      * Observe belongTo field
      */
     private observeBelongToField(): Promise<void> {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         return SystemDataUtils.invokeAllOrganization(
             <OrganizationDataSource>this.getDataSource()).then(
                 values => {
                     let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(fields[0].fieldGroup[0],
                         OrganizationFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent && belongToComponent.setTreeviewItems(values);
-                    belongToComponent && this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
+                    if (!isNullOrUndefined(belongToComponent)) {
+                        belongToComponent.items = values;
+                        this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
+                    }
                 });
     }
 
@@ -490,7 +493,7 @@ export class OrganizationFormlyComponent
      * Observe model fields for applying values
      */
     private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         fields[0].expressionProperties = {
             'country_id': (model: IOrganization) => {
                 if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {

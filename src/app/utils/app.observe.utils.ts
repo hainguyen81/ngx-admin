@@ -162,10 +162,7 @@ export default class AppObserveUtils {
         settingsFieldComponent || throwError('Could not parse field component or invalid component type');
         options = (isNullOrUndefined(settingFilter) ? options : (options || []).filter(settingFilter));
         if (settingsFieldComponent && !isNullOrUndefined(options)) {
-            settingsFieldComponent.setItems(options);
-
-        } else {
-            settingsFieldComponent.setItems([]);
+            settingsFieldComponent.items = options;
         }
     }
 

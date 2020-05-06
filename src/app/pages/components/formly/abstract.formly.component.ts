@@ -62,35 +62,19 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     }
 
     /**
-     * Get the form configuration
-     * @return the form configuration
-     */
-    public getConfig(): FormlyConfig {
-        return this.config;
-    }
-
-    /**
-     * Set the form configuration
-     * @param config to apply
-     */
-    protected setConfig(config: FormlyConfig) {
-        this.config = config;
-    }
-
-    /**
      * Get the form fields configuration
      * @return the form fields configuration
      */
-    public getFields(): FormlyFieldConfig[] {
-        return this.fields || [];
+    get fields(): FormlyFieldConfig[] {
+        return this._fields || [];
     }
 
     /**
      * Set the form fields configuration
      * @param fields to apply
      */
-    protected setFields(fields: FormlyFieldConfig[]) {
-        this.fields = fields || [];
+    set fields(fields: FormlyFieldConfig[]) {
+        this._fields = fields || [];
         // translate form fields
         this.translateFormFields();
     }
@@ -176,8 +160,8 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private config?: FormlyConfig,
-                          private fields?: FormlyFieldConfig[] | [],
+                          _config?: FormlyConfig,
+                          private _fields?: FormlyFieldConfig[] | [],
                           private options?: FormlyFormOptions,
                           private actions?: IToolbarActionsConfig[] | []) {
         super(dataSource, contextMenuService, toasterService, logger,
@@ -185,6 +169,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+        this.config = _config;
     }
 
     // -------------------------------------------------

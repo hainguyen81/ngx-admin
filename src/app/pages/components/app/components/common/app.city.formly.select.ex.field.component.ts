@@ -55,7 +55,7 @@ export class AppCityFormlySelectExFieldComponent
                 @Inject(NGXLogger) _logger: NGXLogger) {
         super(_translateService, _renderer, _logger);
         cityDataSource || throwError('Could not inject CityDatasource instance');
-        super.setConfig(AppCitiesSelectOptions);
+        super.config = AppCitiesSelectOptions;
     }
 
     // -------------------------------------------------
@@ -65,22 +65,23 @@ export class AppCityFormlySelectExFieldComponent
     set province(province: IProvince) {
         if (!province || !(province.id || '').length
             || !(province.code || '').length || !(province.name || '').length) {
-            this.getItems().clear();
+            this.items.clear();
         } else {
             SystemDataUtils.invokeAllCities(this.cityDataSource, province)
                 .then(cities => {
                     let noneCity: ICity;
                     noneCity = new City(null, null, null);
-                    noneCity['text'] = this.getConfig().placeholder;
-                    this.setItems([noneCity].concat(cities as ICity[]));
+                    noneCity['text'] = this.getConfigValue('placeholder');
+                    this.items = [noneCity].concat(cities as ICity[]);
                 });
         }
     }
 
     protected valueFormatter(value: any): any {
         let options: any[];
-        options = this.getItems().filter(opt => {
-            return (opt && ((opt === value) || (opt[this.getConfig().optionValueField] === value)));
+        options = this.items.filter(opt => {
+            return (opt && ((opt === value)
+                || (opt[this.getConfigValue('optionValueField')] === value)));
         });
         return options || [];
     }

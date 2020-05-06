@@ -49,6 +49,7 @@ import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.s
 import {CustomValidators} from 'ngx-custom-validators';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
+import {isNullOrUndefined} from 'util';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -406,8 +407,8 @@ export class WarehouseItemOverviewFormlyComponent
         categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         settingsDatasource || throwError('Could not inject WarehouseSettingsDatasource instance');
-        super.setConfig(WarehouseItemOverviewFormConfig);
-        super.setFields(WarehouseItemOverviewFormFieldsConfig);
+        super.config = WarehouseItemOverviewFormConfig;
+        super.fields = WarehouseItemOverviewFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -473,8 +474,10 @@ export class WarehouseItemOverviewFormlyComponent
                 let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                 belongToComponent = this.getFormFieldComponent(
                     field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                belongToComponent && belongToComponent.setTreeviewItems(categories);
-                belongToComponent && this.setBelongToSelectedValue(field, this.getModel());
+                if (!isNullOrUndefined(belongToComponent)) {
+                    belongToComponent.items = categories;
+                    this.setBelongToSelectedValue(field, this.getModel());
+                }
             });
     }
 

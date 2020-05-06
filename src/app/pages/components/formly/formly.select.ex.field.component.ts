@@ -7,7 +7,7 @@ import {
     ViewChildren,
 } from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
-import {INgxSelectOptions, NgxSelectOption} from 'ngx-select-ex';
+import {NgxSelectOption} from 'ngx-select-ex';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
@@ -33,7 +33,6 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     // DECLARATION
     // -------------------------------------------------
 
-    @Input() private config: INgxSelectOptions;
     /**
      * Items array.
      * Should be an array of objects with id and text properties.
@@ -43,7 +42,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * whose value should be another array of items.
      * Items that have children may omit to have an ID.
      */
-    @Input() private items: any[];
+    @Input() private _items: any[];
 
     @ViewChildren(NgxSelectExComponent)
     private readonly queryNgxSelectExComponent: QueryList<NgxSelectExComponent>;
@@ -62,34 +61,27 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     /**
-     * Get the {INgxSelectOptions} instance
-     * @return the {INgxSelectOptions} instance
-     */
-    public getConfig(): INgxSelectOptions {
-        return this.config;
-    }
-    /**
-     * Set the {INgxSelectOptions} instance
-     * @param config to apply
-     */
-    public setConfig(config: INgxSelectOptions): void {
-        this.config = config;
-    }
-
-    /**
      * Get the {NgxSelectOption} array
      * @return the {NgxSelectOption} array
      */
-    public getItems(): any[] {
-        return this.items || [];
+    get items(): any[] {
+        return this._items || [];
     }
 
     /**
      * Set the {NgxSelectOption} array
-     * @param items to apply
+     * @param _items to apply
      */
-    public setItems(items?: any[]): void {
-        this.items = (items || []);
+    set items(_items: any[]) {
+        this._items = (_items || []);
+    }
+
+    get selectedOptions(): NgxSelectOption[] {
+        return (this.selectExComponent ? this.selectExComponent.selectedOptions : []);
+    }
+
+    get selectedValues(): any[] {
+        return (this.selectExComponent ? this.selectExComponent.selectedOptionValues : []);
     }
 
     // -------------------------------------------------
@@ -115,20 +107,6 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        // build field template config and options before query select-ex component
-        this.field.className = [(this.field.className || ''),
-            'form-field form-select-ex'].join(' ').trim();
-        if (this.field && this.field.templateOptions
-            && isArray(this.field.templateOptions.options)) {
-            this.setItems(this.field.templateOptions.options as any[]);
-
-        } else if (this.field && this.field.templateOptions
-            && isObservable(this.field.templateOptions.options)) {
-            this.field.templateOptions.options.subscribe((items: any[]) => {
-                this.setItems(this.field.templateOptions.options as any[]);
-            });
-        }
-
         // query select-ex component
         if (!this.ngxSelectExComponent) {
             // query component
@@ -138,6 +116,20 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
                         value => this.__applySelectedItems(component, this.value));
                     this.checkOverrideFormFieldClass(component);
                 });
+        }
+
+        // build field template config and options before query select-ex component
+        this.field.className = [(this.field.className || ''),
+            'form-field form-select-ex'].join(' ').trim();
+        if (this.field && this.field.templateOptions
+            && isArray(this.field.templateOptions.options)) {
+            this.items = this.field.templateOptions.options as any[];
+
+        } else if (this.field && this.field.templateOptions
+            && isObservable(this.field.templateOptions.options)) {
+            this.field.templateOptions.options.subscribe((items: any[]) => {
+                this.items = this.field.templateOptions.options as any[];
+            });
         }
     }
 
@@ -192,20 +184,12 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
 
     private __applySelectedItems(selectComponent?: NgxSelectExComponent, value?: any) {
         selectComponent = (selectComponent || this.selectExComponent);
-        if (!selectComponent || !this.getItems().length) return;
+        if (!selectComponent || !this.items.length) return;
         value = this.valueFormatter(value);
         selectComponent.setSelectedItems(isArray(value) ? Array.from(value) : [value]);
     }
 
     protected onSelect($event: IEvent): void {
         this.setValue(($event || {}).data);
-    }
-
-    public get selectedOptions(): NgxSelectOption[] {
-        return (this.selectExComponent ? this.selectExComponent.selectedOptions : []);
-    }
-
-    public get selectedValues(): any[] {
-        return (this.selectExComponent ? this.selectExComponent.selectedOptionValues : []);
     }
 }

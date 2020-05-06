@@ -167,7 +167,7 @@ export class WarehouseStorageTreeviewComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setConfig(WarehouseCategoryTreeviewConfig);
+        super.config = WarehouseCategoryTreeviewConfig;
         super.setContextMenu(WarehouseCategoryContextMenu);
         super.setItemImageParser(
             item => (item && (<IWarehouse>item.value) ? (<IWarehouse>item.value).image || [] : []));

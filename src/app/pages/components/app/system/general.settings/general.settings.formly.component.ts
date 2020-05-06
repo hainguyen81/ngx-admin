@@ -179,8 +179,8 @@ export class GeneralSettingsFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setConfig(GeneralSettingsFormConfig);
-        super.setFields(GeneralSettingsFormFieldsConfig);
+        super.config = GeneralSettingsFormConfig;
+        super.fields = GeneralSettingsFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -201,7 +201,7 @@ export class GeneralSettingsFormlyComponent
      * Observe model fields for applying values
      */
     private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         fields[0].expressionProperties = {
             'module_code': (model: IGeneralSettings) => {
                 if ((model.module_code || '') !== ((model.module || {})['code'] || '')) {

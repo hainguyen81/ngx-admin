@@ -1,7 +1,7 @@
 <div class="form-field form-select-ex"
-     [class.form-select-ex-image]="getConfig()['enableOptionImage'] || false">
-    <ngx-select-ex [items]="getItems()"
-                   [config]="getConfig()"
+     [class.form-select-ex-image]="getConfigValue('enableOptionImage', false)">
+    <ngx-select-ex [items]="items"
+                   [config]="config"
                    (select)="onSelect($event)"
     ></ngx-select-ex>
 </div>

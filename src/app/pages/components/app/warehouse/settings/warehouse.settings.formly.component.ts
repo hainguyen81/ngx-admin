@@ -168,8 +168,8 @@ export class WarehouseSettingsFormlyComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setConfig(WarehouseSettingsFormConfig);
-        super.setFields(WarehouseSettingsFormFieldsConfig);
+        super.config = WarehouseSettingsFormConfig;
+        super.fields = WarehouseSettingsFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -179,7 +179,7 @@ export class WarehouseSettingsFormlyComponent
     ngOnInit(): void {
         super.ngOnInit();
 
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[0],

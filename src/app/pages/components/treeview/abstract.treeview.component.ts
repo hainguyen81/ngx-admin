@@ -126,15 +126,6 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    get config(): NgxTreeviewConfig {
-        const _config: NgxTreeviewConfig = <NgxTreeviewConfig>super.config;
-        return _config || DefaultTreeviewConfig;
-    }
-
-    set config(_config: NgxTreeviewConfig) {
-        super.config = _config || DefaultTreeviewConfig;
-    }
-
     /**
      * Get the tree-view items array to show
      * @return the tree-view items array

@@ -55,7 +55,7 @@ export class AppCountryFormlySelectExFieldComponent
                 @Inject(NGXLogger) _logger: NGXLogger) {
         super(_translateService, _renderer, _logger);
         countryDataSource || throwError('Could not inject CountryDatasource instance');
-        super.setConfig(AppCountriesSelectOptions);
+        super.config = AppCountriesSelectOptions;
     }
 
     // -------------------------------------------------
@@ -68,8 +68,8 @@ export class AppCountryFormlySelectExFieldComponent
                 .then(countries => {
                     let noneCountry: ICountry;
                     noneCountry = new Country(null, null, null);
-                    noneCountry['text'] = this.getConfig().placeholder;
-                    this.setItems([noneCountry].concat(countries as ICountry[]));
+                    noneCountry['text'] = this.getConfigValue('placeholder');
+                    this.items = [noneCountry].concat(countries as ICountry[]);
                 });
         });
         this.countryDataSource.refresh();
@@ -87,8 +87,9 @@ export class AppCountryFormlySelectExFieldComponent
 
     protected valueFormatter(value: any): any {
         let options: any[];
-        options = this.getItems().filter(opt => {
-            return (opt && ((opt === value) || (opt[this.getConfig().optionValueField] === value)));
+        options = this.items.filter(opt => {
+            return (opt && ((opt === value)
+                || (opt[this.getConfigValue('optionValueField')] === value)));
         });
         return options || [];
     }

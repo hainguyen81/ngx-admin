@@ -4,7 +4,6 @@ import {
     QueryList, Renderer2,
     ViewChildren,
 } from '@angular/core';
-import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeviewItem} from 'ngx-treeview';
 import ComponentUtils from '../../../utils/component.utils';
 import {IEvent} from '../abstract.component';
@@ -29,10 +28,8 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // DECLARATION
     // -------------------------------------------------
 
-    /* tree-view config */
-    @Input('config') private treeviewConfig: TreeviewConfig;
     /* tree-view items array */
-    @Input('items') private treeviewItems: TreeviewItem[];
+    @Input('items') private _items: TreeviewItem[];
 
     @ViewChildren(NgxDropdownTreeviewComponent)
     private readonly queryNgxTreeviewComponent: QueryList<NgxDropdownTreeviewComponent>;
@@ -51,35 +48,19 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     }
 
     /**
-     * Get the {TreeviewConfig} instance
-     * @return the {TreeviewConfig} instance
-     */
-    public getConfig(): TreeviewConfig {
-        return this.treeviewConfig;
-    }
-
-    /**
-     * Set the {TreeviewConfig} instance
-     * @param config to apply
-     */
-    public setConfig(config: TreeviewConfig): void {
-        this.treeviewConfig = config;
-    }
-
-    /**
      * Get the {TreeviewItem} array
      * @return the {TreeviewItem} array
      */
-    public getTreeviewItems(): TreeviewItem[] {
-        return this.treeviewItems || [];
+    get items(): TreeviewItem[] {
+        return this._items || [];
     }
 
     /**
      * Set the {TreeviewItem} array
-     * @param items to apply
+     * @param _items to apply
      */
-    public setTreeviewItems(items?: TreeviewItem[]): void {
-        this.treeviewItems = items || [];
+    set items(_items: TreeviewItem[]) {
+        this._items = _items || [];
     }
 
     /**
@@ -87,9 +68,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param data to apply
      */
     public setTreeviewData(data?: any[] | Observable<any[]>): void {
-        const treeBuilder: (data: any[]) => TreeviewItem[] = this.field.templateOptions['treeBuilder'];
-        const itemBuilder: (data: any) => TreeviewItem = this.field.templateOptions['itemBuilder'];
-        this.buildTemplateOptionsToTree(treeBuilder, itemBuilder, data);
+        this.buildTemplateOptionsToTree(data);
     }
 
     // -------------------------------------------------
@@ -129,14 +108,8 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         this.field.className = [(this.field.className || ''),
             'form-field form-dropdown-treeview form-dropdown-treeview-select'].join(' ').trim();
         if (this.field.templateOptions) {
-            if (this.field.templateOptions['config'] instanceof TreeviewConfig) {
-                this.setConfig(<TreeviewConfig>this.field.templateOptions['config']);
-            }
-
-            const treeBuilder: (data: any[]) => TreeviewItem[] = this.field.templateOptions['treeBuilder'];
-            const itemBuilder: (data: any) => TreeviewItem = this.field.templateOptions['itemBuilder'];
             const options: any[] | Observable<any[]> = this.field.templateOptions.options;
-            this.buildTemplateOptionsToTree(treeBuilder, itemBuilder, options);
+            this.buildTemplateOptionsToTree(options);
         }
     }
 
@@ -151,20 +124,19 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
 
     /**
      * Build the specified options data to {TreeviewItem}
-     * @param itemBuilder field template all options data builder
-     * @param itemBuilder field template option builder
      * @param options to build
      */
-    protected buildTemplateOptionsToTree(
-        treeBuilder: (data: any[]) => TreeviewItem[],
-        itemBuilder: (data: any) => TreeviewItem,
-        options: any[] | Observable<any[]>): void {
+    protected buildTemplateOptionsToTree(options: any[] | Observable<any[]>): void {
+        const treeBuilder: (data: any[]) => TreeviewItem[] | null =
+            this.field.templateOptions['treeBuilder'] || this.getConfigValue('treeBuilder');
+        const itemBuilder: (data: any) => TreeviewItem | null =
+            this.field.templateOptions['itemBuilder'] || this.getConfigValue('itemBuilder');
         let items: TreeviewItem[] = [];
         if (isArray(options)) {
             if (!isNullOrUndefined(treeBuilder) && typeof treeBuilder === 'function') {
                 items = treeBuilder.apply(this, [Array.from(options as any[])]);
                 if (!isNullOrUndefined(items)) {
-                    this.setTreeviewItems(items);
+                    this.items = items;
                 }
 
             } if (!isNullOrUndefined(itemBuilder) && typeof itemBuilder === 'function') {
@@ -172,23 +144,23 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
                     const item: TreeviewItem = itemBuilder.apply(this, [option]);
                     item && items.push(item);
                 });
-                this.setTreeviewItems(items);
+                this.items = items;
 
             } else if (!isNullOrUndefined(this.getTreeviewComponent())) {
                 items = this.getTreeviewComponent().mappingDataSourceToTreeviewItems(options);
                 if (!isNullOrUndefined(items)) {
-                    this.setTreeviewItems(items);
+                    this.items = items;
                 }
             }
 
         } else if (isObservable(options)) {
             (<Observable<any[]>>options).subscribe(opts => {
                 const optValues: any[] = (opts && isArray(opts) ? Array.from(opts) : opts ? [opts] : []);
-                this.buildTemplateOptionsToTree(treeBuilder, itemBuilder, optValues);
+                this.buildTemplateOptionsToTree(optValues);
             });
 
         } else if (!isNullOrUndefined(options) && !isArray(options) && !isObservable(options)) {
-            this.buildTemplateOptionsToTree(treeBuilder, itemBuilder, [options]);
+            this.buildTemplateOptionsToTree([options]);
         }
     }
 
@@ -203,7 +175,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
             this.setTreeviewSelectedItem(item as TreeviewItem, false);
 
         } else {
-            for (const it of this.getTreeviewItems()) {
+            for (const it of this.items) {
                 if (it.value === item) {
                     this.setTreeviewSelectedItem(it as TreeviewItem, false);
                     break;
@@ -274,10 +246,9 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param item to disable
      */
     public disableItems(item?: TreeviewItem | null): void {
-        let disabledItems: TreeviewItem[];
-        disabledItems = [];
+        const disabledItems: TreeviewItem[] = [];
         this.parseItemsRecursively(item, disabledItems);
-        (this.getTreeviewItems() || []).forEach(it => this.disableItemsRecursively(it, disabledItems));
+        this.items.forEach(it => this.disableItemsRecursively(it, disabledItems));
     }
     /**
      * Check to disable/enable the specified item by the specified disabled items array
@@ -304,8 +275,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     protected filterValueTreeItem(value: any, key?: string | null): TreeviewItem {
         let itemValue: TreeviewItem;
         itemValue = null;
-        let items: TreeviewItem[];
-        items = this.getTreeviewItems() || [];
+        const items: TreeviewItem[] = this.items;
         for (const it of items) {
             itemValue = this.filterValueTreeItemRecursively(value, key, it);
             if (itemValue) break;

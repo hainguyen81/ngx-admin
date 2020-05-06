@@ -101,7 +101,7 @@ export class OrganizationTreeviewComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setConfig(OrganizationTreeviewConfig);
+        super.config = OrganizationTreeviewConfig;
         super.setContextMenu(OrganizationContextMenu);
     }
 

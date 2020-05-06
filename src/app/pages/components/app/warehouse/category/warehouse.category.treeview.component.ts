@@ -108,7 +108,7 @@ export class WarehouseCategoryTreeviewComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setConfig(WarehouseCategoryTreeviewConfig);
+        super.config = WarehouseCategoryTreeviewConfig;
         super.setContextMenu(WarehouseCategoryContextMenu);
     }
 

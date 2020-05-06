@@ -38,6 +38,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
+import {isNullOrUndefined} from 'util';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();
@@ -209,8 +210,8 @@ export class WarehouseCategoryFormlyComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setConfig(WarehouseCategoryFormConfig);
-        super.setFields(WarehouseCategoryFormFieldsConfig);
+        super.config = WarehouseCategoryFormConfig;
+        super.fields = WarehouseCategoryFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -221,7 +222,7 @@ export class WarehouseCategoryFormlyComponent
         super.ngOnInit();
 
         // observe belongTo fields
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeBelongToField(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0]),
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
@@ -252,8 +253,10 @@ export class WarehouseCategoryFormlyComponent
                     let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
                     belongToComponent = this.getFormFieldComponent(
                         field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                    belongToComponent && belongToComponent.setTreeviewItems(categories);
-                    belongToComponent && this.disableModelFromBelongTo(field, this.getModel());
+                    if (!isNullOrUndefined(belongToComponent)) {
+                        belongToComponent.items = categories;
+                        this.disableModelFromBelongTo(field, this.getModel());
+                    }
                 });
     }
 

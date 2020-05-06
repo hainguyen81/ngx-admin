@@ -373,8 +373,8 @@ export class WarehouseItemVersionFormlyComponent
         categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         settingsDatasource || throwError('Could not inject WarehouseSettingsDatasource instance');
-        super.setConfig(WarehouseItemVersionFormConfig);
-        super.setFields(WarehouseItemVersionFormFieldsConfig);
+        super.config = WarehouseItemVersionFormConfig;
+        super.fields = WarehouseItemVersionFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -396,7 +396,7 @@ export class WarehouseItemVersionFormlyComponent
      * Observe fields
      */
     private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
 
         // master settings fields
         this.observeSettingsFields(fields);

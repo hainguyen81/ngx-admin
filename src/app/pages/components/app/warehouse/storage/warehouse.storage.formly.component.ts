@@ -273,8 +273,8 @@ export class WarehouseStorageFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setConfig(WarehouseStorageFormConfig);
-        super.setFields(WarehouseStorageFormFieldsConfig);
+        super.config = WarehouseStorageFormConfig;
+        super.fields = WarehouseStorageFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -296,7 +296,7 @@ export class WarehouseStorageFormlyComponent
      * Observe model fields for applying values
      */
     private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         fields[0].expressionProperties = {
             'country_id': (model: IWarehouse) => {
                 if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {

@@ -1,10 +1,12 @@
-import {AfterViewInit, Inject, OnDestroy, Renderer2} from '@angular/core';
+import {AfterViewInit, Inject, Input, OnDestroy, Renderer2} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
 import {IEvent} from './abstract.component';
+import {isNullOrUndefined} from 'util';
+import HtmlUtils from '../../utils/html.utils';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
     extends FieldType<F> implements OnDestroy, AfterViewInit {
@@ -14,10 +16,54 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     // -------------------------------------------------
 
     private _field: F;
+    @Input('config') private _config: any;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the component configuration
+     * @return the component configuration
+     */
+    get config(): any {
+        return this._config;
+    }
+
+    /**
+     * Set the {NgxTreeviewConfig} instance
+     * @param _config to apply. NULL for default
+     */
+    set config(_config: any) {
+        this._config = _config;
+        if (this._field) {
+            this._field.templateOptions = (this._field.templateOptions || {});
+            if (!(<Object>this._field.templateOptions).hasOwnProperty('config')
+                || isNullOrUndefined(this._field.templateOptions['config'])
+                || this._field.templateOptions['config'] !== this._config) {
+                this._field.templateOptions['config'] = this._config;
+            }
+        }
+    }
+
+    /**
+     * Get the configuration value of the specified configuration property key
+     * @param propertyKey configuration key
+     * @param defaultValue default value if not found or undefined
+     */
+    protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
+        const value: any = this.config[propertyKey];
+        return (isNullOrUndefined(value) ? defaultValue : value);
+    }
+
+    /**
+     * Set the configuration value of the specified configuration property key
+     * @param propertyKey configuration key
+     * @param configValue configuration value
+     */
+    protected setConfigValue(propertyKey: string, configValue?: any | null): void {
+        this.config[propertyKey] = configValue;
+    }
 
     /**
      * Get the {FormlyFieldConfig} instance
@@ -36,7 +82,19 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         if (this._field) {
             this._field.templateOptions = (this._field.templateOptions || {});
             this._field.templateOptions['componentRef'] = this;
+            if ((<Object>this._field.templateOptions).hasOwnProperty('config')
+                && (isNullOrUndefined(this._config) || this._field.templateOptions['config'] !== this.config)) {
+                this.config = this._field.templateOptions['config'];
+            }
         }
+    }
+
+    /**
+     * Get the application base href
+     * @return the application base href
+     */
+    public get baseHref(): string {
+        return HtmlUtils.getBaseHref();
     }
 
     /**

@@ -56,7 +56,7 @@ export class AppModuleFormlySelectExFieldComponent
                 @Inject(NGXLogger) _logger: NGXLogger) {
         super(_translateService, _renderer, _logger);
         moduleDataSource || throwError('Could not inject ModuleDatasource instance');
-        super.setConfig(AppModulesSelectOptions);
+        super.config = AppModulesSelectOptions;
     }
 
     // -------------------------------------------------
@@ -69,8 +69,8 @@ export class AppModuleFormlySelectExFieldComponent
                 this.moduleDataSource, this.translateService).then(modules => {
                     let noneModule: IModule;
                     noneModule = new Module(null, null, null, null);
-                    noneModule['text'] = this.getConfig().placeholder;
-                    this.setItems([noneModule].concat(modules as IModule[]));
+                    noneModule['text'] = this.getConfigValue('placeholder');
+                    this.items = [noneModule].concat(modules as IModule[]);
                 });
         });
         this.moduleDataSource.refresh();
@@ -78,8 +78,9 @@ export class AppModuleFormlySelectExFieldComponent
 
     protected valueFormatter(value: any): any {
         let options: any[];
-        options = this.getItems().filter(opt => {
-            return (opt && ((opt === value) || (opt[this.getConfig().optionValueField] === value)));
+        options = this.items.filter(opt => {
+            return (opt && ((opt === value)
+                || (opt[this.getConfigValue('optionValueField')] === value)));
         });
         return options || [];
     }

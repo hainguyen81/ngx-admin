@@ -89,8 +89,8 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
                                     required: true,
                                 },
                                 validators: {
-                                    validation: [Validators.pattern(ValidationUtils.VALIDATION_PASSWORD_PATTERN)]
-                                }
+                                    validation: [Validators.pattern(ValidationUtils.VALIDATION_PASSWORD_PATTERN)],
+                                },
                             },
                         ],
                     },
@@ -224,8 +224,8 @@ export class UserFormlyComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setConfig(UserFormConfig);
-        super.setFields(UserFormFieldsConfig);
+        super.config = UserFormConfig;
+        super.fields = UserFormFieldsConfig;
     }
 
     // -------------------------------------------------
@@ -246,7 +246,7 @@ export class UserFormlyComponent
      * Observe model fields for applying values
      */
     private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFields();
+        const fields: FormlyFieldConfig[] = this.fields;
         // user status
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(

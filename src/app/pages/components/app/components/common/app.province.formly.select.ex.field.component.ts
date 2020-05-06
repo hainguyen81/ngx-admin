@@ -55,7 +55,7 @@ export class AppProvinceFormlySelectExFieldComponent
                 @Inject(NGXLogger) _logger: NGXLogger) {
         super(_translateService, _renderer, _logger);
         provinceDataSource || throwError('Could not inject ProvinceDatasource instance');
-        super.setConfig(AppProvincesSelectOptions);
+        super.config = AppProvincesSelectOptions;
     }
 
     // -------------------------------------------------
@@ -65,23 +65,24 @@ export class AppProvinceFormlySelectExFieldComponent
     set country(country: ICountry) {
         if (!country || !(country.id || '').length
             || !(country.code || '').length || !(country.name || '').length) {
-            this.getItems().clear();
+            this.items.clear();
 
         } else {
             SystemDataUtils.invokeAllProvinces(this.provinceDataSource, country)
                 .then(provinces => {
                     let nonProvince: IProvince;
                     nonProvince = new Province(null, null, null);
-                    nonProvince['text'] = this.getConfig().placeholder;
-                    this.setItems([nonProvince].concat(provinces as IProvince[]));
+                    nonProvince['text'] = this.getConfigValue('placeholder');
+                    this.items = [nonProvince].concat(provinces as IProvince[]);
                 });
         }
     }
 
     protected valueFormatter(value: any): any {
         let options: any[];
-        options = this.getItems().filter(opt => {
-            return (opt && ((opt === value) || (opt[this.getConfig().optionValueField] === value)));
+        options = this.items.filter(opt => {
+            return (opt && ((opt === value)
+                || (opt[this.getConfigValue('optionValueField')] === value)));
         });
         return options || [];
     }
