@@ -305,17 +305,17 @@ export class WarehouseItemVersionSmartTableComponent
             actionButtons: [
                 {
                     text: this.translate('common.form.action.save'),
-                    buttonClass: ['btn-save', 'fa fa-save',
+                    buttonClass: ['btn-save',
                         'appearance-filled size-small status-primary shape-rectangle transitions'].join(' '),
                 },
                 {
                     text: this.translate('common.form.action.reset'),
-                    buttonClass: ['btn-reset', 'fa fa-redo',
+                    buttonClass: ['btn-reset',
                         'appearance-filled size-small status-warning shape-rectangle transitions'].join(' '),
                 },
                 {
                     text: this.translate('common.form.action.close'),
-                    buttonClass: ['btn-close', 'fa fa-chevron-circle-left',
+                    buttonClass: ['btn-close',
                         'appearance-filled size-small shape-rectangle transitions'].join(' '),
                     onAction: () => true,
                 },

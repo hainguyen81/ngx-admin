@@ -3,7 +3,6 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ComponentRef,
     ElementRef,
     Inject,
     Renderer2,
@@ -154,15 +153,15 @@ export class WarehouseItemVersionSplitPaneComponent
      * Customize modal dialog component if necessary while the present component is child of this modal.
      * @param modalDialog to customize
      * @param modalDialogElementRef modal dialog element reference {ElementRef}
-     * @param reference {IModalDialog}
+     * @param childComponent child {IModalDialog} component that has been shown on dialog
      * @param options {IModalDialogOptions}
      */
     protected onDialogInit(
         modalDialog: ModalDialogComponent,
         modalDialogElementRef: ElementRef,
-        reference: ComponentRef<IModalDialog>,
+        childComponent: IModalDialog,
         options: Partial<IModalDialogOptions<any>>) {
-        super.onDialogInit(modalDialog, modalDialogElementRef, reference, options);
+        super.onDialogInit(modalDialog, modalDialogElementRef, childComponent, options);
 
         // parse data and save subscription from parent component
         this.saveSubject = (options && options.data['subject'] instanceof Subject
@@ -174,9 +173,9 @@ export class WarehouseItemVersionSplitPaneComponent
         this.dataModel = data;
         this.modifiedDataModel = ObjectUtils.deepCopy(this.dataModel);
         options.actionButtons[0].onAction =
-            () => (<WarehouseItemVersionSplitPaneComponent>reference.instance).performSave();
+            () => (<WarehouseItemVersionSplitPaneComponent>childComponent).performSave();
         options.actionButtons[1].onAction =
-            () => (<WarehouseItemVersionSplitPaneComponent>reference.instance).performReset();
+            () => (<WarehouseItemVersionSplitPaneComponent>childComponent).performReset();
     }
 
     protected doSave(): void {

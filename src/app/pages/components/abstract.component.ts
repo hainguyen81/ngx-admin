@@ -820,12 +820,12 @@ export abstract class AbstractComponent
      * TODO Children classes maybe override this method for customizing modal dialog if necessary
      * @param modalDialog to customize {ModalDialogComponent}
      * @param modalDialogElementRef modal dialog element reference {ElementRef}
-     * @param reference {IModalDialog}
+     * @param childComponent child {IModalDialog} component that has been shown on dialog
      * @param options {IModalDialogOptions}
      */
     protected onDialogInit(modalDialog: ModalDialogComponent,
                            modalDialogElementRef: ElementRef,
-                           reference: ComponentRef<IModalDialog>,
+                           childComponent: IModalDialog,
                            options: Partial<IModalDialogOptions<any>>): void {
         // add footer button style
         const dialogElementRef: ElementRef = modalDialogElementRef;
@@ -920,7 +920,7 @@ export abstract class AbstractComponent
                     if (modalDialogInstance['_childInstance'] instanceof AbstractComponent) {
                         (<AbstractComponent>modalDialogInstance['_childInstance']).onDialogInit(
                             componentRef.instance, modalDialogInstance['dialogElement'] as ElementRef,
-                            modalDialogInstance['reference'], options);
+                            modalDialogInstance['_childInstance'], options);
                     }
                 };
             }
