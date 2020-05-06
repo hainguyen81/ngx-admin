@@ -813,23 +813,6 @@ export abstract class AbstractComponent
      */
     dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
         this.getLogger().debug('Dialog Initialization', reference, options);
-
-        const modalDialogService: ModalDialogService = this.getModalDialogService();
-        const modalDialogInstance: ModalDialogInstanceService = (isNullOrUndefined(modalDialogService)
-            ? undefined : modalDialogService['modalDialogInstanceService'] as ModalDialogInstanceService);
-        const modalComponentRefs: ComponentRef<ModalDialogComponent>[] = (isNullOrUndefined(modalDialogInstance)
-            ? undefined : modalDialogInstance['componentRefs'] as ComponentRef<ModalDialogComponent>[]);
-        if (isArray(modalComponentRefs) && Array.from(modalComponentRefs).length) {
-            let modalDialogComponent: ModalDialogComponent;
-            for (const modalComponentRef of Array.from(modalComponentRefs)) {
-                modalDialogComponent = modalComponentRef.instance;
-                if (!isNullOrUndefined(modalDialogComponent) && modalDialogComponent['_childInstance'] === this) {
-                    this.onDialogInit(modalDialogComponent,
-                        modalDialogComponent['dialogElement'] as ElementRef, reference, options);
-                    break;
-                }
-            }
-        }
     }
 
     /**
@@ -863,6 +846,7 @@ export abstract class AbstractComponent
     // -------------------------------------------------
 
     /**
+     * TODO {ModalDialogComponent} unique hacks
      * Customize (unique hack) {ModalDialogService}
      */
     private uniqueHackModalDialogService(): void {
@@ -883,6 +867,7 @@ export abstract class AbstractComponent
     }
 
     /**
+     * TODO {ModalDialogComponent} unique hacks
      * Close all dialogs
      * @param modalDialogService {ModalDialogService}
      */
@@ -894,6 +879,7 @@ export abstract class AbstractComponent
         }
     }
     /**
+     * TODO {ModalDialogComponent} unique hacks
      * Open dialog in given target element with given options
      * @param modalDialogService {ModalDialogService}
      * @param target {ViewContainerRef} target
@@ -913,25 +899,33 @@ export abstract class AbstractComponent
             modalDialogInstanceService['closeAnyExistingModalDialog'].apply(modalDialogInstanceService);
         }
 
-        if (!ModalDialogComponent.prototype['ngAfterViewInit']) {
-            ModalDialogComponent.prototype['ngAfterViewInit'] = function ngAfterViewInit() {
-                const _this: ModalDialogComponent = <ModalDialogComponent>this;
-                if (_this['_childInstance'] instanceof AbstractComponent) {
-                    (<AbstractComponent>_this['_childInstance']).onDialogInit(
-                        _this, _this['dialogElement'] as ElementRef, _this['reference'], options);
-                }
-            };
-        }
-
         const factory: ComponentFactory<ModalDialogComponent> =
             (isNullOrUndefined(componentFactoryResolver) ? undefined
                 : componentFactoryResolver.resolveComponentFactory(ModalDialogComponent));
         const componentRef = (isNullOrUndefined(factory) ? undefined : target.createComponent(factory));
         if (!isNullOrUndefined(componentRef) && !isNullOrUndefined(modalDialogInstanceService)
             && typeof modalDialogInstanceService['saveExistingModalDialog'] === 'function') {
-            // save first for customizing dialog on initialization
+            // TODO save first for customizing dialog on initialization
             modalDialogInstanceService['saveExistingModalDialog'].apply(modalDialogInstanceService, [componentRef]);
-            componentRef.instance.dialogInit(componentRef, options);
+            // TODO hook ngAfterViewInit for customizing dialog initialization
+            // TODO Because this library already mixed-ins component lifecycle hooks
+            const modalDialogInstance: ModalDialogComponent = componentRef.instance;
+            if (!isNullOrUndefined(modalDialogInstance)
+                && typeof modalDialogInstance['ngAfterViewInit'] === 'function') {
+                const __originalOpenDialog: Function = modalDialogInstance['ngAfterViewInit'] as Function;
+                modalDialogInstance['ngAfterViewInit'] = function mixinNgAfterViewInit() {
+                    __originalOpenDialog.apply(modalDialogInstance);
+
+                    // call dialog onInit
+                    if (modalDialogInstance['_childInstance'] instanceof AbstractComponent) {
+                        (<AbstractComponent>modalDialogInstance['_childInstance']).onDialogInit(
+                            componentRef.instance, modalDialogInstance['dialogElement'] as ElementRef,
+                            modalDialogInstance['reference'], options);
+                    }
+                };
+            }
+            // TODO initialize dialog
+            modalDialogInstance.dialogInit(componentRef, options);
         }
     }
 

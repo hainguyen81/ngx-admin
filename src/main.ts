@@ -8,10 +8,15 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
+import {ComponentLifeCycle, mixins} from './app/runtime/runtime';
+import {ModalDialogComponent} from 'ngx-modal-dialog';
 
 if (environment.production) {
   enableProdMode();
 }
+
+// TODO should mixins prototypes before bootstrap application module
+mixins(ModalDialogComponent, [ComponentLifeCycle]);
 
 const platformRef: PlatformRef = platformBrowserDynamic();
 platformRef.bootstrapModule(AppModule).then(

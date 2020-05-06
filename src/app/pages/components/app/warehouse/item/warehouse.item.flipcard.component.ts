@@ -9,7 +9,9 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {
+    WarehouseItemDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
