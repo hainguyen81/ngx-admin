@@ -12,7 +12,6 @@ import Warehouse, {IWarehouse} from '../../../../../@core/data/warehouse/warehou
 import {ToastrService} from 'ngx-toastr';
 import {
     TreeItem,
-    TreeviewConfig,
     TreeviewI18n,
     TreeviewI18nDefault,
     TreeviewItem,
@@ -30,15 +29,15 @@ import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
 
-export const WarehouseCategoryTreeviewConfig: TreeviewConfig = {
+export const WarehouseCategoryTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
     hasAllCheckBox: false,
     hasCollapseExpand: false,
-    hasDivider: false,
     hasFilter: true,
     maxHeight: -1,
-};
+});
 
 export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 

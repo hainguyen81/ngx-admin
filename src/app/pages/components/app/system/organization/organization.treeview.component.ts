@@ -10,7 +10,6 @@ import {OrganizationDataSource} from '../../../../../services/implementation/sys
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeItem, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import Organization, {IOrganization} from '../../../../../@core/data/system/organization';
 import OrganizationUtils from '../../../../../utils/system/organization.utils';
@@ -26,13 +25,15 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
 
-export const OrganizationTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
+export const OrganizationTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
     hasAllCheckBox: false,
     hasCollapseExpand: false,
     hasFilter: true,
     maxHeight: -1,
+    appendToBody: true,
 });
 
 export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);

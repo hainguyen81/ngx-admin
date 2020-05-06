@@ -16,4 +16,7 @@
             padding: 2px;
         }
     }
+    ::ng-deep .dropdown-menu .dropdown-container {
+        padding: 0 .6rem;
+    }
 }

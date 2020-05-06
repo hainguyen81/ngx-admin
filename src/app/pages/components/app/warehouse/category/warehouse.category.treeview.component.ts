@@ -11,7 +11,6 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
 import {TreeItem, TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
@@ -32,8 +31,9 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
 
-export const WarehouseCategoryTreeviewConfig: TreeviewConfig = TreeviewConfig.create({
+export const WarehouseCategoryTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
     hasAllCheckBox: false,
     hasCollapseExpand: false,
