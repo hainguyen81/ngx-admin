@@ -918,9 +918,12 @@ export abstract class AbstractComponent
 
                     // call dialog onInit
                     if (modalDialogInstance['_childInstance'] instanceof AbstractComponent) {
-                        (<AbstractComponent>modalDialogInstance['_childInstance']).onDialogInit(
+                        const childComponent: AbstractComponent =
+                            <AbstractComponent>modalDialogInstance['_childInstance'];
+                        childComponent.onDialogInit(
                             componentRef.instance, modalDialogInstance['dialogElement'] as ElementRef,
-                            modalDialogInstance['_childInstance'], options);
+                            childComponent, options);
+                        childComponent.getChangeDetectorRef().detectChanges();
                     }
                 };
             }
