@@ -49,6 +49,10 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
         return this._datePickerComponent;
     }
 
+    get config(): any {
+        return super.config;
+    }
+
     set config(_config: any) {
         super.config = _config;
         const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;

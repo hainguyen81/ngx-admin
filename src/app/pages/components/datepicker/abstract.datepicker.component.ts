@@ -105,6 +105,10 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    get config(): any {
+        return super.config;
+    }
+
     set config(_config: any) {
         super.config = _config;
         const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;
