@@ -6,7 +6,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Input,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -92,6 +92,8 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     private readonly queryDatePickerComponent: QueryList<DatePickerComponent>;
     private _datePickerComponent: DatePickerComponent;
 
+    @Input('model') private _model: any;
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
@@ -105,10 +107,17 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     }
 
     /**
-     * Inline mode
+     * Data model
      */
-    get inline(): boolean {
-        return this.getConfigValue('inline', false);
+    get model(): any {
+        return this._model;
+    }
+
+    /**
+     * Data model
+     */
+    set model(_model: any) {
+        this._model = _model;
     }
 
     /**

@@ -16,6 +16,7 @@
                 [minTime]="minTime"
                 [placeholder]="(placeholder || '') | translate"
                 [theme]="theme"
+                [(ngModel)]="model"
 
                 (keydown)="onKeyDown({ event: $event, data: datePicker })"
                 (keypress)="onKeyPress({ event: $event, data: datePicker })"
