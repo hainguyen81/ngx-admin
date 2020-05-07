@@ -63,6 +63,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 import {HtmlCellComponent} from './smart-table/html.cell.component';
 import {DpDatePickerModule} from 'ng2-date-picker';
 import {NgxDatePickerComponent} from './datepicker/datepicker.component';
+import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
 
 @NgModule({
     imports: [
@@ -190,6 +191,7 @@ import {NgxDatePickerComponent} from './datepicker/datepicker.component';
         BarcodeCellComponent,
         HtmlCellComponent,
         NgxDatePickerComponent,
+        DatePickerCellComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -217,6 +219,7 @@ import {NgxDatePickerComponent} from './datepicker/datepicker.component';
         BarcodeCellComponent,
         HtmlCellComponent,
         NgxDatePickerComponent,
+        DatePickerCellComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -235,6 +238,7 @@ import {NgxDatePickerComponent} from './datepicker/datepicker.component';
         BarcodeCellComponent,
         HtmlCellComponent,
         NgxDatePickerComponent,
+        DatePickerCellComponent,
     ],
 })
 export class ComponentsModule {

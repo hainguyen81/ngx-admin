@@ -73,7 +73,7 @@ export interface INgxDatePickerConfig {
     /**
      * {IDatePickerConfig}
      */
-    config: IDatePickerConfig;
+    config?: IDatePickerConfig | null;
 }
 
 /**
