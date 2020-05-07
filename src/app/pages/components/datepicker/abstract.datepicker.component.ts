@@ -105,6 +105,13 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     }
 
     /**
+     * Inline mode
+     */
+    get inline(): boolean {
+        return this.getConfigValue('inline', false);
+    }
+
+    /**
      * The mode of the calender which will be displayed in the picker
      * Default is 'day'
      */
