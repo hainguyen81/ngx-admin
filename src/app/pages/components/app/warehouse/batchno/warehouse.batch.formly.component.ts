@@ -77,11 +77,17 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-4',
                 key: 'mfg_date',
-                type: 'input',
+                type: 'date-picker',
                 templateOptions: {
                     label: 'warehouse.batch_no.form.mfg_date.label',
                     placeholder: 'warehouse.batch_no.form.mfg_date.placeholder',
                     required: true,
+                    'config': {
+                        mode: 'day',
+                        placeholder: 'warehouse.batch_no.form.mfg_date.placeholder',
+                        required: true,
+                        config: {},
+                    },
                 },
             },
         ],
