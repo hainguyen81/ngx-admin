@@ -23,6 +23,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ComponentUtils from '../../../utils/component.utils';
+import {isNullOrUndefined} from 'util';
 
 export interface INgxDatePickerConfig {
     /**
@@ -104,23 +105,23 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    get config(): any {
-        return super.config;
-    }
-
     set config(_config: any) {
         super.config = _config;
-        const cfg: INgxDatePickerConfig = _config as INgxDatePickerConfig;
-        if (this.datePickerComponent && cfg) {
-            this.datePickerComponent.config = cfg.config;
-            this.datePickerComponent.displayDate = this.displayDate;
-            this.datePickerComponent.disabled = this.isDisabled;
-            this.datePickerComponent.maxDate = this.maxDate;
-            this.datePickerComponent.maxTime = this.maxTime;
-            this.datePickerComponent.minDate = this.minDate;
-            this.datePickerComponent.minTime = this.minTime;
-            this.datePickerComponent.placeholder = this.translate(this.placeholder || '');
-            this.datePickerComponent.theme = this.theme;
+        const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;
+        const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
+        if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
+            __dtConfig.format = this.translate(__dtConfig.format);
+        }
+        if (this._datePickerComponent) {
+            this._datePickerComponent.config = this.getConfigValue('config');
+            this._datePickerComponent.displayDate = this.displayDate;
+            this._datePickerComponent.disabled = this.isDisabled;
+            this._datePickerComponent.maxDate = this.maxDate;
+            this._datePickerComponent.maxTime = this.maxTime;
+            this._datePickerComponent.minDate = this.minDate;
+            this._datePickerComponent.minTime = this.minTime;
+            this._datePickerComponent.placeholder = this.translate(this.placeholder || '');
+            this._datePickerComponent.theme = this.theme;
         }
     }
 

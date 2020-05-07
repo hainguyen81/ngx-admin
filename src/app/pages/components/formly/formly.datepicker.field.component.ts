@@ -45,12 +45,8 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
      * Get the {NgxDatePickerComponent} instance
      * @return the {NgxDatePickerComponent} instance
      */
-    protected datePickerComponent(): NgxDatePickerComponent {
+    protected get datePickerComponent(): NgxDatePickerComponent {
         return this._datePickerComponent;
-    }
-
-    get config(): any {
-        return super.config;
     }
 
     set config(_config: any) {
@@ -60,8 +56,8 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
         if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
             __dtConfig.format = this.translate(__dtConfig.format);
         }
-        if (this._datePickerComponent) {
-            this._datePickerComponent.config = _config;
+        if (this.datePickerComponent) {
+            this.datePickerComponent.config = _config;
         }
     }
 
@@ -129,9 +125,6 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                         this.value = this.valueParser(component.model);
                     });
                 });
-            if (this._datePickerComponent) {
-                this._datePickerComponent.config = this.config;
-            }
         }
     }
 
