@@ -8,7 +8,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {AbstractDatePickerComponent} from './abstract.datepicker.component';
+import {AbstractDatePickerComponent, INgxDatePickerConfig} from './abstract.datepicker.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -17,6 +17,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IDatePickerConfig} from 'ng2-date-picker';
+import {isNullOrUndefined} from 'util';
 
 /**
  * Date-picker component base on {DatePickerComponent}
@@ -27,6 +29,19 @@ import {ActivatedRoute, Router} from '@angular/router';
     styleUrls: ['./datepicker.component.scss'],
 })
 export class NgxDatePickerComponent extends AbstractDatePickerComponent<DataSource> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    set config(_config: any) {
+        const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;
+        const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
+        if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
+            __dtConfig.format = this.translate(__dtConfig.format);
+        }
+        super.config = __dtConfig;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION

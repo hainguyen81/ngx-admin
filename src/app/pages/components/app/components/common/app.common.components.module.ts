@@ -29,6 +29,7 @@ import {AppCityFormlySelectExFieldComponent} from './app.city.formly.select.ex.f
 import {AppProvinceFormlySelectExFieldComponent} from './app.province.formly.select.ex.field.component';
 import {AppModuleFormlySelectExFieldComponent} from './app.module.formly.select.ex.field.component';
 import {AppModuleSettingsFormlySelectExFieldComponent} from './app.module.settings.formly.select.ex.field.component';
+import {AppFormlyDatePickerFieldComponent} from './app.formly.datepicker.field.component';
 
 @NgModule({
     imports: [
@@ -124,6 +125,7 @@ import {AppModuleSettingsFormlySelectExFieldComponent} from './app.module.settin
         AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
+        AppFormlyDatePickerFieldComponent,
     ],
     exports: [
         AppModuleFormlySelectExFieldComponent,
@@ -131,6 +133,7 @@ import {AppModuleSettingsFormlySelectExFieldComponent} from './app.module.settin
         AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
+        AppFormlyDatePickerFieldComponent,
     ],
     declarations: [
         AppModuleFormlySelectExFieldComponent,
@@ -138,6 +141,7 @@ import {AppModuleSettingsFormlySelectExFieldComponent} from './app.module.settin
         AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
+        AppFormlyDatePickerFieldComponent,
     ],
 })
 export class AppCommonComponentsModule {

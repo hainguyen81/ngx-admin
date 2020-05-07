@@ -1,6 +1,10 @@
 {
     "app": "Hi! System",
     "common": {
+        "date": {
+            "dd/mm/yyyy": "MM/DD/YYYY",
+            "dd-mm-yyyy": "MM-DD-YYYY"
+        },
         "languages": {
             "vi": "Vietnamese",
             "en": "English"
