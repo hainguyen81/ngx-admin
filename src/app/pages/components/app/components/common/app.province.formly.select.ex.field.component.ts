@@ -1,4 +1,11 @@
-import {Component, Inject, Renderer2} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver, ElementRef,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
@@ -48,12 +55,21 @@ export class AppProvinceFormlySelectExFieldComponent
      * @param _renderer {Renderer2}
      * @param provinceDataSource {ProvinceDatasource}
      * @param _logger {NGXLogger}
+     * @param _factoryResolver {ComponentFactoryResolver}
+     * @param _viewContainerRef {ViewContainerRef}
+     * @param _changeDetectorRef {ChangeDetectorRef}
+     * @param _elementRef {ElementRef}
      */
     constructor(@Inject(ProvinceDatasource) private provinceDataSource: ProvinceDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
-                @Inject(NGXLogger) _logger: NGXLogger) {
-        super(_translateService, _renderer, _logger);
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
+        super(_translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         provinceDataSource || throwError('Could not inject ProvinceDatasource instance');
         super.config = AppProvincesSelectOptions;
     }

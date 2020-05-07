@@ -1,4 +1,14 @@
-import {AfterViewInit, Inject, Input, OnDestroy, Renderer2} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
@@ -128,6 +138,38 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         return null;
     }
 
+    /**
+     * Get the {ComponentFactoryResolver} instance
+     * @return the {ComponentFactoryResolver} instance
+     */
+    protected get factoryResolver(): ComponentFactoryResolver {
+        return this.factoryResolver;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance
+     * @return the {ViewContainerRef} instance
+     */
+    protected get viewContainerRef(): ViewContainerRef {
+        return this._viewContainerRef;
+    }
+
+    /**
+     * Get the {ChangeDetectorRef} instance
+     * @return the {ChangeDetectorRef} instance
+     */
+    protected get changeDetectorRef(): ChangeDetectorRef {
+        return this._changeDetectorRef;
+    }
+
+    /**
+     * Get the {ElementRef} instance
+     * @return the {ElementRef} instance
+     */
+    protected get elementRef(): ElementRef {
+        return this._elementRef;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -137,10 +179,18 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param logger {NGXLogger}
+     * @param _factoryResolver {ComponentFactoryResolver}
+     * @param _viewContainerRef {ViewContainerRef}
+     * @param _changeDetectorRef {ChangeDetectorRef}
+     * @param _elementRef {ElementRef}
      */
     protected constructor(@Inject(TranslateService) private _translateService: TranslateService,
                           @Inject(Renderer2) private _renderer: Renderer2,
-                          @Inject(NGXLogger) private _logger: NGXLogger) {
+                          @Inject(NGXLogger) private _logger: NGXLogger,
+                          @Inject(ComponentFactoryResolver) private _factoryResolver: ComponentFactoryResolver,
+                          @Inject(ViewContainerRef) private _viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) private _changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) private _elementRef: ElementRef) {
         super();
         _translateService || throwError('Could not inject TranslateService');
         _renderer || throwError('Could not inject Renderer2');

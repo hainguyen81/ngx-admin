@@ -1,4 +1,12 @@
-import {Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver, ElementRef,
+    Inject,
+    OnInit,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
@@ -99,12 +107,21 @@ export class AppModuleSettingsFormlySelectExFieldComponent
      * @param _renderer {Renderer2}
      * @param generalSettingsDataSource {GeneralSettingsDatasource}
      * @param _logger {NGXLogger}
+     * @param _factoryResolver {ComponentFactoryResolver}
+     * @param _viewContainerRef {ViewContainerRef}
+     * @param _changeDetectorRef {ChangeDetectorRef}
+     * @param _elementRef {ElementRef}
      */
     constructor(@Inject(GeneralSettingsDatasource) private generalSettingsDataSource: GeneralSettingsDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
-                @Inject(NGXLogger) _logger: NGXLogger) {
-        super(_translateService, _renderer, _logger);
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
+        super(_translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         generalSettingsDataSource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.config = AppModuleSettingsSelectOptions;
     }

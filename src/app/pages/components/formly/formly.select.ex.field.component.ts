@@ -1,10 +1,10 @@
 import {
-    AfterViewInit,
-    Component,
+    AfterViewInit, ChangeDetectorRef,
+    Component, ComponentFactoryResolver, ElementRef,
     Inject,
     Input,
     QueryList, Renderer2,
-    ViewChildren,
+    ViewChildren, ViewContainerRef,
 } from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {NgxSelectOption} from 'ngx-select-ex';
@@ -93,11 +93,20 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
+     * @param _factoryResolver {ComponentFactoryResolver}
+     * @param _viewContainerRef {ViewContainerRef}
+     * @param _changeDetectorRef {ChangeDetectorRef}
+     * @param _elementRef {ElementRef}
      */
     constructor(@Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
-                @Inject(NGXLogger) _logger: NGXLogger) {
-        super(_translateService, _renderer, _logger);
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
+        super(_translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
 
     // -------------------------------------------------
