@@ -2,6 +2,7 @@ import {DatePickerComponent, IDatePickerConfig} from 'ng2-date-picker';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
+    AfterContentChecked,
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
@@ -80,7 +81,7 @@ export interface INgxDatePickerConfig {
  * Abstract tree-view component base on {DatePickerComponent}
  */
 export abstract class AbstractDatePickerComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+    extends AbstractComponent implements AfterViewInit, AfterContentChecked {
 
     protected static DATEPICKER_SELECTOR: string = 'dp-date-picker';
 
@@ -255,6 +256,13 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
         if (!this._datePickerComponent) {
             this._datePickerComponent = ComponentUtils.queryComponent(this.queryDatePickerComponent);
         }
+    }
+
+    ngAfterContentChecked() {
+        super.ngAfterContentChecked();
+
+        this.datePickerComponent
+        && this.datePickerComponent.onScroll();
     }
 
     onClose($event: IEvent) {
