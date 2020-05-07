@@ -64,6 +64,7 @@ import {HtmlCellComponent} from './smart-table/html.cell.component';
 import {DpDatePickerModule} from 'ng2-date-picker';
 import {NgxDatePickerComponent} from './datepicker/datepicker.component';
 import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
+import {DatePickerFormFieldComponent} from './formly/formly.datepicker.field.component';
 
 @NgModule({
     imports: [
@@ -146,6 +147,11 @@ import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
                     component: PasswordFormFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'date-picker',
+                    component: DatePickerFormFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -192,6 +198,7 @@ import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
         HtmlCellComponent,
         NgxDatePickerComponent,
         DatePickerCellComponent,
+        DatePickerFormFieldComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -220,6 +227,7 @@ import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
         HtmlCellComponent,
         NgxDatePickerComponent,
         DatePickerCellComponent,
+        DatePickerFormFieldComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -239,6 +247,7 @@ import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
         HtmlCellComponent,
         NgxDatePickerComponent,
         DatePickerCellComponent,
+        DatePickerFormFieldComponent,
     ],
 })
 export class ComponentsModule {
