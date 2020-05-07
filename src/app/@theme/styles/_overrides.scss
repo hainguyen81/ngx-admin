@@ -159,6 +159,61 @@
         }
     }
 
+    /* date-picker */
+    dp-day-calendar .dp-day-calendar-container {
+        font: inherit;
+        padding: 5px;
+        background-color: transparent;
+
+        dp-calendar-nav .dp-calendar-nav-container {
+            border: none;
+            background-color: transparent;
+
+            .dp-nav-header,
+            .dp-nav-header .dp-nav-header-btn,
+            .dp-nav-header .dp-nav-header-btn:focus {
+                outline: none;
+                border: none;
+                background-color: transparent;
+            }
+
+            .dp-nav-btns-container,
+            .dp-nav-btns-container .dp-calendar-nav-container-left,
+            .dp-nav-btns-container .dp-calendar-nav-container-left .dp-calendar-nav-left,
+            .dp-nav-btns-container .dp-calendar-nav-container-left .dp-calendar-nav-left:focus,
+            .dp-nav-btns-container .dp-calendar-nav-container-right,
+            .dp-nav-btns-container .dp-calendar-nav-container-right .dp-calendar-nav-right,
+            .dp-nav-btns-container .dp-calendar-nav-container-right .dp-calendar-nav-right:focus {
+                outline: none;
+                border: none;
+                background-color: transparent;
+            }
+        }
+
+        .dp-calendar-wrapper {
+            .dp-weekdays {
+                font: inherit;
+
+                .dp-calendar-weekday {
+                    padding: 5px;
+                    width: 35px;
+                    border-left: none;
+                }
+            }
+            .dp-calendar-week {
+                font:  inherit;
+
+                .dp-calendar-day,
+                .dp-calendar-day:focus {
+                    border: none;
+                    outline: none;
+                    padding: 5px;
+                    width: 35px;
+                }
+            }
+        }
+    }
+
     /* Toaster */
 
 }
