@@ -23,12 +23,12 @@ export class DatePickerFormFieldComponent extends AbstractFieldType {
     // -------------------------------------------------
 
     set config(_config: any) {
+        super.config = _config;
         const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
         if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
             __dtConfig.format = this.translate(__dtConfig.format);
         }
-        super.config = __dtConfig;
     }
 
     /**
@@ -36,7 +36,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType {
      * @return the date/time format pattern from configuration
      */
     get dateTimePattern(): string {
-        const __config: INgxDatePickerConfig = super.config as INgxDatePickerConfig;
+        const __config: INgxDatePickerConfig = this.config as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
         return  __dtConfig.format;
     }
