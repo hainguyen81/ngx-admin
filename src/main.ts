@@ -16,6 +16,7 @@ if (environment.production) {
 }
 
 // TODO should mixins prototypes before bootstrap application module
+window.console.warn(['Browser locale', navigator.language, navigator.languages]);
 mixins(ModalDialogComponent, [ComponentLifeCycle]);
 
 const platformRef: PlatformRef = platformBrowserDynamic();

@@ -14,6 +14,7 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {isArray} from 'util';
 import {Meta, Title} from '@angular/platform-browser';
+import HtmlUtils from './utils/html.utils';
 
 @Component({
     selector: 'ngx-app',
@@ -52,7 +53,16 @@ export class AppComponent implements OnInit {
         this.analytics.trackPageViews();
         this.seoService.trackCanonicalChanges();
 
-        this.translateService.setDefaultLang(AppConfig.i18n.defaultLang);
+        // detect browser language and supported languages
+        let language: string = HtmlUtils.detectBrowserLanguage();
+        if (!language.length || AppConfig.i18n.languages.indexOf(language) < 0) {
+            language = AppConfig.i18n.defaultLang;
+
+        } else if (AppConfig.i18n.defaultLang !== language) {
+            AppConfig.i18n.defaultLang = language;
+        }
+        this.logger.warn('Default application language', language);
+        this.translateService.setDefaultLang(language);
         this.translateService.use(AppConfig.i18n.use);
         this.translateService.addLangs(AppConfig.i18n.languages);
         this.translateService.get('common.search.placeholder')

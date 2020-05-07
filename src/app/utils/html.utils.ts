@@ -206,4 +206,37 @@ export default class HtmlUtils {
             height: (element instanceof HTMLElement ? (<HTMLElement>element).offsetHeight : -1),
         };
     }
+
+    /**
+     * Get the default configuration browser language
+     * @return the default configuration browser language
+     */
+    public static detectBrowserLanguage(): string {
+        const language: string = (isNullOrUndefined(navigator) ? '' : navigator.language || '');
+        return (!language.length || language.indexOf('-') < 0
+            ? language || '' : language.substring(0, language.indexOf('-')));
+    }
+
+    /**
+     * Get all configuration browser languages
+     * @return all configuration browser languages
+     */
+    public static detectBrowserLanguages(): string[] {
+        const languages: string[] = this.detectBrowserConfigurationLanguages();
+        const correctLanguages: string [] = [];
+        languages.forEach(language => {
+            const lang: string = (!language.length || language.indexOf('-') < 0
+                ? language : language.substring(0, language.indexOf('-')));
+            lang.length && correctLanguages.push(lang);
+        });
+        return correctLanguages;
+    }
+
+    /**
+     * Get all configuration browser languages
+     * @return all configuration browser languages
+     */
+    public static detectBrowserConfigurationLanguages(): string[] {
+        return (isNullOrUndefined(navigator) ? [] : Array.from(navigator.languages || []));
+    }
 }
