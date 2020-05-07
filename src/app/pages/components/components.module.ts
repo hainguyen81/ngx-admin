@@ -4,7 +4,7 @@ import {
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
-    NbContextMenuModule,
+    NbContextMenuModule, NbDatepickerModule,
     NbIconModule,
     NbInputModule,
     NbLayoutModule,
@@ -61,6 +61,7 @@ import {NgxBarcodeModule} from 'ngx-barcode';
 import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {HtmlCellComponent} from './smart-table/html.cell.component';
+import {DpDatePickerModule} from 'ng2-date-picker';
 
 @NgModule({
     imports: [
@@ -76,6 +77,7 @@ import {HtmlCellComponent} from './smart-table/html.cell.component';
         NbCardModule,
         NbSearchModule,
         NbTabsetModule,
+        NbDatepickerModule,
         FormsModule,
 
         /* Angular material modules */
@@ -159,6 +161,9 @@ import {HtmlCellComponent} from './smart-table/html.cell.component';
         /*Validators*/
         CustomFormsModule,
         ValidatorsModule,
+
+        /* Datepicker */
+        DpDatePickerModule,
 
         /* Barcode */
         NgxBarcodeModule.forRoot(),
