@@ -62,6 +62,7 @@ import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {HtmlCellComponent} from './smart-table/html.cell.component';
 import {DpDatePickerModule} from 'ng2-date-picker';
+import {NgxDatePickerComponent} from './datepicker/datepicker.component';
 
 @NgModule({
     imports: [
@@ -188,6 +189,7 @@ import {DpDatePickerModule} from 'ng2-date-picker';
         RowNumberCellComponent,
         BarcodeCellComponent,
         HtmlCellComponent,
+        NgxDatePickerComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -214,6 +216,7 @@ import {DpDatePickerModule} from 'ng2-date-picker';
         PasswordFormFieldComponent,
         BarcodeCellComponent,
         HtmlCellComponent,
+        NgxDatePickerComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -231,6 +234,7 @@ import {DpDatePickerModule} from 'ng2-date-picker';
         PasswordFormFieldComponent,
         BarcodeCellComponent,
         HtmlCellComponent,
+        NgxDatePickerComponent,
     ],
 })
 export class ComponentsModule {
