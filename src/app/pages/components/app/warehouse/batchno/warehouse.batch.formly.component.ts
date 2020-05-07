@@ -32,6 +32,7 @@ import {IGeneralSettings} from '../../../../../@core/data/system/general.setting
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import moment from 'moment';
 
 /* default warehouse batch no formly config */
 export const WarehouseBatchNoFormConfig: FormlyConfig = new FormlyConfig();
@@ -87,6 +88,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                         required: true,
                         config: {
                             appendTo: document.body,
+                            minDate: moment(new Date()),
                         },
                     },
                 },
@@ -109,6 +111,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                         required: true,
                         config: {
                             appendTo: document.body,
+                            minDate: moment(new Date()),
                         },
                     },
                 },

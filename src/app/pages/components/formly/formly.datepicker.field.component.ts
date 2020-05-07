@@ -6,7 +6,7 @@ import {INgxDatePickerConfig} from '../datepicker/abstract.datepicker.component'
 import {IDatePickerConfig} from 'ng2-date-picker';
 import {isNullOrUndefined} from 'util';
 import {Moment} from 'moment';
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Formly date-picker field component base on {FieldType}
