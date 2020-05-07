@@ -100,6 +100,11 @@ import {AppFormlyDatePickerFieldComponent} from './app.formly.datepicker.field.c
                     component: AppCityFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'app-date-picker',
+                    component: AppFormlyDatePickerFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
