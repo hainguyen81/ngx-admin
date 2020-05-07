@@ -6,9 +6,9 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     Inject,
-    Input,
+    Input, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -96,9 +96,25 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
 
     @Input('model') private _model: any;
 
+    @Output() readonly openListener: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    @Output() readonly closeListener: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    @Output() readonly selectListener: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    get config(): any {
+        return super.config;
+    }
+
+    set config(_config: any) {
+        super.config = _config;
+        const cfg: INgxDatePickerConfig = _config as INgxDatePickerConfig;
+        if (this.datePickerComponent && cfg) {
+            this.datePickerComponent.config = cfg.config;
+        }
+    }
 
     /**
      * Get the {DatePickerComponent} instance
@@ -106,6 +122,14 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
      */
     protected get datePickerComponent(): DatePickerComponent {
         return this._datePickerComponent;
+    }
+
+    /**
+     * Get a boolean value indicating the popup whether is showing
+     * @return true for showing; else false
+     */
+    get isShowing(): boolean {
+        return this.datePickerComponent && this.datePickerComponent._areCalendarsShown;
     }
 
     /**
@@ -269,6 +293,7 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     onClose($event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClose', $event);
+        this.closeListener.emit($event);
     }
 
     onChange($event: IEvent) {
@@ -294,10 +319,12 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     onSelect($event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSelect', $event);
+        this.selectListener.emit($event);
     }
 
     onOpen($event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onOpen', $event);
+        this.openListener.emit($event);
     }
 }

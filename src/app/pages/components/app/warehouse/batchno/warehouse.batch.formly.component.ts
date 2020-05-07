@@ -89,6 +89,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                         config: {
                             appendTo: document.body,
                             minDate: moment(new Date()),
+                            format: 'common.date.dd/mm/yyyy',
                         },
                     },
                 },
@@ -112,6 +113,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                         config: {
                             appendTo: document.body,
                             minDate: moment(new Date()),
+                            format: 'common.date.dd/mm/yyyy',
                         },
                     },
                 },

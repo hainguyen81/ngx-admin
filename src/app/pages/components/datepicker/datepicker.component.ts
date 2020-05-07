@@ -34,6 +34,10 @@ export class NgxDatePickerComponent extends AbstractDatePickerComponent<DataSour
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    get config(): any {
+        return super.config;
+    }
+
     set config(_config: any) {
         super.config = _config;
         const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;

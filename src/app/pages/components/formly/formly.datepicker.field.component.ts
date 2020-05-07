@@ -1,9 +1,10 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2,
+    Inject, QueryList,
+    Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
@@ -14,6 +15,9 @@ import {IDatePickerConfig} from 'ng2-date-picker';
 import {isNullOrUndefined} from 'util';
 import {Moment} from 'moment';
 import moment from 'moment';
+import {NgxDatePickerComponent} from '../datepicker/datepicker.component';
+import ComponentUtils from '../../../utils/component.utils';
+import {IEvent} from '../abstract.component';
 
 /**
  * Formly date-picker field component base on {FieldType}
@@ -23,11 +27,31 @@ import moment from 'moment';
     templateUrl: './formly.datepicker.field.component.html',
     styleUrls: ['./formly.datepicker.field.component.scss'],
 })
-export class DatePickerFormFieldComponent extends AbstractFieldType {
+export class DatePickerFormFieldComponent extends AbstractFieldType implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @ViewChildren(NgxDatePickerComponent)
+    private readonly queryDatePickerComponent: QueryList<NgxDatePickerComponent>;
+    private _datePickerComponent: NgxDatePickerComponent;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {NgxDatePickerComponent} instance
+     * @return the {NgxDatePickerComponent} instance
+     */
+    protected datePickerComponent(): NgxDatePickerComponent {
+        return this._datePickerComponent;
+    }
+
+    get config(): any {
+        return super.config;
+    }
 
     set config(_config: any) {
         super.config = _config;
@@ -35,6 +59,9 @@ export class DatePickerFormFieldComponent extends AbstractFieldType {
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
         if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
             __dtConfig.format = this.translate(__dtConfig.format);
+        }
+        if (this._datePickerComponent) {
+            this._datePickerComponent.config = _config;
         }
     }
 
@@ -45,15 +72,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType {
     get dateTimePattern(): string {
         const __config: INgxDatePickerConfig = this.config as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
-        return  __dtConfig.format;
-    }
-
-    set value(_value: Moment) {
-        super.value = this.valueParser(_value);
-    }
-
-    get value(): Moment {
-        return this.valueFormatter(super.value);
+        return isNullOrUndefined(__dtConfig) ? '' : __dtConfig.format;
     }
 
     // -------------------------------------------------
@@ -82,23 +101,53 @@ export class DatePickerFormFieldComponent extends AbstractFieldType {
     }
 
     // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this._datePickerComponent) {
+            this._datePickerComponent = ComponentUtils.queryComponent(
+                this.queryDatePickerComponent, component => {
+                    component
+                    && component.openListener.subscribe(e => {
+                        this.field.focus = true;
+                        component.model = this.valueFormatter(this.value);
+                        this.stateChanges.next();
+                    });
+                    component
+                    && component.closeListener.subscribe(e => {
+                        this.field.focus = false;
+                        this.value = this.valueParser(component.model);
+                        this.stateChanges.next();
+                    });
+                    component
+                    && component.selectListener.subscribe((e: IEvent) => {
+                        this.field.focus = true;
+                        component.model = e.data['date'];
+                        this.value = this.valueParser(component.model);
+                    });
+                });
+            if (this._datePickerComponent) {
+                this._datePickerComponent.config = this.config;
+            }
+        }
+    }
+
+    // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
 
     protected valueFormatter(value: any): Moment {
-        const momentValue: Moment = value as Moment;
-        const dtValue: Date = value as Date;
-        const numberValue: number = value as number;
-        return (momentValue ? momentValue : dtValue
-            ? moment(dtValue) : numberValue ? moment(numberValue)
-                : value ? moment(value.toString(), this.dateTimePattern) : undefined);
+        return (value ? moment(value, this.dateTimePattern) : undefined);
     }
 
     protected valueParser(value?: any): string {
         const momentValue: Moment = value as Moment;
         const dtValue: Date = value as Date;
         const numberValue: number = value as number;
-        return (momentValue ? momentValue.format(this.dateTimePattern)
+        return (momentValue ? moment(momentValue).format(this.dateTimePattern)
                 : dtValue ? moment(dtValue).format(this.dateTimePattern)
                     : numberValue ? moment(numberValue).format(this.dateTimePattern)
                         : value ? moment(value.toString()).format(this.dateTimePattern) : undefined);

@@ -10,7 +10,6 @@ import {
 import {DatePickerFormFieldComponent} from '../../../formly/formly.datepicker.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {Moment} from 'moment';
 
 /**
  * Formly Image field component base on {FieldType}
