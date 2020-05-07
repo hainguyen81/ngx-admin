@@ -85,7 +85,9 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                     'config': {
                         mode: 'day',
                         required: true,
-                        config: {},
+                        config: {
+                            appendTo: 'body',
+                        },
                     },
                 },
             },
@@ -105,7 +107,9 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                     'config': {
                         mode: 'day',
                         required: true,
-                        config: {},
+                        config: {
+                            appendTo: 'body',
+                        },
                     },
                 },
             },
