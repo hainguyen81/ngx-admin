@@ -1,13 +1,13 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
-  ::ng-deep .form-field.form-date-picker-field {
-    width: 100%;
-    height: 100%;
+	::ng-deep .form-field.form-date-picker-field {
+		width: 100%;
+		height: 100%;
 
-    ngx-date-picker {
-      width: inherit;
-      height: inherit;
-    }
-  }
+		ngx-date-picker {
+			width: inherit;
+			height: inherit;
+		}
+	}
 }
