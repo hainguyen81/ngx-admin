@@ -15,6 +15,7 @@ import {filter, map} from 'rxjs/operators';
 import {isArray} from 'util';
 import {Meta, Title} from '@angular/platform-browser';
 import HtmlUtils from './utils/html.utils';
+import * as moment from 'moment';
 
 @Component({
     selector: 'ngx-app',
@@ -61,6 +62,7 @@ export class AppComponent implements OnInit {
         } else if (AppConfig.i18n.defaultLang !== language) {
             AppConfig.i18n.defaultLang = language;
         }
+
         this.logger.warn('Default application language', language);
         this.translateService.setDefaultLang(language);
         this.translateService.use(AppConfig.i18n.use);
@@ -71,6 +73,9 @@ export class AppComponent implements OnInit {
         this.translateService.get('app')
             .subscribe(value => this.logger.debug(
                 'Translated?', 'app', ' -> ', value));
+
+        // apply moment locale for date/time
+        moment.locale(AppConfig.i18n.use);
 
         // apply application header configuration
         this.detectForPageHeaderConfig();

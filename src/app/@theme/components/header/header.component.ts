@@ -34,6 +34,7 @@ import {NgxLocalStorageEncryptionService} from '../../../services/storage.servic
 import {isArray, isNullOrUndefined} from 'util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserDbService} from '../../../services/implementation/system/user/user.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'ngx-header',
@@ -187,6 +188,9 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
     }
 
     changeLanguage(language: string) {
+        // apply moment locale for date/time
+        moment.locale(language);
+
         this.getTranslateService().use(language);
         this.user['lang'] = language;
         this.authDbService.update(this.token);
