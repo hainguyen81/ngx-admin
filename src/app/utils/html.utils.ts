@@ -227,7 +227,7 @@ export default class HtmlUtils {
         languages.forEach(language => {
             const lang: string = (!language.length || language.indexOf('-') < 0
                 ? language : language.substring(0, language.indexOf('-')));
-            lang.length && correctLanguages.push(lang);
+            lang.length && correctLanguages.indexOf(lang) < 0 && correctLanguages.push(lang);
         });
         return correctLanguages;
     }
