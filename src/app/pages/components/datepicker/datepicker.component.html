@@ -14,7 +14,7 @@
                 [maxTime]="maxTime"
                 [minDate]="minDate"
                 [minTime]="minTime"
-                [placeholder]="placeholder | translate"
+                [placeholder]="(placeholder || '') | translate"
                 [theme]="theme"
 
                 (keydown)="onKeyDown({ event: $event, data: datePicker })"

@@ -84,7 +84,6 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                     required: true,
                     'config': {
                         mode: 'day',
-                        placeholder: 'warehouse.batch_no.form.mfg_date.placeholder',
                         required: true,
                         config: {},
                     },

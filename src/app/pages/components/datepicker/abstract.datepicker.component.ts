@@ -40,7 +40,7 @@ export interface INgxDatePickerConfig {
     /**
      * The date-picker input placeholder
      */
-    placeholder?: string | null;
+    placeholder?: string | '';
     /**
      * This is a validation rule, if there won't be any selected date then the containing form will be invalid.
      */
