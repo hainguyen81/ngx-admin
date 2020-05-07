@@ -113,6 +113,14 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
         const cfg: INgxDatePickerConfig = _config as INgxDatePickerConfig;
         if (this.datePickerComponent && cfg) {
             this.datePickerComponent.config = cfg.config;
+            this.datePickerComponent.displayDate = this.displayDate;
+            this.datePickerComponent.disabled = this.isDisabled;
+            this.datePickerComponent.maxDate = this.maxDate;
+            this.datePickerComponent.maxTime = this.maxTime;
+            this.datePickerComponent.minDate = this.minDate;
+            this.datePickerComponent.minTime = this.minTime;
+            this.datePickerComponent.placeholder = this.translate(this.placeholder || '');
+            this.datePickerComponent.theme = this.theme;
         }
     }
 
