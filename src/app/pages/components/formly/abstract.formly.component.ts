@@ -16,7 +16,7 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
 import {FormGroup} from '@angular/forms';
-import {isArray, isObject} from 'util';
+import {isArray, isNullOrUndefined, isObject} from 'util';
 import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -117,6 +117,14 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      */
     protected getFormlyForm(): FormlyForm {
         return this.formlyForm;
+    }
+
+    get config(): any {
+        return super.config as FormlyConfig;
+    }
+
+    set config(_config: any) {
+        super.config = this.translateFormConfig(_config);
     }
 
     // -------------------------------------------------
@@ -221,6 +229,34 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     }
 
     /**
+     * Translate form configuration
+     * @param _config {FormlyConfig}
+     */
+    private translateFormConfig(_config?: FormlyConfig): FormlyConfig {
+        if (!isNullOrUndefined(_config)) {
+            _config['messages:keys'] = {};
+            const messages: any = _config.messages;
+            if (Object.keys(messages).length) {
+                Object.keys(messages).forEach(messageKey => {
+                    const message: any = messages[messageKey];
+                    messages[messageKey] = this.__translateFormValidationMessage(
+                        messageKey, message, _config['messages:keys']);
+                });
+            }
+
+            const _this: AbstractFormlyComponent<any, any> = this;
+            const __originalAddValidatorMessage: Function = _config.addValidatorMessage;
+            _config.addValidatorMessage =
+                (name: string, message: string | ((error: any, field: FormlyFieldConfig) => string)) => {
+                    const translatedMessage: string | ((error: any, field: FormlyFieldConfig) => string) =
+                        _this.__translateFormValidationMessage(name, message, _config['messages:keys']);
+                    __originalAddValidatorMessage.apply(_config, [name, translatedMessage]);
+                };
+        }
+        return _config;
+    }
+
+    /**
      * Translate form fields configuration
      */
     private translateFormFields(): void {
@@ -292,8 +328,9 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                     const validator: any = validationInValidators[i];
                     if (typeof validator === 'string' && (validator || '').length) {
                         validationInValidators[i] =
-                            this.__translateFormFieldValidationMessage(
-                                field, ['validation', i.toString()].join(':'), validator);
+                            this.__translateFormValidationMessage(
+                                ['validation', i.toString()].join(':'),
+                                validator, field['validation:messages:keys']);
                     }
                 }
 
@@ -303,8 +340,9 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                     if (isObject(validator)) {
                         const validatorMessage: any = validator['message'];
                         validator['message'] =
-                            this.__translateFormFieldValidationMessage(
-                                field, [validatorKey, 'message'].join(':'), validatorMessage);
+                            this.__translateFormValidationMessage(
+                                [validatorKey, 'message'].join(':'),
+                                validatorMessage, field['validation:messages:keys']);
                     }
                 });
             }
@@ -329,22 +367,23 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
             Object.keys(validationMessages).forEach(validationMessageKey => {
                 const validationMessage: any = validationMessages[validationMessageKey];
                 validationMessages[validationMessageKey] =
-                    this.__translateFormFieldValidationMessage(
-                        field, validationMessageKey, validationMessage);
+                    this.__translateFormValidationMessage(
+                        validationMessageKey, validationMessage, field['validation:messages:keys']);
             });
         }
     }
 
     /**
      * Translate the form field validation message configuration
-     * @param field to cache if necessary
-     * @param validationMessageKey current vaidation configuration key to cache
+     * @param validationMessageKey current validation configuration key to cache
      * @param validationMessage form field validation message function or string to translate
+     * @param cachedStorage cache storage for translating future
      * @private
      */
-    private __translateFormFieldValidationMessage(
-        field: FormlyFieldConfig, validationMessageKey: string, validationMessage: any):
+    private __translateFormValidationMessage(
+        validationMessageKey: string, validationMessage: any, cachedStorage: any):
         string | ((e: any, f: FormlyFieldConfig) => string) {
+        cachedStorage = (cachedStorage || {});
         if (typeof validationMessage === 'function') {
             return (e: any, f: FormlyFieldConfig) => {
                 const validatedMessage: string = (<Function>validationMessage).apply(f, [e, f]);
@@ -353,10 +392,10 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
 
         } else if (typeof validationMessage === 'string' && (validationMessage || '').length) {
             const validationMessageNewKey: string = [validationMessageKey, 'key'].join(':');
-            if (!field['validation:messages:keys'].hasOwnProperty(validationMessageNewKey)) {
-                field['validation:messages:keys'][validationMessageNewKey] = validationMessage;
+            if (!cachedStorage.hasOwnProperty(validationMessageNewKey)) {
+                cachedStorage[validationMessageNewKey] = validationMessage;
             }
-            return this.translate(field['validation:messages:keys'][validationMessageNewKey]);
+            return this.translate(cachedStorage[validationMessageNewKey]);
         }
     }
 
