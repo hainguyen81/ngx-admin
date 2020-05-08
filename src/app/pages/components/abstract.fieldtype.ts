@@ -237,7 +237,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * Create a new instance of {AbstractFieldType} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param logger {NGXLogger}
+     * @param _logger {NGXLogger}
      * @param _factoryResolver {ComponentFactoryResolver}
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
@@ -315,6 +315,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     /**
      * Translate the specified value
      * @param value to translate
+     * @param interpolateParams parameters
      * @return translated value or itself
      */
     public translate(value?: string, interpolateParams?: Object | null): string {

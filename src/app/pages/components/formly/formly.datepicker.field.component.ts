@@ -132,20 +132,20 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                     component
                     && component.openListener.subscribe(e => {
                         this.field.focus = true;
-                        component.model = this.valueFormatter(this.value);
+                        component.model = this.value;
                         this.stateChanges.next();
                     });
                     component
                     && component.closeListener.subscribe(e => {
                         this.field.focus = false;
-                        this.value = this.valueParser(component.model);
+                        this.value = component.model;
                         this.stateChanges.next();
                     });
                     component
                     && component.selectListener.subscribe((e: IEvent) => {
                         this.field.focus = true;
                         component.model = e.data['date'];
-                        this.value = this.valueParser(component.model);
+                        this.value = component.model;
                     });
                 });
         }

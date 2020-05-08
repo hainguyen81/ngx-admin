@@ -244,7 +244,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         const checked: boolean = treeViewComponent.internalPropertyValue(
             item, 'internalChecked', false);
         treeViewComponent.setSelectedTreeviewItems(checked ? [item] : [], true);
-        const value: any = (checked ? this.valueParser(item) : null);
+        const value: any = (checked ? this.parseValue(item) : null);
         if (this.value !== value) {
             this.formControl && this.formControl.patchValue(
                 value, {onlySelf: true, emitEvent: updateValue});

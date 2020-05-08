@@ -140,7 +140,7 @@ export abstract class AppTreeSplitFormComponent<
         // Configure left/right component panes
         this.configPaneComponents();
 
-        // refresh data source at strat-up
+        // refresh data source at start-up
         super.getDataSource().refresh();
     }
 
