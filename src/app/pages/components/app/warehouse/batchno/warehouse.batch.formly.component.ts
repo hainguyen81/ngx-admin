@@ -109,7 +109,15 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
 
                             const mfg_date: Moment = fieldComponent.value;
                             const exp_value: Moment = moment(model.exp_date, fieldComponent.dateTimePattern);
-                            return (isNullOrUndefined(mfg_date) || mfg_date.isSameOrBefore(exp_value, 'd'));
+                            const valid: boolean = (isNullOrUndefined(mfg_date)
+                                || mfg_date.isSameOrBefore(exp_value, 'd'));
+                            if (valid && field.form && field.form.controls
+                                && field.form.controls.hasOwnProperty('exp_date')
+                                && field.form.controls['exp_date'].invalid) {
+                                 field.form.controls['exp_date']
+                                     .updateValueAndValidity({ onlySelf: true, emitEvent: true });
+                            }
+                            return valid;
                         },
                         message: 'warehouse.batch_no.form.mfg_date.must_less_equals_exp_date',
                     },
@@ -153,7 +161,15 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
 
                             const exp_date: Moment = fieldComponent.value;
                             const mfg_value: Moment = moment(model.mfg_date, fieldComponent.dateTimePattern);
-                            return (isNullOrUndefined(exp_date) || exp_date.isSameOrAfter(mfg_value, 'd'));
+                            const valid: boolean = (isNullOrUndefined(exp_date)
+                                || exp_date.isSameOrAfter(mfg_value, 'd'));
+                            if (valid && field.form && field.form.controls
+                                && field.form.controls.hasOwnProperty('mfg_date')
+                                && field.form.controls['mfg_date'].invalid) {
+                                field.form.controls['mfg_date']
+                                    .updateValueAndValidity({ onlySelf: true, emitEvent: true });
+                            }
+                            return valid;
                         },
                         message: 'warehouse.batch_no.form.exp_date.must_greater_equals_mfg_date',
                     },
