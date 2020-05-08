@@ -15,7 +15,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
-import {FormGroup} from '@angular/forms';
+import {AbstractControl, FormGroup, ValidationErrors} from '@angular/forms';
 import {isArray, isNullOrUndefined, isObject} from 'util';
 import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
@@ -25,7 +25,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {FormlyTemplateOptions} from '@ngx-formly/core/lib/components/formly.field.config';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ConfigOption, ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
+import {ConfigOption, ValidationMessageOption, ValidatorOption} from '@ngx-formly/core/lib/services/formly.config';
 
 /**
  * Abstract formly component base on {FormlyModule}
