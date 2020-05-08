@@ -71,7 +71,12 @@ import {ValidatorsModule} from 'ngx-validators';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            validationMessages: [{
+                name: 'required',
+                message: 'common.form.required',
+            }],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule

@@ -136,6 +136,7 @@
             "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
         },
         "form": {
+            "required": "This value is required",
             "invalid_data": "Please correct data before performing action!",
             "action": {
                 "save": "Save",

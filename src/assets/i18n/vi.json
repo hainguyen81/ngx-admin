@@ -136,6 +136,7 @@
             "unknown": "Bạn không có đủ quyền hoặc dữ liệu đã bị sai! Vui lòng liên hệ Quản trị viên để được hỗ trợ!"
         },
         "form": {
+            "required": "Giá trị này là bắt buộc",
             "invalid_data": "Vui lòng nhập đầy đủ thông tin yêu cầu trước khi tiếp tục!",
             "action": {
                 "save": "Lưu",

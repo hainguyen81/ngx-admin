@@ -93,9 +93,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                             format: 'common.date.dd/mm/yyyy',
                         },
                     },
-                },
-                validation: {
-                    show: false,
+                    'must_less_equals_exp_date': false,
                 },
                 validators: {
                     'must_less_equals_exp_date': {
@@ -106,20 +104,14 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                             if (isNullOrUndefined(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
                                 || !(model.exp_date || '').length) {
-                                field.validation.show = (formControl.touched && !(model.mfg_date || '').length);
-                                return false;
+                                return true;
                             }
 
                             const mfg_date: Moment = fieldComponent.value;
                             const exp_value: Moment = moment(model.exp_date, fieldComponent.dateTimePattern);
-                            field.validation.show = true;
-                            return mfg_date.isSameOrAfter(exp_value, 'd');
+                            return (isNullOrUndefined(mfg_date) || mfg_date.isSameOrBefore(exp_value, 'd'));
                         },
-                        message: (e, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent = field.formControl['componentRef'];
-                            return fieldComponent.translate(
-                                'warehouse.batch_no.form.mfg_date.must_less_equals_exp_date');
-                        },
+                        message: 'warehouse.batch_no.form.mfg_date.must_less_equals_exp_date',
                     },
                 },
             },
@@ -144,33 +136,26 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                             format: 'common.date.dd/mm/yyyy',
                         },
                     },
-                },
-                validation: {
-                    show: false,
+                    'must_greater_equals_mfg_date': false,
                 },
                 validators: {
                     'must_greater_equals_mfg_date': {
                         expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
                             const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
                             const model: IWarehouseBatchNo = formControl.root.value;
+
                             // if data is invalid; then always be valid
                             if (isNullOrUndefined(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
                                 || !(model.mfg_date || '').length) {
-                                field.validation.show = (formControl.touched && !(model.exp_date || '').length);
-                                return false;
+                                return true;
                             }
 
                             const exp_date: Moment = fieldComponent.value;
                             const mfg_value: Moment = moment(model.mfg_date, fieldComponent.dateTimePattern);
-                            field.validation.show = true;
-                            return exp_date.isSameOrAfter(mfg_value, 'd');
+                            return (isNullOrUndefined(exp_date) || exp_date.isSameOrAfter(mfg_value, 'd'));
                         },
-                        message: (e, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent = field.formControl['componentRef'];
-                            return fieldComponent.translate(
-                                'warehouse.batch_no.form.exp_date.must_greater_equals_mfg_date');
-                        },
+                        message: 'warehouse.batch_no.form.exp_date.must_greater_equals_mfg_date',
                     },
                 },
             },
