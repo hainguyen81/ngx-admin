@@ -3,7 +3,8 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, Injectable, Injector, Type,
+    Inject,
+    Injector,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,6 +15,12 @@ import {ConfigOption, ValidationMessageOption} from '@ngx-formly/core/lib/servic
  * Custom {FormlyFormBuilder} for translating form configuration
  */
 export class NgxFormlyFormBuilderRuntime {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private __initialized: boolean = false;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -87,6 +94,10 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {FormlyConfig} instance
      */
     get formlyConfig(): FormlyConfig {
+        if (!this.__initialized) {
+            this._formlyConfig = this.translateFormConfig(this._formlyConfig);
+            this.__initialized = true;
+        }
         return this._formlyConfig;
     }
 
@@ -95,7 +106,7 @@ export class NgxFormlyFormBuilderRuntime {
      * @param _config to apply
      */
     set formlyConfig(_config: FormlyConfig) {
-        this._formlyConfig = this.translateFormConfig(_config);
+        this._formlyConfig = _config;
     }
 
     // -------------------------------------------------
