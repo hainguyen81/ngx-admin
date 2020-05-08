@@ -10,6 +10,8 @@ import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
 import {ComponentLifeCycle, mixins} from './app/runtime/runtime';
 import {ModalDialogComponent} from 'ngx-modal-dialog';
+import {FormlyFormBuilder} from '@ngx-formly/core';
+import {NgxFormlyFormBuilder} from './app/runtime/formly.form.builder';
 
 if (environment.production) {
   enableProdMode();
@@ -18,6 +20,7 @@ if (environment.production) {
 // TODO should mixins prototypes before bootstrap application module
 window.console.warn(['Browser locale', navigator.language, navigator.languages]);
 mixins(ModalDialogComponent, [ComponentLifeCycle]);
+mixins(FormlyFormBuilder, [NgxFormlyFormBuilder]);
 
 const platformRef: PlatformRef = platformBrowserDynamic();
 platformRef.bootstrapModule(AppModule).then(

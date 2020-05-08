@@ -14,7 +14,7 @@ import {ConfigOption, ValidationMessageOption} from '@ngx-formly/core/lib/servic
  * Custom {FormlyFormBuilder} for translating form configuration
  */
 @Injectable()
-export class NgxFormlyFormBuilder extends FormlyFormBuilder {
+export class NgxFormlyFormBuilder {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -72,7 +72,7 @@ export class NgxFormlyFormBuilder extends FormlyFormBuilder {
      * Get the {FormlyConfig} instance
      * @return the {FormlyConfig} instance
      */
-    get config(): FormlyConfig {
+    get formlyConfig(): FormlyConfig {
         return this._formlyConfig;
     }
 
@@ -80,8 +80,8 @@ export class NgxFormlyFormBuilder extends FormlyFormBuilder {
      * Set the {FormlyConfig} instance
      * @param _config to apply
      */
-    set config(_config: FormlyConfig) {
-        this._formlyConfig = _config;
+    set formlyConfig(_config: FormlyConfig) {
+        this._formlyConfig = this.translateFormConfig(_config);
     }
 
     // -------------------------------------------------
@@ -105,9 +105,7 @@ export class NgxFormlyFormBuilder extends FormlyFormBuilder {
                 @Inject(ElementRef) private _elementRef: ElementRef,
                 @Inject(FORMLY_CONFIG) private _formlyConfig: FormlyConfig,
                 @Inject(Injector) private _injector: Injector) {
-        super(_formlyConfig, _factoryResolver, _injector);
-        _formlyConfig = this.translateFormConfig(_formlyConfig);
-        super['formlyConfig'] = _formlyConfig;
+        this._formlyConfig = this.translateFormConfig(_formlyConfig);
     }
 
     // -------------------------------------------------

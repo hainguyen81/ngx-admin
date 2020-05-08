@@ -1,8 +1,12 @@
 import './prototypes.import';
 import {
     APP_BOOTSTRAP_LISTENER,
-    APP_INITIALIZER, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, ElementRef,
-    ErrorHandler, Inject,
+    APP_INITIALIZER,
+    ChangeDetectorRef,
+    ComponentFactoryResolver,
+    ComponentRef,
+    ElementRef,
+    ErrorHandler,
     InjectionToken,
     Injector,
     LOCALE_ID,
@@ -166,7 +170,7 @@ import {
     WarehouseBatchNoDatasource,
 } from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {FORMLY_CONFIG, FormlyConfig, FormlyFormBuilder} from '@ngx-formly/core';
-import {NgxFormlyFormBuilder} from '../pages/components/formly/formly.form.builder';
+import {NgxFormlyFormBuilder} from '../runtime/formly.form.builder';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
