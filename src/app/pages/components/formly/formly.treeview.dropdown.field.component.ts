@@ -13,6 +13,7 @@ import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable} from 'rxjs';
+import ObjectUtils from '../../../utils/object.utils';
 
 /**
  * Formly Treeview Dropdown field component base on {FieldType}
@@ -69,6 +70,17 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      */
     public setTreeviewData(data?: any[] | Observable<any[]>): void {
         this.buildTemplateOptionsToTree(data);
+    }
+
+    get valueParser(): (value: any) => any {
+        return value => {
+            const itValue: TreeviewItem = ObjectUtils.cast(value, TreeviewItem);
+            return (itValue && itValue.value ? itValue.value['id'] : (value || {})['id']);
+        };
+    }
+
+    get valueFormatter(): (value: any) => any {
+        return value => this.filterValueTreeItem(value, 'id');
     }
 
     // -------------------------------------------------

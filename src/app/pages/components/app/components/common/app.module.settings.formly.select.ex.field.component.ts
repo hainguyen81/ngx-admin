@@ -135,15 +135,6 @@ export class AppModuleSettingsFormlySelectExFieldComponent
         this.generalSettingsDataSource.refresh();
     }
 
-    protected valueFormatter(value: any): any {
-        let options: any[];
-        options = this.items.filter(opt => {
-            return (opt && ((opt === value)
-                || (opt[this.getConfigValue('optionValueField')] === value)));
-        });
-        return options || [];
-    }
-
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------

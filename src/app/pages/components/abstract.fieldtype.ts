@@ -28,6 +28,9 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     private _field: F;
     @Input('config') private _config: any;
 
+    private _valueFormatter: (value: any) => any;
+    private _valueParser: (value: any) => any;
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
@@ -54,6 +57,46 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
                 this._field.templateOptions['config'] = this._config;
             }
         }
+    }
+
+    /**
+     * Get the method to format field value to show
+     * @return the method to format field value to show
+     */
+    get valueFormatter(): (value: any) => any {
+        let formatter: (value: any) => any = this._valueFormatter;
+        if (isNullOrUndefined(formatter) || typeof formatter !== 'function') {
+            formatter = this.getConfigValue('valueFormatter');
+        }
+        return formatter;
+    }
+
+    /**
+     * Get the method to format field value to show
+     * @return the method to format field value to show
+     */
+    set valueFormatter(_valueFormatter: (value: any) => any) {
+        this._valueFormatter = _valueFormatter;
+    }
+
+    /**
+     * Get the method to format field value to show
+     * @return the method to format field value to show
+     */
+    get valueParser(): (value: any) => any {
+        let parser: (value: any) => any = this._valueParser;
+        if (isNullOrUndefined(parser) || typeof parser !== 'function') {
+            parser = this.getConfigValue('valueParser');
+        }
+        return parser;
+    }
+
+    /**
+     * Get the method to format value to field value
+     * @return the method to format value to field value
+     */
+    set valueParser(_valueParser: (value: any) => any) {
+        this._valueParser = _valueParser;
     }
 
     /**
@@ -143,7 +186,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @return the {ComponentFactoryResolver} instance
      */
     protected get factoryResolver(): ComponentFactoryResolver {
-        return this.factoryResolver;
+        return this._factoryResolver;
     }
 
     /**
@@ -168,6 +211,22 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     protected get elementRef(): ElementRef {
         return this._elementRef;
+    }
+
+    /**
+     * Get the field value
+     * @return the field value
+     */
+    get value(): any {
+        return this.formatValue(super.value);
+    }
+
+    /**
+     * Set field value
+     * @param _value to apply
+     */
+    set value(_value: any) {
+        super.value = this.parseValue(_value);
     }
 
     // -------------------------------------------------
@@ -270,21 +329,27 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * Formatter function to format the model field value to viewed value
      * @param value model value to format
      */
-    protected valueFormatter(value: any): any {
-        return value;
+    protected formatValue(value: any): any {
+        const formatter: (value: any) => any = this.valueFormatter;
+        return (isNullOrUndefined(formatter) || typeof formatter !== 'function'
+            ? value : formatter.apply(this, [value]));
     }
 
     /**
      * Parser function to parse the specified field viewed value or data instance to the model value
      * @param value to parse
      */
-    protected valueParser(value?: any): any {
+    protected parseValue(value?: any): any {
         let retValue: any;
         retValue = value;
-        if (this.field) {
-            for (const parser of (this.field.parsers || [])) {
-                retValue = parser.apply(this, [retValue]);
+        const parser: (value: any) => any = this.valueParser;
+        if (isNullOrUndefined(parser) || typeof parser !== 'function' && this.field) {
+            for (const _parser of (this.field.parsers || [])) {
+                retValue = _parser.apply(this, [retValue]);
             }
+
+        } else if (!isNullOrUndefined(parser) && typeof parser === 'function') {
+            retValue = parser.apply(this, [retValue]);
         }
         return retValue;
     }

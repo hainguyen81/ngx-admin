@@ -2,9 +2,12 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, QueryList,
-    Renderer2, ViewChildren,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
@@ -75,6 +78,22 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
         return isNullOrUndefined(__dtConfig) ? '' : __dtConfig.format;
     }
 
+    get valueParser(): (value: any) => any {
+        return value => {
+            const momentValue: Moment = value as Moment;
+            const dtValue: Date = value as Date;
+            const numberValue: number = value as number;
+            return (momentValue ? moment(momentValue).format(this.dateTimePattern)
+                : dtValue ? moment(dtValue).format(this.dateTimePattern)
+                    : numberValue ? moment(numberValue).format(this.dateTimePattern)
+                        : value ? moment(value.toString()).format(this.dateTimePattern) : undefined);
+        };
+    }
+
+    get valueFormatter(): (value: any) => any {
+        return value => (value ? moment(value, this.dateTimePattern) : undefined);
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -130,23 +149,5 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                     });
                 });
         }
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    protected valueFormatter(value: any): Moment {
-        return (value ? moment(value, this.dateTimePattern) : undefined);
-    }
-
-    protected valueParser(value?: any): string {
-        const momentValue: Moment = value as Moment;
-        const dtValue: Date = value as Date;
-        const numberValue: number = value as number;
-        return (momentValue ? moment(momentValue).format(this.dateTimePattern)
-                : dtValue ? moment(dtValue).format(this.dateTimePattern)
-                    : numberValue ? moment(numberValue).format(this.dateTimePattern)
-                        : value ? moment(value.toString()).format(this.dateTimePattern) : undefined);
     }
 }

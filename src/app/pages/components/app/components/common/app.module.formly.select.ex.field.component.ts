@@ -55,7 +55,7 @@ export class AppModuleFormlySelectExFieldComponent
      * Create a new instance of {AppFormlySelectExFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param countryDataSource {CountryDatasource}
+     * @param moduleDataSource {ModuleDatasource}
      * @param _logger {NGXLogger}
      * @param _factoryResolver {ComponentFactoryResolver}
      * @param _viewContainerRef {ViewContainerRef}
@@ -91,14 +91,5 @@ export class AppModuleFormlySelectExFieldComponent
                 });
         });
         this.moduleDataSource.refresh();
-    }
-
-    protected valueFormatter(value: any): any {
-        let options: any[];
-        options = this.items.filter(opt => {
-            return (opt && ((opt === value)
-                || (opt[this.getConfigValue('optionValueField')] === value)));
-        });
-        return options || [];
     }
 }

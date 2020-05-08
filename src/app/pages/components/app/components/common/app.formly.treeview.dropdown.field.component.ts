@@ -4,13 +4,13 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import ObjectUtils from '../../../../../utils/object.utils';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from '../../components/app.treeview.i18n';
 import {IModel} from '../../../../../@core/data/base';
 import {NGXLogger} from 'ngx-logger';
@@ -92,14 +92,5 @@ export abstract class AppFormlyTreeviewDropdownFieldComponent<T extends IModel>
     public disableItemsByValue(value?: T | null): void {
         const item: TreeviewItem = (value && value.id ? this.valueFormatter(value.id) : null);
         item && this.disableItems(item);
-    }
-
-    protected valueFormatter(value: any): TreeviewItem {
-        return this.filterValueTreeItem(value, 'id');
-    }
-
-    protected valueParser(value?: any): any {
-        const itValue: TreeviewItem = ObjectUtils.cast(value, TreeviewItem);
-        return (itValue && itValue.value ? itValue.value['id'] : (value || {})['id']);
     }
 }

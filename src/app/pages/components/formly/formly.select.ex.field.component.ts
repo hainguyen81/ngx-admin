@@ -84,6 +84,17 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
         return (this.selectExComponent ? this.selectExComponent.selectedOptionValues : []);
     }
 
+    get valueFormatter(): (value: any) => any {
+        return value => {
+            let options: any[];
+            options = this.items.filter(opt => {
+                return (opt && ((opt === value)
+                    || (opt[this.getConfigValue('optionValueField')] === value)));
+            });
+            return options || [];
+        };
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -184,7 +195,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * @param value to apply
      */
     public setValue(value?: any): void {
-        value = this.valueParser(value);
+        value = this.parseValue(value);
         if (this.value !== value) {
             this.formControl && this.formControl.patchValue(
                 value, {onlySelf: true, emitEvent: true});
@@ -194,7 +205,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     private __applySelectedItems(selectComponent?: NgxSelectExComponent, value?: any) {
         selectComponent = (selectComponent || this.selectExComponent);
         if (!selectComponent || !this.items.length) return;
-        value = this.valueFormatter(value);
+        value = this.formatValue(value);
         selectComponent.setSelectedItems(isArray(value) ? Array.from(value) : [value]);
     }
 

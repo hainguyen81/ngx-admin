@@ -47,6 +47,21 @@ export class AppCountryFormlySelectExFieldComponent
     implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    get valueFormatter(): (value: any) => any {
+        return value => {
+            let options: any[];
+            options = this.items.filter(opt => {
+                return (opt && ((opt === value)
+                    || (opt[this.getConfigValue('optionValueField')] === value)));
+            });
+            return options || [];
+        };
+    }
+
+    // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
@@ -100,14 +115,5 @@ export class AppCountryFormlySelectExFieldComponent
             item => (item && item.data
             && (((item.data as ICountry).flag || '').length)
                 ? [(item.data as ICountry).flag] : null));
-    }
-
-    protected valueFormatter(value: any): any {
-        let options: any[];
-        options = this.items.filter(opt => {
-            return (opt && ((opt === value)
-                || (opt[this.getConfigValue('optionValueField')] === value)));
-        });
-        return options || [];
     }
 }
