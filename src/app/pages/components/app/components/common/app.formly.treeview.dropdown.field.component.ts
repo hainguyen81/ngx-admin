@@ -90,7 +90,7 @@ export abstract class AppFormlyTreeviewDropdownFieldComponent<T extends IModel>
      * @param value to disable
      */
     public disableItemsByValue(value?: T | null): void {
-        const item: TreeviewItem = (value && value.id ? this.valueFormatter(value.id) : null);
+        const item: TreeviewItem = (value && value.id ? this.formatValue(value.id) : null);
         item && this.disableItems(item);
     }
 }

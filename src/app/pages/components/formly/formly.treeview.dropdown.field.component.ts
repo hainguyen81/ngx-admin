@@ -219,7 +219,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
 
         // apply selected value
         let selectedValue: TreeviewItem;
-        selectedValue = this.valueFormatter(value);
+        selectedValue = this.formatValue(value);
         if (selectedValue) {
             treeViewComponent.internalProperty(
                 selectedValue, 'internalChecked', true);

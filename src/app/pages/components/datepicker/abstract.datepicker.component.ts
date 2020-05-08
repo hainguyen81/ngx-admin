@@ -126,6 +126,7 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
             this._datePickerComponent.minTime = this.minTime;
             this._datePickerComponent.placeholder = this.translate(this.placeholder || '');
             this._datePickerComponent.theme = this.theme;
+            this._datePickerComponent.init();
         }
     }
 

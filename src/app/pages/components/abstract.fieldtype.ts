@@ -105,7 +105,8 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param defaultValue default value if not found or undefined
      */
     protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
-        const value: any = this.config[propertyKey];
+        const _config: any = this.config;
+        const value: any = (_config || {})[propertyKey];
         return (isNullOrUndefined(value) ? defaultValue : value);
     }
 
@@ -115,7 +116,10 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param configValue configuration value
      */
     protected setConfigValue(propertyKey: string, configValue?: any | null): void {
-        this.config[propertyKey] = configValue;
+        const _config: any = this.config;
+        if (!isNullOrUndefined(_config)) {
+            _config[propertyKey] = configValue;
+        }
     }
 
     /**
