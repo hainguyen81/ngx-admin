@@ -1,0 +1,194 @@
+import {FORMLY_CONFIG, FormlyConfig, FormlyFieldConfig, FormlyFormBuilder} from '@ngx-formly/core';
+import {
+    ChangeDetectorRef,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject, Injectable, Injector,
+    ViewContainerRef,
+} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {isNullOrUndefined} from 'util';
+import {ConfigOption, ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
+
+/**
+ * Custom {FormlyFormBuilder} for translating form configuration
+ */
+@Injectable()
+export class NgxFormlyFormBuilder extends FormlyFormBuilder {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {ComponentFactoryResolver} instance
+     * @return the {ComponentFactoryResolver} instance
+     */
+    protected get factoryResolver(): ComponentFactoryResolver {
+        return this._factoryResolver;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance
+     * @return the {ViewContainerRef} instance
+     */
+    protected get viewContainerRef(): ViewContainerRef {
+        return this._viewContainerRef;
+    }
+
+    /**
+     * Get the {ChangeDetectorRef} instance
+     * @return the {ChangeDetectorRef} instance
+     */
+    protected get changeDetectorRef(): ChangeDetectorRef {
+        return this._changeDetectorRef;
+    }
+
+    /**
+     * Get the {ElementRef} instance
+     * @return the {ElementRef} instance
+     */
+    protected get elementRef(): ElementRef {
+        return this._elementRef;
+    }
+
+    /**
+     * Get the {Injector} instance
+     * @return the {Injector} instance
+     */
+    protected get serviceInjector(): Injector {
+        return this._injector;
+    }
+
+    /**
+     * Get the {TranslateService} instance
+     * @return the {TranslateService} instance
+     */
+    protected get translateService(): TranslateService {
+        return this._translateService;
+    }
+
+    /**
+     * Get the {FormlyConfig} instance
+     * @return the {FormlyConfig} instance
+     */
+    get config(): FormlyConfig {
+        return this._formlyConfig;
+    }
+
+    /**
+     * Set the {FormlyConfig} instance
+     * @param _config to apply
+     */
+    set config(_config: FormlyConfig) {
+        this._formlyConfig = _config;
+    }
+
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {AbstractComponent} class
+     * @param _translateService {TranslateService}
+     * @param _factoryResolver {ComponentFactoryResolver}
+     * @param _viewContainerRef {ViewContainerRef}
+     * @param _changeDetectorRef {ChangeDetectorRef}
+     * @param _elementRef {ElementRef}
+     * @param _injector {Injector}
+     * @param _formlyConfig {FormlyConfig}
+     */
+    constructor(@Inject(TranslateService) private _translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) private _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) private _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) private _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) private _elementRef: ElementRef,
+                @Inject(FORMLY_CONFIG) private _formlyConfig: FormlyConfig,
+                @Inject(Injector) private _injector: Injector) {
+        super(_formlyConfig, _factoryResolver, _injector);
+        _formlyConfig = this.translateFormConfig(_formlyConfig);
+        super['formlyConfig'] = _formlyConfig;
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Translate the specified value
+     * @param value to translate
+     * @param interpolateParams message parameters
+     * @return translated value or itself
+     */
+    public translate(value?: string, interpolateParams?: Object | null): string {
+        if (!(value || '').length || !this.translateService) {
+            return value;
+        }
+        return (interpolateParams
+            ? this.translateService.instant(value, interpolateParams)
+            : this.translateService.instant(value));
+    }
+
+    /**
+     * Translate form configuration
+     * @param _config {FormlyConfig}
+     */
+    private translateFormConfig(_config?: FormlyConfig): FormlyConfig {
+        if (!isNullOrUndefined(_config)) {
+            _config['messages:keys'] = {};
+            const messages: any = _config.messages;
+            if (Object.keys(messages).length) {
+                Object.keys(messages).forEach(messageKey => {
+                    const message: any = messages[messageKey];
+                    messages[messageKey] = this.__translateFormValidationMessage(
+                        messageKey, message, _config['messages:keys']);
+                });
+            }
+
+            const _this: NgxFormlyFormBuilder = this;
+            const __originalAddValidatorMessage: Function = _config.addValidatorMessage;
+            _config.addValidatorMessage =
+                (name: string, message: string | ((error: any, field: FormlyFieldConfig) => string)) => {
+                    const translatedMessage: string | ((error: any, field: FormlyFieldConfig) => string) =
+                        _this.__translateFormValidationMessage(name, message, _config['messages:keys']);
+                    __originalAddValidatorMessage.apply(_config, [name, translatedMessage]);
+                };
+
+            const __originalAddConfig: Function = _config.addConfig;
+            _config.addConfig = (config: ConfigOption) => {
+                (config.validationMessages || []).forEach((validationMessage: ValidationMessageOption) => {
+                    validationMessage.message = _this.__translateFormValidationMessage(
+                        validationMessage.name, validationMessage.message, _config['messages:keys']);
+                });
+                __originalAddConfig.apply(_config, [config]);
+            };
+        }
+        return _config;
+    }
+
+    /**
+     * Translate the form field validation message configuration
+     * @param validationMessageKey current validation configuration key to cache
+     * @param validationMessage form field validation message function or string to translate
+     * @param cachedStorage cache storage for translating future
+     * @private
+     */
+    private __translateFormValidationMessage(
+        validationMessageKey: string, validationMessage: any, cachedStorage: any):
+        string | ((e: any, f: FormlyFieldConfig) => string) {
+        cachedStorage = (cachedStorage || {});
+        if (typeof validationMessage === 'function') {
+            return (e: any, f: FormlyFieldConfig) => {
+                const validatedMessage: string = (<Function>validationMessage).apply(f, [e, f]);
+                return ((validatedMessage || '').length ? this.translate(validatedMessage) : '');
+            };
+
+        } else if (typeof validationMessage === 'string' && (validationMessage || '').length) {
+            const validationMessageNewKey: string = [validationMessageKey, 'key'].join(':');
+            if (!cachedStorage.hasOwnProperty(validationMessageNewKey)) {
+                cachedStorage[validationMessageNewKey] = validationMessage;
+            }
+            return this.translate(cachedStorage[validationMessageNewKey]);
+        }
+    }
+}

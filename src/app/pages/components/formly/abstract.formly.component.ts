@@ -120,10 +120,6 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         return this.formlyForm;
     }
 
-    get config(): any {
-        return super.config as FormlyConfig;
-    }
-
     set config(_config: any) {
         super.config = this.translateFormConfig(_config);
     }
