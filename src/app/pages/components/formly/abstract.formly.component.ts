@@ -25,6 +25,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {FormlyTemplateOptions} from '@ngx-formly/core/lib/components/formly.field.config';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ConfigOption, ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -252,6 +253,15 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                         _this.__translateFormValidationMessage(name, message, _config['messages:keys']);
                     __originalAddValidatorMessage.apply(_config, [name, translatedMessage]);
                 };
+
+            const __originalAddConfig: Function = _config.addConfig;
+            _config.addConfig = (config: ConfigOption) => {
+                (config.validationMessages || []).forEach((validationMessage: ValidationMessageOption) => {
+                    validationMessage.message = _this.__translateFormValidationMessage(
+                        validationMessage.name, validationMessage.message, _config['messages:keys']);
+                });
+                __originalAddConfig.apply(_config, [config]);
+            };
         }
         return _config;
     }
