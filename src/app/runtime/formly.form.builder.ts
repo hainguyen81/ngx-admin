@@ -186,7 +186,7 @@ export class NgxFormlyFormBuilder {
             if (!cachedStorage.hasOwnProperty(validationMessageNewKey)) {
                 cachedStorage[validationMessageNewKey] = validationMessage;
             }
-            return this.translate(cachedStorage[validationMessageNewKey]);
+            return (e: any, f: FormlyFieldConfig) => this.translate(cachedStorage[validationMessageNewKey]);
         }
     }
 }
