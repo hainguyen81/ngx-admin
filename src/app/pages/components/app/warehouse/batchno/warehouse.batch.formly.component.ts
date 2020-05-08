@@ -20,7 +20,7 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
-import {Validators} from '@angular/forms';
+import {AbstractControl, Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
 import {
@@ -32,7 +32,9 @@ import {IGeneralSettings} from '../../../../../@core/data/system/general.setting
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
+import {isNullOrUndefined} from 'util';
+import {AppFormlyDatePickerFieldComponent} from '../../components/common/app.formly.datepicker.field.component';
 
 /* default warehouse batch no formly config */
 export const WarehouseBatchNoFormConfig: FormlyConfig = new FormlyConfig();
@@ -86,7 +88,6 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                     'config': {
                         mode: 'day',
                         required: true,
-                        minDate: moment(new Date()),
                         config: {
                             appendTo: document.body,
                             format: 'common.date.dd/mm/yyyy',
@@ -110,10 +111,28 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                     'config': {
                         mode: 'day',
                         required: true,
-                        minDate: moment(new Date()),
                         config: {
                             appendTo: document.body,
                             format: 'common.date.dd/mm/yyyy',
+                        },
+                    },
+                },
+                validators: {
+                    'must_greater_equals_mfg_date': {
+                        expression: (formControl: AbstractControl) => {
+                            const fieldComponent: AppFormlyDatePickerFieldComponent =
+                                (formControl ? formControl['componentRef'] : undefined);
+                            const model: IWarehouseBatchNo =
+                                (formControl && formControl.root ? formControl.root.value : undefined);
+                            // if invalid; then always be valid
+                            if (isNullOrUndefined(fieldComponent) || !(fieldComponent.dateTimePattern || '').length
+                                || isNullOrUndefined(model) || !(model.mfg_date || '').length) return true;
+                            const value: Moment = fieldComponent.value;
+                            const mfg_value: Moment = moment(model.mfg_date, fieldComponent.dateTimePattern);
+                            return value.isSameOrAfter(mfg_value, 'd');
+                        },
+                        message: (e, formControl: AbstractControl) => {
+                            return 'warehouse.batch_no.form.exp_date.must_greater_equals_mfg_date';
                         },
                     },
                 },

@@ -1211,16 +1211,16 @@ export abstract class AbstractComponent
     /**
      * Translate the specified value
      * @param value to translate
+     * @param interpolateParams message parameters
      * @return translated value or itself
      */
     public translate(value?: string, interpolateParams?: Object | null): string {
         if (!(value || '').length || !this.getTranslateService()) {
             return value;
         }
-        const translatedValue: string = (interpolateParams
+        return (interpolateParams
             ? this.getTranslateService().instant(value, interpolateParams)
             : this.getTranslateService().instant(value));
-        return translatedValue;
     }
 
     /**

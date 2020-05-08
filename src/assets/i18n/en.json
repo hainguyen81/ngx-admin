@@ -548,7 +548,8 @@
                 },
                 "exp_date": {
                     "label": "Exp. Date",
-                    "placeholder": "Exp. Date"
+                    "placeholder": "Exp. Date",
+                    "must_greater_equals_mfg_date": "The expiration date must be equal or greater than the MFG date"
                 },
                 "status": {
                     "label": "Status",

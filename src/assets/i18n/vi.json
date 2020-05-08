@@ -548,7 +548,8 @@
                 },
                 "exp_date": {
                     "label": "Ngày hết hạn",
-                    "placeholder": "Ngày hết hạn"
+                    "placeholder": "Ngày hết hạn",
+                    "must_greater_equals_mfg_date": "Ngày hết hạn phải lớn hơn hoặc bằng ngày sản xuất"
                 },
                 "status": {
                     "label": "Trạng thái",

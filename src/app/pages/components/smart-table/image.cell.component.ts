@@ -1,4 +1,13 @@
-import {Component, Host, Inject, Renderer2} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Host,
+    Inject,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {Cell} from 'ng2-smart-table';
 import {isArray} from 'util';
 import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mode/custom-view.component';
@@ -18,6 +27,14 @@ export class ImageCellComponent extends AbstractCellEditor {
 
     private static DESCRIPTOR_PREPARE: string = 'descriptorPrepare';
 
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    get isEditable(): boolean {
+        return false;
+    }
+
     get images(): string[] {
         if (isArray(super.cellValue)) {
             return Array.from(super.cellValue) as string[];
@@ -27,11 +44,31 @@ export class ImageCellComponent extends AbstractCellEditor {
         return [];
     }
 
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {ImageCellComponent} class
+     * @param _parentView {CustomViewComponent}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
+     * @param _logger {NGXLogger}
+     * @param _factoryResolver {ComponentFactoryResolver}
+     * @param _viewContainerRef {ViewContainerRef}
+     * @param _changeDetectorRef {ChangeDetectorRef}
+     * @param _elementRef {ElementRef}
+     */
     constructor(@Host() _parentView: CustomViewComponent,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
-                @Inject(NGXLogger) _logger: NGXLogger) {
-        super(_parentView, _translateService, _renderer, _logger);
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
+        super(_parentView, _translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
 
     /**

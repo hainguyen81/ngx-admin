@@ -36,6 +36,7 @@ import {
     WarehouseBatchNoDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {HtmlCellComponent} from '../../../smart-table/html.cell.component';
+import moment, {Moment} from 'moment';
 
 /* warehouse batch no table settings */
 export const WarehouseBatchNoTableSettings = {
@@ -59,31 +60,33 @@ export const WarehouseBatchNoTableSettings = {
             editable: false,
             renderComponent: HtmlCellComponent,
             'htmlValuePrepare': (cell: Cell, row: Row, batch: IWarehouseBatchNo) => {
-                const expDate: number = batch.exp_date;
+                window.console.error([cell, row, batch]);
+                const expDateValue: string = batch.exp_date;
                 // none expired
-                if (expDate <= 0) {
+                if (!(expDateValue || '').length) {
                     return batch.code;
                 }
 
-                // overdue/expired/near expired
-                const curDate: number = (new Date()).getTime();
-                const oneDate: number = (1000 * 60 * 60 * 24);
-                const threeDate: number = 3 * oneDate;
-                const diff: number = Math.round((expDate - curDate) / oneDate);
-
-                // near expired
-                if (0 <= diff && diff <= oneDate) {
-                    return '<i class="fas fa-exclamation-triangle status-expired"></i>'.concat(batch.code);
-
-                } else if (oneDate < diff && diff <= threeDate) {
-                    return '<i class="fas fa-exclamation-triangle status-near-expired"></i>'.concat(batch.code);
-
-                } else if (diff < 0) {
-                    return '<i class="fas fa-exclamation-triangle status-overdue"></i>'.concat(batch.code);
-
-                } else {
-                    return batch.code;
-                }
+                // // overdue/expired/near expired
+                // const expDate: Moment = moment(expDateValue, )
+                // const curDate: number = (new Date()).getTime();
+                // const oneDate: number = (1000 * 60 * 60 * 24);
+                // const threeDate: number = 3 * oneDate;
+                // const diff: number = Math.round((expDate - curDate) / oneDate);
+                //
+                // // near expired
+                // if (0 <= diff && diff <= oneDate) {
+                //     return '<i class='fas fa-exclamation-triangle status-expired'></i>'.concat(batch.code);
+                //
+                // } else if (oneDate < diff && diff <= threeDate) {
+                //     return '<i class='fas fa-exclamation-triangle status-near-expired'></i>'.concat(batch.code);
+                //
+                // } else if (diff < 0) {
+                //     return '<i class='fas fa-exclamation-triangle status-overdue'></i>'.concat(batch.code);
+                //
+                // } else {
+                //     return batch.code;
+                // }
             },
         },
         name: {

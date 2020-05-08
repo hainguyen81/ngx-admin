@@ -143,6 +143,9 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
                 && (isNullOrUndefined(this._config) || this._field.templateOptions['config'] !== this.config)) {
                 this.config = this._field.templateOptions['config'];
             }
+            if (this._field.formControl) {
+                this._field.formControl['componentRef'] = this;
+            }
         }
     }
 
@@ -282,6 +285,9 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     }
 
     ngOnDestroy(): void {
+        if (this.field && this.field.formControl) {
+            delete this._field.formControl['componentRef'];
+        }
         if (this.field && this.field.templateOptions) {
             delete this._field.templateOptions['componentRef'];
         }
@@ -348,7 +354,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         let retValue: any;
         retValue = value;
         const parser: (value: any) => any = this.valueParser;
-        if (isNullOrUndefined(parser) || typeof parser !== 'function' && this.field) {
+        if ((isNullOrUndefined(parser) || typeof parser !== 'function') && this.field) {
             for (const _parser of (this.field.parsers || [])) {
                 retValue = _parser.apply(this, [retValue]);
             }
