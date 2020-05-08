@@ -1,4 +1,4 @@
-import {FORMLY_CONFIG, FormlyConfig, FormlyFieldConfig, FormlyFormBuilder} from '@ngx-formly/core';
+import {FORMLY_CONFIG, FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
@@ -30,11 +30,19 @@ export class NgxFormlyFormBuilderRuntime {
      * Get the {ComponentFactoryResolver} instance
      * @return the {ComponentFactoryResolver} instance
      */
-    protected get factoryResolver(): ComponentFactoryResolver {
+    get componentFactoryResolver(): ComponentFactoryResolver {
         if (isNullOrUndefined(this._factoryResolver) && !isNullOrUndefined(this.injector)) {
             this._factoryResolver = this.injector.get(ComponentFactoryResolver);
         }
         return this._factoryResolver;
+    }
+
+    /**
+     * Set the {ComponentFactoryResolver} instance
+     * @param _componentFactoryResolver to apply
+     */
+    set componentFactoryResolver(_componentFactoryResolver: ComponentFactoryResolver) {
+        this._factoryResolver = _componentFactoryResolver;
     }
 
     /**
@@ -74,8 +82,16 @@ export class NgxFormlyFormBuilderRuntime {
      * Get the {Injector} instance
      * @return the {Injector} instance
      */
-    protected get injector(): Injector {
+    get injector(): Injector {
         return this._injector;
+    }
+
+    /**
+     * Set the {Injector} instance
+     * @param _injector to apply
+     */
+    set injector(_injector: Injector) {
+        this._injector = _injector;
     }
 
     /**
