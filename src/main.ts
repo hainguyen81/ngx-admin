@@ -8,11 +8,11 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
-import {mixins} from './app/runtime/runtime';
 import {ModalDialogComponent} from 'ngx-modal-dialog';
 import {FormlyFormBuilder} from '@ngx-formly/core';
 import {NgxFormlyFormBuilderRuntime} from './app/runtime/formly.form.builder.runtime';
 import {ComponentLifeCycleRuntime} from './app/runtime/component.lifecycle.runtime';
+import {mixins} from './app/runtime/runtime';
 
 if (environment.production) {
   enableProdMode();
