@@ -3,7 +3,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, Injectable, Injector,
+    Inject, Injectable, Injector, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -24,6 +24,9 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ComponentFactoryResolver} instance
      */
     protected get factoryResolver(): ComponentFactoryResolver {
+        if (isNullOrUndefined(this._factoryResolver) && !isNullOrUndefined(this.serviceInjector)) {
+            this._factoryResolver = this.serviceInjector.get(ComponentFactoryResolver);
+        }
         return this._factoryResolver;
     }
 
@@ -32,6 +35,9 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ViewContainerRef} instance
      */
     protected get viewContainerRef(): ViewContainerRef {
+        if (isNullOrUndefined(this._viewContainerRef) && !isNullOrUndefined(this.serviceInjector)) {
+            this._viewContainerRef = this.serviceInjector.get(ViewContainerRef);
+        }
         return this._viewContainerRef;
     }
 
@@ -40,6 +46,9 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ChangeDetectorRef} instance
      */
     protected get changeDetectorRef(): ChangeDetectorRef {
+        if (isNullOrUndefined(this._changeDetectorRef) && !isNullOrUndefined(this.serviceInjector)) {
+            this._changeDetectorRef = this.serviceInjector.get(ChangeDetectorRef);
+        }
         return this._changeDetectorRef;
     }
 
@@ -48,6 +57,9 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ElementRef} instance
      */
     protected get elementRef(): ElementRef {
+        if (isNullOrUndefined(this._elementRef) && !isNullOrUndefined(this.serviceInjector)) {
+            this._elementRef = this.serviceInjector.get(ElementRef);
+        }
         return this._elementRef;
     }
 
@@ -64,6 +76,9 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {TranslateService} instance
      */
     protected get translateService(): TranslateService {
+        if (isNullOrUndefined(this._translateService) && !isNullOrUndefined(this.serviceInjector)) {
+            this._translateService = this.serviceInjector.get(TranslateService);
+        }
         return this._translateService;
     }
 
