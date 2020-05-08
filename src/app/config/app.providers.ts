@@ -169,8 +169,6 @@ import {
 import {
     WarehouseBatchNoDatasource,
 } from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import {FORMLY_CONFIG, FormlyConfig, FormlyFormBuilder} from '@ngx-formly/core';
-import {NgxFormlyFormBuilder} from '../runtime/formly.form.builder';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -242,15 +240,6 @@ export const CommonProviders: StaticProvider[] = [
     {
         provide: NgxLocalStorageEncryptionService, useClass: NgxLocalStorageEncryptionService,
         deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG, TOKEN_SECURE_ENCRYPTION_CONFIG],
-    },
-
-    // formly builder customization for translation i18n
-    {
-        provide: FormlyFormBuilder, useClass: NgxFormlyFormBuilder,
-        deps: [
-            TranslateService, ComponentFactoryResolver, ViewContainerRef,
-            ChangeDetectorRef, ElementRef, FORMLY_CONFIG, Injector,
-        ],
     },
 ];
 

@@ -13,8 +13,7 @@ import {ConfigOption, ValidationMessageOption} from '@ngx-formly/core/lib/servic
 /**
  * Custom {FormlyFormBuilder} for translating form configuration
  */
-@Injectable()
-export class NgxFormlyFormBuilder {
+export class NgxFormlyFormBuilderRuntime {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -133,6 +132,8 @@ export class NgxFormlyFormBuilder {
      */
     private translateFormConfig(_config?: FormlyConfig): FormlyConfig {
         if (!isNullOrUndefined(_config)) {
+            const _this: NgxFormlyFormBuilderRuntime = this;
+
             _config['messages:keys'] = {};
             const messages: any = _config.messages;
             if (Object.keys(messages).length) {
@@ -143,7 +144,6 @@ export class NgxFormlyFormBuilder {
                 });
             }
 
-            const _this: NgxFormlyFormBuilder = this;
             const __originalAddValidatorMessage: Function = _config.addValidatorMessage;
             _config.addValidatorMessage =
                 (name: string, message: string | ((error: any, field: FormlyFieldConfig) => string)) => {
@@ -151,6 +151,12 @@ export class NgxFormlyFormBuilder {
                         _this.__translateFormValidationMessage(name, message, _config['messages:keys']);
                     __originalAddValidatorMessage.apply(_config, [name, translatedMessage]);
                 };
+
+            const __originalGetValidatorMessage: Function = _config.getValidatorMessage;
+            _config.getValidatorMessage = (name: string) => {
+                return _this.__translateFormValidationMessage(
+                    name, __originalGetValidatorMessage.apply(_config, [name]), _config['messages:keys']);
+            };
 
             const __originalAddConfig: Function = _config.addConfig;
             _config.addConfig = (config: ConfigOption) => {
@@ -186,7 +192,7 @@ export class NgxFormlyFormBuilder {
             if (!cachedStorage.hasOwnProperty(validationMessageNewKey)) {
                 cachedStorage[validationMessageNewKey] = validationMessage;
             }
-            return (e: any, f: FormlyFieldConfig) => this.translate(cachedStorage[validationMessageNewKey]);
+            return this.translate(cachedStorage[validationMessageNewKey]);
         }
     }
 }
