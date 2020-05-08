@@ -94,6 +94,34 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                         },
                     },
                 },
+                validation: {
+                    show: false,
+                },
+                validators: {
+                    'must_less_equals_exp_date': {
+                        expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
+                            const model: IWarehouseBatchNo = formControl.root.value;
+                            // if data is invalid; then always be valid
+                            if (isNullOrUndefined(fieldComponent)
+                                || !(fieldComponent.dateTimePattern || '').length
+                                || !(model.exp_date || '').length) {
+                                field.validation.show = (formControl.touched && !(model.mfg_date || '').length);
+                                return false;
+                            }
+
+                            const mfg_date: Moment = fieldComponent.value;
+                            const exp_value: Moment = moment(model.exp_date, fieldComponent.dateTimePattern);
+                            field.validation.show = true;
+                            return mfg_date.isSameOrAfter(exp_value, 'd');
+                        },
+                        message: (e, field: FormlyFieldConfig) => {
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = field.formControl['componentRef'];
+                            return fieldComponent.translate(
+                                'warehouse.batch_no.form.mfg_date.must_less_equals_exp_date');
+                        },
+                    },
+                },
             },
         ],
     },
@@ -117,25 +145,31 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                         },
                     },
                 },
+                validation: {
+                    show: false,
+                },
                 validators: {
                     'must_greater_equals_mfg_date': {
-                        expression: (formControl: AbstractControl) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent =
-                                (formControl ? formControl['componentRef'] : undefined);
-                            const model: IWarehouseBatchNo =
-                                (formControl && formControl.root ? formControl.root.value : undefined);
+                        expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
+                            const model: IWarehouseBatchNo = formControl.root.value;
                             // if data is invalid; then always be valid
-                            if (isNullOrUndefined(fieldComponent) || !(fieldComponent.dateTimePattern || '').length
-                                || isNullOrUndefined(model) || !(model.mfg_date || '').length) return true;
+                            if (isNullOrUndefined(fieldComponent)
+                                || !(fieldComponent.dateTimePattern || '').length
+                                || !(model.mfg_date || '').length) {
+                                field.validation.show = (formControl.touched && !(model.exp_date || '').length);
+                                return false;
+                            }
+
                             const exp_date: Moment = fieldComponent.value;
                             const mfg_value: Moment = moment(model.mfg_date, fieldComponent.dateTimePattern);
+                            field.validation.show = true;
                             return exp_date.isSameOrAfter(mfg_value, 'd');
                         },
                         message: (e, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent =
-                                (field && field.formControl ? field.formControl['componentRef'] : undefined);
-                            return (fieldComponent ? fieldComponent.translate(
-                                'warehouse.batch_no.form.exp_date.must_greater_equals_mfg_date') : undefined);
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = field.formControl['componentRef'];
+                            return fieldComponent.translate(
+                                'warehouse.batch_no.form.exp_date.must_greater_equals_mfg_date');
                         },
                     },
                 },

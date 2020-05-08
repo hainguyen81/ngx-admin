@@ -132,6 +132,8 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                     component
                     && component.openListener.subscribe(e => {
                         this.field.focus = true;
+                        this.field.formControl
+                        && this.field.formControl.markAsTouched({ onlySelf: true });
                         component.model = this.value;
                         this.stateChanges.next();
                     });
@@ -144,6 +146,8 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                     component
                     && component.selectListener.subscribe((e: IEvent) => {
                         this.field.focus = true;
+                        this.field.formControl
+                        && this.field.formControl.markAsTouched({ onlySelf: true });
                         component.model = e.data['date'];
                         this.value = component.model;
                     });

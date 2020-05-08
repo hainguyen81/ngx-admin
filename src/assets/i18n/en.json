@@ -544,7 +544,8 @@
                 },
                 "mfg_date": {
                     "label": "MFG Date",
-                    "placeholder": "MFG Date"
+                    "placeholder": "MFG Date",
+                    "must_less_equals_exp_date": "The MFG date must be equal or less than the Exp. date"
                 },
                 "exp_date": {
                     "label": "Exp. Date",

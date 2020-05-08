@@ -544,7 +544,8 @@
                 },
                 "mfg_date": {
                     "label": "Ngày sản xuất",
-                    "placeholder": "Ngày sản xuất"
+                    "placeholder": "Ngày sản xuất",
+                    "must_less_equals_exp_date": "Ngày sản xuất phải nhỏ hơn hoặc bằng ngày hết hạn"
                 },
                 "exp_date": {
                     "label": "Ngày hết hạn",
