@@ -139,6 +139,11 @@
     .form-files-gallery-file .mat-form-field .mat-form-field-wrapper .mat-form-field-underline {
         display: none;
     }
+    .form-files-gallery-file .mat-form-field-can-float.mat-form-field-should-float {
+        .mat-form-field-wrapper .primary-upload-file {
+            padding-left: 0;
+        }
+    }
 
     /* Modal dialog */
     .modal .modal-dialog {

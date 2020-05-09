@@ -34,48 +34,36 @@ export const WarehouseInventoryMainFormConfig: FormlyConfig = new FormlyConfig()
 /* default warehouse in/out main formly fields config */
 export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
     {
-        fieldGroupClassName: 'row ml-0 mr-0',
+        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
         fieldGroup: [
             {
-                className: 'col-4',
-                key: 'type',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.inventory.form.type.label',
-                    placeholder: 'warehouse.inventory.form.type.placeholder',
-                    required: true,
-                },
-            },
-            {
-                className: 'col-4',
-                key: 'vendor_customer',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.inventory.form.customer.label',
-                    placeholder: 'warehouse.inventory.form.customer.placeholder',
-                    required: true,
-                },
-            },
-            {
-                className: 'col-4',
-                key: 'file_attach',
-                type: 'files-gallery',
-                templateOptions: {
-                    label: 'warehouse.inventory.form.file_attach.label',
-                    placeholder: 'warehouse.inventory.form.file_attach.placeholder',
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                fieldGroupClassName: 'row ml-0 mr-0',
+                className: 'col-9 ml-0 mr-0 pl-0 pr-0',
+                fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
                 fieldGroup: [
                     {
-                        fieldGroupClassName: 'col-8 ml-0 mr-0',
+                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
                         fieldGroup: [
+                            {
+                                className: 'col-4',
+                                key: 'type',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.inventory.form.type.label',
+                                    placeholder: 'warehouse.inventory.form.type.placeholder',
+                                    required: true,
+                                },
+                            },
+                            {
+                                className: 'col-4',
+                                key: 'vendor_customer',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.inventory.form.customer.label',
+                                    placeholder: 'warehouse.inventory.form.customer.placeholder',
+                                    required: true,
+                                },
+                            },
                             {
                                 className: 'col-4',
                                 key: 'warehouse_id',
@@ -86,6 +74,12 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                     required: true,
                                 },
                             },
+                        ],
+                    },
+                    {
+                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
+                        fieldGroup: [
                             {
                                 className: 'col-4',
                                 key: 'date',
@@ -103,11 +97,6 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                     required: true,
                                 },
                             },
-                        ],
-                    },
-                    {
-                        fieldGroupClassName: 'col-8 ml-0 mr-0',
-                        fieldGroup: [
                             {
                                 className: 'col-4',
                                 key: 'sales_order',
@@ -128,49 +117,71 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                             },
                         ],
                     },
+                    {
+                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
+                        fieldGroup: [
+                            {
+                                className: 'col-4',
+                                key: 'code',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.inventory.form.code.label',
+                                    placeholder: 'warehouse.inventory.form.code.placeholder',
+                                    required: true,
+                                },
+                            },
+                            {
+                                className: 'col-4',
+                                key: 'deliverer',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.inventory.form.deliverer.label',
+                                    placeholder: 'warehouse.inventory.form.deliverer.placeholder',
+                                },
+                            },
+                            {
+                                className: 'col-4',
+                                key: 'status',
+                                type: 'select-ex-general-settings',
+                                templateOptions: {
+                                    label: 'warehouse.category.form.status.label',
+                                    placeholder: 'warehouse.category.form.status.placeholder',
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
+                        fieldGroup: [
+                            {
+                                className: 'col-12',
+                                key: 'remark',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.inventory.form.remark.label',
+                                    placeholder: 'warehouse.inventory.form.remark.placeholder',
+                                },
+                            },
+                        ],
+                    },
                 ],
             },
             {
-                className: 'col-4',
-                key: 'remark',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.inventory.form.remark.label',
-                    placeholder: 'warehouse.inventory.form.remark.placeholder',
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-4',
-                key: 'code',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.inventory.form.code.label',
-                    placeholder: 'warehouse.inventory.form.code.placeholder',
-                    required: true,
-                },
-            },
-            {
-                className: 'col-4',
-                key: 'deliverer',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.inventory.form.deliverer.label',
-                    placeholder: 'warehouse.inventory.form.deliverer.placeholder',
-                },
-            },
-            {
-                className: 'col-4',
-                key: 'status',
-                type: 'select-ex-general-settings',
-                templateOptions: {
-                    label: 'warehouse.category.form.status.label',
-                    placeholder: 'warehouse.category.form.status.placeholder',
-                },
+                className: 'col-3 ml-0 mr-0',
+                fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
+                fieldGroup: [
+                    {
+                        className: 'w-100',
+                        key: 'file_attach',
+                        type: 'files-gallery',
+                        templateOptions: {
+                            label: 'warehouse.inventory.form.file_attach.label',
+                            placeholder: 'warehouse.inventory.form.file_attach.placeholder',
+                        },
+                    },
+                ],
             },
         ],
     },
