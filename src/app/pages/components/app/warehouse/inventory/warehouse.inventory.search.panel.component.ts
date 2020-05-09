@@ -23,6 +23,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocalDataSource} from 'ng2-smart-table';
 import {AppSearchPanelComponent} from '../../components/app.search.panel.component';
+import {ACTION_SEARCH} from '../../../../../config/toolbar.actions.conf';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -34,6 +35,14 @@ export class WarehouseInventorySearchComponent
     extends AppSearchPanelComponent<IWarehouseInventorySearch, DataSource,
         WarehouseInventorySearchFormlyComponent,
         WarehouseInventorySearchToolbarComponent> {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected visibleSearchActions(): String[] {
+        return [ ACTION_SEARCH ];
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
