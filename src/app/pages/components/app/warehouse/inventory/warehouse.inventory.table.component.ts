@@ -36,7 +36,8 @@ import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.compo
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {ObserveCellComponent} from '../../../smart-table/observe.cell.component';
 import {Constants as WHConstants} from '../../../../../@core/data/constants/warehouse.inventory.constants';
-import WAREHOUSE_INVENTORY_TYPE = WHConstants.WarehouseConstants.WarehouseInventoryConstants.WAREHOUSE_INVENTORY_TYPE;
+import WAREHOUSE_INVENTORY_TYPE = WHConstants.WarehouseConstants
+    .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_TYPE;
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {
     WarehouseInventoryDatasource,

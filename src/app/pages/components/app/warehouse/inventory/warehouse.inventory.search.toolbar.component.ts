@@ -35,8 +35,10 @@ export const WarehouseInventorySearchToolbarActionsConfig: IToolbarActionsConfig
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-toolbar-app-warehouse-inventory-search',
     templateUrl: '../../../toolbar/toolbar.component.html',
-    styleUrls: ['../../../toolbar/toolbar.component.scss',
-        '../../components/app.toolbar.component.scss'],
+    styleUrls: [
+        '../../../toolbar/toolbar.component.scss',
+        '../../components/app.toolbar.component.scss',
+    ],
 })
 export class WarehouseInventorySearchToolbarComponent
     extends AppToolbarComponent<DataSource> {

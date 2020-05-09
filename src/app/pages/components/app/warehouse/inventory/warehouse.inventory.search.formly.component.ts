@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -21,9 +21,6 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl} from '@angular/forms';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import moment, {Moment} from 'moment';
 import {isNullOrUndefined} from 'util';
 import {

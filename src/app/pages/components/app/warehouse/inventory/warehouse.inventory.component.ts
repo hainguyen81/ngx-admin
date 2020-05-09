@@ -1,7 +1,9 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2, ViewContainerRef,
 } from '@angular/core';
@@ -12,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {AbstractComponent, IEvent} from '../../../abstract.component';
+import {IEvent} from '../../../abstract.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {
@@ -33,7 +35,9 @@ import {
     WarehouseInventoryPanelComponent,
 } from './warehouse.inventory.panel.component';
 import {AppFlipcardComponent} from '../../components/app.flipcard.component';
-import {WarehouseInventoryMainFormlyComponent} from './warehouse.inventory.main.formly.component';
+import {
+    WarehouseInventoryMainFormlyComponent,
+} from './warehouse.inventory.main.formly.component';
 import WarehouseInventory, {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 
@@ -110,7 +114,7 @@ export class WarehouseInventoryComponent
             router, activatedRoute,
             WarehouseInventoryToolbarComponent,
             WarehouseInventoryPanelComponent,
-            null);
+            WarehouseInventoryMainFormlyComponent);
     }
 
     // -------------------------------------------------
