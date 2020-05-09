@@ -943,6 +943,52 @@
                 "vendor_customer": "Vendor/Customer",
                 "sales_order": "Order",
                 "total_amount": "Total amount"
+            },
+            "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type"
+                },
+                "customer": {
+                    "label": "Vendor/Customer",
+                    "placeholder": "Vendor/Customer"
+                },
+                "file_attach": {
+                    "label": "Documents",
+                    "placeholder": "Documents"
+                },
+                "storage": {
+                    "label": "Warehouse",
+                    "placeholder": "Warehouse"
+                },
+                "date": {
+                    "label": "Date",
+                    "placeholder": "Date"
+                },
+                "sales_order": {
+                    "label": "Sales Order",
+                    "placeholder": "Sales Order"
+                },
+                "reason_for_issuing": {
+                    "label": "Reason",
+                    "placeholder": "Reason"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                },
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "deliverer": {
+                    "label": "Deliverer",
+                    "placeholder": "Deliverer"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status"
+                }
             }
         }
     }

@@ -943,6 +943,52 @@
                 "vendor_customer": "Nhà cung cấp/Khách hàng",
                 "sales_order": "Hóa đơn",
                 "total_amount": "Tổng tiền"
+            },
+            "form": {
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại"
+                },
+                "customer": {
+                    "label": "Nhà cung cấp/Khách hàng",
+                    "placeholder": "Nhà cung cấp/Khách hàng"
+                },
+                "file_attach": {
+                    "label": "Chứng từ",
+                    "placeholder": "Chứng từ"
+                },
+                "storage": {
+                    "label": "Kho",
+                    "placeholder": "Kho"
+                },
+                "date": {
+                    "label": "Ngày nhập/xuất",
+                    "placeholder": "Ngày nhập/xuất"
+                },
+                "sales_order": {
+                    "label": "Hóa đơn",
+                    "placeholder": "Hóa đơn"
+                },
+                "reason_for_issuing": {
+                    "label": "Lý do",
+                    "placeholder": "Lý do"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                },
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "deliverer": {
+                    "label": "Người giao hàng",
+                    "placeholder": "Người giao hàng"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái"
+                }
             }
         }
     }
