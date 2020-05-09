@@ -64,15 +64,16 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.general.settings.form.code.label',
                     placeholder: 'system.general.settings.form.code.placeholder',
                     required: true,
-                    readonly: true,
+                    readonly: false,
+                    'pattern_code': false,
+                },
+                validators: {
+                    'pattern_code': Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN),
                 },
                 expressionProperties: {
                     'templateOptions.readonly':
                         (model: IGeneralSettings) =>
                             !model || model.builtin || !(model.module_code || '').length,
-                },
-                validators: {
-                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
                 },
             },
         ],

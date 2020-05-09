@@ -108,9 +108,10 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'system.organization.form.code.label',
                     placeholder: 'system.organization.form.code.placeholder',
                     required: true,
+                    'pattern_code': false,
                 },
                 validators: {
-                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
+                    'pattern_code': Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN),
                 },
             },
             {

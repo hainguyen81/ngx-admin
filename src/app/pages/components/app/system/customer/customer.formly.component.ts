@@ -104,9 +104,10 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                                     label: 'system.customer.form.code.label',
                                     placeholder: 'system.customer.form.code.placeholder',
                                     required: true,
+                                    'pattern_code': false,
                                 },
                                 validators: {
-                                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
+                                    'pattern_code': Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN),
                                 },
                             },
                             {

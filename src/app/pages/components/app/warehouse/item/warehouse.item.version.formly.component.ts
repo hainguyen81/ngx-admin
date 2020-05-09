@@ -57,9 +57,10 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'warehouse.item.overview.form.code.label',
                     placeholder: 'warehouse.item.overview.form.code.placeholder',
                     required: true,
+                    'pattern_code': false,
                 },
                 validators: {
-                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
+                    'pattern_code': Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN),
                 },
             },
         ],
