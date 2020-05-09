@@ -3,6 +3,17 @@
 @include nb-install-component() {
     ::ng-deep nb-card.card-panel.inventory-front-panel {
         box-shadow: none;
+        margin: 0;
+        nb-card-header.card-panel-header.inventory-front-header {
+            padding-top: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        nb-card-body.card-panel-body.inventory-front-body {
+            padding-right: 0;
+            padding-left: 0;
+            padding-bottom: 0;
+        }
         nb-card-footer.card-panel-footer.inventory-front-footer { display: none; }
     }
 }
