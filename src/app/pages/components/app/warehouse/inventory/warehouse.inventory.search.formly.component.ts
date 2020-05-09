@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -18,12 +19,8 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
-import {AbstractControl, Validators} from '@angular/forms';
-import PromiseUtils from '../../../../../utils/promise.utils';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
+import {AbstractControl} from '@angular/forms';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
@@ -32,7 +29,7 @@ import {isNullOrUndefined} from 'util';
 import {
     AppFormlyDatePickerFieldComponent,
 } from '../../components/common/app.formly.datepicker.field.component';
-import {
+import WarehouseInventorySearch, {
     IWarehouseInventorySearch,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
 import {LocalDataSource} from 'ng2-smart-table';
@@ -195,7 +192,7 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseInventorySearchFormlyComponent
     extends AppFormlyComponent<IWarehouseInventorySearch, DataSource>
-    implements OnInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -234,8 +231,7 @@ export class WarehouseInventorySearchFormlyComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -249,18 +245,8 @@ export class WarehouseInventorySearchFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        // observer fields for applying values
-        const fields: FormlyFieldConfig[] = this.fields;
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[4].fieldGroup[0],
-                BUILTIN_CODES.STATUS.code,
-                null, this.noneOption as IGeneralSettings),
-        ]).then(value => this.getLogger().debug('Loading general settings successful'),
-            reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+        super.setModel(new WarehouseInventorySearch(null));
     }
 }
