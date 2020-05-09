@@ -1,0 +1,22 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep nb-card.card-panel {
+        margin: 0;
+        padding: 0;
+
+        nb-card-header.card-panel-header { display: none; }
+        nb-card-body.card-panel-body { padding-top: 0; padding-bottom: 0; }
+        nb-card-footer.card-panel-footer {
+            border: 0;
+            padding-top: 0;
+
+            mat-toolbar.mat-toolbar.mat-toolbar-multiple-rows {
+                mat-toolbar-row.mat-toolbar-row {
+                    display: block;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

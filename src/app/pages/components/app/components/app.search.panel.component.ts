@@ -31,7 +31,10 @@ import {isNullOrUndefined} from 'util';
 @Component({
     selector: 'ngx-search-panel-app',
     templateUrl: '../../panel/panel.component.html',
-    styleUrls: ['../../panel/panel.component.scss'],
+    styleUrls: [
+        '../../panel/panel.component.scss',
+        './app.search.panel.component.scss',
+    ],
 })
 export abstract class AppSearchPanelComponent<T extends IModel, D extends DataSource,
     SF extends AbstractFormlyComponent<T, D>,

@@ -29,7 +29,10 @@ import {ACTION_SEARCH} from '../../../../../config/toolbar.actions.conf';
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-card-panel-app-warehouse-inventory-search',
     templateUrl: '../../../panel/panel.component.html',
-    styleUrls: ['../../../panel/panel.component.scss'],
+    styleUrls: [
+        '../../../panel/panel.component.scss',
+        '../../components/app.search.panel.component.scss',
+    ],
 })
 export class WarehouseInventorySearchComponent
     extends AppSearchPanelComponent<IWarehouseInventorySearch, DataSource,
