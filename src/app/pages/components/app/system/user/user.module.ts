@@ -114,6 +114,12 @@ import {ValidatorsModule} from 'ngx-validators';
             deps: [UserHttpService, UserDbService, NGXLogger],
         },
     ],
+    exports: [
+        UserSmartTableComponent,
+        UserFormlyComponent,
+        UserToolbarComponent,
+        UserComponent,
+    ],
 })
 export class UserModule {
 }

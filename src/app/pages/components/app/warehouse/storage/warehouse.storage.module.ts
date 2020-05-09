@@ -101,6 +101,12 @@ import {WarehouseStorageSplitPaneComponent} from './warehouse.storage.component'
         WarehouseStorageSplitPaneComponent,
     ],
     providers: [ WarehouseProviders ],
+    exports: [
+        WarehouseStorageTreeviewComponent,
+        WarehouseStorageFormlyComponent,
+        WarehouseStorageToolbarComponent,
+        WarehouseStorageSplitPaneComponent,
+    ],
 })
 export class WarehouseStorageModule {
 }

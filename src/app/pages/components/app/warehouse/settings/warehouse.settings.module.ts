@@ -112,6 +112,12 @@ import {AppComponentsModule} from '../../components/app.components.module';
             deps: [WarehouseSettingsHttpService, WarehouseSettingsDbService, NGXLogger],
         },
     ],
+    exports: [
+        WarehouseSettingsSmartTableComponent,
+        WarehouseSettingsFormlyComponent,
+        WarehouseSettingsToolbarComponent,
+        WarehouseSettingsComponent,
+    ],
 })
 export class WarehouseSettingsModule {
 }

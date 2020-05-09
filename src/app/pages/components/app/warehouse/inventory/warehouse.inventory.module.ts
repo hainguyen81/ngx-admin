@@ -144,6 +144,16 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
             deps: [WarehouseInventoryHttpService, WarehouseInventoryDbService, NGXLogger],
         },
     ],
+    exports: [
+        WarehouseInventorySearchFormlyComponent,
+        WarehouseInventorySearchToolbarComponent,
+        WarehouseInventorySearchComponent,
+        WarehouseInventoryToolbarComponent,
+        WarehouseInventorySmartTableComponent,
+        WarehouseInventoryPanelComponent,
+        WarehouseInventoryComponent,
+        WarehouseInventoryMainFormlyComponent,
+    ],
 })
 export class WarehouseInventoryModule {
 }

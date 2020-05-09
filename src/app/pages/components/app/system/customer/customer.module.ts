@@ -113,6 +113,12 @@ import {ValidatorsModule} from 'ngx-validators';
             deps: [CustomerHttpService, CustomerDbService, NGXLogger],
         },
     ],
+    exports: [
+        CustomerSmartTableComponent,
+        CustomerToolbarComponent,
+        CustomerFormlyComponent,
+        CustomerComponent,
+    ],
 })
 export class CustomerModule {
 }

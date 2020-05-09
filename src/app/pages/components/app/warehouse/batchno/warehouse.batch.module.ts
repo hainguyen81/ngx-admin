@@ -112,6 +112,12 @@ import {WarehouseBatchNoToolbarComponent} from './warehouse.batch.toolbar.compon
             deps: [WarehouseBatchNoHttpService, WarehouseBatchNoDbService, NGXLogger],
         },
     ],
+    exports: [
+        WarehouseBatchNoToolbarComponent,
+        WarehouseBatchNoSmartTableComponent,
+        WarehouseBatchNoFormlyComponent,
+        WarehouseBatchNoComponent,
+    ],
 })
 export class WarehouseBatchNoModule {
 }

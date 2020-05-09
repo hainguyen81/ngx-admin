@@ -112,6 +112,12 @@ import {
             deps: [GeneralSettingsHttpService, GeneralSettingsDbService, NGXLogger],
         },
     ],
+    exports: [
+        GeneralSettingsSmartTableComponent,
+        GeneralSettingsFormlyComponent,
+        GeneralSettingsToolbarComponent,
+        GeneralSettingsComponent,
+    ],
 })
 export class GeneralSettingsModule {
 }

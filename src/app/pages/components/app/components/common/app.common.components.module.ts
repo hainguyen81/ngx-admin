@@ -30,6 +30,7 @@ import {AppProvinceFormlySelectExFieldComponent} from './app.province.formly.sel
 import {AppModuleFormlySelectExFieldComponent} from './app.module.formly.select.ex.field.component';
 import {AppModuleSettingsFormlySelectExFieldComponent} from './app.module.settings.formly.select.ex.field.component';
 import {AppFormlyDatePickerFieldComponent} from './app.formly.datepicker.field.component';
+import {AppFormlyTreeviewDropdownFieldComponent} from './app.formly.treeview.dropdown.field.component';
 
 @NgModule({
     imports: [
@@ -125,28 +126,28 @@ import {AppFormlyDatePickerFieldComponent} from './app.formly.datepicker.field.c
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
-        AppModuleFormlySelectExFieldComponent,
-        AppCountryFormlySelectExFieldComponent,
-        AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
-        AppModuleSettingsFormlySelectExFieldComponent,
+        AppCountryFormlySelectExFieldComponent,
+        AppModuleFormlySelectExFieldComponent,
         AppFormlyDatePickerFieldComponent,
+        AppProvinceFormlySelectExFieldComponent,
+        AppModuleSettingsFormlySelectExFieldComponent,
     ],
     exports: [
-        AppModuleFormlySelectExFieldComponent,
-        AppCountryFormlySelectExFieldComponent,
-        AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
-        AppModuleSettingsFormlySelectExFieldComponent,
+        AppCountryFormlySelectExFieldComponent,
+        AppModuleFormlySelectExFieldComponent,
         AppFormlyDatePickerFieldComponent,
+        AppProvinceFormlySelectExFieldComponent,
+        AppModuleSettingsFormlySelectExFieldComponent,
     ],
     declarations: [
-        AppModuleFormlySelectExFieldComponent,
-        AppCountryFormlySelectExFieldComponent,
-        AppProvinceFormlySelectExFieldComponent,
         AppCityFormlySelectExFieldComponent,
-        AppModuleSettingsFormlySelectExFieldComponent,
+        AppCountryFormlySelectExFieldComponent,
+        AppModuleFormlySelectExFieldComponent,
         AppFormlyDatePickerFieldComponent,
+        AppProvinceFormlySelectExFieldComponent,
+        AppModuleSettingsFormlySelectExFieldComponent,
     ],
 })
 export class AppCommonComponentsModule {
