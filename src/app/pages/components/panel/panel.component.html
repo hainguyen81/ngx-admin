@@ -1,11 +1,11 @@
-<nb-card [class.card-panel]="true">
-    <nb-card-header [class.card-panel-header]="true">
+<nb-card [ngClass]="['card-panel', panelClass || '']">
+    <nb-card-header [ngClass]="['card-panel-header', headerClass || '']">
         <ng-template #cardHeaderHolder></ng-template>
     </nb-card-header>
-    <nb-card-body [class.card-panel-body]="true">
+    <nb-card-body [ngClass]="['card-panel-body', bodyClass || '']">
         <ng-template #cardBodyHolder></ng-template>
     </nb-card-body>
-    <nb-card-footer [class.card-panel-footer]="true">
+    <nb-card-footer [ngClass]="['card-panel-footer', footerClass || '']">
         <ng-template #cardFooterHolder></ng-template>
     </nb-card-footer>
 </nb-card>

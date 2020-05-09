@@ -1,0 +1,8 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep nb-card.card-panel.inventory-front-panel {
+        box-shadow: none;
+        nb-card-footer.card-panel-footer.inventory-front-footer { display: none; }
+    }
+}

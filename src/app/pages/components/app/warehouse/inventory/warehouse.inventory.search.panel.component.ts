@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -32,12 +32,14 @@ import {ACTION_SEARCH} from '../../../../../config/toolbar.actions.conf';
     styleUrls: [
         '../../../panel/panel.component.scss',
         '../../components/app.search.panel.component.scss',
+        './warehouse.inventory.search.panel.component.scss',
     ],
 })
 export class WarehouseInventorySearchComponent
     extends AppSearchPanelComponent<IWarehouseInventorySearch, DataSource,
         WarehouseInventorySearchFormlyComponent,
-        WarehouseInventorySearchToolbarComponent> {
+        WarehouseInventorySearchToolbarComponent>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -68,9 +70,6 @@ export class WarehouseInventorySearchComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param _headerComponentType the header component type
-     * @param _bodyComponentType the body component type
-     * @param _footerComponentType the footer component type
      */
     constructor(@Inject(DataSource) dataSource: LocalDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -94,5 +93,17 @@ export class WarehouseInventorySearchComponent
             router, activatedRoute,
             WarehouseInventorySearchFormlyComponent,
             WarehouseInventorySearchToolbarComponent);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.panelClass = 'search-panel';
+        this.headerClass = 'search-header';
+        this.bodyClass = 'search-body';
+        this.footerClass = 'search-footer';
     }
 }

@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -33,6 +33,7 @@ import {ActivatedRoute, Router} from '@angular/router';
     styleUrls: [
         '../../../panel/panel.component.scss',
         '../../components/app.search.panel.component.scss',
+        './warehouse.inventory.panel.component.scss',
     ],
 })
 export class WarehouseInventoryPanelComponent
@@ -40,7 +41,8 @@ export class WarehouseInventoryPanelComponent
         IWarehouseInventory, WarehouseInventoryDatasource,
         WarehouseInventorySearchComponent,
         WarehouseInventorySmartTableComponent,
-        AbstractComponent> {
+        AbstractComponent>
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -106,5 +108,17 @@ export class WarehouseInventoryPanelComponent
             router, activatedRoute,
             WarehouseInventorySearchComponent,
             WarehouseInventorySmartTableComponent);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.panelClass = 'inventory-front-panel';
+        this.headerClass = 'inventory-front-header';
+        this.bodyClass = 'inventory-front-body';
+        this.footerClass = 'inventory-front-footer';
     }
 }

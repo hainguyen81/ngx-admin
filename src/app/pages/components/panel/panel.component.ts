@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Input,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -49,6 +49,11 @@ export class NgxPanelComponent
     @ViewChildren('cardFooterHolder', {read: ViewContainerRef})
     private readonly queryCardFooterHolderViewContainerRef: QueryList<ViewContainerRef>;
     private _cardFooterHolderViewContainerRef: ViewContainerRef;
+
+    @Input('panelClass') panelClass: string;
+    @Input('headerClass') headerClass: string;
+    @Input('bodyClass') bodyClass: string;
+    @Input('footerClass') footerClass: string;
 
     // -------------------------------------------------
     // GETTERS/SETTERS

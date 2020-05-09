@@ -1,0 +1,10 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep nb-card.card-panel.search-panel {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        nb-card-header.card-panel-header.search-header { display: none; }
+    }
+}
