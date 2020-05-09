@@ -52,9 +52,10 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                     label: 'warehouse.batch_no.form.code.label',
                     placeholder: 'warehouse.batch_no.form.code.placeholder',
                     required: true,
+                    'pattern_code': false,
                 },
                 validators: {
-                    validation: [Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN)],
+                    'pattern_code': Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN),
                 },
             },
         ],

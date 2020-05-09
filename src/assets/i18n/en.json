@@ -137,6 +137,7 @@
         },
         "form": {
             "required": "This value is required",
+            "pattern_code": "Code must not contains special characters and be maximum 12 characters length",
             "invalid_data": "Please correct data before performing action!",
             "action": {
                 "save": "Save",

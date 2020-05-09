@@ -79,6 +79,9 @@ import {NgSelectModule} from '@ng-select/ng-select';
             validationMessages: [{
                 name: 'required',
                 message: 'common.form.required',
+            }, {
+                name: 'pattern_code',
+                message: 'common.form.pattern_code',
             }],
         }),
         /**

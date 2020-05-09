@@ -137,6 +137,7 @@
         },
         "form": {
             "required": "Giá trị này là bắt buộc",
+            "pattern_code": "Mã phải không chứa ký tự đặc biệt và tối đa 12 ký tự",
             "invalid_data": "Vui lòng nhập đầy đủ thông tin yêu cầu trước khi tiếp tục!",
             "action": {
                 "save": "Lưu",
