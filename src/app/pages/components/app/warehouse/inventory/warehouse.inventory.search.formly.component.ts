@@ -21,11 +21,6 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl, Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
-import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
-import {
-    WarehouseBatchNoDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
@@ -34,9 +29,12 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import moment, {Moment} from 'moment';
 import {isNullOrUndefined} from 'util';
-import {AppFormlyDatePickerFieldComponent} from '../../components/common/app.formly.datepicker.field.component';
-import {IWarehouseInventorySearch} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
-import {WarehouseInventoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {
+    AppFormlyDatePickerFieldComponent,
+} from '../../components/common/app.formly.datepicker.field.component';
+import {
+    IWarehouseInventorySearch,
+} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
 import {LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 

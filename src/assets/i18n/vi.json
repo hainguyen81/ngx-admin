@@ -146,7 +146,8 @@
                 "back": "Quay lại",
                 "import": "Import",
                 "deletedb": "Xóa DB",
-                "close": "Đóng"
+                "close": "Đóng",
+                "search": "Tìm kiếm"
             },
             "treeview": {
                 "not_selection": "",
@@ -899,6 +900,38 @@
                 "remark": "Ghi chú",
                 "category": "Loại SP",
                 "brand": "Hãng SX"
+            }
+        },
+        "inventory": {
+            "title": "Quản lý nhập/xuất",
+            "menu": "Nhập/xuất",
+            "search": {
+                "form": {
+                    "storage": {
+                        "label": "Kho",
+                        "placeholder": "Kho"
+                    },
+                    "from": {
+                        "label": "Từ",
+                        "placeholder": "Từ"
+                    },
+                    "to": {
+                        "label": "Đến",
+                        "placeholder": "Đến"
+                    },
+                    "customer": {
+                        "label": "Nhà cung cấp/Khách hàng",
+                        "placeholder": "Nhà cung cấp/Khách hàng"
+                    },
+                    "type": {
+                        "label": "Loại",
+                        "placeholder": "Loại"
+                    },
+                    "keyword": {
+                        "label": "Từ khóa",
+                        "placeholder": "Từ khóa"
+                    }
+                }
             }
         }
     }

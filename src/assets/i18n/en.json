@@ -146,7 +146,8 @@
                 "back": "Back",
                 "import": "Import",
                 "deletedb": "Delete DB",
-                "close": "Close"
+                "close": "Close",
+                "search": "Search"
             },
             "treeview": {
                 "not_selection": "",
@@ -899,6 +900,38 @@
                 "remark": "Remark",
                 "category": "Category",
                 "brand": "Brand"
+            }
+        },
+        "inventory": {
+            "title": "Warehouse Inventory Management",
+            "menu": "Inventory",
+            "search": {
+                "form": {
+                    "storage": {
+                        "label": "Warehouse",
+                        "placeholder": "Warehouse"
+                    },
+                    "from": {
+                        "label": "From",
+                        "placeholder": "From"
+                    },
+                    "to": {
+                        "label": "To",
+                        "placeholder": "To"
+                    },
+                    "customer": {
+                        "label": "Vendor/Customer",
+                        "placeholder": "Vendor/Customer"
+                    },
+                    "type": {
+                        "label": "Type",
+                        "placeholder": "Type"
+                    },
+                    "keyword": {
+                        "label": "Search",
+                        "placeholder": "Search"
+                    }
+                }
             }
         }
     }
