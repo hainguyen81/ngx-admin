@@ -28,6 +28,7 @@ import {NgxSelectModule} from 'ngx-select-ex';
 import {CustomFormsModule} from 'ngx-custom-validators';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {ValidatorsModule} from 'ngx-validators';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
     imports: [
@@ -68,6 +69,9 @@ import {ValidatorsModule} from 'ngx-validators';
 
         /* Select-ex */
         NgxSelectModule,
+
+        /* @ng-select/ng-select */
+        NgSelectModule,
 
         /* Formly for form builder */
         ReactiveFormsModule,

@@ -67,6 +67,8 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 /* Select-ex */
 import {NgxSelectModule} from 'ngx-select-ex';
+/* @ng-select/ng-select */
+import {NgSelectModule} from '@ng-select/ng-select';
 /* Local storage */
 import {NgxLocalStorageModule} from 'ngx-localstorage';
 /* Datepicker */
@@ -193,6 +195,9 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 
         /* Select-ex */
         NgxSelectModule,
+
+        /* @ng-select/ng-select */
+        NgSelectModule,
 
         /* Formly for form builder */
         ReactiveFormsModule,

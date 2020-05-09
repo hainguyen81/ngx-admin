@@ -65,6 +65,7 @@ import {DpDatePickerModule} from 'ng2-date-picker';
 import {NgxDatePickerComponent} from './datepicker/datepicker.component';
 import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
 import {DatePickerFormFieldComponent} from './formly/formly.datepicker.field.component';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
     imports: [
@@ -119,6 +120,9 @@ import {DatePickerFormFieldComponent} from './formly/formly.datepicker.field.com
 
         /* Select-ex */
         NgxSelectModule,
+
+        /* @ng-select/ng-select */
+        NgSelectModule,
 
         /* Modal dialog */
         ModalDialogModule.forRoot(),
