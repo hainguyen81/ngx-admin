@@ -4,7 +4,8 @@ import {
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
-    NbContextMenuModule, NbDatepickerModule,
+    NbContextMenuModule,
+    NbDatepickerModule,
     NbIconModule,
     NbInputModule,
     NbLayoutModule,
@@ -12,6 +13,7 @@ import {
     NbSelectModule,
     NbTabsetModule,
     NbThemeModule,
+    NbTooltipModule,
 } from '@nebular/theme';
 import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
 import {NotFoundComponent} from './not-found.component';
@@ -86,6 +88,7 @@ import {FileGalleryFormFieldComponent} from './formly/formly.file.field.componen
         NbSearchModule,
         NbTabsetModule,
         NbDatepickerModule,
+        NbTooltipModule,
         FormsModule,
 
         /* Angular material modules */

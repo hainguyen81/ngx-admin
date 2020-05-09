@@ -20,7 +20,7 @@
              [class.mr-1]="true"
              *ngFor="let file of files"
              class="files-gallery-item">
-            <span [class.d-table-cell]="true" [innerHTML]="file"></span>
+            <span [class.d-table-cell]="true" [innerHTML]="file" [nbTooltip]="file"></span>
             <nb-icon *ngIf="allowModified"
                      pack="fa" icon="times"
                      [class.d-block]="true"
