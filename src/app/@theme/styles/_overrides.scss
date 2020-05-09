@@ -119,7 +119,8 @@
             font-size: x-small;
             font-weight: normal;
 
-            .ngx-select__clear-icon {
+            .ngx-select__clear-icon::before,
+            .ngx-select__clear-icon::after {
                 border-top-width: 2px;
             }
         }
