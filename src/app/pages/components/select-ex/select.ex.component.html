@@ -58,7 +58,9 @@
              (load)="itemImage.style.visibility = 'visible'"
              (click)="openAlbumLightbox(getOptionImages(option), itemImage.src); preventEvent($event)">
         <span class="ngx-select-option_option-label option-label"
-              [innerHTML]="translate(option['text'] || option['title'])"></span>
+              [attr.option]="option.value"
+              [innerHTML]="translate(option['text'] || option['title'])"
+              (click)="clickOptionAppendToBody(option, $event)"></span>
     </ng-template>
 
     <ng-template ngx-select-option let-option let-text="text">
@@ -69,7 +71,9 @@
              (load)="itemImage.style.visibility = 'visible'"
              (click)="openAlbumLightbox(getOptionImages(option), itemImage.src); preventEvent($event)">
         <span class="ngx-select-option_option-label option-label"
-              [innerHTML]="translate(option['text'] || option['title'])"></span>
+              [attr.option]="option.value"
+              [innerHTML]="translate(option['text'] || option['title'])"
+              (click)="clickOptionAppendToBody(option, $event)"></span>
     </ng-template>
 
     <ng-template ngx-select-option-not-found>

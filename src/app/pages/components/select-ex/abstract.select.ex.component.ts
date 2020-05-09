@@ -23,12 +23,13 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {
     INgxSelectOptions,
-    NgxSelectComponent,
+    NgxSelectComponent, NgxSelectOptGroup,
     NgxSelectOption, TSelectOption,
 } from 'ngx-select-ex';
 import {BehaviorSubject} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {isNullOrUndefined} from 'util';
 
 /**
  * The interface of data while searching option items
@@ -205,7 +206,7 @@ export const DefaultNgxSelectOptions: INgxSelectExOptions = {
      * Specify whether appending options drop-down to body
      * {boolean}
      */
-    appendToBody: true,
+    appendToBody: false,
     /**
      * Specify whether using image for option
      * {boolean}
@@ -254,7 +255,6 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      */
     @Output() finishedLoading: EventEmitter<any> = new EventEmitter<any>();
 
-    @Input() config: INgxSelectOptions;
     /**
      * Items array.
      * Should be an array of objects with id and text properties.
@@ -287,16 +287,16 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * Get the {INgxSelectOptions} instance for configuring
      * @return the {INgxSelectOptions} instance
      */
-    public getConfig(): INgxSelectOptions {
-        return this.config;
+    public getConfig(): INgxSelectExOptions {
+        return super.config as INgxSelectExOptions;
     }
 
     /**
      * Set the {INgxSelectOptions} instance
      * @param config to apply. NULL for default
      */
-    public setConfig(config?: INgxSelectOptions) {
-        this.config = config || DefaultNgxSelectOptions;
+    public setConfig(config?: INgxSelectExOptions) {
+        super.config = config || DefaultNgxSelectOptions;
     }
 
     /**
@@ -387,7 +387,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          config?: INgxSelectOptions | null) {
+                          config?: INgxSelectExOptions | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -506,5 +506,43 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
         const currentOptionsSelected: NgxSelectOption[] =
             (this.getConfig().multiple ? this.selectComponent.optionsSelected || [] : []).concat(opts);
         (<BehaviorSubject<any>>this.selectComponent['subjOptionsSelected']).next(currentOptionsSelected);
+    }
+
+    /**
+     * Find the specified option value
+     * @param optionValue to filter
+     */
+    public filterOptions(optionValue: number | string): NgxSelectOption {
+        const options: TSelectOption[] = this.selectComponent.optionsFiltered || [];
+        let foundOption: NgxSelectOption;
+        for (const option of options) {
+            switch (option.type) {
+                case 'optgroup': {
+                    foundOption = this.__filterOptions(
+                        (<NgxSelectOptGroup>option).options, optionValue);
+                    break;
+                }
+                case 'option': {
+                    foundOption = ((<NgxSelectOption>option).value === optionValue
+                        ? <NgxSelectOption>option : undefined);
+                    break;
+                }
+            }
+            if (!isNullOrUndefined(foundOption)) {
+                break;
+            }
+        }
+        return foundOption;
+    }
+    /**
+     * Find the specified option value
+     * @param options to filter
+     * @param optionValue to filter
+     */
+    private __filterOptions(options: NgxSelectOption[], optionValue: number | string): NgxSelectOption {
+        const foundOptions: NgxSelectOption[] = (options || []).filter(option => {
+            return (option && option.value === optionValue);
+        });
+        return ((foundOptions || []).length ? foundOptions[0] : undefined);
     }
 }

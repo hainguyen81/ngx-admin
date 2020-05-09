@@ -23,7 +23,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
-import {NgxSelectComponent, NgxSelectOption} from 'ngx-select-ex';
+import {NgxSelectComponent, NgxSelectOption, TSelectOption} from 'ngx-select-ex';
 import {throwError} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -39,6 +39,10 @@ import {isNullOrUndefined} from 'util';
 })
 export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     implements AfterViewInit {
+
+    protected static SELECT_ITEM_ELEMENT_CLASS_SELECTOR: string = '.ngx-select__item';
+    protected static SELECT_ITEM_ELEMENT_LABEL_SELECTOR: string = '.ngx-select-option_option-label';
+    protected static SELECT_ITEM_ELEMENT_LABEL_OPTION_DATA: string = 'option';
 
     // -------------------------------------------------
     // DECLARATION
@@ -56,6 +60,22 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating this component whether using `appendToBody`
+     * @return true for appending to body; else false
+     */
+    public appendToBody(): boolean {
+        return this.configValue('appendToBody', false);
+    }
+
+    /**
+     * Set a boolean value indicating this component whether using `appendToBody`
+     * @param appendToBody to apply
+     */
+    public setAppendToBody(appendToBody?: boolean | false): void {
+        this.saveConfigValue('appendToBody', appendToBody);
+    }
 
     /**
      * Get a boolean value indicating this component whether uses image for option item
@@ -239,6 +259,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
 
     /**
      * Override the {ensureVisibleElement} method of {NgxSelectComponent} for customizing `addNewOption`
+     * TODO Unique hack for appending dropdown options to body and adding new option action if necessary
      * @param parentComponent current parent component, because this method is accessed from out-side
      * @param selectComponent {NgxSelectComponent}
      * @param element {HTMLElement}
@@ -247,43 +268,46 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     private __overrideEnsureVisibleElement(
         parentComponent: NgxSelectExComponent, selectComponent: NgxSelectComponent, element: HTMLElement) {
         // check for adding `addNewOption` feature
-        if (selectComponent && selectComponent['choiceMenuElRef'] instanceof ElementRef
-            && parentComponent.addNewOptionElRef) {
+        if (selectComponent && selectComponent['choiceMenuElRef'] instanceof ElementRef) {
             // append add new option action
             const choiceMenuElRef: ElementRef = selectComponent['choiceMenuElRef'] as ElementRef;
-            const addNewOptionEl: HTMLElement =
-                parentComponent.getFirstElementBySelector(
-                    '.ngx-select__item_addNewOption', choiceMenuElRef.nativeElement);
-            const shouldShown: boolean = parentComponent.configValue('showAddNewOption', false)
-                && parentComponent.configValue('addNewOptionConfig', null);
-            if (isNullOrUndefined(addNewOptionEl) && choiceMenuElRef && shouldShown) {
-                parentComponent.getRenderer().appendChild(
-                    choiceMenuElRef.nativeElement, parentComponent.addNewOptionElRef.nativeElement);
-                parentComponent.toggleElementClass(
-                    parentComponent.addNewOptionElRef.nativeElement, 'd-none', false);
+            if (!isNullOrUndefined(parentComponent.addNewOptionElRef)) {
+                const addNewOptionEl: HTMLElement =
+                    parentComponent.getFirstElementBySelector(
+                        '.ngx-select__item_addNewOption', choiceMenuElRef.nativeElement);
+                const shouldShown: boolean = parentComponent.configValue('showAddNewOption', false)
+                    && parentComponent.configValue('addNewOptionConfig', null);
+                if (isNullOrUndefined(addNewOptionEl) && choiceMenuElRef && shouldShown) {
+                    parentComponent.getRenderer().appendChild(
+                        choiceMenuElRef.nativeElement, parentComponent.addNewOptionElRef.nativeElement);
+                    parentComponent.toggleElementClass(
+                        parentComponent.addNewOptionElRef.nativeElement, 'd-none', false);
 
+                }
             }
 
             // append to body
-            const mainInputElRef: ElementRef = selectComponent['inputElRef'] as ElementRef;
-            const shouldAppendToBody: boolean = parentComponent.configValue('appendToBody', false);
-            if (shouldAppendToBody && choiceMenuElRef && mainInputElRef) {
-                parentComponent.getRenderer().appendChild(
-                    document.body, choiceMenuElRef.nativeElement);
-                const offset: { top: number, left: number, width: number, height: number } =
-                    super.offset(mainInputElRef.nativeElement);
-                parentComponent.getRenderer().setStyle(
-                    choiceMenuElRef.nativeElement,
-                    'top', (offset.top + offset.height + 5) + 'px',
-                    RendererStyleFlags2.Important);
-                parentComponent.getRenderer().setStyle(
-                    choiceMenuElRef.nativeElement,
-                    'left', offset.left + 'px',
-                    RendererStyleFlags2.Important);
-                parentComponent.getRenderer().setStyle(
-                    choiceMenuElRef.nativeElement,
-                    'width', offset.width + 'px',
-                    RendererStyleFlags2.Important);
+            if (this.appendToBody()) {
+                const mainInputElRef: ElementRef = selectComponent['inputElRef'] as ElementRef;
+                const shouldAppendToBody: boolean = parentComponent.configValue('appendToBody', false);
+                if (shouldAppendToBody && choiceMenuElRef && mainInputElRef) {
+                    parentComponent.getRenderer().appendChild(
+                        document.body, choiceMenuElRef.nativeElement);
+                    const offset: { top: number, left: number, width: number, height: number } =
+                        super.offset(mainInputElRef.nativeElement);
+                    parentComponent.getRenderer().setStyle(
+                        choiceMenuElRef.nativeElement,
+                        'top', (offset.top + offset.height + 5) + 'px',
+                        RendererStyleFlags2.Important);
+                    parentComponent.getRenderer().setStyle(
+                        choiceMenuElRef.nativeElement,
+                        'left', offset.left + 'px',
+                        RendererStyleFlags2.Important);
+                    parentComponent.getRenderer().setStyle(
+                        choiceMenuElRef.nativeElement,
+                        'width', offset.width + 'px',
+                        RendererStyleFlags2.Important);
+                }
             }
         }
 
@@ -327,5 +351,17 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
         return (this.getOptionImageParser()
             ? this.getOptionImageParser().apply(this, [item])
             : optionImageField.length && item.data ? item.data[optionImageField] : null);
+    }
+
+    /**
+     * Custom for option while using `appendToBody`
+     * @param option {NgxSelectOption}
+     */
+    private clickOptionAppendToBody(option: NgxSelectOption, $event) {
+        if (!this.appendToBody()) {
+            return;
+        }
+
+        this.selectComponent.optionSelect(option, $event);
     }
 }
