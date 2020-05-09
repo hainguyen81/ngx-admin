@@ -197,6 +197,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
     styleUrls: [
         '../../../formly/formly.component.scss',
         '../../components/app.formly.component.scss',
+        './warehouse.inventory.main.formly.component.scss',
     ],
 })
 export class WarehouseInventoryMainFormlyComponent

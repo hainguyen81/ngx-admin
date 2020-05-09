@@ -1,0 +1,7 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep .form-files-gallery-file .files-gallery .files-gallery-list .files-gallery-item {
+        clear: both;
+    }
+}
