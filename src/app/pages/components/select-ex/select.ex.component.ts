@@ -66,7 +66,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @return true for appending to body; else false
      */
     public appendToBody(): boolean {
-        return this.configValue('appendToBody', false);
+        return this.getConfigValue('appendToBody', false);
     }
 
     /**
@@ -74,7 +74,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @param appendToBody to apply
      */
     public setAppendToBody(appendToBody?: boolean | false): void {
-        this.saveConfigValue('appendToBody', appendToBody);
+        this.setConfigValue('appendToBody', appendToBody);
     }
 
     /**
@@ -82,7 +82,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @return true for using image; else false
      */
     public isEnabledOptionImage(): boolean {
-        return this.configValue('enableOptionImage', false);
+        return this.getConfigValue('enableOptionImage', false);
     }
 
     /**
@@ -90,7 +90,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @param enabledItemImage true for using image; else false
      */
     public setEnabledItemImage(enabledOptionImage?: boolean | false): void {
-        this.saveConfigValue('enableOptionImage', enabledOptionImage);
+        this.setConfigValue('enableOptionImage', enabledOptionImage);
     }
 
     /**
@@ -275,8 +275,8 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
                 const addNewOptionEl: HTMLElement =
                     parentComponent.getFirstElementBySelector(
                         '.ngx-select__item_addNewOption', choiceMenuElRef.nativeElement);
-                const shouldShown: boolean = parentComponent.configValue('showAddNewOption', false)
-                    && parentComponent.configValue('addNewOptionConfig', null);
+                const shouldShown: boolean = parentComponent.getConfigValue('showAddNewOption', false)
+                    && parentComponent.getConfigValue('addNewOptionConfig', null);
                 if (isNullOrUndefined(addNewOptionEl) && choiceMenuElRef && shouldShown) {
                     parentComponent.getRenderer().appendChild(
                         choiceMenuElRef.nativeElement, parentComponent.addNewOptionElRef.nativeElement);
@@ -289,7 +289,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
             // append to body
             if (this.appendToBody()) {
                 const mainInputElRef: ElementRef = selectComponent['inputElRef'] as ElementRef;
-                const shouldAppendToBody: boolean = parentComponent.configValue('appendToBody', false);
+                const shouldAppendToBody: boolean = parentComponent.getConfigValue('appendToBody', false);
                 if (shouldAppendToBody && choiceMenuElRef && mainInputElRef) {
                     parentComponent.getRenderer().appendChild(
                         document.body, choiceMenuElRef.nativeElement);
@@ -317,28 +317,10 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     }
 
     /**
-     * Get configuration value for template
-     * @param key configuration key
-     * @param defaultValue default if not found
-     */
-    protected configValue(key?: string, defaultValue?: any): any {
-        return (this.getConfig() && (<Object>this.getConfig()).hasOwnProperty(key)
-            ? this.getConfig()[key] : defaultValue);
-    }
-    /**
-     * Set configuration value for template
-     * @param key configuration key
-     * @param value to apply
-     */
-    protected saveConfigValue(key?: string, value?: any): void {
-        this.getConfig()[key] = value;
-    }
-
-    /**
      * Alias of {AbstractSelectExComponent#configValue} for 'Add new option' action
      */
     protected addNewActionConfig(): IToolbarActionsConfig {
-        return this.configValue('addNewOptionConfig', null) as IToolbarActionsConfig;
+        return this.getConfigValue('addNewOptionConfig', null) as IToolbarActionsConfig;
     }
 
     /**
@@ -347,7 +329,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @return the specified {NgxSelectOption} image
      */
     public getOptionImages(item?: NgxSelectOption): string[] {
-        const optionImageField: string = this.configValue('optionImageField', '');
+        const optionImageField: string = this.getConfigValue('optionImageField', '');
         return (this.getOptionImageParser()
             ? this.getOptionImageParser().apply(this, [item])
             : optionImageField.length && item.data ? item.data[optionImageField] : null);

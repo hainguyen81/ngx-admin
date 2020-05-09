@@ -130,7 +130,7 @@ export const DefaultNgxSelectOptions: INgxSelectExOptions = {
      * Set to true to allow the selection to be cleared. This option only applies to single-value inputs
      * {boolean}
      */
-    allowClear: false,
+    allowClear: true,
     /**
      * Set to true Placeholder text to display when the element has no focus and selected items
      * {string}
@@ -282,22 +282,22 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     protected get selectComponent(): NgxSelectComponent {
         return this.ngxSelectExComponent;
     }
-
-    /**
-     * Get the {INgxSelectOptions} instance for configuring
-     * @return the {INgxSelectOptions} instance
-     */
-    public getConfig(): INgxSelectExOptions {
-        return super.config as INgxSelectExOptions;
-    }
-
-    /**
-     * Set the {INgxSelectOptions} instance
-     * @param config to apply. NULL for default
-     */
-    public setConfig(config?: INgxSelectExOptions) {
-        super.config = config || DefaultNgxSelectOptions;
-    }
+    //
+    // /**
+    //  * Get the {INgxSelectOptions} instance for configuring
+    //  * @return the {INgxSelectOptions} instance
+    //  */
+    // public getConfig(): INgxSelectExOptions {
+    //     return super.config as INgxSelectExOptions;
+    // }
+    //
+    // /**
+    //  * Set the {INgxSelectOptions} instance
+    //  * @param config to apply. NULL for default
+    //  */
+    // public setConfig(config?: INgxSelectExOptions) {
+    //     super.config = config || DefaultNgxSelectOptions;
+    // }
 
     /**
      * Get the option items array to show
@@ -393,7 +393,8 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        this.setConfig(config);
+        // this.setConfig(config);
+        this.config = config;
     }
 
     // -------------------------------------------------
@@ -504,7 +505,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
             opt && opts.push(opt);
         });
         const currentOptionsSelected: NgxSelectOption[] =
-            (this.getConfig().multiple ? this.selectComponent.optionsSelected || [] : []).concat(opts);
+            (this.config.multiple ? this.selectComponent.optionsSelected || [] : []).concat(opts);
         (<BehaviorSubject<any>>this.selectComponent['subjOptionsSelected']).next(currentOptionsSelected);
     }
 
