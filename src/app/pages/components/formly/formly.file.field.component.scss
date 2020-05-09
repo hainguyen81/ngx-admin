@@ -1,4 +1,7 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
+    ::ng-deep .form-files-gallery-file {
+        margin-left: 90px;
+    }
 }

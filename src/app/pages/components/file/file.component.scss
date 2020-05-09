@@ -4,4 +4,35 @@
     ::ng-deep nb-card {
         transform: translate3d(0, 0, 0);
     }
+    ::ng-deep .files-gallery .primary-upload .primary-upload-file .files-gallery-item-pluser {
+        color: #3498db;
+    }
+    ::ng-deep .files-gallery .files-gallery-list {
+        max-width: 200px;
+        overflow: hidden;
+        .files-gallery-item {
+            max-width: 30%;
+            white-space: nowrap;
+            display: block !important;
+            span {
+                display: inline-block !important;
+                width: calc(100% - 20px);
+                max-width: calc(100% - 20px);
+                text-overflow: ellipsis;
+                float: left;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .files-gallery-item-remover {
+                display: inline-block !important;
+                float: right;
+                max-width: 20px;
+                width: 20px;
+                white-space: nowrap;
+                overflow: hidden;
+                font-size: 0.75rem;
+                cursor: pointer;
+            }
+        }
+    }
 }
