@@ -181,12 +181,12 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-6',
-                key: 'remark',
-                type: 'input',
+                className: 'col-4',
+                key: 'status',
+                type: 'select-ex-general-settings',
                 templateOptions: {
-                    label: 'warehouse.batch_no.form.remark.label',
-                    placeholder: 'warehouse.batch_no.form.remark.placeholder',
+                    label: 'warehouse.batch_no.form.status.label',
+                    placeholder: 'warehouse.batch_no.form.status.placeholder',
                 },
             },
         ],
@@ -195,13 +195,12 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
-                className: 'col-4',
-                key: 'status',
-                type: 'select-ex-general-settings',
+                className: 'col-6',
+                key: 'remark',
+                type: 'input',
                 templateOptions: {
-                    label: 'warehouse.batch_no.form.status.label',
-                    placeholder: 'warehouse.batch_no.form.status.placeholder',
-                    required: true,
+                    label: 'warehouse.batch_no.form.remark.label',
+                    placeholder: 'warehouse.batch_no.form.remark.placeholder',
                 },
             },
         ],
