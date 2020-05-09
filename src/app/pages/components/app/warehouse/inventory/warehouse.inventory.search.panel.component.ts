@@ -11,8 +11,6 @@ import {IWarehouseInventorySearch} from '../../../../../@core/data/warehouse/ext
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import {AppPanelComponent} from '../../components/app.panel.component';
-import {AbstractComponent} from '../../../abstract.component';
 import {WarehouseInventorySearchFormlyComponent} from './warehouse.inventory.search.formly.component';
 import {WarehouseInventorySearchToolbarComponent} from './warehouse.inventory.search.toolbar.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -24,6 +22,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocalDataSource} from 'ng2-smart-table';
+import {AppSearchPanelComponent} from '../../components/app.search.panel.component';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -32,8 +31,7 @@ import {LocalDataSource} from 'ng2-smart-table';
     styleUrls: ['../../../panel/panel.component.scss'],
 })
 export class WarehouseInventorySearchComponent
-    extends AppPanelComponent<IWarehouseInventorySearch, DataSource,
-        AbstractComponent,
+    extends AppSearchPanelComponent<IWarehouseInventorySearch, DataSource,
         WarehouseInventorySearchFormlyComponent,
         WarehouseInventorySearchToolbarComponent> {
 
@@ -82,7 +80,6 @@ export class WarehouseInventorySearchComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
-            null,
             WarehouseInventorySearchFormlyComponent,
             WarehouseInventorySearchToolbarComponent);
     }
