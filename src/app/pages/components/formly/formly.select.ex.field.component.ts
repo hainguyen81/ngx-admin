@@ -6,13 +6,17 @@ import {
     QueryList, Renderer2,
     ViewChildren, ViewContainerRef,
 } from '@angular/core';
+import {
+    NgxSelectOptGroup,
+    NgxSelectOption,
+    TSelectOption,
+} from 'ngx-select-ex';
 import {AbstractFieldType} from '../abstract.fieldtype';
-import {NgxSelectOption} from 'ngx-select-ex';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
 import {IEvent} from '../abstract.component';
-import {isArray} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable} from 'rxjs';
 
@@ -87,12 +91,22 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     get valueFormatter(): (value: any) => any {
         return value => {
             let options: any[];
-            options = this.items.filter(opt => {
-                return (opt && ((opt === value)
-                    || (opt[this.getConfigValue('optionValueField')] === value)));
-            });
+            const property: string = this.getConfigValue('optionValueField') || '';
+            if (property.length) {
+                const filterValue: any = (value && value.hasOwnProperty(property)
+                    ? value[property] : value);
+                options = this.items.filter(opt => {
+                    const optValue: any = (opt && opt.hasOwnProperty(property)
+                        ? opt[property] : opt);
+                    return ((optValue || '') === (filterValue || ''));
+                });
+            }
             return options || [];
         };
+    }
+
+    get valueParser(): (value: any) => any {
+        return value => this.__parseOptionValue(value);
     }
 
     // -------------------------------------------------
@@ -154,8 +168,11 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     protected onValueChanges(value: any): void {
-        this.selectExComponent
-        && this.__applySelectedItems(null, value);
+        super.onValueChanges(value);
+        const timer: number = window.setTimeout(() => {
+            this.__applySelectedItems(this.selectExComponent, this.value);
+            window.clearTimeout(timer);
+        }, 200);
     }
 
     protected onStatusChanges(value: any): void {
@@ -195,21 +212,81 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * @param value to apply
      */
     public setValue(value?: any): void {
-        value = this.parseValue(value);
-        if (this.value !== value) {
+        const oldVal: any = this.parseValue(this.value);
+        const newVal: any = this.parseValue(value);
+        if (oldVal !== newVal) {
             this.formControl && this.formControl.patchValue(
-                value, {onlySelf: true, emitEvent: true});
+                newVal, {onlySelf: true, emitEvent: true});
         }
     }
 
     private __applySelectedItems(selectComponent?: NgxSelectExComponent, value?: any) {
         selectComponent = (selectComponent || this.selectExComponent);
-        if (!selectComponent || !this.items.length) return;
-        value = this.formatValue(value);
-        selectComponent.setSelectedItems(isArray(value) ? Array.from(value) : [value]);
+        selectComponent
+        && selectComponent.setSelectedItems(!selectComponent || !this.items.length ? [] : value);
     }
 
     protected onSelect($event: IEvent): void {
         this.setValue(($event || {}).data);
+    }
+
+    private __parseOptionValue(value: any): any[] | any {
+        // detect option
+        const options: any[] = [];
+        if (isArray(value)) {
+            Array.from(value).forEach(val => {
+                const selOpt: TSelectOption = <TSelectOption>val;
+                if (!isNullOrUndefined(selOpt)
+                    || val instanceof NgxSelectOption || val instanceof NgxSelectOptGroup) {
+                    options.push(val);
+                }
+            });
+
+        } else if (!isNullOrUndefined(<TSelectOption>value)
+            || value instanceof NgxSelectOption || value instanceof NgxSelectOptGroup) {
+            options.push(value);
+        }
+
+        let optValues: any[] = [];
+        options.forEach(opt => {
+            optValues = optValues.concat(this.__parseSelectOption(opt));
+        });
+        return (optValues.length ? optValues.length === 1 ? optValues[0] : optValues : undefined);
+    }
+    private __parseOption(opt: NgxSelectOption): any[] {
+        const property: string = this.getConfigValue('optionValueField');
+        return (opt && opt.value ? [opt.value[property] || ''] : []);
+    }
+    private __parseOptionGroup(optGroup: NgxSelectOptGroup): any[] {
+        let parsedValues: any[] = [];
+        if (!isNullOrUndefined(optGroup) && (optGroup.options || []).length) {
+            optGroup.options.forEach(opt => {
+                const parsedValue: any = this.__parseOption(opt);
+                if (isArray(parsedValue) && Array.from(parsedValue).length) {
+                    parsedValues = parsedValues.concat(Array.from(parsedValue));
+                }
+            });
+        }
+        return (parsedValues.length ? parsedValues : undefined);
+    }
+    private __parseSelectOption(selOpt: any): any[] | any {
+        let parsedValues: any[] = [];
+        if (selOpt instanceof NgxSelectOption) {
+            parsedValues = parsedValues.concat(this.__parseOption(<NgxSelectOption>selOpt));
+
+        } else if (selOpt instanceof NgxSelectOptGroup) {
+            parsedValues = parsedValues.concat(this.__parseOptionGroup(<NgxSelectOptGroup>selOpt));
+
+        } else if (!isNullOrUndefined(<TSelectOption>selOpt)) {
+            switch ((<TSelectOption>selOpt).type) {
+                case 'optgroup':
+                    parsedValues = parsedValues.concat(this.__parseOptionGroup(<NgxSelectOptGroup>selOpt));
+                    break;
+                case 'option':
+                    parsedValues = parsedValues.concat(this.__parseOption(<NgxSelectOption>selOpt));
+                    break;
+            }
+        }
+        return (parsedValues.length ? parsedValues : []);
     }
 }
