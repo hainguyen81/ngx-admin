@@ -150,12 +150,12 @@ export abstract class AppPanelComponent<
 
         // create body component
         if (this._bodyComponentType) {
-            this._bodyComponent = this.setHeaderComponent(this._bodyComponentType);
+            this._bodyComponent = this.setBodyComponent(this._bodyComponentType);
         }
 
         // create footer component
         if (this._footerComponentType) {
-            this._footerComponent = this.setHeaderComponent(this._footerComponentType);
+            this._footerComponent = this.setFooterComponent(this._footerComponentType);
         }
     }
 }

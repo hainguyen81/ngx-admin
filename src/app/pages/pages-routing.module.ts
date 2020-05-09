@@ -109,7 +109,7 @@ const routes: Routes = [{
                         component: WarehouseItemFlipcardComponent,
                     },
                     {
-                        path: 'io',
+                        path: 'inventory',
                         component: WarehouseInventorySearchComponent,
                     },
                     {
