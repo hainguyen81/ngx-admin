@@ -5,6 +5,6 @@
                    [images]="images">
 </ngx-image-gallery>
 <div [class.d-table-cell]="true"
-     *ngIf="(getDescriptor() || '').length"
-     [innerHTML]="getDescriptor()"
+     *ngIf="(descriptor || '').length"
+     [innerHTML]="descriptor"
 ></div>

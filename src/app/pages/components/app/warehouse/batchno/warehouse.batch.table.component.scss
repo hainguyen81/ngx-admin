@@ -4,14 +4,14 @@
     ::ng-deep .html-cell {
         i {
             padding-right: 5px;
+            .status-overdue {
+                color: red;
+            }
             .status-expired {
                 color: #e0a800;
             }
             .status-near-expired {
-                color: #2d8ac7;
-            }
-            .status-overdue {
-                color: red;
+                color: #3498db;
             }
         }
     }

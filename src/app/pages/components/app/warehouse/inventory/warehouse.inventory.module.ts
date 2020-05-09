@@ -34,6 +34,8 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
 import {WarehouseInventorySearchToolbarComponent} from './warehouse.inventory.search.toolbar.component';
 import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.panel.component';
+import {WarehouseInventoryToolbarComponent} from './warehouse.inventory.toolbar.component';
+import {WarehouseInventorySmartTableComponent} from './warehouse.inventory.table.component';
 
 @NgModule({
     imports: [
@@ -97,11 +99,15 @@ import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.pa
         WarehouseInventorySearchFormlyComponent,
         WarehouseInventorySearchToolbarComponent,
         WarehouseInventorySearchComponent,
+        WarehouseInventoryToolbarComponent,
+        WarehouseInventorySmartTableComponent,
     ],
     entryComponents: [
         WarehouseInventorySearchFormlyComponent,
         WarehouseInventorySearchToolbarComponent,
         WarehouseInventorySearchComponent,
+        WarehouseInventoryToolbarComponent,
+        WarehouseInventorySmartTableComponent,
     ],
     providers: [
         {

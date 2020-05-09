@@ -11,7 +11,7 @@ export interface IWarehouseInventory extends IModel {
     // 0: IN ; 1 : OUT
     type: string;
     // Ngày nhập xuất
-    date: number;
+    date: string | null;
     // Lý do xuất kho
     reason_for_issuing: string;
     // Tổng tiền
@@ -39,7 +39,7 @@ export interface IWarehouseInventory extends IModel {
 
 export default class WarehouseInventory extends BaseModel implements IWarehouseInventory {
     constructor(public id: string, public code: string, public type: string,
-                public date: number, public reason_for_issuing: string, public total_amount: number) {
+                public date: string | null, public reason_for_issuing: string, public total_amount: number) {
         super(id);
     }
 }

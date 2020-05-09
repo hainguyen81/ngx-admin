@@ -9,32 +9,29 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {isArray, isNullOrUndefined} from 'util';
 import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mode/custom-view.component';
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 
 /**
- * Smart table image cell component base on {DefaultEditor}
+ * Smart table observe cell component base on {DefaultEditor}
  */
 @Component({
-    selector: 'ngx-smart-table-image-cell',
-    templateUrl: './image.cell.component.html',
-    styleUrls: ['./image.cell.component.scss'],
+    selector: 'ngx-smart-table-observe-cell',
+    templateUrl: './observe.cell.component.html',
+    styleUrls: ['./observe.cell.component.scss'],
 })
-export class ImageCellComponent extends AbstractCellEditor
+export class ObserveCellComponent extends AbstractCellEditor
     implements AfterViewInit {
 
-    private static DESCRIPTOR_PREPARE: string = 'descriptorPrepare';
-    private static IMAGES_PREPARE: string = 'imagesPrepare';
+    private static OBSERVE_CELL_VALUE_PREPARE: string = 'valuePrepare';
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    private _images: string[] = [];
-    private _descriptor: string = '';
+    private _observedValue: any;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -44,12 +41,8 @@ export class ImageCellComponent extends AbstractCellEditor
         return false;
     }
 
-    get images(): string[] {
-        return this._images;
-    }
-
-    get descriptor(): string {
-        return this._descriptor;
+    get cellValue(): any {
+        return this._observedValue || '';
     }
 
     // -------------------------------------------------
@@ -85,18 +78,7 @@ export class ImageCellComponent extends AbstractCellEditor
 
     ngAfterViewInit(): void {
         // observe images
-        this.observeConfigProperty(ImageCellComponent.IMAGES_PREPARE)
-            .subscribe(images => {
-                if (isArray(images)) {
-                    this._images = Array.from(images);
-
-                } else if (!isNullOrUndefined(images) && typeof images === 'string') {
-                    this._images = [images];
-                }
-            });
-
-        // observe descriptor
-        this.observeConfigProperty(ImageCellComponent.DESCRIPTOR_PREPARE, false)
-            .subscribe(descriptor => this._descriptor = descriptor || '');
+        this.observeConfigProperty(ObserveCellComponent.OBSERVE_CELL_VALUE_PREPARE)
+            .subscribe(observedValue => this._observedValue = observedValue);
     }
 }

@@ -11,11 +11,13 @@ import {
 import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mode/custom-view.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {throwError} from 'rxjs';
+import {isObservable, Observable, of, throwError} from 'rxjs';
 import {IEvent} from '../abstract.component';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNullOrUndefined} from 'util';
+import PromiseUtils from '../../../utils/promise.utils';
+import {isPromise} from 'rxjs/internal-compatibility';
 
 /**
  * Customization smart table cell editor/render component
@@ -348,5 +350,53 @@ export abstract class AbstractCellEditor extends DefaultEditor {
             retValue = parser.apply(this, [retValue]);
         }
         return retValue;
+    }
+
+    /**
+     * Create an observe of the property configuration
+     * @param property to observe
+     * @param observeValueIfInvalidProperty specify whether observing cell's value
+     * if property is not found from configuration
+     */
+    protected observeConfigProperty(property: string,
+                                    observeValueIfInvalidProperty?: boolean | true): Observable<any> {
+        const cell: Cell = this.cell;
+        const config: any = this.cellColumnConfig;
+        const column: Column = this.cellColumn;
+        if (column && Object.keys(column).length && column.hasOwnProperty(property)) {
+            if (typeof column[property] === 'function') {
+                return of(column[property].call(undefined,
+                    this, cell, this.cellRow, this.cellRowData, this.cellColumnConfig));
+
+            } else if (isObservable(column[property])) {
+                return <Observable<any>>column[property];
+
+            } else if (isPromise(column[property])) {
+                return PromiseUtils.promiseToObservable(<Promise<any>>column[property]);
+
+            } else {
+                return of(column[property]);
+            }
+
+        } else if (config && Object.keys(config).length
+            && config.hasOwnProperty(property)) {
+            if (typeof config[property] === 'function') {
+                return of(config[property].call(undefined,
+                    this, cell, this.cellRow, this.cellRowData, this.cellColumnConfig));
+
+            } else if (isObservable(config[property])) {
+                return <Observable<any>>config[property];
+
+            } else if (isPromise(config[property])) {
+                return PromiseUtils.promiseToObservable(<Promise<any>>config[property]);
+
+            } else {
+                return of(config[property]);
+            }
+
+        } else if (observeValueIfInvalidProperty) {
+            return of(this.cellValue);
+        }
+        return of(undefined);
     }
 }
