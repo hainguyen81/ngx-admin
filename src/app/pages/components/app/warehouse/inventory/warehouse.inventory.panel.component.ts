@@ -1,9 +1,11 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
+    OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -16,7 +18,7 @@ import {
 import {AppPanelComponent} from '../../components/app.panel.component';
 import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.panel.component';
 import {WarehouseInventorySmartTableComponent} from './warehouse.inventory.table.component';
-import {AbstractComponent} from '../../../abstract.component';
+import {AbstractComponent, IEvent} from '../../../abstract.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -62,6 +64,33 @@ export class WarehouseInventoryPanelComponent
      */
     protected get tableResult(): WarehouseInventorySmartTableComponent {
         return this.body as WarehouseInventorySmartTableComponent;
+    }
+
+    /**
+     * Set the item new listener
+     * @param newItemDelegate listener
+     */
+    public setNewItemListener(newItemDelegate: (event: IEvent) => void) {
+        this.tableResult && newItemDelegate
+        && this.tableResult.setNewItemListener(newItemDelegate);
+    }
+
+    /**
+     * Set the item editing listener
+     * @param editItemDelegate listener
+     */
+    public setEditItemListener(editItemDelegate: (event: IEvent) => void) {
+        this.tableResult && editItemDelegate
+        && this.tableResult.setEditItemListener(editItemDelegate);
+    }
+
+    /**
+     * Set the item deleting listener
+     * @param deleteItemDelegate listener
+     */
+    public setDeleteItemListener(deleteItemDelegate: (event: IEvent) => void) {
+        this.tableResult && deleteItemDelegate
+        && this.tableResult.setDeleteItemListener(deleteItemDelegate);
     }
 
     // -------------------------------------------------

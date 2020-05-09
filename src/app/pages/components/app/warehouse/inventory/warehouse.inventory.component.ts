@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -56,7 +57,14 @@ export class WarehouseInventoryComponent
         WarehouseInventoryDatasource,
         WarehouseInventoryToolbarComponent,
         WarehouseInventoryPanelComponent,
-        WarehouseInventoryMainFormlyComponent> {
+        WarehouseInventoryMainFormlyComponent>
+    implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _selectedModel: IWarehouseInventory;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -121,6 +129,45 @@ export class WarehouseInventoryComponent
     // EVENTS
     // -------------------------------------------------
 
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        // listener
+        if (super.getFrontComponent()) {
+            this.getFrontComponent().setNewItemListener($event => {
+                this._selectedModel = null;
+                this.ensureBackComponent();
+                this.onNewData($event);
+                this.setFlipped(true);
+            });
+            this.getFrontComponent().setEditItemListener($event => {
+                this._selectedModel = ($event && $event.data
+                && $event.data['row'] instanceof Row
+                    ? ($event.data['row'] as Row).getData() as IWarehouseInventory : undefined);
+                this.ensureBackComponent();
+                this.onEditData($event);
+                this.setFlipped(true);
+            });
+            this.getFrontComponent().setDeleteItemListener($event => {
+                this._selectedModel = ($event && $event.data
+                && $event.data['row'] instanceof Row
+                    ? ($event.data['row'] as Row).getData() as IWarehouseInventory : undefined);
+                this.ensureBackComponent();
+                this.onDeleteData($event);
+                this.setFlipped(false);
+            });
+        }
+    }
+
+    /**
+     * Perform going back data
+     */
+    protected doBack(): void {
+        // back to front
+        this._selectedModel = undefined;
+        this.setFlipped(false);
+    }
+
     protected onNewData($event: IEvent): void {
         const newInst: IWarehouseInventory =
             new WarehouseInventory(null, null, null, null, null, null);
@@ -130,5 +177,13 @@ export class WarehouseInventoryComponent
     protected onEditData($event: IEvent): void {
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
         row && row.getData() && super.getBackComponent().setModel(row.getData() as IWarehouseInventory);
+    }
+
+    /**
+     * Call when table wanna delete data
+     * @param $event event data {IEvent}
+     */
+    protected onDeleteData($event: IEvent): void {
+        this.getLogger().debug('Flip-table wanna delete data', $event);
     }
 }
