@@ -32,6 +32,9 @@ import {WarehouseStorageModule} from './storage/warehouse.storage.module';
 import {WarehouseSettingsModule} from './settings/warehouse.settings.module';
 import {WarehouseBatchNoModule} from './batchno/warehouse.batch.module';
 import {WarehouseInventoryModule} from './inventory/warehouse.inventory.module';
+import {NgxSelectModule} from 'ngx-select-ex';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {ModalDialogModule} from 'ngx-modal-dialog';
 
 @NgModule({
     imports: [
@@ -79,6 +82,15 @@ import {WarehouseInventoryModule} from './inventory/warehouse.inventory.module';
 
         /* Selection Dropdown */
         SelectDropDownModule,
+
+        /* Select-ex */
+        NgxSelectModule,
+
+        /* @ng-select/ng-select */
+        NgSelectModule,
+
+        /* Modal dialog */
+        ModalDialogModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,

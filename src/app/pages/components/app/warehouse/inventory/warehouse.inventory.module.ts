@@ -24,7 +24,9 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
-import {WarehouseInventorySearchFormlyComponent} from './warehouse.inventory.search.formly.component';
+import {
+    WarehouseInventorySearchFormlyComponent,
+} from './warehouse.inventory.search.formly.component';
 import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
@@ -32,13 +34,19 @@ import {
     WarehouseInventoryDbService,
     WarehouseInventoryHttpService,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
-import {WarehouseInventorySearchToolbarComponent} from './warehouse.inventory.search.toolbar.component';
+import {
+    WarehouseInventorySearchToolbarComponent,
+} from './warehouse.inventory.search.toolbar.component';
 import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.panel.component';
 import {WarehouseInventoryToolbarComponent} from './warehouse.inventory.toolbar.component';
 import {WarehouseInventorySmartTableComponent} from './warehouse.inventory.table.component';
 import {WarehouseInventoryPanelComponent} from './warehouse.inventory.panel.component';
 import {WarehouseInventoryComponent} from './warehouse.inventory.component';
 import {WarehouseInventoryMainFormlyComponent} from './warehouse.inventory.main.formly.component';
+import {SelectDropDownModule} from 'ngx-select-dropdown';
+import {NgxSelectModule} from 'ngx-select-ex';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {ModalDialogModule} from 'ngx-modal-dialog';
 
 @NgModule({
     imports: [
@@ -71,11 +79,23 @@ import {WarehouseInventoryMainFormlyComponent} from './warehouse.inventory.main.
             useBootstrap4: true,
         }),
 
+        /* Tree-view */
+        TreeviewModule.forRoot(),
+
         /* SplitPane */
         AngularSplitModule.forRoot(),
 
-        /* Tree-view */
-        TreeviewModule.forRoot(),
+        /* Selection Dropdown */
+        SelectDropDownModule,
+
+        /* Select-ex */
+        NgxSelectModule,
+
+        /* @ng-select/ng-select */
+        NgSelectModule,
+
+        /* Modal dialog */
+        ModalDialogModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,

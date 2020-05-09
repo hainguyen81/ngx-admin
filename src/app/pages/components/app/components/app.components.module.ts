@@ -29,6 +29,8 @@ import {CustomFormsModule} from 'ngx-custom-validators';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {ValidatorsModule} from 'ngx-validators';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {SelectDropDownModule} from 'ngx-select-dropdown';
+import {ModalDialogModule} from 'ngx-modal-dialog';
 
 @NgModule({
     imports: [
@@ -61,17 +63,23 @@ import {NgSelectModule} from '@ng-select/ng-select';
             useBootstrap4: true,
         }),
 
+        /* Tree-view */
+        TreeviewModule.forRoot(),
+
         /* SplitPane */
         AngularSplitModule.forRoot(),
 
-        /* Tree-view */
-        TreeviewModule.forRoot(),
+        /* Selection Dropdown */
+        SelectDropDownModule,
 
         /* Select-ex */
         NgxSelectModule,
 
         /* @ng-select/ng-select */
         NgSelectModule,
+
+        /* Modal dialog */
+        ModalDialogModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,
