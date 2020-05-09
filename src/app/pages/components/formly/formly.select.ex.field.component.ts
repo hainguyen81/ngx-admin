@@ -95,11 +95,13 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
             if (property.length) {
                 const filterValue: any = (value && value.hasOwnProperty(property)
                     ? value[property] : value);
-                options = this.items.filter(opt => {
-                    const optValue: any = (opt && opt.hasOwnProperty(property)
-                        ? opt[property] : opt);
-                    return ((optValue || '') === (filterValue || ''));
-                });
+                if ((filterValue || '').length) {
+                    options = this.items.filter(opt => {
+                        const optValue: any = (opt && opt.hasOwnProperty(property)
+                            ? opt[property] : opt);
+                        return ((optValue || '') === (filterValue || ''));
+                    });
+                }
             }
             return options || [];
         };
