@@ -32,6 +32,8 @@ import {
     WarehouseInventoryDbService,
     WarehouseInventoryHttpService,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
+import {WarehouseInventorySearchToolbarComponent} from './warehouse.inventory.search.toolbar.component';
+import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.panel.component';
 
 @NgModule({
     imports: [
@@ -93,9 +95,13 @@ import {
     ],
     declarations: [
         WarehouseInventorySearchFormlyComponent,
+        WarehouseInventorySearchToolbarComponent,
+        WarehouseInventorySearchComponent,
     ],
     entryComponents: [
         WarehouseInventorySearchFormlyComponent,
+        WarehouseInventorySearchToolbarComponent,
+        WarehouseInventorySearchComponent,
     ],
     providers: [
         {

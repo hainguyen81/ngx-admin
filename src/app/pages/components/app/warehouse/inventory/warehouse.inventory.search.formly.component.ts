@@ -188,7 +188,7 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
-    selector: 'ngx-formly-form-app-warehouse-inventory',
+    selector: 'ngx-formly-form-app-warehouse-inventory-search',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [
         '../../../formly/formly.component.scss',

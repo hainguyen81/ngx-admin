@@ -66,6 +66,7 @@ import {NgxDatePickerComponent} from './datepicker/datepicker.component';
 import {DatePickerCellComponent} from './smart-table/datepicker.cell.component';
 import {DatePickerFormFieldComponent} from './formly/formly.datepicker.field.component';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {NgxPanelComponent} from './panel/panel.component';
 
 @NgModule({
     imports: [
@@ -203,6 +204,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
         NgxDatePickerComponent,
         DatePickerCellComponent,
         DatePickerFormFieldComponent,
+        NgxPanelComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -232,6 +234,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
         NgxDatePickerComponent,
         DatePickerCellComponent,
         DatePickerFormFieldComponent,
+        NgxPanelComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -252,6 +255,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
         NgxDatePickerComponent,
         DatePickerCellComponent,
         DatePickerFormFieldComponent,
+        NgxPanelComponent,
     ],
 })
 export class ComponentsModule {

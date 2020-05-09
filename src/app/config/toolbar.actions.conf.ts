@@ -7,6 +7,7 @@ export const ACTION_SAVE: string = 'ACTION_SAVE';
 export const ACTION_RESET: string = 'ACTION_RESET';
 export const ACTION_DELETE: string = 'ACTION_DELETE';
 export const ACTION_BACK: string = 'ACTION_BACK';
+export const ACTION_SEARCH: string = 'ACTION_SEARCH';
 export const ACTION_IMPORT: string = 'ACTION_IMPORT';
 export const ACTION_DELETE_DATABASE: string = 'ACTION_DELETE_DATABASE';
 
@@ -100,6 +101,14 @@ export const BaseToolbarActions: IToolbarActionsConfig[] = [{
     type: 'button',
     status: 'warning',
     icon: {icon: 'redo', pack: 'fa'},
+    size: 'small',
+    shape: 'rectangle',
+}, {
+    id: ACTION_SEARCH,
+    label: 'common.form.action.search',
+    type: 'button',
+    status: 'primary',
+    icon: {icon: 'search', pack: 'fas'},
     size: 'small',
     shape: 'rectangle',
 }];
