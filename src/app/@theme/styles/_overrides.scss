@@ -114,6 +114,15 @@
         .ngx-select__choices .ngx-select__item-group .ngx-select__item_active {
             background-color: nb-theme(color-basic-focus-border);
         }
+
+        .ngx-select__clear.btn {
+            font-size: x-small;
+            font-weight: normal;
+
+            .ngx-select__clear-icon {
+                border-top-width: 2px;
+            }
+        }
     }
 
     /* mat-option */
