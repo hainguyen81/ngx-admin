@@ -27,8 +27,8 @@ import {
     WarehouseBatchNoComponent,
 } from './components/app/warehouse/batchno/warehouse.batch.component';
 import {
-    WarehouseInventoryPanelComponent,
-} from './components/app/warehouse/inventory/warehouse.inventory.panel.component';
+    WarehouseInventoryComponent,
+} from './components/app/warehouse/inventory/warehouse.inventory.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
@@ -114,7 +114,7 @@ const routes: Routes = [{
                     },
                     {
                         path: 'inventory',
-                        component: WarehouseInventoryPanelComponent,
+                        component: WarehouseInventoryComponent,
                     },
                     {
                         path: '',
