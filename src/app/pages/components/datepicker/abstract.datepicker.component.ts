@@ -24,6 +24,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ComponentUtils from '../../../utils/component.utils';
 import {isNullOrUndefined} from 'util';
+import {Moment} from 'moment';
 
 export interface INgxDatePickerConfig {
     /**
@@ -96,6 +97,8 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     private _datePickerComponent: DatePickerComponent;
 
     @Input('model') private _model: any;
+
+    @Input('selected') private _selected: Moment[];
 
     @Output() readonly openListener: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() readonly closeListener: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -176,6 +179,14 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     }
 
     /**
+     * Indicates on what date to open the calendar on
+     * TODO Only for day|month|daytime
+     */
+    set displayDate(_displayDate: string) {
+        this.getConfigValue('displayDate', _displayDate);
+    }
+
+    /**
      * If set to true the input would be disabled
      */
     get isDisabled(): boolean {
@@ -238,6 +249,17 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
 
     get datePickerConfig(): IDatePickerConfig {
         return this.getConfigValue('config') as IDatePickerConfig;
+    }
+
+    get selected(): Moment[] {
+        return this._selected;
+    }
+
+    set selected(_selected: Moment[]) {
+        this._selected = _selected;
+        if (this.datePickerComponent) {
+            this.datePickerComponent.selected = _selected;
+        }
     }
 
     // -------------------------------------------------

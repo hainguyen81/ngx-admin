@@ -233,7 +233,10 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param _value to apply
      */
     set value(_value: any) {
-        super.value = this.parseValue(_value);
+        const __parsedValue: any = this.parseValue(_value);
+        if (super.value !== __parsedValue) {
+            super.value = __parsedValue;
+        }
     }
 
     // -------------------------------------------------

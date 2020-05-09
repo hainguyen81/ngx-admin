@@ -134,13 +134,11 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                         this.field.focus = true;
                         this.field.formControl
                         && this.field.formControl.markAsTouched({ onlySelf: true });
-                        component.model = this.value;
                         this.stateChanges.next();
                     });
                     component
                     && component.closeListener.subscribe(e => {
                         this.field.focus = false;
-                        this.value = component.model;
                         this.stateChanges.next();
                     });
                     component
@@ -152,6 +150,18 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                         this.value = component.model;
                     });
                 });
+        }
+    }
+
+    protected onValueChanges(value: any): void {
+        super.onValueChanges(value);
+        if (this.datePickerComponent) {
+            const timer: number = window.setTimeout(() => {
+                this.datePickerComponent.displayDate = moment(this.value).format(this.dateTimePattern);
+                this.datePickerComponent.model = this.value;
+                this.datePickerComponent.selected = (this.value ? [this.value] : []);
+                window.clearTimeout(timer);
+            }, 200);
         }
     }
 }
