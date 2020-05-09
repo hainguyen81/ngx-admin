@@ -5,7 +5,7 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     Inject,
-    Renderer2,
+    Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -257,5 +257,16 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
                 this.deleteRowByData(event.data['item'], 'id');
                 break;
         }
+    }
+
+    /**
+     * Create the search component dynamically
+     * @param componentType front component type
+     * @return created component
+     */
+    protected setSearchComponent(componentType: Type<any>): any {
+        let viewContainerRef: ViewContainerRef;
+        viewContainerRef = this.getSearchViewContainerComponent();
+        return super.createComponentAt(viewContainerRef, componentType);
     }
 }

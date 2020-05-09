@@ -14,52 +14,57 @@
     </nb-card-header>
 
     <nb-card-body [class.p-0]="!isShowHeader()" [class.m-0]="!isShowHeader()" class="ngx-smart-table-panel-body">
-        <ng2-smart-table
-            #smartTableComponent
-            [settings]="getTableSettings()"
-            [source]="getDataSource()"
-            (rowSelect)="onRowSelect({ data: $event })"
-            (userRowSelect)="onUserRowSelect( { data: $event })"
-            (create)="onCreate({ data: $event })"
-            (createConfirm)="onCreateConfirm({ data: $event })"
-            (edit)="onEdit({ data: $event })"
-            (editConfirm)="onEditConfirm({ data: $event })"
-            (delete)="onDelete({ data: $event })"
-            (deleteConfirm)="onDeleteConfirm({ data: $event })"
-            [contextMenu]="contextMenuComponent"
-            (contextmenu)="onContextMenu({ event: $event, data: smartTableComponent })"
-            (keydown)="onKeyDown({ event: $event, data: smartTableComponent })"
-            (keypress)="onKeyPress({ event: $event, data: smartTableComponent })"
-            (keyup)="onKeyUp({ event: $event, data: smartTableComponent })"
-            (click)="onClick({ event: $event, data: smartTableComponent })"
-            (dblclick)="onDoubleClick( { event: $event, data: smartTableComponent })"
-            (mousedown)="onMouseDown({ event: $event, data: smartTableComponent })"
-            (mouseenter)="onMouseEnter({ event: $event, data: smartTableComponent })"
-            (mouseleave)="onMouseLeave({ event: $event, data: smartTableComponent })"
-            (mousemove)="onMouseMove({ event: $event, data: smartTableComponent })"
-            (mouseout)="onMouseOut({ event: $event, data: smartTableComponent })"
-            (mouseover)="onMouseOver({ event: $event, data: smartTableComponent })"
-            (mouseup)="onMouseUp({ event: $event, data: smartTableComponent })"
-            (mousewheel)="onMouseWheel({ event: $event, data: smartTableComponent })"
-            (focus)="onFocus({ event: $event, data: smartTableComponent })"
-            (focusin)="onFocusIn({ event: $event, data: smartTableComponent })"
-            (focusout)="onFocusOut({ event: $event, data: smartTableComponent })"
-            (blur)="onBlur({ event: $event, data: smartTableComponent })"
-        ></ng2-smart-table>
-        <context-menu #contextMenuComponent
-                      [disabled]="!contextMenu || !contextMenu.length"
-                      (close)="onContextMenuClose()">
-            <ng-template
-                contextMenuItem
-                *ngFor="let item of contextMenu"
-                [visible]="evalContextMenuItem(item, 'visible', false)"
-                [enabled]="evalContextMenuItem(item, 'enabled', false)"
-                [divider]="evalContextMenuItem(item, 'divider', false)"
-                (execute)="onMenuEvent({ event: $event.event, data: { item: $event.item, menu: item } })"
-            >
-                <span><nb-icon [icon]="evalContextMenuItem(item, 'icon')" pack="fa"></nb-icon>
-                    {{evalContextMenuItem(item, 'title', '') | translate}}</span>
-            </ng-template>
-        </context-menu>
+        <div class="search-form" [class.d-table-row]="true" [class.mb-1]="true" *ngIf="isShowSearch()">
+            <ng-template #searchHolder></ng-template>
+        </div>
+        <div class="smart-table" [class.d-table-row]="true">
+            <ng2-smart-table
+                #smartTableComponent
+                [settings]="getTableSettings()"
+                [source]="getDataSource()"
+                (rowSelect)="onRowSelect({ data: $event })"
+                (userRowSelect)="onUserRowSelect( { data: $event })"
+                (create)="onCreate({ data: $event })"
+                (createConfirm)="onCreateConfirm({ data: $event })"
+                (edit)="onEdit({ data: $event })"
+                (editConfirm)="onEditConfirm({ data: $event })"
+                (delete)="onDelete({ data: $event })"
+                (deleteConfirm)="onDeleteConfirm({ data: $event })"
+                [contextMenu]="contextMenuComponent"
+                (contextmenu)="onContextMenu({ event: $event, data: smartTableComponent })"
+                (keydown)="onKeyDown({ event: $event, data: smartTableComponent })"
+                (keypress)="onKeyPress({ event: $event, data: smartTableComponent })"
+                (keyup)="onKeyUp({ event: $event, data: smartTableComponent })"
+                (click)="onClick({ event: $event, data: smartTableComponent })"
+                (dblclick)="onDoubleClick( { event: $event, data: smartTableComponent })"
+                (mousedown)="onMouseDown({ event: $event, data: smartTableComponent })"
+                (mouseenter)="onMouseEnter({ event: $event, data: smartTableComponent })"
+                (mouseleave)="onMouseLeave({ event: $event, data: smartTableComponent })"
+                (mousemove)="onMouseMove({ event: $event, data: smartTableComponent })"
+                (mouseout)="onMouseOut({ event: $event, data: smartTableComponent })"
+                (mouseover)="onMouseOver({ event: $event, data: smartTableComponent })"
+                (mouseup)="onMouseUp({ event: $event, data: smartTableComponent })"
+                (mousewheel)="onMouseWheel({ event: $event, data: smartTableComponent })"
+                (focus)="onFocus({ event: $event, data: smartTableComponent })"
+                (focusin)="onFocusIn({ event: $event, data: smartTableComponent })"
+                (focusout)="onFocusOut({ event: $event, data: smartTableComponent })"
+                (blur)="onBlur({ event: $event, data: smartTableComponent })"
+            ></ng2-smart-table>
+            <context-menu #contextMenuComponent
+                          [disabled]="!contextMenu || !contextMenu.length"
+                          (close)="onContextMenuClose()">
+                <ng-template
+                    contextMenuItem
+                    *ngFor="let item of contextMenu"
+                    [visible]="evalContextMenuItem(item, 'visible', false)"
+                    [enabled]="evalContextMenuItem(item, 'enabled', false)"
+                    [divider]="evalContextMenuItem(item, 'divider', false)"
+                    (execute)="onMenuEvent({ event: $event.event, data: { item: $event.item, menu: item } })"
+                >
+                    <span><nb-icon [icon]="evalContextMenuItem(item, 'icon')" pack="fa"></nb-icon>
+                        {{evalContextMenuItem(item, 'title', '') | translate}}</span>
+                </ng-template>
+            </context-menu>
+        </div>
     </nb-card-body>
 </nb-card>

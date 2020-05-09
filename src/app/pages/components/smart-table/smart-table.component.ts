@@ -1,10 +1,11 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
-    Renderer2,
+    Inject, QueryList,
+    Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -17,6 +18,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import ComponentUtils from '../../../utils/component.utils';
 
 /**
  * Smart table base on {Ng2SmartTableComponent}
@@ -26,7 +28,16 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './smart-table.component.html',
     styleUrls: ['./smart-table.component.scss'],
 })
-export class SmartTableComponent extends AbstractSmartTableComponent<DataSource> {
+export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
+    implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @ViewChildren('searchHolder', {read: ViewContainerRef})
+    private readonly querySearchViewContainerRef: QueryList<ViewContainerRef>;
+    private searchViewContainerRef: ViewContainerRef;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -38,6 +49,22 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      */
     protected isShowHeader(): boolean {
         return true;
+    }
+
+    /**
+     * Get a boolean value indicating whether showing panel search
+     * @return true (default) for showing; else false
+     */
+    protected isShowSearch(): boolean {
+        return false;
+    }
+
+    /**
+     * Get the {ViewContainerRef} instance of header panel
+     * @return the {ViewContainerRef} instance of header panel
+     */
+    protected getSearchViewContainerComponent(): ViewContainerRef {
+        return this.searchViewContainerRef;
     }
 
     // -------------------------------------------------
@@ -86,5 +113,13 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
 
     doSearch(keyword: any): void {
         this.getLogger().debug('doSearch', keyword);
+    }
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this.searchViewContainerRef) {
+            this.searchViewContainerRef = ComponentUtils.queryComponent(this.querySearchViewContainerRef);
+        }
     }
 }
