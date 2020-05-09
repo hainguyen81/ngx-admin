@@ -35,145 +35,115 @@ import {
 import moment, {Moment} from 'moment';
 import {isNullOrUndefined} from 'util';
 import {AppFormlyDatePickerFieldComponent} from '../../components/common/app.formly.datepicker.field.component';
+import {IWarehouseInventorySearch} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
+import {WarehouseInventoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {LocalDataSource} from 'ng2-smart-table';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 
-/* default warehouse batch no formly config */
-export const WarehouseBatchNoFormConfig: FormlyConfig = new FormlyConfig();
+/* default warehouse in/out search formly config */
+export const WarehouseInventorySearchFormConfig: FormlyConfig = new FormlyConfig();
 
-/* default warehouse batch no formly fields config */
-export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-6',
-                key: 'code',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.batch_no.form.code.label',
-                    placeholder: 'warehouse.batch_no.form.code.placeholder',
-                    required: true,
-                    'pattern_code': false,
-                },
-                validators: {
-                    'pattern_code': Validators.pattern(ValidationUtils.VALIDATION_CODE_PATTERN),
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-6',
-                key: 'name',
-                type: 'input',
-                templateOptions: {
-                    label: 'warehouse.batch_no.form.name.label',
-                    placeholder: 'warehouse.batch_no.form.name.placeholder',
-                    required: true,
-                },
-            },
-        ],
-    },
+/* default warehouse in/out search formly fields config */
+export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
     {
         fieldGroupClassName: 'row ml-0 mr-0',
         fieldGroup: [
             {
                 className: 'col-4',
-                key: 'mfg_date',
-                type: 'app-date-picker',
+                key: 'warehouse_id',
+                type: 'input',
                 templateOptions: {
-                    label: 'warehouse.batch_no.form.mfg_date.label',
-                    placeholder: 'warehouse.batch_no.form.mfg_date.placeholder',
-                    required: true,
-                    'config': {
-                        mode: 'day',
-                        required: true,
-                        config: {
-                            appendTo: document.body,
-                            format: 'common.date.dd/mm/yyyy',
-                        },
-                    },
-                    'must_less_equals_exp_date': false,
-                },
-                validators: {
-                    'must_less_equals_exp_date': {
-                        expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
-                            const model: IWarehouseBatchNo = formControl.root.value;
-
-                            // if data is invalid; then always be valid
-                            if (isNullOrUndefined(fieldComponent)
-                                || !(fieldComponent.dateTimePattern || '').length
-                                || !(model.exp_date || '').length) {
-                                return true;
-                            }
-
-                            const mfg_date: Moment = fieldComponent.value;
-                            const exp_value: Moment = moment(model.exp_date, fieldComponent.dateTimePattern);
-                            const valid: boolean = (isNullOrUndefined(mfg_date)
-                                || mfg_date.isSameOrBefore(exp_value, 'd'));
-                            if (valid && field.form && field.form.controls
-                                && field.form.controls.hasOwnProperty('exp_date')
-                                && field.form.controls['exp_date'].invalid) {
-                                 field.form.controls['exp_date']
-                                     .updateValueAndValidity({ onlySelf: true, emitEvent: true });
-                            }
-                            return valid;
-                        },
-                        message: 'warehouse.batch_no.form.mfg_date.must_less_equals_exp_date',
-                    },
+                    label: 'warehouse.inventory.search.form.storage.label',
+                    placeholder: 'warehouse.inventory.search.form.storage.placeholder',
                 },
             },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
             {
                 className: 'col-4',
-                key: 'exp_date',
+                key: 'from',
                 type: 'app-date-picker',
                 templateOptions: {
-                    label: 'warehouse.batch_no.form.exp_date.label',
-                    placeholder: 'warehouse.batch_no.form.exp_date.placeholder',
-                    required: true,
+                    label: 'warehouse.inventory.search.form.from.label',
+                    placeholder: 'warehouse.inventory.search.form.from.placeholder',
                     'config': {
                         mode: 'day',
-                        required: true,
                         config: {
                             appendTo: document.body,
                             format: 'common.date.dd/mm/yyyy',
                         },
                     },
-                    'must_greater_equals_mfg_date': false,
+                    'must_less_equals_to_date': false,
                 },
                 validators: {
-                    'must_greater_equals_mfg_date': {
+                    'must_less_equals_to_date': {
                         expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
                             const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
-                            const model: IWarehouseBatchNo = formControl.root.value;
+                            const model: IWarehouseInventorySearch = formControl.root.value;
 
                             // if data is invalid; then always be valid
                             if (isNullOrUndefined(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
-                                || !(model.mfg_date || '').length) {
+                                || !(model.to || '').length) {
                                 return true;
                             }
 
-                            const exp_date: Moment = fieldComponent.value;
-                            const mfg_value: Moment = moment(model.mfg_date, fieldComponent.dateTimePattern);
-                            const valid: boolean = (isNullOrUndefined(exp_date)
-                                || exp_date.isSameOrAfter(mfg_value, 'd'));
+                            const from_date: Moment = fieldComponent.value;
+                            const to_value: Moment = moment(model.to, fieldComponent.dateTimePattern);
+                            const valid: boolean = (isNullOrUndefined(from_date)
+                                || from_date.isSameOrBefore(to_value, 'd'));
                             if (valid && field.form && field.form.controls
-                                && field.form.controls.hasOwnProperty('mfg_date')
-                                && field.form.controls['mfg_date'].invalid) {
-                                field.form.controls['mfg_date']
+                                && field.form.controls.hasOwnProperty('to')
+                                && field.form.controls['to'].invalid) {
+                                field.form.controls['to']
                                     .updateValueAndValidity({ onlySelf: true, emitEvent: true });
                             }
                             return valid;
                         },
-                        message: 'warehouse.batch_no.form.exp_date.must_greater_equals_mfg_date',
+                        message: 'warehouse.inventory.search.form.from.must_less_equals_to_date',
+                    },
+                },
+            },
+            {
+                className: 'col-4',
+                key: 'to',
+                type: 'app-date-picker',
+                templateOptions: {
+                    label: 'warehouse.inventory.search.form.to.label',
+                    placeholder: 'warehouse.inventory.search.form.to.placeholder',
+                    'config': {
+                        mode: 'day',
+                        config: {
+                            appendTo: document.body,
+                            format: 'common.date.dd/mm/yyyy',
+                        },
+                    },
+                    'must_greater_equals_from_date': false,
+                },
+                validators: {
+                    'must_greater_equals_from_date': {
+                        expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
+                            const model: IWarehouseInventorySearch = formControl.root.value;
+
+                            // if data is invalid; then always be valid
+                            if (isNullOrUndefined(fieldComponent)
+                                || !(fieldComponent.dateTimePattern || '').length
+                                || !(model.from || '').length) {
+                                return true;
+                            }
+
+                            const to_date: Moment = fieldComponent.value;
+                            const from_value: Moment = moment(model.from, fieldComponent.dateTimePattern);
+                            const valid: boolean = (isNullOrUndefined(to_date)
+                                || to_date.isSameOrAfter(from_value, 'd'));
+                            if (valid && field.form && field.form.controls
+                                && field.form.controls.hasOwnProperty('from')
+                                && field.form.controls['from'].invalid) {
+                                field.form.controls['from']
+                                    .updateValueAndValidity({ onlySelf: true, emitEvent: true });
+                            }
+                            return valid;
+                        },
+                        message: 'warehouse.inventory.search.form.to.must_greater_equals_from_date',
                     },
                 },
             },
@@ -184,25 +154,29 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-4',
-                key: 'status',
-                type: 'select-ex-general-settings',
-                templateOptions: {
-                    label: 'warehouse.batch_no.form.status.label',
-                    placeholder: 'warehouse.batch_no.form.status.placeholder',
-                },
-            },
-        ],
-    },
-    {
-        fieldGroupClassName: 'row ml-0 mr-0',
-        fieldGroup: [
-            {
-                className: 'col-6',
-                key: 'remark',
+                key: 'custom_id',
                 type: 'input',
                 templateOptions: {
-                    label: 'warehouse.batch_no.form.remark.label',
-                    placeholder: 'warehouse.batch_no.form.remark.placeholder',
+                    label: 'warehouse.inventory.search.form.customer.label',
+                    placeholder: 'warehouse.inventory.search.form.customer.placeholder',
+                },
+            },
+            {
+                className: 'col-4',
+                key: 'type',
+                type: 'input',
+                templateOptions: {
+                    label: 'warehouse.inventory.search.form.type.label',
+                    placeholder: 'warehouse.inventory.search.form.type.placeholder',
+                },
+            },
+            {
+                className: 'col-4',
+                key: 'keyword',
+                type: 'input',
+                templateOptions: {
+                    label: 'warehouse.inventory.search.form.keyword.label',
+                    placeholder: 'warehouse.inventory.search.form.keyword.placeholder',
                 },
             },
         ],
@@ -213,15 +187,16 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
-    selector: 'ngx-formly-form-app-warehouse-batch-no',
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    selector: 'ngx-formly-form-app-warehouse-inventory',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['../../../formly/formly.component.scss',
+    styleUrls: [
+        '../../../formly/formly.component.scss',
         '../../components/app.formly.component.scss',
     ],
 })
-export class WarehouseBatchNoFormlyComponent
-    extends AppFormlyComponent<IWarehouseBatchNo, WarehouseBatchNoDatasource>
+export class WarehouseInventorySearchFormlyComponent
+    extends AppFormlyComponent<IWarehouseInventorySearch, DataSource>
     implements OnInit {
 
     // -------------------------------------------------
@@ -229,8 +204,8 @@ export class WarehouseBatchNoFormlyComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseBatchNoFormlyComponent} class
-     * @param dataSource {WarehouseBatchNoDatasource}
+     * Create a new instance of {WarehouseInventorySearchFormlyComponent} class
+     * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -247,7 +222,7 @@ export class WarehouseBatchNoFormlyComponent
      * @param activatedRoute {ActivatedRoute}
      * @param generalSettingsDatasource {GeneralSettingsDatasource}
      */
-    constructor(@Inject(WarehouseBatchNoDatasource) dataSource: WarehouseBatchNoDatasource,
+    constructor(@Inject(DataSource) dataSource: LocalDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -268,8 +243,8 @@ export class WarehouseBatchNoFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.config = WarehouseBatchNoFormConfig;
-        super.fields = WarehouseBatchNoFormFieldsConfig;
+        super.config = WarehouseInventorySearchFormConfig;
+        super.fields = WarehouseInventorySearchFormFieldsConfig;
     }
 
     // -------------------------------------------------

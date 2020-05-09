@@ -9,7 +9,7 @@ export interface IWarehouseInventory extends IModel {
     // Mã phiếu
     code: string;
     // 0: IN ; 1 : OUT
-    type: WAREHOUSE_INVENTORY_TYPE | WAREHOUSE_INVENTORY_TYPE.IN;
+    type: string;
     // Ngày nhập xuất
     date: number;
     // Lý do xuất kho
@@ -21,7 +21,7 @@ export interface IWarehouseInventory extends IModel {
     // Ghi chú
     remark?: string | null;
     // Tình trạng phiếu
-    status: WAREHOUSE_INVENTORY_STATUS | WAREHOUSE_INVENTORY_STATUS.UNFINISHED;
+    status?: string | null;
     // Tập tin đính kèm
     file_attach?: string | null;
 
@@ -38,10 +38,8 @@ export interface IWarehouseInventory extends IModel {
 }
 
 export default class WarehouseInventory extends BaseModel implements IWarehouseInventory {
-    constructor(public id: string, public code: string,
-                public type: WAREHOUSE_INVENTORY_TYPE | WAREHOUSE_INVENTORY_TYPE.IN,
-                public date: number, public reason_for_issuing: string, public total_amount: number,
-                public status: WAREHOUSE_INVENTORY_STATUS | WAREHOUSE_INVENTORY_STATUS.UNFINISHED) {
+    constructor(public id: string, public code: string, public type: string,
+                public date: number, public reason_for_issuing: string, public total_amount: number) {
         super(id);
     }
 }

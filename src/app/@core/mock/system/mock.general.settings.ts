@@ -1,9 +1,10 @@
 import {IdGenerators} from '../../../config/generator.config';
 import GeneralSettings, {IGeneralSettings} from '../../data/system/general.settings';
 import {MockModuleSystem, MockModuleWarehouse} from './mock.module';
-import {Constants, Constants as CommonConstants} from '../../data/constants/common.constants';
+import {Constants as CommonConstants} from '../../data/constants/common.constants';
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import STATUS = CommonConstants.COMMON.STATUS;
+import CURRENCY = CommonConstants.COMMON.CURRENCY;
 import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
 import CUSTOMER_LEVEL = CustomerConstants.CustomerConstants.CUSTOMER_LEVEL;
 import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
@@ -13,7 +14,11 @@ import {Constants as WarehouseConstants} from '../../data/constants/warehouse.ca
 import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import {Constants as WarehouseSettingsConstants} from '../../data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WarehouseSettingsConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
-import CURRENCY = Constants.COMMON.CURRENCY;
+import {Constants as WarehouseInventoryConstants} from '../../data/constants/warehouse.inventory.constants';
+import WAREHOUSE_INVENTORY_TYPE = WarehouseInventoryConstants.WarehouseConstants
+    .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_TYPE;
+import WAREHOUSE_INVENTORY_STATUS = WarehouseInventoryConstants.WarehouseConstants
+    .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_STATUS;
 
 export function generalSystemSettingsStatusGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
@@ -174,6 +179,46 @@ export function generalWarehouseSettingsCategoryGenerate(): IGeneralSettings[] {
     return systemSettings;
 }
 
+export function generalWarehouseSettingsInventoryGenerate(): IGeneralSettings[] {
+    let systemSettings: IGeneralSettings[];
+    let systemSetting: IGeneralSettings;
+    systemSettings = [];
+
+    // -------------------------------------------------
+    // WAREHOUSE_SETTINGS_TYPE
+    // -------------------------------------------------
+    Object.keys(WAREHOUSE_INVENTORY_TYPE).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.WAREHOUSE_INVENTORY_TYPE.code;
+        systemSetting.name = k;
+        systemSetting.value = WAREHOUSE_INVENTORY_TYPE[k];
+        systemSetting.module_id = MockModuleWarehouse.id;
+        systemSetting.module_code = MockModuleWarehouse.code;
+        systemSetting.module = MockModuleWarehouse;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    // -------------------------------------------------
+    // WAREHOUSE_INVENTORY_STATUS
+    // -------------------------------------------------
+    Object.keys(WAREHOUSE_INVENTORY_STATUS).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.WAREHOUSE_INVENTORY_STATUS.code;
+        systemSetting.name = k;
+        systemSetting.value = WAREHOUSE_INVENTORY_STATUS[k];
+        systemSetting.module_id = MockModuleWarehouse.id;
+        systemSetting.module_code = MockModuleWarehouse.code;
+        systemSetting.module = MockModuleWarehouse;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    return systemSettings;
+}
+
 export function generalSettingsGenerate(): IGeneralSettings[] {
     let mockSettings: IGeneralSettings[];
     mockSettings = [];
@@ -193,6 +238,9 @@ export function generalSettingsGenerate(): IGeneralSettings[] {
 
     // Warehouse settings
     mockSettings = mockSettings.concat(generalWarehouseSettingsSettingsTypeGenerate());
+
+    // Warehouse inventory
+    mockSettings = mockSettings.concat(generalWarehouseSettingsInventoryGenerate());
 
     return mockSettings;
 }

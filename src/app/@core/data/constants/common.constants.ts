@@ -34,6 +34,8 @@ export namespace Constants {
             WAREHOUSE_FEATURES: API.warehouse.children.features.code.call(undefined),
             WAREHOUSE_FEATURES_ITEM:
                 API.warehouse.children.features.children.warehouseItem.code.call(undefined),
+            WAREHOUSE_FEATURES_INVENTORY:
+                API.warehouse.children.features.children.warehouseInventory.code.call(undefined),
         };
 
         export const BUILTIN_CODES: any = {
@@ -52,6 +54,10 @@ export namespace Constants {
             },
             // warehouse category
             WAREHOUSE_CATEGORY_TYPE: { code: 'CATEGORY_TYPE', name: 'common.enum.warehouseCategoryType.name' },
+            // warehouse inventory type
+            WAREHOUSE_INVENTORY_TYPE: { code: 'INVENTORY_TYPE', name: 'common.enum.warehouseInventoryType.name' },
+            // warehouse inventory status
+            WAREHOUSE_INVENTORY_STATUS: { code: 'INVENTORY_STATUS', name: 'common.enum.warehouseInventoryStatus.name' },
         };
     }
 }

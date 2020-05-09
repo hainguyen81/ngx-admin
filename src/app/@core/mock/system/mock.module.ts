@@ -6,7 +6,7 @@ import {
     MockApiSystemOrganization,
     MockApiSystemUser,
     MockApiWarehouse,
-    MockApiWarehouseFeatures,
+    MockApiWarehouseFeatures, MockApiWarehouseFeaturesInventory,
     MockApiWarehouseFeaturesItem,
     MockApiWarehouseSettings, MockApiWarehouseSettingsBatchNo,
     MockApiWarehouseSettingsCategory,
@@ -132,6 +132,15 @@ export const MockModuleWarehouseFeaturesItem: IModule = {
     children: [],
 };
 
+export const MockModuleWarehouseFeaturesInventory: IModule = {
+    code: MockApiWarehouseFeaturesInventory.code,
+    name: MockApiWarehouseFeaturesInventory.name,
+    apiId: MockApiWarehouseFeaturesInventory.id,
+    api: MockApiWarehouseFeaturesInventory,
+    id: IdGenerators.oid.generate(),
+    children: [],
+};
+
     export const MockModuleWarehouseFeatures: IModule = {
         code: MockApiWarehouseFeatures.code,
         name: MockApiWarehouseFeatures.name,
@@ -140,6 +149,7 @@ export const MockModuleWarehouseFeaturesItem: IModule = {
         id: IdGenerators.oid.generate(),
         children: [
             MockModuleWarehouseFeaturesItem,
+            MockModuleWarehouseFeaturesInventory,
         ],
     };
 

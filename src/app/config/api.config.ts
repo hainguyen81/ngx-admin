@@ -364,6 +364,33 @@ export const API = {
                             },
                         },
                     },
+                    warehouseInventory: {
+                        code: () => {
+                            const parent: any = API.warehouse.children.features;
+                            return parent.code.call(undefined).concat('_INVENTORY');
+                        },
+                        name: () => 'warehouse.inventory.menu',
+                        api: {
+                            method: 'POST',
+                            url: () => {
+                                const parent: any = API.warehouse.children.features.api;
+                                return parent.url.call(undefined).concat('/inventory');
+                            },
+                            login: () => {
+                                const parent: any = API.warehouse.children.features.api;
+                                return parent.login.call(undefined);
+                            },
+                            regexUrl: 'warehouse/features/inventory/**',
+                            version: '1.0.0',
+                        },
+                        client: {
+                            icon: {icon: 'truck-loading', pack: 'fas'},
+                            url: () => {
+                                const parent: any = API.warehouse.children.features.client;
+                                return parent.url.call(undefined).concat('/inventory');
+                            },
+                        },
+                    },
                 },
             },
         },

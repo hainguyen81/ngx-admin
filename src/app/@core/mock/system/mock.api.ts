@@ -140,6 +140,16 @@ export const MockApiWarehouse: IApi = {
             id: IdGenerators.oid.generate(),
         };
 
+        export const MockApiWarehouseFeaturesInventory: IApi = {
+            code: API.warehouse.children.features.children.warehouseInventory.code.call(undefined),
+            name: API.warehouse.children.features.children.warehouseInventory.name.call(undefined),
+            regexUrl: API.warehouse.children.features.children.warehouseInventory.api.regexUrl,
+            baseUrl: API.warehouse.children.features.children.warehouseInventory.api.url.call(undefined),
+            icon: API.warehouse.children.features.children.warehouseInventory.client.icon,
+            version: API.warehouse.children.features.children.warehouseInventory.api.version,
+            id: IdGenerators.oid.generate(),
+        };
+
 // -------------------------------------------------
 // SUMMARY
 // -------------------------------------------------
@@ -159,6 +169,7 @@ export const MockApi = {
         },
         features: {
             warehouseItem: MockApiWarehouseFeaturesItem,
+            warehouseInventory: MockApiWarehouseFeaturesInventory,
         },
     },
 };

@@ -1,18 +1,18 @@
 export namespace Constants {
     export namespace WarehouseConstants {
         export namespace WarehouseInventoryConstants {
-            export const enum WAREHOUSE_INVENTORY_TYPE {
+            export enum WAREHOUSE_INVENTORY_TYPE {
                 // Nhập
-                IN,
+                IN = 'common.enum.warehouseInventoryType.in',
                 // Xuất
-                OUT,
+                OUT = 'common.enum.warehouseInventoryType.out',
             }
 
-            export const enum WAREHOUSE_INVENTORY_STATUS {
+            export enum WAREHOUSE_INVENTORY_STATUS {
                 // Chưa hoàn thành
-                UNFINISHED,
+                UNFINISHED = 'common.enum.warehouseInventoryStatus.finished',
                 // Hoàn thành
-                FINISHED,
+                FINISHED = 'common.enum.warehouseInventoryStatus.unfinished',
             }
 
             export function convertWareHouseInventoryTypeToDisplay(value: WAREHOUSE_INVENTORY_TYPE): string {
