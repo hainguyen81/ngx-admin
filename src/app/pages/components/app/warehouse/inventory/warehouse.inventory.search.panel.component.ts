@@ -28,8 +28,8 @@ import {LocalDataSource} from 'ng2-smart-table';
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-card-panel-app-warehouse-inventory-search',
-    templateUrl: '../../panel/panel.component.html',
-    styleUrls: ['../../panel/panel.component.scss'],
+    templateUrl: '../../../panel/panel.component.html',
+    styleUrls: ['../../../panel/panel.component.scss'],
 })
 export class WarehouseInventorySearchComponent
     extends AppPanelComponent<IWarehouseInventorySearch, DataSource,
