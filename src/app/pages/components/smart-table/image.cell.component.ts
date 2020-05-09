@@ -14,6 +14,7 @@ import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mod
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
+import {Column} from 'ng2-smart-table/lib/data-set/column';
 
 /**
  * Smart table image cell component base on {DefaultEditor}
@@ -79,11 +80,21 @@ export class ImageCellComponent extends AbstractCellEditor {
         let descriptor: string = '';
         const cell: Cell = this.cell;
         const config: any = this.cellColumnConfig;
-        if (config && Object.keys(config).length
+        const column: Column = this.cellColumn;
+        if (column && Object.keys(column).length
+            && column.hasOwnProperty(ImageCellComponent.DESCRIPTOR_PREPARE)) {
+            if (typeof column[ImageCellComponent.DESCRIPTOR_PREPARE] === 'function') {
+                descriptor = column[ImageCellComponent.DESCRIPTOR_PREPARE]
+                    .call(undefined, this, cell, this.cellRow, this.cellRowData, this.cellColumnConfig);
+            } else {
+                descriptor = column[ImageCellComponent.DESCRIPTOR_PREPARE] || '';
+            }
+
+        } else if (config && Object.keys(config).length
             && config.hasOwnProperty(ImageCellComponent.DESCRIPTOR_PREPARE)) {
             if (typeof config[ImageCellComponent.DESCRIPTOR_PREPARE] === 'function') {
                 descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE]
-                    .call(undefined, cell, this.cellRow, this.cellRowData);
+                    .call(undefined, this, cell, this.cellRow, this.cellRowData, this.cellColumnConfig);
             } else {
                 descriptor = config[ImageCellComponent.DESCRIPTOR_PREPARE] || '';
             }

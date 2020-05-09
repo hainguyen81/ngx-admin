@@ -33,7 +33,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {of, Subject, throwError} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {Cell, LocalDataSource} from 'ng2-smart-table';
+import {Cell, DefaultEditor, LocalDataSource} from 'ng2-smart-table';
 import {
     WarehouseItemVersionDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
@@ -64,7 +64,10 @@ export const WarehouseItemVersionTableSettings = {
                 type: 'custom',
                 component: ImageCellComponent,
                 config: {
-                    'descriptorPrepare': (cell: Cell, row: Row, data: IWarehouseItem) => {
+                    'descriptorPrepare': (c: DefaultEditor,
+                                          cell: Cell, row: Row,
+                                          data: IWarehouseItem,
+                                          config: any) => {
                         return (data ? data.code || '' : '');
                     },
                 },

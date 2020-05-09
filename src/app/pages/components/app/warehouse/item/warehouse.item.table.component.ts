@@ -29,7 +29,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
-import {Cell} from 'ng2-smart-table';
+import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import PromiseUtils from '../../../../../utils/promise.utils';
@@ -72,7 +72,10 @@ export const WarehouseItemTableSettings = {
                 type: 'custom',
                 component: ImageCellComponent,
                 config: {
-                    'descriptorPrepare': (cell: Cell, row: Row, data: IWarehouseItem) => {
+                    'descriptorPrepare': (c: DefaultEditor,
+                                          cell: Cell, row: Row,
+                                          data: IWarehouseItem,
+                                          config: any) => {
                         return (data ? data.code || '' : '');
                     },
                 },

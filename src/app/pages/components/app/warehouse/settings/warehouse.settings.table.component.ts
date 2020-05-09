@@ -33,6 +33,9 @@ import PromiseUtils from '../../../../../utils/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
+import {Cell, DefaultEditor} from 'ng2-smart-table';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 
 /* warehouse settings table settings */
 export const WarehouseSettingsTableSettings = {
@@ -56,12 +59,25 @@ export const WarehouseSettingsTableSettings = {
             editable: false,
             renderComponent: SelectTranslateCellComponent,
         },
-        code: {
+        image: {
             title: 'warehouse.settings.table.code',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editable: false,
+            renderComponent: ImageCellComponent,
+            editor: {
+                type: 'custom',
+                component: ImageCellComponent,
+                config: {
+                    'descriptorPrepare': (c: DefaultEditor,
+                                          cell: Cell, row: Row,
+                                          data: IWarehouseSetting,
+                                          config: any) => {
+                        return (data ? data.code || '' : '');
+                    },
+                },
+            },
         },
         name: {
             title: 'warehouse.settings.table.name',
@@ -69,14 +85,6 @@ export const WarehouseSettingsTableSettings = {
             sort: false,
             filter: false,
             editable: false,
-        },
-        image: {
-            title: 'warehouse.settings.table.image',
-            type: 'custom',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: ImageCellComponent,
         },
         order: {
             title: 'warehouse.settings.table.order',

@@ -215,6 +215,20 @@
         }
     }
 
+    /* Batch statuses */
+    .status-overdue {
+        color: red;
+        padding-right: 5px;
+    }
+    .status-expired {
+        color: #e0a800;
+        padding-right: 5px;
+    }
+    .status-near-expired {
+        color: #3498db;
+        padding-right: 5px;
+    }
+
     /* Toaster */
 
 }

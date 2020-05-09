@@ -29,7 +29,7 @@ import PromiseUtils from '../../../../../utils/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
-import {Cell} from 'ng2-smart-table';
+import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
 import {
@@ -37,6 +37,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {HtmlCellComponent} from '../../../smart-table/html.cell.component';
 import moment, {Moment} from 'moment';
+import {isNullOrUndefined} from 'util';
 
 /* warehouse batch no table settings */
 export const WarehouseBatchNoTableSettings = {
@@ -59,34 +60,47 @@ export const WarehouseBatchNoTableSettings = {
             filter: false,
             editable: false,
             renderComponent: HtmlCellComponent,
-            'htmlValuePrepare': (cell: Cell, row: Row, batch: IWarehouseBatchNo) => {
-                window.console.error([cell, row, batch]);
-                const expDateValue: string = batch.exp_date;
-                // none expired
-                if (!(expDateValue || '').length) {
-                    return batch.code;
-                }
+            editor: {
+                type: 'custom',
+                component: HtmlCellComponent,
+                config: {
+                    format: 'common.date.dd/mm/yyyy',
+                    'htmlValuePrepare': (c: DefaultEditor,
+                                         cell: Cell, row: Row,
+                                         batch: IWarehouseBatchNo,
+                                         config: any) => {
+                        const cellCtrl: HtmlCellComponent = c as HtmlCellComponent;
+                        const expDateValue: string = batch.exp_date;
+                        let format: string = (config || {})['format'] || '';
+                        format = (cellCtrl && format.length ? cellCtrl.translate(format) || '' : '');
+                        // none expired
+                        if (isNullOrUndefined(cellCtrl) || !(expDateValue || '').length || !format.length) {
+                            return batch.code;
+                        }
 
-                // // overdue/expired/near expired
-                // const expDate: Moment = moment(expDateValue, )
-                // const curDate: number = (new Date()).getTime();
-                // const oneDate: number = (1000 * 60 * 60 * 24);
-                // const threeDate: number = 3 * oneDate;
-                // const diff: number = Math.round((expDate - curDate) / oneDate);
-                //
-                // // near expired
-                // if (0 <= diff && diff <= oneDate) {
-                //     return '<i class='fas fa-exclamation-triangle status-expired'></i>'.concat(batch.code);
-                //
-                // } else if (oneDate < diff && diff <= threeDate) {
-                //     return '<i class='fas fa-exclamation-triangle status-near-expired'></i>'.concat(batch.code);
-                //
-                // } else if (diff < 0) {
-                //     return '<i class='fas fa-exclamation-triangle status-overdue'></i>'.concat(batch.code);
-                //
-                // } else {
-                //     return batch.code;
-                // }
+                        // overdue/expired/near expired
+                        const expDate: Moment = moment(expDateValue, format);
+                        const curDate: number = (new Date()).getTime();
+                        const oneDate: number = (1000 * 60 * 60 * 24);
+                        const threeDate: number = 3 * oneDate;
+                        // diff in milliseconds
+                        const diff: number = (Math.round(((expDate.unix() * 1000) - curDate) / oneDate) * oneDate);
+
+                        // near expired
+                        let icon = '';
+                        if (0 <= diff && diff <= oneDate) {
+                            icon = 'fas fa-exclamation-triangle status-expired';
+
+                        } else if (oneDate < diff && diff <= threeDate) {
+                            icon = 'fas fa-exclamation-triangle status-near-expired';
+
+                        } else if (diff < 0) {
+                            icon = 'fas fa-exclamation-triangle status-overdue';
+
+                        }
+                        return ['<i class=\'', icon, '\'></i>', batch.code].join('');
+                    },
+                },
             },
         },
         name: {

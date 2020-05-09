@@ -40,7 +40,7 @@ export class HtmlCellComponent extends AbstractCellEditor {
             && column.hasOwnProperty(HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION)) {
             if (typeof column[HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION] === 'function') {
                 htmlValue = column[HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION]
-                    .call(undefined, cell, this.cellRow, this.cellRowData);
+                    .call(undefined, this, cell, this.cellRow, this.cellRowData, this.cellColumnConfig);
             } else {
                 htmlValue = column[HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION] || '';
             }
@@ -49,7 +49,7 @@ export class HtmlCellComponent extends AbstractCellEditor {
             && config.hasOwnProperty(HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION)) {
             if (typeof config[HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION] === 'function') {
                 htmlValue = config[HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION]
-                    .call(undefined, cell, this.cellRow, this.cellRowData);
+                    .call(undefined, this, cell, this.cellRow, this.cellRowData, this.cellColumnConfig);
             } else {
                 htmlValue = config[HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION] || '';
             }
