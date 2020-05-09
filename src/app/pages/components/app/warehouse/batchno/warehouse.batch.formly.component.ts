@@ -281,7 +281,7 @@ export class WarehouseBatchNoFormlyComponent
         const fields: FormlyFieldConfig[] = this.fields;
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[5].fieldGroup[0],
+                this.generalSettingsDatasource, fields[4].fieldGroup[0],
                 BUILTIN_CODES.STATUS.code,
                 null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading general settings successful'),
