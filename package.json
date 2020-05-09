@@ -51,6 +51,7 @@
         "@nebular/eva-icons": "4.4.0",
         "@nebular/security": "4.4.0",
         "@nebular/theme": "^4.6.0",
+        "@ng-select/ng-select": "^4.0.0",
         "@ngx-formly/core": "^5.5.15",
         "@ngx-formly/material": "^5.5.15",
         "@ngx-translate/core": "^11.0.1",
