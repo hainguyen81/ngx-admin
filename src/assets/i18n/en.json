@@ -932,6 +932,17 @@
                         "placeholder": "Search"
                     }
                 }
+            },
+            "table": {
+                "noData": "Not found any information",
+                "no": "No.",
+                "date": "Date",
+                "code": "Code",
+                "warehouse": "Warehouse",
+                "type": "Type",
+                "vendor_customer": "Vendor/Customer",
+                "sales_order": "Order",
+                "total_amount": "Total amount"
             }
         }
     }

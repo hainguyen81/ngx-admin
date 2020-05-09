@@ -932,6 +932,17 @@
                         "placeholder": "Từ khóa"
                     }
                 }
+            },
+            "table": {
+                "noData": "Không có bất kỳ thông tin nào",
+                "no": "STT",
+                "date": "Ngày nhập/xuất",
+                "code": "Mã",
+                "warehouse": "Kho",
+                "type": "Loại",
+                "vendor_customer": "Nhà cung cấp/Khách hàng",
+                "sales_order": "Hóa đơn",
+                "total_amount": "Tổng tiền"
             }
         }
     }
