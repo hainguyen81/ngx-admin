@@ -36,7 +36,8 @@ import {isNullOrUndefined} from 'util';
         './app.search.panel.component.scss',
     ],
 })
-export abstract class AppSearchPanelComponent<T extends IModel, D extends DataSource,
+export abstract class AppSearchPanelComponent<
+    T extends IModel, D extends DataSource,
     SF extends AbstractFormlyComponent<T, D>,
     STB extends AbstractToolbarComponent<D>>
     extends AppPanelComponent<T, D, AbstractComponent, SF, STB>
