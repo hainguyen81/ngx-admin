@@ -7,7 +7,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {NgxImageGalleryComponent} from './image.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -16,23 +15,24 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgxFileGalleryComponent} from './file.component';
 
 /**
- * Base Image Gallery component base on {Lightbox}
+ * Base Files Gallery component
  */
 @Component({
-    selector: 'ngx-image-gallery',
-    templateUrl: './image.component.html',
-    styleUrls: ['./image.component.scss'],
+    selector: 'ngx-file-gallery',
+    templateUrl: './file.component.html',
+    styleUrls: ['./file.component.scss'],
 })
-export abstract class BaseImageGalleryComponent<T extends DataSource> extends NgxImageGalleryComponent {
+export abstract class BaseFileGalleryComponent<T extends DataSource> extends NgxFileGalleryComponent {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {BaseImageGalleryComponent} class
+     * Create a new instance of {BaseFileGalleryComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}

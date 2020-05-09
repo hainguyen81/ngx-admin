@@ -215,7 +215,6 @@ export class WarehouseInventorySearchFormlyComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param generalSettingsDatasource {GeneralSettingsDatasource}
      */
     constructor(@Inject(DataSource) dataSource: LocalDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,

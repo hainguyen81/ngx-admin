@@ -68,6 +68,8 @@ import {DatePickerFormFieldComponent} from './formly/formly.datepicker.field.com
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgxPanelComponent} from './panel/panel.component';
 import {ObserveCellComponent} from './smart-table/observe.cell.component';
+import {NgxFileGalleryComponent} from './file/file.component';
+import {FileGalleryFormFieldComponent} from './formly/formly.file.field.component';
 
 @NgModule({
     imports: [
@@ -139,6 +141,11 @@ import {ObserveCellComponent} from './smart-table/observe.cell.component';
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'files-gallery',
+                    component: FileGalleryFormFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'treeview-dropdown',
                     component: DropdownTreeviewFormFieldComponent,
                     wrappers: ['form-field'],
@@ -207,6 +214,8 @@ import {ObserveCellComponent} from './smart-table/observe.cell.component';
         DatePickerFormFieldComponent,
         NgxPanelComponent,
         ObserveCellComponent,
+        NgxFileGalleryComponent,
+        FileGalleryFormFieldComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -238,6 +247,8 @@ import {ObserveCellComponent} from './smart-table/observe.cell.component';
         DatePickerFormFieldComponent,
         NgxPanelComponent,
         ObserveCellComponent,
+        NgxFileGalleryComponent,
+        FileGalleryFormFieldComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -260,6 +271,8 @@ import {ObserveCellComponent} from './smart-table/observe.cell.component';
         DatePickerFormFieldComponent,
         NgxPanelComponent,
         ObserveCellComponent,
+        NgxFileGalleryComponent,
+        FileGalleryFormFieldComponent,
     ],
 })
 export class ComponentsModule {

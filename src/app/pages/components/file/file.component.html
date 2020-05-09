@@ -1,0 +1,30 @@
+<div [class.d-table]="true" class="files-gallery">
+    <div [class.d-table-row]="true" [class.border]="true" class="primary-upload" *ngIf="allowModified">
+        <div [class.d-table-cell]="true"
+             [class.border]="true"
+             [class.rounded-circle]="true"
+             [class.overflow-hidden]="true"
+             class="primary-upload-file">
+            <input #file type="file" [multiple]="true" (change)="onSelectFile({ event: $event }); file.value = '';">
+        </div>
+    </div>
+    <div [class.d-table-row]="true" *ngIf="files.length" class="files-gallery">
+        <div [class.pt-2]="true"
+             [class.d-table]="(file || '').length"
+             [class.d-none]="!(file || '').length"
+             [class.position-relative]="true"
+             [class.float-left]="true"
+             [class.mr-1]="true"
+             *ngFor="let file of files"
+             class="files-gallery-item">
+            <span [class.d-table-cell]="true" [innerHTML]="file"></span>
+            <nb-icon *ngIf="allowModified"
+                     pack="fa" icon="times"
+                     [class.d-block]="true"
+                     [class.position-absolute]="true"
+                     class="files-gallery-item-remover"
+                     (click)="removeFile(file); preventEvent($event);">
+            </nb-icon>
+        </div>
+    </div>
+</div>

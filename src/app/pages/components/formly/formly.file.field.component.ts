@@ -13,14 +13,14 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 
 /**
- * Formly Image field component base on {FieldType}
+ * Formly File field component base on {FieldType}
  */
 @Component({
-    selector: 'ngx-formly-image-field',
-    templateUrl: './formly.image.field.component.html',
-    styleUrls: ['./formly.image.field.component.scss'],
+    selector: 'ngx-formly-file-field',
+    templateUrl: './formly.file.field.component.html',
+    styleUrls: ['./formly.file.field.component.scss'],
 })
-export class ImageGalleryFormFieldComponent extends AbstractFieldType
+export class FileGalleryFormFieldComponent extends AbstractFieldType
     implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
@@ -28,10 +28,10 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
     // -------------------------------------------------
 
     /**
-     * Get field value as image sources
-     * @return image sources
+     * Get field value as file sources
+     * @return file sources
      */
-    public getImages(): string[] {
+    get files(): string[] {
         return (Array.isArray(this.value) ? this.value as string[] : []);
     }
 
@@ -44,7 +44,7 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {ImageGalleryFormFieldComponent} class
+     * Create a new instance of {FileGalleryFormFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -81,11 +81,11 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
         super.ngAfterViewInit();
 
         this.field.className = [(this.field.className || ''),
-            'form-field form-images-gallery-file'].join(' ').trim();
+            'form-field form-files-gallery-file'].join(' ').trim();
     }
 
     /**
-     * Raises while images have been changed
+     * Raises while files have been changed
      * @param e {IEvent} as $data is images list
      */
     public onChange(e: IEvent): void {

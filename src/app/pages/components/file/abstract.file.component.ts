@@ -1,40 +1,36 @@
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
     Inject, Input, Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import ComponentUtils from '../../../utils/component.utils';
-import {NbCardBackComponent, NbCardFrontComponent, NbRevealCardComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {IAlbum, Lightbox} from 'ngx-lightbox';
+import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {isNullOrUndefined} from 'util';
 
 /**
- * Abstract Image Gallery component base on {Lighbox}
+ * Abstract Files Gallery component
  */
-export abstract class AbstractImageGalleryComponent<T extends DataSource> extends AbstractComponent {
+export abstract class AbstractFileGalleryComponent<T extends DataSource> extends AbstractComponent {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    @Input('showAlbum') private isShowAlbum: boolean | true;
-    @Input('onlyPrimary') private isOnlyPrimary: boolean | false;
     @Input('allowModified') private isAllowModified: boolean | false;
-    @Input('images') private images: string[];
+    @Input('files') private _files: string[];
+    @Input('allowFileExtensions') private _extensions: string[];
+    private _fileData: File[];
     @Output() onChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
@@ -42,54 +38,71 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     // -------------------------------------------------
 
     /**
-     * Get all images in album
-     * @return all images in album
+     * Get all file data in collection
+     * @return all file data in collection
      */
-    protected getInternalImages(): string[] {
-        if (!this.images) {
-            this.images = [];
+    public get fileData(): File[] {
+        if (!this._fileData) {
+            this._fileData = [];
         }
-        return this.images;
+        return this._fileData;
     }
 
     /**
-     * Get all images in album
-     * @return all images in album
+     * Get all file extensions in collection
+     * @return all file extensions in collection
      */
-    public getImages(): string[] {
-        return (!this.showAlbum() ? [] : this.getInternalImages());
+    public get allowFileExtensions(): string[] {
+        if (!this._extensions) {
+            this._extensions = [];
+        }
+        return this._extensions;
     }
 
     /**
-     * Set all images in album
-     * @param images to apply
+     * Set all file extensions in collection
+     * @param _extensions to apply
      */
-    public setImages(images: string[]): void {
-        this.images = images || [];
-        this.onChange && this.onChange.emit({data: this.images});
+    public set allowFileExtensions(_extensions: string[]) {
+        this._extensions = _extensions || [];
     }
 
     /**
-     * Add images in album
-     * @param images to apply
+     * Get all file names in collection
+     * @return all file names in collection
      */
-    public addImages(images: string[]): void {
-        this.images = (this.images || []).concat(images || []);
-        this.onChange && this.onChange.emit({data: this.images});
+    public get files(): string[] {
+        if (!this._files) {
+            this._files = [];
+        }
+        return this._files;
     }
 
     /**
-     * Get the first image to show as primary image
-     * @return the first image to show as primary image
+     * Set all file names in collection
+     * @param _files to apply
      */
-    public getImage(): string {
-        return (!(this.images || []).length ? null : this.images[0]);
+    public set files(_files: string[]) {
+        this._files = _files || [];
+        this.onChange && this.onChange.emit({data: this.files});
+    }
+
+    /**
+     * Add files to collection
+     * @param files to apply
+     */
+    public addFiles(_files: File[]): void {
+        this._fileData = (this._fileData || []).concat(_files || []);
+        this._fileData.forEach(f => {
+            this.supportedFile(f) && this.files.push(f.name);
+        });
+        this.onChange && this.onChange.emit({data: this.files});
     }
 
     /**
      * Get a boolean value indicating whether allows adding/deleting/modifying images
      */
-    public allowModified(): boolean {
+    public get allowModified(): boolean {
         return this.isAllowModified;
     }
 
@@ -97,38 +110,17 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * Set a boolean value indicating whether allows adding/deleting/modifying images
      * @param allowModified to apply
      */
-    public setAllowModified(allowModified: boolean): void {
+    public set allowModified(allowModified: boolean) {
         this.isAllowModified = allowModified;
     }
 
     /**
-     * Get a boolean value indicating whether allows showing all images in album
+     * Get a boolean value indicating the specified {File} whether is supported
+     * @param f to check
      */
-    public showAlbum(): boolean {
-        return this.isShowAlbum;
-    }
-
-    /**
-     * Set a boolean value indicating whether allows showing all images in album
-     * @param showAlbum to apply
-     */
-    public setShowAlbum(showAlbum: boolean): void {
-        this.isShowAlbum = showAlbum;
-    }
-
-    /**
-     * Get a boolean value indicating whether allows showing only primary image in album
-     */
-    public onlyPrimary(): boolean {
-        return this.isOnlyPrimary;
-    }
-
-    /**
-     * Set a boolean value indicating whether allows showing only primary image in album
-     * @param isOnlyPrimary to apply
-     */
-    public setOnlyPrimary(isOnlyPrimary: boolean): void {
-        this.isOnlyPrimary = isOnlyPrimary;
+    protected supportedFile(f: File): boolean {
+        const fileExt: string = (isNullOrUndefined(f) ? '' : f.name.split('.').pop().toLowerCase());
+        return (!this.allowFileExtensions.length || this.allowFileExtensions.indexOf(fileExt) >= 0);
     }
 
     // -------------------------------------------------
@@ -136,7 +128,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AbstractImageGalleryComponent} class
+     * Create a new instance of {AbstractFileGalleryComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -180,27 +172,38 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     // -------------------------------------------------
 
     /**
-     * Open images lightbox
-     * @param currentImage to show
+     * Remove the specified file out of album
+     * @param file to remove
      */
-    public showLightbox(currentImage?: string): void {
-        super.openAlbumLightbox(this.getImages(), currentImage);
+    public removeFile(file: string): void {
+        file = (file || '');
+
+        // remove file name
+        let fired: boolean = false;
+        let fileNameIdx: number = this.files.indexOf(file);
+        fired = (fileNameIdx >= 0);
+        fired && this.files.splice(fileNameIdx, 1);
+
+        // remove file data if necessary
+        fileNameIdx = -1;
+        const fileData: File[] = this.fileData || [];
+        for (let idx: number = 0; idx < fileData.length; idx++) {
+            if (fileData[idx].name.toLowerCase() === file.toLowerCase()) {
+                fileNameIdx = idx;
+                break;
+            }
+        }
+        fired = (fileNameIdx >= 0);
+        fired && this.fileData.splice(fileNameIdx, 1);
+        fired && this.onChange && this.onChange.emit({data: this.files});
     }
 
     /**
-     * Remove the specified image out of album
-     * @param image to remove
+     * Remove the specified file out of album
+     * @param file to remove
      */
-    public removeImage(image: string): void {
-        let images: string[];
-        images = this.getInternalImages();
-        if (!(images || []).length || images.indexOf(image) < 0) {
-            return;
-        }
-
-        let imageIdx: number;
-        imageIdx = images.indexOf(image);
-        images.splice(imageIdx, 1);
-        this.setImages(images);
+    public removeFileData(file: File): void {
+        if (isNullOrUndefined(file)) return;
+        this.removeFile(file.name);
     }
 }

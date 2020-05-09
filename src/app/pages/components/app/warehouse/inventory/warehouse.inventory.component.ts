@@ -12,7 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {AbstractComponent} from '../../../abstract.component';
+import {AbstractComponent, IEvent} from '../../../abstract.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {
@@ -33,6 +33,9 @@ import {
     WarehouseInventoryPanelComponent,
 } from './warehouse.inventory.panel.component';
 import {AppFlipcardComponent} from '../../components/app.flipcard.component';
+import {WarehouseInventoryMainFormlyComponent} from './warehouse.inventory.main.formly.component';
+import WarehouseInventory, {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -49,7 +52,7 @@ export class WarehouseInventoryComponent
         WarehouseInventoryDatasource,
         WarehouseInventoryToolbarComponent,
         WarehouseInventoryPanelComponent,
-        AbstractComponent> {
+        WarehouseInventoryMainFormlyComponent> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -114,13 +117,14 @@ export class WarehouseInventoryComponent
     // EVENTS
     // -------------------------------------------------
 
-    // protected onNewData($event: IEvent): void {
-    //     const newInst: IWarehouseInventory = new WarehouseInventory(null, null, null, null, null, null);
-    //     super.getBackComponent().setModel(newInst);
-    // }
-    //
-    // protected onEditData($event: IEvent): void {
-    //     const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
-    //     row && row.getData() && super.getBackComponent().setModel(row.getData() as IWarehouseInventory);
-    // }
+    protected onNewData($event: IEvent): void {
+        const newInst: IWarehouseInventory =
+            new WarehouseInventory(null, null, null, null, null, null);
+        super.getBackComponent().setModel(newInst);
+    }
+
+    protected onEditData($event: IEvent): void {
+        const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
+        row && row.getData() && super.getBackComponent().setModel(row.getData() as IWarehouseInventory);
+    }
 }

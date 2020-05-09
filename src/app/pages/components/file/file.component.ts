@@ -1,13 +1,13 @@
 import {
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {Lightbox} from 'ngx-lightbox';
-import {AbstractImageGalleryComponent} from './abstract.image.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
@@ -16,29 +16,25 @@ import {TranslateService} from '@ngx-translate/core';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {IEvent} from '../abstract.component';
-import {AppConfig} from '../../../config/app.config';
-import {Util} from 'leaflet';
-import isArray = Util.isArray;
 import {ActivatedRoute, Router} from '@angular/router';
-
-export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
+import {AbstractFileGalleryComponent} from './abstract.file.component';
 
 /**
- * Image Gallery component base on {FieldType}
+ * Files Gallery component
  */
 @Component({
-    selector: 'ngx-image-gallery',
-    templateUrl: './image.component.html',
-    styleUrls: ['./image.component.scss'],
+    selector: 'ngx-file-gallery',
+    templateUrl: './file.component.html',
+    styleUrls: ['./file.component.scss'],
 })
-export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<DataSource> {
+export class NgxFileGalleryComponent extends AbstractFileGalleryComponent<DataSource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {ImageGalleryComponent} class
+     * Create a new instance of {NgxFileGalleryComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -89,35 +85,20 @@ export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<Data
         let files: File[];
         files = (e && e.event && e.event.target && e.event.target['files'] ? e.event.target['files'] : []);
         if ((files || []).length) {
-            let invalidFiles: string[];
-            invalidFiles = [];
-            let readFiles: Promise<string>[];
-            readFiles = [];
+            const invalidFiles: string[] = [];
             Array.of(...files).forEach(f => {
                 let fileName: string;
                 fileName = (f || {})['name'] || '';
-                let fileExt: string;
-                fileExt = fileName.split('.').pop().toLowerCase();
-                if (SUPPORTED_IMAGE_FILE_EXTENSIONS.indexOf(fileExt) < 0) {
+                if (!this.supportedFile(f)) {
                     fileName.length && invalidFiles.push(fileName);
 
                 } else {
-                    readFiles.push(this.readFile(f));
+                    fileName.length && this.files.push(fileName);
+                    f && this.fileData.push(f);
                 }
             });
-
-            // read all files asynchronous
-            Promise.all(readFiles).then(values => {
-                this.addImages(values);
-                invalidFiles.length && this.processUnsupportedFiles(invalidFiles);
-
-            }, (errFile) => {
-                if (!isArray(errFile)) {
-                    errFile = [errFile];
-                }
-                invalidFiles = invalidFiles.concat(Array.from(errFile));
-                invalidFiles.length && this.processUnsupportedFiles(invalidFiles);
-            });
+            this.onChange && this.onChange.emit({data: this.files});
+            invalidFiles.length && this.processUnsupportedFiles(invalidFiles);
         }
     }
 
@@ -127,26 +108,5 @@ export class NgxImageGalleryComponent extends AbstractImageGalleryComponent<Data
      */
     protected processUnsupportedFiles(unsupportedFiles: string[]) {
         this.getLogger().error('Not support these files', unsupportedFiles);
-    }
-
-    /**
-     * Read the specified {File} as base64
-     * @param f to read
-     * @param retImages returned images list
-     */
-    private readFile(f: File): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            try {
-                let reader: FileReader;
-                reader = new FileReader();
-                reader.readAsDataURL(f); // read file as data url
-                reader.onload = (event) => { // called once readAsDataURL is completed
-                    resolve.apply(this, [reader.result.toString()]);
-                };
-            } catch (e) {
-                this.getLogger().error('Could not read file {' + f.name + '}', e);
-                reject.apply(this, [f.name]);
-            }
-        });
     }
 }

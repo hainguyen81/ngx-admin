@@ -23,7 +23,9 @@ export interface IWarehouseInventory extends IModel {
     // Tình trạng phiếu
     status?: string | null;
     // Tập tin đính kèm
-    file_attach?: string | null;
+    file_attach?: string | string[] | null;
+    // Mã phiếu mua hàng
+    sales_order?: string | null;
 
     // foreign keys
     // Mã kho

@@ -25,6 +25,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import ObjectUtils from '../../../../../utils/object.utils';
 
 /* default warehouse inventory toolbar header config */
 export const WarehouseInventoryToolbarHeaderConfig: IToolbarHeaderConfig = {
@@ -33,7 +34,8 @@ export const WarehouseInventoryToolbarHeaderConfig: IToolbarHeaderConfig = {
 };
 
 /* default warehouse inventory toolbar actions config */
-export const WarehouseInventoryToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppToolbarImportActionsConfig);
+export const WarehouseInventoryToolbarActionsConfig: IToolbarActionsConfig[] =
+    [].concat(ObjectUtils.deepCopy(AppToolbarImportActionsConfig));
 
 /**
  * Toolbar component base on {MatToolbar}
