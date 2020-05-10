@@ -68,6 +68,7 @@ import {
 import {
     WarehouseSettingsBrandFormlySelectExFieldComponent,
 } from './warehouse/settings/warehouse.settings.brand.select.ex.field.component';
+import {WarehouseSettingsItemFormlySelectExFieldComponent} from './warehouse/settings/warehouse.settings.item.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -175,6 +176,11 @@ import {
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'warehouse-settings-item',
+                    component: WarehouseSettingsItemFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'warehouse-category-type',
                     component: WarehouseCategoryTypeFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -214,6 +220,7 @@ import {
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
+        WarehouseSettingsItemFormlySelectExFieldComponent,
     ],
     exports: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -229,6 +236,7 @@ import {
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
+        WarehouseSettingsItemFormlySelectExFieldComponent,
     ],
     declarations: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -244,6 +252,7 @@ import {
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
+        WarehouseSettingsItemFormlySelectExFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {
