@@ -23,6 +23,26 @@ import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IModule} from '../../../../../@core/data/system/module';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
+import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+
+export const AppSystemSettingsStatusSelectOptions: INgxSelectExOptions =
+    Object.assign({}, DefaultNgxSelectOptions, {
+        /**
+         * Provide an opportunity to change the name an id property of objects in the items
+         * {string}
+         */
+        optionValueField: 'name',
+        /**
+         * Provide an opportunity to change the name a text property of objects in the items
+         * {string}
+         */
+        optionTextField: 'value',
+        /**
+         * Specify whether using image for option
+         * {boolean}
+         */
+        enableOptionImage: false,
+    });
 
 /**
  * Custom module formly field for selecting system status
@@ -90,6 +110,7 @@ export class SystemStatusFormlySelectExFieldComponent
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+        this.config = AppSystemSettingsStatusSelectOptions;
     }
 
     // -------------------------------------------------
