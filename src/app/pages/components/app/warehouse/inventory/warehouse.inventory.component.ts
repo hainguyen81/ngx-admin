@@ -78,6 +78,10 @@ export class WarehouseInventoryComponent
         return [ACTION_SAVE, ACTION_RESET, ACTION_DELETE, ACTION_BACK];
     }
 
+    protected fulfillComponentsAtStartup(): boolean {
+        return false;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
