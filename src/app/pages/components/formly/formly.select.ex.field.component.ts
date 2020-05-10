@@ -302,6 +302,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
                 case 'option':
                     parsedValues = parsedValues.concat(this.__parseOption(<NgxSelectOption>selOpt));
                     break;
+                default:
+                    !isNullOrUndefined(selOpt) && parsedValues.push(selOpt);
             }
         }
         return (parsedValues.length ? parsedValues : []);
