@@ -98,7 +98,7 @@ export class AppLanguagesFormlySelectExFieldComponent
         (AppConfig.i18n.languages || []).forEach(language => {
             languages.push({
                 value: language,
-                label: this.translate(['common.languages', language].join('')),
+                label: this.translate(['common.languages.', language].join('')),
                 code: language,
                 id: IdGenerators.oid.generate(),
             });
