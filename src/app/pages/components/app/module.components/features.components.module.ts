@@ -59,7 +59,12 @@ import {
 import {
     WarehouseSettingsTypeFormlySelectExFieldComponent,
 } from './common/warehouse.settings.type.select.ex.field.component';
-import {WarehouseCategoryTypeFormlySelectExFieldComponent} from './common/warehouse.category.type.select.ex.field.component';
+import {
+    WarehouseCategoryTypeFormlySelectExFieldComponent,
+} from './common/warehouse.category.type.select.ex.field.component';
+import {
+    AppLanguagesFormlySelectExFieldComponent,
+} from './common/app.languages.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -106,6 +111,11 @@ import {WarehouseCategoryTypeFormlySelectExFieldComponent} from './common/wareho
         ReactiveFormsModule,
         FormlyModule.forRoot({
             types: [
+                {
+                    name: 'system-language',
+                    component: AppLanguagesFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
                 {
                     name: 'vendor-customer',
                     component: VendorCustomerFormlySelectExFieldComponent,
@@ -183,6 +193,7 @@ import {WarehouseCategoryTypeFormlySelectExFieldComponent} from './common/wareho
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
+        AppLanguagesFormlySelectExFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCategoryTypeFormlySelectExFieldComponent,
@@ -196,6 +207,7 @@ import {WarehouseCategoryTypeFormlySelectExFieldComponent} from './common/wareho
         WarehouseCategoryTypeFormlySelectExFieldComponent,
     ],
     exports: [
+        AppLanguagesFormlySelectExFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCategoryTypeFormlySelectExFieldComponent,
@@ -209,6 +221,7 @@ import {WarehouseCategoryTypeFormlySelectExFieldComponent} from './common/wareho
         WarehouseCategoryTypeFormlySelectExFieldComponent,
     ],
     declarations: [
+        AppLanguagesFormlySelectExFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCategoryTypeFormlySelectExFieldComponent,

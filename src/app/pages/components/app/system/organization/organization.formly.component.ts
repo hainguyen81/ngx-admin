@@ -39,14 +39,8 @@ import {Constants, Constants as CommonConstants} from '../../../../../@core/data
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 import {isNullOrUndefined} from 'util';
@@ -77,7 +71,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'type',
-                type: 'select-ex-general-settings',
+                type: 'system-organization-type',
                 templateOptions: {
                     label: 'system.organization.form.type.label',
                     placeholder: 'system.organization.form.type.placeholder',
@@ -416,15 +410,13 @@ export class OrganizationFormlyComponent
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(UserDataSource) private userDataSource?: UserDataSource,
-                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
+                @Inject(UserDataSource) private userDataSource?: UserDataSource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         userDataSource || throwError('Could not inject UserDataSource instance');
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         this.config = OrganizationFormConfig;
         this.fields = OrganizationFormFieldsConfig;
     }
@@ -437,14 +429,9 @@ export class OrganizationFormlyComponent
         super.ngOnInit();
 
         // observe belongTo/manager fields
-        const fields: FormlyFieldConfig[] = this.fields;
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeBelongToField(),
             this.observeManagerField(),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[1].fieldGroup[0],
-                BUILTIN_CODES.ORGANIZATION_TYPE.code,
-                null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

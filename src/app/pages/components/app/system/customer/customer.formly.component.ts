@@ -33,16 +33,8 @@ import {
 import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
-import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import {CustomValidators} from 'ngx-custom-validators';
-import PromiseUtils from '../../../../../utils/promise.utils';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 
@@ -65,7 +57,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'type',
-                                type: 'select-ex-general-settings',
+                                type: 'system-customer-type',
                                 templateOptions: {
                                     label: 'system.customer.form.type.label',
                                     placeholder: 'system.customer.form.type.placeholder',
@@ -75,7 +67,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'level',
-                                type: 'select-ex-general-settings',
+                                type: 'system-customer-level',
                                 templateOptions: {
                                     label: 'system.customer.form.level.label',
                                     placeholder: 'system.customer.form.level.placeholder',
@@ -375,14 +367,12 @@ export class CustomerFormlyComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.config = CustomerFormConfig;
         super.fields = CustomerFormFieldsConfig;
     }
@@ -418,23 +408,6 @@ export class CustomerFormlyComponent
                 }
             },
         };
-
-        // customer status
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource,
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0],
-                BUILTIN_CODES.CUSTOMER_TYPE.code,
-                null, this.noneOption as IGeneralSettings),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource,
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1],
-                BUILTIN_CODES.CUSTOMER_LEVEL.code,
-                null, this.noneOption as IGeneralSettings),
-        ]).then(
-            value => this.getLogger().debug('Loading settings successful'),
-            reason => this.getLogger().error(reason))
-        .catch(reason => this.getLogger().error(reason));
     }
 
     /**
