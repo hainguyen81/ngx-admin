@@ -6,15 +6,17 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import City, {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
-import {of, throwError} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {CityDatasource} from '../../../../../services/implementation/system/city/city.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
 import {IProvince} from '../../../../../@core/data/system/province';
+import {
+    AppModuleDataFormlySelectExFieldComponent,
+} from './app.module.data.formly.select.ex.field.component';
 
 export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
@@ -43,7 +45,30 @@ export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({}, Def
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export class AppCityFormlySelectExFieldComponent
-    extends AppFormlySelectExFieldComponent<ICity> {
+    extends AppModuleDataFormlySelectExFieldComponent<ICity, CityDatasource> {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _province: IProvince;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected get noneOption(): ICity {
+        return new City(null, null, null);
+    }
+
+    get province(): IProvince {
+        return this._province;
+    }
+
+    set province(_province: IProvince) {
+        this._province = _province;
+        this.refresh();
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -51,16 +76,16 @@ export class AppCityFormlySelectExFieldComponent
 
     /**
      * Create a new instance of {AppFormlySelectExFieldComponent} class
+     * @param dataSource {CityDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param cityDataSource {CityDatasource}
      * @param _logger {NGXLogger}
      * @param _factoryResolver {ComponentFactoryResolver}
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Inject(CityDatasource) private cityDataSource: CityDatasource,
+    constructor(@Inject(CityDatasource) dataSource: CityDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,
@@ -68,28 +93,22 @@ export class AppCityFormlySelectExFieldComponent
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
-        super(_translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        cityDataSource || throwError('Could not inject CityDatasource instance');
-        super.config = AppCitiesSelectOptions;
+        super(dataSource, _translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
+            AppCitiesSelectOptions);
     }
 
     // -------------------------------------------------
-    // FUNCTIONS
+    // EVENTS
     // -------------------------------------------------
 
-    set province(province: IProvince) {
-        if (!province || !(province.id || '').length
-            || !(province.code || '').length || !(province.name || '').length) {
-            this.items.clear();
+    protected loadData(): Observable<ICity[] | ICity> | Promise<ICity[] | ICity> | ICity[] | ICity {
+        const prov: IProvince = this.province;
+        if (!prov || !(prov.id || '').length || !(prov.code || '').length || !(prov.name || '').length) {
+            return of([this.noneOption]);
+
         } else {
-            SystemDataUtils.invokeAllCities(this.cityDataSource, province)
-                .then(cities => {
-                    let noneCity: ICity;
-                    noneCity = new City(null, null, null);
-                    noneCity['text'] = this.getConfigValue('placeholder');
-                    this.items = [noneCity].concat(cities as ICity[]);
-                });
+            return SystemDataUtils.invokeAllCities(this.dataSource, prov);
         }
     }
 }

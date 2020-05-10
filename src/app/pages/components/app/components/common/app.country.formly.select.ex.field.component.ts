@@ -1,20 +1,24 @@
 import {
-    AfterViewInit, ChangeDetectorRef,
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import Country, {ICountry} from '../../../../../@core/data/system/country';
 import {NGXLogger} from 'ngx-logger';
+import {
+    AppModuleDataFormlySelectExFieldComponent,
+} from './app.module.data.formly.select.ex.field.component';
 
 export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
@@ -43,22 +47,15 @@ export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({}, 
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export class AppCountryFormlySelectExFieldComponent
-    extends AppFormlySelectExFieldComponent<ICountry>
+    extends AppModuleDataFormlySelectExFieldComponent<ICountry, CountryDatasource>
     implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    get valueFormatter(): (value: any) => any {
-        return value => {
-            let options: any[];
-            options = this.items.filter(opt => {
-                return (opt && ((opt === value)
-                    || (opt[this.getConfigValue('optionValueField')] === value)));
-            });
-            return options || [];
-        };
+    protected get noneOption(): ICountry {
+        return new Country(null, null, null);
     }
 
     // -------------------------------------------------
@@ -67,16 +64,16 @@ export class AppCountryFormlySelectExFieldComponent
 
     /**
      * Create a new instance of {AppFormlySelectExFieldComponent} class
+     * @param dataSource {CountryDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param countryDataSource {CountryDatasource}
      * @param _logger {NGXLogger}
      * @param _factoryResolver {ComponentFactoryResolver}
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Inject(CountryDatasource) private countryDataSource: CountryDatasource,
+    constructor(@Inject(CountryDatasource) dataSource: CountryDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,
@@ -84,28 +81,14 @@ export class AppCountryFormlySelectExFieldComponent
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
-        super(_translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        countryDataSource || throwError('Could not inject CountryDatasource instance');
-        super.config = AppCountriesSelectOptions;
+        super(dataSource, _translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
+            AppCountriesSelectOptions);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
-
-    ngOnInit(): void {
-        this.countryDataSource.onChanged().subscribe(value => {
-            SystemDataUtils.invokeAllCountries(this.countryDataSource)
-                .then(countries => {
-                    let noneCountry: ICountry;
-                    noneCountry = new Country(null, null, null);
-                    noneCountry['text'] = this.getConfigValue('placeholder');
-                    this.items = [noneCountry].concat(countries as ICountry[]);
-                });
-        });
-        this.countryDataSource.refresh();
-    }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
@@ -115,5 +98,9 @@ export class AppCountryFormlySelectExFieldComponent
             item => (item && item.data
             && (((item.data as ICountry).flag || '').length)
                 ? [(item.data as ICountry).flag] : null));
+    }
+
+    protected loadData(): Observable<ICountry[] | ICountry> | Promise<ICountry[] | ICountry> | ICountry[] | ICountry {
+        return SystemDataUtils.invokeAllCountries(this.dataSource);
     }
 }

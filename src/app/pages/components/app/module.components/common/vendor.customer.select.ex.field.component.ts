@@ -21,12 +21,12 @@ import Customer, {ICustomer} from '../../../../../@core/data/system/customer';
 import {
     CustomerDatasource,
 } from '../../../../../services/implementation/system/customer/customer.datasource';
-import {
-    AppModuleDataSettingsFormlySelectExFieldComponent,
-} from '../../components/common/app.module.data.formly.select.ex.field.component';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {$enum} from 'ts-enum-util';
 import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
+import {
+    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
+} from '../../components/common/app.module.data.index.formly.select.ex.field.component';
 
 export const VendorCustomerSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -56,7 +56,7 @@ export const VendorCustomerSelectOptions: INgxSelectExOptions =
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export class VendorCustomerFormlySelectExFieldComponent
-    extends AppModuleDataSettingsFormlySelectExFieldComponent<ICustomer, CustomerDatasource>
+    extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<ICustomer, CustomerDatasource>
     implements OnInit {
 
     // -------------------------------------------------
@@ -94,6 +94,14 @@ export class VendorCustomerFormlySelectExFieldComponent
         return _noneCustomer;
     }
 
+    protected get dataIndexName(): string {
+        return '__customer_index_by_type';
+    }
+
+    protected get dataIndexKey(): IDBKeyRange {
+        return IDBKeyRange.only([this.vendorCustomerType]);
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -118,8 +126,8 @@ export class VendorCustomerFormlySelectExFieldComponent
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            VendorCustomerSelectOptions);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+        this.config = VendorCustomerSelectOptions;
     }
 
     // -------------------------------------------------
@@ -137,22 +145,17 @@ export class VendorCustomerFormlySelectExFieldComponent
                     [],
                     (result: ICustomer[], value: ICustomer[]) => result = result.concat(value), [
                         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                            _dataSource,
-                            '__customer_index_by_type',
+                            _dataSource, this.dataIndexName,
                             IDBKeyRange.only([$enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.CUSTOMER)]),
                             this.translateService),
                         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                            _dataSource,
-                            '__customer_index_by_type',
+                            _dataSource, this.dataIndexName,
                             IDBKeyRange.only([$enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.VENDOR)]),
                             this.translateService),
                     ]);
 
             default:
-                return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                    _dataSource,
-                    '__customer_index_by_type', IDBKeyRange.only([this.vendorCustomerType]),
-                    this.translateService);
+                return super.loadData();
         }
     }
 }

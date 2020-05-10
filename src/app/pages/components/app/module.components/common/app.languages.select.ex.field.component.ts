@@ -9,7 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {
-    AppModuleDataSettingsFormlySelectExFieldComponent,
+    AppModuleDataFormlySelectExFieldComponent,
 } from '../../components/common/app.module.data.formly.select.ex.field.component';
 import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -49,7 +49,7 @@ export const AppLanguagesSelectOptions: INgxSelectExOptions =
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export class AppLanguagesFormlySelectExFieldComponent
-    extends AppModuleDataSettingsFormlySelectExFieldComponent<IModel, DataSource>
+    extends AppModuleDataFormlySelectExFieldComponent<IModel, DataSource>
     implements OnInit {
 
     // -------------------------------------------------

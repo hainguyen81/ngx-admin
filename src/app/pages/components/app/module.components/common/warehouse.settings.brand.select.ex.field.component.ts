@@ -13,30 +13,39 @@ import {NGXLogger} from 'ngx-logger';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
+import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 import {
-    GeneralWarehouseSettingsFormlySelectExFieldComponent,
-} from './general.warehouse.settings.select.ex.field.component';
+    WarehouseSettingsDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {
+    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
+} from '../../components/common/app.module.data.index.formly.select.ex.field.component';
+import {$enum} from 'ts-enum-util';
+import {Constants as WHConstants} from '../../../../../@core/data/constants/warehouse.settings.constants';
+import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 
 /**
- * Custom module formly field for selecting general warehouse settings type settings
+ * Custom module formly field for selecting general warehouse settings brand settings
  */
 @Component({
-    selector: 'ngx-select-ex-app-module-general-settings-warehouse-settings-type',
+    selector: 'ngx-select-ex-app-module-general-settings-warehouse-settings-brand',
     templateUrl: '../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export class WarehouseSettingsTypeFormlySelectExFieldComponent
-    extends GeneralWarehouseSettingsFormlySelectExFieldComponent
+export class WarehouseSettingsBrandFormlySelectExFieldComponent
+    extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<IWarehouseSetting, WarehouseSettingsDatasource>
     implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    protected get dataIndexName(): string {
+        return 'type';
+    }
+
     protected get dataIndexKey(): IDBKeyRange {
-        return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code]);
+        return IDBKeyRange.only($enum(WAREHOUSE_SETTINGS_TYPE).getKeyOrThrow(WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS));
     }
 
     // -------------------------------------------------

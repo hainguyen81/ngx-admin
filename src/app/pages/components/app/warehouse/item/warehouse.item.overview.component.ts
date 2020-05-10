@@ -33,14 +33,10 @@ import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import PromiseUtils from '../../../../../utils/promise.utils';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {throwError} from 'rxjs';
-import {Constants as WarehouseConstants} from '../../../../../@core/data/constants/warehouse.settings.constants';
-import WAREHOUSE_SETTINGS_TYPE = WarehouseConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 import {CustomValidators} from 'ngx-custom-validators';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
@@ -106,11 +102,10 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'brand_id',
-                type: 'select-ex-general-settings',
+                type: 'warehouse-settings-brand',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.brand.label',
                     placeholder: 'warehouse.item.overview.form.brand.placeholder',
-                    options: [],
                 },
             },
             {
@@ -393,15 +388,13 @@ export class WarehouseItemOverviewFormlyComponent
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource,
-                @Inject(WarehouseSettingsDatasource) private settingsDatasource?: WarehouseSettingsDatasource) {
+                @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
-        settingsDatasource || throwError('Could not inject WarehouseSettingsDatasource instance');
         super.config = WarehouseItemOverviewFormConfig;
         super.fields = WarehouseItemOverviewFormFieldsConfig;
     }
@@ -434,18 +427,8 @@ export class WarehouseItemOverviewFormlyComponent
      * @param fields to observe
      */
     private observeSettingsFields(fields: FormlyFieldConfig[]): void {
-        const brandSettings: string = Object.keys(WAREHOUSE_SETTINGS_TYPE)
-            .find(key => WAREHOUSE_SETTINGS_TYPE[key] === WAREHOUSE_SETTINGS_TYPE.BRAND_SETTINGS);
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeCategoriesField(fields[2].fieldGroup[0]),
-            AppObserveUtils.observeDatasourceFormField(
-                this.settingsDatasource,
-                'type', IDBKeyRange.only(brandSettings),
-                fields[3].fieldGroup[0], null,
-                null, {
-                    'title': (model: IWarehouseSetting) => model.name,
-                    'text': (model: IWarehouseSetting) => model.name,
-                }, this.noneOption),
         ]).then(value => this.getLogger().debug('Loading settings successful!'),
                 reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

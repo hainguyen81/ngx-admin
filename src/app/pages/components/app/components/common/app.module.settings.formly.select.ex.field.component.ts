@@ -1,15 +1,14 @@
 import {
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {Observable} from 'rxjs';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {NGXLogger} from 'ngx-logger';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
@@ -18,8 +17,8 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {IModule} from '../../../../../@core/data/system/module';
 import {
-    AppModuleDataSettingsFormlySelectExFieldComponent,
-} from './app.module.data.formly.select.ex.field.component';
+    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
+} from './app.module.data.index.formly.select.ex.field.component';
 
 export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
@@ -48,8 +47,7 @@ export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export class AppModuleSettingsFormlySelectExFieldComponent
-    extends AppModuleDataSettingsFormlySelectExFieldComponent<
-        IGeneralSettings, GeneralSettingsDatasource>
+    extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<IGeneralSettings, GeneralSettingsDatasource>
     implements OnInit {
 
     // -------------------------------------------------
@@ -100,6 +98,16 @@ export class AppModuleSettingsFormlySelectExFieldComponent
         return _noneSettings;
     }
 
+    protected get dataIndexName(): string {
+        return ((this.moduleId || '').length ? 'module_id'
+            : (this.moduleCode || '').length ? 'module_code' : undefined);
+    }
+
+    protected get dataIndexKey(): IDBKeyRange {
+        return ((this.moduleId || '').length ? IDBKeyRange.only(this.moduleId)
+            : (this.moduleCode || '').length ? IDBKeyRange.only(this.moduleCode) : undefined);
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -126,26 +134,5 @@ export class AppModuleSettingsFormlySelectExFieldComponent
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
             AppModuleSettingsSelectOptions);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    protected loadData(): Observable<IGeneralSettings[] | IGeneralSettings>
-        | Promise<IGeneralSettings[] | IGeneralSettings>
-        | IGeneralSettings[] | IGeneralSettings {
-        const _dataSource: GeneralSettingsDatasource = this.dataSource;
-        if ((this.moduleId || '').length) {
-            return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                _dataSource, 'module_id', IDBKeyRange.only(this.moduleId), this.translateService);
-
-        } else if ((this.moduleCode || '').length) {
-            return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                _dataSource, 'module_code', IDBKeyRange.only(this.moduleCode), this.translateService);
-
-        } else {
-            return [this.noneOption];
-        }
     }
 }

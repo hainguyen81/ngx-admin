@@ -35,7 +35,7 @@ export class SystemCurrencyFormlySelectExFieldComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected get settingsDbIndexKey(): IDBKeyRange {
+    protected get dataIndexKey(): IDBKeyRange {
         return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.CURRENCY.code]);
     }
 

@@ -17,9 +17,8 @@ import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
-import {Observable, throwError} from 'rxjs';
+import {throwError} from 'rxjs';
 import {IModule} from '../../../../../@core/data/system/module';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 
 export const AppGeneralSettingsSelectOptions: INgxSelectExOptions =
@@ -82,14 +81,9 @@ export abstract class GeneralSettingsFormlySelectExFieldComponent
      * Define the system settings index name to query settings
      * @return the system settings index name
      */
-    protected get settingsDbIndexName(): string {
+    protected get dataIndexName(): string {
         return '__general_settings_index_by_module_code';
     }
-    /**
-     * Define the system settings index key to query settings
-     * @return the system settings index key
-     */
-    protected abstract get settingsDbIndexKey(): IDBKeyRange;
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -117,16 +111,5 @@ export abstract class GeneralSettingsFormlySelectExFieldComponent
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this.config = AppGeneralSettingsSelectOptions;
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    protected loadData(): Observable<IGeneralSettings[] | IGeneralSettings>
-        | Promise<IGeneralSettings[] | IGeneralSettings>
-        | IGeneralSettings[] | IGeneralSettings {
-        return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-            this.dataSource, this.settingsDbIndexName, this.settingsDbIndexKey, this.translateService);
     }
 }

@@ -10,6 +10,7 @@ import {IModel} from '../../../../../@core/data/base';
 import {SelectExFormFieldComponent} from '../../../formly/formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
+import {INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 
 /**
  * Custom formly field for selecting parent
@@ -42,8 +43,10 @@ export abstract class AppFormlySelectExFieldComponent<T extends IModel>
                           @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+                          @Inject(ElementRef) _elementRef: ElementRef,
+                          _config?: INgxSelectExOptions | null) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+        this.config = _config;
     }
 }

@@ -28,7 +28,7 @@ import {isPromise} from 'rxjs/internal-compatibility';
     templateUrl: '../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export abstract class AppModuleDataSettingsFormlySelectExFieldComponent<M extends IModel, D extends DataSource>
+export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel, D extends DataSource>
     extends AppFormlySelectExFieldComponent<M>
     implements OnInit {
 
@@ -76,10 +76,9 @@ export abstract class AppModuleDataSettingsFormlySelectExFieldComponent<M extend
                           @Inject(ElementRef) _elementRef: ElementRef,
                           _config?: INgxSelectExOptions | null) {
         super(_translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef, _config);
         this._datasource || throwError('Could not inject DataSource instance');
         _config || throwError('Configuration must be required');
-        this.config = _config;
     }
 
     // -------------------------------------------------
@@ -109,7 +108,7 @@ export abstract class AppModuleDataSettingsFormlySelectExFieldComponent<M extend
      * Refresh data
      */
     public refresh(): void {
-        const _this: AppModuleDataSettingsFormlySelectExFieldComponent<M, D> = this;
+        const _this: AppModuleDataFormlySelectExFieldComponent<M, D> = this;
         const _loadData: Observable<M | M[]> | Promise<M | M[]> | (M | M[]) = this.loadData();
 
         // promise data
