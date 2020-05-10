@@ -32,6 +32,9 @@ import {AppCommonComponentsModule} from '../components/common/app.common.compone
 import {
     VendorCustomerFormlySelectExFieldComponent,
 } from './common/vendor.customer.select.ex.field.component';
+import {
+    SystemStatusFormlySelectExFieldComponent,
+} from './common/system.status.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -83,6 +86,11 @@ import {
                     component: VendorCustomerFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'system-status',
+                    component: SystemStatusFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -106,12 +114,15 @@ import {
     ],
     entryComponents: [
         VendorCustomerFormlySelectExFieldComponent,
+        SystemStatusFormlySelectExFieldComponent,
     ],
     exports: [
         VendorCustomerFormlySelectExFieldComponent,
+        SystemStatusFormlySelectExFieldComponent,
     ],
     declarations: [
         VendorCustomerFormlySelectExFieldComponent,
+        SystemStatusFormlySelectExFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {

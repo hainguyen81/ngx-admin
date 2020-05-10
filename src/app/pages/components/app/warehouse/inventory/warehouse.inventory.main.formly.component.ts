@@ -143,7 +143,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'status',
-                                type: 'select-ex-general-settings',
+                                type: 'system-status',
                                 templateOptions: {
                                     label: 'warehouse.category.form.status.label',
                                     placeholder: 'warehouse.category.form.status.placeholder',

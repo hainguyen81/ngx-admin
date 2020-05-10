@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -18,7 +18,6 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl, Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
@@ -26,15 +25,14 @@ import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.b
 import {
     WarehouseBatchNoDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import PromiseUtils from '../../../../../utils/promise.utils';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import moment, {Moment} from 'moment';
 import {isNullOrUndefined} from 'util';
-import {AppFormlyDatePickerFieldComponent} from '../../components/common/app.formly.datepicker.field.component';
+import {
+    AppFormlyDatePickerFieldComponent,
+} from '../../components/common/app.formly.datepicker.field.component';
 
 /* default warehouse batch no formly config */
 export const WarehouseBatchNoFormConfig: FormlyConfig = new FormlyConfig();
@@ -185,7 +183,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-4',
                 key: 'status',
-                type: 'select-ex-general-settings',
+                type: 'system-status',
                 templateOptions: {
                     label: 'warehouse.batch_no.form.status.label',
                     placeholder: 'warehouse.batch_no.form.status.placeholder',
@@ -221,8 +219,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class WarehouseBatchNoFormlyComponent
-    extends AppFormlyComponent<IWarehouseBatchNo, WarehouseBatchNoDatasource>
-    implements OnInit {
+    extends AppFormlyComponent<IWarehouseBatchNo, WarehouseBatchNoDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -270,24 +267,5 @@ export class WarehouseBatchNoFormlyComponent
             router, activatedRoute);
         super.config = WarehouseBatchNoFormConfig;
         super.fields = WarehouseBatchNoFormFieldsConfig;
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        // observer fields for applying values
-        const fields: FormlyFieldConfig[] = this.fields;
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[4].fieldGroup[0],
-                BUILTIN_CODES.STATUS.code,
-                null, this.noneOption as IGeneralSettings),
-        ]).then(value => this.getLogger().debug('Loading general settings successful'),
-            reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
     }
 }

@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -18,19 +18,15 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {EmailValidators} from 'ngx-validators';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {CustomValidators} from 'ngx-custom-validators';
-import PromiseUtils from '../../../../../utils/promise.utils';
 import {IUser} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 
@@ -136,7 +132,7 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'status',
-                                type: 'select-ex-general-settings',
+                                type: 'system-status',
                                 templateOptions: {
                                     label: 'system.user.form.status.label',
                                     placeholder: 'system.user.form.status.placeholder',
@@ -177,8 +173,7 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class UserFormlyComponent
-    extends AppFormlyComponent<IUser, UserDataSource>
-    implements OnInit {
+    extends AppFormlyComponent<IUser, UserDataSource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -226,35 +221,5 @@ export class UserFormlyComponent
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.config = UserFormConfig;
         super.fields = UserFormFieldsConfig;
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        this.observeFields();
-    }
-
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    /**
-     * Observe model fields for applying values
-     */
-    private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.fields;
-        // user status
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[3].fieldGroup[1],
-                BUILTIN_CODES.STATUS.code,
-                null, this.noneOption as IGeneralSettings),
-        ]).then(value => this.getLogger().debug('Loading settings successful'),
-                reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
     }
 }

@@ -3,7 +3,8 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
+    OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -84,7 +85,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'status',
-                                type: 'select-ex-general-settings',
+                                type: 'system-status',
                                 templateOptions: {
                                     label: 'system.customer.form.status.label',
                                     placeholder: 'system.customer.form.status.placeholder',
@@ -429,11 +430,6 @@ export class CustomerFormlyComponent
                 this.generalSettingsDatasource,
                 fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1],
                 BUILTIN_CODES.CUSTOMER_LEVEL.code,
-                null, this.noneOption as IGeneralSettings),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource,
-                fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2],
-                BUILTIN_CODES.STATUS.code,
                 null, this.noneOption as IGeneralSettings),
         ]).then(
             value => this.getLogger().debug('Loading settings successful'),

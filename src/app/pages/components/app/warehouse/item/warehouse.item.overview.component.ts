@@ -336,7 +336,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-3',
                 key: 'status',
-                type: 'select-ex-general-settings',
+                type: 'system-status',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.status.label',
                     placeholder: 'warehouse.item.overview.form.status.placeholder',
@@ -455,10 +455,6 @@ export class WarehouseItemOverviewFormlyComponent
             AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
                 this.generalSettingsDatasource, fields[5].fieldGroup[1],
                 BUILTIN_CODES.CURRENCY.code,
-                null, this.noneOption as IGeneralSettings),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[12].fieldGroup[0],
-                BUILTIN_CODES.STATUS.code,
                 null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading settings successful!'),
                 reason => this.getLogger().error(reason))
