@@ -70,15 +70,14 @@ export class VendorCustomerFormlySelectExFieldComponent
     public get vendorCustomerType(): string {
         if (!(this._vendorCustomerType || '').length) {
             this._vendorCustomerType = Object.keys(CUSTOMER_TYPE)
-                .find(key => key === CUSTOMER_TYPE[CUSTOMER_TYPE.ALL]);
+                .find(key => CUSTOMER_TYPE[key] === CUSTOMER_TYPE.ALL);
         }
         return this._vendorCustomerType;
     }
 
     public set vendorCustomerType(_vendorCustomerType: string) {
-        const correctType: CUSTOMER_TYPE = CUSTOMER_TYPE[
-            Object.keys(CUSTOMER_TYPE).find(
-                key => key.toLowerCase() === (_vendorCustomerType || '').toLowerCase())];
+        const correctType: CUSTOMER_TYPE = Object.values(CUSTOMER_TYPE)
+            .find(enumValue => enumValue === CUSTOMER_TYPE[_vendorCustomerType]);
         this.vendorCustomerTypeEnum = correctType;
     }
 
