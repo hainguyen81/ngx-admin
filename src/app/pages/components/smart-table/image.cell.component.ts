@@ -48,8 +48,16 @@ export class ImageCellComponent extends AbstractCellEditor
         return this._images;
     }
 
+    set images(_images: string[]) {
+        this._images = _images;
+    }
+
     get descriptor(): string {
         return this._descriptor;
+    }
+
+    set descriptor(_descriptor: string) {
+        this._descriptor = _descriptor;
     }
 
     // -------------------------------------------------
@@ -88,15 +96,15 @@ export class ImageCellComponent extends AbstractCellEditor
         this.observeConfigProperty(ImageCellComponent.IMAGES_PREPARE)
             .subscribe(images => {
                 if (isArray(images)) {
-                    this._images = Array.from(images);
+                    this.images = Array.from(images);
 
                 } else if (!isNullOrUndefined(images) && typeof images === 'string') {
-                    this._images = [images];
+                    this.images = [images];
                 }
             });
 
         // observe descriptor
         this.observeConfigProperty(ImageCellComponent.DESCRIPTOR_PREPARE, false)
-            .subscribe(descriptor => this._descriptor = descriptor || '');
+            .subscribe(descriptor => this.descriptor = descriptor || '');
     }
 }

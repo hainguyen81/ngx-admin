@@ -363,6 +363,7 @@ export abstract class AbstractCellEditor extends DefaultEditor {
         const cell: Cell = this.cell;
         const config: any = this.cellColumnConfig;
         const column: Column = this.cellColumn;
+        const _observeValueIfInvalidProperty = (observeValueIfInvalidProperty || true);
         if (column && Object.keys(column).length && column.hasOwnProperty(property)) {
             if (typeof column[property] === 'function') {
                 return of(column[property].call(undefined,
@@ -394,7 +395,7 @@ export abstract class AbstractCellEditor extends DefaultEditor {
                 return of(config[property]);
             }
 
-        } else if (observeValueIfInvalidProperty) {
+        } else if (_observeValueIfInvalidProperty) {
             return of(this.cellValue);
         }
         return of(undefined);

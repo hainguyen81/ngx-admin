@@ -23,15 +23,15 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {LoggerModule} from 'ngx-logger';
 import {NgxSelectModule} from 'ngx-select-ex';
-import {
-    WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
-} from './warehouse/inventory/warehouse.inventory.vendor.customer.select.ex.field.component';
 import {AppComponentsModule} from '../components/app.components.module';
 import {ThemeModule} from '../../../../@theme/theme.module';
 import {ComponentsModule} from '../../components.module';
 import {AppMaterialModule} from '../../../../app.material.module';
 import {AppConfig} from '../../../../config/app.config';
 import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
+import {
+    VendorCustomerFormlySelectExFieldComponent,
+} from './common/vendor.customer.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -79,8 +79,8 @@ import {AppCommonComponentsModule} from '../components/common/app.common.compone
         FormlyModule.forRoot({
             types: [
                 {
-                    name: 'warehouse-inventory-customer',
-                    component: WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
+                    name: 'vendor-customer',
+                    component: VendorCustomerFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
             ],
@@ -105,13 +105,13 @@ import {AppCommonComponentsModule} from '../components/common/app.common.compone
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
-        WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
+        VendorCustomerFormlySelectExFieldComponent,
     ],
     exports: [
-        WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
+        VendorCustomerFormlySelectExFieldComponent,
     ],
     declarations: [
-        WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
+        VendorCustomerFormlySelectExFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {

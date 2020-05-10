@@ -18,7 +18,9 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
-import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {
+    GeneralSettingsDatasource,
+} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
@@ -27,7 +29,13 @@ import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
+import {
+    SelectTranslateCellComponent,
+} from '../../../smart-table/select.translate.cell.component';
+import {ImageCellComponent} from '../../../smart-table/image.cell.component';
+import {Cell, DefaultEditor} from 'ng2-smart-table';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {ICustomer} from '../../../../../@core/data/system/customer';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -51,11 +59,25 @@ export const CustomerTableSettings = {
             editable: false,
             renderComponent: SelectTranslateCellComponent,
         },
-        code: {
+        image: {
             title: 'system.customer.table.code',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
+            renderComponent: ImageCellComponent,
+            editor: {
+                type: 'custom',
+                component: ImageCellComponent,
+                config: {
+                    'descriptorPrepare': (c: DefaultEditor,
+                                          cell: Cell, row: Row,
+                                          data: ICustomer,
+                                          config: any) => {
+                        return (data ? data.code || '' : '');
+                    },
+                },
+            },
         },
         name: {
             title: 'system.customer.table.name',

@@ -1,7 +1,7 @@
 import {
     DefaultNgxSelectOptions,
     INgxSelectExOptions,
-} from '../../../../select-ex/abstract.select.ex.component';
+} from '../../../select-ex/abstract.select.ex.component';
 import {
     ChangeDetectorRef,
     Component,
@@ -15,24 +15,24 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
-import SystemDataUtils from '../../../../../../utils/system/system.data.utils';
-import {Constants as CustomerConstants} from '../../../../../../@core/data/constants/customer.constants';
+import SystemDataUtils from '../../../../../utils/system/system.data.utils';
+import {Constants as CustomerConstants} from '../../../../../@core/data/constants/customer.constants';
 import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
-import Customer, {ICustomer} from '../../../../../../@core/data/system/customer';
+import Customer, {ICustomer} from '../../../../../@core/data/system/customer';
 import {
     CustomerDatasource,
-} from '../../../../../../services/implementation/system/customer/customer.datasource';
+} from '../../../../../services/implementation/system/customer/customer.datasource';
 import {
     AppModuleDataSettingsFormlySelectExFieldComponent,
-} from '../../../components/common/app.module.data.formly.select.ex.field.component';
+} from '../../components/common/app.module.data.formly.select.ex.field.component';
 
-export const WarehouseInventoryVendorCustomerSelectOptions: INgxSelectExOptions =
+export const VendorCustomerSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
          * {string}
          */
-        optionValueField: 'id',
+        optionValueField: 'code',
         /**
          * Provide an opportunity to change the name a text property of objects in the items
          * {string}
@@ -49,11 +49,11 @@ export const WarehouseInventoryVendorCustomerSelectOptions: INgxSelectExOptions 
  * Custom module formly field for selecting warehouse inventory vendor/customer
  */
 @Component({
-    selector: 'ngx-select-ex-app-module-warehouse-inventory-vendor-customer',
-    templateUrl: '../../../../formly/formly.select.ex.field.component.html',
-    styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],
+    selector: 'ngx-select-ex-app-module-vendor-customer',
+    templateUrl: '../../../formly/formly.select.ex.field.component.html',
+    styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export class WarehouseInventoryVendorCustomerFormlySelectExFieldComponent
+export class VendorCustomerFormlySelectExFieldComponent
     extends AppModuleDataSettingsFormlySelectExFieldComponent<ICustomer, CustomerDatasource>
     implements OnInit {
 
@@ -117,7 +117,7 @@ export class WarehouseInventoryVendorCustomerFormlySelectExFieldComponent
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            WarehouseInventoryVendorCustomerSelectOptions);
+            VendorCustomerSelectOptions);
     }
 
     // -------------------------------------------------
