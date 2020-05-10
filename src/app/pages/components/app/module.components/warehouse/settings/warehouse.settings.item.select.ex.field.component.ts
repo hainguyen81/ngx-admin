@@ -10,16 +10,14 @@ import {
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {IWarehouseSetting} from '../../../../../../@core/data/warehouse/warehouse.setting';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {
-    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
-} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
-import {$enum} from 'ts-enum-util';
 import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
+import {
+    WarehouseSettingsFormlySelectExFieldComponent,
+} from './warehouse.settings.select.ex.field.component';
 
 /**
  * Custom module formly field for selecting general warehouse settings item settings
@@ -30,19 +28,15 @@ import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUS
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],
 })
 export class WarehouseSettingsItemFormlySelectExFieldComponent
-    extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<IWarehouseSetting, WarehouseSettingsDatasource>
+    extends WarehouseSettingsFormlySelectExFieldComponent
     implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected get dataIndexName(): string {
-        return 'type';
-    }
-
-    protected get dataIndexKey(): IDBKeyRange {
-        return IDBKeyRange.only($enum(WAREHOUSE_SETTINGS_TYPE).getKeyOrThrow(WAREHOUSE_SETTINGS_TYPE.ITEM_SETTINGS));
+    protected get settingsType(): WAREHOUSE_SETTINGS_TYPE {
+        return WAREHOUSE_SETTINGS_TYPE.ITEM_SETTINGS;
     }
 
     // -------------------------------------------------

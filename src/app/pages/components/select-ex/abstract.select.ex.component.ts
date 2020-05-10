@@ -282,22 +282,6 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     protected get selectComponent(): NgxSelectComponent {
         return this.ngxSelectExComponent;
     }
-    //
-    // /**
-    //  * Get the {INgxSelectOptions} instance for configuring
-    //  * @return the {INgxSelectOptions} instance
-    //  */
-    // public getConfig(): INgxSelectExOptions {
-    //     return super.config as INgxSelectExOptions;
-    // }
-    //
-    // /**
-    //  * Set the {INgxSelectOptions} instance
-    //  * @param config to apply. NULL for default
-    //  */
-    // public setConfig(config?: INgxSelectExOptions) {
-    //     super.config = config || DefaultNgxSelectOptions;
-    // }
 
     /**
      * Get the option items array to show

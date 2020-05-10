@@ -139,11 +139,13 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
     protected loadDataInternal(data: M | M[]): void {
         const defaultOpt: M = this.noneOption;
         let items: M[] = [];
-        if (isArray(data)) {
-            items = (isNullOrUndefined(defaultOpt) ? [] : [defaultOpt]).concat(data as M[]);
+        if (!isNullOrUndefined(data)) {
+            if (isArray(data)) {
+                items = (isNullOrUndefined(defaultOpt) ? [] : [defaultOpt]).concat(data as M[]);
 
-        } else if (!isNullOrUndefined(data)) {
-            items = (isNullOrUndefined(defaultOpt) ? [] : [defaultOpt]).concat([data as M]);
+            } else {
+                items = (isNullOrUndefined(defaultOpt) ? [] : [defaultOpt]).concat([data as M]);
+            }
         }
         this.items = items;
     }
