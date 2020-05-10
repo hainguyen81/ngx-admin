@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -22,15 +22,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
-import PromiseUtils from '../../../../../utils/promise.utils';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
-import BUILTIN_CODES = Constants.COMMON.BUILTIN_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 
@@ -49,7 +41,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     {
                         className: 'w-100',
                         key: 'type',
-                        type: 'select-ex-general-settings',
+                        type: 'warehouse-settings-type',
                         templateOptions: {
                             label: 'warehouse.settings.form.type.label',
                             placeholder: 'warehouse.settings.form.type.placeholder',
@@ -122,8 +114,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
     ],
 })
 export class WarehouseSettingsFormlyComponent
-    extends AppFormlyComponent<IWarehouseSetting, WarehouseSettingsDatasource>
-    implements OnInit {
+    extends AppFormlyComponent<IWarehouseSetting, WarehouseSettingsDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -146,7 +137,6 @@ export class WarehouseSettingsFormlyComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param generalSettingsDatasource {GeneralSettingsDatasource}
      */
     constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -162,33 +152,13 @@ export class WarehouseSettingsFormlyComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.config = WarehouseSettingsFormConfig;
         super.fields = WarehouseSettingsFormFieldsConfig;
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        const fields: FormlyFieldConfig[] = this.fields;
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultWarehouseGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[0],
-                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
-                null, this.noneOption as IGeneralSettings),
-        ]).then(value => this.getLogger().debug('Loading general settings successful'),
-            reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
     }
 }

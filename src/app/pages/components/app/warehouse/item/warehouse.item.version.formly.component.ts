@@ -1,6 +1,5 @@
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -25,16 +24,9 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import PromiseUtils from '../../../../../utils/promise.utils';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
@@ -163,7 +155,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'currency',
-                type: 'select-ex-general-settings',
+                type: 'system-currency',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.currency.label',
                     placeholder: 'warehouse.item.overview.form.currency.placeholder',
@@ -322,8 +314,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
     styleUrls: ['../../../formly/formly.component.scss'],
 })
 export class WarehouseItemVersionFormlyComponent
-    extends AppFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
-    implements AfterViewInit {
+    extends AppFormlyComponent<IWarehouseItem, WarehouseItemDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -347,7 +338,6 @@ export class WarehouseItemVersionFormlyComponent
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      * @param categoryDatasource {WarehouseCategoryDatasource}
-     * @param generalSettingsDatasource {GeneralSettingsDatasource}
      * @param settingsDatasource {WarehouseSettingsDatasource}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
@@ -366,7 +356,6 @@ export class WarehouseItemVersionFormlyComponent
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource,
-                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource,
                 @Inject(WarehouseSettingsDatasource) private settingsDatasource?: WarehouseSettingsDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
@@ -374,49 +363,8 @@ export class WarehouseItemVersionFormlyComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         settingsDatasource || throwError('Could not inject WarehouseSettingsDatasource instance');
         super.config = WarehouseItemVersionFormConfig;
         super.fields = WarehouseItemVersionFormFieldsConfig;
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // observe fields
-        this.observeFields();
-    }
-
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    /**
-     * Observe fields
-     */
-    private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.fields;
-
-        // master settings fields
-        this.observeSettingsFields(fields);
-    }
-
-    /**
-     * Observe master settings fields
-     * @param fields to observe
-     */
-    private observeSettingsFields(fields: FormlyFieldConfig[]): void {
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[5].fieldGroup[1],
-                BUILTIN_CODES.CURRENCY.code,
-                null, this.noneOption as IGeneralSettings),
-        ]).then(value => this.getLogger().debug('Loading settings successful!'),
-                reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
     }
 }

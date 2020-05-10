@@ -28,15 +28,8 @@ import {AppFormlyComponent} from '../../components/app.formly.component';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import PromiseUtils from '../../../../../utils/promise.utils';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 import {isNullOrUndefined} from 'util';
@@ -76,7 +69,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'type',
-                                type: 'select-ex-general-settings',
+                                type: 'system-category-type',
                                 templateOptions: {
                                     label: 'warehouse.category.form.type.label',
                                     placeholder: 'warehouse.category.form.type.placeholder',
@@ -204,14 +197,12 @@ export class WarehouseCategoryFormlyComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(GeneralSettingsDatasource) private generalSettingsDatasource?: GeneralSettingsDatasource) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
         super.config = WarehouseCategoryFormConfig;
         super.fields = WarehouseCategoryFormFieldsConfig;
     }
@@ -227,10 +218,6 @@ export class WarehouseCategoryFormlyComponent
         const fields: FormlyFieldConfig[] = this.fields;
         PromiseUtils.parallelPromises(undefined, undefined, [
             this.observeBelongToField(fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0]),
-            AppObserveUtils.observeDefaultSystemGeneralSettingsFormField(
-                this.generalSettingsDatasource, fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0],
-                BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code,
-                null, this.noneOption as IGeneralSettings),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
             reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));

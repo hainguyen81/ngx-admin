@@ -35,7 +35,7 @@ import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {Constants, Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
@@ -291,7 +291,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-4',
                 key: 'business_license_dt',
-                type: 'datepicker',
+                type: 'app-date-picker',
                 templateOptions: {
                     label: 'system.organization.form.business_license_dt.label',
                     placeholder: 'system.organization.form.business_license_dt.placeholder',
@@ -300,7 +300,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-4',
                 key: 'date_incorporation',
-                type: 'datepicker',
+                type: 'app-date-picker',
                 templateOptions: {
                     label: 'system.organization.form.date_incorporation.label',
                     placeholder: 'system.organization.form.date_incorporation.placeholder',

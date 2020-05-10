@@ -156,7 +156,7 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-4',
                 key: 'type',
-                type: 'input',
+                type: 'warehouse-inventory-type',
                 templateOptions: {
                     label: 'warehouse.inventory.search.form.type.label',
                     placeholder: 'warehouse.inventory.search.form.type.placeholder',
