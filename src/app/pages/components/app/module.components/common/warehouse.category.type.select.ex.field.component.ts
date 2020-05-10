@@ -16,19 +16,19 @@ import {
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {
-    GeneralSystemSettingsFormlySelectExFieldComponent,
-} from './general.system.settings.select.ex.field.component';
+    GeneralWarehouseSettingsFormlySelectExFieldComponent,
+} from './general.warehouse.settings.select.ex.field.component';
 
 /**
- * Custom module formly field for selecting general system status settings
+ * Custom module formly field for selecting general warehouse category type settings
  */
 @Component({
-    selector: 'ngx-select-ex-app-module-general-settings-system-status',
+    selector: 'ngx-select-ex-app-module-general-settings-warehouse-category-type',
     templateUrl: '../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export class SystemStatusFormlySelectExFieldComponent
-    extends GeneralSystemSettingsFormlySelectExFieldComponent
+export class WarehouseCategoryTypeFormlySelectExFieldComponent
+    extends GeneralWarehouseSettingsFormlySelectExFieldComponent
     implements OnInit {
 
     // -------------------------------------------------
@@ -36,7 +36,7 @@ export class SystemStatusFormlySelectExFieldComponent
     // -------------------------------------------------
 
     protected get settingsDbIndexKey(): IDBKeyRange {
-        return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.STATUS.code]);
+        return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code]);
     }
 
     // -------------------------------------------------

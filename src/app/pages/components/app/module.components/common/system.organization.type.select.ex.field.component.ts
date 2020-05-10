@@ -20,14 +20,14 @@ import {
 } from './general.system.settings.select.ex.field.component';
 
 /**
- * Custom module formly field for selecting general system status settings
+ * Custom module formly field for selecting general system organization type settings
  */
 @Component({
-    selector: 'ngx-select-ex-app-module-general-settings-system-status',
+    selector: 'ngx-select-ex-app-module-general-settings-system-organization-type',
     templateUrl: '../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export class SystemStatusFormlySelectExFieldComponent
+export class SystemOrganizationTypeFormlySelectExFieldComponent
     extends GeneralSystemSettingsFormlySelectExFieldComponent
     implements OnInit {
 
@@ -36,7 +36,7 @@ export class SystemStatusFormlySelectExFieldComponent
     // -------------------------------------------------
 
     protected get settingsDbIndexKey(): IDBKeyRange {
-        return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.STATUS.code]);
+        return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.ORGANIZATION_TYPE.code]);
     }
 
     // -------------------------------------------------

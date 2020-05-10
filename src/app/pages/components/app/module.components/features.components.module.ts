@@ -35,6 +35,31 @@ import {
 import {
     SystemStatusFormlySelectExFieldComponent,
 } from './common/system.status.select.ex.field.component';
+import {
+    SystemCategoryTypeFormlySelectExFieldComponent,
+} from './common/system.category.type.select.ex.field.component';
+import {
+    SystemCurrencyFormlySelectExFieldComponent,
+} from './common/system.currency.select.ex.field.component';
+import {
+    SystemCustomerLevelFormlySelectExFieldComponent,
+} from './common/system.customer.level.select.ex.field.component';
+import {
+    SystemCustomerTypeFormlySelectExFieldComponent,
+} from './common/system.customer.type.select.ex.field.component';
+import {
+    SystemOrganizationTypeFormlySelectExFieldComponent,
+} from './common/system.organization.type.select.ex.field.component';
+import {
+    WarehouseInventoryStatusFormlySelectExFieldComponent,
+} from './common/warehouse.inventory.status.select.ex.field.component';
+import {
+    WarehouseInventoryTypeFormlySelectExFieldComponent,
+} from './common/warehouse.inventory.type.select.ex.field.component';
+import {
+    WarehouseSettingsTypeFormlySelectExFieldComponent,
+} from './common/warehouse.settings.type.select.ex.field.component';
+import {WarehouseCategoryTypeFormlySelectExFieldComponent} from './common/warehouse.category.type.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -91,6 +116,51 @@ import {
                     component: SystemStatusFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'system-category-type',
+                    component: SystemCategoryTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'system-currency',
+                    component: SystemCurrencyFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'system-customer-level',
+                    component: SystemCustomerLevelFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'system-customer-type',
+                    component: SystemCustomerTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'system-organization-type',
+                    component: SystemOrganizationTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'warehouse-inventory-status',
+                    component: WarehouseInventoryStatusFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'warehouse-inventory-type',
+                    component: WarehouseInventoryTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'warehouse-settings-type',
+                    component: WarehouseSettingsTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'warehouse-category-type',
+                    component: WarehouseCategoryTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -115,14 +185,41 @@ import {
     entryComponents: [
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
+        SystemCategoryTypeFormlySelectExFieldComponent,
+        SystemCurrencyFormlySelectExFieldComponent,
+        SystemCustomerLevelFormlySelectExFieldComponent,
+        SystemCustomerTypeFormlySelectExFieldComponent,
+        SystemOrganizationTypeFormlySelectExFieldComponent,
+        WarehouseInventoryStatusFormlySelectExFieldComponent,
+        WarehouseInventoryTypeFormlySelectExFieldComponent,
+        WarehouseSettingsTypeFormlySelectExFieldComponent,
+        WarehouseCategoryTypeFormlySelectExFieldComponent,
     ],
     exports: [
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
+        SystemCategoryTypeFormlySelectExFieldComponent,
+        SystemCurrencyFormlySelectExFieldComponent,
+        SystemCustomerLevelFormlySelectExFieldComponent,
+        SystemCustomerTypeFormlySelectExFieldComponent,
+        SystemOrganizationTypeFormlySelectExFieldComponent,
+        WarehouseInventoryStatusFormlySelectExFieldComponent,
+        WarehouseInventoryTypeFormlySelectExFieldComponent,
+        WarehouseSettingsTypeFormlySelectExFieldComponent,
+        WarehouseCategoryTypeFormlySelectExFieldComponent,
     ],
     declarations: [
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
+        SystemCategoryTypeFormlySelectExFieldComponent,
+        SystemCurrencyFormlySelectExFieldComponent,
+        SystemCustomerLevelFormlySelectExFieldComponent,
+        SystemCustomerTypeFormlySelectExFieldComponent,
+        SystemOrganizationTypeFormlySelectExFieldComponent,
+        WarehouseInventoryStatusFormlySelectExFieldComponent,
+        WarehouseInventoryTypeFormlySelectExFieldComponent,
+        WarehouseSettingsTypeFormlySelectExFieldComponent,
+        WarehouseCategoryTypeFormlySelectExFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {
