@@ -108,7 +108,6 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
      * Refresh data
      */
     public refresh(): void {
-        const _this: AppModuleDataFormlySelectExFieldComponent<M, D> = this;
         const _loadData: Observable<M | M[]> | Promise<M | M[]> | (M | M[]) = this.loadData();
 
         // promise data
