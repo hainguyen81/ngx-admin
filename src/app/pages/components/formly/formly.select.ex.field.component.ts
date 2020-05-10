@@ -214,7 +214,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * @param value to apply
      */
     public setValue(value?: any): void {
-        const oldVal: any = this.parseValue(this.value);
+        const oldVal: any = this.parseValue(this.rawValue);
         const newVal: any = this.parseValue(value);
         if (oldVal !== newVal) {
             this.formControl && this.formControl.patchValue(

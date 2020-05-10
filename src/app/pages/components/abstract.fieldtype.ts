@@ -30,6 +30,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
 
     private _valueFormatter: (value: any) => any;
     private _valueParser: (value: any) => any;
+    private _rawValue: any;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -233,10 +234,27 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param _value to apply
      */
     set value(_value: any) {
-        const __parsedValue: any = this.parseValue(_value);
+        this.rawValue = _value;
+        const __parsedValue: any = this.parseValue(this.rawValue);
         if (super.value !== __parsedValue) {
             super.value = __parsedValue;
         }
+    }
+
+    /**
+     * Get the field raw value
+     * @return the field value
+     */
+    protected get rawValue(): any {
+        return this._rawValue;
+    }
+
+    /**
+     * Set field value
+     * @param _value to apply
+     */
+    protected set rawValue(_value: any) {
+        this._rawValue = _value;
     }
 
     // -------------------------------------------------
