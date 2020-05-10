@@ -146,20 +146,20 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
         fieldGroup: [
             {
                 className: 'col-4',
-                key: 'custom_id',
-                type: 'vendor-customer',
-                templateOptions: {
-                    label: 'warehouse.inventory.search.form.customer.label',
-                    placeholder: 'warehouse.inventory.search.form.customer.placeholder',
-                },
-            },
-            {
-                className: 'col-4',
                 key: 'type',
                 type: 'warehouse-inventory-type',
                 templateOptions: {
                     label: 'warehouse.inventory.search.form.type.label',
                     placeholder: 'warehouse.inventory.search.form.type.placeholder',
+                },
+            },
+            {
+                className: 'col-4',
+                key: 'custom_id',
+                type: 'vendor-customer',
+                templateOptions: {
+                    label: 'warehouse.inventory.search.form.customer.label',
+                    placeholder: 'warehouse.inventory.search.form.customer.placeholder',
                 },
             },
             {
