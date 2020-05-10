@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {TreeviewModule} from 'ngx-treeview';
-import {AppComponentsModule} from '../../components/app.components.module';
 import {NgModule} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -9,28 +8,30 @@ import {
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
-    NbContextMenuModule, NbIconModule, NbInputModule,
+    NbContextMenuModule,
+    NbDatepickerModule,
+    NbIconModule,
+    NbInputModule,
     NbLayoutModule,
     NbSelectModule,
     NbThemeModule,
 } from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
-import {WarehouseStorageTreeviewComponent} from './warehouse.storage.treeview.component';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
-import {WarehouseStorageFormlyComponent} from './warehouse.storage.formly.component';
-import {ComponentsModule} from '../../../components.module';
-import {WarehouseStorageToolbarComponent} from './warehouse.storage.toolbar.component';
 import {FormlyModule} from '@ngx-formly/core';
-import {WarehouseProviders} from '../../../../../config/app.providers';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {ThemeModule} from '../../../../../@theme/theme.module';
 import {LoggerModule} from 'ngx-logger';
-import {AppMaterialModule} from '../../../../../app.material.module';
-import {AppConfig} from '../../../../../config/app.config';
-import {WarehouseStorageSplitPaneComponent} from './warehouse.storage.component';
-import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
-import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {NgxSelectModule} from 'ngx-select-ex';
+import {
+    WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
+} from './warehouse/inventory/warehouse.inventory.vendor.customer.select.ex.field.component';
+import {AppComponentsModule} from '../components/app.components.module';
+import {ThemeModule} from '../../../../@theme/theme.module';
+import {ComponentsModule} from '../../components.module';
+import {AppMaterialModule} from '../../../../app.material.module';
+import {AppConfig} from '../../../../config/app.config';
+import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         NbSelectModule,
         NbButtonModule,
         NbLayoutModule,
+        NbDatepickerModule,
         Ng2SmartTableModule,
         FormsModule,
 
@@ -69,9 +71,20 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         /* Tree-view */
         TreeviewModule.forRoot(),
 
+        /* Select-ex */
+        NgxSelectModule,
+
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot({
+            types: [
+                {
+                    name: 'warehouse-inventory-customer',
+                    component: WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+            ],
+        }),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -87,30 +100,19 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         ComponentsModule,
         AppComponentsModule,
         AppCommonComponentsModule,
-        FeaturesComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
-        WarehouseStorageTreeviewComponent,
-        WarehouseStorageFormlyComponent,
-        WarehouseStorageToolbarComponent,
-        WarehouseStorageSplitPaneComponent,
+        WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
+    ],
+    exports: [
+        WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
     ],
     declarations: [
-        WarehouseStorageTreeviewComponent,
-        WarehouseStorageFormlyComponent,
-        WarehouseStorageToolbarComponent,
-        WarehouseStorageSplitPaneComponent,
-    ],
-    providers: [ WarehouseProviders ],
-    exports: [
-        WarehouseStorageTreeviewComponent,
-        WarehouseStorageFormlyComponent,
-        WarehouseStorageToolbarComponent,
-        WarehouseStorageSplitPaneComponent,
+        WarehouseInventoryVendorCustomerFormlySelectExFieldComponent,
     ],
 })
-export class WarehouseStorageModule {
+export class FeaturesComponentsModule {
 }

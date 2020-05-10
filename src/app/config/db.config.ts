@@ -36,6 +36,17 @@ export function indexFactory() {
     // to be modified so a migrator for that version is not included.
     return {
         1: (db, transaction) => {
+            // customer
+            const customerStore = transaction.objectStore(DB_STORE.customer);
+            customerStore.createIndex(
+                '__customer_index_by_type_code',
+                ['type', 'code'],
+                { unique: true });
+            customerStore.createIndex(
+                '__customer_index_by_type',
+                ['type'],
+                { unique: false });
+
             // general settings
             const generalSettingsStore = transaction.objectStore(DB_STORE.general_settings);
             generalSettingsStore.createIndex(

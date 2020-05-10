@@ -1,0 +1,140 @@
+import {
+    DefaultNgxSelectOptions,
+    INgxSelectExOptions,
+} from '../../../../select-ex/abstract.select.ex.component';
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    OnInit,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {NGXLogger} from 'ngx-logger';
+import {Observable} from 'rxjs';
+import SystemDataUtils from '../../../../../../utils/system/system.data.utils';
+import {Constants as CustomerConstants} from '../../../../../../@core/data/constants/customer.constants';
+import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
+import Customer, {ICustomer} from '../../../../../../@core/data/system/customer';
+import {
+    CustomerDatasource,
+} from '../../../../../../services/implementation/system/customer/customer.datasource';
+import {
+    AppModuleDataSettingsFormlySelectExFieldComponent,
+} from '../../../components/common/app.module.data.formly.select.ex.field.component';
+
+export const WarehouseInventoryVendorCustomerSelectOptions: INgxSelectExOptions =
+    Object.assign({}, DefaultNgxSelectOptions, {
+        /**
+         * Provide an opportunity to change the name an id property of objects in the items
+         * {string}
+         */
+        optionValueField: 'id',
+        /**
+         * Provide an opportunity to change the name a text property of objects in the items
+         * {string}
+         */
+        optionTextField: 'text',
+        /**
+         * Specify whether using image for option
+         * {boolean}
+         */
+        enableOptionImage: true,
+    });
+
+/**
+ * Custom module formly field for selecting warehouse inventory vendor/customer
+ */
+@Component({
+    selector: 'ngx-select-ex-app-module-warehouse-inventory-vendor-customer',
+    templateUrl: '../../../../formly/formly.select.ex.field.component.html',
+    styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],
+})
+export class WarehouseInventoryVendorCustomerFormlySelectExFieldComponent
+    extends AppModuleDataSettingsFormlySelectExFieldComponent<ICustomer, CustomerDatasource>
+    implements OnInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _vendorCustomerType: string;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    public get vendorCustomerType(): string {
+        return this._vendorCustomerType;
+    }
+
+    public set vendorCustomerType(_vendorCustomerType: string) {
+        const correctType: CUSTOMER_TYPE = CUSTOMER_TYPE[
+            Object.keys(CUSTOMER_TYPE).find(
+                key => key.toLowerCase() === (_vendorCustomerType || '').toLowerCase())];
+        this.vendorCustomerTypeEnum = correctType;
+    }
+
+    public set vendorCustomerTypeEnum(_vendorCustomerType: CUSTOMER_TYPE) {
+        _vendorCustomerType = (_vendorCustomerType || CUSTOMER_TYPE.ALL);
+        if (this._vendorCustomerType !== CUSTOMER_TYPE[_vendorCustomerType]) {
+            this._vendorCustomerType = _vendorCustomerType;
+            this.refresh();
+        }
+    }
+
+    protected get noneOption(): ICustomer {
+        const _noneCustomer: ICustomer = new Customer(null, null, null, null);
+        _noneCustomer['text'] = this.getConfigValue('placeholder');
+        return _noneCustomer;
+    }
+
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    /**
+     * Create a new instance of {WarehouseInventoryVendorCustomerFormlySelectExFieldComponent} class
+     * @param dataSource {CustomerDatasource}
+     * @param _translateService {TranslateService}
+     * @param _renderer {Renderer2}
+     * @param _logger {NGXLogger}
+     * @param _factoryResolver {ComponentFactoryResolver}
+     * @param _viewContainerRef {ViewContainerRef}
+     * @param _changeDetectorRef {ChangeDetectorRef}
+     * @param _elementRef {ElementRef}
+     */
+    constructor(@Inject(CustomerDatasource) dataSource: CustomerDatasource,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
+        super(dataSource, _translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
+            WarehouseInventoryVendorCustomerSelectOptions);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    protected loadData(): Observable<ICustomer[] | ICustomer>
+        | Promise<ICustomer[] | ICustomer> | ICustomer[] | ICustomer {
+        const _dataSource: CustomerDatasource = this.dataSource;
+        if ((this.vendorCustomerType || '').length) {
+            return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
+                _dataSource,
+                '__customer_index_by_type', IDBKeyRange.only(this.vendorCustomerType),
+                this.translateService);
+
+        } else {
+            return [this.noneOption];
+        }
+    }
+}

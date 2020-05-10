@@ -57,7 +57,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'vendor_customer',
-                                type: 'input',
+                                type: 'warehouse-inventory-customer',
                                 templateOptions: {
                                     label: 'warehouse.inventory.form.customer.label',
                                     placeholder: 'warehouse.inventory.form.customer.placeholder',

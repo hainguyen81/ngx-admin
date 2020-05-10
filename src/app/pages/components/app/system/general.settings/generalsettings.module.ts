@@ -35,6 +35,8 @@ import {
     GeneralSettingsDbService,
     GeneralSettingsHttpService,
 } from '../../../../../services/implementation/system/general.settings/general.settings.service';
+import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
+import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 
 @NgModule({
     imports: [
@@ -90,6 +92,8 @@ import {
         /* Application components module */
         ComponentsModule,
         AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

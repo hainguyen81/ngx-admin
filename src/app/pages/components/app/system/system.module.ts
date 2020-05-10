@@ -29,6 +29,10 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {FeaturesComponentsModule} from '../module.components/features.components.module';
+import {ComponentsModule} from '../../components.module';
+import {AppComponentsModule} from '../components/app.components.module';
+import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
 
 @NgModule({
     imports: [
@@ -94,6 +98,12 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
+
+        /* Application components module */
+        ComponentsModule,
+        AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /* Modules */
         GeneralSettingsModule,

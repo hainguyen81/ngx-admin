@@ -32,6 +32,8 @@ import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {CustomFormsModule} from 'ngx-custom-validators';
 import {ValidatorsModule} from 'ngx-validators';
+import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
+import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 
 @NgModule({
     imports: [
@@ -87,6 +89,8 @@ import {ValidatorsModule} from 'ngx-validators';
         /* Application components module */
         ComponentsModule,
         AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /*Validators*/
         CustomFormsModule,

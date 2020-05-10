@@ -47,6 +47,8 @@ import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {NgxSelectModule} from 'ngx-select-ex';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {ModalDialogModule} from 'ngx-modal-dialog';
+import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
+import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 
 @NgModule({
     imports: [
@@ -114,6 +116,8 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
         /* Application components module */
         ComponentsModule,
         AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

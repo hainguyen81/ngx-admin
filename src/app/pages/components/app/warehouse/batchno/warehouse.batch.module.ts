@@ -35,6 +35,8 @@ import {
     WarehouseBatchNoHttpService,
 } from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
 import {WarehouseBatchNoToolbarComponent} from './warehouse.batch.toolbar.component';
+import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
+import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 
 @NgModule({
     imports: [
@@ -90,6 +92,8 @@ import {WarehouseBatchNoToolbarComponent} from './warehouse.batch.toolbar.compon
         /* Application components module */
         ComponentsModule,
         AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

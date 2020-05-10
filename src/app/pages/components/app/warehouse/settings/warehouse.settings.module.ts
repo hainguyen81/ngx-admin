@@ -35,6 +35,8 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
+import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
+import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 
 @NgModule({
     imports: [
@@ -90,6 +92,8 @@ import {AppComponentsModule} from '../../components/app.components.module';
         /* Application components module */
         ComponentsModule,
         AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

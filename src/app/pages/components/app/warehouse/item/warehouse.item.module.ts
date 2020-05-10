@@ -46,6 +46,8 @@ import {AppComponentsModule} from '../../components/app.components.module';
 import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
 import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.table.component';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
+import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
+import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 
 @NgModule({
     imports: [
@@ -120,6 +122,8 @@ import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.s
         /* Application components module */
         ComponentsModule,
         AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

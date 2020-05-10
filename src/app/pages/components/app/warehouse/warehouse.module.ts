@@ -35,6 +35,10 @@ import {WarehouseInventoryModule} from './inventory/warehouse.inventory.module';
 import {NgxSelectModule} from 'ngx-select-ex';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {ModalDialogModule} from 'ngx-modal-dialog';
+import {FeaturesComponentsModule} from '../module.components/features.components.module';
+import {ComponentsModule} from '../../components.module';
+import {AppComponentsModule} from '../components/app.components.module';
+import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
 
 @NgModule({
     imports: [
@@ -109,6 +113,12 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
+
+        /* Application components module */
+        ComponentsModule,
+        AppComponentsModule,
+        AppCommonComponentsModule,
+        FeaturesComponentsModule,
 
         /* Modules */
         WarehouseItemModule,
