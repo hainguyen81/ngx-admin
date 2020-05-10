@@ -17,7 +17,6 @@ import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {Constants as CustomerConstants} from '../../../../../@core/data/constants/customer.constants';
-import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
 import Customer, {ICustomer} from '../../../../../@core/data/system/customer';
 import {
     CustomerDatasource,
@@ -25,6 +24,9 @@ import {
 import {
     AppModuleDataSettingsFormlySelectExFieldComponent,
 } from '../../components/common/app.module.data.formly.select.ex.field.component';
+import PromiseUtils from '../../../../../utils/promise.utils';
+import {$enum} from 'ts-enum-util';
+import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
 
 export const VendorCustomerSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -69,16 +71,13 @@ export class VendorCustomerFormlySelectExFieldComponent
 
     public get vendorCustomerType(): string {
         if (!(this._vendorCustomerType || '').length) {
-            this._vendorCustomerType = Object.keys(CUSTOMER_TYPE)
-                .find(key => CUSTOMER_TYPE[key] === CUSTOMER_TYPE.ALL);
+            this._vendorCustomerType = $enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.ALL);
         }
         return this._vendorCustomerType;
     }
 
     public set vendorCustomerType(_vendorCustomerType: string) {
-        const correctType: CUSTOMER_TYPE = Object.values(CUSTOMER_TYPE)
-            .find(enumValue => enumValue === CUSTOMER_TYPE[_vendorCustomerType]);
-        this.vendorCustomerTypeEnum = correctType;
+        this.vendorCustomerTypeEnum = $enum(CUSTOMER_TYPE).getValueOrThrow(_vendorCustomerType);
     }
 
     public set vendorCustomerTypeEnum(_vendorCustomerType: CUSTOMER_TYPE) {
@@ -130,12 +129,30 @@ export class VendorCustomerFormlySelectExFieldComponent
     protected loadData(): Observable<ICustomer[] | ICustomer>
         | Promise<ICustomer[] | ICustomer> | ICustomer[] | ICustomer {
         const _dataSource: CustomerDatasource = this.dataSource;
-        if ((this.vendorCustomerType || '').length) {
-            return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                _dataSource,
-                '__customer_index_by_type', IDBKeyRange.only(this.vendorCustomerType),
-                this.translateService);
+        const enumType: CUSTOMER_TYPE = $enum(CUSTOMER_TYPE).getValueOrDefault(
+            this.vendorCustomerType, CUSTOMER_TYPE.ALL);
+        switch (enumType) {
+            case CUSTOMER_TYPE.ALL:
+                return PromiseUtils.parallelPromises(
+                    [],
+                    (result: ICustomer[], value: ICustomer[]) => result = result.concat(value), [
+                        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
+                            _dataSource,
+                            '__customer_index_by_type',
+                            IDBKeyRange.only($enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.CUSTOMER)),
+                            this.translateService),
+                        SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
+                            _dataSource,
+                            '__customer_index_by_type',
+                            IDBKeyRange.only($enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.VENDOR)),
+                            this.translateService),
+                    ]);
 
-        } else return undefined;
+            default:
+                return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
+                    _dataSource,
+                    '__customer_index_by_type', IDBKeyRange.only(this.vendorCustomerType),
+                    this.translateService);
+        }
     }
 }
