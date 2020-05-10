@@ -169,9 +169,9 @@ export function generalWarehouseSettingsCategoryGenerate(): IGeneralSettings[] {
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code;
         systemSetting.name = k;
         systemSetting.value = CATEGORY_TYPE[k];
-        systemSetting.module_id = MockModuleSystem.id;
-        systemSetting.module_code = MockModuleSystem.code;
-        systemSetting.module = MockModuleSystem;
+        systemSetting.module_id = MockModuleWarehouse.id;
+        systemSetting.module_code = MockModuleWarehouse.code;
+        systemSetting.module = MockModuleWarehouse;
         systemSetting.builtin = true;
         systemSettings.push(systemSetting);
     });
