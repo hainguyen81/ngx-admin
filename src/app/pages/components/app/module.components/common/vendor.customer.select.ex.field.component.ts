@@ -25,7 +25,6 @@ import {
 import {
     AppModuleDataSettingsFormlySelectExFieldComponent,
 } from '../../components/common/app.module.data.formly.select.ex.field.component';
-import {isNullOrUndefined} from 'util';
 
 export const VendorCustomerSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -69,9 +68,9 @@ export class VendorCustomerFormlySelectExFieldComponent
     // -------------------------------------------------
 
     public get vendorCustomerType(): string {
-        if (isNullOrUndefined(this._vendorCustomerType)) {
+        if (!(this._vendorCustomerType || '').length) {
             this._vendorCustomerType = Object.keys(CUSTOMER_TYPE)
-                .find(key => key === CUSTOMER_TYPE.ALL);
+                .find(key => key === CUSTOMER_TYPE[CUSTOMER_TYPE.ALL]);
         }
         return this._vendorCustomerType;
     }
