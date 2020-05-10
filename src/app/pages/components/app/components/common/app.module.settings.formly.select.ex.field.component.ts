@@ -7,9 +7,8 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {NGXLogger} from 'ngx-logger';
@@ -18,6 +17,9 @@ import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {IModule} from '../../../../../@core/data/system/module';
+import {
+    AppModuleDataSettingsFormlySelectExFieldComponent,
+} from './app.module.data.formly.select.ex.field.component';
 
 export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
@@ -46,7 +48,8 @@ export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
 export class AppModuleSettingsFormlySelectExFieldComponent
-    extends AppFormlySelectExFieldComponent<IGeneralSettings>
+    extends AppModuleDataSettingsFormlySelectExFieldComponent<
+        IGeneralSettings, GeneralSettingsDatasource>
     implements OnInit {
 
     // -------------------------------------------------
@@ -75,7 +78,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
         if (this._moduleId !== (_module || {})['id']) {
             this._moduleId = _module.id;
             this._moduleCode = _module.code;
-            this.doFilter();
+            this.refresh();
         }
     }
 
@@ -86,11 +89,11 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     public set moduleCode(_moduleCode: string) {
         if (this._moduleCode !== _moduleCode) {
             this._moduleCode = _moduleCode;
-            this.doFilter();
+            this.refresh();
         }
     }
 
-    protected get noneSettings(): IGeneralSettings {
+    protected get noneOption(): IGeneralSettings {
         const _noneSettings: IGeneralSettings =
             new GeneralSettings(null, null, null, null);
         _noneSettings['text'] = this.getConfigValue('placeholder');
@@ -103,16 +106,16 @@ export class AppModuleSettingsFormlySelectExFieldComponent
 
     /**
      * Create a new instance of {AppFormlySelectExFieldComponent} class
+     * @param dataSource {GeneralSettingsDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
-     * @param generalSettingsDataSource {GeneralSettingsDatasource}
      * @param _logger {NGXLogger}
      * @param _factoryResolver {ComponentFactoryResolver}
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Inject(GeneralSettingsDatasource) private generalSettingsDataSource: GeneralSettingsDatasource,
+    constructor(@Inject(GeneralSettingsDatasource) dataSource: GeneralSettingsDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,
@@ -120,40 +123,29 @@ export class AppModuleSettingsFormlySelectExFieldComponent
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
-        super(_translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        generalSettingsDataSource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.config = AppModuleSettingsSelectOptions;
+        super(dataSource, _translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
+            AppModuleSettingsSelectOptions);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        this.generalSettingsDataSource.onChanged().subscribe(value => this.doFilter());
-        this.generalSettingsDataSource.refresh();
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    private doFilter(): void {
+    protected loadData(): Observable<IGeneralSettings[] | IGeneralSettings>
+        | Promise<IGeneralSettings[] | IGeneralSettings>
+        | IGeneralSettings[] | IGeneralSettings {
+        const _dataSource: GeneralSettingsDatasource = this.dataSource;
         if ((this.moduleId || '').length) {
-            SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                this.generalSettingsDataSource, 'module_id',
-                IDBKeyRange.only(this.moduleId), this.translateService).then(
-                    modules => this.items = [this.noneSettings].concat(modules as IGeneralSettings[]));
+            return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
+                _dataSource, 'module_id', IDBKeyRange.only(this.moduleId), this.translateService);
 
         } else if ((this.moduleCode || '').length) {
-            SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                this.generalSettingsDataSource, 'module_code',
-                IDBKeyRange.only(this.moduleCode), this.translateService).then(
-                    modules => this.items = [this.noneSettings].concat(modules as IGeneralSettings[]));
+            return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
+                _dataSource, 'module_code', IDBKeyRange.only(this.moduleCode), this.translateService);
 
         } else {
-            this.items = [this.noneSettings];
+            return [this.noneOption];
         }
     }
 }

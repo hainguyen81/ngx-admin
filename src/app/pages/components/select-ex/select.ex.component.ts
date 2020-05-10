@@ -52,6 +52,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fire while selecting option item
      */
     @Output() select: EventEmitter<IEvent> = new EventEmitter<IEvent>();
+    @Output() close: EventEmitter<IEvent> = new EventEmitter<IEvent>();
     @Output() addNewOption: EventEmitter<IEvent> = new EventEmitter<IEvent>();
     @Input('optionImage') private optionImageParser: (item?: NgxSelectOption) => string[];
     @ViewChild('addNewOption', {static: false}) private addNewOptionElRef: ElementRef;
@@ -201,6 +202,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     protected onClose($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClose', $event);
+        this.close.emit($event);
     }
 
     /**

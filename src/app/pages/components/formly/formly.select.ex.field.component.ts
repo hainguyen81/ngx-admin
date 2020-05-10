@@ -229,7 +229,13 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     protected onSelect($event: IEvent): void {
+        this.field.focus = true;
         this.setValue(($event || {}).data);
+    }
+
+    protected onClose($event: IEvent): void {
+        this.field.focus = false;
+        this.stateChanges.next();
     }
 
     private __parseOptionValue(value: any): any[] | any {
