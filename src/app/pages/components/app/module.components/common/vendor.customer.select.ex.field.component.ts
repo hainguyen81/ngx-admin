@@ -139,19 +139,19 @@ export class VendorCustomerFormlySelectExFieldComponent
                         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
                             _dataSource,
                             '__customer_index_by_type',
-                            IDBKeyRange.only($enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.CUSTOMER)),
+                            IDBKeyRange.only([$enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.CUSTOMER)]),
                             this.translateService),
                         SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
                             _dataSource,
                             '__customer_index_by_type',
-                            IDBKeyRange.only($enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.VENDOR)),
+                            IDBKeyRange.only([$enum(CUSTOMER_TYPE).getKeyOrThrow(CUSTOMER_TYPE.VENDOR)]),
                             this.translateService),
                     ]);
 
             default:
                 return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
                     _dataSource,
-                    '__customer_index_by_type', IDBKeyRange.only(this.vendorCustomerType),
+                    '__customer_index_by_type', IDBKeyRange.only([this.vendorCustomerType]),
                     this.translateService);
         }
     }
