@@ -69,7 +69,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'type',
-                                type: 'system-category-type',
+                                type: 'warehouse-category-type',
                                 templateOptions: {
                                     label: 'warehouse.category.form.type.label',
                                     placeholder: 'warehouse.category.form.type.placeholder',

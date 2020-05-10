@@ -36,9 +36,6 @@ import {
     SystemStatusFormlySelectExFieldComponent,
 } from './common/system.status.select.ex.field.component';
 import {
-    SystemCategoryTypeFormlySelectExFieldComponent,
-} from './common/system.category.type.select.ex.field.component';
-import {
     SystemCurrencyFormlySelectExFieldComponent,
 } from './common/system.currency.select.ex.field.component';
 import {
@@ -68,7 +65,9 @@ import {
 import {
     WarehouseSettingsBrandFormlySelectExFieldComponent,
 } from './warehouse/settings/warehouse.settings.brand.select.ex.field.component';
-import {WarehouseSettingsItemFormlySelectExFieldComponent} from './warehouse/settings/warehouse.settings.item.select.ex.field.component';
+import {
+    WarehouseSettingsItemFormlySelectExFieldComponent,
+} from './warehouse/settings/warehouse.settings.item.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -128,11 +127,6 @@ import {WarehouseSettingsItemFormlySelectExFieldComponent} from './warehouse/set
                 {
                     name: 'system-status',
                     component: SystemStatusFormlySelectExFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'system-category-type',
-                    component: SystemCategoryTypeFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -210,7 +204,6 @@ import {WarehouseSettingsItemFormlySelectExFieldComponent} from './warehouse/set
         AppLanguagesFormlySelectExFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
-        SystemCategoryTypeFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
@@ -226,7 +219,6 @@ import {WarehouseSettingsItemFormlySelectExFieldComponent} from './warehouse/set
         AppLanguagesFormlySelectExFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
-        SystemCategoryTypeFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
@@ -242,7 +234,6 @@ import {WarehouseSettingsItemFormlySelectExFieldComponent} from './warehouse/set
         AppLanguagesFormlySelectExFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
-        SystemCategoryTypeFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
