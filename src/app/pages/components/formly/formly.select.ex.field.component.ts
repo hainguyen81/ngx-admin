@@ -241,25 +241,34 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     private __parseOptionValue(value: any): any[] | any {
         // detect option
         const options: any[] = [];
+        const parsedValues: any[] = [];
         if (isArray(value)) {
             Array.from(value).forEach(val => {
                 const selOpt: TSelectOption = <TSelectOption>val;
                 if (!isNullOrUndefined(selOpt)
                     || val instanceof NgxSelectOption || val instanceof NgxSelectOptGroup) {
                     options.push(val);
+
+                } else if (!isNullOrUndefined(val)) {
+                    parsedValues.push(val);
                 }
             });
 
         } else if (!isNullOrUndefined(<TSelectOption>value)
             || value instanceof NgxSelectOption || value instanceof NgxSelectOptGroup) {
             options.push(value);
+
+        } else if (!isNullOrUndefined(value)) {
+            parsedValues.push(value);
         }
 
         let optValues: any[] = [];
         options.forEach(opt => {
             optValues = optValues.concat(this.__parseSelectOption(opt));
         });
-        return (optValues.length ? optValues.length === 1 ? optValues[0] : optValues : undefined);
+        return (optValues.length ? optValues.length === 1 ? optValues[0] : optValues
+            : parsedValues.length ? parsedValues.length === 1 ? parsedValues[0] : parsedValues
+                : undefined);
     }
     private __parseOption(opt: NgxSelectOption): any[] {
         const property: string = this.getConfigValue('optionValueField');
