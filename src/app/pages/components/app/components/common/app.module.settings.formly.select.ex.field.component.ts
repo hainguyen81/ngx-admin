@@ -68,7 +68,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     public set moduleId(_moduleId: string) {
         if (this._moduleId !== _moduleId) {
             this._moduleId = _moduleId;
-            // this.doFilter();
+            this.refresh();
         }
     }
 
@@ -92,10 +92,7 @@ export class AppModuleSettingsFormlySelectExFieldComponent
     }
 
     protected get noneOption(): IGeneralSettings {
-        const _noneSettings: IGeneralSettings =
-            new GeneralSettings(null, null, null, null);
-        _noneSettings['text'] = this.getConfigValue('placeholder');
-        return _noneSettings;
+        return new GeneralSettings(null, null, null, null);
     }
 
     protected get dataIndexName(): string {
