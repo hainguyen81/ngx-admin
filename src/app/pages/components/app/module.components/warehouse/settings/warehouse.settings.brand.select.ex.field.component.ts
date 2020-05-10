@@ -10,18 +10,15 @@ import {
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
+import {IWarehouseSetting} from '../../../../../../@core/data/warehouse/warehouse.setting';
 import {
     WarehouseSettingsDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+} from '../../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {
     AppModuleDataIndexSettingsFormlySelectExFieldComponent,
-} from '../../components/common/app.module.data.index.formly.select.ex.field.component';
+} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
 import {$enum} from 'ts-enum-util';
-import {Constants as WHConstants} from '../../../../../@core/data/constants/warehouse.settings.constants';
+import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 
 /**
@@ -29,8 +26,8 @@ import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUS
  */
 @Component({
     selector: 'ngx-select-ex-app-module-general-settings-warehouse-settings-brand',
-    templateUrl: '../../../formly/formly.select.ex.field.component.html',
-    styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
+    templateUrl: '../../../../formly/formly.select.ex.field.component.html',
+    styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],
 })
 export class WarehouseSettingsBrandFormlySelectExFieldComponent
     extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<IWarehouseSetting, WarehouseSettingsDatasource>
@@ -54,7 +51,7 @@ export class WarehouseSettingsBrandFormlySelectExFieldComponent
 
     /**
      * Create a new instance of {SystemStatusFormlySelectExFieldComponent} class
-     * @param dataSource {GeneralSettingsDatasource}
+     * @param dataSource {WarehouseSettingsDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -63,7 +60,7 @@ export class WarehouseSettingsBrandFormlySelectExFieldComponent
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Inject(GeneralSettingsDatasource) dataSource: GeneralSettingsDatasource,
+    constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,

@@ -65,7 +65,9 @@ import {
 import {
     AppLanguagesFormlySelectExFieldComponent,
 } from './common/app.languages.select.ex.field.component';
-import {WarehouseSettingsBrandFormlySelectExFieldComponent} from './common/warehouse.settings.brand.select.ex.field.component';
+import {
+    WarehouseSettingsBrandFormlySelectExFieldComponent,
+} from './warehouse/settings/warehouse.settings.brand.select.ex.field.component';
 
 @NgModule({
     imports: [
