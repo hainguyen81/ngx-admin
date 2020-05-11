@@ -29,9 +29,6 @@ import {WarehouseCategorySplitPaneComponent} from './warehouse.category.componen
 import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
 import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
 import {ComponentsModule} from '../../../components.module';
-import {
-    WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-} from './warehouse.category.formly.treeview.dropdown.field.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
@@ -76,15 +73,7 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot({
-            types: [
-                {
-                    name: 'warehouse-category-treeview-dropdown',
-                    component: WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-                    wrappers: ['form-field'],
-                },
-            ],
-        }),
+        FormlyModule.forRoot(),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -110,14 +99,12 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
-        WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],
     declarations: [
         WarehouseCategoryTreeviewComponent,
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
-        WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],
     providers: WarehouseProviders,
     exports: [
@@ -125,7 +112,6 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
-        WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
     ],
 })
 export class WarehouseCategoryModule {

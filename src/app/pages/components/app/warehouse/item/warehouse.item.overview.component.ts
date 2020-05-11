@@ -1,6 +1,5 @@
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -20,27 +19,14 @@ import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item
 import {
     WarehouseItemDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {
-    WarehouseCategoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {
-    WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-} from '../category/warehouse.category.formly.treeview.dropdown.field.component';
-import WarehouseDataUtils from '../../../../../utils/warehouse/warehouse.data.utils';
 import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import PromiseUtils from '../../../../../utils/promise.utils';
-import {throwError} from 'rxjs';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {CustomValidators} from 'ngx-custom-validators';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
-import {isNullOrUndefined} from 'util';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -86,7 +72,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col belongTo',
                 key: 'categories_id',
-                type: 'warehouse-category-treeview-dropdown',
+                type: 'warehouse-category-treeview',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.category.label',
                     placeholder: 'warehouse.item.overview.form.category.placeholder',
@@ -346,8 +332,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
     styleUrls: ['../../../formly/formly.component.scss'],
 })
 export class WarehouseItemOverviewFormlyComponent
-    extends AppFormlyComponent<IWarehouseItem, WarehouseItemDatasource>
-    implements AfterViewInit {
+    extends AppFormlyComponent<IWarehouseItem, WarehouseItemDatasource> {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -370,8 +355,6 @@ export class WarehouseItemOverviewFormlyComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param categoryDatasource {WarehouseCategoryDatasource}
-     * @param settingsDatasource {WarehouseSettingsDatasource}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -387,86 +370,13 @@ export class WarehouseItemOverviewFormlyComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(WarehouseCategoryDatasource) private categoryDatasource?: WarehouseCategoryDatasource) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
         super.config = WarehouseItemOverviewFormConfig;
         super.fields = WarehouseItemOverviewFormFieldsConfig;
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        // observe fields
-        this.observeFields();
-    }
-
-    // -------------------------------------------------
-    // FUNCTION
-    // -------------------------------------------------
-
-    /**
-     * Observe fields
-     */
-    private observeFields(): void {
-        const fields: FormlyFieldConfig[] = this.getFormlyForm().fields;
-        this.observeSettingsFields(fields);
-    }
-
-    /**
-     * Observe master settings fields
-     * @param fields to observe
-     */
-    private observeSettingsFields(fields: FormlyFieldConfig[]): void {
-        PromiseUtils.parallelPromises(undefined, undefined, [
-            this.observeCategoriesField(fields[2].fieldGroup[0]),
-        ]).then(value => this.getLogger().debug('Loading settings successful!'),
-                reason => this.getLogger().error(reason))
-            .catch(reason => this.getLogger().error(reason));
-    }
-
-    /**
-     * Observe categories field
-     * @param field to apply
-     */
-    private observeCategoriesField(field: FormlyFieldConfig): Promise<void> {
-        return WarehouseDataUtils.invokeAllWarehouseCategories(this.categoryDatasource).then(
-            categories => {
-                let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-                belongToComponent = this.getFormFieldComponent(
-                    field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-                if (!isNullOrUndefined(belongToComponent)) {
-                    belongToComponent.items = categories;
-                    this.setBelongToSelectedValue(field, this.getModel());
-                }
-            });
-    }
-
-    /**
-     * Disable current data model in the belongTo field
-     * @param field to parse field component
-     * @param model to disable
-     */
-    private setBelongToSelectedValue(field: FormlyFieldConfig, model?: IWarehouseItem | null) {
-        model = model || this.getModel();
-        if (!model || !(model.id || '').length) {
-            return;
-        }
-
-        // detect field component
-        let belongToComponent: WarehouseCategoryFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = this.getFormFieldComponent(field, WarehouseCategoryFormlyTreeviewDropdownFieldComponent);
-
-        // select current model item in treeview
-        belongToComponent && belongToComponent.setSelectedValue(model.categories_id);
     }
 }

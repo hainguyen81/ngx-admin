@@ -38,9 +38,6 @@ import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
 import {ComponentsModule} from '../../../components.module';
-import {
-    WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-} from '../category/warehouse.category.formly.treeview.dropdown.field.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {WarehouseItemVersionFormlyComponent} from './warehouse.item.version.formly.component';
@@ -98,15 +95,7 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot({
-            types: [
-                {
-                    name: 'warehouse-category-treeview-dropdown',
-                    component: WarehouseCategoryFormlyTreeviewDropdownFieldComponent,
-                    wrappers: ['form-field'],
-                },
-            ],
-        }),
+        FormlyModule.forRoot(),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule

@@ -4,19 +4,24 @@ import {
     Component,
     ComponentFactoryResolver, ElementRef,
     Inject,
-    Injectable,
+    Injectable, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
-import {
-    AppFormlyTreeviewDropdownFieldComponent,
-} from '../../components/common/app.formly.treeview.dropdown.field.component';
-import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
+import {IWarehouseCategory} from '../../../../../../@core/data/warehouse/warehouse.category';
+import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../../components/app.treeview.i18n';
 import {NGXLogger} from 'ngx-logger';
-import {Constants} from '../../../../../@core/data/constants/common.constants';
+import {Constants} from '../../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
+import {
+    WarehouseCategoryDatasource,
+} from '../../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {
+    AppModuleDataIndexFormlyTreeviewFieldComponent,
+} from '../../../components/common/app.module.data.index.formly.treeview.field.component';
+import WarehouseUtils from '../../../../../../utils/warehouse/warehouse.utils';
+import {Observable} from 'rxjs';
 
 /**
  * Multi language for treeview field
@@ -77,9 +82,9 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
-    selector: 'ngx-formly-treeview-dropdown-app-warehouse-category',
-    templateUrl: '../../../formly/formly.treeview.dropdown.field.component.html',
-    styleUrls: ['../../../formly/formly.treeview.dropdown.field.component.scss'],
+    selector: 'ngx-formly-treeview-dropdown-app-module-data-index-warehouse-category',
+    templateUrl: '../../../../formly/formly.treeview.dropdown.field.component.html',
+    styleUrls: ['../../../../formly/formly.treeview.dropdown.field.component.scss'],
     providers: [
         {
             provide: TOKEN_APP_TREEVIEW_SHOW_ALL, useValue: false,
@@ -91,16 +96,37 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
         },
     ],
 })
-export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
-    extends AppFormlyTreeviewDropdownFieldComponent<IWarehouseCategory>
-    implements AfterViewInit {
+export class WarehouseCategoryFormlyTreeviewFieldComponent
+    extends AppModuleDataIndexFormlyTreeviewFieldComponent<IWarehouseCategory, WarehouseCategoryDatasource>
+    implements OnInit, AfterViewInit {
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    protected get isEnabledItemImage(): boolean {
+        return true;
+    }
+
+    protected get dataIndexKey(): IDBKeyRange {
+        return undefined;
+    }
+
+    protected get dataIndexName(): string {
+        return '';
+    }
+
+    protected get disableValue(): any {
+        return (this.field ? this.field.model : undefined);
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseCategoryFormlyTreeviewDropdownFieldComponent} class
+     * Create a new instance of {WarehouseCategoryFormlyTreeviewFieldComponent} class
+     * @param _dataSource {WarehouseCategoryDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -109,20 +135,30 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Inject(TranslateService) _translateService: TranslateService,
+    constructor(@Inject(WarehouseCategoryDatasource) _dataSource: WarehouseCategoryDatasource,
+                @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,
                 @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
-        super(_translateService, _renderer, _logger,
+        super(_dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    ngOnInit() {
+        if (this.field) {
+            this.field.templateOptions = (this.field.templateOptions || {});
+            this.field.templateOptions['treeBuilder'] = WarehouseUtils.buildWarehouseCategories;
+        }
+
+        super.ngOnInit();
+    }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
@@ -133,5 +169,11 @@ export class WarehouseCategoryFormlyTreeviewDropdownFieldComponent
             category = (item && item.value ? <IWarehouseCategory>item.value : null);
             return (category ? category.image : null);
         });
+    }
+
+    protected loadData(): Observable<IWarehouseCategory[] | IWarehouseCategory>
+        | Promise<IWarehouseCategory[] | IWarehouseCategory> | IWarehouseCategory[] | IWarehouseCategory {
+        return this.dataSource.setPaging(1, undefined, false)
+            .setFilter([], false, false).getAll();
     }
 }

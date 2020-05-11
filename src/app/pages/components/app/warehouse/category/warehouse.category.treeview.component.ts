@@ -26,12 +26,14 @@ import WarehouseCategory, {
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
-import {WarehouseCategoryTreeviewI18n} from './warehouse.category.formly.treeview.dropdown.field.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
+import {
+    WarehouseCategoryTreeviewI18n,
+} from '../../module.components/warehouse/category/warehouse.category.formly.treeview.field.component';
 
 export const WarehouseCategoryTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
