@@ -989,6 +989,19 @@
                     "label": "Trạng thái",
                     "placeholder": "Trạng thái"
                 }
+            },
+            "detail": {
+                "table": {
+                    "noData": "Không có bất kỳ thông tin nào",
+                    "item": "Trang thiết bị",
+                    "unit": "ĐVT",
+                    "batch": "Lô hàng",
+                    "series": "Serial No./IMEI",
+                    "storage": "Vị trí lưu trữ",
+                    "quantity_orders": "Số lượng",
+                    "unit_price": "Đơn giá",
+                    "amount": "Tổng tiền"
+                }
             }
         }
     }

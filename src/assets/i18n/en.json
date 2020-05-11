@@ -989,6 +989,19 @@
                     "label": "Status",
                     "placeholder": "Status"
                 }
+            },
+            "detail": {
+                "table": {
+                    "noData": "Not found any information",
+                    "item": "Item",
+                    "unit": "Unit",
+                    "batch": "Batch",
+                    "series": "Serial No./IMEI",
+                    "storage": "Archive",
+                    "quantity_orders": "Quantity",
+                    "unit_price": "Unit price",
+                    "amount": "Total amount"
+                }
             }
         }
     }
