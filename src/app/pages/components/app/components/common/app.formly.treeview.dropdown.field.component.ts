@@ -93,6 +93,5 @@ export abstract class AppFormlyTreeviewDropdownFieldComponent<T extends IModel>
         const item: TreeviewItem = (value && value.id
             ? this.formatValue(value.id) : value ? this.formatValue(value) : null);
         item && this.disableItems(item);
-        window.console.warn(['Disable node', item]);
     }
 }
