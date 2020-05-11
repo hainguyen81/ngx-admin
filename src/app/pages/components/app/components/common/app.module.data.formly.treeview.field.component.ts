@@ -62,6 +62,14 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
         return undefined;
     }
 
+    /**
+     * Get a boolean value indicating the {#disableValue} whether should be disabled if valid value
+     * @return true for should be disabled; else false
+     */
+    protected get shouldDisableValue(): boolean {
+        return true;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -102,12 +110,13 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
 
         this.field && this.field.form
         && this.field.form.valueChanges.subscribe(subscriber => {
-            const timer: number = window.setTimeout(() => {
-                const disabledItemValue: any = this.disableValue;
-                window.console.error(['disabledItemValue', disabledItemValue]);
-                !isNullOrUndefined(disabledItemValue) && super.disableItemsByValue(disabledItemValue);
-                window.clearTimeout(timer);
-            }, 100);
+            if (this.shouldDisableValue) {
+                const timer: number = window.setTimeout(() => {
+                    const disabledItemValue: any = this.disableValue;
+                    !isNullOrUndefined(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
+                    window.clearTimeout(timer);
+                }, 100);
+            }
         });
     }
 
@@ -160,7 +169,9 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
         // select current field value and disable node if necessary
         const fieldValue: any = this.rawValue;
         super.setSelectedValue(fieldValue, false);
-        const disabledItemValue: any = this.disableValue;
-        !isNullOrUndefined(disabledItemValue) && super.disableItemsByValue(disabledItemValue);
+        if (this.shouldDisableValue) {
+            const disabledItemValue: any = this.disableValue;
+            !isNullOrUndefined(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
+        }
     }
 }

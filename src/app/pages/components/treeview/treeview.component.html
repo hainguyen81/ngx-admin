@@ -111,7 +111,7 @@
                    [attr.for]="'item-'.concat(generateTreeviewItemKey(item) || '')">{{item.text}}</label>
         </div>
     </div>
-    <div class="form-inline row-item"
+    <div class="form-inline row-item row-item-disabled"
          *ngIf="item.disabled"
          [id]="generateTreeviewItemKey(item) || ''">
         <nb-icon *ngIf="item.children && item.collapsed"
@@ -120,7 +120,7 @@
         <nb-icon *ngIf="item.children && !item.collapsed"
                  pack="fa" icon="caret-down"
                  (click)="onCollapseExpand()"></nb-icon>
-        <div class="form-check">
+        <div class="form-check" [attr.aria-disabled]="item.disabled">
             <input type="checkbox" class="form-check-input"
                    *ngIf="isEnabledItemCheck()"
                    [(ngModel)]="item.checked"

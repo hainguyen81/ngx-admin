@@ -77,18 +77,33 @@
     }
 
     /* tree-view */
-    ngx-treeview {
-        ngx-treeview-item, ngx-treeview-item * {
+    .ngx-treeview .dropdown-container .treeview-container .treeview-item,
+    .treeview-container .treeview-item {
+        .row-item:not(.row-item-disabled):not([aria-disabled='true']) {
             cursor: pointer;
         }
-
-        ngx-treeview-item.selected > .treeview-item > .row-item,
-        ngx-treeview-item.hover > .treeview-item > .row-item,
-        ngx-treeview-item > .treeview-item > .row-item:hover,
-        ngx-treeview-item > .treeview-item > .row-item:active,
-        ngx-treeview-item > .treeview-item > .row-item:focus {
-            background-color: nb-theme(color-basic-focus-border);
+        .row-item-disabled [aria-disabled='true'],
+        .row-item-disabled .form-check-label[aria-disabled='true'] {
+            color: nb-theme(text-disabled-color);
+            pointer-events: none;
+            cursor: not-allowed;
         }
+        .row-item-disabled .item-image, .item-image {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            padding: 2px;
+            pointer-events: all;
+        }
+    }
+    .ngx-treeview .treeview-container .row-item.selected,
+    .ngx-treeview .treeview-container .row-item.selected:hover,
+    .ngx-treeview .treeview-container .row-item.selected:active,
+    .ngx-treeview .treeview-container .row-item.selected:focus {
+        background-color: nb-theme(color-basic-focus-border);
+    }
+    .dropdown-menu .dropdown-container {
+        padding: 0 0.6rem;
     }
     .form-dropdown-treeview-select ngx-tree-view-dropdown ngx-dropdown-treeview {
         .btn.dropdown-toggle::after {

@@ -33,6 +33,7 @@ export const OrganizationTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.c
     hasCollapseExpand: false,
     hasFilter: true,
     maxHeight: -1,
+    appendToBody: true,
 });
 
 export const OrganizationContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
