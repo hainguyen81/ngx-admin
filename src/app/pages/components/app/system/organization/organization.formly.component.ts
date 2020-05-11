@@ -20,9 +20,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {EmailValidators} from 'ngx-validators';
 import {Lightbox} from 'ngx-lightbox';
 import {OrganizationTreeviewConfig} from './organization.treeview.component';
-import {
-    OrganizationFormlyTreeviewDropdownFieldComponent,
-} from './organization.formly.treeview.dropdown.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {
@@ -43,7 +40,6 @@ import {throwError} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
-import {isNullOrUndefined} from 'util';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();

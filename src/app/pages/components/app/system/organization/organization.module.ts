@@ -104,14 +104,12 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
         OrganizationToolbarComponent,
-        OrganizationFormlyTreeviewDropdownFieldComponent,
     ],
     declarations: [
         OrganizationTreeviewComponent,
         OrganizationFormlyComponent,
         OrganizationToolbarComponent,
         OrganizationSplitPaneComponent,
-        OrganizationFormlyTreeviewDropdownFieldComponent,
     ],
     providers: [
         {
@@ -124,7 +122,6 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         OrganizationFormlyComponent,
         OrganizationToolbarComponent,
         OrganizationSplitPaneComponent,
-        OrganizationFormlyTreeviewDropdownFieldComponent,
     ],
 })
 export class OrganizationModule {
