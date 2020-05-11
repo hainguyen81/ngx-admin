@@ -28,6 +28,9 @@ import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {
+    WarehouseItemCellComponent,
+} from '../../module.components/warehouse/item/warehouse.item.cell.component';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -43,41 +46,50 @@ export const WarehouseInventoryDetailTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     columns: {
-        item_id: {
+        item_code: {
             title: 'warehouse.inventory.detail.table.item',
             type: 'string',
             sort: false,
             filter: false,
+            editor: {
+                type: 'custom',
+                component: WarehouseItemCellComponent,
+            },
         },
         unit: {
             title: 'warehouse.inventory.detail.table.unit',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
         },
         batches: {
             title: 'warehouse.inventory.detail.table.batch',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
         },
         series: {
             title: 'warehouse.inventory.detail.table.series',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
         },
         storage: {
             title: 'warehouse.inventory.detail.table.storage',
             type: 'string',
             sort: false,
             filter: false,
+            editable: false,
         },
         quantity_orders: {
             title: 'warehouse.inventory.detail.table.quantity_orders',
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: NumberCellComponent,
             config: {
                 isCurrency: false,
@@ -88,6 +100,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: NumberCellComponent,
             config: {
                 isCurrency: true,
