@@ -106,13 +106,13 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
     ],
-    providers: WarehouseProviders,
     exports: [
         WarehouseCategoryTreeviewComponent,
         WarehouseCategoryFormlyComponent,
         WarehouseCategoryToolbarComponent,
         WarehouseCategorySplitPaneComponent,
     ],
+    providers: WarehouseProviders,
 })
 export class WarehouseCategoryModule {
 }

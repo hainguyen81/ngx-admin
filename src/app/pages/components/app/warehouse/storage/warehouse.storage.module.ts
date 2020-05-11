@@ -104,13 +104,13 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseStorageToolbarComponent,
         WarehouseStorageSplitPaneComponent,
     ],
-    providers: [ WarehouseProviders ],
     exports: [
         WarehouseStorageTreeviewComponent,
         WarehouseStorageFormlyComponent,
         WarehouseStorageToolbarComponent,
         WarehouseStorageSplitPaneComponent,
     ],
+    providers: WarehouseProviders,
 })
 export class WarehouseStorageModule {
 }

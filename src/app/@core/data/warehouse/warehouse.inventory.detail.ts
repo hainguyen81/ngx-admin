@@ -13,6 +13,12 @@ export interface IWarehouseInventoryDetail extends IModel {
     amount: number;
     // Ghi chú
     remark?: string | null;
+    // Lô hàng
+    batches?: { batch_id: string; quantity?: number | 0 }[] | null;
+    // series
+    series?: string[] | null;
+    // storage
+    storage?: { warehouse_id: string; quantity?: number | 0 }[] | null;
 
     // foreign keys
     inventory_id?: string | null;

@@ -11,16 +11,9 @@ import {
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
-import {LoggerModule, NGXLogger} from 'ngx-logger';
+import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {
-    WarehouseSettingsDbService,
-    WarehouseSettingsHttpService,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.service';
 import {WarehouseSettingsFormlyComponent} from './warehouse.settings.formly.component';
 import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
 import {WarehouseSettingsSmartTableComponent} from './warehouse.settings.table.component';
@@ -37,6 +30,7 @@ import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {WarehouseProviders} from '../../../../../config/app.providers';
 
 @NgModule({
     imports: [
@@ -110,18 +104,13 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseSettingsToolbarComponent,
         WarehouseSettingsComponent,
     ],
-    providers: [
-        {
-            provide: WarehouseSettingsDatasource, useClass: WarehouseSettingsDatasource,
-            deps: [WarehouseSettingsHttpService, WarehouseSettingsDbService, NGXLogger],
-        },
-    ],
     exports: [
         WarehouseSettingsSmartTableComponent,
         WarehouseSettingsFormlyComponent,
         WarehouseSettingsToolbarComponent,
         WarehouseSettingsComponent,
     ],
+    providers: WarehouseProviders,
 })
 export class WarehouseSettingsModule {
 }

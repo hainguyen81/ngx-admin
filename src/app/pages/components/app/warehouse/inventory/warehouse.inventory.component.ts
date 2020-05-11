@@ -36,11 +36,10 @@ import {
     WarehouseInventoryPanelComponent,
 } from './warehouse.inventory.panel.component';
 import {AppFlipcardComponent} from '../../components/app.flipcard.component';
-import {
-    WarehouseInventoryMainFormlyComponent,
-} from './warehouse.inventory.main.formly.component';
 import WarehouseInventory, {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
+import {throwError} from 'rxjs';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -57,7 +56,7 @@ export class WarehouseInventoryComponent
         WarehouseInventoryDatasource,
         WarehouseInventoryToolbarComponent,
         WarehouseInventoryPanelComponent,
-        WarehouseInventoryMainFormlyComponent>
+        WarehouseInventoryDetailPanelComponent>
     implements AfterViewInit {
 
     // -------------------------------------------------
@@ -126,7 +125,7 @@ export class WarehouseInventoryComponent
             router, activatedRoute,
             WarehouseInventoryToolbarComponent,
             WarehouseInventoryPanelComponent,
-            WarehouseInventoryMainFormlyComponent);
+            WarehouseInventoryDetailPanelComponent);
     }
 
     // -------------------------------------------------
@@ -175,12 +174,14 @@ export class WarehouseInventoryComponent
     protected onNewData($event: IEvent): void {
         const newInst: IWarehouseInventory =
             new WarehouseInventory(null, null, null, null, null, null);
-        super.getBackComponent().setModel(newInst);
+        super.getBackComponent().dataModel = newInst;
     }
 
     protected onEditData($event: IEvent): void {
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
-        row && row.getData() && super.getBackComponent().setModel(row.getData() as IWarehouseInventory);
+        if (row && row.getData()) {
+            super.getBackComponent().dataModel = row.getData() as IWarehouseInventory;
+        } else throwError('Could not found data model to edit');
     }
 
     /**

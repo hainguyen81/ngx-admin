@@ -21,22 +21,16 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ThemeModule} from '../../../../../@theme/theme.module';
-import {LoggerModule, NGXLogger} from 'ngx-logger';
+import {LoggerModule} from 'ngx-logger';
 import {AppMaterialModule} from '../../../../../app.material.module';
 import {AppConfig} from '../../../../../config/app.config';
 import {WarehouseBatchNoSmartTableComponent} from './warehouse.batch.table.component';
 import {WarehouseBatchNoFormlyComponent} from './warehouse.batch.formly.component';
 import {WarehouseBatchNoComponent} from './warehouse.batch.component';
-import {
-    WarehouseBatchNoDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import {
-    WarehouseBatchNoDbService,
-    WarehouseBatchNoHttpService,
-} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
 import {WarehouseBatchNoToolbarComponent} from './warehouse.batch.toolbar.component';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {WarehouseProviders} from '../../../../../config/app.providers';
 
 @NgModule({
     imports: [
@@ -110,18 +104,13 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseBatchNoFormlyComponent,
         WarehouseBatchNoComponent,
     ],
-    providers: [
-        {
-            provide: WarehouseBatchNoDatasource, useClass: WarehouseBatchNoDatasource,
-            deps: [WarehouseBatchNoHttpService, WarehouseBatchNoDbService, NGXLogger],
-        },
-    ],
     exports: [
         WarehouseBatchNoToolbarComponent,
         WarehouseBatchNoSmartTableComponent,
         WarehouseBatchNoFormlyComponent,
         WarehouseBatchNoComponent,
     ],
+    providers: WarehouseProviders,
 })
 export class WarehouseBatchNoModule {
 }

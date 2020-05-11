@@ -11,7 +11,7 @@ import {
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
-import {LoggerModule, NGXLogger} from 'ngx-logger';
+import {LoggerModule} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {ThemeModule} from '../../../../../@theme/theme.module';
@@ -49,6 +49,9 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {ModalDialogModule} from 'ngx-modal-dialog';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {WarehouseInventoryDetailSmartTableComponent} from './warehouse.inventory.detail.table.component';
+import {WarehouseProviders} from '../../../../../config/app.providers';
+import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 
 @NgModule({
     imports: [
@@ -131,6 +134,8 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseInventoryPanelComponent,
         WarehouseInventoryComponent,
         WarehouseInventoryMainFormlyComponent,
+        WarehouseInventoryDetailSmartTableComponent,
+        WarehouseInventoryDetailPanelComponent,
     ],
     entryComponents: [
         WarehouseInventorySearchFormlyComponent,
@@ -141,12 +146,8 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseInventoryPanelComponent,
         WarehouseInventoryComponent,
         WarehouseInventoryMainFormlyComponent,
-    ],
-    providers: [
-        {
-            provide: WarehouseInventoryDatasource, useClass: WarehouseInventoryDatasource,
-            deps: [WarehouseInventoryHttpService, WarehouseInventoryDbService, NGXLogger],
-        },
+        WarehouseInventoryDetailSmartTableComponent,
+        WarehouseInventoryDetailPanelComponent,
     ],
     exports: [
         WarehouseInventorySearchFormlyComponent,
@@ -157,7 +158,10 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseInventoryPanelComponent,
         WarehouseInventoryComponent,
         WarehouseInventoryMainFormlyComponent,
+        WarehouseInventoryDetailSmartTableComponent,
+        WarehouseInventoryDetailPanelComponent,
     ],
+    providers: WarehouseProviders,
 })
 export class WarehouseInventoryModule {
 }
