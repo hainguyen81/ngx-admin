@@ -189,7 +189,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Raise when the selected value of dropdown treeview has been changed
      * @param e event data
      */
-    private onSelectedValue(e: IEvent): void {
+    protected onSelectedValue(e: IEvent): void {
         let item: any;
         item = (e && e.data && isArray(e.data) && Array.from(e.data).length ? e.data[0] : null);
         if (!item || item instanceof TreeviewItem) {
