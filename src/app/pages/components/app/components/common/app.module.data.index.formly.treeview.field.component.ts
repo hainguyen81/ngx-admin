@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -43,8 +42,7 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 })
 export abstract class AppModuleDataIndexFormlyTreeviewFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
-    extends AppModuleDataFormlyTreeviewFieldComponent<M, D>
-    implements AfterViewInit {
+    extends AppModuleDataFormlyTreeviewFieldComponent<M, D> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS

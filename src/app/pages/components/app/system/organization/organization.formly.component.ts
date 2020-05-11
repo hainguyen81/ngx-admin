@@ -56,7 +56,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col belongTo',
                 key: 'parentId',
-                type: 'organization-treeview-dropdown',
+                type: 'organization-treeview',
                 templateOptions: {
                     label: 'system.organization.form.belongTo.label',
                     placeholder: 'system.organization.form.belongTo.placeholder',
@@ -363,7 +363,8 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
     moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-formly-form-app-system-organization',
     templateUrl: '../../../formly/formly.component.html',
-    styleUrls: ['../../../formly/formly.component.scss',
+    styleUrls: [
+        '../../../formly/formly.component.scss',
         '../../components/app.formly.component.scss',
         './organization.formly.component.scss',
     ],
@@ -430,7 +431,6 @@ export class OrganizationFormlyComponent
 
         // observe belongTo/manager fields
         PromiseUtils.parallelPromises(undefined, undefined, [
-            this.observeBelongToField(),
             this.observeManagerField(),
         ]).then(value => this.getLogger().debug('Loading parent organization/manager data successful'),
                 reason => this.getLogger().error(reason))
@@ -440,34 +440,9 @@ export class OrganizationFormlyComponent
         this.observeFields();
     }
 
-    protected onModelChanged() {
-        super.onModelChanged();
-
-        const fields: FormlyFieldConfig[] = this.fields;
-        this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
-    }
-
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------
-
-    /**
-     * Observe belongTo field
-     */
-    private observeBelongToField(): Promise<void> {
-        const fields: FormlyFieldConfig[] = this.fields;
-        return SystemDataUtils.invokeAllOrganization(
-            <OrganizationDataSource>this.getDataSource()).then(
-                values => {
-                    let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-                    belongToComponent = this.getFormFieldComponent(fields[0].fieldGroup[0],
-                        OrganizationFormlyTreeviewDropdownFieldComponent);
-                    if (!isNullOrUndefined(belongToComponent)) {
-                        belongToComponent.items = values;
-                        this.disableModelFromBelongTo(fields[0].fieldGroup[0], this.getModel());
-                    }
-                });
-    }
 
     /**
      * Observe manager field
@@ -542,27 +517,5 @@ export class OrganizationFormlyComponent
         if (cityFieldComponent) {
             cityFieldComponent.province = model.province;
         }
-    }
-
-    /**
-     * Disable current data model in the belongTo field
-     * @param field to parse field component
-     * @param model to disable
-     */
-    private disableModelFromBelongTo(field: FormlyFieldConfig, model?: IOrganization | null) {
-        model = model || this.getModel();
-        if (!model || !(model.id || '').length) {
-            return;
-        }
-
-        // detect field component
-        let belongToComponent: OrganizationFormlyTreeviewDropdownFieldComponent;
-        belongToComponent = this.getFormFieldComponent(field, OrganizationFormlyTreeviewDropdownFieldComponent);
-
-        // disable current model item in treeview
-        belongToComponent && belongToComponent.disableItemsByValue(model);
-
-        // select current model item in treeview
-        belongToComponent && belongToComponent.setSelectedValue(model.parentId);
     }
 }

@@ -1,10 +1,10 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
+    OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -44,7 +44,7 @@ import {isPromise} from 'rxjs/internal-compatibility';
 export abstract class AppModuleDataFormlyTreeviewFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
     extends AppFormlyTreeviewDropdownFieldComponent<M>
-    implements AfterViewInit {
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -52,6 +52,14 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
 
     protected get dataSource(): D {
         return this._dataSource;
+    }
+
+    /**
+     * Get the value of node that need to disable
+     * @return value of node to disable or undefined to ignore
+     */
+    protected get disableValue(): any {
+        return undefined;
     }
 
     // -------------------------------------------------
@@ -80,6 +88,27 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this._dataSource || throwError('Could not inject DataSource instance');
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngOnInit() {
+        super.ngOnInit();
+
+        // load data
+        this.refresh();
+
+        this.field && this.field.form
+        && this.field.form.valueChanges.subscribe(subscriber => {
+            const timer: number = window.setTimeout(() => {
+                const disabledItemValue: any = this.disableValue;
+                window.console.error(['disabledItemValue', disabledItemValue]);
+                !isNullOrUndefined(disabledItemValue) && super.disableItemsByValue(disabledItemValue);
+                window.clearTimeout(timer);
+            }, 100);
+        });
     }
 
     // -------------------------------------------------
@@ -127,5 +156,11 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
             items = [data as M];
         }
         super.buildTemplateOptionsToTree(items);
+
+        // select current field value and disable node if necessary
+        const fieldValue: any = this.rawValue;
+        super.setSelectedValue(fieldValue, false);
+        const disabledItemValue: any = this.disableValue;
+        !isNullOrUndefined(disabledItemValue) && super.disableItemsByValue(disabledItemValue);
     }
 }

@@ -21,6 +21,8 @@ import {$enum} from 'ts-enum-util';
 import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
+import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -45,6 +47,7 @@ export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
  * Custom module formly field for selecting general warehouse settings brand settings
  */
 @Component({
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS,
     selector: 'ngx-select-ex-app-module-general-settings-warehouse-settings',
     templateUrl: '../../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],

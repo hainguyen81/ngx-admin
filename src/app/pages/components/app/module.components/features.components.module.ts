@@ -68,6 +68,9 @@ import {
 import {
     WarehouseSettingsItemFormlySelectExFieldComponent,
 } from './warehouse/settings/warehouse.settings.item.select.ex.field.component';
+import {
+    OrganizationFormlyTreeviewFieldComponent,
+} from './system/organization.formly.treeview.field.component';
 
 @NgModule({
     imports: [
@@ -179,6 +182,11 @@ import {
                     component: WarehouseCategoryTypeFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'organization-treeview',
+                    component: OrganizationFormlyTreeviewFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -214,6 +222,7 @@ import {
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
+        OrganizationFormlyTreeviewFieldComponent,
     ],
     exports: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -229,6 +238,7 @@ import {
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
+        OrganizationFormlyTreeviewFieldComponent,
     ],
     declarations: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -244,6 +254,7 @@ import {
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
+        OrganizationFormlyTreeviewFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {

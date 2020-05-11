@@ -35,9 +35,6 @@ import {ThemeModule} from '../../../../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {AppMaterialModule} from '../../../../../app.material.module';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
-import {
-    OrganizationFormlyTreeviewDropdownFieldComponent,
-} from './organization.formly.treeview.dropdown.field.component';
 import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
@@ -82,15 +79,7 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot({
-            types: [
-                {
-                    name: 'organization-treeview-dropdown',
-                    component: OrganizationFormlyTreeviewDropdownFieldComponent,
-                    wrappers: ['form-field'],
-                },
-            ],
-        }),
+        FormlyModule.forRoot(),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
