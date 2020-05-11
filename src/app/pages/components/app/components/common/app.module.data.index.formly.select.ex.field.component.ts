@@ -59,6 +59,14 @@ export abstract class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
         return true;
     }
 
+    /**
+     * Define the function to build more option properties/keys if necessary
+     * @return null or undefined to ignore
+     */
+    protected get optionBuilder(): { [key: string]: (model: M) => string | string[] | M } | null {
+        return undefined;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -93,6 +101,7 @@ export abstract class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
     // -------------------------------------------------
 
     protected loadData(): Observable<M[] | M> | Promise<M[] | M> | M[] | M {
+        const optionBuilder: { [key: string]: (model: M) => string | string[] | M } | null = this.optionBuilder;
         const useFilter: boolean = this.useDataFilter;
         const needToFilter: boolean = ((this.dataIndexName || '').length && !isNullOrUndefined(this.dataIndexKey));
         if (useFilter && !needToFilter) {
@@ -103,11 +112,28 @@ export abstract class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
             }
 
         } else if (!useFilter && !needToFilter) {
-            return SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(this.dataSource, this.translateService);
+            if (!isNullOrUndefined(optionBuilder)) {
+                return SystemDataUtils.invokeAllModelsAsSelectOptions(
+                    this.dataSource, this.translateService, optionBuilder);
+
+            } else {
+                return SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(
+                    this.dataSource, this.translateService);
+            }
 
         } else if (useFilter && needToFilter) {
-            return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
-                this.dataSource, this.dataIndexName, this.dataIndexKey, this.translateService);
+            if (!isNullOrUndefined(optionBuilder)) {
+                return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
+                    this.dataSource,
+                    this.dataIndexName, this.dataIndexKey,
+                    this.translateService, optionBuilder);
+
+            } else {
+                return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
+                    this.dataSource,
+                    this.dataIndexName, this.dataIndexKey,
+                    this.translateService);
+            }
 
         } else {
             throwError('Must define index to filter or define useDataFilter as false');
