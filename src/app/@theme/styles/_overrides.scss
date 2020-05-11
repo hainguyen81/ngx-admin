@@ -76,18 +76,26 @@
         background-color: transparent !important;
     }
 
+    /* mat-form-field */
+    .mat-form-field.mat-form-field-disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
     /* tree-view */
     .ngx-treeview .dropdown-container .treeview-container .treeview-item,
     .treeview-container .treeview-item {
-        .row-item:not(.row-item-disabled):not([aria-disabled='true']) {
-            cursor: pointer;
-        }
         .row-item-disabled [aria-disabled='true'],
         .row-item-disabled .form-check-label[aria-disabled='true'] {
             color: nb-theme(text-disabled-color);
             pointer-events: none;
             cursor: not-allowed;
         }
+        nb-icon,
+        .item-image {
+            cursor: pointer;
+        }
+        nb-icon,
         .row-item-disabled .item-image, .item-image {
             width: 24px;
             height: 24px;
@@ -117,6 +125,10 @@
     }
     .dropdown-menu.ngx-treeview .dropdown-container {
         padding: 0 0.6rem;
+    }
+    .mat-form-field.mat-form-field-disabled ngx-tree-view-dropdown ngx-dropdown-treeview,
+    .mat-form-field.mat-form-field-disabled ngx-tree-view-dropdown ngx-dropdown-treeview .btn.dropdown-toggle {
+        pointer-events: none;
     }
 
     /* ngx-select-ex */

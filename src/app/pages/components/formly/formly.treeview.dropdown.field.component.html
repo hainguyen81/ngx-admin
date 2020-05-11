@@ -1,4 +1,6 @@
-<div class="form-field form-dropdown-treeview-select">
+<div class="form-field form-dropdown-treeview-select"
+     [class.form-dropdown-treeview-select-disabled]="field.templateOptions && field.templateOptions.disabled"
+     [class.form-dropdown-treeview-select-readonly]="field.templateOptions && field.templateOptions.readonly">
     <ngx-tree-view-dropdown #dropdownTreeview
                             [config]="config"
                             [items]="items"

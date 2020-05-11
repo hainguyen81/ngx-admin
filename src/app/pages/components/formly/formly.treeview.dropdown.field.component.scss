@@ -6,4 +6,9 @@
         .btn.dropdown-toggle { padding: 0; white-space: pre-wrap; }
         .dropdown-menu { width: 100%; }
     }
+    ::ng-deep .form-dropdown-treeview-select.form-dropdown-treeview-select-disabled,
+    ::ng-deep .form-dropdown-treeview-select.form-dropdown-treeview-select-readonly {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 }
