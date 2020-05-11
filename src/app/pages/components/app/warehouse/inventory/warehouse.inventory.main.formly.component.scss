@@ -4,4 +4,19 @@
     ::ng-deep .form-files-gallery-file .files-gallery .files-gallery-list .files-gallery-item {
         clear: both;
     }
+    ::ng-deep formly-field.remark {
+        formly-wrapper-mat-form-field,
+        formly-wrapper-mat-form-field .mat-form-field,
+        formly-wrapper-mat-form-field .mat-form-field .mat-form-field-wrapper,
+        formly-wrapper-mat-form-field .mat-form-field .mat-form-field-wrapper .mat-form-field-flex,
+        formly-wrapper-mat-form-field .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix formly-field-mat-textarea {
+            height: inherit;
+        }
+        formly-wrapper-mat-form-field .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+            height: 100%;
+        }
+        formly-wrapper-mat-form-field .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix formly-field-mat-textarea textarea.mat-input-element {
+            height: calc(100% - 15px);
+        }
+    }
 }

@@ -1,4 +1,5 @@
 import {
+    AfterContentChecked,
     AfterViewInit,
     ChangeDetectorRef,
     Component,
@@ -6,27 +7,27 @@ import {
     ElementRef,
     Inject,
     Renderer2,
+    RendererStyleFlags2,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
+import {FormlyConfig, FormlyFieldConfig, FormlyForm} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {
-    IWarehouseInventory,
-} from '../../../../../@core/data/warehouse/warehouse.inventory';
+import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {isNullOrUndefined} from 'util';
 
 /* default warehouse in/out main formly config */
 export const WarehouseInventoryMainFormConfig: FormlyConfig = new FormlyConfig();
@@ -36,16 +37,18 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
     {
         fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
         fieldGroup: [
+            // col-1
             {
-                className: 'col-9 ml-0 mr-0 pl-0 pr-0',
+                className: 'col-6 ml-0 mr-0 pl-0 pr-0 left-col',
                 fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
                 fieldGroup: [
+                    // row-1
                     {
                         className: 'w-100 ml-0 mr-0 pl-0 pr-0',
                         fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
                         fieldGroup: [
                             {
-                                className: 'col-4',
+                                className: 'col-6',
                                 key: 'type',
                                 type: 'warehouse-inventory-type',
                                 templateOptions: {
@@ -55,7 +58,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'col-4',
+                                className: 'col-6',
                                 key: 'vendor_customer',
                                 type: 'vendor-customer',
                                 templateOptions: {
@@ -64,8 +67,15 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                     required: true,
                                 },
                             },
+                        ],
+                    },
+                    // row-2
+                    {
+                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
+                        fieldGroup: [
                             {
-                                className: 'col-4',
+                                className: 'col-6',
                                 key: 'warehouse_id',
                                 type: 'input',
                                 templateOptions: {
@@ -74,14 +84,8 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                     required: true,
                                 },
                             },
-                        ],
-                    },
-                    {
-                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
-                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
-                        fieldGroup: [
                             {
-                                className: 'col-4',
+                                className: 'col-6',
                                 key: 'date',
                                 type: 'app-date-picker',
                                 templateOptions: {
@@ -97,32 +101,15 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                     required: true,
                                 },
                             },
-                            {
-                                className: 'col-4',
-                                key: 'sales_order',
-                                type: 'input',
-                                templateOptions: {
-                                    label: 'warehouse.inventory.form.sales_order.label',
-                                    placeholder: 'warehouse.inventory.form.sales_order.placeholder',
-                                },
-                            },
-                            {
-                                className: 'col-4',
-                                key: 'reason_for_issuing',
-                                type: 'input',
-                                templateOptions: {
-                                    label: 'warehouse.inventory.form.reason_for_issuing.label',
-                                    placeholder: 'warehouse.inventory.form.reason_for_issuing.placeholder',
-                                },
-                            },
                         ],
                     },
+                    // row-3
                     {
                         className: 'w-100 ml-0 mr-0 pl-0 pr-0',
                         fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
                         fieldGroup: [
                             {
-                                className: 'col-4',
+                                className: 'col-6',
                                 key: 'code',
                                 type: 'input',
                                 templateOptions: {
@@ -132,7 +119,32 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'col-4',
+                                className: 'col-6',
+                                key: 'reason_for_issuing',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.inventory.form.reason_for_issuing.label',
+                                    placeholder: 'warehouse.inventory.form.reason_for_issuing.placeholder',
+                                },
+                            },
+                        ],
+                    },
+                    // row-4
+                    {
+                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
+                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
+                        fieldGroup: [
+                            {
+                                className: 'col-6',
+                                key: 'sales_order',
+                                type: 'input',
+                                templateOptions: {
+                                    label: 'warehouse.inventory.form.sales_order.label',
+                                    placeholder: 'warehouse.inventory.form.sales_order.placeholder',
+                                },
+                            },
+                            {
+                                className: 'col-6',
                                 key: 'deliverer',
                                 type: 'input',
                                 templateOptions: {
@@ -140,36 +152,40 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                                     placeholder: 'warehouse.inventory.form.deliverer.placeholder',
                                 },
                             },
-                            {
-                                className: 'col-4',
-                                key: 'status',
-                                type: 'system-status',
-                                templateOptions: {
-                                    label: 'warehouse.category.form.status.label',
-                                    placeholder: 'warehouse.category.form.status.placeholder',
-                                },
-                            },
                         ],
                     },
+
+                ],
+            },
+            // col-2
+            {
+                className: 'col-3 ml-0 mr-0 mid-col',
+                fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
+                fieldGroup: [
                     {
-                        className: 'w-100 ml-0 mr-0 pl-0 pr-0',
-                        fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
-                        fieldGroup: [
-                            {
-                                className: 'col-12',
-                                key: 'remark',
-                                type: 'input',
-                                templateOptions: {
-                                    label: 'warehouse.inventory.form.remark.label',
-                                    placeholder: 'warehouse.inventory.form.remark.placeholder',
-                                },
-                            },
-                        ],
+                        className: 'w-100 remark',
+                        key: 'remark',
+                        type: 'textarea',
+                        templateOptions: {
+                            label: 'warehouse.inventory.form.remark.label',
+                            placeholder: 'warehouse.inventory.form.remark.placeholder',
+                            rows: 5,
+                        },
+                    },
+                    {
+                        className: 'w-100 status',
+                        key: 'status',
+                        type: 'system-status',
+                        templateOptions: {
+                            label: 'warehouse.category.form.status.label',
+                            placeholder: 'warehouse.category.form.status.placeholder',
+                        },
                     },
                 ],
             },
+            // col-3
             {
-                className: 'col-3 ml-0 mr-0',
+                className: 'col-3 ml-0 mr-0 right-col',
                 fieldGroupClassName: 'row ml-0 mr-0 pl-0 pr-0',
                 fieldGroup: [
                     {
@@ -202,7 +218,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseInventoryMainFormlyComponent
     extends AppFormlyComponent<IWarehouseInventory, WarehouseInventoryDatasource>
-    implements AfterViewInit {
+    implements AfterContentChecked {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -254,7 +270,53 @@ export class WarehouseInventoryMainFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
+    ngAfterContentChecked(): void {
+        super.ngAfterContentChecked();
+
+        // make form beauty
+        this.__makeFormBeauty();
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Calculate the layout to make it beauty
+     * @private
+     */
+    private __makeFormBeauty(): void {
+        // make the remark beauty
+        const renderer: Renderer2 = this.getRenderer();
+        if (!isNullOrUndefined(renderer) && !isNullOrUndefined(this.getElementRef())) {
+            const formElement: Element = this.getElementRef().nativeElement;
+            const leftColumn: Element = this.getFirstElementBySelector('.left-col', formElement);
+            const midColumn: Element = this.getFirstElementBySelector('.mid-col', formElement);
+            const remarkField: Element = this.getFirstElementBySelector('.remark', midColumn);
+            const statusField: Element = this.getFirstElementBySelector('.status', midColumn);
+            const rightColumn: Element = this.getFirstElementBySelector('.right-col', formElement);
+            const leftColOffset: { top: number, left: number,
+                width: number, height: number } = this.offset(leftColumn);
+            const midColOffset: { top: number, left: number,
+                width: number, height: number } = this.offset(midColumn);
+            const rightColOffset: { top: number, left: number,
+                width: number, height: number } = this.offset(rightColumn);
+            const statusOffset: { top: number, left: number,
+                width: number, height: number } = this.offset(statusField);
+            const maxHeight: number = Math.max(
+                Math.max(leftColOffset.height, midColOffset.height), rightColOffset.height);
+            (maxHeight > 0)
+            && renderer.setStyle(leftColumn, 'height',
+                [maxHeight, 'px'].join(''), RendererStyleFlags2.Important);
+            (maxHeight > 0)
+            && renderer.setStyle(midColumn, 'height',
+                [maxHeight, 'px'].join(''), RendererStyleFlags2.Important);
+            (maxHeight > 0)
+            && renderer.setStyle(rightColumn, 'height',
+                [maxHeight, 'px'].join(''), RendererStyleFlags2.Important);
+            (maxHeight > 0 && statusOffset.height > 0)
+            && renderer.setStyle(remarkField, 'height',
+                [(maxHeight - statusOffset.height), 'px'].join(''), RendererStyleFlags2.Important);
+        }
     }
 }

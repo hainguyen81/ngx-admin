@@ -278,4 +278,9 @@
 
     /* Toaster */
 
+    /* mat-textarea */
+    textarea.mat-input-element {
+        resize: none !important;
+        overflow: hidden;
+    }
 }
