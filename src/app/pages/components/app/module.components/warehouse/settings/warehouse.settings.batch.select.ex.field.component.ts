@@ -69,6 +69,15 @@ export class WarehouseSettingsBatchFormlySelectExFieldComponent
         return false;
     }
 
+    protected get optionBuilder():
+        { [key: string]: (model: IWarehouseBatchNo) => (string | string[] | IWarehouseBatchNo) } | null {
+        return {
+            'text': (model: IWarehouseBatchNo) => {
+                return (model ? [model.code, model.exp_date].join(' - ') : '');
+            },
+        };
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
