@@ -15,7 +15,7 @@ import {BaseDataSource} from '../../../../../services/datasource.service';
 import {IDbService, IHttpService} from '../../../../../services/interface.service';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NGXLogger} from 'ngx-logger';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {isNullOrUndefined} from 'util';
 import {
     AppModuleDataFormlyTreeviewFieldComponent,
@@ -59,6 +59,14 @@ export abstract class AppModuleDataIndexFormlyTreeviewFieldComponent<
      */
     protected abstract get dataIndexKey(): IDBKeyRange;
 
+    /**
+     * Specify whether using data index to filter
+     * @return true for using index to filter if index valid; else false for selecting all if invalid index
+     */
+    protected get useDataFilter(): boolean {
+        return true;
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -91,12 +99,20 @@ export abstract class AppModuleDataIndexFormlyTreeviewFieldComponent<
     // -------------------------------------------------
 
     protected loadData(): Observable<M[] | M> | Promise<M[] | M> | M[] | M {
-        if (!(this.dataIndexName || '').length || isNullOrUndefined(this.dataIndexKey)) {
-            return [];
+        const useFilter: boolean = this.useDataFilter;
+        const needToFilter: boolean = ((this.dataIndexName || '').length && !isNullOrUndefined(this.dataIndexKey));
+        if (useFilter && !needToFilter) {
+            return  [];
 
-        } else {
+        } else if (!useFilter && !needToFilter) {
+            return SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(this.dataSource, this.translateService);
+
+        } else if (useFilter && needToFilter) {
             return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
                 this.dataSource, this.dataIndexName, this.dataIndexKey, this.translateService);
+
+        } else {
+            throwError('Must define index to filter or define useDataFilter as false');
         }
     }
 }

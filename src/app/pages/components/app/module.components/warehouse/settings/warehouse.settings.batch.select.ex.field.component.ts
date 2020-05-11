@@ -10,21 +10,18 @@ import {
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {IWarehouseSetting} from '../../../../../../@core/data/warehouse/warehouse.setting';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {
     AppModuleDataIndexSettingsFormlySelectExFieldComponent,
 } from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
-import {$enum} from 'ts-enum-util';
-import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
-import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
+import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
+import {
+    WarehouseBatchNoDatasource,
+} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 
-export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
+export const WarehouseSettingsBatchSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
@@ -35,7 +32,7 @@ export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
          * Provide an opportunity to change the name a text property of objects in the items
          * {string}
          */
-        optionTextField: 'name',
+        optionTextField: 'text',
         /**
          * Specify whether using image for option
          * {boolean}
@@ -44,16 +41,16 @@ export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
     });
 
 /**
- * Custom module formly field for selecting general warehouse settings brand settings
+ * Custom module formly field for selecting warehouse settings batch
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS,
-    selector: 'ngx-select-ex-app-module-general-settings-warehouse-settings',
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    selector: 'ngx-select-ex-app-module-warehouse-settings-batch',
     templateUrl: '../../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],
 })
-export abstract class WarehouseSettingsFormlySelectExFieldComponent
-    extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<IWarehouseSetting, WarehouseSettingsDatasource>
+export class WarehouseSettingsBatchFormlySelectExFieldComponent
+    extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<IWarehouseBatchNo, WarehouseBatchNoDatasource>
     implements OnInit {
 
     // -------------------------------------------------
@@ -61,22 +58,24 @@ export abstract class WarehouseSettingsFormlySelectExFieldComponent
     // -------------------------------------------------
 
     protected get dataIndexName(): string {
-        return 'type';
+        return '';
     }
 
     protected get dataIndexKey(): IDBKeyRange {
-        return IDBKeyRange.only($enum(WAREHOUSE_SETTINGS_TYPE).getKeyOrThrow(this.settingsType));
+        return undefined;
     }
 
-    protected abstract get settingsType(): WAREHOUSE_SETTINGS_TYPE;
+    protected get useDataFilter(): boolean {
+        return false;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {SystemStatusFormlySelectExFieldComponent} class
-     * @param dataSource {WarehouseSettingsDatasource}
+     * Create a new instance of {WarehouseSettingsBatchFormlySelectExFieldComponent} class
+     * @param dataSource {WarehouseBatchNoDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -85,16 +84,16 @@ export abstract class WarehouseSettingsFormlySelectExFieldComponent
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
-                          @Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2,
-                          @Inject(NGXLogger) _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+    constructor(@Inject(WarehouseBatchNoDatasource) dataSource: WarehouseBatchNoDatasource,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            WarehouseSettingsSelectOptions);
+            WarehouseSettingsBatchSelectOptions);
     }
 }

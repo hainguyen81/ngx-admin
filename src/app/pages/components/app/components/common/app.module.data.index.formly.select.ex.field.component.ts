@@ -19,7 +19,7 @@ import {
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {IDbService, IHttpService} from '../../../../../services/interface.service';
 import {BaseDataSource} from '../../../../../services/datasource.service';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {isNullOrUndefined} from 'util';
 import {INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 
@@ -50,6 +50,14 @@ export abstract class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
      * @return the database index key
      */
     protected abstract get dataIndexKey(): IDBKeyRange;
+
+    /**
+     * Specify whether using data index to filter
+     * @return true for using index to filter if index valid; else false for selecting all if invalid index
+     */
+    protected get useDataFilter(): boolean {
+        return true;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -85,15 +93,24 @@ export abstract class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
     // -------------------------------------------------
 
     protected loadData(): Observable<M[] | M> | Promise<M[] | M> | M[] | M {
-        if (!(this.dataIndexName || '').length || isNullOrUndefined(this.dataIndexKey)) {
+        const useFilter: boolean = this.useDataFilter;
+        const needToFilter: boolean = ((this.dataIndexName || '').length && !isNullOrUndefined(this.dataIndexKey));
+        if (useFilter && !needToFilter) {
             if (isNullOrUndefined(this.noneOption)) {
                 return undefined;
             } else {
                 return [this.noneOption];
             }
-        } else {
+
+        } else if (!useFilter && !needToFilter) {
+            return SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(this.dataSource, this.translateService);
+
+        } else if (useFilter && needToFilter) {
             return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsDefaultSelectOptions(
                 this.dataSource, this.dataIndexName, this.dataIndexKey, this.translateService);
+
+        } else {
+            throwError('Must define index to filter or define useDataFilter as false');
         }
     }
 }

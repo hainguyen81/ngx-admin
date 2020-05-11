@@ -74,6 +74,9 @@ import {
 import {
     WarehouseCategoryFormlyTreeviewFieldComponent,
 } from './warehouse/category/warehouse.category.formly.treeview.field.component';
+import {
+    WarehouseSettingsBatchFormlySelectExFieldComponent,
+} from './warehouse/settings/warehouse.settings.batch.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -195,6 +198,11 @@ import {
                     component: WarehouseCategoryFormlyTreeviewFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'warehouse-settings-batch',
+                    component: WarehouseSettingsBatchFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -232,6 +240,7 @@ import {
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
+        WarehouseSettingsBatchFormlySelectExFieldComponent,
     ],
     exports: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -249,6 +258,7 @@ import {
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
+        WarehouseSettingsBatchFormlySelectExFieldComponent,
     ],
     declarations: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -266,6 +276,7 @@ import {
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
+        WarehouseSettingsBatchFormlySelectExFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {
