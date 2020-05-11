@@ -72,6 +72,21 @@ export function indexFactory() {
                 '__warehouse_item_index_by_code',
                 ['code', 'item_code'],
                 { unique: true });
+
+            // warehouse_inventory_detail
+            const warehouseInvDetailStore = transaction.objectStore(DB_STORE.warehouse_inventory_detail);
+            warehouseInvDetailStore.createIndex(
+                '__warehouse_inv_detail_index_by_id',
+                ['id', 'inventory_id'],
+                { unique: true });
+            warehouseInvDetailStore.createIndex(
+                '__warehouse_inv_detail_index_by_inventory_id',
+                ['inventory_id'],
+                { unique: false });
+            warehouseInvDetailStore.createIndex(
+                '__warehouse_inv_detail_index_by_inventory_code',
+                ['inventory_code'],
+                { unique: false });
         },
     };
 }
@@ -356,9 +371,14 @@ export const dbConfig: DBConfig = {
             {name: 'unit_price', keypath: 'unit_price', options: {unique: false}},
             {name: 'amount', keypath: 'amount', options: {unique: false}},
             {name: 'remark', keypath: 'remark', options: {unique: false}},
+            {name: 'batches', keypath: 'batches', options: {unique: false}},
+            {name: 'series', keypath: 'series', options: {unique: false}},
+            {name: 'storage', keypath: 'storage', options: {unique: false}},
             {name: 'inventory_id', keypath: 'inventory_id', options: {unique: false}},
+            {name: 'inventory_code', keypath: 'inventory_code', options: {unique: false}},
             {name: 'inventory', keypath: 'inventory', options: {unique: false}},
             {name: 'item_id', keypath: 'item_id', options: {unique: false}},
+            {name: 'item_code', keypath: 'item_code', options: {unique: false}},
             {name: 'item', keypath: 'item', options: {unique: false}},
         ],
     }, {
