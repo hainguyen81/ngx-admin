@@ -1,6 +1,10 @@
 {
     "app": "Hi! System",
     "common": {
+        "date": {
+            "dd/mm/yyyy": "DD/MM/YYYY",
+            "dd-mm-yyyy": "DD-MM-YYYY"
+        },
         "languages": {
             "vi": "Tiếng Việt",
             "en": "Tiếng Anh"
@@ -132,6 +136,8 @@
             "unknown": "Bạn không có đủ quyền hoặc dữ liệu đã bị sai! Vui lòng liên hệ Quản trị viên để được hỗ trợ!"
         },
         "form": {
+            "required": "Giá trị này là bắt buộc",
+            "pattern_code": "Mã phải không chứa ký tự đặc biệt và tối đa 12 ký tự",
             "invalid_data": "Vui lòng nhập đầy đủ thông tin yêu cầu trước khi tiếp tục!",
             "action": {
                 "save": "Lưu",
@@ -140,7 +146,8 @@
                 "back": "Quay lại",
                 "import": "Import",
                 "deletedb": "Xóa DB",
-                "close": "Đóng"
+                "close": "Đóng",
+                "search": "Tìm kiếm"
             },
             "treeview": {
                 "not_selection": "",
@@ -517,6 +524,47 @@
             "master": "Thiết lập",
             "features": "Tính năng"
         },
+        "batch_no": {
+            "title": "Quản lý lô hàng",
+            "menu": "Lô hàng",
+            "table": {
+                "noData": "Không có bất kỳ thiết lập lô hàng nào",
+                "code": "Mã",
+                "name": "Tên",
+                "mfg_date": "Ngày sản xuất",
+                "exp_date": "Ngày hết hạn",
+                "status": "Trạng thái",
+                "remark": "Ghi chú"
+            },
+            "form": {
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "name": {
+                    "label": "Tên",
+                    "placeholder": "Tên"
+                },
+                "mfg_date": {
+                    "label": "Ngày sản xuất",
+                    "placeholder": "Ngày sản xuất",
+                    "must_less_equals_exp_date": "Ngày sản xuất phải nhỏ hơn hoặc bằng ngày hết hạn"
+                },
+                "exp_date": {
+                    "label": "Ngày hết hạn",
+                    "placeholder": "Ngày hết hạn",
+                    "must_greater_equals_mfg_date": "Ngày hết hạn phải lớn hơn hoặc bằng ngày sản xuất"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                }
+            }
+        },
         "settings": {
             "title": "Quản lý thiết lập chung",
             "menu": "Thiết lập chung",
@@ -852,6 +900,95 @@
                 "remark": "Ghi chú",
                 "category": "Loại SP",
                 "brand": "Hãng SX"
+            }
+        },
+        "inventory": {
+            "title": "Quản lý nhập/xuất",
+            "menu": "Nhập/xuất",
+            "search": {
+                "form": {
+                    "storage": {
+                        "label": "Kho",
+                        "placeholder": "Kho"
+                    },
+                    "from": {
+                        "label": "Từ",
+                        "placeholder": "Từ"
+                    },
+                    "to": {
+                        "label": "Đến",
+                        "placeholder": "Đến"
+                    },
+                    "customer": {
+                        "label": "Nhà cung cấp/Khách hàng",
+                        "placeholder": "Nhà cung cấp/Khách hàng"
+                    },
+                    "type": {
+                        "label": "Loại",
+                        "placeholder": "Loại"
+                    },
+                    "keyword": {
+                        "label": "Từ khóa",
+                        "placeholder": "Từ khóa"
+                    }
+                }
+            },
+            "table": {
+                "noData": "Không có bất kỳ thông tin nào",
+                "no": "STT",
+                "date": "Ngày nhập/xuất",
+                "code": "Mã",
+                "warehouse": "Kho",
+                "type": "Loại",
+                "vendor_customer": "Nhà cung cấp/Khách hàng",
+                "sales_order": "Hóa đơn",
+                "total_amount": "Tổng tiền"
+            },
+            "form": {
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại"
+                },
+                "customer": {
+                    "label": "Nhà cung cấp/Khách hàng",
+                    "placeholder": "Nhà cung cấp/Khách hàng"
+                },
+                "file_attach": {
+                    "label": "Chứng từ",
+                    "placeholder": "Chứng từ"
+                },
+                "storage": {
+                    "label": "Kho",
+                    "placeholder": "Kho"
+                },
+                "date": {
+                    "label": "Ngày nhập/xuất",
+                    "placeholder": "Ngày nhập/xuất"
+                },
+                "sales_order": {
+                    "label": "Hóa đơn",
+                    "placeholder": "Hóa đơn"
+                },
+                "reason_for_issuing": {
+                    "label": "Lý do",
+                    "placeholder": "Lý do"
+                },
+                "remark": {
+                    "label": "Ghi chú",
+                    "placeholder": "Ghi chú"
+                },
+                "code": {
+                    "label": "Mã",
+                    "placeholder": "Mã"
+                },
+                "deliverer": {
+                    "label": "Người giao hàng",
+                    "placeholder": "Người giao hàng"
+                },
+                "status": {
+                    "label": "Trạng thái",
+                    "placeholder": "Trạng thái"
+                }
             }
         }
     }

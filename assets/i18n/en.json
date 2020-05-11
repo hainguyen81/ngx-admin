@@ -1,6 +1,10 @@
 {
     "app": "Hi! System",
     "common": {
+        "date": {
+            "dd/mm/yyyy": "MM/DD/YYYY",
+            "dd-mm-yyyy": "MM-DD-YYYY"
+        },
         "languages": {
             "vi": "Vietnamese",
             "en": "English"
@@ -132,6 +136,8 @@
             "unknown": "You have not enough permissions or data has been wrong! Please contact administrator for detail!"
         },
         "form": {
+            "required": "This value is required",
+            "pattern_code": "Code must not contains special characters and be maximum 12 characters length",
             "invalid_data": "Please correct data before performing action!",
             "action": {
                 "save": "Save",
@@ -140,7 +146,8 @@
                 "back": "Back",
                 "import": "Import",
                 "deletedb": "Delete DB",
-                "close": "Close"
+                "close": "Close",
+                "search": "Search"
             },
             "treeview": {
                 "not_selection": "",
@@ -517,6 +524,47 @@
             "master": "Settings",
             "features": "Features"
         },
+        "batch_no": {
+            "title": "Warehouse Batch No. Management",
+            "menu": "Batch No.",
+            "table": {
+                "noData": "Not found any batch",
+                "code": "Code",
+                "name": "Name",
+                "mfg_date": "MFG Date",
+                "exp_date": "Exp. Date",
+                "status": "Status",
+                "remark": "Remark"
+            },
+            "form": {
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Name"
+                },
+                "mfg_date": {
+                    "label": "MFG Date",
+                    "placeholder": "MFG Date",
+                    "must_less_equals_exp_date": "The MFG date must be equal or less than the Exp. date"
+                },
+                "exp_date": {
+                    "label": "Exp. Date",
+                    "placeholder": "Exp. Date",
+                    "must_greater_equals_mfg_date": "The expiration date must be equal or greater than the MFG date"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                }
+            }
+        },
         "settings": {
             "title": "Warehouse Settings Management",
             "menu": "General Settings",
@@ -852,6 +900,95 @@
                 "remark": "Remark",
                 "category": "Category",
                 "brand": "Brand"
+            }
+        },
+        "inventory": {
+            "title": "Warehouse Inventory Management",
+            "menu": "Inventory",
+            "search": {
+                "form": {
+                    "storage": {
+                        "label": "Warehouse",
+                        "placeholder": "Warehouse"
+                    },
+                    "from": {
+                        "label": "From",
+                        "placeholder": "From"
+                    },
+                    "to": {
+                        "label": "To",
+                        "placeholder": "To"
+                    },
+                    "customer": {
+                        "label": "Vendor/Customer",
+                        "placeholder": "Vendor/Customer"
+                    },
+                    "type": {
+                        "label": "Type",
+                        "placeholder": "Type"
+                    },
+                    "keyword": {
+                        "label": "Search",
+                        "placeholder": "Search"
+                    }
+                }
+            },
+            "table": {
+                "noData": "Not found any information",
+                "no": "No.",
+                "date": "Date",
+                "code": "Code",
+                "warehouse": "Warehouse",
+                "type": "Type",
+                "vendor_customer": "Vendor/Customer",
+                "sales_order": "Order",
+                "total_amount": "Total amount"
+            },
+            "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type"
+                },
+                "customer": {
+                    "label": "Vendor/Customer",
+                    "placeholder": "Vendor/Customer"
+                },
+                "file_attach": {
+                    "label": "Documents",
+                    "placeholder": "Documents"
+                },
+                "storage": {
+                    "label": "Warehouse",
+                    "placeholder": "Warehouse"
+                },
+                "date": {
+                    "label": "Date",
+                    "placeholder": "Date"
+                },
+                "sales_order": {
+                    "label": "Sales Order",
+                    "placeholder": "Sales Order"
+                },
+                "reason_for_issuing": {
+                    "label": "Reason",
+                    "placeholder": "Reason"
+                },
+                "remark": {
+                    "label": "Remark",
+                    "placeholder": "Remark"
+                },
+                "code": {
+                    "label": "Code",
+                    "placeholder": "Code"
+                },
+                "deliverer": {
+                    "label": "Deliverer",
+                    "placeholder": "Deliverer"
+                },
+                "status": {
+                    "label": "Status",
+                    "placeholder": "Status"
+                }
             }
         }
     }
