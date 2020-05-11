@@ -18,26 +18,7 @@ import {NGXLogger} from 'ngx-logger';
  */
 @Component({
     selector: 'ngx-smart-table-select-translate-cell',
-    template: `
-        <div [ngSwitch]="isEditable">
-            <div *ngSwitchCase="false" [innerHTML]="(cellValue || '') | translate"></div>
-            <div *ngSwitchDefault>
-                <select [ngClass]='inputClass'
-                        class='form-control'
-                        [(ngModel)]='cell.newValue'
-                        [name]='cellId'
-                        [disabled]='!isEditable'
-                        (click)='onClick.emit($event)'
-                        (keydown.enter)='onEdited.emit($event)'
-                        (keydown.esc)='onStopEditing.emit()'>
-                    <option *ngFor='let option of cellColumnConfig?.list' [value]='option.value'
-                            [selected]='option.value === cellValue'>
-                        {{(option.title || option.label || '') | translate}}
-                    </option>
-                </select>
-            </div>
-        </div>
-    `,
+    templateUrl: './select.translate.cell.component.html',
 })
 export class SelectTranslateCellComponent extends AbstractCellEditor {
 
