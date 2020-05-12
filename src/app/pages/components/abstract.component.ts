@@ -511,6 +511,7 @@ export abstract class AbstractComponent
         // this.getLogger().debug('ngOnDestroy',
         //     'queryViewContainerRef', this.queryViewContainerRef,
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
+        this.getChangeDetectorRef().detach();
     }
 
     /**

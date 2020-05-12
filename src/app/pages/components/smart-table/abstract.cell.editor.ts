@@ -2,9 +2,10 @@ import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef, forwardRef,
-    Host,
+    ElementRef,
+    forwardRef,
     Inject,
+    OnDestroy,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -22,7 +23,8 @@ import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 /**
  * Customization smart table cell editor/render component
  */
-export abstract class AbstractCellEditor extends DefaultEditor {
+export abstract class AbstractCellEditor extends DefaultEditor
+    implements OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -311,6 +313,10 @@ export abstract class AbstractCellEditor extends DefaultEditor {
     onLangChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
+    }
+
+    ngOnDestroy(): void {
+        this.changeDetectorRef.detach();
     }
 
     // -------------------------------------------------

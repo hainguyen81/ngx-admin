@@ -292,7 +292,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
             if (this.appendToBody()) {
                 const mainInputElRef: ElementRef = selectComponent['inputElRef'] as ElementRef;
                 const shouldAppendToBody: boolean = parentComponent.getConfigValue('appendToBody', false);
-                if (shouldAppendToBody && choiceMenuElRef && mainInputElRef) {
+                if (shouldAppendToBody && choiceMenuElRef && mainInputElRef && isNullOrUndefined(mainInputElRef['appendToBody'])) {
                     parentComponent.getRenderer().appendChild(
                         document.body, choiceMenuElRef.nativeElement);
                     const offset: { top: number, left: number, width: number, height: number } =
@@ -309,16 +309,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
                         choiceMenuElRef.nativeElement,
                         'width', offset.width + 'px',
                         RendererStyleFlags2.Important);
-                }
-
-                // bind option click event
-                const optLinks: NodeListOf<HTMLElement> = this.getElementsBySelector(
-                    '.ngx-select__choices .ngx-select__item-group .ngx-select__item.dropdown-item', document.body);
-                window.console.error([optLinks]);
-                if (!isNullOrUndefined(optLinks) && optLinks.length) {
-                    optLinks.forEach(optLink => {
-                        optLink.addEventListener('click', this.clickOptionAppendToBody2.bind(this));
-                    });
+                    mainInputElRef['appendToBody'] = true;
                 }
             }
         }
@@ -352,6 +343,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @param option {NgxSelectOption}
      */
     private clickOptionAppendToBody(option: NgxSelectOption, $event) {
+        window.console.error(['clickOptionAppendToBody', $event]);
         if (!this.appendToBody()) {
             return;
         }
@@ -364,6 +356,6 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @param $event {NgxSelectOption}
      */
     private clickOptionAppendToBody2($event: Event) {
-        window.console.error($event);
+        window.console.error(['clickOptionAppendToBody2', $event]);
     }
 }
