@@ -226,7 +226,11 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @return the field value
      */
     get value(): any {
-        return this.formatValue(super.value);
+        if (!isNullOrUndefined(this.field) && !isNullOrUndefined(this.formControl)) {
+            return this.formatValue(super.value);
+        } else {
+            return this.formatValue(this.rawValue);
+        }
     }
 
     /**
@@ -236,7 +240,8 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     set value(_value: any) {
         this.rawValue = _value;
         const __parsedValue: any = this.parseValue(this.rawValue);
-        if (super.value !== __parsedValue) {
+        if (!isNullOrUndefined(this.field) && !isNullOrUndefined(this.formControl)
+            && super.value !== __parsedValue) {
             super.value = __parsedValue;
         }
     }

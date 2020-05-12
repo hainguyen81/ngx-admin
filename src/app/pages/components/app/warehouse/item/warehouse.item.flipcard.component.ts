@@ -142,6 +142,7 @@ export class WarehouseItemFlipcardComponent
         }
 
         const versions: IWarehouseItem[] = this.getBackComponent().getDataModelVersions() || [];
+        this.selectedModel = Object.assign({}, this.getBackComponent().getDataModel());
         this.selectedModel.is_version = 0;
         this.selectedModel.versions = versions.length;
         versions.forEach(version => {

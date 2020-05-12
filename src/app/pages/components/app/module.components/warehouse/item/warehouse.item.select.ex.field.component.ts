@@ -40,6 +40,11 @@ export const WarehouseItemSelectOptions: INgxSelectExOptions =
          * {boolean}
          */
         enableOptionImage: true,
+        /**
+         * Specify whether appending options drop-down to body
+         * {boolean}
+         */
+        appendToBody: true,
     });
 
 /**
@@ -75,7 +80,7 @@ export class WarehouseItemFormlySelectExFieldComponent
         { [key: string]: (model: IWarehouseItem) => (string | string[] | IWarehouseItem) } | null {
         return {
             'text': (model: IWarehouseItem) => {
-                return (model ? [model.name, ' (', model.code, ')'].join('') : '');
+                return (model && model.code.length ? [model.name, ' (', model.code, ')'].join('') : '');
             },
         };
     }

@@ -23,7 +23,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
-import {NgxSelectComponent, NgxSelectOption, TSelectOption} from 'ngx-select-ex';
+import {NgxSelectComponent, NgxSelectOption} from 'ngx-select-ex';
 import {throwError} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -310,6 +310,16 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
                         'width', offset.width + 'px',
                         RendererStyleFlags2.Important);
                 }
+
+                // bind option click event
+                const optLinks: NodeListOf<HTMLElement> = this.getElementsBySelector(
+                    '.ngx-select__choices .ngx-select__item-group .ngx-select__item.dropdown-item', document.body);
+                window.console.error([optLinks]);
+                if (!isNullOrUndefined(optLinks) && optLinks.length) {
+                    optLinks.forEach(optLink => {
+                        optLink.addEventListener('click', this.clickOptionAppendToBody2.bind(this));
+                    });
+                }
             }
         }
 
@@ -347,5 +357,13 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
         }
 
         this.selectComponent.optionSelect(option, $event);
+    }
+
+    /**
+     * Custom for option while using `appendToBody`
+     * @param $event {NgxSelectOption}
+     */
+    private clickOptionAppendToBody2($event: Event) {
+        window.console.error($event);
     }
 }

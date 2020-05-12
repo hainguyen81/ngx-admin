@@ -15,7 +15,8 @@ import {
     OnInit,
     QueryList,
     Renderer2,
-    SimpleChanges, Type,
+    SimpleChanges,
+    Type,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -46,14 +47,13 @@ import {AbstractComponentService, BaseComponentService} from '../../services/com
 import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 import {AutoUnsubscribe} from './customization/extend.component';
-import {isArray, isNullOrUndefined} from 'util';
+import {isNullOrUndefined} from 'util';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import AppUtils from '../../utils/app.utils';
 import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
 import {AppConfig} from '../../config/app.config';
 import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';
 import {ActivatedRoute, Data, ParamMap, Params, Router} from '@angular/router';
-import {ModalDialogInstanceService} from 'ngx-modal-dialog/src/modal-dialog-instance.service';
 
 /* Customize event for abstract component */
 export interface IEvent {
