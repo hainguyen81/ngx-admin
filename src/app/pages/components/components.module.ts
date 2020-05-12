@@ -73,6 +73,7 @@ import {ObserveCellComponent} from './smart-table/observe.cell.component';
 import {NgxFileGalleryComponent} from './file/file.component';
 import {FileGalleryFormFieldComponent} from './formly/formly.file.field.component';
 import {NgxSelectComponent} from './select/select.component';
+import {SelectFormFieldComponent} from './formly/formly.select.field.component';
 
 @NgModule({
     imports: [
@@ -160,6 +161,11 @@ import {NgxSelectComponent} from './select/select.component';
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'select-ngx',
+                    component: SelectFormFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'password',
                     component: PasswordFormFieldComponent,
                     wrappers: ['form-field'],
@@ -221,6 +227,7 @@ import {NgxSelectComponent} from './select/select.component';
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,
         NgxSelectComponent,
+        SelectFormFieldComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -255,6 +262,7 @@ import {NgxSelectComponent} from './select/select.component';
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,
         NgxSelectComponent,
+        SelectFormFieldComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -280,6 +288,7 @@ import {NgxSelectComponent} from './select/select.component';
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,
         NgxSelectComponent,
+        SelectFormFieldComponent,
     ],
 })
 export class ComponentsModule {
