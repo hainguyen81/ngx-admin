@@ -1,13 +1,18 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {NgxSelectExComponent} from './select.ex.component';
+import {
+    AbstractSelectComponent,
+    DefaultNgxSelectOptions,
+} from './abstract.select.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -21,18 +26,19 @@ import {ActivatedRoute, Router} from '@angular/router';
  * Select component base on {NgxSelectComponent}
  */
 @Component({
-    selector: 'ngx-select-ex',
-    templateUrl: './select.ex.component.html',
-    styleUrls: ['./select.ex.component.scss'],
+    selector: 'ngx-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
 })
-export abstract class BaseNgxSelectExComponent<T extends DataSource> extends NgxSelectExComponent {
+export class NgxSelectComponent extends AbstractSelectComponent<DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {NgxSelectExComponent} class
+     * Create a new instance of {AbstractSelectComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -49,25 +55,26 @@ export abstract class BaseNgxSelectExComponent<T extends DataSource> extends Ngx
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      */
-    protected constructor(@Inject(DataSource) dataSource: T,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+    constructor(@Inject(DataSource) dataSource: DataSource,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            router, activatedRoute);
+            router, activatedRoute,
+            DefaultNgxSelectOptions);
     }
 }

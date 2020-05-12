@@ -13,7 +13,7 @@ import {NGXLogger} from 'ngx-logger';
 import {
     AppModuleDataIndexSettingsFormlySelectExFieldComponent,
 } from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants, Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
@@ -24,7 +24,7 @@ import {$enum} from 'ts-enum-util';
 import STATUS = Constants.COMMON.STATUS;
 
 export const WarehouseItemSelectOptions: INgxSelectExOptions =
-    Object.assign({}, DefaultNgxSelectOptions, {
+    Object.assign({}, DefaultNgxSelectExOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
          * {string}

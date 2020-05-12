@@ -7,7 +7,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {NgxSelectExComponent} from './select.ex.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -16,23 +15,24 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgxSelectComponent} from './select.component';
 
 /**
  * Select component base on {NgxSelectComponent}
  */
 @Component({
-    selector: 'ngx-select-ex',
-    templateUrl: './select.ex.component.html',
-    styleUrls: ['./select.ex.component.scss'],
+    selector: 'ngx-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
 })
-export abstract class BaseNgxSelectExComponent<T extends DataSource> extends NgxSelectExComponent {
+export abstract class BaseNgxSelectComponent<T extends DataSource> extends NgxSelectComponent {
 
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {NgxSelectExComponent} class
+     * Create a new instance of {BaseNgxSelectComponent} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}

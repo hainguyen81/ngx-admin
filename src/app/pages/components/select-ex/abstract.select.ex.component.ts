@@ -95,7 +95,7 @@ export interface INgxSelectExOptions extends INgxSelectOptions {
 /**
  * Default select configuration
  */
-export const DefaultNgxSelectOptions: INgxSelectExOptions = {
+export const DefaultNgxSelectExOptions: INgxSelectExOptions = {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}

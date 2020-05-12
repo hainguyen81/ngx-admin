@@ -19,10 +19,10 @@ import {
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {throwError} from 'rxjs';
 import {IModule} from '../../../../../@core/data/system/module';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 
 export const AppGeneralSettingsSelectOptions: INgxSelectExOptions =
-    Object.assign({}, DefaultNgxSelectOptions, {
+    Object.assign({}, DefaultNgxSelectExOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
          * {string}

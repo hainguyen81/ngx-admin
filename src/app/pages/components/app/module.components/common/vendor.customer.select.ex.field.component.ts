@@ -1,5 +1,5 @@
 import {
-    DefaultNgxSelectOptions,
+    DefaultNgxSelectExOptions,
     INgxSelectExOptions,
 } from '../../../select-ex/abstract.select.ex.component';
 import {
@@ -29,7 +29,7 @@ import {
 } from '../../components/common/app.module.data.index.formly.select.ex.field.component';
 
 export const VendorCustomerSelectOptions: INgxSelectExOptions =
-    Object.assign({}, DefaultNgxSelectOptions, {
+    Object.assign({}, DefaultNgxSelectExOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
          * {string}

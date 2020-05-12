@@ -72,6 +72,7 @@ import {NgxPanelComponent} from './panel/panel.component';
 import {ObserveCellComponent} from './smart-table/observe.cell.component';
 import {NgxFileGalleryComponent} from './file/file.component';
 import {FileGalleryFormFieldComponent} from './formly/formly.file.field.component';
+import {NgxSelectComponent} from './select/select.component';
 
 @NgModule({
     imports: [
@@ -219,6 +220,7 @@ import {FileGalleryFormFieldComponent} from './formly/formly.file.field.componen
         ObserveCellComponent,
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,
+        NgxSelectComponent,
     ],
     declarations: [
         SmartTableComponent,
@@ -252,6 +254,7 @@ import {FileGalleryFormFieldComponent} from './formly/formly.file.field.componen
         ObserveCellComponent,
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,
+        NgxSelectComponent,
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
@@ -276,6 +279,7 @@ import {FileGalleryFormFieldComponent} from './formly/formly.file.field.componen
         ObserveCellComponent,
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,
+        NgxSelectComponent,
     ],
 })
 export class ComponentsModule {

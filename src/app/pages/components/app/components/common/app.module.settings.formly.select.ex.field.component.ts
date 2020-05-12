@@ -9,7 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {NGXLogger} from 'ngx-logger';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {
@@ -20,7 +20,7 @@ import {
     AppModuleDataIndexSettingsFormlySelectExFieldComponent,
 } from './app.module.data.index.formly.select.ex.field.component';
 
-export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
+export const AppModuleSettingsSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}

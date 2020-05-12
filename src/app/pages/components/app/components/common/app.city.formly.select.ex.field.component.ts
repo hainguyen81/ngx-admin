@@ -9,7 +9,7 @@ import {
 import City, {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, of} from 'rxjs';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {CityDatasource} from '../../../../../services/implementation/system/city/city.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
@@ -18,7 +18,7 @@ import {
     AppModuleDataFormlySelectExFieldComponent,
 } from './app.module.data.formly.select.ex.field.component';
 
-export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
+export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}

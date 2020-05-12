@@ -13,14 +13,14 @@ import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
 import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import Country, {ICountry} from '../../../../../@core/data/system/country';
 import {NGXLogger} from 'ngx-logger';
 import {
     AppModuleDataFormlySelectExFieldComponent,
 } from './app.module.data.formly.select.ex.field.component';
 
-export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
+export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}

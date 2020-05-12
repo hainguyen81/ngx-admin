@@ -20,12 +20,12 @@ import {
 import {$enum} from 'ts-enum-util';
 import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
-    Object.assign({}, DefaultNgxSelectOptions, {
+    Object.assign({}, DefaultNgxSelectExOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
          * {string}

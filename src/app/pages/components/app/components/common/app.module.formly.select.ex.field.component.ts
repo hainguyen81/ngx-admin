@@ -12,12 +12,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {NGXLogger} from 'ngx-logger';
 import Module, {IModule} from '../../../../../@core/data/system/module';
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
 
-export const AppModulesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
+export const AppModulesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}

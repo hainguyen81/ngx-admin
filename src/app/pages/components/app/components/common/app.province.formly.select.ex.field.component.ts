@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, of} from 'rxjs';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {ICountry} from '../../../../../@core/data/system/country';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
@@ -18,7 +18,7 @@ import {
     AppModuleDataFormlySelectExFieldComponent,
 } from './app.module.data.formly.select.ex.field.component';
 
-export const AppProvincesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectOptions, {
+export const AppProvincesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}

@@ -13,7 +13,7 @@ import {NGXLogger} from 'ngx-logger';
 import {
     AppModuleDataIndexSettingsFormlySelectExFieldComponent,
 } from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
@@ -22,7 +22,7 @@ import {
 } from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 
 export const WarehouseSettingsBatchSelectOptions: INgxSelectExOptions =
-    Object.assign({}, DefaultNgxSelectOptions, {
+    Object.assign({}, DefaultNgxSelectExOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
          * {string}

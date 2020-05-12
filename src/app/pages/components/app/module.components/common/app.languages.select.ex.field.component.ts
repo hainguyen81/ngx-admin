@@ -15,14 +15,14 @@ import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {DefaultNgxSelectOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {LocalDataSource} from 'ng2-smart-table';
 import {Observable, of} from 'rxjs';
 import {AppConfig} from '../../../../../config/app.config';
 import {IdGenerators} from '../../../../../config/generator.config';
 
 export const AppLanguagesSelectOptions: INgxSelectExOptions =
-    Object.assign({}, DefaultNgxSelectOptions, {
+    Object.assign({}, DefaultNgxSelectExOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
          * {string}
