@@ -48,6 +48,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            renderComponent: WarehouseItemCellComponent,
             editor: {
                 type: 'custom',
                 component: WarehouseItemCellComponent,

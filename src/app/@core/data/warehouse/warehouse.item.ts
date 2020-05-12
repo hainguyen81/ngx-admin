@@ -61,7 +61,7 @@ export interface IWarehouseItem extends IModel {
     // Ghi chú
     remark?: string | null;
     // the number of versions
-    is_version?: boolean | false;
+    is_version?: number | 0;
     versions?: number | 0;
 
     // foreign keys

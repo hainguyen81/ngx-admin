@@ -253,7 +253,7 @@ export class WarehouseItemVersionSmartTableComponent
                 version.id = IdGenerators.oid.generate();
                 version.item_id = _this.getDataModel().id;
                 version.item_code = _this.getDataModel().code;
-                version.is_version = true;
+                version.is_version = 1;
                 _this.dataModelVersion.unshift(version);
             }
             _this.getDataSource().refresh();

@@ -117,6 +117,14 @@ export abstract class AbstractCellEditor extends DefaultEditor {
     }
 
     /**
+     * Get a boolean value indicating the current {Cell} whether is in edit mode
+     * @return true for being in edit mode; else false
+     */
+    get isInEditingMode(): boolean {
+        return (this.cellRow ? this.cellRow.isInEditing : false);
+    }
+
+    /**
      * Get the current {Cell} new value
      * @return the current {Cell} new value
      */

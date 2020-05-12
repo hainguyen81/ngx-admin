@@ -142,12 +142,12 @@ export class WarehouseItemFlipcardComponent
         }
 
         const versions: IWarehouseItem[] = this.getBackComponent().getDataModelVersions() || [];
-        this.selectedModel.is_version = false;
+        this.selectedModel.is_version = 0;
         this.selectedModel.versions = versions.length;
         versions.forEach(version => {
             version.item_id = this.selectedModel.id;
             version.item_code = this.selectedModel.code;
-            version.is_version = true;
+            version.is_version = 1;
             version.versions = 0;
         });
 
