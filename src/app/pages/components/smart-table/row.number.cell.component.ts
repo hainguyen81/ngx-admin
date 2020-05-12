@@ -2,16 +2,16 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, forwardRef,
     Host,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {NumberCellComponent} from './number.cell.component';
-import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mode/custom-view.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
+import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 
 /**
  * Smart table row number cell component base on {DefaultEditor}
@@ -45,7 +45,7 @@ export class RowNumberCellComponent extends NumberCellComponent {
 
     /**
      * Create a new instance of {RowNumberCellComponent} class
-     * @param _parentView {CustomViewComponent}
+     * @param _parentCell {CellComponent}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -54,7 +54,7 @@ export class RowNumberCellComponent extends NumberCellComponent {
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Host() _parentView: CustomViewComponent,
+    constructor(@Inject(forwardRef(() => CellComponent)) _parentCell: CellComponent,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,
@@ -62,7 +62,7 @@ export class RowNumberCellComponent extends NumberCellComponent {
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
-        super(_parentView, _translateService, _renderer, _logger,
+        super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
 }

@@ -155,17 +155,19 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
         }
 
         // build field template config and options before query select-ex component
-        this.field.className = [(this.field.className || ''),
-            'form-field form-select-ex'].join(' ').trim();
-        if (this.field && this.field.templateOptions
-            && isArray(this.field.templateOptions.options)) {
-            this.items = this.field.templateOptions.options as any[];
-
-        } else if (this.field && this.field.templateOptions
-            && isObservable(this.field.templateOptions.options)) {
-            this.field.templateOptions.options.subscribe((items: any[]) => {
+        if (this.field) {
+            this.field.className = [(this.field.className || ''),
+                'form-field form-select-ex'].join(' ').trim();
+            if (this.field.templateOptions
+                && isArray(this.field.templateOptions.options)) {
                 this.items = this.field.templateOptions.options as any[];
-            });
+
+            } else if (this.field.templateOptions
+                && isObservable(this.field.templateOptions.options)) {
+                this.field.templateOptions.options.subscribe((items: any[]) => {
+                    this.items = this.field.templateOptions.options as any[];
+                });
+            }
         }
     }
 
@@ -179,7 +181,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
 
     protected onStatusChanges(value: any): void {
         if (value === 'DISABLED' && this.selectExComponent && this.config) {
-            this.config.disabled = this.field.formControl.disabled;
+            this.config.disabled = (this.field && this.field.formControl && this.field.formControl.disabled);
         }
     }
 
@@ -229,12 +231,12 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     protected onSelect($event: IEvent): void {
-        this.field.focus = true;
+        if (this.field) this.field.focus = true;
         this.setValue(($event || {}).data);
     }
 
     protected onClose($event: IEvent): void {
-        this.field.focus = false;
+        if (this.field) this.field.focus = false;
         this.stateChanges.next();
     }
 

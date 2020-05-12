@@ -17,20 +17,17 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {
-    WarehouseInventoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
-import {
     WarehouseItemCellComponent,
 } from '../../module.components/warehouse/item/warehouse.item.cell.component';
+import {
+    WarehouseInventoryDetailDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -48,7 +45,7 @@ export const WarehouseInventoryDetailTableSettings = {
     columns: {
         item_code: {
             title: 'warehouse.inventory.detail.table.item',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             editor: {
@@ -129,7 +126,7 @@ export const WarehouseInventoryDetailContextMenu: IContextMenu[] = [].concat(COM
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class WarehouseInventoryDetailSmartTableComponent
-    extends AppSmartTableComponent<WarehouseInventoryDatasource> {
+    extends AppSmartTableComponent<WarehouseInventoryDetailDatasource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -145,7 +142,7 @@ export class WarehouseInventoryDetailSmartTableComponent
 
     /**
      * Create a new instance of {WarehouseInventoryDetailSmartTableComponent} class
-     * @param dataSource {WarehouseInventoryDatasource}
+     * @param dataSource {WarehouseInventoryDetailDatasource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -160,9 +157,8 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param generalSettingsDatasource {GeneralSettingsDatasource}
      */
-    constructor(@Inject(WarehouseInventoryDatasource) dataSource: WarehouseInventoryDatasource,
+    constructor(@Inject(WarehouseInventoryDetailDatasource) dataSource: WarehouseInventoryDetailDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,

@@ -293,16 +293,16 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         if (this.field) {
             this.field.className = [(this.field.className || ''),
                 'custom-form-field'].join(' ').trim();
+            this.field.expressionProperties
+            && (this.expressionPropertyObserver() || '').length
+            && this.field.expressionProperties.hasOwnProperty(this.expressionPropertyObserver())
+            && of(this.field.expressionProperties[this.expressionPropertyObserver()])
+                .subscribe(value => this.subscribeExpressionProperty(value));
+            this.formControl
+            && this.formControl.valueChanges.subscribe(value => this.onValueChanges(value));
+            this.formControl
+            && this.formControl.statusChanges.subscribe(value => this.onStatusChanges(value));
         }
-        this.field && this.field.expressionProperties
-        && (this.expressionPropertyObserver() || '').length
-        && this.field.expressionProperties.hasOwnProperty(this.expressionPropertyObserver())
-        && of(this.field.expressionProperties[this.expressionPropertyObserver()])
-            .subscribe(value => this.subscribeExpressionProperty(value));
-        this.formControl
-        && this.formControl.valueChanges.subscribe(value => this.onValueChanges(value));
-        this.formControl
-        && this.formControl.statusChanges.subscribe(value => this.onStatusChanges(value));
     }
 
     ngOnDestroy(): void {

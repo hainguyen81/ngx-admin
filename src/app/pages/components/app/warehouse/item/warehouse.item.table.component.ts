@@ -195,6 +195,7 @@ export class WarehouseItemSmartTableComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param generalSettingsDatasource {GeneralSettingsDatasource}
      */
     constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,

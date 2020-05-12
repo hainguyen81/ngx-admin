@@ -277,6 +277,7 @@ export const dbConfig: DBConfig = {
             {name: 'quantity_received', keypath: 'quantity_received', options: {unique: false}},
             {name: 'description', keypath: 'description', options: {unique: false}},
             {name: 'remark', keypath: 'remark', options: {unique: false}},
+            {name: 'is_version', keypath: 'is_version', options: {unique: false}},
             {name: 'versions', keypath: 'versions', options: {unique: false}},
             {name: 'item_id', keypath: 'item_id', options: {unique: false}},
             {name: 'item_code', keypath: 'item_code', options: {unique: false}},

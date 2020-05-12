@@ -2,13 +2,12 @@ import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, forwardRef,
     Host,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mode/custom-view.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, of, throwError} from 'rxjs';
@@ -18,6 +17,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNullOrUndefined} from 'util';
 import PromiseUtils from '../../../utils/promise.utils';
 import {isPromise} from 'rxjs/internal-compatibility';
+import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 
 /**
  * Customization smart table cell editor/render component
@@ -182,8 +182,8 @@ export abstract class AbstractCellEditor extends DefaultEditor {
         if (isNullOrUndefined(this._cell)) {
             if (super.cell) {
                 this._cell = super.cell;
-            } else if (this.parentView) {
-                this._cell = this.parentView.cell;
+            } else if (this.parentCell) {
+                this._cell = this.parentCell.cell;
             }
         }
         return this._cell;
@@ -198,11 +198,11 @@ export abstract class AbstractCellEditor extends DefaultEditor {
     }
 
     /**
-     * Get the parent {CustomViewComponent} instance
-     * @return the parent {CustomViewComponent} instance
+     * Get the parent {CellComponent} instance
+     * @return the parent {CellComponent} instance
      */
-    protected get parentView(): CustomViewComponent {
-        return this._parentView;
+    protected get parentCell(): CellComponent {
+        return this._parentCell;
     }
 
     /**
@@ -267,7 +267,7 @@ export abstract class AbstractCellEditor extends DefaultEditor {
 
     /**
      * Create a new instance of {AbstractCellEditor} class
-     * @param _parentView {CustomViewComponent}
+     * @param _parentCell {CellComponent}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -276,7 +276,7 @@ export abstract class AbstractCellEditor extends DefaultEditor {
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Host() private _parentView: CustomViewComponent,
+    protected constructor(@Inject(forwardRef(() => CellComponent)) private _parentCell: CellComponent,
                           @Inject(TranslateService) private _translateService: TranslateService,
                           @Inject(Renderer2) private _renderer: Renderer2,
                           @Inject(NGXLogger) private _logger: NGXLogger,
@@ -285,6 +285,7 @@ export abstract class AbstractCellEditor extends DefaultEditor {
                           @Inject(ChangeDetectorRef) private _changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) private _elementRef: ElementRef) {
         super();
+        _parentCell || throwError('Could not inject CellComponent');
         _translateService || throwError('Could not inject TranslateService');
         _renderer || throwError('Could not inject Renderer2');
         _logger || throwError('Could not inject NGXLogger');

@@ -3,17 +3,17 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, forwardRef,
     Host,
     Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {isArray, isNullOrUndefined} from 'util';
-import {CustomViewComponent} from 'ng2-smart-table/components/cell/cell-view-mode/custom-view.component';
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
+import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 
 /**
  * Smart table image cell component base on {DefaultEditor}
@@ -66,7 +66,7 @@ export class ImageCellComponent extends AbstractCellEditor
 
     /**
      * Create a new instance of {ImageCellComponent} class
-     * @param _parentView {CustomViewComponent}
+     * @param _parentCell {CellComponent}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -75,7 +75,7 @@ export class ImageCellComponent extends AbstractCellEditor
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Host() _parentView: CustomViewComponent,
+    constructor(@Inject(forwardRef(() => CellComponent)) _parentCell: CellComponent,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,
@@ -83,7 +83,7 @@ export class ImageCellComponent extends AbstractCellEditor
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
-        super(_parentView, _translateService, _renderer, _logger,
+        super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
 

@@ -197,6 +197,7 @@ export class WarehouseItemVersionSmartTableComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param warehouseItemVersionDatasource {WarehouseItemVersionDatasource}
      */
     constructor(@Inject(DataSource) dataSource: LocalDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -252,6 +253,7 @@ export class WarehouseItemVersionSmartTableComponent
                 version.id = IdGenerators.oid.generate();
                 version.item_id = _this.getDataModel().id;
                 version.item_code = _this.getDataModel().code;
+                version.is_version = true;
                 _this.dataModelVersion.unshift(version);
             }
             _this.getDataSource().refresh();
