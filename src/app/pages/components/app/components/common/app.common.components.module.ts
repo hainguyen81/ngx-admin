@@ -34,6 +34,7 @@ import {AppFormlyTreeviewDropdownFieldComponent} from './app.formly.treeview.dro
 import {AppCityFormlySelectFieldComponent} from './app.city.formly.select.field.component';
 import {AppCountryFormlySelectFieldComponent} from './app.country.formly.select.field.component';
 import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.field.component';
+import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.select.field.component';
 
 @NgModule({
     imports: [
@@ -110,6 +111,11 @@ import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.fi
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'select-ngx-province',
+                    component: AppProvinceFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'select-ex-city',
                     component: AppCityFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -152,6 +158,7 @@ import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.fi
         AppModuleFormlySelectFieldComponent,
         AppFormlyDatePickerFieldComponent,
         AppProvinceFormlySelectExFieldComponent,
+        AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
     ],
     exports: [
@@ -163,6 +170,7 @@ import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.fi
         AppModuleFormlySelectFieldComponent,
         AppFormlyDatePickerFieldComponent,
         AppProvinceFormlySelectExFieldComponent,
+        AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
     ],
     declarations: [
@@ -174,6 +182,7 @@ import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.fi
         AppModuleFormlySelectFieldComponent,
         AppFormlyDatePickerFieldComponent,
         AppProvinceFormlySelectExFieldComponent,
+        AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
     ],
 })
