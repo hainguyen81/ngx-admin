@@ -82,6 +82,7 @@ import {
 } from './warehouse/item/warehouse.item.select.ex.field.component';
 import {WarehouseItemCellComponent} from './warehouse/item/warehouse.item.cell.component';
 import {AppLanguagesFormlySelectFieldComponent} from './common/app.languages.select.field.component';
+import {SystemCurrencyFormlySelectFieldComponent} from "./common/system.currency.select.field.component";
 
 @NgModule({
     imports: [
@@ -151,6 +152,11 @@ import {AppLanguagesFormlySelectFieldComponent} from './common/app.languages.sel
                 {
                     name: 'system-currency',
                     component: SystemCurrencyFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-system-currency',
+                    component: SystemCurrencyFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -245,6 +251,7 @@ import {AppLanguagesFormlySelectFieldComponent} from './common/app.languages.sel
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
+        SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
@@ -266,6 +273,7 @@ import {AppLanguagesFormlySelectFieldComponent} from './common/app.languages.sel
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
+        SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
@@ -287,6 +295,7 @@ import {AppLanguagesFormlySelectFieldComponent} from './common/app.languages.sel
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
+        SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
