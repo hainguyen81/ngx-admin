@@ -90,8 +90,15 @@ import {
 import {
     SystemCustomerLevelFormlySelectFieldComponent,
 } from './common/system.customer.level.select.field.component';
-import {SystemCustomerTypeFormlySelectFieldComponent} from './common/system.customer.type.select.field.component';
-import {SystemOrganizationTypeFormlySelectFieldComponent} from "./common/system.organization.type.select.field.component";
+import {
+    SystemCustomerTypeFormlySelectFieldComponent,
+} from './common/system.customer.type.select.field.component';
+import {
+    SystemOrganizationTypeFormlySelectFieldComponent,
+} from './common/system.organization.type.select.field.component';
+import {
+    SystemStatusFormlySelectFieldComponent,
+} from './common/system.status.select.field.component';
 
 @NgModule({
     imports: [
@@ -156,6 +163,11 @@ import {SystemOrganizationTypeFormlySelectFieldComponent} from "./common/system.
                 {
                     name: 'system-status',
                     component: SystemStatusFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-system-status',
+                    component: SystemStatusFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -274,6 +286,7 @@ import {SystemOrganizationTypeFormlySelectFieldComponent} from "./common/system.
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
+        SystemStatusFormlySelectFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
@@ -299,6 +312,7 @@ import {SystemOrganizationTypeFormlySelectFieldComponent} from "./common/system.
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
+        SystemStatusFormlySelectFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
@@ -324,6 +338,7 @@ import {SystemOrganizationTypeFormlySelectFieldComponent} from "./common/system.
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
+        SystemStatusFormlySelectFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
