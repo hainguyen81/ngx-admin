@@ -121,6 +121,7 @@ import {
     WarehouseSettingsBatchFormlySelectFieldComponent,
 } from './warehouse/settings/warehouse.settings.batch.select.field.component';
 import {WarehouseSettingsBrandFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.brand.select.field.component';
+import {WarehouseSettingsItemFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.item.select.field.component';
 
 @NgModule({
     imports: [
@@ -283,6 +284,11 @@ import {WarehouseSettingsBrandFormlySelectFieldComponent} from './warehouse/sett
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'ngx-warehouse-settings-item',
+                    component: WarehouseSettingsItemFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'warehouse-category-type',
                     component: WarehouseCategoryTypeFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -364,6 +370,7 @@ import {WarehouseSettingsBrandFormlySelectFieldComponent} from './warehouse/sett
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
+        WarehouseSettingsItemFormlySelectFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
@@ -398,6 +405,7 @@ import {WarehouseSettingsBrandFormlySelectFieldComponent} from './warehouse/sett
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
+        WarehouseSettingsItemFormlySelectFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
@@ -432,6 +440,7 @@ import {WarehouseSettingsBrandFormlySelectFieldComponent} from './warehouse/sett
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsBrandFormlySelectFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
+        WarehouseSettingsItemFormlySelectFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
