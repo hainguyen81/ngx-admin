@@ -646,7 +646,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @return the option items array
      */
     public get items(): any[] {
-        return this.items || [];
+        return this._items || [];
     }
 
     /**
