@@ -978,8 +978,9 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param item to parse
      */
     public getBindValue(item: any): any {
-        return (this.getBindProperty(item, 'bindValue', 'id')
-            || this.getBindProperty(item, 'bindValue', 'code'));
+        const bindValue: string = this.getConfigValue('bindValue');
+        return (this.getBindProperty(item, bindValue, 'id')
+            || this.getBindProperty(item, bindValue, 'code'));
     }
 
     /**
@@ -987,9 +988,10 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param item to parse
      */
     public getBindLabel(item: any): any {
-        return (this.getBindProperty(item, 'bindLabel', 'title')
-            || this.getBindProperty(item, 'bindLabel', 'text')
-            || this.getBindProperty(item, 'bindLabel', 'name'));
+        const bindLabel: string = this.getConfigValue('bindLabel');
+        return (this.getBindProperty(item, bindLabel, 'title')
+            || this.getBindProperty(item, bindLabel, 'text')
+            || this.getBindProperty(item, bindLabel, 'name'));
     }
 
     /**
@@ -999,8 +1001,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param defaultProperty default property to bind if not valid
      */
     public getBindProperty(item: any, property: string, defaultProperty?: string | null): any {
-        const propertyConfig: string = this.getConfigValue(property);
-        if (!(propertyConfig || '').length || !item || !item.hasOwnProperty(propertyConfig)) {
+        if (!(property || '').length || !item || !item.hasOwnProperty(property)) {
             if (!(defaultProperty || '').length || !item || !item.hasOwnProperty(defaultProperty)) {
                 return undefined;
             } else {
