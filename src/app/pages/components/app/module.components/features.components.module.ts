@@ -105,6 +105,15 @@ import {
 import {
     WarehouseCategoryTypeFormlySelectFieldComponent,
 } from './common/warehouse.category.type.select.field.component';
+import {
+    WarehouseInventoryStatusFormlySelectFieldComponent,
+} from './common/warehouse.inventory.status.select.field.component';
+import {
+    WarehouseInventoryTypeFormlySelectFieldComponent,
+} from './common/warehouse.inventory.type.select.field.component';
+import {
+    WarehouseSettingsTypeFormlySelectFieldComponent,
+} from './common/warehouse.settings.type.select.field.component';
 
 @NgModule({
     imports: [
@@ -227,13 +236,28 @@ import {
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'ngx-warehouse-inventory-status',
+                    component: WarehouseInventoryStatusFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'warehouse-inventory-type',
                     component: WarehouseInventoryTypeFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'ngx-warehouse-inventory-type',
+                    component: WarehouseInventoryTypeFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'warehouse-settings-type',
                     component: WarehouseSettingsTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-warehouse-settings-type',
+                    component: WarehouseSettingsTypeFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -313,8 +337,11 @@ import {
         SystemOrganizationTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
+        WarehouseInventoryStatusFormlySelectFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
+        WarehouseInventoryTypeFormlySelectFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
+        WarehouseSettingsTypeFormlySelectFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
@@ -341,8 +368,11 @@ import {
         SystemOrganizationTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
+        WarehouseInventoryStatusFormlySelectFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
+        WarehouseInventoryTypeFormlySelectFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
+        WarehouseSettingsTypeFormlySelectFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
@@ -369,8 +399,11 @@ import {
         SystemOrganizationTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
+        WarehouseInventoryStatusFormlySelectFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
+        WarehouseInventoryTypeFormlySelectFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
+        WarehouseSettingsTypeFormlySelectFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
