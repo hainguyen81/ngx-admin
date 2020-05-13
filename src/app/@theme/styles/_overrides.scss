@@ -291,6 +291,8 @@
             min-height: unset;
             .ng-value-container {
                 border-top: none;
+                padding: 0;
+                min-height: 20px;
             }
             &::after {
                 content: none;
@@ -298,6 +300,17 @@
         }
     }
     .ng-select.ng-select-single .ng-select-container .ng-arrow-wrapper {
+        bottom: 5px;
+    }
+    .ng-select.ng-select-single .ng-select-container .ng-clear-wrapper {
         bottom: 0;
+    }
+    .mat-form-field.form-field-ngx-select .mat-form-field-infix,
+    .mat-form-field.form-field-ngx-select-image .mat-form-field-infix {
+        padding: 0.2775rem 0;
+    }
+    .mat-form-field.form-field-ngx-select .mat-form-field-infix,
+    .mat-form-field.form-field-ngx-select-image .mat-form-field-infix {
+        padding: 0.2775rem 0;
     }
 }

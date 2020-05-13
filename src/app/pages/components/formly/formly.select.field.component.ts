@@ -30,6 +30,9 @@ import {NgOption} from '@ng-select/ng-select';
 })
 export class SelectFormFieldComponent extends AbstractFieldType implements AfterViewInit {
 
+    private static DEFAULT_CLASS_FORM_FIELD: string = 'form-field-ngx-select';
+    private static IMAGE_CLASS_FORM_FIELD: string = 'form-field-ngx-select-image';
+
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
@@ -157,13 +160,14 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                         this.field.focus = true;
                         this.value = component.selectedValues;
                     });
+                    this.checkOverrideFormFieldClass();
                 });
         }
 
         // build field template config and options before query select-ex component
         if (this.field) {
             this.field.className = [(this.field.className || ''),
-                'form-field form-select-ex'].join(' ').trim();
+                'form-field form-ngx-select'].join(' ').trim();
             if (this.field.templateOptions
                 && isArray(this.field.templateOptions.options)) {
                 this.items = this.field.templateOptions.options as any[];
@@ -192,6 +196,32 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
     protected onStatusChanges(value: any): void {
         if (value === 'DISABLED' && this.selectComponent) {
             this.config.readonly = (this.field && this.field.formControl && this.field.formControl.disabled);
+        }
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    /**
+     * Check for adding/removing form field class for customizing
+     */
+    private checkOverrideFormFieldClass() {
+        if (this.formField && this.formField._elementRef
+            && this.formField._elementRef.nativeElement) {
+            const enabledImage: boolean = this.getConfigValue('enableImage', false);
+            enabledImage && this.renderer.removeClass(
+                this.formField._elementRef.nativeElement,
+                SelectFormFieldComponent.DEFAULT_CLASS_FORM_FIELD);
+            !enabledImage && this.renderer.removeClass(
+                this.formField._elementRef.nativeElement,
+                SelectFormFieldComponent.IMAGE_CLASS_FORM_FIELD);
+            enabledImage && this.renderer.addClass(
+                this.formField._elementRef.nativeElement,
+                SelectFormFieldComponent.IMAGE_CLASS_FORM_FIELD);
+            !enabledImage && this.renderer.addClass(
+                this.formField._elementRef.nativeElement,
+                SelectFormFieldComponent.DEFAULT_CLASS_FORM_FIELD);
         }
     }
 }
