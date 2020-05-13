@@ -123,7 +123,7 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'lang',
-                                type: 'system-language',
+                                type: 'ngx-system-language',
                                 templateOptions: {
                                     label: 'system.user.form.lang.label',
                                     placeholder: 'system.user.form.lang.placeholder',

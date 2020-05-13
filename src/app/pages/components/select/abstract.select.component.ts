@@ -970,4 +970,17 @@ export abstract class AbstractSelectComponent<T extends DataSource>
         }
         return item[property];
     }
+
+    /**
+     * The comparation from configuration. If not found in config, then it will compare by `bidnValue`
+     * @param a to compare
+     * @param b to compare
+     */
+    protected compareWith(a: any, b: any): boolean {
+        const _compareWith: (a1: any, b1: any) => boolean = this.getConfigValue('compareWith');
+        if (isNullOrUndefined(_compareWith)) {
+            return (this.getBindValue(a) === this.getBindValue(b));
+        }
+        return _compareWith.apply(this, [a, b]);
+    }
 }
