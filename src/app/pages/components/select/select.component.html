@@ -62,7 +62,7 @@
            (focusin)="onFocusIn({ event: $event, data: selectComponent })"
            (focusout)="onFocusOut({ event: $event, data: selectComponent })"
 >
-    <ng-option [value]="item.id"  [disabled]="item.disabled" *ngFor="let item of items">
+    <ng-option [value]="item.id" [disabled]="item.disabled" *ngFor="let item of items">
         <img #itemImage *ngIf="getConfigValue('enableImage', false)"
              [src]="parseOptionFirstImage(item)"
              class="ngx-select-2-option-selected_option-image option-image"

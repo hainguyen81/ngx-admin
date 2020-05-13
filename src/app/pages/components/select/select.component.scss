@@ -4,4 +4,15 @@
     ::ng-deep nb-card {
         transform: translate3d(0, 0, 0);
     }
+    ::ng-deep ngx-select ng-option {
+        .option-image {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            padding: 2px;
+        }
+        .ngx-select-2__choices .ngx-select-2__item_addNewOption {
+            padding: 3px 20px;
+        }
+    }
 }
