@@ -676,7 +676,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             const multiple: boolean = this.getConfigValue('multiple', false);
             for (const item of items) {
                 if (!isNullOrUndefined(item)) {
-                    this.selectComponent.select(item);
+                    this.selectComponent.itemsList.select(item);
                     if (!multiple) break;
                 }
             }
@@ -697,16 +697,10 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     set selectedValues(values: any[]) {
         if (!isNullOrUndefined(this.selectComponent)) {
-            const selectedItems: NgOption[] = [];
-            const multiple: boolean = this.getConfigValue('multiple', false);
-            for (const value of values || []) {
-                const item: NgOption = this.selectComponent.itemsList.findItem(value);
-                if (!isNullOrUndefined(item)) {
-                    selectedItems.push(item);
-                    if (!multiple) break;
-                }
-            }
-            selectedItems.forEach(item => this.selectComponent.select(item));
+            const selectedItems: NgOption[] = this.findItems(values);
+            selectedItems.forEach(item => {
+                this.selectComponent.itemsList.select(item);
+            });
         }
     }
 
@@ -1030,5 +1024,26 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             return (aVal === bVal);
         }
         return _compareWith.apply(_this, [a, b]);
+    }
+
+    /**
+     * Find the {NgOption} array of the specified values array
+     * @param values to find
+     */
+    public findItems(values: any[]): NgOption[] {
+        if (isNullOrUndefined(this.selectComponent)) {
+            return [];
+        }
+
+        const selectedItems: NgOption[] = [];
+        const multiple: boolean = this.getConfigValue('multiple', false);
+        for (const value of values || []) {
+            const item: NgOption = this.selectComponent.itemsList.findItem(value);
+            if (!isNullOrUndefined(item)) {
+                selectedItems.push(item);
+                if (!multiple) break;
+            }
+        }
+        return selectedItems;
     }
 }

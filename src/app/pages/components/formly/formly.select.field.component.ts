@@ -96,11 +96,22 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         return (this.selectComponent ? this.selectComponent.selectedValues : []);
     }
 
+    get valueFormatter(): (value: any) => any {
+        return value => {
+            if (isNullOrUndefined(this.selectComponent)) {
+                return undefined;
+            }
+
+            return this.selectComponent.findItems(value);
+        };
+    }
+
     get valueParser(): (value: any) => any {
         return value => {
             if (isNullOrUndefined(this.selectComponent)) {
                 return undefined;
             }
+
             const parsedValues: any[] = [];
             const rawValues: any[] = (isArray(value)
                 ? Array.from(value) : !isNullOrUndefined(value) ? [value] : []);
@@ -152,17 +163,6 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             this.ngxSelectComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectComponent, component => {
                     if (!isNullOrUndefined(component)) {
-                        let formattedValues: any[];
-                        const fieldValue: any = this.value;
-                        if (isArray(fieldValue)) {
-                            formattedValues = [].concat(Array.from(fieldValue));
-                        } else if (!isNullOrUndefined(fieldValue)) {
-                            formattedValues = [fieldValue];
-                        } else {
-                            formattedValues = [];
-                        }
-
-                        component.selectedValues = formattedValues;
                         component.open.subscribe(e => {
                             this.field.focus = true;
                         });
@@ -171,7 +171,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                         });
                         component.change.subscribe(e => {
                             this.field.focus = true;
-                            this.value = component.selectedValues;
+                            this.value = (e || {})['data'];
                         });
                     }
                     this.checkOverrideFormFieldClass();
@@ -204,7 +204,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                         : !isNullOrUndefined(value) ? [value] : []);
             }
             window.clearTimeout(timer);
-        }, 300);
+        }, 200);
     }
 
     protected onStatusChanges(value: any): void {
