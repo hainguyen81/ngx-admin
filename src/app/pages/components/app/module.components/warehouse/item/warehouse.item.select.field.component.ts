@@ -24,7 +24,7 @@ import {$enum} from 'ts-enum-util';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abstract.select.component';
 import {
     AppModuleDataIndexSettingsFormlySelectFieldComponent,
-} from "../../../components/common/app.module.data.index.formly.select.field.component";
+} from '../../../components/common/app.module.data.index.formly.select.field.component';
 
 export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
