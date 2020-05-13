@@ -21,6 +21,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgSelectConfig} from '@ng-select/ng-select';
 
 /**
  * Select component base on {NgSelectComponent}
@@ -29,6 +30,10 @@ import {ActivatedRoute, Router} from '@angular/router';
     selector: 'ngx-select-2',
     templateUrl: './select.component.html',
     styleUrls: ['./select.component.scss'],
+    providers: [{
+        provide: NgSelectConfig, useValue: DefaultNgxSelectOptions,
+        multi: true,
+    }],
 })
 export class NgxSelectComponent extends AbstractSelectComponent<DataSource>
     implements AfterViewInit {

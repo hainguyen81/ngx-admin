@@ -2,15 +2,12 @@ import './prototypes.import';
 import {
     APP_BOOTSTRAP_LISTENER,
     APP_INITIALIZER,
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
     ComponentRef,
-    ElementRef,
     ErrorHandler,
     InjectionToken,
     Injector,
     LOCALE_ID,
-    StaticProvider, ViewContainerRef,
+    StaticProvider,
 } from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
 import {

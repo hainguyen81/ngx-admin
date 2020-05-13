@@ -316,7 +316,7 @@ export abstract class AbstractCellEditor extends DefaultEditor
     }
 
     ngOnDestroy(): void {
-        this.changeDetectorRef.detach();
+        // this.changeDetectorRef.detach();
     }
 
     // -------------------------------------------------

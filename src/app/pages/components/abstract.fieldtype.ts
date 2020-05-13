@@ -311,7 +311,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     }
 
     ngOnDestroy(): void {
-        this.changeDetectorRef.detach();
+        // this.changeDetectorRef.detach();
         if (this.field && this.field.formControl) {
             delete this._field.formControl['componentRef'];
         }
