@@ -114,6 +114,7 @@ import {
 import {
     WarehouseSettingsTypeFormlySelectFieldComponent,
 } from './common/warehouse.settings.type.select.field.component';
+import {WarehouseItemFormlySelectFieldComponent} from './warehouse/item/warehouse.item.select.field.component';
 
 @NgModule({
     imports: [
@@ -350,6 +351,7 @@ import {
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
         WarehouseItemFormlySelectExFieldComponent,
+        WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
     ],
     exports: [
@@ -381,6 +383,7 @@ import {
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
         WarehouseItemFormlySelectExFieldComponent,
+        WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
     ],
     declarations: [
@@ -412,6 +415,7 @@ import {
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
         WarehouseItemFormlySelectExFieldComponent,
+        WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
     ],
 })
