@@ -931,4 +931,43 @@ export abstract class AbstractSelectComponent<T extends DataSource>
         const images: string[] = this.parseOptionImages(item);
         return (!isNullOrUndefined(images) && images.length ? images[0] : null);
     }
+
+    /**
+     * Get the bind value of the specified item
+     * @param item to parse
+     */
+    public getBindValue(item: any): any {
+        const bindValue: string = this.getConfigValue('bindValue');
+        return (this.getBindProperty(item, bindValue, 'id')
+            || this.getBindProperty(item, bindValue, 'code'));
+    }
+
+    /**
+     * Get the bind label of the specified item
+     * @param item to parse
+     */
+    public getBindLabel(item: any): any {
+        const bindLabel: string = this.getConfigValue('bindLabel');
+        return (this.getBindProperty(item, bindLabel, 'title')
+            || this.getBindProperty(item, bindLabel, 'text')
+            || this.getBindProperty(item, bindLabel, 'name'));
+    }
+
+    /**
+     * Get the bind property value of the specified item
+     * @param item to parse
+     * @param property item property to bind
+     * @param defaultProperty default property to bind if not valid
+     */
+    public getBindProperty(item: any, property: string, defaultProperty?: string | null): any {
+        const bindValue: string = this.getConfigValue('bindValue');
+        if (!(property || '').length || !item || !item.hasOwnProperty(property)) {
+            if (!(defaultProperty || '').length || !item || !item.hasOwnProperty(defaultProperty)) {
+                return undefined;
+            } else {
+                return item[defaultProperty];
+            }
+        }
+        return item[property];
+    }
 }

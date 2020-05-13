@@ -9,7 +9,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -17,6 +16,7 @@ import {isArray, isNullOrUndefined} from 'util';
 import {isObservable, Observable, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import {AppFormlySelectFieldComponent} from './app.formly.select.field.component';
+import {INgxSelectOptions} from '../../../select/abstract.select.component';
 
 /**
  * Custom module data formly field for selecting special
@@ -48,7 +48,7 @@ export abstract class AppModuleDataFormlySelectFieldComponent<M extends IModel, 
 
     /**
      * Create a new instance of {AppModuleDataSettingsFormlySelectExFieldComponent} class
-     * @param datasource {DataSource}
+     * @param _datasource {DataSource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -66,7 +66,7 @@ export abstract class AppModuleDataFormlySelectFieldComponent<M extends IModel, 
                           @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) _elementRef: ElementRef,
-                          _config?: INgxSelectExOptions | null) {
+                          _config?: INgxSelectOptions | null) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef, _config);
         this._datasource || throwError('Could not inject DataSource instance');

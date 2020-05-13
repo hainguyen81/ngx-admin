@@ -62,7 +62,7 @@
            (focusin)="onFocusIn({ event: $event, data: selectComponent })"
            (focusout)="onFocusOut({ event: $event, data: selectComponent })"
 >
-    <ng-option [value]="item.id" [disabled]="item.disabled" *ngFor="let item of items">
+    <ng-option [value]="getBindValue(item)" [disabled]="item.disabled" *ngFor="let item of items">
         <img #itemImage *ngIf="getConfigValue('enableImage', false)"
              [src]="parseOptionFirstImage(item)"
              class="ngx-select-2-option-selected_option-image option-image"
@@ -70,8 +70,8 @@
              (load)="itemImage.style.visibility = 'visible'"
              (click)="openAlbumLightbox(parseOptionImages(item), itemImage.src); preventEvent($event)">
         <span class="ngx-select-2-option_option-label option-label"
-              [attr.option]="item.id"
-              [innerHTML]="translate(item['text'] || item['title'] || item['name'])"></span>
+              [attr.option]="getBindValue(item)"
+              [innerHTML]="translate(getBindLabel(item))"></span>
     </ng-option>
 </ng-select>
 
