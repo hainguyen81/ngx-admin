@@ -23,10 +23,10 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 
 /**
- * Select component base on {NgxSelectComponent}
+ * Select component base on {NgSelectComponent}
  */
 @Component({
-    selector: 'ngx-select',
+    selector: 'ngx-select-2',
     templateUrl: './select.component.html',
     styleUrls: ['./select.component.scss'],
 })

@@ -61,7 +61,56 @@
            (mousewheel)="onMouseWheel({ event: $event, data: selectComponent })"
            (focusin)="onFocusIn({ event: $event, data: selectComponent })"
            (focusout)="onFocusOut({ event: $event, data: selectComponent })"
-></ng-select>
+>
+    <ng-option [value]="item.id"  [disabled]="item.disabled" *ngFor="let item of items">
+        <img #itemImage *ngIf="getConfigValue('enableImage', false)"
+             [src]="parseOptionFirstImage(item)"
+             class="ngx-select-2-option-selected_option-image option-image"
+             (error)="itemImage.style.visibility = 'hidden'"
+             (load)="itemImage.style.visibility = 'visible'"
+             (click)="openAlbumLightbox(parseOptionImages(item), itemImage.src); preventEvent($event)">
+        <span class="ngx-select-2-option_option-label option-label"
+              [attr.option]="item.id"
+              [innerHTML]="translate(item['text'] || item['title'] || item['name'])"></span>
+    </ng-option>
+</ng-select>
+
+<li #addNewOption
+    *ngIf="getConfigValue('addNewOption', false)"
+    class="ngx-select-2__item-group ngx-select-2__item ngx-select-2__item_addNewOption">
+    <button nbButton
+            [class.d-table]="true"
+            [id]="addNewOptionConfig.id"
+            [title]="addNewOptionConfig.description || ''"
+            [classList]="addNewOptionConfig.class || ''"
+            [type]="addNewOptionConfig.type || 'button'"
+            [filled]="addNewOptionConfig.filled"
+            [outline]="addNewOptionConfig.outline"
+            [ghost]="addNewOptionConfig.ghost"
+            [hero]="addNewOptionConfig.hero"
+            [fullWidth]="addNewOptionConfig.fullWidth"
+            [disabled]="addNewOptionConfig.disabled"
+            [size]="addNewOptionConfig.size"
+            [shape]="addNewOptionConfig.shape"
+            [status]="addNewOptionConfig.status"
+            (click)="onAddNewOption({ event: $event, data: addNewOptionConfig });"
+            (mousedown)="onMouseDown({ event: $event, data: addNewOptionConfig })"
+            (mouseenter)="onMouseEnter({ event: $event, data: addNewOptionConfig })"
+            (mouseleave)="onMouseLeave({ event: $event, data: addNewOptionConfig })"
+            (mousemove)="onMouseMove({ event: $event, data: addNewOptionConfig })"
+            (mouseout)="onMouseOut({ event: $event, data: addNewOptionConfig })"
+            (mouseover)="onMouseOver({ event: $event, data: addNewOptionConfig })"
+            (mouseup)="onMouseUp({ event: $event, data: addNewOptionConfig })"
+            (mousewheel)="onMouseWheel({ event: $event, data: addNewOptionConfig })"
+            (focus)="onFocus({ event: $event, data: addNewOptionConfig })"
+            (focusin)="onFocusIn({ event: $event, data: addNewOptionConfig })"
+            (focusout)="onFocusOut({ event: $event, data: addNewOptionConfig })"
+            (blur)="onBlur({ event: $event, data: addNewOptionConfig })"
+    ><span><nb-icon [icon]="addNewOptionConfig.icon.icon"
+                    *ngIf="addNewOptionConfig.icon && addNewOptionConfig.icon.icon.length > 0"
+                    [pack]="addNewOptionConfig.icon.pack"></nb-icon>
+        {{addNewOptionConfig.label | translate}}</span></button>
+</li>
 
 <context-menu #selectContextMenuComponent
               [disabled]="!contextMenu || !contextMenu.length"

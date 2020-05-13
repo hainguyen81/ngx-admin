@@ -30,6 +30,8 @@ import {
 import {Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DropdownPosition, NgOption, NgSelectComponent} from '@ng-select/ng-select';
+import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
+import {isArray, isNullOrUndefined} from 'util';
 
 /**
  * The extension of {NgSelectConfig}
@@ -260,6 +262,26 @@ export interface INgxSelectOptions {
      * @param $event {KeyboardEvent}
      */
     keyDownFn?: ($event: KeyboardEvent) => boolean | true;
+    /**
+     * Specify whether using image for option
+     * {boolean}
+     */
+    enableImage?: boolean | false;
+    /**
+     * Provide an opportunity to change the name an image property of objects in the items
+     * {string}
+     */
+    imageParser?: (item: any) => (string | string[] | null) | string[] | string | null;
+    /**
+     * Shows the 'Add new option' action in case of out of items at all
+     * {boolean}
+     */
+    addNewOption?: boolean | false;
+    /**
+     * The configuration of 'Add new option' action
+     * {IToolbarActionsConfig}
+     */
+    addNewOptionConfig?: IToolbarActionsConfig | null;
 }
 
 /**
@@ -492,6 +514,26 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
      * @param $event {KeyboardEvent}
      */
     keyDownFn: true,
+    /**
+     * Specify whether using image for option
+     * {boolean}
+     */
+    enableImage: false,
+    /**
+     * Provide an opportunity to change the name an image property of objects in the items
+     * {string}
+     */
+    imageParser: null,
+    /**
+     * Shows the 'Add new option' action in case of out of items at all
+     * {boolean}
+     */
+    addNewOption: false,
+    /**
+     * The configuration of 'Add new option' action
+     * {IToolbarActionsConfig}
+     */
+    addNewOptionConfig: null,
 };
 
 /**
@@ -582,6 +624,14 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     get currentPanelPosition(): DropdownPosition {
         return (this.selectComponent ? this.selectComponent.currentPanelPosition : null);
+    }
+
+    /**
+     * Get the {IToolbarActionsConfig} instance of the `add new option` action
+     * @return the {IToolbarActionsConfig} instance
+     */
+    get addNewOptionConfig(): IToolbarActionsConfig {
+        return this.getConfigValue('addNewOptionConfig') as IToolbarActionsConfig;
     }
 
     // -------------------------------------------------
@@ -754,5 +804,46 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onScrollToEnd($event: IEvent): void {
         this.getLogger().debug('onScrollToEnd', $event);
+    }
+
+    /**
+     * Raise by clicking on 'Add new option' action.
+     * @param $event {IEvent} as {IEvent#$event} is event data
+     */
+    protected onAddNewOption($event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onAddNewOption', $event);
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Parse the specified option item images
+     * @param item to parse
+     */
+    public parseOptionImages(item: any): string[] {
+        const parser: (item: any) => string | string[] | null = this.getConfigValue('imageParser');
+        let images: string[] = [];
+        if (!isNullOrUndefined(parser)) {
+            const image: string | string[] = parser.apply(this, [item]);
+            if (isArray(image)) {
+                images = Array.from(image);
+
+            } else if ((image || '').length) {
+                images.push(image as string);
+            }
+        }
+        return images;
+    }
+
+    /**
+     * Parse the specified option item first image
+     * @param item to parse
+     */
+    public parseOptionFirstImage(item: any): string {
+        const images: string[] = this.parseOptionImages(item);
+        return (!isNullOrUndefined(images) && images.length ? images[0] : null);
     }
 }
