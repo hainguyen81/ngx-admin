@@ -310,7 +310,7 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
      * For correct positioning body should have position:relative
      * Default is null
      */
-    appendTo: null,
+    appendTo: 'body',
     /**
      * Object property to use for selected model.
      * By default binds to whole object.
@@ -978,9 +978,8 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param item to parse
      */
     public getBindValue(item: any): any {
-        const bindValue: string = this.getConfigValue('bindValue');
-        return (this.getBindProperty(item, bindValue, 'id')
-            || this.getBindProperty(item, bindValue, 'code'));
+        return (this.getBindProperty(item, 'bindValue', 'id')
+            || this.getBindProperty(item, 'bindValue', 'code'));
     }
 
     /**
@@ -988,10 +987,9 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param item to parse
      */
     public getBindLabel(item: any): any {
-        const bindLabel: string = this.getConfigValue('bindLabel');
-        return (this.getBindProperty(item, bindLabel, 'title')
-            || this.getBindProperty(item, bindLabel, 'text')
-            || this.getBindProperty(item, bindLabel, 'name'));
+        return (this.getBindProperty(item, 'bindLabel', 'title')
+            || this.getBindProperty(item, 'bindLabel', 'text')
+            || this.getBindProperty(item, 'bindLabel', 'name'));
     }
 
     /**
@@ -1001,8 +999,8 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param defaultProperty default property to bind if not valid
      */
     public getBindProperty(item: any, property: string, defaultProperty?: string | null): any {
-        const bindValue: string = this.getConfigValue('bindValue');
-        if (!(property || '').length || !item || !item.hasOwnProperty(property)) {
+        const propertyConfig: string = this.getConfigValue(property);
+        if (!(propertyConfig || '').length || !item || !item.hasOwnProperty(propertyConfig)) {
             if (!(defaultProperty || '').length || !item || !item.hasOwnProperty(defaultProperty)) {
                 return undefined;
             } else {
