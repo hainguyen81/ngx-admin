@@ -7,43 +7,43 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {NGXLogger} from 'ngx-logger';
 import Module, {IModule} from '../../../../../@core/data/system/module';
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
+import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../select/abstract.select.component';
+import {AppFormlySelectFieldComponent} from './app.formly.select.field.component';
 
-export const AppModulesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
+export const AppModulesNgxSelectOptions: INgxSelectOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
      * Provide an opportunity to change the name an id property of objects in the items
      * {string}
      */
-    optionValueField: 'code',
+    bindValue: 'code',
     /**
      * Provide an opportunity to change the name a text property of objects in the items
      * {string}
      */
-    optionTextField: 'text',
+    bindLabel: 'text',
     /**
      * Specify whether using image for option
      * {boolean}
      */
-    enableOptionImage: false,
+    enableImage: false,
 });
 
 /**
  * Custom module formly field for selecting special
  */
 @Component({
-    selector: 'ngx-select-ex-app-module',
-    templateUrl: '../../../formly/formly.select.ex.field.component.html',
-    styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
+    selector: 'ngx-select-2-app-module',
+    templateUrl: '../../../formly/formly.select.field.component.html',
+    styleUrls: ['../../../formly/formly.select.field.component.scss'],
 })
-export class AppModuleFormlySelectExFieldComponent
-    extends AppFormlySelectExFieldComponent<IModule>
+export class AppModuleFormlySelectFieldComponent
+    extends AppFormlySelectFieldComponent<IModule>
     implements OnInit {
 
     // -------------------------------------------------
@@ -51,7 +51,7 @@ export class AppModuleFormlySelectExFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AppFormlySelectExFieldComponent} class
+     * Create a new instance of {AppFormlySelectFieldComponent} class
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param moduleDataSource {ModuleDatasource}
@@ -71,7 +71,7 @@ export class AppModuleFormlySelectExFieldComponent
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            AppModulesSelectOptions);
+            AppModulesNgxSelectOptions);
         moduleDataSource || throwError('Could not inject ModuleDatasource instance');
     }
 
