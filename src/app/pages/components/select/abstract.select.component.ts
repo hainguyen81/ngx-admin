@@ -70,6 +70,16 @@ export interface INgxSelectOptions {
      */
     bindLabel?: string | 'label' | null;
     /**
+     * Specify whether using image for option
+     * {boolean}
+     */
+    enableImage?: boolean | false;
+    /**
+     * Object property to use for image.
+     * Default `image`
+     */
+    bindImage?: (item: any) => (string | string[] | null) | string[] | string | 'image' | null;
+    /**
      * Whether to close the menu when a value is selected.
      * Default is true
      */
@@ -262,16 +272,6 @@ export interface INgxSelectOptions {
      * @param $event {KeyboardEvent}
      */
     keyDownFn?: ($event: KeyboardEvent) => boolean | true;
-    /**
-     * Specify whether using image for option
-     * {boolean}
-     */
-    enableImage?: boolean | false;
-    /**
-     * Provide an opportunity to change the name an image property of objects in the items
-     * {string}
-     */
-    imageParser?: (item: any) => (string | string[] | null) | string[] | string | null;
     /**
      * Shows the 'Add new option' action in case of out of items at all
      * {boolean}
@@ -897,15 +897,27 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param item to parse
      */
     public parseOptionImages(item: any): string[] {
-        const parser: (item: any) => string | string[] | null = this.getConfigValue('imageParser');
+        if (!this.getConfigValue('enableImage', false)) {
+            return [];
+        }
+
+        const parser: (item: any) => string | string[] | null = this.getConfigValue('bindImage');
         let images: string[] = [];
         if (!isNullOrUndefined(parser)) {
-            const image: string | string[] = parser.apply(this, [item]);
-            if (isArray(image)) {
-                images = Array.from(image);
+            if (typeof parser === 'function') {
+                const image: string | string[] = parser.apply(this, [item]);
+                if (isArray(image)) {
+                    images = Array.from(image);
 
-            } else if ((image || '').length) {
-                images.push(image as string);
+                } else if ((image || '').length) {
+                    images.push(image as string);
+                }
+
+            } else if (isArray(parser)) {
+                images = [].concat(Array.from(parser));
+
+            } else {
+                images.push(parser as string);
             }
         }
         return images;
