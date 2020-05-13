@@ -4,21 +4,18 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef, forwardRef,
-    Host,
     Inject, QueryList,
     Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {isNullOrUndefined} from 'util';
 import {Constants} from '../../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = Constants.COMMON.MODULE_CODES;
-import {WarehouseItemFormlySelectExFieldComponent} from './warehouse.item.select.ex.field.component';
-import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
 import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.field.component';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -36,38 +33,20 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren(WarehouseItemFormlySelectExFieldComponent)
-    private readonly querySelectComponent: QueryList<WarehouseItemFormlySelectExFieldComponent>;
-    private _selectComponent: WarehouseItemFormlySelectExFieldComponent;
+    @ViewChildren(WarehouseItemFormlySelectFieldComponent)
+    private readonly querySelectComponent: QueryList<WarehouseItemFormlySelectFieldComponent>;
+    private _selectComponent: WarehouseItemFormlySelectFieldComponent;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected get selectComponent(): WarehouseItemFormlySelectExFieldComponent {
+    protected get selectComponent(): WarehouseItemFormlySelectFieldComponent {
         return this._selectComponent;
     }
 
     get isEditable(): boolean {
         return true;
-    }
-
-    get valueParser(): (value: any) => any {
-        return value => value;
-    }
-
-    get valueFormatter(): (value: any) => any {
-        return value => {
-            if (!isNullOrUndefined(this.selectComponent)) {
-                const detectValItem: IWarehouseItem =
-                    (this.selectComponent.items || []).find((item: IWarehouseItem) => {
-                    return (((isNullOrUndefined(value) || !(value || '').length) && isNullOrUndefined(item))
-                        || item.code === value);
-                });
-                return detectValItem;
-            }
-            return undefined;
-        };
     }
 
     // -------------------------------------------------

@@ -57,7 +57,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'type',
-                                type: 'system-customer-type',
+                                type: 'ngx-system-customer-type',
                                 templateOptions: {
                                     label: 'system.customer.form.type.label',
                                     placeholder: 'system.customer.form.type.placeholder',
@@ -67,7 +67,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'level',
-                                type: 'system-customer-level',
+                                type: 'ngx-system-customer-level',
                                 templateOptions: {
                                     label: 'system.customer.form.level.label',
                                     placeholder: 'system.customer.form.level.placeholder',
@@ -77,7 +77,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'status',
-                                type: 'system-status',
+                                type: 'ngx-system-status',
                                 templateOptions: {
                                     label: 'system.customer.form.status.label',
                                     placeholder: 'system.customer.form.status.placeholder',
@@ -137,7 +137,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'country_id',
-                                type: 'select-ex-country',
+                                type: 'select-ngx-country',
                                 templateOptions: {
                                     label: 'system.customer.form.country.label',
                                     placeholder: 'system.customer.form.country.placeholder',
@@ -146,7 +146,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'province_id',
-                                type: 'select-ex-province',
+                                type: 'select-ngx-province',
                                 templateOptions: {
                                     label: 'system.customer.form.state_province.label',
                                     placeholder: 'system.customer.form.state_province.placeholder',
@@ -166,7 +166,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'city_id',
-                                type: 'select-ex-city',
+                                type: 'select-ngx-city',
                                 templateOptions: {
                                     label: 'system.customer.form.city.label',
                                     placeholder: 'system.customer.form.city.placeholder',
