@@ -114,7 +114,12 @@ import {
 import {
     WarehouseSettingsTypeFormlySelectFieldComponent,
 } from './common/warehouse.settings.type.select.field.component';
-import {WarehouseItemFormlySelectFieldComponent} from './warehouse/item/warehouse.item.select.field.component';
+import {
+    WarehouseItemFormlySelectFieldComponent,
+} from './warehouse/item/warehouse.item.select.field.component';
+import {
+    WarehouseSettingsBatchFormlySelectFieldComponent,
+} from './warehouse/settings/warehouse.settings.batch.select.field.component';
 
 @NgModule({
     imports: [
@@ -297,6 +302,11 @@ import {WarehouseItemFormlySelectFieldComponent} from './warehouse/item/warehous
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'ngx-warehouse-settings-batch',
+                    component: WarehouseSettingsBatchFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'warehouse-item',
                     component: WarehouseItemFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -350,6 +360,7 @@ import {WarehouseItemFormlySelectFieldComponent} from './warehouse/item/warehous
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
+        WarehouseSettingsBatchFormlySelectFieldComponent,
         WarehouseItemFormlySelectExFieldComponent,
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
@@ -382,6 +393,7 @@ import {WarehouseItemFormlySelectFieldComponent} from './warehouse/item/warehous
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
+        WarehouseSettingsBatchFormlySelectFieldComponent,
         WarehouseItemFormlySelectExFieldComponent,
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
@@ -414,6 +426,7 @@ import {WarehouseItemFormlySelectFieldComponent} from './warehouse/item/warehous
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
         WarehouseSettingsBatchFormlySelectExFieldComponent,
+        WarehouseSettingsBatchFormlySelectFieldComponent,
         WarehouseItemFormlySelectExFieldComponent,
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
