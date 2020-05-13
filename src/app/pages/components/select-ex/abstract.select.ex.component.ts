@@ -253,7 +253,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     /**
      * Raise after items already were loaded to show
      */
-    @Output() finishedLoading: EventEmitter<any> = new EventEmitter<any>();
+    @Output() readonly finishedLoading: EventEmitter<any> = new EventEmitter<any>();
 
     /**
      * Items array.

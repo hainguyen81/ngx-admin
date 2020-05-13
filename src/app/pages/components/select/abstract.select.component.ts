@@ -553,7 +553,70 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     /**
      * Raise after items already were loaded to show
      */
-    @Output() finishedLoading: EventEmitter<any> = new EventEmitter<any>();
+    @Output() readonly finishedLoading: EventEmitter<any> = new EventEmitter<any>();
+
+    /**
+     * Fired when item is added while [multiple]='true'. Outputs added item.
+     * $event {IEvent} with data is an added item
+     */
+    @Output() readonly add: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired on model change. Outputs whole model
+     * @param $event {IEvent} with data is model
+     */
+    @Output() readonly change: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired on select dropdown close
+     * @param $event {IEvent} no data
+     */
+    @Output() readonly close: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired on clear icon click
+     * @param $event {IEvent} no data
+     */
+    @Output() readonly clear: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired while typing search term. Outputs search term with filtered items
+     * @param $event {IEvent} with data is { term, items: this.itemsList.filteredItems.map(x => x.value) }
+     */
+    @Output() readonly search: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired on select dropdown open
+     * @param $event {IEvent} no data
+     */
+    @Output() readonly open: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired when item is removed while [multiple]='true'
+     * @param $event {IEvent} with data is a removed item
+     */
+    @Output() readonly remove: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired when scrolled.
+     * Provides the start and end index of the currently available items.
+     * Can be used for loading more items in chunks before the user has scrolled all the way to the bottom of the list.
+     * @param $event {IEvent} with data is { start: number; end: number }
+     */
+    @Output() readonly scroll: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Fired when scrolled to the end of items.
+     * Can be used for loading more items in chunks.
+     * @param $event {IEvent} no data
+     */
+    @Output() readonly scrollToEnd: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
+     * Raise by clicking on 'Add new option' action.
+     * @param $event {IEvent} as {IEvent#$event} is event data
+     */
+    @Output() readonly addNewOption: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     /**
      * Items array.
@@ -737,6 +800,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onAdd($event: IEvent): void {
         this.getLogger().debug('onAdd', $event);
+        this.add.emit($event);
     }
 
     /**
@@ -745,6 +809,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onChange($event: IEvent): void {
         this.getLogger().debug('onChange', $event);
+        this.change.emit($event);
     }
 
     /**
@@ -753,6 +818,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onClose($event: IEvent): void {
         this.getLogger().debug('onClose', $event);
+        this.close.emit($event);
     }
 
     /**
@@ -761,6 +827,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onClear($event: IEvent): void {
         this.getLogger().debug('onClear', $event);
+        this.clear.emit($event);
     }
 
     /**
@@ -769,6 +836,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onSearch($event: IEvent): void {
         this.getLogger().debug('onSearch', $event);
+        this.search.emit($event);
     }
 
     /**
@@ -777,6 +845,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onOpen($event: IEvent): void {
         this.getLogger().debug('onOpen', $event);
+        this.open.emit($event);
     }
 
     /**
@@ -785,6 +854,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onRemove($event: IEvent): void {
         this.getLogger().debug('onRemove', $event);
+        this.remove.emit($event);
     }
 
     /**
@@ -795,6 +865,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onScroll($event: IEvent): void {
         this.getLogger().debug('onScroll', $event);
+        this.scroll.emit($event);
     }
 
     /**
@@ -804,6 +875,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onScrollToEnd($event: IEvent): void {
         this.getLogger().debug('onScrollToEnd', $event);
+        this.scrollToEnd.emit($event);
     }
 
     /**
@@ -813,6 +885,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     protected onAddNewOption($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onAddNewOption', $event);
+        this.addNewOption.emit($event);
     }
 
     // -------------------------------------------------
