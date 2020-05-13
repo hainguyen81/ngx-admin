@@ -186,8 +186,8 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         const timer: number = window.setTimeout(() => {
             if (!isNullOrUndefined(this.selectComponent)) {
                 this.selectComponent.selectedValues =
-                    (isArray(this.value) ? this.value
-                        : !isNullOrUndefined(value) ? [this.value] : []);
+                    (isArray(value) ? value
+                        : !isNullOrUndefined(value) ? [value] : []);
             }
             window.clearTimeout(timer);
         }, 200);
