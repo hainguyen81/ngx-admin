@@ -90,6 +90,8 @@ import {
 import {
     SystemCustomerLevelFormlySelectFieldComponent,
 } from './common/system.customer.level.select.field.component';
+import {SystemCustomerTypeFormlySelectFieldComponent} from './common/system.customer.type.select.field.component';
+import {SystemOrganizationTypeFormlySelectFieldComponent} from "./common/system.organization.type.select.field.component";
 
 @NgModule({
     imports: [
@@ -182,8 +184,18 @@ import {
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'ngx-system-customer-type',
+                    component: SystemCustomerTypeFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'system-organization-type',
                     component: SystemOrganizationTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-system-organization-type',
+                    component: SystemOrganizationTypeFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -267,7 +279,9 @@ import {
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerLevelFormlySelectFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
+        SystemCustomerTypeFormlySelectFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
+        SystemOrganizationTypeFormlySelectFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
@@ -290,7 +304,9 @@ import {
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerLevelFormlySelectFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
+        SystemCustomerTypeFormlySelectFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
+        SystemOrganizationTypeFormlySelectFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
@@ -313,7 +329,9 @@ import {
         SystemCustomerLevelFormlySelectExFieldComponent,
         SystemCustomerLevelFormlySelectFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
+        SystemCustomerTypeFormlySelectFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
+        SystemOrganizationTypeFormlySelectFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
