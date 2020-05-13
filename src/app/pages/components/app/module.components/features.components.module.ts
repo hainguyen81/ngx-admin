@@ -99,6 +99,9 @@ import {
 import {
     SystemStatusFormlySelectFieldComponent,
 } from './common/system.status.select.field.component';
+import {
+    VendorCustomerFormlySelectFieldComponent,
+} from './common/vendor.customer.select.field.component';
 
 @NgModule({
     imports: [
@@ -158,6 +161,11 @@ import {
                 {
                     name: 'vendor-customer',
                     component: VendorCustomerFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-vendor-customer',
+                    component: VendorCustomerFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -285,6 +293,7 @@ import {
         AppLanguagesFormlySelectExFieldComponent,
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
+        VendorCustomerFormlySelectFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemStatusFormlySelectFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
@@ -311,6 +320,7 @@ import {
         AppLanguagesFormlySelectExFieldComponent,
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
+        VendorCustomerFormlySelectFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemStatusFormlySelectFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
@@ -337,6 +347,7 @@ import {
         AppLanguagesFormlySelectExFieldComponent,
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
+        VendorCustomerFormlySelectFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemStatusFormlySelectFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
