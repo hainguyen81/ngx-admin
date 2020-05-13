@@ -81,8 +81,15 @@ import {
     WarehouseItemFormlySelectExFieldComponent,
 } from './warehouse/item/warehouse.item.select.ex.field.component';
 import {WarehouseItemCellComponent} from './warehouse/item/warehouse.item.cell.component';
-import {AppLanguagesFormlySelectFieldComponent} from './common/app.languages.select.field.component';
-import {SystemCurrencyFormlySelectFieldComponent} from "./common/system.currency.select.field.component";
+import {
+    AppLanguagesFormlySelectFieldComponent,
+} from './common/app.languages.select.field.component';
+import {
+    SystemCurrencyFormlySelectFieldComponent,
+} from './common/system.currency.select.field.component';
+import {
+    SystemCustomerLevelFormlySelectFieldComponent,
+} from './common/system.customer.level.select.field.component';
 
 @NgModule({
     imports: [
@@ -162,6 +169,11 @@ import {SystemCurrencyFormlySelectFieldComponent} from "./common/system.currency
                 {
                     name: 'system-customer-level',
                     component: SystemCustomerLevelFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-system-customer-level',
+                    component: SystemCustomerLevelFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -253,6 +265,7 @@ import {SystemCurrencyFormlySelectFieldComponent} from "./common/system.currency
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
+        SystemCustomerLevelFormlySelectFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
@@ -275,6 +288,7 @@ import {SystemCurrencyFormlySelectFieldComponent} from "./common/system.currency
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
+        SystemCustomerLevelFormlySelectFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
@@ -297,6 +311,7 @@ import {SystemCurrencyFormlySelectFieldComponent} from "./common/system.currency
         SystemCurrencyFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectFieldComponent,
         SystemCustomerLevelFormlySelectExFieldComponent,
+        SystemCustomerLevelFormlySelectFieldComponent,
         SystemCustomerTypeFormlySelectExFieldComponent,
         SystemOrganizationTypeFormlySelectExFieldComponent,
         WarehouseInventoryStatusFormlySelectExFieldComponent,
