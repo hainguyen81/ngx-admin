@@ -81,6 +81,7 @@ import {
     WarehouseItemFormlySelectExFieldComponent,
 } from './warehouse/item/warehouse.item.select.ex.field.component';
 import {WarehouseItemCellComponent} from './warehouse/item/warehouse.item.cell.component';
+import {AppLanguagesFormlySelectFieldComponent} from './common/app.languages.select.field.component';
 
 @NgModule({
     imports: [
@@ -130,6 +131,11 @@ import {WarehouseItemCellComponent} from './warehouse/item/warehouse.item.cell.c
                 {
                     name: 'system-language',
                     component: AppLanguagesFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-system-language',
+                    component: AppLanguagesFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
                 {
@@ -235,6 +241,7 @@ import {WarehouseItemCellComponent} from './warehouse/item/warehouse.item.cell.c
     ],
     entryComponents: [
         AppLanguagesFormlySelectExFieldComponent,
+        AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
@@ -255,6 +262,7 @@ import {WarehouseItemCellComponent} from './warehouse/item/warehouse.item.cell.c
     ],
     exports: [
         AppLanguagesFormlySelectExFieldComponent,
+        AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
@@ -275,6 +283,7 @@ import {WarehouseItemCellComponent} from './warehouse/item/warehouse.item.cell.c
     ],
     declarations: [
         AppLanguagesFormlySelectExFieldComponent,
+        AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
         SystemStatusFormlySelectExFieldComponent,
         SystemCurrencyFormlySelectExFieldComponent,
