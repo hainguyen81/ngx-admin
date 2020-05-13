@@ -132,7 +132,7 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-4',
                                 key: 'status',
-                                type: 'system-status',
+                                type: 'ngx-system-status',
                                 templateOptions: {
                                     label: 'system.user.form.status.label',
                                     placeholder: 'system.user.form.status.placeholder',
