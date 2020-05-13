@@ -102,6 +102,9 @@ import {
 import {
     VendorCustomerFormlySelectFieldComponent,
 } from './common/vendor.customer.select.field.component';
+import {
+    WarehouseCategoryTypeFormlySelectFieldComponent,
+} from './common/warehouse.category.type.select.field.component';
 
 @NgModule({
     imports: [
@@ -249,6 +252,11 @@ import {
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'ngx-warehouse-category-type',
+                    component: WarehouseCategoryTypeFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'organization-treeview',
                     component: OrganizationFormlyTreeviewFieldComponent,
                     wrappers: ['form-field'],
@@ -308,6 +316,7 @@ import {
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
+        WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
@@ -335,6 +344,7 @@ import {
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
+        WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
@@ -362,6 +372,7 @@ import {
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
+        WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
