@@ -104,12 +104,13 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             const parsedValues: any[] = [];
             const rawValues: any[] = (isArray(value)
                 ? Array.from(value) : !isNullOrUndefined(value) ? [value] : []);
+            const mutiple: boolean = this.getConfigValue('multiple', false);
             rawValues.forEach(rawValue => {
                 const parsedValue: any = this.selectComponent.getBindValue(rawValue);
                 parsedValue && parsedValues.push(parsedValue);
                 isNullOrUndefined(parsedValue) && parsedValues.push(rawValue);
             });
-            return parsedValues;
+            return (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : undefined);
         };
     }
 
@@ -150,16 +151,29 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             // query component
             this.ngxSelectComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectComponent, component => {
-                    component && component.open.subscribe(e => {
-                        this.field.focus = true;
-                    });
-                    component && component.close.subscribe(e => {
-                        this.field.focus = false;
-                    });
-                    component && component.change.subscribe(e => {
-                        this.field.focus = true;
-                        this.value = component.selectedValues;
-                    });
+                    if (!isNullOrUndefined(component)) {
+                        let formattedValues: any[];
+                        const fieldValue: any = this.value;
+                        if (isArray(fieldValue)) {
+                            formattedValues = [].concat(Array.from(fieldValue));
+                        } else if (!isNullOrUndefined(fieldValue)) {
+                            formattedValues = [fieldValue];
+                        } else {
+                            formattedValues = [];
+                        }
+
+                        component.selectedValues = formattedValues;
+                        component.open.subscribe(e => {
+                            this.field.focus = true;
+                        });
+                        component.close.subscribe(e => {
+                            this.field.focus = false;
+                        });
+                        component.change.subscribe(e => {
+                            this.field.focus = true;
+                            this.value = component.selectedValues;
+                        });
+                    }
                     this.checkOverrideFormFieldClass();
                 });
         }
@@ -190,7 +204,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                         : !isNullOrUndefined(value) ? [value] : []);
             }
             window.clearTimeout(timer);
-        }, 200);
+        }, 300);
     }
 
     protected onStatusChanges(value: any): void {
