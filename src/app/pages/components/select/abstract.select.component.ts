@@ -31,7 +31,7 @@ import {Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DropdownPosition, NgOption, NgSelectComponent} from '@ng-select/ng-select';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
-import {isArray, isNullOrUndefined} from 'util';
+import {isArray, isNullOrUndefined, isObject} from 'util';
 
 /**
  * The extension of {NgSelectConfig}
@@ -542,6 +542,8 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
 export abstract class AbstractSelectComponent<T extends DataSource>
     extends AbstractComponent implements AfterViewInit {
 
+    protected static NG_SELECT_PARENT_COMPONENT_REF_PROPERTY = '__parentComponentRef';
+
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
@@ -666,11 +668,46 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     }
 
     /**
+     * Get the selected options
+     * @return the selected options
+     */
+    set selectedItems(items: NgOption[]) {
+        if (!isNullOrUndefined(this.selectComponent)) {
+            const multiple: boolean = this.getConfigValue('multiple', false);
+            for (const item of items) {
+                if (!isNullOrUndefined(item)) {
+                    this.selectComponent.select(item);
+                    if (!multiple) break;
+                }
+            }
+        }
+    }
+
+    /**
      * Get the selected values
      * @return the selected values
      */
     get selectedValues(): any[] {
         return (this.selectComponent ? this.selectComponent.selectedValues : []);
+    }
+
+    /**
+     * Set the selected values
+     * @param values value from `bindValue` to select
+     */
+    set selectedValues(values: any[]) {
+        if (!isNullOrUndefined(this.selectComponent)) {
+            const selectedItems: NgOption[] = [];
+            const multiple: boolean = this.getConfigValue('multiple', false);
+            for (const value of values || []) {
+                const item: NgOption = this.selectComponent.itemsList.findItem(value);
+                if (!isNullOrUndefined(item)) {
+                    selectedItems.push(item);
+                    if (!multiple) break;
+                }
+            }
+            selectedItems.forEach(item => this.selectComponent.select(item));
+        }
     }
 
     /**
@@ -752,44 +789,48 @@ export abstract class AbstractSelectComponent<T extends DataSource>
         super.ngAfterViewInit();
 
         if (!this.ngSelectComponent) {
+            const _this: AbstractSelectComponent<T> = this;
             this.ngSelectComponent = ComponentUtils.queryComponent(
                 this.queryNgSelectComponent, component => {
-                    component && component.addEvent.subscribe(addedItem => {
-                        this.onAdd({ data: addedItem });
-                    });
-                    component && component.blurEvent.subscribe($event => {
-                        this.onBlur({ event: $event });
-                    });
-                    component && component.changeEvent.subscribe(model => {
-                        this.onChange({ data: model });
-                    });
-                    component && component.closeEvent.subscribe($event => {
-                        this.onClose({ event: $event });
-                    });
-                    component && component.clearEvent.subscribe($event => {
-                        this.onClear({ event: $event });
-                    });
-                    component && component.focusEvent.subscribe($event => {
-                        this.onFocus({ event: $event });
-                    });
-                    component && component.searchEvent.subscribe(data => {
-                        this.onSearch({ data: data });
-                    });
-                    component && component.searchEvent.subscribe(data => {
-                        this.onSearch({ data: data });
-                    });
-                    component && component.openEvent.subscribe($event => {
-                        this.onOpen({ event: $event });
-                    });
-                    component && component.removeEvent.subscribe(removedItem => {
-                        this.onRemove({ data: removedItem });
-                    });
-                    component && component.scroll.subscribe(data => {
-                        this.onScroll({ data: data });
-                    });
-                    component && component.scrollToEnd.subscribe($event => {
-                        this.onScrollToEnd({ event: $event });
-                    });
+                    if (!isNullOrUndefined(component)) {
+                        component[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] = _this;
+                        component.addEvent.subscribe(addedItem => {
+                            this.onAdd({ data: addedItem });
+                        });
+                        component.blurEvent.subscribe($event => {
+                            this.onBlur({ event: $event });
+                        });
+                        component.changeEvent.subscribe(model => {
+                            this.onChange({ data: model });
+                        });
+                        component.closeEvent.subscribe($event => {
+                            this.onClose({ event: $event });
+                        });
+                        component.clearEvent.subscribe($event => {
+                            this.onClear({ event: $event });
+                        });
+                        component.focusEvent.subscribe($event => {
+                            this.onFocus({ event: $event });
+                        });
+                        component.searchEvent.subscribe(data => {
+                            this.onSearch({ data: data });
+                        });
+                        component.searchEvent.subscribe(data => {
+                            this.onSearch({ data: data });
+                        });
+                        component.openEvent.subscribe($event => {
+                            this.onOpen({ event: $event });
+                        });
+                        component.removeEvent.subscribe(removedItem => {
+                            this.onRemove({ data: removedItem });
+                        });
+                        component.scroll.subscribe(data => {
+                            this.onScroll({ data: data });
+                        });
+                        component.scrollToEnd.subscribe($event => {
+                            this.onScrollToEnd({ event: $event });
+                        });
+                    }
                 });
         }
     }
@@ -977,10 +1018,18 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param b to compare
      */
     protected compareWith(a: any, b: any): boolean {
-        const _compareWith: (a1: any, b1: any) => boolean = this.getConfigValue('compareWith');
+        const _this: AbstractSelectComponent<T> =
+            (this[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] || this);
+        if (isNullOrUndefined(_this)) return false;
+
+        const _compareWith: (a1: any, b1: any) => boolean = _this.getConfigValue('compareWith');
         if (isNullOrUndefined(_compareWith)) {
-            return (this.getBindValue(a) === this.getBindValue(b));
+            const aObj: boolean = isObject(a);
+            const bObj: boolean = isObject(b);
+            const aVal: any = (aObj ? _this.getBindValue(a) : a);
+            const bVal: any = (bObj ? _this.getBindValue(b) : b);
+            return (aVal === bVal);
         }
-        return _compareWith.apply(this, [a, b]);
+        return _compareWith.apply(_this, [a, b]);
     }
 }

@@ -16,7 +16,6 @@
            [groupValue]="getConfigValue('groupValue')"
            [selectableGroup]="getConfigValue('selectableGroup', false)"
            [selectableGroupAsModel]="getConfigValue('selectableGroupAsModel', true)"
-           [items]="items"
            [loading]="getConfigValue('loading', false)"
            [loadingText]="getConfigValue('loadingText', 'Loading...') | translate"
            [labelForId]="getConfigValue('labelForId')"
@@ -62,7 +61,8 @@
            (focusin)="onFocusIn({ event: $event, data: selectComponent })"
            (focusout)="onFocusOut({ event: $event, data: selectComponent })"
 >
-    <ng-option [value]="getBindValue(item)" [disabled]="item.disabled" *ngFor="let item of items">
+    <ng-template ng-option-tmp let-item="item" let-index="index">
+    <!--<ng-option [value]="getBindValue(item)" [disabled]="item.disabled" *ngFor="let item of items">-->
         <img #itemImage *ngIf="getConfigValue('enableImage', false)"
              [src]="parseOptionFirstImage(item)"
              class="ngx-select-2-option-selected_option-image option-image"
@@ -72,7 +72,8 @@
         <span class="ngx-select-2-option_option-label option-label"
               [attr.option]="getBindValue(item)"
               [innerHTML]="translate(getBindLabel(item))"></span>
-    </ng-option>
+    <!--</ng-option>-->
+    </ng-template>
 </ng-select>
 
 <li #addNewOption

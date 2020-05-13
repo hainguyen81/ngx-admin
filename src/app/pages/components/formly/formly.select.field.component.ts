@@ -14,7 +14,7 @@ import {
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/component.utils';
-import {isArray} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable} from 'rxjs';
 import {NgxSelectComponent} from '../select/select.component';
@@ -93,6 +93,23 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         return (this.selectComponent ? this.selectComponent.selectedValues : []);
     }
 
+    get valueParser(): (value: any) => any {
+        return value => {
+            if (isNullOrUndefined(this.selectComponent)) {
+                return undefined;
+            }
+            const parsedValues: any[] = [];
+            const rawValues: any[] = (isArray(value)
+                ? Array.from(value) : !isNullOrUndefined(value) ? [value] : []);
+            rawValues.forEach(rawValue => {
+                const parsedValue: any = this.selectComponent.getBindValue(rawValue);
+                parsedValue && parsedValues.push(parsedValue);
+                isNullOrUndefined(parsedValue) && parsedValues.push(rawValue);
+            });
+            return parsedValues;
+        };
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -128,7 +145,19 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         // query select-ex component
         if (!this.ngxSelectComponent) {
             // query component
-            this.ngxSelectComponent = ComponentUtils.queryComponent(this.queryNgxSelectComponent);
+            this.ngxSelectComponent = ComponentUtils.queryComponent(
+                this.queryNgxSelectComponent, component => {
+                    component && component.open.subscribe(e => {
+                        this.field.focus = true;
+                    });
+                    component && component.close.subscribe(e => {
+                        this.field.focus = false;
+                    });
+                    component && component.change.subscribe(e => {
+                        this.field.focus = true;
+                        this.value = component.selectedValues;
+                    });
+                });
         }
 
         // build field template config and options before query select-ex component
@@ -145,6 +174,24 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                     this.items = this.field.templateOptions.options as any[];
                 });
             }
+        }
+    }
+
+    protected onValueChanges(value: any): void {
+        super.onValueChanges(value);
+        const timer: number = window.setTimeout(() => {
+            if (!isNullOrUndefined(this.selectComponent)) {
+                this.selectComponent.selectedValues =
+                    (isArray(this.value) ? this.value
+                        : !isNullOrUndefined(value) ? [this.value] : []);
+            }
+            window.clearTimeout(timer);
+        }, 200);
+    }
+
+    protected onStatusChanges(value: any): void {
+        if (value === 'DISABLED' && this.selectComponent) {
+            this.config.readonly = (this.field && this.field.formControl && this.field.formControl.disabled);
         }
     }
 }

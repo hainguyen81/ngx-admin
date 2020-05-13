@@ -296,8 +296,8 @@
                 content: none;
             }
         }
-        .ng-select-single .ng-select-container .ng-arrow-wrapper {
-            bottom: 0;
-        }
+    }
+    .ng-select.ng-select-single .ng-select-container .ng-arrow-wrapper {
+        bottom: 0;
     }
 }
