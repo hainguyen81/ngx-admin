@@ -120,6 +120,7 @@ import {
 import {
     WarehouseSettingsBatchFormlySelectFieldComponent,
 } from './warehouse/settings/warehouse.settings.batch.select.field.component';
+import {WarehouseSettingsBrandFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.brand.select.field.component';
 
 @NgModule({
     imports: [
@@ -272,6 +273,11 @@ import {
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'ngx-warehouse-settings-brand',
+                    component: WarehouseSettingsBrandFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'warehouse-settings-item',
                     component: WarehouseSettingsItemFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -356,6 +362,7 @@ import {
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
+        WarehouseSettingsBrandFormlySelectFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
@@ -389,6 +396,7 @@ import {
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
+        WarehouseSettingsBrandFormlySelectFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
@@ -422,6 +430,7 @@ import {
         WarehouseCategoryTypeFormlySelectExFieldComponent,
         WarehouseCategoryTypeFormlySelectFieldComponent,
         WarehouseSettingsBrandFormlySelectExFieldComponent,
+        WarehouseSettingsBrandFormlySelectFieldComponent,
         WarehouseSettingsItemFormlySelectExFieldComponent,
         OrganizationFormlyTreeviewFieldComponent,
         WarehouseCategoryFormlyTreeviewFieldComponent,
