@@ -665,7 +665,6 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     set selectedItems(items: NgOption[]) {
         if (!isNullOrUndefined(this.selectComponent)) {
-            window.console.error(['START - Control selected value', items]);
             const control: NgSelectComponent = this.selectComponent;
             const multiple: boolean = this.getConfigValue('multiple', false);
             if (items.length) {
@@ -677,11 +676,9 @@ export abstract class AbstractSelectComponent<T extends DataSource>
                 }
 
             } else {
-                window.console.error(['MID - Clear selected value', items]);
                 items = [].concat(this.selectedItems);
                 items.forEach(item => control.unselect(item));
             }
-            window.console.error(['END - Control selected value', this.selectedItems]);
         }
     }
 
