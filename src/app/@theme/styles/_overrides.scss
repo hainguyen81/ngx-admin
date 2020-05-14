@@ -309,7 +309,7 @@
         bottom: 0;
     }
     .ng-dropdown-panel {
-        min-width: 150px;
+        min-width: 150px !important;
         .ng-dropdown-panel-items .ng-option {
             min-height: 2.5em;
             line-height: 2.5em;
