@@ -78,6 +78,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      */
     set items(_items: any[]) {
         this._items = (_items || []);
+        this.onValueChanges(this.value);
     }
 
     /**
@@ -102,7 +103,9 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 return undefined;
             }
 
-            return this.selectComponent.findItems(value);
+            const _value: any = this.selectComponent.findItems(value);
+            window.console.error(['Formatted value', _value]);
+            return _value;
         };
     }
 
@@ -121,7 +124,9 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 parsedValue && parsedValues.push(parsedValue);
                 isNullOrUndefined(parsedValue) && parsedValues.push(rawValue);
             });
-            return (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : undefined);
+            const _value: any = (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : undefined);
+            window.console.error(['parsed value', _value]);
+            return _value;
         };
     }
 
@@ -169,9 +174,12 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                         component.close.subscribe(e => {
                             this.field.focus = false;
                         });
+                        component.close.subscribe(e => {
+                            this.field.focus = false;
+                        });
                         component.change.subscribe(e => {
                             this.field.focus = true;
-                            this.value = (e || {})['data'];
+                            this.value = this.parseValue((e || {})['data']);
                         });
                     }
                     this.checkOverrideFormFieldClass();
@@ -195,17 +203,19 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         }
     }
 
-    protected onValueChanges(value: any): void {
+    protected onValueChanges(value: any) {
         super.onValueChanges(value);
+
         const timer: number = window.setTimeout(() => {
             if (!isNullOrUndefined(this.selectComponent)) {
-                this.value = value;
-                window.console.error(['Field selected value', value, this.rawValue, this.value]);
+                window.console.error(['selected value', value]);
                 this.selectComponent.selectedValues =
                     (isArray(value) ? value : !isNullOrUndefined(value) ? [value] : undefined);
+                window.console.error(['selected items',
+                    this.selectComponent.selectedValues, this.selectComponent.selectedItems]);
             }
             window.clearTimeout(timer);
-        }, 200);
+        }, 1000);
     }
 
     protected onStatusChanges(value: any): void {

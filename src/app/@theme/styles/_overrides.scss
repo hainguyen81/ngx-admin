@@ -299,6 +299,9 @@
             }
         }
     }
+    .ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-value {
+        color: inherit;
+    }
     .ng-select.ng-select-single .ng-select-container .ng-arrow-wrapper {
         bottom: 5px;
     }

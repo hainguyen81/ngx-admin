@@ -40,7 +40,7 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col',
                 key: 'module_code',
-                type: 'select-ex-module',
+                type: 'select-ngx-module',
                 templateOptions: {
                     label: 'system.general.settings.form.module.label',
                     placeholder: 'system.general.settings.form.module.placeholder',

@@ -167,7 +167,7 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
         super.buildTemplateOptionsToTree(items);
 
         // select current field value and disable node if necessary
-        const fieldValue: any = this.rawValue;
+        const fieldValue: any = this.value;
         super.setSelectedValue(fieldValue, false);
         if (this.shouldDisableValue) {
             const disabledItemValue: any = this.disableValue;

@@ -73,7 +73,6 @@
               [innerHTML]="translate(getBindLabel(item))"></span>
     </ng-template>
     <ng-template #ngOptionTemplate ng-option-tmp let-item="item" let-index="index">
-        {{selectedItems.length}} {{selectedValues.length}} {{selectedItems.length ? getBindValue(selectedItems[0]) : 'NULL'}}
         <img #itemImage *ngIf="getConfigValue('enableImage', false)"
              [src]="parseOptionFirstImage(item)"
              class="ngx-select-2-option-selected_option-image option-image"

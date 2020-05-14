@@ -24,9 +24,6 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    INgxSelectOptions,
-} from 'ngx-select-ex';
 import {Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DropdownPosition, NgOption, NgSelectComponent} from '@ng-select/ng-select';
@@ -271,7 +268,7 @@ export interface INgxSelectOptions {
      * Default is true
      * @param $event {KeyboardEvent}
      */
-    keyDownFn?: ($event: KeyboardEvent) => boolean | true;
+    keyDownFn?: (($event: KeyboardEvent) => boolean) | boolean | true;
     /**
      * Shows the 'Add new option' action in case of out of items at all
      * {boolean}
@@ -520,11 +517,6 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
      */
     enableImage: false,
     /**
-     * Provide an opportunity to change the name an image property of objects in the items
-     * {string}
-     */
-    imageParser: null,
-    /**
      * Shows the 'Add new option' action in case of out of items at all
      * {boolean}
      */
@@ -647,7 +639,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * Get the option items array to show
      * @return the option items array
      */
-    public get items(): any[] {
+    get items(): any[] {
         return this._items || [];
     }
 
@@ -655,7 +647,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * Set the option items array to show
      * @param _items to apply
      */
-    public set items(_items: any[]) {
+    set items(_items: any[]) {
         this._items = (_items || []);
     }
 
@@ -673,13 +665,23 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     set selectedItems(items: NgOption[]) {
         if (!isNullOrUndefined(this.selectComponent)) {
+            window.console.error(['START - Control selected value', items]);
+            const control: NgSelectComponent = this.selectComponent;
             const multiple: boolean = this.getConfigValue('multiple', false);
-            for (const item of items) {
-                if (!isNullOrUndefined(item)) {
-                    this.selectComponent.select(item);
-                    if (!multiple) break;
+            if (items.length) {
+                for (const item of items) {
+                    if (!isNullOrUndefined(item) && !item.selected) {
+                        this.selectComponent.select(item);
+                        if (!multiple) break;
+                    }
                 }
+
+            } else {
+                window.console.error(['MID - Clear selected value', items]);
+                items = [].concat(this.selectedItems);
+                items.forEach(item => control.unselect(item));
             }
+            window.console.error(['END - Control selected value', this.selectedItems]);
         }
     }
 
@@ -697,11 +699,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     set selectedValues(values: any[]) {
         if (!isNullOrUndefined(this.selectComponent)) {
-            const selectedItems: NgOption[] = this.findItems(values);
-            window.console.error(['Control selected value', selectedItems]);
-            selectedItems.forEach(item => {
-                this.selectComponent.select(item);
-            });
+            this.selectedItems = this.findItems(values);
         }
     }
 
@@ -996,14 +994,17 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param defaultProperty default property to bind if not valid
      */
     public getBindProperty(item: any, property: string, defaultProperty?: string | null): any {
+        let bindPropertyValue: any;
         if (!(property || '').length || !item || !item.hasOwnProperty(property)) {
             if (!(defaultProperty || '').length || !item || !item.hasOwnProperty(defaultProperty)) {
-                return undefined;
+                bindPropertyValue = undefined;
             } else {
-                return item[defaultProperty];
+                bindPropertyValue = item[defaultProperty];
             }
+        } else {
+            bindPropertyValue = item[property];
         }
-        return item[property];
+        return bindPropertyValue;
     }
 
     /**
@@ -1036,15 +1037,15 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             return [];
         }
 
-        const selectedItems: NgOption[] = [];
+        const _selectedItems: NgOption[] = [];
         const multiple: boolean = this.getConfigValue('multiple', false);
-        for (const value of values || []) {
+        for (const value of (values || [])) {
             const item: NgOption = this.selectComponent.itemsList.findItem(value);
             if (!isNullOrUndefined(item)) {
-                selectedItems.push(item);
+                _selectedItems.push(item);
                 if (!multiple) break;
             }
         }
-        return selectedItems;
+        return _selectedItems;
     }
 }
