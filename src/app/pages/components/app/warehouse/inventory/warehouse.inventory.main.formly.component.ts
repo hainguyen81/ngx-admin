@@ -50,7 +50,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'type',
-                                type: 'warehouse-inventory-type',
+                                type: 'ngx-warehouse-inventory-type',
                                 templateOptions: {
                                     label: 'warehouse.inventory.form.type.label',
                                     placeholder: 'warehouse.inventory.form.type.placeholder',
@@ -60,7 +60,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'vendor_customer',
-                                type: 'vendor-customer',
+                                type: 'ngx-vendor-customer',
                                 templateOptions: {
                                     label: 'warehouse.inventory.form.customer.label',
                                     placeholder: 'warehouse.inventory.form.customer.placeholder',
@@ -175,7 +175,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                     {
                         className: 'w-100 status',
                         key: 'status',
-                        type: 'system-status',
+                        type: 'ngx-system-status',
                         templateOptions: {
                             label: 'warehouse.category.form.status.label',
                             placeholder: 'warehouse.category.form.status.placeholder',
