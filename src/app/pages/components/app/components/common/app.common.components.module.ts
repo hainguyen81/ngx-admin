@@ -30,11 +30,11 @@ import {AppProvinceFormlySelectExFieldComponent} from './app.province.formly.sel
 import {AppModuleFormlySelectExFieldComponent} from './app.module.formly.select.ex.field.component';
 import {AppModuleSettingsFormlySelectExFieldComponent} from './app.module.settings.formly.select.ex.field.component';
 import {AppFormlyDatePickerFieldComponent} from './app.formly.datepicker.field.component';
-import {AppFormlyTreeviewDropdownFieldComponent} from './app.formly.treeview.dropdown.field.component';
 import {AppCityFormlySelectFieldComponent} from './app.city.formly.select.field.component';
 import {AppCountryFormlySelectFieldComponent} from './app.country.formly.select.field.component';
 import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.field.component';
 import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.select.field.component';
+import {AppModuleSettingsFormlySelectFieldComponent} from './app.module.settings.formly.select.field.component';
 
 @NgModule({
     imports: [
@@ -96,6 +96,11 @@ import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.selec
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'select-ngx-general-settings',
+                    component: AppModuleSettingsFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'select-ex-country',
                     component: AppCountryFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -150,6 +155,7 @@ import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.selec
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
+        AppModuleSettingsFormlySelectFieldComponent,
         AppCityFormlySelectExFieldComponent,
         AppCityFormlySelectFieldComponent,
         AppCountryFormlySelectExFieldComponent,
@@ -162,6 +168,7 @@ import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.selec
         AppModuleSettingsFormlySelectExFieldComponent,
     ],
     exports: [
+        AppModuleSettingsFormlySelectFieldComponent,
         AppCityFormlySelectExFieldComponent,
         AppCityFormlySelectFieldComponent,
         AppCountryFormlySelectExFieldComponent,
@@ -174,6 +181,7 @@ import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.selec
         AppModuleSettingsFormlySelectExFieldComponent,
     ],
     declarations: [
+        AppModuleSettingsFormlySelectFieldComponent,
         AppCityFormlySelectExFieldComponent,
         AppCityFormlySelectFieldComponent,
         AppCountryFormlySelectExFieldComponent,
