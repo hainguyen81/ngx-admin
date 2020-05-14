@@ -199,9 +199,10 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         super.onValueChanges(value);
         const timer: number = window.setTimeout(() => {
             if (!isNullOrUndefined(this.selectComponent)) {
+                this.value = value;
+                window.console.error(['Field selected value', value, this.rawValue, this.value]);
                 this.selectComponent.selectedValues =
-                    (isArray(value) ? value
-                        : !isNullOrUndefined(value) ? [value] : []);
+                    (isArray(value) ? value : !isNullOrUndefined(value) ? [value] : undefined);
             }
             window.clearTimeout(timer);
         }, 200);

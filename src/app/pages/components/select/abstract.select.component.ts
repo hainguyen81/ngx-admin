@@ -676,7 +676,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             const multiple: boolean = this.getConfigValue('multiple', false);
             for (const item of items) {
                 if (!isNullOrUndefined(item)) {
-                    this.selectComponent.itemsList.select(item);
+                    this.selectComponent.select(item);
                     if (!multiple) break;
                 }
             }
@@ -698,8 +698,9 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     set selectedValues(values: any[]) {
         if (!isNullOrUndefined(this.selectComponent)) {
             const selectedItems: NgOption[] = this.findItems(values);
+            window.console.error(['Control selected value', selectedItems]);
             selectedItems.forEach(item => {
-                this.selectComponent.itemsList.select(item);
+                this.selectComponent.select(item);
             });
         }
     }
