@@ -932,7 +932,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             return [];
         }
 
-        const parser: (item: any) => string | string[] | null = this.getConfigValue('bindImage');
+        const parser: (item: any) => string | string[] | null = this.getBindImage(item);
         let images: string[] = [];
         if (!isNullOrUndefined(parser)) {
             if (typeof parser === 'function') {
@@ -971,6 +971,15 @@ export abstract class AbstractSelectComponent<T extends DataSource>
         const bindValue: string = this.getConfigValue('bindValue');
         return (this.getBindProperty(item, bindValue, 'id')
             || this.getBindProperty(item, bindValue, 'code'));
+    }
+
+    /**
+     * Get the bind iamge of the specified item
+     * @param item to parse
+     */
+    public getBindImage(item: any): any {
+        const bindValue: string = this.getConfigValue('bindImage');
+        return this.getBindProperty(item, bindValue, 'image');
     }
 
     /**
