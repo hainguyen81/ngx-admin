@@ -1,4 +1,5 @@
 import {
+    AfterContentChecked,
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
@@ -532,9 +533,10 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
  * Abstract select component base on {NgSelectComponent}
  */
 export abstract class AbstractSelectComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+    extends AbstractComponent implements AfterContentChecked, AfterViewInit {
 
     protected static NG_SELECT_PARENT_COMPONENT_REF_PROPERTY = '__parentComponentRef';
+    protected static NG_SELECT_CONTAINER_SELECTOR = '.ng-select-container';
 
     // -------------------------------------------------
     // DECLARATION
@@ -822,6 +824,33 @@ export abstract class AbstractSelectComponent<T extends DataSource>
                         });
                     }
                 });
+        }
+    }
+
+    ngAfterContentChecked(): void {
+        super.ngAfterContentChecked();
+
+        // check for reposition dropdown panel
+        this.__checkForDropdownPanelPosition();
+    }
+
+    onMouseWheel(event: IEvent): void {
+        super.onMouseWheel(event);
+
+        // check for reposition dropdown panel
+        this.__checkForDropdownPanelPosition();
+    }
+
+    /**
+     * Adjust dropdown-panel position
+     * @private
+     */
+    private __checkForDropdownPanelPosition(): void {
+        // check for reposition dropdown panel
+        const selectComponent: NgSelectComponent = this.selectComponent;
+        if (!isNullOrUndefined(selectComponent) && selectComponent.isOpen
+            && !isNullOrUndefined(selectComponent.dropdownPanel)) {
+            selectComponent.dropdownPanel.adjustPosition();
         }
     }
 

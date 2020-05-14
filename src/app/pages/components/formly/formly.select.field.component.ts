@@ -172,11 +172,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                         component.close.subscribe(e => {
                             this.field.focus = false;
                         });
-                        component.close.subscribe(e => {
-                            this.field.focus = false;
-                        });
                         component.change.subscribe(e => {
-                            this.field.focus = true;
                             this.value = this.parseValue((e || {})['data']);
                         });
                     }
