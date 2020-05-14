@@ -134,29 +134,29 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
                         className: 'w-100',
                         fieldGroupClassName: 'row ml-0 mr-0 p-0',
                         fieldGroup: [
-                            // {
-                            //     className: 'col-6',
-                            //     key: 'country_id',
-                            //     type: 'select-ngx-country',
-                            //     templateOptions: {
-                            //         label: 'system.customer.form.country.label',
-                            //         placeholder: 'system.customer.form.country.placeholder',
-                            //     },
-                            // },
-                            // {
-                            //     className: 'col-6',
-                            //     key: 'province_id',
-                            //     type: 'select-ngx-province',
-                            //     templateOptions: {
-                            //         label: 'system.customer.form.state_province.label',
-                            //         placeholder: 'system.customer.form.state_province.placeholder',
-                            //         disabled: true,
-                            //     },
-                            //     expressionProperties: {
-                            //         'templateOptions.disabled':
-                            //                 model => (!model || !(model['country_id'] || '').length),
-                            //     },
-                            // },
+                            {
+                                className: 'col-6',
+                                key: 'country_id',
+                                type: 'select-ngx-country',
+                                templateOptions: {
+                                    label: 'system.customer.form.country.label',
+                                    placeholder: 'system.customer.form.country.placeholder',
+                                },
+                            },
+                            {
+                                className: 'col-6',
+                                key: 'province_id',
+                                type: 'select-ngx-province',
+                                templateOptions: {
+                                    label: 'system.customer.form.state_province.label',
+                                    placeholder: 'system.customer.form.state_province.placeholder',
+                                    disabled: true,
+                                },
+                                expressionProperties: {
+                                    'templateOptions.disabled':
+                                            model => (!model || !(model['country_id'] || '').length),
+                                },
+                            },
                         ],
                     },
                     {

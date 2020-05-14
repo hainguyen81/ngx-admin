@@ -39,8 +39,8 @@ export const AppProvincesNgxSelectOptions: INgxSelectOptions = Object.assign({},
  */
 @Component({
     selector: 'ngx-select-2-app-province',
-    templateUrl: '../../../formly/formly.select.ex.field.component.html',
-    styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
+    templateUrl: '../../../formly/formly.select.field.component.html',
+    styleUrls: ['../../../formly/formly.select.field.component.scss'],
 })
 export class AppProvinceFormlySelectFieldComponent
     extends AppModuleDataFormlySelectFieldComponent<IProvince, ProvinceDatasource> {
