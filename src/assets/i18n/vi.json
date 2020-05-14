@@ -998,7 +998,7 @@
                     "batch": "Lô hàng",
                     "series": "Serial No./IMEI",
                     "storage": "Vị trí lưu trữ",
-                    "quantity_orders": "Số lượng",
+                    "quantity_orders": "SL",
                     "unit_price": "Đơn giá",
                     "amount": "Tổng tiền"
                 }

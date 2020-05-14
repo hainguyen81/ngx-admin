@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef, forwardRef,
-    Inject, QueryList,
+    Inject, OnDestroy, OnInit, QueryList,
     Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -16,6 +16,14 @@ import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.field.component';
+import {IEvent} from '../../../../abstract.component';
+import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
+import {isNullOrUndefined} from 'util';
+import {
+    WarehouseItemDbService,
+} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
+import {BehaviorSubject} from 'rxjs';
+import {Cell} from 'ng2-smart-table';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -27,7 +35,7 @@ import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.f
     styleUrls: ['./warehouse.item.cell.component.scss'],
 })
 export class WarehouseItemCellComponent extends AbstractCellEditor
-    implements AfterViewInit {
+    implements OnInit, AfterViewInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -36,6 +44,9 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     @ViewChildren(WarehouseItemFormlySelectFieldComponent)
     private readonly querySelectComponent: QueryList<WarehouseItemFormlySelectFieldComponent>;
     private _selectComponent: WarehouseItemFormlySelectFieldComponent;
+
+    private _warehouseItemBehavior: BehaviorSubject<any>;
+    private _warehouseItem: IWarehouseItem;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -47,6 +58,15 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
 
     get isEditable(): boolean {
         return true;
+    }
+
+    get warehouseItem(): IWarehouseItem {
+        return this._warehouseItem;
+    }
+
+    get viewValue(): string {
+        return (!isNullOrUndefined(this.warehouseItem)
+            ? [this.warehouseItem.name, ' (', this.warehouseItem.code, ')'].join('') : '');
     }
 
     // -------------------------------------------------
@@ -63,6 +83,7 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
+     * @param warehouseItemDbService {WarehouseItemDbService}
      */
     constructor(@Inject(forwardRef(() => CellComponent)) _parentCell: CellComponent,
                 @Inject(TranslateService) _translateService: TranslateService,
@@ -71,7 +92,8 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
                 @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                @Inject(ElementRef) _elementRef: ElementRef) {
+                @Inject(ElementRef) _elementRef: ElementRef,
+                @Inject(WarehouseItemDbService) private warehouseItemDbService: WarehouseItemDbService) {
         super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
@@ -80,12 +102,62 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     // EVENTS
     // -------------------------------------------------
 
+    ngOnInit(): void {
+        const _this: WarehouseItemCellComponent = this;
+        this.valueParser = (value: any) => {
+            const item: IWarehouseItem = value as IWarehouseItem;
+            return (item ? item.code : null);
+        };
+        this.valueFormatter = (value: any) => {
+            if (isNullOrUndefined(_this.selectComponent)) return undefined;
+            return _this.selectComponent.findItems([value]);
+        };
+    }
+
     ngAfterViewInit(): void {
-        if (!this._selectComponent) {
+        if (!this._selectComponent && !this.viewMode) {
             this._selectComponent = ComponentUtils.queryComponent(
                 this.querySelectComponent, component => {
-                    component && component.refresh();
+                    if (component) {
+                        component.onLoad.subscribe(e => {
+                            component.value = this.cellValue;
+                        });
+                        component.onSelect.subscribe(($event: IEvent) => {
+                            this.newCellValue = $event.data;
+                        });
+                        component.refresh();
+                    }
                 });
+        }
+
+        if (this.viewMode) {
+            this._warehouseItemBehavior = new BehaviorSubject<any>(this.cellValue);
+            this._warehouseItemBehavior.subscribe(value => {
+                this._observeCellValue(value);
+            });
+        }
+    }
+
+    ngOnDestroy(): void {
+        this._warehouseItemBehavior
+        && this._warehouseItemBehavior.unsubscribe();
+        super.ngOnDestroy();
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    private _observeCellValue(value: any): void {
+        if ((isNullOrUndefined(this._warehouseItem) || ((value || '') !== (this._warehouseItem.code || '')))
+            && !isNullOrUndefined(value) && (value || '').length
+            && (!this.isEditable || !this.isInEditingMode)) {
+            this.warehouseItemDbService.getAllByIndex('code', IDBKeyRange.only(value))
+                .then(items => {
+                    this._warehouseItem = (items.length ? items[0] : undefined);
+                    this.changeDetectorRef.detectChanges();
+                }, reason => this.logger.error(reason))
+                .catch(reason => this.logger.error(reason));
         }
     }
 }

@@ -54,13 +54,6 @@ export const WarehouseInventoryDetailTableSettings = {
                 component: WarehouseItemCellComponent,
             },
         },
-        unit: {
-            title: 'warehouse.inventory.detail.table.unit',
-            type: 'string',
-            sort: false,
-            filter: false,
-            editable: false,
-        },
         batches: {
             title: 'warehouse.inventory.detail.table.batch',
             type: 'string',
@@ -104,17 +97,6 @@ export const WarehouseInventoryDetailTableSettings = {
                 isCurrency: true,
             },
         },
-        amount: {
-            title: 'warehouse.inventory.detail.table.amount',
-            type: 'custom',
-            sort: false,
-            filter: false,
-            editable: false,
-            renderComponent: NumberCellComponent,
-            config: {
-                isCurrency: true,
-            },
-        },
     },
 };
 
@@ -124,7 +106,10 @@ export const WarehouseInventoryDetailContextMenu: IContextMenu[] = [].concat(COM
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-app-warehouse-inventory-detail',
     templateUrl: '../../../smart-table/smart-table.component.html',
-    styleUrls: ['../../../smart-table/smart-table.component.scss'],
+    styleUrls: [
+        '../../../smart-table/smart-table.component.scss',
+        './warehouse.inventory.detail.table.component.scss',
+    ],
 })
 export class WarehouseInventoryDetailSmartTableComponent
     extends AppSmartTableComponent<WarehouseInventoryDetailDatasource> {

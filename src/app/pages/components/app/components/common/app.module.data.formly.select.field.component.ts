@@ -2,9 +2,9 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     Inject,
-    OnInit,
+    OnInit, Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -29,6 +29,12 @@ import {INgxSelectOptions} from '../../../select/abstract.select.component';
 export abstract class AppModuleDataFormlySelectFieldComponent<M extends IModel, D extends DataSource>
     extends AppFormlySelectFieldComponent<M>
     implements OnInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @Output() readonly onLoad: EventEmitter<any> = new EventEmitter(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -129,5 +135,6 @@ export abstract class AppModuleDataFormlySelectFieldComponent<M extends IModel, 
             }
         }
         this.items = items;
+        this.onLoad.emit();
     }
 }

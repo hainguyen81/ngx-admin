@@ -1,10 +1,11 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     Inject,
-    OnInit,
+    OnInit, Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -25,6 +26,8 @@ import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abs
 import {
     AppModuleDataIndexSettingsFormlySelectFieldComponent,
 } from '../../../components/common/app.module.data.index.formly.select.field.component';
+import {isNullOrUndefined} from 'util';
+import {IEvent} from '../../../../abstract.component';
 
 export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -66,7 +69,13 @@ export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
 })
 export class WarehouseItemFormlySelectFieldComponent
     extends AppModuleDataIndexSettingsFormlySelectFieldComponent<IWarehouseItem, WarehouseItemDatasource>
-    implements OnInit {
+    implements OnInit, AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @Output() readonly onSelect: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -119,5 +128,19 @@ export class WarehouseItemFormlySelectFieldComponent
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
             WarehouseItemNgxSelectOptions);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!isNullOrUndefined(super.selectComponent)) {
+            super.selectComponent.change.subscribe(($event: IEvent) => {
+                this.onSelect.emit($event);
+            });
+        }
     }
 }

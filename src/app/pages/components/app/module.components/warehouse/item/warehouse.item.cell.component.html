@@ -1,6 +1,4 @@
-<div class="cell-editor" *ngIf="isInEditingMode">
+<div class="cell-editor" *ngIf="!viewMode">
     <ngx-select-2-app-module-warehouse-item></ngx-select-2-app-module-warehouse-item>
 </div>
-<div class="cell-viewer" *ngIf="!isInEditingMode">
-    View mode
-</div>
+<div class="cell-viewer" *ngIf="viewMode" [innerHTML]="viewValue"></div>

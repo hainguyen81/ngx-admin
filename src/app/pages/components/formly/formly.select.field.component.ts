@@ -201,10 +201,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         super.onValueChanges(value);
 
         const timer: number = window.setTimeout(() => {
-            if (!isNullOrUndefined(this.selectComponent)) {
-                this.selectComponent.selectedValues =
-                    (isArray(value) ? value : !isNullOrUndefined(value) ? [value] : undefined);
-            }
+            this.setSelectedValue(value);
             window.clearTimeout(timer);
         }, 250);
     }
@@ -238,6 +235,24 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             !enabledImage && this.renderer.addClass(
                 this.formField._elementRef.nativeElement,
                 SelectFormFieldComponent.DEFAULT_CLASS_FORM_FIELD);
+        }
+    }
+
+    public findItems(values: any[]): NgOption[] {
+        if (isNullOrUndefined(this.selectComponent)) {
+            return [];
+        }
+        return this.selectComponent.findItems(values);
+    }
+
+    /**
+     * Set the dropdown selected value
+     * @param value to apply
+     */
+    public setSelectedValue(value: any) {
+        if (!isNullOrUndefined(this.selectComponent)) {
+            this.selectComponent.selectedValues =
+                (isArray(value) ? value : !isNullOrUndefined(value) ? [value] : undefined);
         }
     }
 }

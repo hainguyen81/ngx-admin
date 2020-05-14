@@ -1,0 +1,39 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep ng2-smart-table table {
+        tr td, tr.ng2-smart-titles th {
+            padding: 0.5rem 0.25rem !important;
+        }
+        thead {
+            th.ng2-smart-th {
+                .ng2-smart-title .ng2-smart-sort {
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                &.item_code {
+                    min-width: 250px !important;
+                }
+                &.batches {
+                    min-width: 300px !important;
+                }
+                &.series {
+                    min-width: 120px !important;
+                }
+                &.batches {
+                    min-width: 300px !important;
+                }
+                &.storage {
+                    min-width: 250px !important;
+                }
+                &.quantity_orders {
+                    min-width: 100px !important;
+                }
+                &.unit_price {
+                    min-width: 150px !important;
+                }
+            }
+        }
+    }
+}

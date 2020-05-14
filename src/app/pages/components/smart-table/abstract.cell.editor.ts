@@ -40,6 +40,14 @@ export abstract class AbstractCellEditor extends DefaultEditor
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating cell whether is in view-mode or edit-mode
+     * @return true for view mode; else false
+     */
+    get viewMode(): boolean {
+        return !this.isEditable || !this.isInEditingMode;
+    }
+
+    /**
      * Get the method to format field value to show
      * @return the method to format field value to show
      */
@@ -139,8 +147,11 @@ export abstract class AbstractCellEditor extends DefaultEditor
      * @param _value to apply
      */
     set newCellValue(_value: any) {
-        if (this.cell && !this.isEditable) {
-            this.cell.newValue = this.parseValue(_value);
+        if (this.cell && this.isEditable && this.isInEditingMode) {
+            const newValue: any = this.parseValue(_value);
+            if (this.cell.newValue !== newValue) {
+                this.cell.newValue = newValue;
+            }
         }
     }
 

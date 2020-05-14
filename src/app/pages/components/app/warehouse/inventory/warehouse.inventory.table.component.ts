@@ -174,7 +174,9 @@ export const WarehouseInventoryContextMenu: IContextMenu[] = [].concat(COMMON.ba
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-app-warehouse-inventory',
     templateUrl: '../../../smart-table/smart-table.component.html',
-    styleUrls: ['../../../smart-table/smart-table.component.scss'],
+    styleUrls: [
+        '../../../smart-table/smart-table.component.scss',
+    ],
 })
 export class WarehouseInventorySmartTableComponent
     extends AppSmartTableComponent<WarehouseInventoryDatasource>
