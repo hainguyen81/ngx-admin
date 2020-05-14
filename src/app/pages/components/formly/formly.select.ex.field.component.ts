@@ -193,7 +193,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
      * Check for adding/removing form field class for customizing
      */
     private checkOverrideFormFieldClass(selectComponent?: NgxSelectExComponent) {
-        if (this.formField && this.formField._elementRef
+        if (this.field && this.formField && this.formField._elementRef
             && this.formField._elementRef.nativeElement) {
             const enabledImage: boolean = (selectComponent && selectComponent.isEnabledOptionImage());
             enabledImage && this.renderer.removeClass(
@@ -218,7 +218,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     public setValue(value?: any): void {
         const oldVal: any = this.parseValue(this.value);
         const newVal: any = this.parseValue(value);
-        if ((oldVal || '') !== (newVal || '')) {
+        if ((oldVal || '') !== (newVal || '') && this.field) {
             this.formControl && this.formControl.patchValue(
                 newVal, {onlySelf: true, emitEvent: true});
         }

@@ -27,6 +27,8 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
 
     private _field: F;
     @Input('config') private _config: any;
+    /* use for standalone component */
+    private __internalValue: any;
 
     private _valueFormatter: (value: any) => any;
     private _valueParser: (value: any) => any;
@@ -225,7 +227,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @return the field value
      */
     get value(): any {
-        return super.value;
+        return (this._field && this.formControl ? super.value : this.__internalValue);
     }
 
     /**
@@ -233,7 +235,12 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param _value to apply
      */
     set value(_value: any) {
-        super.value = _value;
+        if (!isNullOrUndefined(this._field) && !isNullOrUndefined(this.formControl)) {
+            super.value = _value;
+
+        } else {
+            this.__internalValue = _value;
+        }
     }
 
     /**

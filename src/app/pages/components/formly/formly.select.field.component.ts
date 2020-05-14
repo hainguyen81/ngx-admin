@@ -167,10 +167,10 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 this.queryNgxSelectComponent, component => {
                     if (!isNullOrUndefined(component)) {
                         component.open.subscribe(e => {
-                            this.field.focus = true;
+                            if (this.field) this.field.focus = true;
                         });
                         component.close.subscribe(e => {
-                            this.field.focus = false;
+                            if (this.field) this.field.focus = false;
                         });
                         component.change.subscribe(e => {
                             this.value = this.parseValue((e || {})['data']);
@@ -223,7 +223,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      * Check for adding/removing form field class for customizing
      */
     private checkOverrideFormFieldClass() {
-        if (this.formField && this.formField._elementRef
+        if (this.field && this.formField && this.formField._elementRef
             && this.formField._elementRef.nativeElement) {
             const enabledImage: boolean = this.getConfigValue('enableImage', false);
             enabledImage && this.renderer.removeClass(

@@ -69,19 +69,23 @@ export class FileGalleryFormFieldComponent extends AbstractFieldType
     // -------------------------------------------------
 
     ngOnInit(): void {
-        this.formControl && this.formControl.patchValue(value => {
-            this.value = (Array.isArray(value) ? value as string[] : value ? [ value ] : []);
-        });
-        if (!this.formControl) {
-            this.value = [];
+        if (this.field) {
+            this.formControl && this.formControl.patchValue(value => {
+                this.value = (Array.isArray(value) ? value as string[] : value ? [value] : []);
+            });
+            if (!this.formControl) {
+                this.value = [];
+            }
         }
     }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.field.className = [(this.field.className || ''),
-            'form-field form-files-gallery-file'].join(' ').trim();
+        if (this.field) {
+            this.field.className = [(this.field.className || ''),
+                'form-field form-files-gallery-file'].join(' ').trim();
+        }
     }
 
     /**
@@ -90,6 +94,7 @@ export class FileGalleryFormFieldComponent extends AbstractFieldType
      */
     public onChange(e: IEvent): void {
         this.value = e.data || [];
-        this.formControl && this.formControl.setValue(this.value);
+        this.field && this.formControl
+        && this.formControl.setValue(this.value);
     }
 }
