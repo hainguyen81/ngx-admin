@@ -33,7 +33,7 @@ export const AppCountriesNgxSelectOptions: INgxSelectOptions = Object.assign({},
      * Object property to use for image.
      * Default `image`
      */
-    bindImage: 'image',
+    bindImage: 'flag',
     /**
      * Specify whether using image for option
      * {boolean}
