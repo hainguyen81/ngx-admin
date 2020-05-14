@@ -312,6 +312,15 @@
         min-height: 2.5em;
         line-height: 2.5em;
         padding: 0 15px;
+        .option-image {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            padding: 2px;
+        }
+        .ngx-select-2__choices .ngx-select-2__item_addNewOption {
+            padding: 3px 20px;
+        }
     }
     .mat-form-field.form-field-ngx-select .mat-form-field-infix,
     .mat-form-field.form-field-ngx-select-image .mat-form-field-infix {
