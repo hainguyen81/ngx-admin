@@ -41,7 +41,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
                     {
                         className: 'w-100',
                         key: 'type',
-                        type: 'warehouse-settings-type',
+                        type: 'ngx-warehouse-settings-type',
                         templateOptions: {
                             label: 'warehouse.settings.form.type.label',
                             placeholder: 'warehouse.settings.form.type.placeholder',

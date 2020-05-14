@@ -183,7 +183,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-4',
                 key: 'status',
-                type: 'system-status',
+                type: 'ngx-system-status',
                 templateOptions: {
                     label: 'warehouse.batch_no.form.status.label',
                     placeholder: 'warehouse.batch_no.form.status.placeholder',

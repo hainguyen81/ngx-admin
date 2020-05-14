@@ -88,7 +88,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'brand_id',
-                type: 'warehouse-settings-brand',
+                type: 'ngx-warehouse-settings-brand',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.brand.label',
                     placeholder: 'warehouse.item.overview.form.brand.placeholder',
@@ -159,7 +159,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'currency',
-                type: 'system-currency',
+                type: 'ngx-system-currency',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.currency.label',
                     placeholder: 'warehouse.item.overview.form.currency.placeholder',
@@ -312,7 +312,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-3',
                 key: 'status',
-                type: 'system-status',
+                type: 'ngx-system-status',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.status.label',
                     placeholder: 'warehouse.item.overview.form.status.placeholder',

@@ -62,7 +62,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'type',
-                                type: 'warehouse-category-type',
+                                type: 'ngx-warehouse-category-type',
                                 templateOptions: {
                                     label: 'warehouse.category.form.type.label',
                                     placeholder: 'warehouse.category.form.type.placeholder',
@@ -72,7 +72,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'status',
-                                type: 'system-status',
+                                type: 'ngx-system-status',
                                 templateOptions: {
                                     label: 'warehouse.category.form.status.label',
                                     placeholder: 'warehouse.category.form.status.placeholder',

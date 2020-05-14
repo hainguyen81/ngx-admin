@@ -210,7 +210,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                     (isArray(value) ? value : !isNullOrUndefined(value) ? [value] : undefined);
             }
             window.clearTimeout(timer);
-        }, 200);
+        }, 250);
     }
 
     protected onStatusChanges(value: any): void {

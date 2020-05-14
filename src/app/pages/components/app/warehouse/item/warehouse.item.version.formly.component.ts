@@ -155,7 +155,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'currency',
-                type: 'system-currency',
+                type: 'ngx-system-currency',
                 templateOptions: {
                     label: 'warehouse.item.overview.form.currency.label',
                     placeholder: 'warehouse.item.overview.form.currency.placeholder',

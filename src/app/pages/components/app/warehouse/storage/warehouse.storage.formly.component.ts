@@ -91,7 +91,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'w-50 pl-0 pr-2',
                                 key: 'country_id',
-                                type: 'select-ex-country',
+                                type: 'select-ngx-country',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.country.label',
                                     placeholder: 'warehouse.storage.form.country.placeholder',
@@ -100,7 +100,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'w-50 pl-2 pr-0',
                                 key: 'province_id',
-                                type: 'select-ex-province',
+                                type: 'select-ngx-province',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.province.label',
                                     placeholder: 'warehouse.storage.form.province.placeholder',
@@ -120,7 +120,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'w-50 pl-0 pr-2',
                                 key: 'city_id',
-                                type: 'select-ex-city',
+                                type: 'select-ngx-city',
                                 templateOptions: {
                                     label: 'warehouse.storage.form.city.label',
                                     placeholder: 'warehouse.storage.form.city.placeholder',

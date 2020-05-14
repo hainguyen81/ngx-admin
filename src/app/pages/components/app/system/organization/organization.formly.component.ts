@@ -136,7 +136,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'country_id',
-                type: 'select-ex-country',
+                type: 'select-ngx-country',
                 templateOptions: {
                     label: 'system.organization.form.country.label',
                     placeholder: 'system.organization.form.country.placeholder',
@@ -145,7 +145,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'province_id',
-                type: 'select-ex-province',
+                type: 'select-ngx-province',
                 templateOptions: {
                     label: 'system.organization.form.state_province.label',
                     placeholder: 'system.organization.form.state_province.placeholder',
@@ -164,7 +164,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
             {
                 className: 'col-6',
                 key: 'city_id',
-                type: 'select-ex-city',
+                type: 'select-ngx-city',
                 templateOptions: {
                     label: 'system.organization.form.city.label',
                     placeholder: 'system.organization.form.city.placeholder',
