@@ -124,9 +124,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 parsedValue && parsedValues.push(parsedValue);
                 isNullOrUndefined(parsedValue) && parsedValues.push(rawValue);
             });
-            const _value: any = (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : undefined);
-            window.console.error(['parsed value', _value]);
-            return _value;
+            return (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : undefined);
         };
     }
 
@@ -212,7 +210,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                     (isArray(value) ? value : !isNullOrUndefined(value) ? [value] : undefined);
             }
             window.clearTimeout(timer);
-        }, 100);
+        }, 200);
     }
 
     protected onStatusChanges(value: any): void {
