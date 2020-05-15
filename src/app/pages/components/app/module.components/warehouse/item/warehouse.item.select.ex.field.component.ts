@@ -51,7 +51,7 @@ export const WarehouseItemSelectOptions: INgxSelectExOptions =
  * Custom module formly field for selecting warehouse items
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-select-ex-app-module-warehouse-item',
     templateUrl: '../../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],

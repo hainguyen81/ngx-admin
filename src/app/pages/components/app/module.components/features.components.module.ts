@@ -129,6 +129,9 @@ import {
 import {
     WarehouseBatchNoFormlySelectFieldComponent,
 } from './warehouse/batchno/warehouse.batch.select.field.component';
+import {
+    WarehouseInventoryDetailBatchNoCellComponent,
+} from './warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
 
 @NgModule({
     imports: [
@@ -396,6 +399,7 @@ import {
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
         WarehouseBatchNoFormlySelectFieldComponent,
+        WarehouseInventoryDetailBatchNoCellComponent,
     ],
     exports: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -432,6 +436,7 @@ import {
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
         WarehouseBatchNoFormlySelectFieldComponent,
+        WarehouseInventoryDetailBatchNoCellComponent,
     ],
     declarations: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -468,6 +473,7 @@ import {
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
         WarehouseBatchNoFormlySelectFieldComponent,
+        WarehouseInventoryDetailBatchNoCellComponent,
     ],
 })
 export class FeaturesComponentsModule {

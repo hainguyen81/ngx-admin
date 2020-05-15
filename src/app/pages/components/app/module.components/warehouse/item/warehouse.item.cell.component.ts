@@ -29,10 +29,9 @@ import {Cell} from 'ng2-smart-table';
  * Smart table warehouse item cell component base on {DefaultEditor}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-warehouse-item-cell',
     templateUrl: './warehouse.item.cell.component.html',
-    styleUrls: ['./warehouse.item.cell.component.scss'],
 })
 export class WarehouseItemCellComponent extends AbstractCellEditor
     implements OnInit, AfterViewInit, OnDestroy {
@@ -151,7 +150,7 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     private _observeCellValue(value: any): void {
         if ((isNullOrUndefined(this._warehouseItem) || ((value || '') !== (this._warehouseItem.code || '')))
             && !isNullOrUndefined(value) && (value || '').length
-            && (!this.isEditable || !this.isInEditingMode)) {
+            && this.viewMode) {
             this.warehouseItemDbService.getAllByIndex('code', IDBKeyRange.only(value))
                 .then(items => {
                     this._warehouseItem = (items.length ? items[0] : undefined);

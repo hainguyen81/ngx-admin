@@ -28,6 +28,9 @@ import {
 import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {
+    WarehouseInventoryDetailBatchNoCellComponent,
+} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -56,10 +59,14 @@ export const WarehouseInventoryDetailTableSettings = {
         },
         batches: {
             title: 'warehouse.inventory.detail.table.batch',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
-            editable: false,
+            renderComponent: WarehouseInventoryDetailBatchNoCellComponent,
+            editor: {
+                type: 'custom',
+                component: WarehouseInventoryDetailBatchNoCellComponent,
+            },
         },
         series: {
             title: 'warehouse.inventory.detail.table.series',

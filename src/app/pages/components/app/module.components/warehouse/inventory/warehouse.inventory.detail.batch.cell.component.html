@@ -1,0 +1,9 @@
+<div class="cell-editor" *ngIf="!viewMode">
+    <ngx-select-2-app-module-warehouse-batch-no></ngx-select-2-app-module-warehouse-batch-no>
+</div>
+<div class="cell-viewer d-table" *ngIf="viewMode">
+    <div class="batch-row d-table-row" *ngFor="let batch of warehouseBatches">
+        <div class="batch-cell d-table-cell text-left w-75" [innerHTML]="batch.viewBatch"></div>
+        <div class="batch-cell d-table-cell text-right w-25" [innerHTML]="batch.quantity"></div>
+    </div>
+</div>
