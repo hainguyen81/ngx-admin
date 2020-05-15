@@ -31,8 +31,7 @@ import {INgxSelectOptions} from '../../../select/abstract.select.component';
 })
 export abstract class AppModuleDataIndexSettingsFormlySelectFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
-    extends AppModuleDataFormlySelectFieldComponent<M, D>
-    implements OnInit {
+    extends AppModuleDataFormlySelectFieldComponent<M, D> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS

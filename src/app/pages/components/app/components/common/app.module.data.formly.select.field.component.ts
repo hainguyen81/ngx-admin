@@ -2,9 +2,11 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef, EventEmitter,
+    ElementRef,
+    EventEmitter,
     Inject,
-    OnInit, Output,
+    OnInit,
+    Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';

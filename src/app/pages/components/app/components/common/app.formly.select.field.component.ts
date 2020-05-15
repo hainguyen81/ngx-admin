@@ -1,8 +1,12 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
     Inject,
+    Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -11,6 +15,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {SelectFormFieldComponent} from '../../../formly/formly.select.field.component';
 import {INgxSelectOptions} from '../../../select/abstract.select.component';
+import {IEvent} from '../../../abstract.component';
+import {isNullOrUndefined} from 'util';
 
 /**
  * Custom formly field for selecting parent
@@ -21,7 +27,14 @@ import {INgxSelectOptions} from '../../../select/abstract.select.component';
     styleUrls: ['../../../formly/formly.select.field.component.scss'],
 })
 export abstract class AppFormlySelectFieldComponent<T extends IModel>
-    extends SelectFormFieldComponent {
+    extends SelectFormFieldComponent
+    implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @Output() readonly onSelect: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -48,5 +61,19 @@ export abstract class AppFormlySelectFieldComponent<T extends IModel>
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this.config = _config;
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
+
+        if (!isNullOrUndefined(super.selectComponent)) {
+            super.selectComponent.change.subscribe(($event: IEvent) => {
+                this.onSelect.emit($event);
+            });
+        }
     }
 }

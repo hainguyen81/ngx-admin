@@ -5,7 +5,7 @@ import {
     ElementRef,
     EventEmitter,
     Inject,
-    OnInit,
+    OnInit, Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -36,7 +36,8 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
     // DECLARATION
     // -------------------------------------------------
 
-    onChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    @Output() readonly onChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    @Output() readonly onLoad: EventEmitter<any> = new EventEmitter(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -148,5 +149,6 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
             }
         }
         this.items = items;
+        this.onLoad.emit();
     }
 }

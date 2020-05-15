@@ -3,9 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    EventEmitter,
     Inject,
-    OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -33,8 +31,7 @@ import {INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.compone
 })
 export abstract class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
-    extends AppModuleDataFormlySelectExFieldComponent<M, D>
-    implements OnInit {
+    extends AppModuleDataFormlySelectExFieldComponent<M, D> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS

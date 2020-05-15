@@ -12,17 +12,17 @@ import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import STATUS = CommonConstants.COMMON.STATUS;
-import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
-import {
-    WarehouseItemDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {$enum} from 'ts-enum-util';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abstract.select.component';
 import {
     AppModuleDataIndexSettingsFormlySelectFieldComponent,
 } from '../../../components/common/app.module.data.index.formly.select.field.component';
+import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
+import {
+    WarehouseBatchNoDatasource,
+} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 
-export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
+export const WarehouseBatchNoNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
         /**
          * Provide an opportunity to change the name an id property of objects in the items
@@ -38,12 +38,7 @@ export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
          * Specify whether using image for option
          * {boolean}
          */
-        enableImage: true,
-        /**
-         * Object property to use for image.
-         * Default `image`
-         */
-        bindImage: 'image',
+        enableImage: false,
         /**
          * Specify whether appending options drop-down to body
          * {boolean}
@@ -56,12 +51,12 @@ export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
-    selector: 'ngx-select-2-app-module-warehouse-item',
+    selector: 'ngx-select-2-app-module-warehouse-batch-no',
     templateUrl: '../../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../../formly/formly.select.field.component.scss'],
 })
-export class WarehouseItemFormlySelectFieldComponent
-    extends AppModuleDataIndexSettingsFormlySelectFieldComponent<IWarehouseItem, WarehouseItemDatasource> {
+export class WarehouseBatchNoFormlySelectFieldComponent
+    extends AppModuleDataIndexSettingsFormlySelectFieldComponent<IWarehouseBatchNo, WarehouseBatchNoDatasource> {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -80,10 +75,12 @@ export class WarehouseItemFormlySelectFieldComponent
     }
 
     protected get optionBuilder():
-        { [key: string]: (model: IWarehouseItem) => (string | string[] | IWarehouseItem) } | null {
+        { [key: string]: (model: IWarehouseBatchNo) => (string | string[] | IWarehouseBatchNo) } | null {
         return {
-            'text': (model: IWarehouseItem) => {
-                return (model && model.code.length ? [model.name, ' (', model.code, ')'].join('') : '');
+            'text': (model: IWarehouseBatchNo) => {
+                return (model && model.exp_date.length
+                    ? [model.exp_date, ' - ', model.name, ' (', model.code, ')'].join('')
+                    : model && model.name ? [model.name, ' (', model.code, ')'].join('') : '');
             },
         };
     }
@@ -93,8 +90,8 @@ export class WarehouseItemFormlySelectFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseItemFormlySelectFieldComponent} class
-     * @param dataSource {WarehouseItemDatasource}
+     * Create a new instance of {WarehouseBatchNoFormlySelectFieldComponent} class
+     * @param dataSource {WarehouseBatchNoDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -103,7 +100,7 @@ export class WarehouseItemFormlySelectFieldComponent
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    constructor(@Inject(WarehouseItemDatasource) dataSource: WarehouseItemDatasource,
+    constructor(@Inject(WarehouseBatchNoDatasource) dataSource: WarehouseBatchNoDatasource,
                 @Inject(TranslateService) _translateService: TranslateService,
                 @Inject(Renderer2) _renderer: Renderer2,
                 @Inject(NGXLogger) _logger: NGXLogger,
@@ -113,6 +110,6 @@ export class WarehouseItemFormlySelectFieldComponent
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            WarehouseItemNgxSelectOptions);
+            WarehouseBatchNoNgxSelectOptions);
     }
 }

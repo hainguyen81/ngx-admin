@@ -120,8 +120,15 @@ import {
 import {
     WarehouseSettingsBatchFormlySelectFieldComponent,
 } from './warehouse/settings/warehouse.settings.batch.select.field.component';
-import {WarehouseSettingsBrandFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.brand.select.field.component';
-import {WarehouseSettingsItemFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.item.select.field.component';
+import {
+    WarehouseSettingsBrandFormlySelectFieldComponent,
+} from './warehouse/settings/warehouse.settings.brand.select.field.component';
+import {
+    WarehouseSettingsItemFormlySelectFieldComponent,
+} from './warehouse/settings/warehouse.settings.item.select.field.component';
+import {
+    WarehouseBatchNoFormlySelectFieldComponent,
+} from './warehouse/batchno/warehouse.batch.select.field.component';
 
 @NgModule({
     imports: [
@@ -323,6 +330,16 @@ import {WarehouseSettingsItemFormlySelectFieldComponent} from './warehouse/setti
                     component: WarehouseItemFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'ngx-warehouse-item',
+                    component: WarehouseItemFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-warehouse-batch',
+                    component: WarehouseBatchNoFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -378,6 +395,7 @@ import {WarehouseSettingsItemFormlySelectFieldComponent} from './warehouse/setti
         WarehouseItemFormlySelectExFieldComponent,
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
+        WarehouseBatchNoFormlySelectFieldComponent,
     ],
     exports: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -413,6 +431,7 @@ import {WarehouseSettingsItemFormlySelectFieldComponent} from './warehouse/setti
         WarehouseItemFormlySelectExFieldComponent,
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
+        WarehouseBatchNoFormlySelectFieldComponent,
     ],
     declarations: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -448,6 +467,7 @@ import {WarehouseSettingsItemFormlySelectFieldComponent} from './warehouse/setti
         WarehouseItemFormlySelectExFieldComponent,
         WarehouseItemFormlySelectFieldComponent,
         WarehouseItemCellComponent,
+        WarehouseBatchNoFormlySelectFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {
