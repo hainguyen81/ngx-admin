@@ -78,7 +78,6 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      */
     set items(_items: any[]) {
         this._items = (_items || []);
-        this.onValueChanges(this.value);
     }
 
     /**
@@ -103,9 +102,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 return undefined;
             }
 
-            const _value: any = this.selectComponent.findItems(value);
-            window.console.error(['Formatted value', _value]);
-            return _value;
+            return this.selectComponent.findItems(value);
         };
     }
 
@@ -173,7 +170,13 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                             if (this.field) this.field.focus = false;
                         });
                         component.change.subscribe(e => {
-                            this.value = this.parseValue((e || {})['data']);
+                            this.value = (e || {})['data'];
+                        });
+                        component.load.subscribe(e => {
+                            const timer: number = window.setTimeout(() => {
+                                this.setSelectedValue(this.value);
+                                window.clearTimeout(timer);
+                            }, 200);
                         });
                     }
                     this.checkOverrideFormFieldClass();
@@ -195,15 +198,6 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 });
             }
         }
-    }
-
-    protected onValueChanges(value: any) {
-        super.onValueChanges(value);
-
-        const timer: number = window.setTimeout(() => {
-            this.setSelectedValue(value);
-            window.clearTimeout(timer);
-        }, 250);
     }
 
     protected onStatusChanges(value: any): void {
@@ -247,12 +241,12 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
 
     /**
      * Set the dropdown selected value
-     * @param value to apply
+     * @param _value to apply
      */
-    public setSelectedValue(value: any) {
+    public setSelectedValue(_value: any) {
         if (!isNullOrUndefined(this.selectComponent)) {
             this.selectComponent.selectedValues =
-                (isArray(value) ? value : !isNullOrUndefined(value) ? [value] : undefined);
+                (isArray(_value) ? _value : !isNullOrUndefined(_value) ? [_value] : undefined);
         }
     }
 }

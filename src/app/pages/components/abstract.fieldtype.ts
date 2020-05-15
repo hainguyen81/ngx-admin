@@ -227,7 +227,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @return the field value
      */
     get value(): any {
-        return (this._field && this.formControl ? super.value : this.__internalValue);
+        return this._field && this.formControl ? super.value : this.__internalValue;
     }
 
     /**
@@ -235,19 +235,20 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param _value to apply
      */
     set value(_value: any) {
-        if (!isNullOrUndefined(this._field) && !isNullOrUndefined(this.formControl)) {
-            super.value = _value;
+        const parsedValue: any = this.parseValue(_value);
+        if (!isNullOrUndefined(this._field) && !isNullOrUndefined(this.formControl) && super.value !== parsedValue) {
+            super.value = parsedValue;
 
-        } else {
-            this.__internalValue = _value;
+        } else if (this.__internalValue !== parsedValue) {
+            this.__internalValue = parsedValue;
         }
     }
 
     /**
-     * Get the formatted field value to show if necessary
+     * Get the formatted value value to show if necessary
      * @return the formatted value
      */
-    protected get formattedValue(): any {
+    protected get viewValue(): any {
         return this.formatValue(this.value);
     }
 

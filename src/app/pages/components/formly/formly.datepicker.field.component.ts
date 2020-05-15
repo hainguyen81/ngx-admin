@@ -131,21 +131,25 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                 this.queryDatePickerComponent, component => {
                     component
                     && component.openListener.subscribe(e => {
-                        this.field.focus = true;
-                        this.field.formControl
-                        && this.field.formControl.markAsTouched({ onlySelf: true });
+                        if (this.field) {
+                            this.field.focus = true;
+                            this.field.formControl
+                            && this.field.formControl.markAsTouched({onlySelf: true});
+                        }
                         this.stateChanges.next();
                     });
                     component
                     && component.closeListener.subscribe(e => {
-                        this.field.focus = false;
+                        if (this.field) this.field.focus = false;
                         this.stateChanges.next();
                     });
                     component
                     && component.selectListener.subscribe((e: IEvent) => {
-                        this.field.focus = true;
-                        this.field.formControl
-                        && this.field.formControl.markAsTouched({ onlySelf: true });
+                        if (this.field) {
+                            this.field.focus = true;
+                            this.field.formControl
+                            && this.field.formControl.markAsTouched({onlySelf: true});
+                        }
                         component.model = e.data['date'];
                         this.value = component.model;
                     });
@@ -157,9 +161,9 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
         super.onValueChanges(value);
         if (this.datePickerComponent) {
             const timer: number = window.setTimeout(() => {
-                this.datePickerComponent.displayDate = moment(this.value).format(this.dateTimePattern);
-                this.datePickerComponent.model = this.value;
-                this.datePickerComponent.selected = (this.value ? [this.value] : []);
+                this.datePickerComponent.displayDate = this.value;
+                this.datePickerComponent.model = this.viewValue;
+                this.datePickerComponent.selected = (this.viewValue ? [this.viewValue] : []);
                 window.clearTimeout(timer);
             }, 200);
         }

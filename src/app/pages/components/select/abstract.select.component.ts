@@ -547,9 +547,10 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     private ngSelectComponent: NgSelectComponent;
 
     /**
-     * Raise after items already were loaded to show
+     * Fired when item is added while [multiple]='true'. Outputs added item.
+     * $event {IEvent} with data is an added item
      */
-    @Output() readonly finishedLoading: EventEmitter<any> = new EventEmitter<any>();
+    @Output() readonly load: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     /**
      * Fired when item is added while [multiple]='true'. Outputs added item.
@@ -623,7 +624,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * whose value should be another array of items.
      * Items that have children may omit to have an ID.
      */
-    @Input('items') private _items: any[];
+    private _items: any[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -649,8 +650,10 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * Set the option items array to show
      * @param _items to apply
      */
+    @Input('items')
     set items(_items: any[]) {
         this._items = (_items || []);
+        this.load.emit();
     }
 
     /**
@@ -1072,13 +1075,17 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             return [];
         }
 
+        const findValues: any[] = (isArray(values) ? Array.from(values)
+            : !isNullOrUndefined(values) ? [values] : []);
         const _selectedItems: NgOption[] = [];
-        const multiple: boolean = this.getConfigValue('multiple', false);
-        for (const value of (values || [])) {
-            const item: NgOption = this.selectComponent.itemsList.findItem(value);
-            if (!isNullOrUndefined(item)) {
-                _selectedItems.push(item);
-                if (!multiple) break;
+        if (findValues.length) {
+            const multiple: boolean = this.getConfigValue('multiple', false);
+            for (const value of findValues) {
+                const item: NgOption = this.selectComponent.itemsList.findItem(value);
+                if (!isNullOrUndefined(item)) {
+                    _selectedItems.push(item);
+                    if (!multiple) break;
+                }
             }
         }
         return _selectedItems;

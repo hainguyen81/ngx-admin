@@ -115,7 +115,9 @@ export abstract class AppTableFlipFormComponent<
 
         // update model if necessary
         const model: T = this.getBackComponent().getModel();
-        model.id = model.id || IdGenerators.oid.generate();
+        if (!(model.id || '').length) {
+            model.id = IdGenerators.oid.generate();
+        }
         this.getDataSource().update(this.selectedModel, model)
             .then(() => { this.showSaveDataSuccess(); this.doBack(); })
             .catch(() => this.showSaveDataError());

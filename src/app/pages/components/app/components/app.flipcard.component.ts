@@ -338,9 +338,11 @@ export abstract class AppFlipcardComponent<
                 }
                 default: {
                     if (super.isFlipped()) {
-                        action.visible = this.visibleActionsOnBack().contains(action.id);
+                        action.visible = this.visibleActionsOnBack().contains(action.id)
+                            || this.visibleSpecialActionsOnBack().contains(action.id);
                     } else {
-                        action.visible = this.visibleActionsOnFront().contains(action.id);
+                        action.visible = this.visibleActionsOnFront().contains(action.id)
+                            || this.visibleActionsOnFront().contains(action.id);
                     }
                     break;
                 }
