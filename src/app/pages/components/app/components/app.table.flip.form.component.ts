@@ -61,6 +61,9 @@ export abstract class AppTableFlipFormComponent<
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param toolbarComponentType toolbar component type
+     * @param tableComponentType front table component type
+     * @param formComponentType front form component type
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
