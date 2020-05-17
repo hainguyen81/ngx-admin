@@ -103,11 +103,12 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                             // if data is invalid; then always be valid
                             if (isNullOrUndefined(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
+                                || !(fieldComponent.value || '').length
                                 || !(model.exp_date || '').length) {
                                 return true;
                             }
 
-                            const mfg_date: Moment = fieldComponent.value;
+                            const mfg_date: Moment = moment(fieldComponent.value, fieldComponent.dateTimePattern);
                             const exp_value: Moment = moment(model.exp_date, fieldComponent.dateTimePattern);
                             const valid: boolean = (isNullOrUndefined(mfg_date)
                                 || mfg_date.isSameOrBefore(exp_value, 'd'));
@@ -155,11 +156,12 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                             // if data is invalid; then always be valid
                             if (isNullOrUndefined(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
+                                || !(fieldComponent.value || '').length
                                 || !(model.mfg_date || '').length) {
                                 return true;
                             }
 
-                            const exp_date: Moment = fieldComponent.value;
+                            const exp_date: Moment = moment(fieldComponent.value, fieldComponent.dateTimePattern);
                             const mfg_value: Moment = moment(model.mfg_date, fieldComponent.dateTimePattern);
                             const valid: boolean = (isNullOrUndefined(exp_date)
                                 || exp_date.isSameOrAfter(mfg_value, 'd'));
