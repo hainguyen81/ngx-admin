@@ -1075,7 +1075,6 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             return;
         }
         this.findItems(values).forEach(option => option.disabled = true);
-        this.items = [].concat(this.items);
         this.getChangeDetectorRef().detectChanges();
     }
 
