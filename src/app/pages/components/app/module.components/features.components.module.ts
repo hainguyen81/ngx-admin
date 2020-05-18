@@ -132,7 +132,12 @@ import {
 import {
     WarehouseInventoryDetailBatchNoCellComponent,
 } from './warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
-import {WarehouseInventoryDetailSerialCellComponent} from './warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
+import {
+    WarehouseInventoryDetailSerialCellComponent,
+} from './warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
+import {
+    WarehouseStorageFormlySelectFieldComponent,
+} from './warehouse/storage/warehouse.storage.select.field.component';
 
 @NgModule({
     imports: [
@@ -344,6 +349,11 @@ import {WarehouseInventoryDetailSerialCellComponent} from './warehouse/inventory
                     component: WarehouseBatchNoFormlySelectFieldComponent,
                     wrappers: ['form-field'],
                 },
+                {
+                    name: 'ngx-warehouse-storage',
+                    component: WarehouseStorageFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
             ],
         }),
         /**
@@ -402,6 +412,7 @@ import {WarehouseInventoryDetailSerialCellComponent} from './warehouse/inventory
         WarehouseBatchNoFormlySelectFieldComponent,
         WarehouseInventoryDetailBatchNoCellComponent,
         WarehouseInventoryDetailSerialCellComponent,
+        WarehouseStorageFormlySelectFieldComponent,
     ],
     exports: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -440,6 +451,7 @@ import {WarehouseInventoryDetailSerialCellComponent} from './warehouse/inventory
         WarehouseBatchNoFormlySelectFieldComponent,
         WarehouseInventoryDetailBatchNoCellComponent,
         WarehouseInventoryDetailSerialCellComponent,
+        WarehouseStorageFormlySelectFieldComponent,
     ],
     declarations: [
         AppLanguagesFormlySelectExFieldComponent,
@@ -478,6 +490,7 @@ import {WarehouseInventoryDetailSerialCellComponent} from './warehouse/inventory
         WarehouseBatchNoFormlySelectFieldComponent,
         WarehouseInventoryDetailBatchNoCellComponent,
         WarehouseInventoryDetailSerialCellComponent,
+        WarehouseStorageFormlySelectFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {
