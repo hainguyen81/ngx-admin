@@ -42,6 +42,14 @@ export abstract class AppModuleDataFormlySelectFieldComponent<M extends IModel, 
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    /**
+     * Get a boolean value indicating the select component whether loads data automatically on start-up
+     * @return true for loading; else false
+     */
+    protected get autoLoadOnStartup(): boolean {
+        return true;
+    }
+
     protected get dataSource(): D {
         return this._datasource;
     }
@@ -86,7 +94,7 @@ export abstract class AppModuleDataFormlySelectFieldComponent<M extends IModel, 
     // -------------------------------------------------
 
     ngOnInit(): void {
-        this.refresh();
+        this.autoLoadOnStartup && this.refresh();
     }
 
     // -------------------------------------------------
@@ -103,7 +111,7 @@ export abstract class AppModuleDataFormlySelectFieldComponent<M extends IModel, 
         if (!isNullOrUndefined(_loadData) && isPromise(_loadData)) {
             (<Promise<M | M[]>>_loadData).then(
                 data => this.loadDataInternal(data),
-                    reason => this.logger.error(reason))
+                reason => this.logger.error(reason))
                 .catch(reason => this.logger.error(reason));
 
             // observe data
