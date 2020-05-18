@@ -1,23 +1,23 @@
 <div class="cell-editor d-flex flex-column flex-wrap" *ngIf="!viewMode">
     <div class="cell-editor-row d-flex flex-row flex-nowrap"
          *ngFor="let batch of newCellValue; let index = index; let last = last">
-        <div class="cell-editor-batch m-sm-1">
+        <div class="cell-editor-batch mr-sm-1">
             <ngx-select-2-app-module-warehouse-batch-no (onSelect)="onSelect($event, index)"
             ></ngx-select-2-app-module-warehouse-batch-no>
         </div>
         <input #quantityInput
                matInput
-               class="cell-editor-batch-number text-right number-cell m-sm-1"
+               class="cell-editor-batch-number text-right number-cell mr-sm-1"
                type="number"
                [(ngModel)]="batch.quantity">
-        <div class="cell-editor-batch-remover m-sm-1">
+        <div class="cell-editor-batch-remover mr-sm-1">
             <nb-icon [pack]="'fas'"
                      [icon]="'minus'"
                      (click)="removeBatch(index)"
                      *ngIf="newCellValue.length > 1"
             ></nb-icon>
         </div>
-        <div class="cell-editor-batch-pluser m-sm-1">
+        <div class="cell-editor-batch-pluser mr-sm-1">
             <nb-icon [pack]="'fas'"
                      [icon]="'plus'"
                      (click)="addBatch()"

@@ -39,7 +39,7 @@ import {IdGenerators} from '../../../../../../config/generator.config';
 import {MatInput} from '@angular/material/input';
 
 /**
- * Smart table warehouse item cell component base on {DefaultEditor}
+ * Smart table warehouse batch cell component base on {DefaultEditor}
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,

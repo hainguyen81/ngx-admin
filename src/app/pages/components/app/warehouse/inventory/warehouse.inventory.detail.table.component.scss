@@ -5,6 +5,15 @@
         tr td, tr.ng2-smart-titles th {
             padding: 0.5rem 0.25rem !important;
         }
+        tr td {
+            vertical-align: top;
+        }
+        tr td table-cell-edit-mode table-cell-custom-editor {
+            ng-select, input {
+                border-radius: 3px;
+                border: 1px solid rgb(162, 163, 165);
+            }
+        }
         thead {
             th.ng2-smart-th {
                 .ng2-smart-title .ng2-smart-sort {

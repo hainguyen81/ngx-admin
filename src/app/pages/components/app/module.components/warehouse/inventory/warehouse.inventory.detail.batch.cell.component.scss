@@ -11,9 +11,11 @@
             width: 20%;
         }
         .cell-editor-batch-remover, .cell-editor-batch-pluser {
-            font-size: smaller !important;
             max-width: 10%;
             width: 10%;
+        }
+        .cell-editor-batch-remover nb-icon, .cell-editor-batch-pluser nb-icon {
+            font-size: smaller;
         }
     }
 }

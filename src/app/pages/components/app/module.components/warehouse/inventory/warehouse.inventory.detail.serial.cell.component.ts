@@ -17,7 +17,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 
 /**
- * Smart table warehouse item cell component base on {DefaultEditor}
+ * Smart table warehouse serial/IMEI cell component base on {DefaultEditor}
  */
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,

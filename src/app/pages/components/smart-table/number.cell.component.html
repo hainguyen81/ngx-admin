@@ -1,2 +1,12 @@
-<span class="d-table-cell text-right number-cell currency" *ngIf="isCurrency">{{cellValue | currency}}</span>
-<span class="d-table-cell text-right number-cell" *ngIf="!isCurrency">{{cellValue}}</span>
+<div class="cell-editor d-table-cell" *ngIf="!viewMode">
+    <input #serialInput
+           matInput
+           class="cell-editor-number text-right number-cell mr-sm-1"
+           [class.currency]="isCurrency"
+           type="number"
+           [(ngModel)]="newCellValue">
+</div>
+<div class="cell-editor d-table-cell" *ngIf="viewMode">
+    <span class="d-table-cell text-right number-cell currency" *ngIf="isCurrency">{{cellValue | currency}}</span>
+    <span class="d-table-cell text-right number-cell" *ngIf="!isCurrency">{{cellValue}}</span>
+</div>

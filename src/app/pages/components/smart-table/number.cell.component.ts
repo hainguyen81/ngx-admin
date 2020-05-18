@@ -27,12 +27,16 @@ export class NumberCellComponent extends AbstractCellEditor {
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    get isEditable(): boolean {
-        return false;
-    }
-
     get cellValue(): number {
         return super.cellValue as number;
+    }
+
+    get newCellValue(): number {
+        return super.newCellValue as number;
+    }
+
+    set newCellValue(_value: number) {
+        super.newCellValue = _value;
     }
 
     get isCurrency(): boolean {

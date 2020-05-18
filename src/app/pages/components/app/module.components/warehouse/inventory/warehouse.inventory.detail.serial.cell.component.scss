@@ -7,9 +7,11 @@
 			width: 75%;
 		}
 		.cell-editor-serial-remover, .cell-editor-serial-pluser {
-			font-size: smaller !important;
 			max-width: 10%;
 			width: 10%;
+		}
+		.cell-editor-serial-remover nb-icon, .cell-editor-serial-pluser nb-icon {
+			font-size: smaller;
 		}
 	}
 }

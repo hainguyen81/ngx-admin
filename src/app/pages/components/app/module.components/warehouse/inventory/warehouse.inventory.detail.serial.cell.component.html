@@ -3,17 +3,17 @@
          *ngFor="let serial of newCellValue; let index = index; let last = last">
         <input #serialInput
                matInput
-               class="cell-editor-serial-number text-left m-sm-1"
+               class="cell-editor-serial-number text-left mr-sm-1"
                type="text"
                [(ngModel)]="serial">
-        <div class="cell-editor-serial-remover m-sm-1">
+        <div class="cell-editor-serial-remover mr-sm-1">
             <nb-icon [pack]="'fas'"
                      [icon]="'minus'"
                      (click)="removeSerial(index)"
                      *ngIf="newCellValue.length > 1"
             ></nb-icon>
         </div>
-        <div class="cell-editor-serial-pluser m-sm-1">
+        <div class="cell-editor-serial-pluser mr-sm-1">
             <nb-icon [pack]="'fas'"
                      [icon]="'plus'"
                      (click)="addSerial()"
