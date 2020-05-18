@@ -5,6 +5,7 @@ export namespace Constants {
             FLOOR = 1,
             SHELVES = 2,
             COMPARTMENT = 3,
+            OTHERS = 4,
         }
 
         export function convertWarehouseTypeToDisplay(value: WAREHOUSE_STORAGE_TYPE): string {
@@ -18,7 +19,7 @@ export namespace Constants {
                 case WAREHOUSE_STORAGE_TYPE.COMPARTMENT:
                     return 'common.enum.warehouseStorage.compartment.name';
                 default:
-                    return undefined;
+                    return 'common.enum.warehouseStorage.others.name';
             }
         }
     }
