@@ -24,54 +24,52 @@ import {IEvent} from '../../../../abstract.component';
 import {isNullOrUndefined, isNumber} from 'util';
 import {BehaviorSubject} from 'rxjs';
 import {
-    WarehouseBatchNoFormlySelectFieldComponent,
-} from '../batchno/warehouse.batch.select.field.component';
-import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
-import {
     WarehouseBatchNoDbService,
 } from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
-import {$enum} from 'ts-enum-util';
-import STATUS = Constants.COMMON.STATUS;
-import {
-    IWarehouseInventoryDetailBatch,
-} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
 import {IdGenerators} from '../../../../../../config/generator.config';
 import {MatInput} from '@angular/material/input';
+import {
+    WarehouseStorageFormlySelectFieldComponent,
+} from '../storage/warehouse.storage.select.field.component';
+import {IWarehouse} from '../../../../../../@core/data/warehouse/warehouse';
+import {
+    IWarehouseInventoryDetailStorage,
+} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
+import {
+    WarehouseDatasource,
+} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
-    selector: 'ngx-smart-table-warehouse-inventory-batch-no-cell',
-    templateUrl: './warehouse.inventory.detail.batch.cell.component.html',
-    styleUrls: ['./warehouse.inventory.detail.batch.cell.component.scss'],
+    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
+    selector: 'ngx-smart-table-warehouse-inventory-storage-cell',
+    templateUrl: './warehouse.inventory.detail.storage.cell.component.html',
+    styleUrls: ['./warehouse.inventory.detail.storage.cell.component.scss'],
 })
-export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEditor
+export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEditor
     implements OnInit, AfterViewInit, OnDestroy {
-
-    private static DB_BATCH_NO_STATUS_INDEX = 'status';
-    private static DB_BATCH_NO_STATUS_KEYRANGE = IDBKeyRange.only($enum(STATUS).getKeyOrThrow(STATUS.ACTIVATED));
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren(WarehouseBatchNoFormlySelectFieldComponent)
-    private readonly querySelectComponent: QueryList<WarehouseBatchNoFormlySelectFieldComponent>;
-    private _selectComponents: WarehouseBatchNoFormlySelectFieldComponent[];
+    @ViewChildren(WarehouseStorageFormlySelectFieldComponent)
+    private readonly querySelectComponent: QueryList<WarehouseStorageFormlySelectFieldComponent>;
+    private _selectComponents: WarehouseStorageFormlySelectFieldComponent[];
     @ViewChildren(MatInput)
     private readonly queryInputComponent: QueryList<MatInput>;
     private _inputComponents: MatInput[];
 
-    private _warehouseBatchesBehavior: BehaviorSubject<any>;
-    private _warehouseBatches: IWarehouseInventoryDetailBatch[] = [];
+    private _warehouseStoragesBehavior: BehaviorSubject<any>;
+    private _warehouseStorages: IWarehouseInventoryDetailStorage[] = [];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected get selectComponents(): WarehouseBatchNoFormlySelectFieldComponent[] {
+    protected get selectComponents(): WarehouseStorageFormlySelectFieldComponent[] {
         return this._selectComponents;
     }
 
@@ -83,15 +81,15 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         return true;
     }
 
-    get warehouseBatches(): IWarehouseInventoryDetailBatch[] {
-        return this._warehouseBatches;
+    get warehouseStorages(): IWarehouseInventoryDetailStorage[] {
+        return this._warehouseStorages;
     }
 
-    get newCellValue(): IWarehouseInventoryDetailBatch[] {
-        return super.newCellValue as IWarehouseInventoryDetailBatch[];
+    get newCellValue(): IWarehouseInventoryDetailStorage[] {
+        return super.newCellValue as IWarehouseInventoryDetailStorage[];
     }
 
-    set newCellValue(_value: IWarehouseInventoryDetailBatch[]) {
+    set newCellValue(_value: IWarehouseInventoryDetailStorage[]) {
         super.newCellValue = _value;
     }
 
@@ -100,7 +98,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseInventoryDetailBatchNoCellComponent} class
+     * Create a new instance of {WarehouseInventoryDetailStorageCellComponent} class
      * @param _parentCell {CellComponent}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
@@ -109,7 +107,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
-     * @param warehouseBatchNoDbService {WarehouseBatchNoDbService}
+     * @param warehouseDbService {WarehouseBatchNoDbService}
      */
     constructor(@Inject(forwardRef(() => CellComponent)) _parentCell: CellComponent,
                 @Inject(TranslateService) _translateService: TranslateService,
@@ -119,7 +117,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef,
-                @Inject(WarehouseBatchNoDbService) private warehouseBatchNoDbService: WarehouseBatchNoDbService) {
+                @Inject(WarehouseDatasource) private warehouseDbService: WarehouseDatasource) {
         super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
@@ -133,7 +131,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             this.newCellValue = [];
         }
         // if need to add at least one row
-        if (!this.viewMode && this.newCellValue.length < 1) this.addBatch();
+        if (!this.viewMode && this.newCellValue.length < 1) this.addStorage();
     }
 
     ngAfterViewInit(): void {
@@ -148,29 +146,29 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         }
 
         if (this.viewMode) {
-            this._warehouseBatchesBehavior = new BehaviorSubject<any>(this.cellValue);
-            this._warehouseBatchesBehavior.subscribe(value => {
+            this._warehouseStoragesBehavior = new BehaviorSubject<any>(this.cellValue);
+            this._warehouseStoragesBehavior.subscribe(value => {
                 this.__observeCellValue(value);
             });
         }
     }
 
     ngOnDestroy(): void {
-        this._warehouseBatchesBehavior
-        && this._warehouseBatchesBehavior.unsubscribe();
+        this._warehouseStoragesBehavior
+        && this._warehouseStoragesBehavior.unsubscribe();
         super.ngOnDestroy();
     }
 
     onSelect($event: IEvent, dataIndex: number): void {
-        const batches: IWarehouseInventoryDetailBatch[] =
-            this.newCellValue as IWarehouseInventoryDetailBatch[];
-        const batch: IWarehouseInventoryDetailBatch =
-            (0 <= dataIndex && dataIndex < batches.length ? batches[dataIndex] : undefined);
-        const selBatch: IWarehouseBatchNo = $event.data as IWarehouseBatchNo;
-        batch.batch = selBatch;
-        batch.batch_id = (isNullOrUndefined(selBatch) ? undefined : selBatch.id);
-        batch.batch_code = (isNullOrUndefined(selBatch) ? undefined : selBatch.code);
-        batch.batch_name = (isNullOrUndefined(selBatch) ? undefined : selBatch.name);
+        const storages: IWarehouseInventoryDetailStorage[] =
+            this.newCellValue as IWarehouseInventoryDetailStorage[];
+        const storage: IWarehouseInventoryDetailStorage =
+            (0 <= dataIndex && dataIndex < storages.length ? storages[dataIndex] : undefined);
+        const selStorage: IWarehouse = $event.data as IWarehouse;
+        storage.storage = selStorage;
+        storage.storage_id = (isNullOrUndefined(selStorage) ? undefined : selStorage.id);
+        storage.storage_code = (isNullOrUndefined(selStorage) ? undefined : selStorage.code);
+        storage.storage_name = (isNullOrUndefined(selStorage) ? undefined : selStorage.name);
     }
 
     // -------------------------------------------------
@@ -182,19 +180,18 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
      * @private
      */
     private __initializeEditMode(): void {
-        const components: WarehouseBatchNoFormlySelectFieldComponent[] = this.selectComponents;
+        const components: WarehouseStorageFormlySelectFieldComponent[] = this.selectComponents;
         const inputComponents: MatInput[] = this.inputComponents;
-        const batches: IWarehouseInventoryDetailBatch[] =
-            this.cellValue as IWarehouseInventoryDetailBatch[];
+        const storages: IWarehouseInventoryDetailStorage[] =
+            this.cellValue as IWarehouseInventoryDetailStorage[];
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
             component.onLoad.subscribe(e => {
-                const batch: IWarehouseInventoryDetailBatch = batches[dataIndex];
-                if (!isNullOrUndefined(batch)) {
-                    component.setSelectedValue(batch.batch_code);
-                    inputComponent.value =
-                        (isNumber(batch.quantity) ? batch.quantity.toString() : undefined);
+                const storage: IWarehouseInventoryDetailStorage = storages[dataIndex];
+                if (!isNullOrUndefined(storage)) {
+                    component.setSelectedValue(storage.storage_code);
+                    inputComponent.value = (isNumber(storage.quantity) ? storage.quantity.toString() : undefined);
                 }
             });
             component.refresh();
@@ -207,106 +204,101 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
      * @private
      */
     private __observeCellValue(value: any): void {
-        if ((!(this._warehouseBatches || []).length
-            || (Array.from(value || []).length !== (this._warehouseBatches || []).length))
+        if ((!(this._warehouseStorages || []).length
+            || (Array.from(value || []).length !== (this._warehouseStorages || []).length))
             && !isNullOrUndefined(value) && Array.from(value || []).length
             && this.viewMode) {
-            const batches: { batch_id: string; batch_code: string; quantity?: number | 0 }[] =
+            const storages: { storage_id: string; storage_code: string; quantity?: number | 0 }[] =
                 (Array.from(value || []).length
-                    ? Array.from(value) as { batch_id: string; batch_code: string; quantity?: number | 0 }[] : []);
-            const batchCodes: string[] = [];
-            batches.forEach(batch => batch && (batch.batch_code || '').length && batchCodes.push(batch.batch_code));
-            this._warehouseBatches.clear();
-            batches.length && this.__loadBatchesToView(batches, batchCodes);
+                    ? Array.from(value) as { storage_id: string; storage_code: string; quantity?: number | 0 }[] : []);
+            const storageCodes: string[] = [];
+            storages.forEach(storage => storage && (storage.storage_code || '').length
+                && storageCodes.push(storage.storage_code));
+            this._warehouseStorages.clear();
+            storages.length && this.__loadStoragesToView(storages, storageCodes);
         }
     }
 
     /**
-     * Load batches to view
-     * @param batches to load
-     * @param batchCodes to check
+     * Load storages to view
+     * @param storages to load
+     * @param storageCodes to check
      * @private
      */
-    private __loadBatchesToView(batches: {
-        batch_id: string;
-        batch_code: string;
-        quantity?: number | 0
-    }[], batchCodes: string[]): void {
-        this.warehouseBatchNoDbService.openCursorByIndex(
-            WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_INDEX,
-            WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_KEYRANGE,
-            (event: Event) => {
-                const cursor = (<any>event.target).result;
-                if (cursor) {
-                    const batch: IWarehouseBatchNo = cursor.value as IWarehouseBatchNo;
-                    this.__mapBatchToView(batch, batches, batchCodes);
-                    cursor.continue();
-                }
-            }).then(() => this.changeDetectorRef.detectChanges(),
-            reason => this.logger.error(reason))
+    private __loadStoragesToView(storages: { storage_id: string; storage_code: string; quantity?: number | 0 }[],
+                                 storageCodes: string[]): void {
+        this.warehouseDbService.getAll()
+            .then((dataStorages: IWarehouse[]) => {
+                (dataStorages || []).forEach(storage => {
+                    this.__mapStorageToView(storage, storages, storageCodes);
+                });
+            }, reason => this.logger.error(reason))
             .catch(reason => this.logger.error(reason));
     }
 
     /**
-     * Map the data batch record to view
-     * @param batch {IWarehouseBatchNo} record
-     * @param batches to load
-     * @param batchCodes to check
+     * Map the data storage record to view
+     * @param storage {IWarehouse} record
+     * @param storages to load
+     * @param storageCodes to check
      * @private
      */
-    private __mapBatchToView(batch: IWarehouseBatchNo,
-                             batches: { batch_id: string; batch_code: string; quantity?: number | 0 }[],
-                             batchCodes: string[]): void {
-        if (batchCodes.indexOf(batch.code || '') >= 0) {
-            const batchIdx: number = batchCodes.indexOf(batch.code || '');
-            this._warehouseBatches.push(
-                WarehouseInventoryDetailBatchNoCellComponent
-                    .__buildViewBatch(batch, batches[batchIdx]));
+    private __mapStorageToView(storage: IWarehouse,
+                               storages: { storage_id: string; storage_code: string; quantity?: number | 0 }[],
+                               storageCodes: string[]): void {
+        if (storageCodes.indexOf(storage.code || '') >= 0) {
+            const storageIdx: number = storageCodes.indexOf(storage.code || '');
+            this._warehouseStorages.push(
+                WarehouseInventoryDetailStorageCellComponent
+                    .__buildViewStorage(storage, storages[storageIdx]));
         }
     }
 
     /**
-     * Build {IWarehouseInventoryDetailBatch} to view
-     * @param batch to build
-     * @param batchDetail to build
+     * Build {IWarehouseInventoryDetailStorage} to view
+     * @param storage to build
+     * @param storageDetail to build
      * @private
      */
-    private static __buildViewBatch(batch: IWarehouseBatchNo,
-                                    batchDetail: { batch_id: string; batch_code: string; quantity?: number | 0 }):
-        IWarehouseInventoryDetailBatch {
+    private static __buildViewStorage(storage: IWarehouse,
+                                      storageDetail: {
+        storage_id: string;
+        storage_code: string;
+        quantity?: number | 0
+    }): IWarehouseInventoryDetailStorage {
         return {
             id: IdGenerators.oid.generate(),
-            batch: batch,
-            batch_id: batch.id,
-            batch_code: batch.code,
-            batch_name: batch.name,
-            viewBatch: [batch.name, ' (', batch.code, ')'].join(''),
-            quantity: batchDetail.quantity || 0,
-        } as IWarehouseInventoryDetailBatch;
+            storage: storage,
+            storage_id: storage.id,
+            storage_code: storage.code,
+            storage_name: storage.name,
+            viewStorage: [storage.name, ' (', storage.code, ')'].join(''),
+            quantity: storageDetail.quantity || 0,
+        } as IWarehouseInventoryDetailStorage;
     }
 
     /**
-     * Remove batch at the specified index
+     * Remove storage at the specified index
      * @param dataIndex to remove
      */
-    public removeBatch(dataIndex: number): void {
-        const batches: IWarehouseInventoryDetailBatch[] =
-            this.newCellValue as IWarehouseInventoryDetailBatch[];
-        if (0 <= dataIndex && dataIndex < (batches || []).length) {
-            batches.splice(dataIndex, 1);
+    public removeStorage(dataIndex: number): void {
+        const storages: IWarehouseInventoryDetailStorage[] =
+            this.newCellValue as IWarehouseInventoryDetailStorage[];
+        if (0 <= dataIndex && dataIndex < (storages || []).length) {
+            storages.splice(dataIndex, 1);
         }
     }
 
     /**
-     * Add a new batch at the bottom position
+     * Add a new storage at the bottom position
      */
-    public addBatch(): void {
+    public addStorage(): void {
         this.newCellValue.push({
             id: undefined,
-            batch_id: undefined,
-            batch_code: undefined,
-            batch_name: undefined,
-            batch: undefined,
+            storage_id: undefined,
+            storage_code: undefined,
+            storage_name: undefined,
+            storage: undefined,
             quantity: undefined,
         });
     }
