@@ -46,7 +46,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      * whose value should be another array of items.
      * Items that have children may omit to have an ID.
      */
-    @Input() private _items: any[];
+    private _items: any[];
 
     @ViewChildren(NgxSelectComponent)
     private readonly queryNgxSelectComponent: QueryList<NgxSelectComponent>;
@@ -68,7 +68,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      * Get the items array
      * @return the items array
      */
-    get items(): any[] {
+    @Input() get items(): any[] {
         return this._items || [];
     }
 

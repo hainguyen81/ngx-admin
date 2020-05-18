@@ -266,10 +266,10 @@ export interface INgxSelectOptions {
      * Provide custom keyDown function.
      * Executed before default handler.
      * Return false to suppress execution of default key down handlers
-     * Default is true
+     * Default is false
      * @param $event {KeyboardEvent}
      */
-    keyDownFn?: (($event: KeyboardEvent) => boolean) | boolean | true;
+    keyDownFn?: (($event: KeyboardEvent) => boolean) | boolean | false;
     /**
      * Shows the 'Add new option' action in case of out of items at all
      * {boolean}
@@ -508,10 +508,10 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
      * Provide custom keyDown function.
      * Executed before default handler.
      * Return false to suppress execution of default key down handlers
-     * Default is true
+     * Default is false
      * @param $event {KeyboardEvent}
      */
-    keyDownFn: true,
+    keyDownFn: false,
     /**
      * Specify whether using image for option
      * {boolean}
@@ -1064,6 +1064,19 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             return (aVal === bVal);
         }
         return _compareWith.apply(_this, [a, b]);
+    }
+
+    /**
+     * Disable the option items by the specified values
+     * @param values to make disable
+     */
+    public setDisabledItemsByValues(values: any[]): void {
+        if (isNullOrUndefined(this.selectComponent)) {
+            return;
+        }
+        this.findItems(values).forEach(option => option.disabled = true);
+        this.items = [].concat(this.items);
+        this.getChangeDetectorRef().detectChanges();
     }
 
     /**

@@ -2,7 +2,9 @@
     <div class="cell-editor-row d-flex flex-row flex-nowrap"
          *ngFor="let batch of newCellValue; let index = index; let last = last">
         <div class="cell-editor-batch mr-sm-1">
-            <ngx-select-2-app-module-warehouse-batch-no (onSelect)="onSelect($event, index)"
+            <ngx-select-2-app-module-warehouse-batch-no
+                (onSelect)="onSelect($event, index)"
+                [disabledValues]="selectedBatchCodes"
             ></ngx-select-2-app-module-warehouse-batch-no>
         </div>
         <input #quantityInput
@@ -27,7 +29,7 @@
     </div>
 </div>
 <div class="cell-viewer d-table" *ngIf="viewMode">
-    <div class="batch-row d-table-row" *ngFor="let batch of warehouseBatches">
+    <div class="batch-row d-table-row" *ngFor="let batch of warehouseDetailBatches">
         <div class="batch-cell d-table-cell text-left w-75" [innerHTML]="batch.viewBatch"></div>
         <div class="batch-cell d-table-cell text-right w-25" [innerHTML]="batch.quantity"></div>
     </div>

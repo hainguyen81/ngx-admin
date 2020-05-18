@@ -27,16 +27,15 @@ import {
     WarehouseBatchNoFormlySelectFieldComponent,
 } from '../batchno/warehouse.batch.select.field.component';
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
-import {
-    WarehouseBatchNoDbService,
-} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
 import {$enum} from 'ts-enum-util';
 import STATUS = Constants.COMMON.STATUS;
 import {
     IWarehouseInventoryDetailBatch,
 } from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
-import {IdGenerators} from '../../../../../../config/generator.config';
 import {MatInput} from '@angular/material/input';
+import {
+    WarehouseBatchNoDatasource,
+} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -65,7 +64,8 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     private _inputComponents: MatInput[];
 
     private _warehouseBatchesBehavior: BehaviorSubject<any>;
-    private _warehouseBatches: IWarehouseInventoryDetailBatch[] = [];
+    private _warehouseDetailBatches: IWarehouseInventoryDetailBatch[] = [];
+    private _warehouseBatches: IWarehouseBatchNo[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -83,8 +83,8 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         return true;
     }
 
-    get warehouseBatches(): IWarehouseInventoryDetailBatch[] {
-        return this._warehouseBatches;
+    get warehouseDetailBatches(): IWarehouseInventoryDetailBatch[] {
+        return this._warehouseDetailBatches;
     }
 
     get newCellValue(): IWarehouseInventoryDetailBatch[] {
@@ -93,6 +93,15 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
 
     set newCellValue(_value: IWarehouseInventoryDetailBatch[]) {
         super.newCellValue = _value;
+    }
+
+    get selectedBatchCodes(): string[] {
+        const batches: IWarehouseInventoryDetailBatch[] = this.newCellValue;
+        const batchCodes: string[] = [];
+        (batches || []).forEach(batch => {
+            (batch.batch_code || '').length && batchCodes.push(batch.batch_code);
+        });
+        return (batchCodes.length ? batchCodes : undefined);
     }
 
     // -------------------------------------------------
@@ -109,7 +118,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
-     * @param warehouseBatchNoDbService {WarehouseBatchNoDbService}
+     * @param warehouseBatchNoDatasource {WarehouseBatchNoDatasource}
      */
     constructor(@Inject(forwardRef(() => CellComponent)) _parentCell: CellComponent,
                 @Inject(TranslateService) _translateService: TranslateService,
@@ -119,7 +128,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef,
-                @Inject(WarehouseBatchNoDbService) private warehouseBatchNoDbService: WarehouseBatchNoDbService) {
+                @Inject(WarehouseBatchNoDatasource) private warehouseBatchNoDatasource: WarehouseBatchNoDatasource) {
         super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
@@ -132,26 +141,38 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         if (!(this.newCellValue || []).length) {
             this.newCellValue = [];
         }
+
         // if need to add at least one row
         if (!this.viewMode && this.newCellValue.length < 1) this.addBatch();
+
+        // observe batch no master
+        this._warehouseBatchesBehavior = new BehaviorSubject<any>(this._warehouseBatches);
+        this._warehouseBatchesBehavior.subscribe((batches: IWarehouseBatchNo[]) => {
+            if (this.viewMode) {
+                this.__initialViewModeSelectItems(batches);
+
+            } else {
+                this.__initialEditModeSelectItems(batches);
+            }
+        });
+        this.warehouseBatchNoDatasource.getAllByIndex(
+            WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_INDEX,
+            WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_KEYRANGE)
+            .then((batches: IWarehouseBatchNo[]) => {
+                this._warehouseBatchesBehavior.next(batches);
+            }, reason => this.logger.error(reason))
+            .catch(reason => this.logger.error(reason));
     }
 
     ngAfterViewInit(): void {
-        if (!(this._selectComponents || []).length && !this.viewMode) {
-            this._selectComponents = ComponentUtils.queryComponents(this.querySelectComponent);
-        }
-        if (!(this._inputComponents || []).length && !this.viewMode) {
-            this._inputComponents = ComponentUtils.queryComponents(this.queryInputComponent);
-        }
         if (!this.viewMode) {
+            if (!(this._selectComponents || []).length) {
+                this._selectComponents = ComponentUtils.queryComponents(this.querySelectComponent);
+            }
+            if (!(this._inputComponents || []).length) {
+                this._inputComponents = ComponentUtils.queryComponents(this.queryInputComponent);
+            }
             this.__initializeEditMode();
-        }
-
-        if (this.viewMode) {
-            this._warehouseBatchesBehavior = new BehaviorSubject<any>(this.cellValue);
-            this._warehouseBatchesBehavior.subscribe(value => {
-                this.__observeCellValue(value);
-            });
         }
     }
 
@@ -182,14 +203,16 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
      * @private
      */
     private __initializeEditMode(): void {
+        if (this.viewMode) return;
+
         const components: WarehouseBatchNoFormlySelectFieldComponent[] = this.selectComponents;
         const inputComponents: MatInput[] = this.inputComponents;
-        const batches: IWarehouseInventoryDetailBatch[] =
-            this.cellValue as IWarehouseInventoryDetailBatch[];
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
             component.onLoad.subscribe(e => {
+                const batches: IWarehouseInventoryDetailBatch[] =
+                    this.cellValue as IWarehouseInventoryDetailBatch[];
                 const batch: IWarehouseInventoryDetailBatch = batches[dataIndex];
                 if (!isNullOrUndefined(batch)) {
                     component.setSelectedValue(batch.batch_code);
@@ -197,92 +220,53 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
                         (isNumber(batch.quantity) ? batch.quantity.toString() : undefined);
                 }
             });
-            component.refresh();
         }
     }
 
     /**
-     * Observe cell value to view
-     * @param value to observe
+     * Initialize select items for edit mode
+     * @param batches master data to load
      * @private
      */
-    private __observeCellValue(value: any): void {
-        if ((!(this._warehouseBatches || []).length
-            || (Array.from(value || []).length !== (this._warehouseBatches || []).length))
-            && !isNullOrUndefined(value) && Array.from(value || []).length
-            && this.viewMode) {
-            const batches: { batch_id: string; batch_code: string; quantity?: number | 0 }[] =
-                (Array.from(value || []).length
-                    ? Array.from(value) as { batch_id: string; batch_code: string; quantity?: number | 0 }[] : []);
-            const batchCodes: string[] = [];
-            batches.forEach(batch => batch && (batch.batch_code || '').length && batchCodes.push(batch.batch_code));
-            this._warehouseBatches.clear();
-            batches.length && this.__loadBatchesToView(batches, batchCodes);
-        }
+    private __initialEditModeSelectItems(batches: IWarehouseBatchNo[]): void {
+        (this._warehouseBatches || []).clear();
+        if (this.viewMode) return;
+
+        // detect for disabled items
+        this._warehouseBatches = [];
+        (batches || []).forEach(batch => {
+            batch['text'] = [batch.exp_date, ' - ', batch.name, ' (', batch.code, ')'].join('');
+            this._warehouseBatches.push(batch);
+        });
+
+        // apply select items
+        const components: WarehouseBatchNoFormlySelectFieldComponent[] = this.selectComponents;
+        (components || []).forEach(component => component.items = this._warehouseBatches);
+        this.changeDetectorRef.detectChanges();
     }
 
     /**
-     * Load batches to view
-     * @param batches to load
-     * @param batchCodes to check
+     * Initialize select items for view mode
+     * @param batches master data to load
      * @private
      */
-    private __loadBatchesToView(batches: {
-        batch_id: string;
-        batch_code: string;
-        quantity?: number | 0
-    }[], batchCodes: string[]): void {
-        this.warehouseBatchNoDbService.openCursorByIndex(
-            WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_INDEX,
-            WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_KEYRANGE,
-            (event: Event) => {
-                const cursor = (<any>event.target).result;
-                if (cursor) {
-                    const batch: IWarehouseBatchNo = cursor.value as IWarehouseBatchNo;
-                    this.__mapBatchToView(batch, batches, batchCodes);
-                    cursor.continue();
-                }
-            }).then(() => this.changeDetectorRef.detectChanges(),
-            reason => this.logger.error(reason))
-            .catch(reason => this.logger.error(reason));
-    }
+    private __initialViewModeSelectItems(batches: IWarehouseBatchNo[]): void {
+        this._warehouseDetailBatches.clear();
+        if (!this.viewMode) return;
 
-    /**
-     * Map the data batch record to view
-     * @param batch {IWarehouseBatchNo} record
-     * @param batches to load
-     * @param batchCodes to check
-     * @private
-     */
-    private __mapBatchToView(batch: IWarehouseBatchNo,
-                             batches: { batch_id: string; batch_code: string; quantity?: number | 0 }[],
-                             batchCodes: string[]): void {
-        if (batchCodes.indexOf(batch.code || '') >= 0) {
-            const batchIdx: number = batchCodes.indexOf(batch.code || '');
-            this._warehouseBatches.push(
-                WarehouseInventoryDetailBatchNoCellComponent
-                    .__buildViewBatch(batch, batches[batchIdx]));
-        }
-    }
-
-    /**
-     * Build {IWarehouseInventoryDetailBatch} to view
-     * @param batch to build
-     * @param batchDetail to build
-     * @private
-     */
-    private static __buildViewBatch(batch: IWarehouseBatchNo,
-                                    batchDetail: { batch_id: string; batch_code: string; quantity?: number | 0 }):
-        IWarehouseInventoryDetailBatch {
-        return {
-            id: IdGenerators.oid.generate(),
-            batch: batch,
-            batch_id: batch.id,
-            batch_code: batch.code,
-            batch_name: batch.name,
-            viewBatch: [batch.name, ' (', batch.code, ')'].join(''),
-            quantity: batchDetail.quantity || 0,
-        } as IWarehouseInventoryDetailBatch;
+        const detailBatches: IWarehouseInventoryDetailBatch[] =
+            this.cellValue as IWarehouseInventoryDetailBatch[];
+        (detailBatches || []).forEach(detailBatch => {
+            const batch: IWarehouseBatchNo = (batches || []).find(b => {
+                return (b.code === detailBatch.batch_code);
+            });
+            if (!isNullOrUndefined(batch)) {
+                detailBatch.batch = batch;
+                detailBatch.viewBatch = [detailBatch.batch_name, ' (', detailBatch.batch_code, ')'].join('');
+                this._warehouseDetailBatches.push(detailBatch);
+            }
+        });
+        this.changeDetectorRef.detectChanges();
     }
 
     /**
@@ -295,6 +279,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         if (0 <= dataIndex && dataIndex < (batches || []).length) {
             batches.splice(dataIndex, 1);
         }
+        this.changeDetectorRef.detectChanges();
     }
 
     /**

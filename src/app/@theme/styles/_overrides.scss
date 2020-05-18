@@ -312,8 +312,11 @@
         bottom: 0.2375em;
         padding: 0 4px;
     }
+    .ng-select .ng-select-container .ng-value-container .ng-input input[role='combobox'] {
+        min-height: 20px !important;
+    }
     .ng-select .ng-select-container .ng-value-container .ng-value {
-        padding: 5px 2px 2px;
+        padding: 5px;
     }
     .ng-dropdown-panel {
         min-width: 150px !important;
