@@ -161,6 +161,18 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         super.ngOnDestroy();
     }
 
+    onSelect($event: IEvent, dataIndex: number): void {
+        const batches: IWarehouseInventoryDetailBatch[] =
+            this.newCellValue as IWarehouseInventoryDetailBatch[];
+        const batch: IWarehouseInventoryDetailBatch =
+            (0 <= dataIndex && dataIndex < batches.length ? batches[dataIndex] : undefined);
+        const selBatch: IWarehouseBatchNo = $event.data as IWarehouseBatchNo;
+        batch.batch = selBatch;
+        batch.batch_id = (isNullOrUndefined(selBatch) ? undefined : selBatch.id);
+        batch.batch_code = (isNullOrUndefined(selBatch) ? undefined : selBatch.code);
+        batch.batch_name = (isNullOrUndefined(selBatch) ? undefined : selBatch.name);
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
@@ -174,8 +186,6 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         const inputComponents: MatInput[] = this.inputComponents;
         const batches: IWarehouseInventoryDetailBatch[] =
             this.cellValue as IWarehouseInventoryDetailBatch[];
-        const newBatches: IWarehouseInventoryDetailBatch[] =
-            this.newCellValue as IWarehouseInventoryDetailBatch[];
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
@@ -186,14 +196,6 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
                     inputComponent.value =
                         (isNumber(batch.quantity) ? batch.quantity.toString() : undefined);
                 }
-            });
-            component.onSelect.subscribe(($event: IEvent) => {
-                const selBatch: IWarehouseBatchNo = $event.data as IWarehouseBatchNo;
-                const newBatch: IWarehouseInventoryDetailBatch = newBatches[components.indexOf(component)];
-                newBatch.batch = selBatch;
-                newBatch.batch_id = (isNullOrUndefined(selBatch) ? undefined : selBatch.id);
-                newBatch.batch_code = (isNullOrUndefined(selBatch) ? undefined : selBatch.code);
-                newBatch.batch_name = (isNullOrUndefined(selBatch) ? undefined : selBatch.name);
             });
             component.refresh();
         }

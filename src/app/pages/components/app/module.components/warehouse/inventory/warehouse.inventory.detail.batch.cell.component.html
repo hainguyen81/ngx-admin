@@ -2,7 +2,8 @@
     <div class="cell-editor-row d-flex flex-row flex-nowrap"
          *ngFor="let batch of newCellValue; let index = index; let last = last">
         <div class="cell-editor-batch m-sm-1">
-            <ngx-select-2-app-module-warehouse-batch-no></ngx-select-2-app-module-warehouse-batch-no>
+            <ngx-select-2-app-module-warehouse-batch-no (onSelect)="onSelect($event, index)"
+            ></ngx-select-2-app-module-warehouse-batch-no>
         </div>
         <input #quantityInput
                matInput

@@ -49,6 +49,7 @@ export abstract class AppFormlySelectFieldComponent<T extends IModel>
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
+     * @param _config {INgxSelectOptions}
      */
     protected constructor(@Inject(TranslateService) _translateService: TranslateService,
                           @Inject(Renderer2) _renderer: Renderer2,
