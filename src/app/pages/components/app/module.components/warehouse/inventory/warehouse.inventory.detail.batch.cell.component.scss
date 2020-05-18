@@ -2,8 +2,18 @@
 
 @include nb-install-component() {
     ::ng-deep .cell-editor .cell-editor-row {
-        .cell-editor-batch { max-width: 60%; width: 60%; }
-        .cell-editor-batch-number { max-width: 20%; width: 20%; }
-        .cell-editor-batch-remover, .cell-editor-batch-pluser { max-width: 10%; width: 10%; }
+        .cell-editor-batch {
+            max-width: 60%;
+            width: 60%;
+        }
+        .cell-editor-batch-number {
+            max-width: 20%;
+            width: 20%;
+        }
+        .cell-editor-batch-remover, .cell-editor-batch-pluser {
+            font-size: smaller !important;
+            max-width: 10%;
+            width: 10%;
+        }
     }
 }

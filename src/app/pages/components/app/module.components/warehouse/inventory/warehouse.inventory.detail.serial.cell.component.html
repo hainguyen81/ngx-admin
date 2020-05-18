@@ -1,0 +1,29 @@
+<div class="cell-editor d-flex flex-column flex-wrap" *ngIf="!viewMode">
+    <div class="cell-editor-row d-flex flex-row flex-nowrap"
+         *ngFor="let serial of newCellValue; let index = index; let last = last">
+        <input #serialInput
+               matInput
+               class="cell-editor-serial-number text-left m-sm-1"
+               type="text"
+               [(ngModel)]="serial">
+        <div class="cell-editor-serial-remover m-sm-1">
+            <nb-icon [pack]="'fas'"
+                     [icon]="'minus'"
+                     (click)="removeSerial(index)"
+                     *ngIf="newCellValue.length > 1"
+            ></nb-icon>
+        </div>
+        <div class="cell-editor-serial-pluser m-sm-1">
+            <nb-icon [pack]="'fas'"
+                     [icon]="'plus'"
+                     (click)="addSerial()"
+                     *ngIf="last"
+            ></nb-icon>
+        </div>
+    </div>
+</div>
+<div class="cell-viewer d-table" *ngIf="viewMode">
+    <div class="serial-row d-table-row" *ngFor="let serial of cellValue">
+        <div class="batch-cell d-table-cell text-left w-100" [innerHTML]="serial"></div>
+    </div>
+</div>

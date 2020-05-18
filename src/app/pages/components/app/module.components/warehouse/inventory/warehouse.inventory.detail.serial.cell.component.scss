@@ -1,0 +1,15 @@
+@import '../../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+	::ng-deep .cell-editor .cell-editor-row {
+		.cell-editor-serial-number {
+			max-width: 75%;
+			width: 75%;
+		}
+		.cell-editor-serial-remover, .cell-editor-serial-pluser {
+			font-size: smaller !important;
+			max-width: 10%;
+			width: 10%;
+		}
+	}
+}

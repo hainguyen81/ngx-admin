@@ -100,7 +100,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {DatePickerCellComponent} class
+     * Create a new instance of {WarehouseInventoryDetailBatchNoCellComponent} class
      * @param _parentCell {CellComponent}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
