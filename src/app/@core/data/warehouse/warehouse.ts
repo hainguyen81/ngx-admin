@@ -9,6 +9,8 @@ export interface IWarehouse extends IModel {
     code: string;
     // Tên kho
     name: string;
+    // Loại kho hàng/kệ/ngăn
+    type?: string | null;
     // Hình ảnh
     image?: string[] | null;
     // Địa chỉ

@@ -15,8 +15,8 @@ import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abs
 import {
     AppModuleDataIndexSettingsFormlySelectFieldComponent,
 } from '../../../components/common/app.module.data.index.formly.select.field.component';
-import {IWarehouse} from "../../../../../../@core/data/warehouse/warehouse";
-import {WarehouseDatasource} from "../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource";
+import {IWarehouse} from '../../../../../../@core/data/warehouse/warehouse';
+import {WarehouseDatasource} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 
 export const WarehouseStorageNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {

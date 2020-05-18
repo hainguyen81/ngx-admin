@@ -231,6 +231,7 @@ export const dbConfig: DBConfig = {
             {name: 'id', keypath: 'id', options: {unique: true}},
             {name: 'code', keypath: 'code', options: {unique: true}},
             {name: 'name', keypath: 'name', options: {unique: false}},
+            {name: 'type', keypath: 'type', options: {unique: false}},
             {name: 'street_address', keypath: 'street_address', options: {unique: false}},
             {name: 'district_id', keypath: 'district_id', options: {unique: false}},
             {name: 'district', keypath: 'district', options: {unique: false}},
