@@ -2,19 +2,19 @@
 
 @include nb-install-component() {
     ::ng-deep .cell-editor .cell-editor-row {
-        .cell-editor-batch {
+        .cell-editor-storage {
             max-width: 60%;
             width: 60%;
         }
-        .cell-editor-batch-number {
+        .cell-editor-storage-number {
             max-width: 20%;
             width: 20%;
         }
-        .cell-editor-batch-remover, .cell-editor-batch-pluser {
+        .cell-editor-storage-remover, .cell-editor-storage-pluser {
             max-width: 10%;
             width: 10%;
         }
-        .cell-editor-batch-remover nb-icon, .cell-editor-batch-pluser nb-icon {
+        .cell-editor-storage-remover nb-icon, .cell-editor-storage-pluser nb-icon {
             font-size: smaller;
         }
     }
