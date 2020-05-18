@@ -31,7 +31,12 @@ import {
 import {
     WarehouseInventoryDetailBatchNoCellComponent,
 } from '../../module.components/warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
-import {WarehouseInventoryDetailSerialCellComponent} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
+import {
+    WarehouseInventoryDetailSerialCellComponent,
+} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
+import {
+    WarehouseInventoryDetailStorageCellComponent,
+} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -85,7 +90,11 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'string',
             sort: false,
             filter: false,
-            editable: false,
+            renderComponent: WarehouseInventoryDetailStorageCellComponent,
+            editor: {
+                type: 'custom',
+                component: WarehouseInventoryDetailStorageCellComponent,
+            },
         },
         quantity_orders: {
             title: 'warehouse.inventory.detail.table.quantity_orders',
