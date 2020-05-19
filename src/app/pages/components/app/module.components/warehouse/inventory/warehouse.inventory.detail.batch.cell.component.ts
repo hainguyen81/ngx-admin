@@ -96,9 +96,8 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     }
 
     get selectedBatchCodes(): string[] {
-        const batches: IWarehouseInventoryDetailBatch[] = this.newCellValue;
         const batchCodes: string[] = [];
-        (batches || []).forEach(batch => {
+        (this.newCellValue || []).forEach(batch => {
             (batch.batch_code || '').length && batchCodes.push(batch.batch_code);
         });
         return (batchCodes.length ? batchCodes : undefined);
@@ -240,8 +239,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         });
 
         // apply select items
-        const components: WarehouseBatchNoFormlySelectFieldComponent[] = this.selectComponents;
-        (components || []).forEach(component => component.items = this._warehouseBatches);
+        (this.selectComponents || []).forEach(component => component.items = this._warehouseBatches);
         this.detectChanges();
     }
 
@@ -254,9 +252,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         this._warehouseDetailBatches.clear();
         if (!this.viewMode) return;
 
-        const detailBatches: IWarehouseInventoryDetailBatch[] =
-            this.cellValue as IWarehouseInventoryDetailBatch[];
-        (detailBatches || []).forEach(detailBatch => {
+        (this.cellValue as IWarehouseInventoryDetailBatch[] || []).forEach(detailBatch => {
             const batch: IWarehouseBatchNo = (batches || []).find(b => {
                 return (b.code === detailBatch.batch_code);
             });
@@ -278,8 +274,9 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             this.newCellValue as IWarehouseInventoryDetailBatch[];
         if (0 <= dataIndex && dataIndex < (batches || []).length) {
             batches.splice(dataIndex, 1);
+            this.newCellValue = [].concat(batches);
+            this.detectChanges();
         }
-        this.detectChanges();
     }
 
     /**

@@ -11,7 +11,7 @@
                  (click)="showLightbox(imagePreview.src); preventEvent($event);">
         </div>
     </div>
-    <div [class.d-table-row]="true" *ngIf="!onlyPrimary() && (showAlbum() || allowModified())" class="images-gallery">
+    <div [class.d-table-row]="true" *ngIf="!onlyPrimary && (showAlbum || allowModified)" class="images-gallery">
         <div [class.pt-2]="true"
              [class.d-table-cell]="(image || '').length"
              [class.d-none]="!(image || '').length"
@@ -19,7 +19,7 @@
              [class.float-left]="true"
              [class.mr-1]="true"
              (click)="imagePreview.src = image"
-             *ngFor="let image of getImages()"
+             *ngFor="let image of images"
              class="images-gallery-item">
             <img [src]="image" [width]="48" [height]="48"
                  [class.pt-2]="true"
@@ -28,7 +28,7 @@
                  [class.float-left]="true"
                  [class.mr-1]="true"
                  (click)="imagePreview.src = image; preventEvent($event);">
-            <nb-icon *ngIf="allowModified()"
+            <nb-icon *ngIf="allowModified"
                      pack="fa" icon="times"
                      [class.d-block]="true"
                      [class.position-absolute]="true"
@@ -36,7 +36,7 @@
                      (click)="removeImage(image); preventEvent($event);">
             </nb-icon>
         </div>
-        <nb-icon *ngIf="allowModified()"
+        <nb-icon *ngIf="allowModified"
                  pack="fa" icon="plus"
                  [class.d-table-cell]="true"
                  [class.pt-2]="true"

@@ -108,7 +108,7 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    get config(): any {
+    @Input('config') get config(): any {
         return super.config;
     }
 

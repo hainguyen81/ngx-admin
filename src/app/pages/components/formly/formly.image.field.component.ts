@@ -31,7 +31,7 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
      * Get field value as image sources
      * @return image sources
      */
-    public getImages(): string[] {
+    get images(): string[] {
         return (Array.isArray(this.value) ? this.value as string[] : []);
     }
 
