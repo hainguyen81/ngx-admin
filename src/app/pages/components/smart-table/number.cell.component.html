@@ -6,7 +6,7 @@
            type="number"
            [(ngModel)]="newCellValue">
 </div>
-<div class="cell-viewer w-100 d-table-cell" *ngIf="viewMode">
+<div class="cell-viewer w-100 d-table" *ngIf="viewMode">
     <span class="d-table-cell w-100 text-right number-cell currency" *ngIf="isCurrency">{{cellValue | currency}}</span>
     <span class="d-table-cell w-100 text-right number-cell" *ngIf="!isCurrency">{{cellValue}}</span>
 </div>
