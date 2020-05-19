@@ -63,11 +63,11 @@ export class WarehouseItemFlipcardComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected visibleSpecialActionsOnFront(): String[] {
+    protected get visibleSpecialActionsOnFront(): String[] {
         return [ACTION_IMPORT];
     }
 
-    protected visibleActionsOnBack(): String[] {
+    protected get visibleActionsOnBack(): String[] {
         return [ACTION_SAVE, ACTION_RESET, ACTION_DELETE, ACTION_BACK];
     }
 
@@ -125,24 +125,24 @@ export class WarehouseItemFlipcardComponent
     protected onNewData($event: IEvent): void {
         this.selectedModel = new WarehouseItem(IdGenerators.oid.generate(), null, null);
         this.selectedModel.status = Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED);
-        super.getBackComponent().setDataModel(ObjectUtils.deepCopy(this.selectedModel));
+        this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
     }
 
     protected onEditData($event: IEvent): void {
-        super.getBackComponent().setDataModel(ObjectUtils.deepCopy(this.selectedModel));
+        this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
     }
 
     protected doReset(): void {
-        super.getBackComponent().setDataModel(ObjectUtils.deepCopy(this.selectedModel));
+        this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
     }
 
     protected doSave(): void {
-        if (!this.getBackComponent().submit()) {
+        if (!this.backComponent.submit()) {
             return;
         }
 
-        const versions: IWarehouseItem[] = this.getBackComponent().getDataModelVersions() || [];
-        this.selectedModel = Object.assign({}, this.getBackComponent().getDataModel());
+        const versions: IWarehouseItem[] = this.backComponent.getDataModelVersions() || [];
+        this.selectedModel = Object.assign({}, this.backComponent.getDataModel());
         this.selectedModel.is_version = 0;
         this.selectedModel.versions = versions.length;
         versions.forEach(version => {

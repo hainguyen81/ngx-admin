@@ -1,6 +1,6 @@
 <ngx-select #selectExComponent
-            [items]="getItems()"
-            [defaultValue]="getInitialValues()"
+            [items]="items"
+            [defaultValue]="initialValues"
             [searchCallback]="SELECT_SEARCH_CALLBACK"
             [autoActiveOnMouseEnter]="getConfigValue('autoActiveOnMouseEnter', true)"
             [keepSelectMenuOpened]="getConfigValue('keepSelectMenuOpened', false)"
