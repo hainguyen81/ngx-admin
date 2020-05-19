@@ -1,7 +1,7 @@
 import './prototypes.import';
 import {
     APP_BOOTSTRAP_LISTENER,
-    APP_INITIALIZER,
+    APP_INITIALIZER, ApplicationRef, ComponentFactoryResolver,
     ComponentRef,
     ErrorHandler,
     InjectionToken,
@@ -166,6 +166,7 @@ import {
 import {
     WarehouseBatchNoDatasource,
 } from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {InjectionService} from '../services/injection.service';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -237,6 +238,12 @@ export const CommonProviders: StaticProvider[] = [
     {
         provide: NgxLocalStorageEncryptionService, useClass: NgxLocalStorageEncryptionService,
         deps: [NGXLogger, TOKEN_STORAGE_SERIALIZER, TOKEN_STORAGE_CONFIG, TOKEN_SECURE_ENCRYPTION_CONFIG],
+    },
+
+    // injection service to create dynamic components
+    {
+        provide: InjectionService, useClass: InjectionService,
+        deps: [ApplicationRef, ComponentFactoryResolver, Injector],
     },
 ];
 

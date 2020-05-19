@@ -142,7 +142,6 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     set config(_config: any) {
         super.config = _config;
         this.translateSettings();
-        this.__detectForTableFooter();
     }
 
     get tableHeader(): string {
@@ -289,7 +288,9 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         super.ngAfterViewInit();
 
         if (!this.smartTableComponent) {
-            this.smartTableComponent = ComponentUtils.queryComponent(this.querySmartTableComponent);
+            this.smartTableComponent = ComponentUtils.queryComponent(
+                this.querySmartTableComponent,
+                    component => component && this.__detectForTableFooter());
         }
     }
 
@@ -1488,9 +1489,9 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     private __detectForTableFooter(): void {
         const settings: any = this.config;
         const footerSettings: any = (!isNullOrUndefined(settings)
-        && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
+            && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
         const rowsNumber: number = (!isNullOrUndefined(footerSettings)
-        && footerSettings.hasOwnProperty('rows') && isNumber(footerSettings['rows'])
+            && footerSettings.hasOwnProperty('rows') && isNumber(footerSettings['rows'])
             ? parseInt(footerSettings['rows'], 10) : 0);
         if (rowsNumber > 0) {
             const innerTable: HTMLTableElement = this.getFirstElementBySelector(
