@@ -28,13 +28,6 @@ import {
     WarehouseInventorySearchFormlyComponent,
 } from './warehouse.inventory.search.formly.component';
 import {
-    WarehouseInventoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
-import {
-    WarehouseInventoryDbService,
-    WarehouseInventoryHttpService,
-} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
-import {
     WarehouseInventorySearchToolbarComponent,
 } from './warehouse.inventory.search.toolbar.component';
 import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.panel.component';
@@ -50,7 +43,6 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {WarehouseInventoryDetailSmartTableComponent} from './warehouse.inventory.detail.table.component';
-import {WarehouseProviders} from '../../../../../config/app.providers';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 
 @NgModule({
@@ -161,7 +153,7 @@ import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.deta
         WarehouseInventoryDetailSmartTableComponent,
         WarehouseInventoryDetailPanelComponent,
     ],
-    providers: WarehouseProviders,
+    providers: AppConfig.Providers,
 })
 export class WarehouseInventoryModule {
 }

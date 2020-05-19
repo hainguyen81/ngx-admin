@@ -27,6 +27,7 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {WarehouseCategoryModule} from './category/warehouse.category.module';
+import {WarehouseProviders} from '../../../../config/app.providers';
 import {WarehouseStorageModule} from './storage/warehouse.storage.module';
 import {WarehouseSettingsModule} from './settings/warehouse.settings.module';
 import {WarehouseBatchNoModule} from './batchno/warehouse.batch.module';
@@ -127,7 +128,7 @@ import {AppCommonComponentsModule} from '../components/common/app.common.compone
         WarehouseBatchNoModule,
         WarehouseInventoryModule,
     ],
-    providers: AppConfig.Providers,
+    providers: [ WarehouseProviders ],
 })
 export class WarehouseModule {
 }

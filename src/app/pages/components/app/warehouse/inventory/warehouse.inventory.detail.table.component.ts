@@ -53,7 +53,6 @@ import {BehaviorSubject, throwError} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -392,11 +391,5 @@ export class WarehouseInventoryDetailSmartTableComponent
                 summaryColumn: 5,
                 tableComponent: this.tableComponent,
             }, cell);
-    }
-
-    protected saveRow(row: Row) {
-        super.saveRow(row);
-
-
     }
 }
