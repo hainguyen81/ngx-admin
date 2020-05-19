@@ -4,7 +4,7 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     EventEmitter,
-    Inject,
+    Inject, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -106,6 +106,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     private _edittingRows: Array<Row> = [];
     private _allowMultiEdit: boolean = false;
     private _tableFooterRows: HTMLTableRowElement[];
+
+    /**
+     * Event to fire while creating table footer with {IEvent} data as: {HTMLTableRowElement} array
+     */
+    @Output() footerCreation: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -1510,6 +1515,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 for (let i: number = 0; i < rowsNumber; i++) {
                     this._tableFooterRows.push(innerFooter.insertRow(0));
                 }
+                this._tableFooterRows.length
+                && this.footerCreation.emit({ data: this._tableFooterRows });
             }
         }
     }
