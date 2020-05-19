@@ -3,7 +3,6 @@ import {
     Component,
     ComponentFactoryResolver, ElementRef,
     Inject,
-    OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -21,7 +20,7 @@ import {NGXLogger} from 'ngx-logger';
     styleUrls: ['./formly.file.field.component.scss'],
 })
 export class FileGalleryFormFieldComponent extends AbstractFieldType
-    implements OnInit, AfterViewInit {
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -67,17 +66,6 @@ export class FileGalleryFormFieldComponent extends AbstractFieldType
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
-
-    // ngOnInit(): void {
-    //     if (this.field) {
-    //         this.formControl && this.formControl.patchValue(value => {
-    //             this.value = (Array.isArray(value) ? value as string[] : value ? [value] : []);
-    //         });
-    //         if (!this.formControl) {
-    //             this.value = [];
-    //         }
-    //     }
-    // }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
