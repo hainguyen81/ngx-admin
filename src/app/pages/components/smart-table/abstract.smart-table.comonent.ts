@@ -200,7 +200,6 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         this.settings = settings;
         this.translateSettings();
         this.__detectForTableFooter();
-        this.detectChanges();
     }
 
     protected getTableSettings(): any {
