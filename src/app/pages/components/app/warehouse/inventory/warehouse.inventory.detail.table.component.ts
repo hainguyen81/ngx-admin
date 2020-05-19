@@ -5,7 +5,7 @@ import {
     ComponentFactoryResolver,
     ComponentRef,
     ElementRef,
-    Inject,
+    Inject, Input, OnDestroy, OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -48,6 +48,12 @@ import {
 import {
     AppMultilinguageLabelComponent,
 } from '../../module.components/common/app.multilinguage.label.component';
+import {LocalDataSource} from 'ng2-smart-table';
+import {BehaviorSubject, throwError} from 'rxjs';
+import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
+import PromiseUtils from '../../../../../utils/promise.utils';
+import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -153,13 +159,15 @@ export const WarehouseInventoryDetailContextMenu: IContextMenu[] = [].concat(COM
     ],
 })
 export class WarehouseInventoryDetailSmartTableComponent
-    extends AppSmartTableComponent<WarehouseInventoryDetailDatasource>
-    implements AfterViewInit {
+    extends AppSmartTableComponent<LocalDataSource>
+    implements OnInit, AfterViewInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
+    private _behaviorSubject: BehaviorSubject<IWarehouseInventory>;
+    private _model: IWarehouseInventory;
     private _sumQuantityComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
     private _sumPriceComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
 
@@ -169,6 +177,15 @@ export class WarehouseInventoryDetailSmartTableComponent
 
     protected get isShowHeader(): boolean {
         return false;
+    }
+
+    protected get dataIndexName(): string {
+        return 'inventory_id';
+    }
+
+    protected get dataIndexKey(): IDBKeyRange {
+        return (this.model && (this.model.id || '').length
+            ? IDBKeyRange.only(this.model.id) : undefined);
     }
 
     /**
@@ -195,13 +212,32 @@ export class WarehouseInventoryDetailSmartTableComponent
         return this._sumPriceComponent;
     }
 
+    /**
+     * Get the {IWarehouseInventory} instance
+     * @return the {IWarehouseInventory} instance
+     */
+    @Input() get model(): IWarehouseInventory {
+        return this._model;
+    }
+
+    /**
+     * Set the {IWarehouseInventory} instance
+     * @param _model to apply
+     */
+    set model(_model: IWarehouseInventory) {
+        this._model = _model;
+        this._model && (this._model.id || '').length
+        && this._behaviorSubject
+        && this._behaviorSubject.next(this._model);
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
 
     /**
      * Create a new instance of {WarehouseInventoryDetailSmartTableComponent} class
-     * @param dataSource {WarehouseInventoryDetailDatasource}
+     * @param dataSource {LocalDataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
@@ -216,9 +252,10 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param _warehouseInventoryDetailDatasource {WarehouseInventoryDetailDatasource}
      * @param _injectionService {InjectionService}
      */
-    constructor(@Inject(WarehouseInventoryDetailDatasource) dataSource: WarehouseInventoryDetailDatasource,
+    constructor(@Inject(LocalDataSource) dataSource: LocalDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
@@ -233,12 +270,16 @@ export class WarehouseInventoryDetailSmartTableComponent
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                @Inject(WarehouseInventoryDetailDatasource)
+                private _warehouseInventoryDetailDatasource?: WarehouseInventoryDetailDatasource,
                 @Inject(InjectionService) private _injectionService?: InjectionService) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+        this._warehouseInventoryDetailDatasource
+        || throwError('Could not inject WarehouseInventoryDetailDatasource');
         this.tableHeader = 'warehouse.inventory.title';
         this.config = WarehouseInventoryDetailTableSettings;
         this.setContextMenu(WarehouseInventoryDetailContextMenu);
@@ -247,6 +288,18 @@ export class WarehouseInventoryDetailSmartTableComponent
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        this._behaviorSubject = new BehaviorSubject<IWarehouseInventory>(this.model);
+        this._behaviorSubject.subscribe(model => this.__loadInventoryDetail(model));
+    }
+
+    ngOnDestroy(): void {
+        PromiseUtils.unsubscribe(this._behaviorSubject);
+        super.ngOnDestroy();
+    }
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([], false);
@@ -264,6 +317,23 @@ export class WarehouseInventoryDetailSmartTableComponent
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
+
+    /**
+     * Load {IWarehouseInventoryDetail} by the specified {IWarehouseInventory}
+     * @param model to load
+     * @private
+     */
+    private __loadInventoryDetail(model: IWarehouseInventory): void {
+        if (isNullOrUndefined(model) || (model.id || '').length) {
+            this.getDataSource().load([]);
+        } else {
+            this._warehouseInventoryDetailDatasource.getAllByIndex(
+                this.dataIndexName, this.dataIndexKey)
+                .then((detail: IWarehouseInventoryDetail[]) => this.getDataSource().load(detail),
+                    reason => this.getLogger().error(reason))
+                .catch(reason => this.getLogger().error(reason));
+        }
+    }
 
     /**
      * Create table footer
@@ -322,5 +392,11 @@ export class WarehouseInventoryDetailSmartTableComponent
                 summaryColumn: 5,
                 tableComponent: this.tableComponent,
             }, cell);
+    }
+
+    protected saveRow(row: Row) {
+        super.saveRow(row);
+
+
     }
 }
