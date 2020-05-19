@@ -1074,7 +1074,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             return;
         }
         this.findItems(values).forEach(option => option.disabled = true);
-        this.detectChanges();
+        this.selectComponent['_setItemsFromNgOptions'].apply(this.selectComponent);
     }
 
     /**

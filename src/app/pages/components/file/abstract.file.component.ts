@@ -72,10 +72,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * @return all file names in collection
      */
     @Input('files') get files(): string[] {
-        if (!this._files) {
-            this._files = [];
-        }
-        return this._files;
+        return this._files || [];
     }
 
     /**
@@ -89,7 +86,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
 
     /**
      * Add files to collection
-     * @param files to apply
+     * @param _files to apply
      */
     public addFiles(_files: File[]): void {
         this._fileData = (this._fileData || []).concat(_files || []);
