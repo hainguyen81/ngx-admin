@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, Input,
+    Inject,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -21,8 +21,6 @@ import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehous
 import {
     WarehouseBatchNoDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import {NgOption} from '@ng-select/ng-select';
-import {isNullOrUndefined} from 'util';
 
 export const WarehouseBatchNoNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -61,12 +59,6 @@ export class WarehouseBatchNoFormlySelectFieldComponent
     extends AppModuleDataIndexSettingsFormlySelectFieldComponent<IWarehouseBatchNo, WarehouseBatchNoDatasource> {
 
     // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    private _disabledValues: any[];
-
-    // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
@@ -91,15 +83,6 @@ export class WarehouseBatchNoFormlySelectFieldComponent
                     : model && model.name ? [model.name, ' (', model.code, ')'].join('') : '');
             },
         };
-    }
-
-    @Input('disabledValues') get disabledValues(): any[] {
-        return this._disabledValues;
-    }
-
-    set disabledValues(_disabledValues: any[]) {
-        this._disabledValues = _disabledValues;
-        this.setDisabledValues(_disabledValues);
     }
 
     // -------------------------------------------------
@@ -128,18 +111,5 @@ export class WarehouseBatchNoFormlySelectFieldComponent
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
             WarehouseBatchNoNgxSelectOptions);
-    }
-
-    // -------------------------------------------------
-    // FUNCTIONS
-    // -------------------------------------------------
-
-    /**
-     * Apply disable items by disabled values
-     * @param values to disable
-     */
-    public setDisabledValues(values: any[]): void {
-        if (isNullOrUndefined(this.selectComponent) || !(this.items || []).length) return;
-        this.selectComponent.setDisabledItemsByValues(values);
     }
 }

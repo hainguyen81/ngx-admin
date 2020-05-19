@@ -219,7 +219,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         (this._warehouseBatches || []).clear();
         if (this.viewMode) return;
 
-        // detect for disabled items
+        // detect for master items
         this._warehouseBatches = [];
         (batches || []).forEach(batch => {
             batch['text'] = [batch.exp_date, ' - ', batch.name, ' (', batch.code, ')'].join('');

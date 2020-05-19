@@ -21,4 +21,14 @@
             font-size: smaller;
         }
     }
+    ::ng-deep .cell-viewer {
+        max-width: calc(100% - 90px);
+        width: calc(100% - 90px);
+        .batch-row {
+            .batch-number-cell {
+                max-width: 60px;
+                width: 60px;
+            }
+        }
+    }
 }

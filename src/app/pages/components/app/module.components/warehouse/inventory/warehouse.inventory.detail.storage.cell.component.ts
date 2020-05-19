@@ -6,7 +6,6 @@ import {
     ElementRef,
     forwardRef,
     Inject,
-    OnDestroy,
     OnInit,
     QueryList,
     Renderer2,
@@ -22,11 +21,6 @@ import ComponentUtils from '../../../../../../utils/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {IEvent} from '../../../../abstract.component';
 import {isNullOrUndefined, isNumber} from 'util';
-import {BehaviorSubject} from 'rxjs';
-import {
-    WarehouseBatchNoDbService,
-} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
-import {IdGenerators} from '../../../../../../config/generator.config';
 import {MatInput} from '@angular/material/input';
 import {
     WarehouseStorageFormlySelectFieldComponent,
@@ -38,7 +32,6 @@ import {
 import {
     WarehouseDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
-import PromiseUtils from '../../../../../../utils/promise.utils';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -50,7 +43,7 @@ import PromiseUtils from '../../../../../../utils/promise.utils';
     styleUrls: ['./warehouse.inventory.detail.storage.cell.component.scss'],
 })
 export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEditor
-    implements OnInit, AfterViewInit, OnDestroy {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -63,8 +56,8 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
     private readonly queryInputComponent: QueryList<MatInput>;
     private _inputComponents: MatInput[];
 
-    private _warehouseStoragesBehavior: BehaviorSubject<any>;
-    private _warehouseStorages: IWarehouseInventoryDetailStorage[] = [];
+    private _warehouseDetailStorages: IWarehouseInventoryDetailStorage[] = [];
+    private _warehouseStorages: IWarehouse[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -82,8 +75,8 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         return true;
     }
 
-    get warehouseStorages(): IWarehouseInventoryDetailStorage[] {
-        return this._warehouseStorages;
+    get warehouseDetailStorages(): IWarehouseInventoryDetailStorage[] {
+        return this._warehouseDetailStorages;
     }
 
     get newCellValue(): IWarehouseInventoryDetailStorage[] {
@@ -92,6 +85,14 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
 
     set newCellValue(_value: IWarehouseInventoryDetailStorage[]) {
         super.newCellValue = _value;
+    }
+
+    get selectedStorageCodes(): string[] {
+        const storageCodes: string[] = [];
+        (this.newCellValue || []).forEach(storage => {
+            (storage.storage_code || '').length && storageCodes.push(storage.storage_code);
+        });
+        return (storageCodes.length ? storageCodes : undefined);
     }
 
     // -------------------------------------------------
@@ -108,7 +109,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
-     * @param warehouseDbService {WarehouseBatchNoDbService}
+     * @param warehouseDatasource {WarehouseDatasource}
      */
     constructor(@Inject(forwardRef(() => CellComponent)) _parentCell: CellComponent,
                 @Inject(TranslateService) _translateService: TranslateService,
@@ -118,7 +119,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
                 @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef,
-                @Inject(WarehouseDatasource) private warehouseDbService: WarehouseDatasource) {
+                @Inject(WarehouseDatasource) private warehouseDatasource: WarehouseDatasource) {
         super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
@@ -133,30 +134,29 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         }
         // if need to add at least one row
         if (!this.viewMode && this.newCellValue.length < 1) this.addStorage();
+
+        // observe storage no master
+        this.warehouseDatasource.getAll().then((storages: IWarehouse[]) => {
+            if (this.viewMode) {
+                this.__initialViewModeSelectItems(storages);
+
+            } else {
+                this.__initialEditModeSelectItems(storages);
+            }
+        }, reason => this.logger.error(reason))
+        .catch(reason => this.logger.error(reason));
     }
 
     ngAfterViewInit(): void {
-        if (!(this._selectComponents || []).length && !this.viewMode) {
-            this._selectComponents = ComponentUtils.queryComponents(this.querySelectComponent);
-        }
-        if (!(this._inputComponents || []).length && !this.viewMode) {
-            this._inputComponents = ComponentUtils.queryComponents(this.queryInputComponent);
-        }
         if (!this.viewMode) {
+            if (!(this._selectComponents || []).length) {
+                this._selectComponents = ComponentUtils.queryComponents(this.querySelectComponent);
+            }
+            if (!(this._inputComponents || []).length) {
+                this._inputComponents = ComponentUtils.queryComponents(this.queryInputComponent);
+            }
             this.__initializeEditMode();
         }
-
-        if (this.viewMode) {
-            this._warehouseStoragesBehavior = new BehaviorSubject<any>(this.cellValue);
-            this._warehouseStoragesBehavior.subscribe(value => {
-                this.__observeCellValue(value);
-            });
-        }
-    }
-
-    ngOnDestroy(): void {
-        PromiseUtils.unsubscribe(this._warehouseStoragesBehavior);
-        super.ngOnDestroy();
     }
 
     onSelect($event: IEvent, dataIndex: number): void {
@@ -180,101 +180,68 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
      * @private
      */
     private __initializeEditMode(): void {
+        if (this.viewMode) return;
+
         const components: WarehouseStorageFormlySelectFieldComponent[] = this.selectComponents;
         const inputComponents: MatInput[] = this.inputComponents;
-        const storages: IWarehouseInventoryDetailStorage[] =
-            this.cellValue as IWarehouseInventoryDetailStorage[];
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
             component.onLoad.subscribe(e => {
+                const storages: IWarehouseInventoryDetailStorage[] =
+                    this.cellValue as IWarehouseInventoryDetailStorage[];
                 const storage: IWarehouseInventoryDetailStorage = storages[dataIndex];
                 if (!isNullOrUndefined(storage)) {
                     component.setSelectedValue(storage.storage_code);
-                    inputComponent.value = (isNumber(storage.quantity) ? storage.quantity.toString() : undefined);
+                    inputComponent.value =
+                        (isNumber(storage.quantity) ? storage.quantity.toString() : undefined);
                 }
             });
-            component.refresh();
         }
     }
 
     /**
-     * Observe cell value to view
-     * @param value to observe
+     * Initialize select items for edit mode
+     * @param storages master data to load
      * @private
      */
-    private __observeCellValue(value: any): void {
-        if ((!(this._warehouseStorages || []).length
-            || (Array.from(value || []).length !== (this._warehouseStorages || []).length))
-            && !isNullOrUndefined(value) && Array.from(value || []).length
-            && this.viewMode) {
-            const storages: { storage_id: string; storage_code: string; quantity?: number | 0 }[] =
-                (Array.from(value || []).length
-                    ? Array.from(value) as { storage_id: string; storage_code: string; quantity?: number | 0 }[] : []);
-            const storageCodes: string[] = [];
-            storages.forEach(storage => storage && (storage.storage_code || '').length
-                && storageCodes.push(storage.storage_code));
-            this._warehouseStorages.clear();
-            storages.length && this.__loadStoragesToView(storages, storageCodes);
-        }
+    private __initialEditModeSelectItems(storages: IWarehouse[]): void {
+        (this._warehouseStorages || []).clear();
+        if (this.viewMode) return;
+
+        // detect for master items
+        this._warehouseStorages = [];
+        (storages || []).forEach(storage => {
+            storage['text'] = [storage.name, ' (', storage.code, ')'].join('');
+            this._warehouseStorages.push(storage);
+        });
+
+        // apply select items
+        (this.selectComponents || []).forEach(component => component.items = this._warehouseStorages);
+        this.detectChanges();
     }
 
     /**
-     * Load storages to view
-     * @param storages to load
-     * @param storageCodes to check
+     * Initialize select items for view mode
+     * @param storages master data to load
      * @private
      */
-    private __loadStoragesToView(storages: { storage_id: string; storage_code: string; quantity?: number | 0 }[],
-                                 storageCodes: string[]): void {
-        this.warehouseDbService.getAll()
-            .then((dataStorages: IWarehouse[]) => {
-                (dataStorages || []).forEach(storage => {
-                    this.__mapStorageToView(storage, storages, storageCodes);
-                });
-            }, reason => this.logger.error(reason))
-            .catch(reason => this.logger.error(reason));
-    }
+    private __initialViewModeSelectItems(storages: IWarehouse[]): void {
+        this._warehouseDetailStorages.clear();
+        if (!this.viewMode) return;
 
-    /**
-     * Map the data storage record to view
-     * @param storage {IWarehouse} record
-     * @param storages to load
-     * @param storageCodes to check
-     * @private
-     */
-    private __mapStorageToView(storage: IWarehouse,
-                               storages: { storage_id: string; storage_code: string; quantity?: number | 0 }[],
-                               storageCodes: string[]): void {
-        if (storageCodes.indexOf(storage.code || '') >= 0) {
-            const storageIdx: number = storageCodes.indexOf(storage.code || '');
-            this._warehouseStorages.push(
-                WarehouseInventoryDetailStorageCellComponent
-                    .__buildViewStorage(storage, storages[storageIdx]));
-        }
-    }
-
-    /**
-     * Build {IWarehouseInventoryDetailStorage} to view
-     * @param storage to build
-     * @param storageDetail to build
-     * @private
-     */
-    private static __buildViewStorage(storage: IWarehouse,
-                                      storageDetail: {
-        storage_id: string;
-        storage_code: string;
-        quantity?: number | 0
-    }): IWarehouseInventoryDetailStorage {
-        return {
-            id: IdGenerators.oid.generate(),
-            storage: storage,
-            storage_id: storage.id,
-            storage_code: storage.code,
-            storage_name: storage.name,
-            viewStorage: [storage.name, ' (', storage.code, ')'].join(''),
-            quantity: storageDetail.quantity || 0,
-        } as IWarehouseInventoryDetailStorage;
+        (this.cellValue as IWarehouseInventoryDetailStorage[] || []).forEach(detailStorage => {
+            const storage: IWarehouse = (storages || []).find(b => {
+                return (b.code === detailStorage.storage_code);
+            });
+            if (!isNullOrUndefined(storage)) {
+                detailStorage.storage = storage;
+                detailStorage.viewStorage = [detailStorage.storage_name,
+                    ' (', detailStorage.storage_code, ')'].join('');
+                this._warehouseDetailStorages.push(detailStorage);
+            }
+        });
+        this.detectChanges();
     }
 
     /**
@@ -286,6 +253,8 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
             this.newCellValue as IWarehouseInventoryDetailStorage[];
         if (0 <= dataIndex && dataIndex < (storages || []).length) {
             storages.splice(dataIndex, 1);
+            this.newCellValue = [].concat(storages);
+            this.detectChanges();
         }
     }
 

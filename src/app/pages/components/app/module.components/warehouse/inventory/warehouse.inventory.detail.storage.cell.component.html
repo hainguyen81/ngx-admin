@@ -2,8 +2,10 @@
     <div class="cell-editor-row d-flex flex-row flex-nowrap"
          *ngFor="let storage of newCellValue; let index = index; let last = last">
         <div class="cell-editor-storage mr-sm-1">
-            <ngx-select-2-app-module-warehouse-batch-no (onSelect)="onSelect($event, index)"
-            ></ngx-select-2-app-module-warehouse-batch-no>
+            <ngx-select-2-app-module-warehouse-storage
+                    (onSelect)="onSelect($event, index)"
+                    [disabledValues]="selectedStorageCodes"
+            ></ngx-select-2-app-module-warehouse-storage>
         </div>
         <input #quantityInput
                matInput
@@ -27,8 +29,8 @@
     </div>
 </div>
 <div class="cell-viewer d-table" *ngIf="viewMode">
-    <div class="batch-row d-table-row" *ngFor="let storage of warehouseStorages">
-        <div class="batch-cell d-table-cell text-left w-75" [innerHTML]="storage.viewStorage"></div>
-        <div class="batch-cell d-table-cell text-right w-25" [innerHTML]="storage.quantity"></div>
+    <div class="storage-row d-table-row" *ngFor="let storage of warehouseDetailStorages">
+        <div class="storage-cell d-table-cell text-left w-75 pb-2" [innerHTML]="storage.viewStorage"></div>
+        <div class="storage-number-cell d-table-cell text-right w-25 pb-2" [innerHTML]="storage.quantity"></div>
     </div>
 </div>

@@ -47,6 +47,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      * Items that have children may omit to have an ID.
      */
     private _items: any[];
+    private _disabledValues: any[];
 
     @ViewChildren(NgxSelectComponent)
     private readonly queryNgxSelectComponent: QueryList<NgxSelectComponent>;
@@ -123,6 +124,15 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             });
             return (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : undefined);
         };
+    }
+
+    @Input('disabledValues') get disabledValues(): any[] {
+        return this._disabledValues;
+    }
+
+    set disabledValues(_disabledValues: any[]) {
+        this._disabledValues = _disabledValues;
+        this.setDisabledValues(_disabledValues);
     }
 
     // -------------------------------------------------
@@ -248,5 +258,14 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             this.selectComponent.selectedValues =
                 (isArray(_value) ? _value : !isNullOrUndefined(_value) ? [_value] : undefined);
         }
+    }
+
+    /**
+     * Apply disable items by disabled values
+     * @param values to disable
+     */
+    public setDisabledValues(values: any[]): void {
+        if (isNullOrUndefined(this.selectComponent) || !(this.items || []).length) return;
+        this.selectComponent.setDisabledItemsByValues(values);
     }
 }

@@ -2,20 +2,33 @@
 
 @include nb-install-component() {
     ::ng-deep .cell-editor .cell-editor-row {
+        padding-bottom: 5px;
         .cell-editor-storage {
-            max-width: 60%;
-            width: 60%;
+            max-width: calc(100% - 90px);
+            width: calc(100% - 90px);
         }
         .cell-editor-storage-number {
-            max-width: 20%;
-            width: 20%;
+            max-width: 60px;
+            width: 60px;
         }
         .cell-editor-storage-remover, .cell-editor-storage-pluser {
-            max-width: 10%;
-            width: 10%;
+            max-width: 15px;
+            width: 15px;
+            display: table-cell;
+            vertical-align: middle;
         }
         .cell-editor-storage-remover nb-icon, .cell-editor-storage-pluser nb-icon {
             font-size: smaller;
+        }
+    }
+    ::ng-deep .cell-viewer {
+        max-width: calc(100% - 90px);
+        width: calc(100% - 90px);
+        .storage-row {
+            .storage-number-cell {
+                max-width: 60px;
+                width: 60px;
+            }
         }
     }
 }

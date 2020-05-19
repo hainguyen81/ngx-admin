@@ -30,7 +30,7 @@
 </div>
 <div class="cell-viewer d-table" *ngIf="viewMode">
     <div class="batch-row d-table-row" *ngFor="let batch of warehouseDetailBatches">
-        <div class="batch-cell d-table-cell text-left w-75" [innerHTML]="batch.viewBatch"></div>
-        <div class="batch-cell d-table-cell text-right w-25" [innerHTML]="batch.quantity"></div>
+        <div class="batch-cell d-table-cell text-left w-75 pb-2" [innerHTML]="batch.viewBatch"></div>
+        <div class="batch-number-cell d-table-cell text-right w-25 pb-2" [innerHTML]="batch.quantity"></div>
     </div>
 </div>
