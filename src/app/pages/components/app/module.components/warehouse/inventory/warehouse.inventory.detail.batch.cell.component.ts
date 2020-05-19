@@ -6,7 +6,6 @@ import {
     ElementRef,
     forwardRef,
     Inject,
-    OnDestroy,
     OnInit,
     QueryList,
     Renderer2,
@@ -22,7 +21,6 @@ import ComponentUtils from '../../../../../../utils/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {IEvent} from '../../../../abstract.component';
 import {isNullOrUndefined, isNumber} from 'util';
-import {BehaviorSubject} from 'rxjs';
 import {
     WarehouseBatchNoFormlySelectFieldComponent,
 } from '../batchno/warehouse.batch.select.field.component';
@@ -48,7 +46,7 @@ import PromiseUtils from '../../../../../../utils/promise.utils';
     styleUrls: ['./warehouse.inventory.detail.batch.cell.component.scss'],
 })
 export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEditor
-    implements OnInit, AfterViewInit, OnDestroy {
+    implements OnInit, AfterViewInit {
 
     private static DB_BATCH_NO_STATUS_INDEX = 'status';
     private static DB_BATCH_NO_STATUS_KEYRANGE = IDBKeyRange.only($enum(STATUS).getKeyOrThrow(STATUS.ACTIVATED));
@@ -64,7 +62,6 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     private readonly queryInputComponent: QueryList<MatInput>;
     private _inputComponents: MatInput[];
 
-    private _warehouseBatchesBehavior: BehaviorSubject<any>;
     private _warehouseDetailBatches: IWarehouseInventoryDetailBatch[] = [];
     private _warehouseBatches: IWarehouseBatchNo[];
 
@@ -146,20 +143,16 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         if (!this.viewMode && this.newCellValue.length < 1) this.addBatch();
 
         // observe batch no master
-        this._warehouseBatchesBehavior = new BehaviorSubject<any>(this._warehouseBatches);
-        this._warehouseBatchesBehavior.subscribe((batches: IWarehouseBatchNo[]) => {
-            if (this.viewMode) {
-                this.__initialViewModeSelectItems(batches);
-
-            } else {
-                this.__initialEditModeSelectItems(batches);
-            }
-        });
         this.warehouseBatchNoDatasource.getAllByIndex(
             WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_INDEX,
             WarehouseInventoryDetailBatchNoCellComponent.DB_BATCH_NO_STATUS_KEYRANGE)
             .then((batches: IWarehouseBatchNo[]) => {
-                this._warehouseBatchesBehavior.next(batches);
+                if (this.viewMode) {
+                    this.__initialViewModeSelectItems(batches);
+
+                } else {
+                    this.__initialEditModeSelectItems(batches);
+                }
             }, reason => this.logger.error(reason))
             .catch(reason => this.logger.error(reason));
     }
@@ -174,11 +167,6 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             }
             this.__initializeEditMode();
         }
-    }
-
-    ngOnDestroy(): void {
-        PromiseUtils.unsubscribe(this._warehouseBatchesBehavior);
-        super.ngOnDestroy();
     }
 
     onSelect($event: IEvent, dataIndex: number): void {

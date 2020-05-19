@@ -1073,8 +1073,12 @@ export abstract class AbstractSelectComponent<T extends DataSource>
         if (isNullOrUndefined(this.selectComponent)) {
             return;
         }
-        this.findItems(values).forEach(option => option.disabled = true);
-        this.selectComponent['_setItemsFromNgOptions'].apply(this.selectComponent);
+        (values || []).forEach(value => {
+            const option: NgOption = this.selectComponent.itemsList.findItem(value);
+            if (!isNullOrUndefined(option)) {
+                option.disabled = true;
+            }
+        });
     }
 
     /**
