@@ -51,6 +51,9 @@ export const WarehouseInventoryDetailTableSettings = {
         display: true,
         perPage: AppConfig.COMMON.itemsPerPage,
     },
+    footer: {
+        rows: 1,
+    },
     columns: {
         item_code: {
             title: 'warehouse.inventory.detail.table.item',

@@ -18,7 +18,7 @@ import {NGXLogger} from 'ngx-logger';
 import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import {isArray, isNumber} from 'util';
+import {isArray, isNullOrUndefined, isNumber} from 'util';
 import KeyboardUtils from '../../../utils/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
@@ -46,6 +46,9 @@ export const DefaultTableSettings = {
     delete: {
         deleteButtonContent: '<i class=\'nb-trash\'></i>',
         confirmDelete: true,
+    },
+    footer: {
+        rows: 0,
     },
     columns: {
         id: {
@@ -103,6 +106,19 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
     private edittingRows: Array<Row> = [];
     private allowMultiEdit: boolean = false;
+    private _tableFooterRows: HTMLTableRowElement[];
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {HTMLTableRowElement} of table footer if using footer
+     * @return {HTMLTableRowElement}
+     */
+    protected get tableFooterRows(): HTMLTableRowElement[] {
+        return this._tableFooterRows;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -156,7 +172,28 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         super.ngAfterViewInit();
 
         if (!this.smartTableComponent) {
-            this.smartTableComponent = ComponentUtils.queryComponent(this.querySmartTableComponent);
+            this.smartTableComponent = ComponentUtils.queryComponent(
+                this.querySmartTableComponent, component => {
+                    const settings: any = this.getTableSettings();
+                    const footerSettings: any = (!isNullOrUndefined(settings)
+                        && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
+                    const rowsNumber: number = (!isNullOrUndefined(footerSettings)
+                        && footerSettings.hasOwnProperty('rows') && isNumber(footerSettings['rows'])
+                        ? parseInt(footerSettings['rows'], 10) : 0);
+                    if (rowsNumber > 0) {
+                        const innerTable: HTMLTableElement = this.getFirstElementBySelector(
+                            AbstractSmartTableComponent.SMART_TABLE_SELETOR,
+                            this.getElementRef().nativeElement) as HTMLTableElement;
+                        const innerFooter: HTMLTableSectionElement =
+                            (!isNullOrUndefined(innerTable) ? innerTable.createTFoot() : undefined);
+                        if (!isNullOrUndefined(innerFooter)) {
+                            this._tableFooterRows = [];
+                            for (let i: number = 0; i < rowsNumber; i++) {
+                                this._tableFooterRows.push(innerFooter.insertRow(0));
+                            }
+                        }
+                    }
+                });
         }
     }
 
