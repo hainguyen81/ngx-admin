@@ -8,6 +8,7 @@ import {
     Injectable,
     Injector, Type,
 } from '@angular/core';
+import {isNullOrUndefined} from 'util';
 
 /**
  * Injection service is a helper to append components
@@ -132,6 +133,7 @@ export class InjectionService {
     /**
      * Appends a component to a adjacent location
      * @template T
+     * @param componentFactoryResolver {ComponentFactoryResolver}
      * @param {Type<T>} componentClass
      * @param {*} [options={}]
      * @param {Element} [location=this.getRootViewContainerNode()]
@@ -139,12 +141,14 @@ export class InjectionService {
      *
      * @memberOf InjectionService
      */
-    public appendComponent<T>(componentClass: Type<T>,
-                              options: any = {},
-                              location: Element = this.rootViewContainerNode): ComponentRef<any> {
-
+    public appendComponentByFactory<T>(componentFactoryResolver: ComponentFactoryResolver,
+                                       componentClass: Type<T>,
+                                       options: any = {},
+                                       location: Element = this.rootViewContainerNode): ComponentRef<any> {
+        const factoryResolver: ComponentFactoryResolver = (isNullOrUndefined(componentFactoryResolver)
+            ? this.componentFactoryResolver : componentFactoryResolver);
         const componentFactory: ComponentFactory<any> =
-            this.componentFactoryResolver.resolveComponentFactory(componentClass);
+            factoryResolver.resolveComponentFactory(componentClass);
         const componentRef: ComponentRef<any> = componentFactory.create(this.injector);
         const appRef: ApplicationRef = this.applicationRef;
         const componentRootNode: HTMLElement = this.getComponentRootNode(componentRef);
@@ -182,5 +186,21 @@ export class InjectionService {
         }
         location.appendChild(componentRootNode);
         return componentRef;
+    }
+
+    /**
+     * Appends a component to a adjacent location
+     * @template T
+     * @param {Type<T>} componentClass
+     * @param {*} [options={}]
+     * @param {Element} [location=this.getRootViewContainerNode()]
+     * @returns {ComponentRef<any>}
+     *
+     * @memberOf InjectionService
+     */
+    public appendComponent<T>(componentClass: Type<T>,
+                              options: any = {},
+                              location: Element = this.rootViewContainerNode): ComponentRef<any> {
+        return this.appendComponentByFactory(null, componentClass, options, location);
     }
 }

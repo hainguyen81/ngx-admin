@@ -1,7 +1,9 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ComponentRef,
     ElementRef,
     Inject,
     Renderer2,
@@ -37,6 +39,15 @@ import {
 import {
     WarehouseInventoryDetailStorageCellComponent,
 } from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
+import {IEvent} from '../../../abstract.component';
+import {isNullOrUndefined} from 'util';
+import {InjectionService} from '../../../../../services/injection.service';
+import {
+    WarehouseInventoryDetailSummaryComponent,
+} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.summary.component';
+import {
+    AppMultilinguageLabelComponent,
+} from '../../module.components/common/app.multilinguage.label.component';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -52,7 +63,7 @@ export const WarehouseInventoryDetailTableSettings = {
         perPage: AppConfig.COMMON.itemsPerPage,
     },
     footer: {
-        rows: 1,
+        rows: 2,
     },
     columns: {
         item_code: {
@@ -142,7 +153,15 @@ export const WarehouseInventoryDetailContextMenu: IContextMenu[] = [].concat(COM
     ],
 })
 export class WarehouseInventoryDetailSmartTableComponent
-    extends AppSmartTableComponent<WarehouseInventoryDetailDatasource> {
+    extends AppSmartTableComponent<WarehouseInventoryDetailDatasource>
+    implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _sumQuantityComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
+    private _sumPriceComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -150,6 +169,30 @@ export class WarehouseInventoryDetailSmartTableComponent
 
     protected get isShowHeader(): boolean {
         return false;
+    }
+
+    /**
+     * Get the {InjectionService} instance
+     * @return the {InjectionService} instance
+     */
+    protected get injectionService(): InjectionService {
+        return this._injectionService;
+    }
+
+    /**
+     * Get the {NumberCellComponent} component
+     * @return the {NumberCellComponent} component
+     */
+    protected get sumQuantityComponent(): ComponentRef<WarehouseInventoryDetailSummaryComponent> {
+        return this._sumQuantityComponent;
+    }
+
+    /**
+     * Get the {NumberCellComponent} component
+     * @return the {NumberCellComponent} component
+     */
+    protected get sumPriceComponent(): ComponentRef<WarehouseInventoryDetailSummaryComponent> {
+        return this._sumPriceComponent;
     }
 
     // -------------------------------------------------
@@ -173,6 +216,7 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param _injectionService {InjectionService}
      */
     constructor(@Inject(WarehouseInventoryDetailDatasource) dataSource: WarehouseInventoryDetailDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -188,7 +232,8 @@ export class WarehouseInventoryDetailSmartTableComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                @Inject(InjectionService) private _injectionService?: InjectionService) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -205,5 +250,77 @@ export class WarehouseInventoryDetailSmartTableComponent
 
     doSearch(keyword: any): void {
         this.getDataSource().setFilter([], false);
+    }
+
+    ngAfterViewInit(): void {
+        // listen for creating footer components
+        this.footerCreation.subscribe(e => {
+            this.__createTableFooter(e);
+        });
+
+        super.ngAfterViewInit();
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Create table footer
+     * @private
+     */
+    private __createTableFooter($event: IEvent): void {
+        if (isNullOrUndefined($event) || isNullOrUndefined($event.data)
+            || isNullOrUndefined(this.injectionService)) return;
+
+        const rows: HTMLTableRowElement[] = $event.data as HTMLTableRowElement[];
+        if (!(rows || []).length) return;
+
+        // first summary row
+        let rowIndex: number = 0;
+        let cell: HTMLTableCellElement = rows[rowIndex].insertCell(0);
+        cell.colSpan = 3;
+        cell = rows[rowIndex].insertCell(1);
+        this.injectionService.appendComponentByFactory(
+            this.getFactoryResolver(), AppMultilinguageLabelComponent, {
+                innerHtml: 'warehouse.inventory.detail.table.summary',
+                componentClass: 'inventory-sum-label',
+            }, cell);
+        cell = rows[rowIndex].insertCell(2);
+        this._sumQuantityComponent = this.injectionService.appendComponentByFactory(
+            this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
+                isCurrency: false,
+                componentClass: 'inventory-sum-quantity',
+                summaryColumn: 4,
+                tableComponent: this.tableComponent,
+            }, cell);
+        cell = rows[rowIndex].insertCell(3);
+        this._sumPriceComponent = this.injectionService.appendComponentByFactory(
+            this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
+                isCurrency: false,
+                componentClass: 'inventory-sum-price',
+                summaryColumn: 5,
+                tableComponent: this.tableComponent,
+            }, cell);
+
+        // second summary row
+        rowIndex++;
+        cell = rows[rowIndex].insertCell(0);
+        cell.colSpan = 3;
+        cell = rows[rowIndex].insertCell(1);
+        this.injectionService.appendComponentByFactory(
+            this.getFactoryResolver(), AppMultilinguageLabelComponent, {
+                innerHtml: 'warehouse.inventory.detail.table.total',
+                componentClass: 'inventory-sum-label',
+            }, cell);
+        cell = rows[rowIndex].insertCell(2);
+        cell.colSpan = 2;
+        this._sumQuantityComponent = this.injectionService.appendComponentByFactory(
+            this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
+                isCurrency: false,
+                componentClass: 'inventory-total-quantity',
+                summaryColumn: 5,
+                tableComponent: this.tableComponent,
+            }, cell);
     }
 }

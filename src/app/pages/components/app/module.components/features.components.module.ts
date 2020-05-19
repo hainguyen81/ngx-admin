@@ -141,6 +141,10 @@ import {
 import {
     WarehouseInventoryDetailStorageCellComponent,
 } from './warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
+import {
+    WarehouseInventoryDetailSummaryComponent,
+} from './warehouse/inventory/warehouse.inventory.detail.summary.component';
+import {AppMultilinguageLabelComponent} from './common/app.multilinguage.label.component';
 
 @NgModule({
     imports: [
@@ -379,6 +383,7 @@ import {
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
+        AppMultilinguageLabelComponent,
         AppLanguagesFormlySelectExFieldComponent,
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
@@ -417,8 +422,10 @@ import {
         WarehouseInventoryDetailSerialCellComponent,
         WarehouseStorageFormlySelectFieldComponent,
         WarehouseInventoryDetailStorageCellComponent,
+        WarehouseInventoryDetailSummaryComponent,
     ],
     exports: [
+        AppMultilinguageLabelComponent,
         AppLanguagesFormlySelectExFieldComponent,
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
@@ -457,8 +464,10 @@ import {
         WarehouseInventoryDetailSerialCellComponent,
         WarehouseStorageFormlySelectFieldComponent,
         WarehouseInventoryDetailStorageCellComponent,
+        WarehouseInventoryDetailSummaryComponent,
     ],
     declarations: [
+        AppMultilinguageLabelComponent,
         AppLanguagesFormlySelectExFieldComponent,
         AppLanguagesFormlySelectFieldComponent,
         VendorCustomerFormlySelectExFieldComponent,
@@ -497,6 +506,7 @@ import {
         WarehouseInventoryDetailSerialCellComponent,
         WarehouseStorageFormlySelectFieldComponent,
         WarehouseInventoryDetailStorageCellComponent,
+        WarehouseInventoryDetailSummaryComponent,
     ],
 })
 export class FeaturesComponentsModule {

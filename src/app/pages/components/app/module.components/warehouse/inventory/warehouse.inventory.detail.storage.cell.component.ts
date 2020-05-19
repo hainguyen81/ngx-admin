@@ -37,7 +37,7 @@ import {
  * Smart table warehouse batch cell component base on {DefaultEditor}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
+    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-warehouse-inventory-storage-cell',
     templateUrl: './warehouse.inventory.detail.storage.cell.component.html',
     styleUrls: ['./warehouse.inventory.detail.storage.cell.component.scss'],
