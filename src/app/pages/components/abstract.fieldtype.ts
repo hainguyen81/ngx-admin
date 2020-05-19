@@ -155,7 +155,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * Get the application base href
      * @return the application base href
      */
-    public get baseHref(): string {
+    get baseHref(): string {
         return HtmlUtils.getBaseHref();
     }
 
@@ -236,6 +236,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     set value(_value: any) {
         const parsedValue: any = this.parseValue(_value);
+        window.console.error(['set value', _value, super.value, parsedValue]);
         if (!isNullOrUndefined(this._field) && !isNullOrUndefined(this.formControl) && super.value !== parsedValue) {
             super.value = parsedValue;
 

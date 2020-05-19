@@ -27,7 +27,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
     // DECLARATION
     // -------------------------------------------------
 
-    private isAllowModified: boolean | false;
+    private isAllowModified: boolean;
     private _files: string[];
     private _extensions: string[];
     private _fileData: File[];
@@ -42,10 +42,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * @return all file data in collection
      */
     public get fileData(): File[] {
-        if (!this._fileData) {
-            this._fileData = [];
-        }
-        return this._fileData;
+        return this._fileData || [];
     }
 
     /**
@@ -53,10 +50,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * @return all file extensions in collection
      */
     @Input('allowFileExtensions') get allowFileExtensions(): string[] {
-        if (!this._extensions) {
-            this._extensions = [];
-        }
-        return this._extensions;
+        return this._extensions || [];
     }
 
     /**
@@ -81,7 +75,6 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      */
     set files(_files: string[]) {
         this._files = _files || [];
-        this.onChange && this.onChange.emit({data: this.files});
     }
 
     /**

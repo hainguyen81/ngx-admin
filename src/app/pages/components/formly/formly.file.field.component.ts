@@ -68,16 +68,16 @@ export class FileGalleryFormFieldComponent extends AbstractFieldType
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        if (this.field) {
-            this.formControl && this.formControl.patchValue(value => {
-                this.value = (Array.isArray(value) ? value as string[] : value ? [value] : []);
-            });
-            if (!this.formControl) {
-                this.value = [];
-            }
-        }
-    }
+    // ngOnInit(): void {
+    //     if (this.field) {
+    //         this.formControl && this.formControl.patchValue(value => {
+    //             this.value = (Array.isArray(value) ? value as string[] : value ? [value] : []);
+    //         });
+    //         if (!this.formControl) {
+    //             this.value = [];
+    //         }
+    //     }
+    // }
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
@@ -94,7 +94,5 @@ export class FileGalleryFormFieldComponent extends AbstractFieldType
      */
     public onChange(e: IEvent): void {
         this.value = e.data || [];
-        this.field && this.formControl
-        && this.formControl.setValue(this.value);
     }
 }
