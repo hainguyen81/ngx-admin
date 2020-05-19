@@ -266,10 +266,10 @@ export interface INgxSelectOptions {
      * Provide custom keyDown function.
      * Executed before default handler.
      * Return false to suppress execution of default key down handlers
-     * Default is false
+     * Default is true
      * @param $event {KeyboardEvent}
      */
-    keyDownFn?: (($event: KeyboardEvent) => boolean) | boolean | false;
+    keyDownFn?: ($event: KeyboardEvent) => boolean;
     /**
      * Shows the 'Add new option' action in case of out of items at all
      * {boolean}
@@ -508,10 +508,10 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
      * Provide custom keyDown function.
      * Executed before default handler.
      * Return false to suppress execution of default key down handlers
-     * Default is false
+     * Default is true
      * @param $event {KeyboardEvent}
      */
-    keyDownFn: false,
+    keyDownFn: ($event: KeyboardEvent) => true,
     /**
      * Specify whether using image for option
      * {boolean}
