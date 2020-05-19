@@ -26,7 +26,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     // -------------------------------------------------
 
     private _field: F;
-    @Input('config') private _config: any;
+    private _config: any;
     /* use for standalone component */
     private __internalValue: any;
 
@@ -41,7 +41,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * Get the component configuration
      * @return the component configuration
      */
-    get config(): any {
+    @Input('config') get config(): any {
         return this._config;
     }
 

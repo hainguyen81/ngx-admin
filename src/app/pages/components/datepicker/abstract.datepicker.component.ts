@@ -96,9 +96,9 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     private readonly queryDatePickerComponent: QueryList<DatePickerComponent>;
     private _datePickerComponent: DatePickerComponent;
 
-    @Input('model') private _model: any;
+    private _model: any;
 
-    @Input('selected') private _selected: Moment[];
+    private _selected: Moment[];
 
     @Output() readonly openListener: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() readonly closeListener: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -151,7 +151,7 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     /**
      * Data model
      */
-    get model(): any {
+    @Input('model') get model(): any {
         return this._model;
     }
 
@@ -251,7 +251,7 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
         return this.getConfigValue('config') as IDatePickerConfig;
     }
 
-    get selected(): Moment[] {
+    @Input('selected') get selected(): Moment[] {
         return this._selected;
     }
 

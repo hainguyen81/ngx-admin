@@ -89,7 +89,7 @@ export abstract class AbstractComponent
     private componentKeyUpHandlerService: AbstractKeyupEventHandlerService<Element>;
     private componentKeyPressHandlerService: AbstractKeypressEventHandlerService<Element>;
 
-    @Input('config') private _config: any;
+    private _config: any;
 
     // unique hack for {ModalDialogService}
     private __originalOpenDialog: Function;
@@ -102,7 +102,7 @@ export abstract class AbstractComponent
      * Get the component configuration
      * @return the component configuration
      */
-    get config(): any {
+    @Input('config') get config(): any {
         return this._config || {};
     }
 

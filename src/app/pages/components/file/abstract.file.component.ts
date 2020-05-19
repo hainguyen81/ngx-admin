@@ -27,9 +27,9 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
     // DECLARATION
     // -------------------------------------------------
 
-    @Input('allowModified') private isAllowModified: boolean | false;
-    @Input('files') private _files: string[];
-    @Input('allowFileExtensions') private _extensions: string[];
+    private isAllowModified: boolean | false;
+    private _files: string[];
+    private _extensions: string[];
     private _fileData: File[];
     @Output() onChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
@@ -52,7 +52,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * Get all file extensions in collection
      * @return all file extensions in collection
      */
-    public get allowFileExtensions(): string[] {
+    @Input('allowFileExtensions') get allowFileExtensions(): string[] {
         if (!this._extensions) {
             this._extensions = [];
         }
@@ -63,7 +63,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * Set all file extensions in collection
      * @param _extensions to apply
      */
-    public set allowFileExtensions(_extensions: string[]) {
+    set allowFileExtensions(_extensions: string[]) {
         this._extensions = _extensions || [];
     }
 
@@ -71,7 +71,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * Get all file names in collection
      * @return all file names in collection
      */
-    public get files(): string[] {
+    @Input('files') get files(): string[] {
         if (!this._files) {
             this._files = [];
         }
@@ -82,7 +82,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * Set all file names in collection
      * @param _files to apply
      */
-    public set files(_files: string[]) {
+    set files(_files: string[]) {
         this._files = _files || [];
         this.onChange && this.onChange.emit({data: this.files});
     }
@@ -102,7 +102,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
     /**
      * Get a boolean value indicating whether allows adding/deleting/modifying images
      */
-    public get allowModified(): boolean {
+    @Input('allowModified') get allowModified(): boolean {
         return this.isAllowModified;
     }
 
@@ -110,7 +110,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * Set a boolean value indicating whether allows adding/deleting/modifying images
      * @param allowModified to apply
      */
-    public set allowModified(allowModified: boolean) {
+    set allowModified(allowModified: boolean) {
         this.isAllowModified = allowModified;
     }
 

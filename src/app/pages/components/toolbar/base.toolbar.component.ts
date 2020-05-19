@@ -49,8 +49,6 @@ export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxT
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param toolbarHeader toolbar header
-     * @param actions {IToolbarActionsConfig}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,

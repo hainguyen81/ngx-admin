@@ -31,10 +31,10 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     // DECLARATION
     // -------------------------------------------------
 
-    @Input('showAlbum') private isShowAlbum: boolean | true;
-    @Input('onlyPrimary') private isOnlyPrimary: boolean | false;
-    @Input('allowModified') private isAllowModified: boolean | false;
-    @Input('images') private images: string[];
+    private isShowAlbum: boolean | true;
+    private isOnlyPrimary: boolean | false;
+    private isAllowModified: boolean | false;
+    private _images: string[];
     @Output() onChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
@@ -46,26 +46,26 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * @return all images in album
      */
     protected getInternalImages(): string[] {
-        if (!this.images) {
-            this.images = [];
+        if (!this._images) {
+            this._images = [];
         }
-        return this.images;
+        return this._images;
     }
 
     /**
      * Get all images in album
      * @return all images in album
      */
-    public getImages(): string[] {
-        return (!this.showAlbum() ? [] : this.getInternalImages());
+    @Input('images') get images(): string[] {
+        return (!this.showAlbum ? [] : this.getInternalImages());
     }
 
     /**
      * Set all images in album
-     * @param images to apply
+     * @param _images to apply
      */
-    public setImages(images: string[]): void {
-        this.images = images || [];
+    set images(_images: string[]) {
+        this._images = _images || [];
         this.onChange && this.onChange.emit({data: this.images});
     }
 
@@ -89,7 +89,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     /**
      * Get a boolean value indicating whether allows adding/deleting/modifying images
      */
-    public allowModified(): boolean {
+    @Input('allowModified') get allowModified(): boolean {
         return this.isAllowModified;
     }
 
@@ -97,14 +97,14 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * Set a boolean value indicating whether allows adding/deleting/modifying images
      * @param allowModified to apply
      */
-    public setAllowModified(allowModified: boolean): void {
+    set allowModified(allowModified: boolean) {
         this.isAllowModified = allowModified;
     }
 
     /**
      * Get a boolean value indicating whether allows showing all images in album
      */
-    public showAlbum(): boolean {
+    @Input('showAlbum') get showAlbum(): boolean {
         return this.isShowAlbum;
     }
 
@@ -112,14 +112,14 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * Set a boolean value indicating whether allows showing all images in album
      * @param showAlbum to apply
      */
-    public setShowAlbum(showAlbum: boolean): void {
+    set showAlbum(showAlbum: boolean) {
         this.isShowAlbum = showAlbum;
     }
 
     /**
      * Get a boolean value indicating whether allows showing only primary image in album
      */
-    public onlyPrimary(): boolean {
+    @Input('onlyPrimary') get onlyPrimary(): boolean {
         return this.isOnlyPrimary;
     }
 
@@ -127,7 +127,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * Set a boolean value indicating whether allows showing only primary image in album
      * @param isOnlyPrimary to apply
      */
-    public setOnlyPrimary(isOnlyPrimary: boolean): void {
+    set onlyPrimary(isOnlyPrimary: boolean) {
         this.isOnlyPrimary = isOnlyPrimary;
     }
 
@@ -184,7 +184,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * @param currentImage to show
      */
     public showLightbox(currentImage?: string): void {
-        super.openAlbumLightbox(this.getImages(), currentImage);
+        super.openAlbumLightbox(this.images, currentImage);
     }
 
     /**
@@ -201,6 +201,6 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
         let imageIdx: number;
         imageIdx = images.indexOf(image);
         images.splice(imageIdx, 1);
-        this.setImages(images);
+        this.images = images;
     }
 }

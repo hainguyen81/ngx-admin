@@ -30,7 +30,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
     // -------------------------------------------------
 
     /* tree-view items array */
-    @Input('items') private _items: TreeviewItem[];
+    private _items: TreeviewItem[];
 
     @ViewChildren(NgxDropdownTreeviewComponent)
     private readonly queryNgxTreeviewComponent: QueryList<NgxDropdownTreeviewComponent>;
@@ -52,7 +52,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Get the {TreeviewItem} array
      * @return the {TreeviewItem} array
      */
-    get items(): TreeviewItem[] {
+    @Input('items') get items(): TreeviewItem[] {
         return this._items || [];
     }
 

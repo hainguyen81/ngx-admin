@@ -264,12 +264,12 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * whose value should be another array of items.
      * Items that have children may omit to have an ID.
      */
-    @Input() private items: any[];
+    private _items: any[];
     /**
      * Use to set default value
      * {any[]}
      */
-    @Input() private initialValues: any[];
+    private _initialValues: any[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -287,16 +287,16 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * Get the option items array to show
      * @return the option items array
      */
-    public getItems(): any[] {
-        return this.items || [];
+    @Input() get items(): any[] {
+        return this._items || [];
     }
 
     /**
      * Set the option items array to show
      * @param items to apply
      */
-    public setItems(items?: any[]): void {
-        this.items = (items || []);
+    set items(items: any[]) {
+        this._items = (items || []);
     }
 
     /**
@@ -321,16 +321,16 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * Get the initial selected option items array to show
      * @return the initial selected  items array
      */
-    public getInitialValues(): any[] {
-        return this.initialValues || [];
+    @Input() get initialValues(): any[] {
+        return this._initialValues || [];
     }
 
     /**
      * Set the initial selected option items array to show
      * @param items to apply
      */
-    public setInitialValues(items?: any[]): void {
-        this.initialValues = (items || []);
+    set initialValues(items: any[]) {
+        this._initialValues = (items || []);
     }
 
     // -------------------------------------------------

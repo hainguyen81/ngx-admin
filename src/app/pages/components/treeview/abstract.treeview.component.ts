@@ -114,7 +114,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     private dropdownTreeviewComponent: DropdownTreeviewComponent;
 
     /* tree-view items array */
-    @Input('items') private _items: TreeviewItem[];
+    private _items: TreeviewItem[];
 
     @Output() private selectedChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
     @Output() private filterChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -132,7 +132,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * Get the tree-view items array to show
      * @return the tree-view items array
      */
-    get items(): TreeviewItem[] {
+    @Input('items') get items(): TreeviewItem[] {
         if (isNullOrUndefined(this._items)) {
             this._items = [];
         }

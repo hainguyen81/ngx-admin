@@ -54,7 +54,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     @Output() select: EventEmitter<IEvent> = new EventEmitter<IEvent>();
     @Output() close: EventEmitter<IEvent> = new EventEmitter<IEvent>();
     @Output() addNewOption: EventEmitter<IEvent> = new EventEmitter<IEvent>();
-    @Input('optionImage') private optionImageParser: (item?: NgxSelectOption) => string[];
+    private _optionImageParser: (item?: NgxSelectOption) => string[];
     @ViewChild('addNewOption', {static: false}) private addNewOptionElRef: ElementRef;
     private __originalEnsureVisibleElement: Function;
 
@@ -98,18 +98,18 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Get the parser delegate to parse item image
      * @return the parser delegate to parse item image
      */
-    public getOptionImageParser(): (item?: NgxSelectOption) => string[] {
-        return this.optionImageParser;
+    @Input('optionImage') get optionImageParser(): (item?: NgxSelectOption) => string[] {
+        return this._optionImageParser;
     }
 
     /**
      * Set a boolean value indicating this component whether uses image for tree-view item
-     * @param enabledItemImage true for using image; else false
+     * @param _optionImageParser true for using image; else false
      */
-    public setOptionImageParser(optionImageParser?: (item?: NgxSelectOption) => string[] | null): void {
+    set optionImageParser(_optionImageParser: (item?: NgxSelectOption) => string[] | null) {
         this.isEnabledOptionImage() || throwError(
             'Not allow for using option image! Please apply `enableOptionImage` in config to use!');
-        this.optionImageParser = optionImageParser;
+        this._optionImageParser = _optionImageParser;
     }
 
     // -------------------------------------------------
@@ -333,29 +333,21 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      */
     public getOptionImages(item?: NgxSelectOption): string[] {
         const optionImageField: string = this.getConfigValue('optionImageField', '');
-        return (this.getOptionImageParser()
-            ? this.getOptionImageParser().apply(this, [item])
+        return (this.optionImageParser ? this.optionImageParser.apply(this, [item])
             : optionImageField.length && item.data ? item.data[optionImageField] : null);
     }
 
     /**
      * Custom for option while using `appendToBody`
      * @param option {NgxSelectOption}
+     * @param $event event
      */
-    private clickOptionAppendToBody(option: NgxSelectOption, $event) {
+    private clickOptionAppendToBody(option: NgxSelectOption, $event): void {
         window.console.error(['clickOptionAppendToBody', $event]);
         if (!this.appendToBody()) {
             return;
         }
 
         this.selectComponent.optionSelect(option, $event);
-    }
-
-    /**
-     * Custom for option while using `appendToBody`
-     * @param $event {NgxSelectOption}
-     */
-    private clickOptionAppendToBody2($event: Event) {
-        window.console.error(['clickOptionAppendToBody2', $event]);
     }
 }

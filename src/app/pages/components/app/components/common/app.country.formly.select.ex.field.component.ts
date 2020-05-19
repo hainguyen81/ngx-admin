@@ -93,11 +93,11 @@ export class AppCountryFormlySelectExFieldComponent
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.selectExComponent
-        && this.selectExComponent.setOptionImageParser(
-            item => (item && item.data
-            && (((item.data as ICountry).flag || '').length)
-                ? [(item.data as ICountry).flag] : null));
+        if (this.selectExComponent) {
+            this.selectExComponent.optionImageParser =
+                    item => (item && item.data && (((item.data as ICountry).flag || '').length)
+                        ? [(item.data as ICountry).flag] : null);
+        }
     }
 
     protected loadData(): Observable<ICountry[] | ICountry> | Promise<ICountry[] | ICountry> | ICountry[] | ICountry {

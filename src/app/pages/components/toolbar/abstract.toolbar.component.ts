@@ -140,6 +140,8 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      * @param actions {IToolbarActionsConfig}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param header {IToolbarHeaderConfig}
+     * @param actions {IToolbarActionsConfig}
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,

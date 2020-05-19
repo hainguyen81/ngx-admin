@@ -227,7 +227,7 @@ export abstract class AbstractTabComponent<T extends DataSource>
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param numberOfTabs
+     * @param numberOfTabs the number of tabs
      * @param fullWidthValue take full width of value
      * @param fullWidth take full width of a parent
      * @param routeParam if specified - tabset listens to this parameter and selects corresponding tab.

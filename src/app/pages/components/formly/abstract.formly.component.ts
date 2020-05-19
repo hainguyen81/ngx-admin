@@ -7,7 +7,8 @@ import {
     ElementRef,
     Inject,
     QueryList,
-    Renderer2, Type,
+    Renderer2,
+    Type,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
-import {AbstractControl, FormGroup, ValidationErrors} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {isArray, isNullOrUndefined, isObject} from 'util';
 import ComponentUtils from '../../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
