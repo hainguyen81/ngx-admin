@@ -7,6 +7,13 @@
         }
         tr td {
             vertical-align: top;
+
+            table-cell-view-mode,
+            table-cell-view-mode custom-view-component,
+            table-cell-view-mode custom-view-component ngx-smart-table-number-cell {
+                width: 100%;
+                display: block;
+            }
         }
         tr td table-cell-edit-mode table-cell-custom-editor {
             ng-select, input {
