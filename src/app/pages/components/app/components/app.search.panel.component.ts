@@ -126,7 +126,7 @@ export abstract class AppSearchPanelComponent<
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
         this.__listenToolbarActions();
-        this.getChangeDetectorRef().detectChanges();
+        this.detectChanges();
     }
 
     /**

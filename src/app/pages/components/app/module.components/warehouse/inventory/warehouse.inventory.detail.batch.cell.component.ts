@@ -242,7 +242,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         // apply select items
         const components: WarehouseBatchNoFormlySelectFieldComponent[] = this.selectComponents;
         (components || []).forEach(component => component.items = this._warehouseBatches);
-        this.changeDetectorRef.detectChanges();
+        this.detectChanges();
     }
 
     /**
@@ -266,7 +266,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
                 this._warehouseDetailBatches.push(detailBatch);
             }
         });
-        this.changeDetectorRef.detectChanges();
+        this.detectChanges();
     }
 
     /**
@@ -279,7 +279,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         if (0 <= dataIndex && dataIndex < (batches || []).length) {
             batches.splice(dataIndex, 1);
         }
-        this.changeDetectorRef.detectChanges();
+        this.detectChanges();
     }
 
     /**

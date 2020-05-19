@@ -234,7 +234,7 @@ export abstract class AppSplitPaneComponent<
             this.doToolbarActionsSettings();
             // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
             // TODO after updating toolbar action settings
-            super.getChangeDetectorRef().detectChanges();
+            this.detectChanges();
         }
 
         // create left side component

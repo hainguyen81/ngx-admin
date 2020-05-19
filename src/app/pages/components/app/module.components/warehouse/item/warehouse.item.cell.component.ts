@@ -154,7 +154,7 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
             this.warehouseItemDbService.getAllByIndex('code', IDBKeyRange.only(value))
                 .then(items => {
                     this._warehouseItem = (items.length ? items[0] : undefined);
-                    this.changeDetectorRef.detectChanges();
+                    this.detectChanges();
                 }, reason => this.logger.error(reason))
                 .catch(reason => this.logger.error(reason));
         }

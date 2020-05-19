@@ -928,7 +928,7 @@ export abstract class AbstractComponent
                         childComponent.onDialogInit(
                             componentRef.instance, modalDialogInstance['dialogElement'] as ElementRef,
                             childComponent, options);
-                        childComponent.getChangeDetectorRef().detectChanges();
+                        childComponent.detectChanges();
                     }
                 };
             }
@@ -1460,5 +1460,14 @@ export abstract class AbstractComponent
      */
     protected melt(): void {
         this.getChangeDetectorRef() && this.getChangeDetectorRef().reattach();
+    }
+
+    /**
+     * Detect changes
+     */
+    public detectChanges(): void {
+        if (!(<any>this.changeDetectorRef).destroyed) {
+            this.changeDetectorRef.detectChanges();
+        }
     }
 }

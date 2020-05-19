@@ -426,4 +426,13 @@ export abstract class AbstractCellEditor extends DefaultEditor
         }
         return of(undefined);
     }
+
+    /**
+     * Detect changes
+     */
+    public detectChanges(): void {
+        if (!(<any>this.changeDetectorRef).destroyed) {
+            this.changeDetectorRef.detectChanges();
+        }
+    }
 }

@@ -381,4 +381,13 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         }
         return retValue;
     }
+
+    /**
+     * Detect changes
+     */
+    public detectChanges(): void {
+        if (!(<any>this.changeDetectorRef).destroyed) {
+            this.changeDetectorRef.detectChanges();
+        }
+    }
 }
