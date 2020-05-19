@@ -36,6 +36,7 @@ import {MatInput} from '@angular/material/input';
 import {
     WarehouseBatchNoDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import PromiseUtils from '../../../../../../utils/promise.utils';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -176,8 +177,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     }
 
     ngOnDestroy(): void {
-        this._warehouseBatchesBehavior
-        && this._warehouseBatchesBehavior.unsubscribe();
+        PromiseUtils.unsubscribe(this._warehouseBatchesBehavior);
         super.ngOnDestroy();
     }
 

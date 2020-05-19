@@ -38,6 +38,7 @@ import {
 import {
     WarehouseDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
+import PromiseUtils from '../../../../../../utils/promise.utils';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -154,8 +155,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
     }
 
     ngOnDestroy(): void {
-        this._warehouseStoragesBehavior
-        && this._warehouseStoragesBehavior.unsubscribe();
+        PromiseUtils.unsubscribe(this._warehouseStoragesBehavior);
         super.ngOnDestroy();
     }
 

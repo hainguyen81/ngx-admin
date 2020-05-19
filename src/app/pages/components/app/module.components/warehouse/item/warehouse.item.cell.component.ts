@@ -24,6 +24,7 @@ import {
 } from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {BehaviorSubject} from 'rxjs';
 import {Cell} from 'ng2-smart-table';
+import PromiseUtils from '../../../../../../utils/promise.utils';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -138,8 +139,7 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     }
 
     ngOnDestroy(): void {
-        this._warehouseItemBehavior
-        && this._warehouseItemBehavior.unsubscribe();
+        PromiseUtils.unsubscribe(this._warehouseItemBehavior);
         super.ngOnDestroy();
     }
 

@@ -38,6 +38,7 @@ import {
     WarehouseItemVersionDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 import {IdGenerators} from '../../../../../config/generator.config';
+import PromiseUtils from '../../../../../utils/promise.utils';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -261,8 +262,7 @@ export class WarehouseItemVersionSmartTableComponent
     }
 
     ngOnDestroy(): void {
-        this.saveSubject.unsubscribe();
-
+        PromiseUtils.unsubscribe(this.saveSubject);
         super.ngOnDestroy();
     }
 

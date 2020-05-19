@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import {Component} from '@angular/core';
+import PromiseUtils from '../../../utils/promise.utils';
 
 export const COMPONENT_ANNOTATIONS_PROPERTY: string = '__annotations__';
 export const COMPONENT_PARAMETERS_PROPERTY: string = '__paramaters__';
@@ -59,7 +60,7 @@ export function makeAutoUnsubscribeDecorator(obs$ = []): Function {
                     }
                 }
                 for (const ob$ of obs$) {
-                    ob$.unsubscribe();
+                    PromiseUtils.unsubscribe(ob$);
                 }
                 originalNgDestroy.apply();
             };
