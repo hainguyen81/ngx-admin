@@ -87,7 +87,7 @@ export const WarehouseInventoryDetailTableSettings = {
         },
         storage: {
             title: 'warehouse.inventory.detail.table.storage',
-            type: 'string',
+            type: 'custom',
             sort: false,
             filter: false,
             renderComponent: WarehouseInventoryDetailStorageCellComponent,
