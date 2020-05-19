@@ -44,6 +44,7 @@ import {AppCommonComponentsModule} from '../../components/common/app.common.comp
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {WarehouseInventoryDetailSmartTableComponent} from './warehouse.inventory.detail.table.component';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
+import {WarehouseProviders} from '../../../../../config/app.providers';
 
 @NgModule({
     imports: [
@@ -153,7 +154,7 @@ import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.deta
         WarehouseInventoryDetailSmartTableComponent,
         WarehouseInventoryDetailPanelComponent,
     ],
-    providers: AppConfig.Providers,
+    providers: WarehouseProviders,
 })
 export class WarehouseInventoryModule {
 }

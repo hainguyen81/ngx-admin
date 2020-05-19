@@ -53,6 +53,7 @@ import {BehaviorSubject, throwError} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
+import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -254,7 +255,7 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @param _warehouseInventoryDetailDatasource {WarehouseInventoryDetailDatasource}
      * @param _injectionService {InjectionService}
      */
-    constructor(@Inject(LocalDataSource) dataSource: LocalDataSource,
+    constructor(@Inject(DataSource) dataSource: LocalDataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
                 @Inject(ToastrService) toasterService: ToastrService,
                 @Inject(NGXLogger) logger: NGXLogger,
