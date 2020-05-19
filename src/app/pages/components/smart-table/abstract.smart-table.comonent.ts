@@ -172,28 +172,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         super.ngAfterViewInit();
 
         if (!this.smartTableComponent) {
-            this.smartTableComponent = ComponentUtils.queryComponent(
-                this.querySmartTableComponent, component => {
-                    const settings: any = this.getTableSettings();
-                    const footerSettings: any = (!isNullOrUndefined(settings)
-                        && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
-                    const rowsNumber: number = (!isNullOrUndefined(footerSettings)
-                        && footerSettings.hasOwnProperty('rows') && isNumber(footerSettings['rows'])
-                        ? parseInt(footerSettings['rows'], 10) : 0);
-                    if (rowsNumber > 0) {
-                        const innerTable: HTMLTableElement = this.getFirstElementBySelector(
-                            AbstractSmartTableComponent.SMART_TABLE_SELETOR,
-                            this.getElementRef().nativeElement) as HTMLTableElement;
-                        const innerFooter: HTMLTableSectionElement =
-                            (!isNullOrUndefined(innerTable) ? innerTable.createTFoot() : undefined);
-                        if (!isNullOrUndefined(innerFooter)) {
-                            this._tableFooterRows = [];
-                            for (let i: number = 0; i < rowsNumber; i++) {
-                                this._tableFooterRows.push(innerFooter.insertRow(0));
-                            }
-                        }
-                    }
-                });
+            this.smartTableComponent = ComponentUtils.queryComponent(this.querySmartTableComponent);
         }
     }
 
@@ -220,6 +199,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     protected setTableSettings(settings: any) {
         this.settings = settings;
         this.translateSettings();
+        this.__detectForTableFooter();
+        this.detectChanges();
     }
 
     protected getTableSettings(): any {
@@ -1481,6 +1462,37 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                         }
                     }
                 });
+            }
+        }
+    }
+
+    /**
+     * Detect settings for table footer
+     */
+    private __detectForTableFooter(): void {
+        const settings: any = this.getTableSettings();
+        const footerSettings: any = (!isNullOrUndefined(settings)
+        && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
+        const rowsNumber: number = (!isNullOrUndefined(footerSettings)
+        && footerSettings.hasOwnProperty('rows') && isNumber(footerSettings['rows'])
+            ? parseInt(footerSettings['rows'], 10) : 0);
+        if (rowsNumber > 0) {
+            const innerTable: HTMLTableElement = this.getFirstElementBySelector(
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR,
+                this.getElementRef().nativeElement) as HTMLTableElement;
+            // check to delete footer and create new while changing table settings
+            if (!isNullOrUndefined(innerTable)) {
+                innerTable.deleteTFoot();
+            }
+
+            // create new settings
+            const innerFooter: HTMLTableSectionElement =
+                (!isNullOrUndefined(innerTable)  ? innerTable.createTFoot() : undefined);
+            if (!isNullOrUndefined(innerFooter)) {
+                this._tableFooterRows = [];
+                for (let i: number = 0; i < rowsNumber; i++) {
+                    this._tableFooterRows.push(innerFooter.insertRow(0));
+                }
             }
         }
     }
