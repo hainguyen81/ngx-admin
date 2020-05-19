@@ -51,11 +51,11 @@ export class GeneralSettingsComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected visibleSpecialActionsOnFront(): String[] {
+    protected get visibleSpecialActionsOnFront(): String[] {
         return [ACTION_IMPORT, ACTION_DELETE_DATABASE];
     }
 
-    protected visibleActionsOnBack(): String[] {
+    protected get visibleActionsOnBack(): String[] {
         return [ACTION_BACK, ACTION_DELETE, ACTION_RESET, ACTION_SAVE];
     }
 
@@ -113,7 +113,7 @@ export class GeneralSettingsComponent
     protected onNewData($event: IEvent): void {
         const newInst: IGeneralSettings = new GeneralSettings(null, null, null, null);
         newInst.builtin = false;
-        super.getBackComponent().setModel(newInst);
+        super.backComponent.setModel(newInst);
     }
 
     protected onEditData($event: IEvent): void {
@@ -122,6 +122,6 @@ export class GeneralSettingsComponent
         const setting: IGeneralSettings = row.getData() as IGeneralSettings;
         setting || throwError('Invalid data to edit');
         if (setting.builtin) setting.value = this.translate(setting.value.toString());
-        super.getBackComponent().setModel(setting);
+        super.backComponent.setModel(setting);
     }
 }

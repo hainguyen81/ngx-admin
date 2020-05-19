@@ -28,6 +28,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Column} from 'ng2-smart-table/lib/data-set/column';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -97,15 +98,13 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     // DECLARATION
     // -------------------------------------------------
 
-    tableHeader: string;
-    private settings: any = DefaultTableSettings;
-
     @ViewChildren(Ng2SmartTableComponent)
     private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
     private smartTableComponent: Ng2SmartTableComponent;
 
-    private edittingRows: Array<Row> = [];
-    private allowMultiEdit: boolean = false;
+    private _tableHeader: string;
+    private _edittingRows: Array<Row> = [];
+    private _allowMultiEdit: boolean = false;
     private _tableFooterRows: HTMLTableRowElement[];
 
     // -------------------------------------------------
@@ -118,6 +117,124 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected get tableFooterRows(): HTMLTableRowElement[] {
         return this._tableFooterRows;
+    }
+
+    get allowMultipleEdit(): boolean {
+        return this._allowMultiEdit || false;
+    }
+
+    set allowMultipleEdit(allow: boolean) {
+        let changed: boolean;
+        changed = (this._allowMultiEdit !== allow);
+        this._allowMultiEdit = allow || false;
+        if (!allow && changed && this.editingRows.length > 1) {
+            // exclude the latest editing row
+            this.editingRows.pop();
+            // cancel all editing rows
+            this.cancelEditRows(this.editingRows);
+        }
+    }
+
+    get config(): any {
+        return super.config || DefaultTableSettings;
+    }
+
+    set config(_config: any) {
+        super.config = _config;
+        this.translateSettings();
+        this.__detectForTableFooter();
+    }
+
+    get tableHeader(): string {
+        return this._tableHeader;
+    }
+
+    set tableHeader(header: string) {
+        this._tableHeader = header;
+    }
+
+    protected get tableComponent(): Ng2SmartTableComponent {
+        return this.smartTableComponent;
+    }
+
+    protected get gridComponent(): Grid {
+        return (!isNullOrUndefined(this.tableComponent)
+            ? this.tableComponent.grid : undefined);
+    }
+
+    /**
+     * Get the current editing Row array
+     * @return the current editing Row array or empty
+     */
+    protected get editingRows(): Array<Row> {
+        return this._edittingRows || [];
+    }
+
+    /**
+     * Get the current editing Row DOM elements array
+     * @return the current editing Row DOM elements array
+     */
+    protected get editingRowElements(): Array<HTMLTableRowElement> {
+        const editRows: Array<Row> = this.editingRows;
+        if (!(editRows || []).length) {
+            return undefined;
+        }
+
+        let editingRowEls: Array<HTMLTableRowElement>;
+        editingRowEls = [];
+        let rowEls: NodeListOf<HTMLTableRowElement>;
+        rowEls = this.getAllRowElements();
+        editRows.forEach(r => editingRowEls.push(rowEls.item(r.index)));
+        return editingRowEls;
+    }
+
+    /**
+     * Get a boolean value indicating whether is in EDIT mode
+     * @return true for being in EDIT mode; else false
+     */
+    get isInEditMode(): boolean {
+        const editingRows: Array<Row> = this.editingRows;
+        return ((editingRows || []).length > 0);
+    }
+
+    /**
+     * Get the selected rows
+     * @return selected rows array
+     */
+    get selectedRows(): Array<Row> {
+        return (this.gridComponent ? this.gridComponent.getSelectedRows() : []);
+    }
+
+    /**
+     * Get the rows
+     * @return rows array
+     */
+    get rows(): Array<Row> {
+        return (this.gridComponent ? this.gridComponent.getRows() : []);
+    }
+
+    /**
+     * Get the columns
+     * @return columns array
+     */
+    get columns(): Array<Column> {
+        return (this.gridComponent ? this.gridComponent.getColumns() : []);
+    }
+
+    /**
+     * Get the first {Row}
+     * @return the first {Row}
+     */
+    get firstRow(): Row {
+        return (this.gridComponent ? this.gridComponent.getFirstRow() : undefined);
+    }
+
+    /**
+     * Get the last {Row}
+     * @return the last {Row}
+     */
+    get lastRow(): Row {
+        return (this.gridComponent ? this.gridComponent.getLastRow() : undefined);
     }
 
     // -------------------------------------------------
@@ -177,106 +294,15 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     }
 
     // -------------------------------------------------
-    // GETTERS/SETTERS
+    // FUNCTIONS
     // -------------------------------------------------
-
-    public allowMultipleEdit(): boolean {
-        return this.allowMultiEdit || false;
-    }
-
-    public setAllowMultipleEdit(allow?: boolean | false) {
-        let changed: boolean;
-        changed = (this.allowMultiEdit !== allow);
-        this.allowMultiEdit = allow || false;
-        if (!allow && changed && this.getEditingRows().length > 1) {
-            // exclude the latest editing row
-            this.getEditingRows().pop();
-            // cancel all editing rows
-            this.cancelEditRows(this.getEditingRows());
-        }
-    }
-
-    protected setTableSettings(settings: any) {
-        this.settings = settings;
-        this.translateSettings();
-        this.__detectForTableFooter();
-    }
-
-    protected getTableSettings(): any {
-        return this.settings;
-    }
-
-    protected setTableHeader(header: string) {
-        this.tableHeader = header;
-    }
-
-    protected getSmartTableComponent(): Ng2SmartTableComponent {
-        return this.smartTableComponent;
-    }
-
-    protected getGridComponent(): Grid {
-        return this.getSmartTableComponent().grid;
-    }
-
-    /**
-     * Get the current editing Row array
-     * @return the current editing Row array or empty
-     */
-    protected getEditingRows(): Array<Row> {
-        return this.edittingRows || [];
-    }
-
-    /**
-     * Get the current editing Row DOM elements array
-     * @return the current editing Row DOM elements array
-     */
-    protected getEditingRowElements(): Array<HTMLTableRowElement> {
-        let editRows: Array<Row>;
-        editRows = this.getEditingRows();
-        if (!editRows || !editRows.length) {
-            return undefined;
-        }
-
-        let editingRowEls: Array<HTMLTableRowElement>;
-        editingRowEls = [];
-        let rowEls: NodeListOf<HTMLTableRowElement>;
-        rowEls = this.getAllRowElements();
-        editRows.forEach(r => editingRowEls.push(rowEls.item(r.index)));
-        return editingRowEls;
-    }
-
-    /**
-     * Get a boolean value indicating whether is in EDIT mode
-     * @return true for being in EDIT mode; else false
-     */
-    public isInEditMode(): boolean {
-        let editingRows: Array<Row>;
-        editingRows = this.getEditingRows();
-        return (editingRows && editingRows.length > 0);
-    }
 
     /**
      * Get a boolean value indicating the specified Row whether is in EDIT mode
      * @return true for being in EDIT mode; else false
      */
     public isRowInEditMode(row: Row): boolean {
-        return (row && row.isInEditing);
-    }
-
-    /**
-     * Get the selected rows
-     * @return selected rows array
-     */
-    public getSelectedRows(): Array<Row> {
-        return this.getGridComponent().getSelectedRows();
-    }
-
-    /**
-     * Get the rows
-     * @return rows array
-     */
-    public getRows(): Array<Row> {
-        return this.getGridComponent().getRows();
+        return (!isNullOrUndefined(row) && row.isInEditing);
     }
 
     /**
@@ -285,9 +311,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Row or undefined
      */
     public getRowByIndex(rowIdx: number): Row {
-        let rows: Array<Row>;
-        rows = this.getRows();
-        if (rows && rows.length && 0 <= rowIdx && rowIdx < rows.length) {
+        const rows: Array<Row> = this.rows;
+        if ((rows || []).length && 0 <= rowIdx && rowIdx < rows.length) {
             return rows[rowIdx];
         }
         return undefined;
@@ -299,9 +324,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Row data or undefined
      */
     public getRowDataByIndex(rowIdx: number): any {
-        let row: Row;
-        row = this.getRowByIndex(rowIdx);
-        return (row ? row.getData() : undefined);
+        const row: Row = this.getRowByIndex(rowIdx);
+        return (!isNullOrUndefined(row) ? row.getData() : undefined);
     }
 
     /**
@@ -311,9 +335,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Row index or -1
      */
     public getRowIndexByData(item: any, attr?: string): number {
-        let rows: Array<Row>;
-        rows = this.getRows();
-        if (!item || !rows || !rows.length || (attr && attr.length && !item[attr])) {
+        const rows: Array<Row> = this.rows;
+        if (!item || !(rows || []).length || (attr && attr.length && !item[attr])) {
             return -1;
         }
         for (const row of rows) {
@@ -333,15 +356,13 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Row or undefined
      */
     public getRowByData(item: any, attr?: string): Row {
-        let rowIndex: number;
-        rowIndex = this.getRowIndexByData(item, attr);
+        const rowIndex: number = this.getRowIndexByData(item, attr);
         if (rowIndex < 0) {
             return undefined;
         }
 
-        let rows: Array<Row>;
-        rows = this.getGridComponent().getRows();
-        return (rows && rows.length && rowIndex < rows.length ? rows[rowIndex] : undefined);
+        const rows: Array<Row> = this.rows;
+        return ((rows || []).length && rowIndex < rows.length ? rows[rowIndex] : undefined);
     }
 
     /**
@@ -350,8 +371,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Row or undefined
      */
     protected getRowByEvent(event: Event): Row {
-        let rowIdx: number;
-        rowIdx = -1;
+        let rowIdx: number = -1;
         let target: HTMLElement;
         target = event.target as HTMLElement;
         target = (target && target.tagName.toLowerCase() === 'tr'
@@ -405,13 +425,12 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Row or undefined
      */
     public getRowElement(row: Row): HTMLTableRowElement {
-        if (!row) {
+        if (isNullOrUndefined(row)) {
             return;
         }
 
-        let rows: NodeListOf<HTMLTableRowElement>;
-        rows = this.getAllRowElements();
-        if (!rows || !rows.length || row.index >= rows.length || !this.getRenderer()) {
+        const rows: NodeListOf<HTMLTableRowElement> = this.getAllRowElements();
+        if (!(rows || []).length || row.index >= rows.length || !this.getRenderer()) {
             return;
         }
 
@@ -475,8 +494,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Cell or undefined
      */
     public getCellByIndex(rowIndex: number, columnIndex: number): Cell {
-        let row: Row;
-        row = this.getRowByIndex(rowIndex);
+        const row: Row = this.getRowByIndex(rowIndex);
         if (row && row.cells && row.cells.length && columnIndex < row.cells.length) {
             return row.cells[columnIndex];
         }
@@ -490,8 +508,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Cell or undefined
      */
     public getCellByProperty(rowIndex: number, propertyId: string): Cell {
-        let row: Row;
-        row = this.getRowByIndex(rowIndex);
+        const row: Row = this.getRowByIndex(rowIndex);
         if (row && row.cells && row.cells.length && (propertyId || '').length) {
             for (const cell of row.cells) {
                 if (cell.getId() && cell.getId().toLowerCase() === propertyId.toLowerCase()) {
@@ -637,12 +654,12 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             let cell: Cell;
             cell = this.getCellByEvent(event.event);
             this.getLogger().debug('onDoubleClick', event, cell);
-            if (cell && !this.isInEditMode()) {
+            if (cell && !this.isInEditMode) {
                 this.editCell(cell);
             }
             this.preventEvent(event.event);
 
-        } else if (event && event.data && event.data['data'] && !this.isInEditMode()) {
+        } else if (event && event.data && event.data['data'] && !this.isInEditMode) {
             this.getLogger().debug('onDoubleClick', event);
             this.editRow(event.data['data']);
         }
@@ -968,9 +985,9 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
 
         let cell: Cell;
         cell = (columnIndex < 0 ? undefined : row.cells[columnIndex]);
-        this.getEditingRows().push(row);
+        this.editingRows.push(row);
         this.selectRow(row);
-        this.getGridComponent().edit(row);
+        this.gridComponent.edit(row);
 
         // wait for showing editor
         let timer: number;
@@ -1038,8 +1055,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             return;
         }
 
-        row && this.getGridComponent().save(row,
-            this.getSmartTableComponent().editConfirm || new EventEmitter<any>());
+        row && this.gridComponent.save(row,
+            this.tableComponent.editConfirm || new EventEmitter<any>());
         !row && this.getLogger().warn('Undefined row to edit');
     }
 
@@ -1070,14 +1087,14 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * Save the editing Row array in the selected rows
      */
     protected saveSelectedRows() {
-        return this.saveRows(this.getSelectedRows());
+        return this.saveRows(this.selectedRows);
     }
 
     /**
      * Save the editing Row array in all rows
      */
     protected saveAllRows() {
-        return this.saveRows(this.getRows());
+        return this.saveRows(this.rows);
     }
 
     /**
@@ -1103,8 +1120,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected deleteRow(row: Row) {
         row && this.removeEditingRow(row);
-        row && this.getGridComponent().delete(row,
-            this.getSmartTableComponent().deleteConfirm || new EventEmitter<any>());
+        row && this.gridComponent.delete(row,
+            this.tableComponent.deleteConfirm || new EventEmitter<any>());
         !row && this.getLogger().warn('Undefined row to delete');
     }
 
@@ -1123,14 +1140,14 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * Delete the selected rows
      */
     protected deleteSelectedRows() {
-        return this.deleteRows(this.getSelectedRows());
+        return this.deleteRows(this.selectedRows);
     }
 
     /**
      * Delete all rows
      */
     protected deleteAllRows() {
-        return this.deleteRows(this.getRows());
+        return this.deleteRows(this.rows);
     }
 
     /**
@@ -1138,18 +1155,18 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected newRow() {
         // not new row if editing
-        if (this.isInEditMode()) {
+        if (this.isInEditMode) {
             return;
         }
 
         // create new row
         let newRow: Row;
-        newRow = this.getGridComponent().getNewRow();
+        newRow = this.gridComponent.getNewRow();
         newRow.index = 0;
 
         // insert new row data into data source
-        this.getGridComponent().create(newRow,
-            this.getSmartTableComponent().createConfirm || new EventEmitter<any>());
+        this.gridComponent.create(newRow,
+            this.tableComponent.createConfirm || new EventEmitter<any>());
 
         // wait for editing this row
         let timer: number;
@@ -1194,7 +1211,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         }
         // refresh for reset editors' data
         if (refresh) {
-            this.getGridComponent().source.refresh();
+            this.gridComponent.source.refresh();
         }
     }
 
@@ -1206,7 +1223,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         if (rows && rows.length) {
             rows.forEach((r) => this.cancelEditRow(r, false));
             // refresh for reset editors' data
-            this.getGridComponent().source.refresh();
+            this.gridComponent.source.refresh();
         }
     }
 
@@ -1214,7 +1231,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * Cancel all editing rows
      */
     protected cancelEditAll() {
-        this.cancelEditRows(this.getRows());
+        this.cancelEditRows(this.rows);
     }
 
     // -------------------------------------------------
@@ -1228,7 +1245,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     public selectRow(row: Row) {
         if (row && !row.isSelected) {
             row.isSelected = true;
-            this.getGridComponent().selectRow(row);
+            this.gridComponent.selectRow(row);
             this.getLogger().debug('Row is selected?', row.isSelected);
 
         } else if (!row) {
@@ -1390,9 +1407,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             return;
         }
 
-        let rows: Array<Row>;
-        rows = this.getEditingRows();
-        if (!rows || !rows.length) {
+        const rows: Array<Row> = this.editingRows;
+        if (!(rows || []).length) {
             return;
         }
 
@@ -1437,14 +1453,15 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected translateSettings(): void {
         // apply translate
-        if (this.settings && Object.keys(this.settings).length) {
-            if (!this.settings.hasOwnProperty('noDataMessage:key')) {
-                this.settings['noDataMessage:key'] = this.settings['noDataMessage'];
+        const settings: any = this.config;
+        if (settings && Object.keys(settings).length) {
+            if (!settings.hasOwnProperty('noDataMessage:key')) {
+                settings['noDataMessage:key'] = settings['noDataMessage'];
             }
-            this.settings['noDataMessage'] =
-                this.translate(this.settings['noDataMessage:key'] || '');
-            if (this.settings.hasOwnProperty('columns')) {
-                Object.values(this.settings['columns']).forEach(column => {
+            settings['noDataMessage'] =
+                this.translate(settings['noDataMessage:key'] || '');
+            if (settings.hasOwnProperty('columns')) {
+                Object.values(settings['columns']).forEach(column => {
                     if (column) {
                         if (!column.hasOwnProperty('title:key')) {
                             column['title:key'] = column['title'];
@@ -1469,7 +1486,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * Detect settings for table footer
      */
     private __detectForTableFooter(): void {
-        const settings: any = this.getTableSettings();
+        const settings: any = this.config;
         const footerSettings: any = (!isNullOrUndefined(settings)
         && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
         const rowsNumber: number = (!isNullOrUndefined(footerSettings)

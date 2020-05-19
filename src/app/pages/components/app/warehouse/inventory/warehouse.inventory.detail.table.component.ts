@@ -148,7 +148,7 @@ export class WarehouseInventoryDetailSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -194,9 +194,9 @@ export class WarehouseInventoryDetailSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setTableHeader('warehouse.inventory.title');
-        super.setTableSettings(WarehouseInventoryDetailTableSettings);
-        super.setContextMenu(WarehouseInventoryDetailContextMenu);
+        this.tableHeader = 'warehouse.inventory.title';
+        this.config = WarehouseInventoryDetailTableSettings;
+        this.setContextMenu(WarehouseInventoryDetailContextMenu);
     }
 
     // -------------------------------------------------

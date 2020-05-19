@@ -54,11 +54,11 @@ export class CustomerComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected visibleSpecialActionsOnFront(): String[] {
+    protected get visibleSpecialActionsOnFront(): String[] {
         return [ACTION_IMPORT];
     }
 
-    protected visibleActionsOnBack(): String[] {
+    protected get visibleActionsOnBack(): String[] {
         return [ACTION_BACK, ACTION_SAVE, ACTION_RESET, ACTION_DELETE];
     }
 
@@ -115,11 +115,11 @@ export class CustomerComponent
 
     protected onNewData($event: IEvent): void {
         const newInst: ICustomer = new Customer(null, null, null, null);
-        super.getBackComponent().setModel(newInst);
+        super.backComponent.setModel(newInst);
     }
 
     protected onEditData($event: IEvent): void {
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
-        row && row.getData() && super.getBackComponent().setModel(row.getData() as ICustomer);
+        row && row.getData() && super.backComponent.setModel(row.getData() as ICustomer);
     }
 }

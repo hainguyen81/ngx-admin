@@ -170,7 +170,7 @@ export class WarehouseItemSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -219,9 +219,9 @@ export class WarehouseItemSmartTableComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setTableHeader('warehouse.item.title');
-        super.setTableSettings(WarehouseItemTableSettings);
-        super.setContextMenu(WarehouseItemContextMenu);
+        this.tableHeader = 'warehouse.item.title';
+        this.config = WarehouseItemTableSettings;
+        this.setContextMenu(WarehouseItemContextMenu);
     }
 
     // -------------------------------------------------
@@ -238,7 +238,7 @@ export class WarehouseItemSmartTableComponent
     ngOnInit(): void {
         super.ngOnInit();
 
-        const settings: any = this.getTableSettings();
+        const settings: any = this.config;
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',

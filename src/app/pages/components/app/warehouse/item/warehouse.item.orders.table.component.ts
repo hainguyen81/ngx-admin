@@ -113,7 +113,7 @@ export class WarehouseItemOrdersSmartTableComponent
      * Remove panel header
      * @return false
      */
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -183,9 +183,9 @@ export class WarehouseItemOrdersSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setTableHeader('warehouse.item.title');
-        super.setTableSettings(WarehouseItemOrdersTableSettings);
-        super.setContextMenu(WarehouseItemOrdersContextMenu);
+        this.tableHeader = 'warehouse.item.title';
+        this.config = WarehouseItemOrdersTableSettings;
+        this.setContextMenu(WarehouseItemOrdersContextMenu);
     }
 
     doSearch(keyword: any): void {

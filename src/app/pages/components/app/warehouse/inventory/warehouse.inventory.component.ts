@@ -69,15 +69,15 @@ export class WarehouseInventoryComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected visibleSpecialActionsOnFront(): String[] {
+    protected get visibleSpecialActionsOnFront(): String[] {
         return [ACTION_IMPORT];
     }
 
-    protected visibleActionsOnBack(): String[] {
+    protected get visibleActionsOnBack(): String[] {
         return [ACTION_SAVE, ACTION_RESET, ACTION_DELETE, ACTION_BACK];
     }
 
-    protected fulfillComponentsAtStartup(): boolean {
+    protected get fulfillComponentsAtStartup(): boolean {
         return false;
     }
 
@@ -136,14 +136,14 @@ export class WarehouseInventoryComponent
         super.ngAfterViewInit();
 
         // listener
-        if (super.getFrontComponent()) {
-            this.getFrontComponent().setNewItemListener($event => {
+        if (this.frontComponent) {
+            this.frontComponent.setNewItemListener($event => {
                 this._selectedModel = null;
                 this.ensureBackComponent();
                 this.onNewData($event);
                 this.setFlipped(true);
             });
-            this.getFrontComponent().setEditItemListener($event => {
+            this.frontComponent.setEditItemListener($event => {
                 this._selectedModel = ($event && $event.data
                 && $event.data['row'] instanceof Row
                     ? ($event.data['row'] as Row).getData() as IWarehouseInventory : undefined);
@@ -151,7 +151,7 @@ export class WarehouseInventoryComponent
                 this.onEditData($event);
                 this.setFlipped(true);
             });
-            this.getFrontComponent().setDeleteItemListener($event => {
+            this.frontComponent.setDeleteItemListener($event => {
                 this._selectedModel = ($event && $event.data
                 && $event.data['row'] instanceof Row
                     ? ($event.data['row'] as Row).getData() as IWarehouseInventory : undefined);
@@ -174,13 +174,13 @@ export class WarehouseInventoryComponent
     protected onNewData($event: IEvent): void {
         const newInst: IWarehouseInventory =
             new WarehouseInventory(null, null, null, null, null, null);
-        super.getBackComponent().dataModel = newInst;
+        this.backComponent.dataModel = newInst;
     }
 
     protected onEditData($event: IEvent): void {
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
         if (row && row.getData()) {
-            super.getBackComponent().dataModel = row.getData() as IWarehouseInventory;
+            this.backComponent.dataModel = row.getData() as IWarehouseInventory;
         } else throwError('Could not found data model to edit');
     }
 

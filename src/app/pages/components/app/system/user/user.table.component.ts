@@ -133,7 +133,7 @@ export class UserSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -181,9 +181,9 @@ export class UserSmartTableComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setTableHeader('system.user.title');
-        super.setTableSettings(UserTableSettings);
-        super.setContextMenu(UserContextMenu);
+        this.tableHeader = 'system.user.title';
+        this.config = UserTableSettings;
+        this.setContextMenu(UserContextMenu);
     }
 
     doSearch(keyword: any): void {
@@ -198,7 +198,7 @@ export class UserSmartTableComponent
     ngOnInit(): void {
         super.ngOnInit();
 
-        const settings: any = this.getTableSettings();
+        const settings: any = this.config;
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',

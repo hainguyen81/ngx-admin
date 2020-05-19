@@ -1,16 +1,16 @@
-<nb-card [class.m-0]="!isShowHeader()"
-         [class.p-0]="!isShowHeader()"
+<nb-card [class.m-0]="!isShowHeader"
+         [class.p-0]="!isShowHeader"
          [class.flipped]="isFlipped()"
          class="ngx-flipcard-pane"
 >
-    <nb-card-header *ngIf="isShowHeader()"
+    <nb-card-header *ngIf="isShowHeader"
                     [class.flipped]="isFlipped()"
                     class="ngx-flipcard-pane-header">
         <ng-template #headerHolder></ng-template>
     </nb-card-header>
 
-    <nb-card-body [class.m-0]="!isShowHeader()"
-                  [class.p-0]="!isShowHeader()"
+    <nb-card-body [class.m-0]="!isShowHeader"
+                  [class.p-0]="!isShowHeader"
                   [class.flipped]="isFlipped()"
                   class="ngx-flipcard-pane-body">
         <nb-flip-card #flipCard

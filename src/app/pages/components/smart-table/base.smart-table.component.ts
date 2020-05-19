@@ -109,7 +109,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         needToSave = ((isF2Key && kbEvent.altKey) || (isEnterKey && kbEvent.ctrlKey)
             || (isSKey && kbEvent.ctrlKey));
 
-        if (!this.getRows().length && !isInsertKey) {
+        if (!this.rows.length && !isInsertKey) {
             return;
         }
 
@@ -165,8 +165,8 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         let editRow: Row;
         editRow = (row ? row : hoveredRows && hoveredRows.length
             ? this.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
-            : this.getSelectedRows().length ? this.getSelectedRows().shift()
-                : this.getRows().shift());
+            : this.selectedRows.length ? this.selectedRows.shift()
+                : this.rows.shift());
         if (editRow) {
             this.editCellByIndex(editRow.index, columnIndex);
         }
@@ -178,8 +178,8 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     private cancelEditMode(row?: Row) {
         let cancelRows: Row[];
-        cancelRows = (row ? [row] : this.getSelectedRows().length
-            ? this.getSelectedRows() : this.getRows());
+        cancelRows = (row ? [row] : this.selectedRows.length
+            ? this.selectedRows : this.rows);
         if (cancelRows && cancelRows.length) {
             this.cancelEditRows(cancelRows);
             cancelRows.forEach(r => {
@@ -199,8 +199,8 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     private saveData(row?: Row) {
         let saveRows: Row[];
-        saveRows = (row ? [row] : this.getSelectedRows().length
-            ? this.getSelectedRows() : this.getRows());
+        saveRows = (row ? [row] : this.selectedRows.length
+            ? this.selectedRows : this.rows);
         if (saveRows && saveRows.length) {
             this.saveRows(saveRows);
         }
@@ -217,7 +217,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         let delRow: Row;
         delRow = (row ? row : hoveredRows && hoveredRows.length
             ? this.getRowByIndex(hoveredRows.item(0).rowIndex - 1)
-            : this.getSelectedRows().length ? this.getSelectedRows().shift() : undefined);
+            : this.selectedRows.length ? this.selectedRows.shift() : undefined);
         if (delRow) {
             this.deleteRowByIndex(delRow.index);
         }
@@ -266,7 +266,7 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
      */
     protected setSearchComponent(componentType: Type<any>): any {
         let viewContainerRef: ViewContainerRef;
-        viewContainerRef = this.getSearchViewContainerComponent();
+        viewContainerRef = this.searchViewContainerComponent;
         return super.createComponentAt(viewContainerRef, componentType);
     }
 }

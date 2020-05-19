@@ -53,7 +53,7 @@ export abstract class AppTableFlipComponent<
      * Get a boolean value indicating whether creating back-component at start-up
      * @return true (default) for creating; else false
      */
-    protected fulfillComponentsAtStartup(): boolean {
+    protected get fulfillComponentsAtStartup(): boolean {
         return false;
     }
 
@@ -132,15 +132,15 @@ export abstract class AppTableFlipComponent<
         super.ngAfterViewInit();
 
         // listener
-        if (super.getFrontComponent()) {
-            (<AppSmartTableComponent<D>>super.getFrontComponent())
+        if (this.frontComponent) {
+            (<AppSmartTableComponent<D>>this.frontComponent)
                 .setNewItemListener($event => {
                     this._selectedModel = null;
                     this.ensureBackComponent();
                     this.onNewData($event);
                     this.setFlipped(true);
                 });
-            (<AppSmartTableComponent<D>>super.getFrontComponent())
+            (<AppSmartTableComponent<D>>this.frontComponent)
                 .setEditItemListener($event => {
                     this._selectedModel = ($event && $event.data
                         && $event.data['row'] instanceof Row
@@ -149,7 +149,7 @@ export abstract class AppTableFlipComponent<
                     this.onEditData($event);
                     this.setFlipped(true);
                 });
-            (<AppSmartTableComponent<D>>super.getFrontComponent())
+            (<AppSmartTableComponent<D>>this.frontComponent)
                 .setDeleteItemListener($event => {
                     this._selectedModel = ($event && $event.data
                     && $event.data['row'] instanceof Row

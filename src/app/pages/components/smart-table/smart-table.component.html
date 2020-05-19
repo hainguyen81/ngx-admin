@@ -1,5 +1,5 @@
-<nb-card [class.p-0]="!isShowHeader()" [class.m-0]="!isShowHeader()" class="ngx-smart-table-panel">
-    <nb-card-header *ngIf="isShowHeader()" class="ngx-smart-table-panel-header">
+<nb-card [class.p-0]="!isShowHeader" [class.m-0]="!isShowHeader" class="ngx-smart-table-panel">
+    <nb-card-header *ngIf="isShowHeader" class="ngx-smart-table-panel-header">
         <div class="form-group row has-search m-md-auto">
             <label for="search" class="col-form-label">{{tableHeader | translate}}</label>
             <div class="col-sm-5">
@@ -7,21 +7,21 @@
                 <input type="search" #search id="search"
                        [placeholder]="'common.search.placeholder' | translate"
                        class="form-control nb-search pt-0 py-0"
-                       [disabled]="isInEditMode()"
+                       [disabled]="isInEditMode"
                        (keydown.enter)="onSearch({ data: search.value })">
             </div>
         </div>
     </nb-card-header>
 
-    <nb-card-body [class.p-0]="!isShowHeader()" [class.m-0]="!isShowHeader()" class="ngx-smart-table-panel-body">
+    <nb-card-body [class.p-0]="!isShowHeader" [class.m-0]="!isShowHeader" class="ngx-smart-table-panel-body">
         <div class="search-form" [class.d-table]="true" [class.w-100]="true" [class.mb-1]="true"
-             *ngIf="isShowSearch() && getSearchViewContainerComponent().length">
+             *ngIf="isShowSearch && searchViewContainerComponent.length">
             <ng-template #searchHolder></ng-template>
         </div>
         <div class="smart-table" [class.d-table]="true" [class.w-100]="true">
             <ng2-smart-table
                 #smartTableComponent
-                [settings]="getTableSettings()"
+                [settings]="config"
                 [source]="getDataSource()"
                 (rowSelect)="onRowSelect({ data: $event })"
                 (userRowSelect)="onUserRowSelect( { data: $event })"

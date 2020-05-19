@@ -132,7 +132,7 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
      * Create new Row
      */
     protected newRow() {
-        if (this.newItemDelegate && !this.isInEditMode()) {
+        if (this.newItemDelegate && !this.isInEditMode) {
             this.newItemDelegate.apply(this, [{}]);
 
         } else {

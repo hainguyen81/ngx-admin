@@ -95,17 +95,17 @@ export abstract class AppTableFlipFormComponent<
     // FUNCTIONS
     // -------------------------------------------------
 
-    protected isDataChanged(): boolean {
-        return this.getBackComponent().getFormGroup().dirty;
+    protected get isDataChanged(): boolean {
+        return this.backComponent.getFormGroup().dirty;
     }
 
     /**
      * Perform saving data
      */
     protected doSave(): void {
-        if (!this.getBackComponent().submit()) {
-            if (this.getToolbarComponent()) {
-                this.showError(this.getToolbarComponent().getToolbarHeader().title,
+        if (!this.backComponent.submit()) {
+            if (this.toolbarComponent) {
+                this.showError(this.toolbarComponent.getToolbarHeader().title,
                     'common.form.invalid_data');
             } else {
                 this.showError('app', 'common.form.invalid_data');
@@ -114,7 +114,7 @@ export abstract class AppTableFlipFormComponent<
         }
 
         // update model if necessary
-        const model: T = this.getBackComponent().getModel();
+        const model: T = this.backComponent.getModel();
         if (!(model.id || '').length) {
             model.id = IdGenerators.oid.generate();
         }
@@ -129,7 +129,7 @@ export abstract class AppTableFlipFormComponent<
     protected doReset(): void {
         const cloned: T = DeepCloner(this.selectedModel);
         delete cloned['parent'], cloned['children'];
-        this.getBackComponent().setModel(cloned);
+        this.backComponent.setModel(cloned);
     }
 
     /**
@@ -141,10 +141,10 @@ export abstract class AppTableFlipFormComponent<
             color: 'warn',
             content: this.translate('common.toast.confirm.delete.message'),
             okButton: this.translate('common.toast.confirm.delete.ok'),
-            title: (!this.getToolbarComponent() ? this.translate('app')
-                : this.translate(this.getToolbarComponent().getToolbarHeader().title)),
+            title: (!this.toolbarComponent ? this.translate('app')
+                : this.translate(this.toolbarComponent.getToolbarHeader().title)),
         }).toPromise().then(value => {
-            value && this.getDataSource().remove(this.getBackComponent().getModel())
+            value && this.getDataSource().remove(this.backComponent.getModel())
                 .then(() => { this.showDeleteDataSuccess(); this.doBack(); })
                 .catch(() => this.showSaveDataError());
         });

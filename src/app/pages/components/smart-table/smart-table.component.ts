@@ -37,7 +37,7 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
 
     @ViewChildren('searchHolder', {read: ViewContainerRef})
     private readonly querySearchViewContainerRef: QueryList<ViewContainerRef>;
-    private searchViewContainerRef: ViewContainerRef;
+    private _searchViewContainerRef: ViewContainerRef;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -47,7 +47,7 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return true;
     }
 
@@ -55,7 +55,7 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      * Get a boolean value indicating whether showing panel search
      * @return true (default) for showing; else false
      */
-    protected isShowSearch(): boolean {
+    protected get isShowSearch(): boolean {
         return false;
     }
 
@@ -63,8 +63,8 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      * Get the {ViewContainerRef} instance of header panel
      * @return the {ViewContainerRef} instance of header panel
      */
-    protected getSearchViewContainerComponent(): ViewContainerRef {
-        return this.searchViewContainerRef;
+    protected get searchViewContainerComponent(): ViewContainerRef {
+        return this._searchViewContainerRef;
     }
 
     // -------------------------------------------------
@@ -118,8 +118,8 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.searchViewContainerRef) {
-            this.searchViewContainerRef = ComponentUtils.queryComponent(this.querySearchViewContainerRef);
+        if (!this._searchViewContainerRef) {
+            this._searchViewContainerRef = ComponentUtils.queryComponent(this.querySearchViewContainerRef);
         }
     }
 }

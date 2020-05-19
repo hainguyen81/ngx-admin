@@ -82,7 +82,7 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      */
     protected setToolbarComponent(componentType: Type<any>): any {
         let viewContainerRef: ViewContainerRef;
-        viewContainerRef = this.getHeaderViewContainerComponent();
+        viewContainerRef = this.headerViewContainerComponent;
         return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 
@@ -93,7 +93,7 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      */
     protected setFrontComponent(componentType: Type<any>): any {
         let viewContainerRef: ViewContainerRef;
-        viewContainerRef = this.getCardFrontComponentViewContainerRef() || this.getFrontComponentViewContainerRef();
+        viewContainerRef = this.cardFrontComponentViewContainerRef || this.frontComponentViewContainerRef;
         return super.createComponentAt(viewContainerRef, componentType);
     }
 
@@ -104,7 +104,7 @@ export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFli
      */
     protected setBackComponent(componentType: Type<any>): any {
         let viewContainerRef: ViewContainerRef;
-        viewContainerRef = this.getCardBackComponentViewContainerRef() || this.getBackComponentViewContainerRef();
+        viewContainerRef = this.cardBackComponentViewContainerRef || this.backComponentViewContainerRef;
         return super.createComponentAt(viewContainerRef, componentType);
     }
 }

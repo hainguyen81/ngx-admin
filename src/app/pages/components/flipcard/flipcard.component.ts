@@ -41,23 +41,23 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
 
     @ViewChildren('cardFrontComponent', {read: ViewContainerRef})
     private readonly queryCardFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
-    private cardFrontComponentHolderViewContainerRef: ViewContainerRef;
+    private _cardFrontComponentHolderViewContainerRef: ViewContainerRef;
 
     @ViewChildren('frontComponent', {read: ViewContainerRef})
     private readonly queryFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
-    private frontComponentHolderViewContainerRef: ViewContainerRef;
+    private _frontComponentHolderViewContainerRef: ViewContainerRef;
 
     @ViewChildren('cardBackComponent', {read: ViewContainerRef})
     private readonly queryCardBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
-    private cardBackComponentHolderViewContainerRef: ViewContainerRef;
+    private _cardBackComponentHolderViewContainerRef: ViewContainerRef;
 
     @ViewChildren('backComponent', {read: ViewContainerRef})
     private readonly queryBackComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
-    private backComponentHolderViewContainerRef: ViewContainerRef;
+    private _backComponentHolderViewContainerRef: ViewContainerRef;
 
     @ViewChildren('headerHolder', {read: ViewContainerRef})
     private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
-    private headerViewContainerRef: ViewContainerRef;
+    private _headerViewContainerRef: ViewContainerRef;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -67,7 +67,7 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -75,40 +75,40 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
      * Get the {ViewContainerRef} instance of header panel
      * @return the {ViewContainerRef} instance of header panel
      */
-    protected getHeaderViewContainerComponent(): ViewContainerRef {
-        return this.headerViewContainerRef;
+    protected get headerViewContainerComponent(): ViewContainerRef {
+        return this._headerViewContainerRef;
     }
 
     /**
      * Get the {ViewContainerRef} instance of the front component
      * @return the {ViewContainerRef} instance of the front component
      */
-    protected getCardFrontComponentViewContainerRef(): ViewContainerRef {
-        return this.cardFrontComponentHolderViewContainerRef;
+    protected get cardFrontComponentViewContainerRef(): ViewContainerRef {
+        return this._cardFrontComponentHolderViewContainerRef;
     }
 
     /**
      * Get the {ViewContainerRef} instance of the front component
      * @return the {ViewContainerRef} instance of the front component
      */
-    protected getFrontComponentViewContainerRef(): ViewContainerRef {
-        return this.frontComponentHolderViewContainerRef;
+    protected get frontComponentViewContainerRef(): ViewContainerRef {
+        return this._frontComponentHolderViewContainerRef;
     }
 
     /**
      * Get the {ViewContainerRef} instance of the back component
      * @return the {ViewContainerRef} instance of the back component
      */
-    protected getCardBackComponentViewContainerRef(): ViewContainerRef {
-        return this.cardBackComponentHolderViewContainerRef;
+    protected get cardBackComponentViewContainerRef(): ViewContainerRef {
+        return this._cardBackComponentHolderViewContainerRef;
     }
 
     /**
      * Get the {ViewContainerRef} instance of the back component
      * @return the {ViewContainerRef} instance of the back component
      */
-    protected getBackComponentViewContainerRef(): ViewContainerRef {
-        return this.backComponentHolderViewContainerRef;
+    protected get backComponentViewContainerRef(): ViewContainerRef {
+        return this._backComponentHolderViewContainerRef;
     }
 
     // -------------------------------------------------
@@ -163,24 +163,24 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.headerViewContainerRef) {
-            this.headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
+        if (!this._headerViewContainerRef) {
+            this._headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
         }
-        if (!this.cardFrontComponentHolderViewContainerRef) {
-            this.cardFrontComponentHolderViewContainerRef =
+        if (!this._cardFrontComponentHolderViewContainerRef) {
+            this._cardFrontComponentHolderViewContainerRef =
                 ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);
         }
-        if (!this.cardBackComponentHolderViewContainerRef) {
-            this.cardBackComponentHolderViewContainerRef =
+        if (!this._cardBackComponentHolderViewContainerRef) {
+            this._cardBackComponentHolderViewContainerRef =
                 ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef);
         }
 
-        if (!this.frontComponentHolderViewContainerRef) {
-            this.frontComponentHolderViewContainerRef =
+        if (!this._frontComponentHolderViewContainerRef) {
+            this._frontComponentHolderViewContainerRef =
                 ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef);
         }
-        if (!this.backComponentHolderViewContainerRef) {
-            this.backComponentHolderViewContainerRef =
+        if (!this._backComponentHolderViewContainerRef) {
+            this._backComponentHolderViewContainerRef =
                 ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
         }
     }

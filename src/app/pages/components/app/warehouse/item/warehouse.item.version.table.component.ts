@@ -160,7 +160,7 @@ export class WarehouseItemVersionSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -224,9 +224,9 @@ export class WarehouseItemVersionSmartTableComponent
             router, activatedRoute);
         warehouseItemVersionDatasource
         || throwError('Could not inject WarehouseItemVersionDatasource instance');
-        super.setTableHeader('warehouse.item.title');
-        super.setTableSettings(WarehouseItemVersionTableSettings);
-        super.setContextMenu(WarehouseItemVersionContextMenu);
+        this.tableHeader = 'warehouse.item.title';
+        this.config = WarehouseItemVersionTableSettings;
+        this.setContextMenu(WarehouseItemVersionContextMenu);
     }
 
     // -------------------------------------------------

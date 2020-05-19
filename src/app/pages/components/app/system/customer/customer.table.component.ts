@@ -138,7 +138,7 @@ export class CustomerSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -186,9 +186,9 @@ export class CustomerSmartTableComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
-        super.setTableHeader('system.customer.title');
-        super.setTableSettings(CustomerTableSettings);
-        super.setContextMenu(CustomerContextMenu);
+        this.tableHeader = 'system.customer.title';
+        this.config = CustomerTableSettings;
+        this.setContextMenu(CustomerContextMenu);
     }
 
     doSearch(keyword: any): void {
@@ -207,7 +207,7 @@ export class CustomerSmartTableComponent
     ngOnInit(): void {
         super.ngOnInit();
 
-        const settings: any = this.getTableSettings();
+        const settings: any = this.config;
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',

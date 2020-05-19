@@ -46,9 +46,9 @@ export abstract class AppFlipcardComponent<
     // DECLARATION
     // -------------------------------------------------
 
-    private toolbarComponent: TB;
-    private frontComponent: F;
-    private backComponent: B;
+    private _toolbarComponent: TB;
+    private _frontComponent: F;
+    private _backComponent: B;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -57,28 +57,28 @@ export abstract class AppFlipcardComponent<
     /**
      * Get the special toolbar action identities that need to be visible on front
      */
-    protected visibleSpecialActionsOnFront(): String[] {
+    protected get visibleSpecialActionsOnFront(): String[] {
         return [];
     }
 
     /**
      * Get the special toolbar action identities that need to be visible on front
      */
-    protected visibleSpecialActionsOnBack(): String[] {
+    protected get visibleSpecialActionsOnBack(): String[] {
         return [];
     }
 
     /**
      * Get the toolbar action identities that need to be visible on front
      */
-    protected visibleActionsOnFront(): String[] {
+    protected get visibleActionsOnFront(): String[] {
         return [];
     }
 
     /**
      * Get the toolbar action identities that need to be visible on back
      */
-    protected visibleActionsOnBack(): String[] {
+    protected get visibleActionsOnBack(): String[] {
         return [];
     }
 
@@ -86,7 +86,7 @@ export abstract class AppFlipcardComponent<
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return true;
     }
 
@@ -94,7 +94,7 @@ export abstract class AppFlipcardComponent<
      * Get a boolean value indicating whether creating back-component at start-up
      * @return true (default) for creating; else false
      */
-    protected fulfillComponentsAtStartup(): boolean {
+    protected get fulfillComponentsAtStartup(): boolean {
         return true;
     }
 
@@ -102,24 +102,33 @@ export abstract class AppFlipcardComponent<
      * Get the toolbar {AppToolbarComponent} instance
      * @return the toolbar {AppToolbarComponent} instance
      */
-    protected getToolbarComponent(): TB {
-        return this.toolbarComponent;
+    protected get toolbarComponent(): TB {
+        return this._toolbarComponent;
     }
 
     /**
      * Get the front-flip {AbstractComponent} instance
      * @return the front-flip {AbstractComponent} instance
      */
-    protected getFrontComponent(): F {
-        return this.frontComponent;
+    protected get frontComponent(): F {
+        return this._frontComponent;
     }
 
     /**
      * Get the back-flip {AbstractComponent} instance
      * @return the back-flip {AbstractComponent} instance
      */
-    protected getBackComponent(): B {
-        return this.backComponent;
+    protected get backComponent(): B {
+        return this._backComponent;
+    }
+
+    /**
+     * Get a boolean value indicating data that has been changed to shown confirmation dialog while back flip
+     * TODO Children classes should override this method
+     * @return true for changed; else false
+     */
+    protected get isDataChanged(): boolean {
+        return false;
     }
 
     // -------------------------------------------------
@@ -216,7 +225,7 @@ export abstract class AppFlipcardComponent<
                 this.doDelete();
                 break;
             case ACTION_BACK:
-                if (this.isDataChanged()) {
+                if (this.isDataChanged) {
                     let popupConfig: ConfirmPopupConfig;
                     popupConfig = {
                         title: this.translate('app'),
@@ -265,30 +274,21 @@ export abstract class AppFlipcardComponent<
     private createFlipComponents(): void {
         // create table component
         const _this: AppFlipcardComponent<D, TB, F, B> = this;
-        this.toolbarComponent = super.setToolbarComponent(this.toolbarComponentType);
-        this.toolbarComponent
-        && this.toolbarComponent.actionListener()
+        this._toolbarComponent = super.setToolbarComponent(this.toolbarComponentType);
+        this._toolbarComponent
+        && this._toolbarComponent.actionListener()
             .subscribe($event => _this.onClickAction($event));
-        this.frontComponent = super.setFrontComponent(this.frontComponentType);
-        this.fulfillComponentsAtStartup() && this.ensureBackComponent();
+        this._frontComponent = super.setFrontComponent(this.frontComponentType);
+        this.fulfillComponentsAtStartup && this.ensureBackComponent();
     }
 
     /**
      * Ensure back-component whether has been created
      */
     protected ensureBackComponent(): void {
-        if (!this.backComponent) {
-            this.backComponent = super.setBackComponent(this.backComponentType);
+        if (!this._backComponent) {
+            this._backComponent = super.setBackComponent(this.backComponentType);
         }
-    }
-
-    /**
-     * Get a boolean value indicating data that has been changed to shown confirmation dialog while back flip
-     * TODO Children classes should override this method
-     * @return true for changed; else false
-     */
-    protected isDataChanged(): boolean {
-        return false;
     }
 
     /**
@@ -323,26 +323,26 @@ export abstract class AppFlipcardComponent<
      * Apply toolbar actions settings while flipping
      */
     protected doToolbarActionsSettingsOnFlipped() {
-        if (isNullOrUndefined(this.getToolbarComponent())) return;
+        if (isNullOrUndefined(this.toolbarComponent)) return;
 
-        this.getToolbarComponent().showActions = true;
-        const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
+        this.toolbarComponent.showActions = true;
+        const actions: IToolbarActionsConfig[] = this.toolbarComponent.getActions();
         (actions || []).forEach(action => {
             switch (action.id) {
                 // special actions, then default not visible
                 case ACTION_DELETE_DATABASE:
                 case ACTION_IMPORT: {
                     action.visible = (!super.isFlipped()
-                        && this.visibleSpecialActionsOnFront().contains(action.id));
+                        && this.visibleSpecialActionsOnFront.contains(action.id));
                     break;
                 }
                 default: {
                     if (super.isFlipped()) {
-                        action.visible = this.visibleActionsOnBack().contains(action.id)
-                            || this.visibleSpecialActionsOnBack().contains(action.id);
+                        action.visible = this.visibleActionsOnBack.contains(action.id)
+                            || this.visibleSpecialActionsOnBack.contains(action.id);
                     } else {
-                        action.visible = this.visibleActionsOnFront().contains(action.id)
-                            || this.visibleActionsOnFront().contains(action.id);
+                        action.visible = this.visibleActionsOnFront.contains(action.id)
+                            || this.visibleActionsOnFront.contains(action.id);
                     }
                     break;
                 }

@@ -107,7 +107,7 @@ export class GeneralSettingsSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected isShowHeader(): boolean {
+    protected get isShowHeader(): boolean {
         return false;
     }
 
@@ -159,8 +159,8 @@ export class GeneralSettingsSmartTableComponent
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
         _moduleDatasource || throwError('Could not inject ModuleDatasource instance');
-        super.setTableHeader('system.general.settings.title');
-        super.setTableSettings(GeneralSettingsTableSettings);
+        this.tableHeader = 'system.general.settings.title';
+        this.config = GeneralSettingsTableSettings;
         super.setContextMenu(GeneralSettingsContextMenu);
     }
 
@@ -179,7 +179,7 @@ export class GeneralSettingsSmartTableComponent
     ngOnInit(): void {
         super.ngOnInit();
 
-        const settings: any = this.getTableSettings();
+        const settings: any = this.config;
         settings['columns']['module_code']['valuePrepareFunction'] =
             value => this.translateModuleColumn(settings, value);
         settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);

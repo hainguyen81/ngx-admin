@@ -56,11 +56,11 @@ export class UserComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected visibleSpecialActionsOnFront(): String[] {
+    protected get visibleSpecialActionsOnFront(): String[] {
         return [ACTION_IMPORT];
     }
 
-    protected visibleActionsOnBack(): String[] {
+    protected get visibleActionsOnBack(): String[] {
         return [ACTION_DELETE, ACTION_RESET, ACTION_SAVE, ACTION_BACK];
     }
 
@@ -143,7 +143,7 @@ export class UserComponent
             null, null, null, null,
             null, null, null, null,
             null, null, null, null);
-        super.getBackComponent().setModel(newInst);
+        super.backComponent.setModel(newInst);
     }
 
     protected onEditData($event: IEvent): void {
@@ -152,7 +152,7 @@ export class UserComponent
     }
     protected onEditUser(user: IUser) {
         !user && this.showGlobalError();
-        user && super.getBackComponent().setModel(user);
+        user && super.backComponent.setModel(user);
         user && super.setFlipped(true);
     }
 

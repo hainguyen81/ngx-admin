@@ -38,15 +38,15 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
 
     @ViewChildren(NbFlipCardComponent)
     private readonly queryFlipcardComponent: QueryList<NbFlipCardComponent>;
-    private flipcardComponent: NbFlipCardComponent;
+    private _flipcardComponent: NbFlipCardComponent;
 
     @ViewChildren(NbCardFrontComponent)
     private readonly queryFlipcardFrontComponent: QueryList<NbCardFrontComponent>;
-    private flipcardFrontComponent: NbCardFrontComponent;
+    private _flipcardFrontComponent: NbCardFrontComponent;
 
     @ViewChildren(NbCardBackComponent)
     private readonly queryFlipcardBackComponent: QueryList<NbCardBackComponent>;
-    private flipcardBackComponent: NbCardBackComponent;
+    private _flipcardBackComponent: NbCardBackComponent;
 
     // raise when flipping
     @Output() protected onFlipped: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -59,24 +59,24 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * Get the {NbFlipCardComponent} instance
      * @return the {NbFlipCardComponent} instance
      */
-    protected getFlipcardComponent(): NbFlipCardComponent {
-        return this.flipcardComponent;
+    protected get flipcardComponent(): NbFlipCardComponent {
+        return this._flipcardComponent;
     }
 
     /**
      * Get the {NbCardFrontComponent} instance
      * @return the {NbCardFrontComponent} instance
      */
-    protected getFlipcardFrontComponent(): NbCardFrontComponent {
-        return this.flipcardFrontComponent;
+    protected get flipcardFrontComponent(): NbCardFrontComponent {
+        return this._flipcardFrontComponent;
     }
 
     /**
      * Get the {NbCardBackComponent} instance
      * @return the {NbCardBackComponent} instance
      */
-    protected getFlipcardBackComponent(): NbCardBackComponent {
-        return this.flipcardBackComponent;
+    protected get flipcardBackComponent(): NbCardBackComponent {
+        return this._flipcardBackComponent;
     }
 
     /**
@@ -86,13 +86,13 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
     public setFlipped(flipped?: boolean): void {
         if (this.flipped !== (flipped || false)) {
             this.flipped = flipped || false;
-            if (this.getFlipcardComponent()) {
-                this.getFlipcardComponent().flipped = this.flipped;
+            if (this.flipcardComponent) {
+                this.flipcardComponent.flipped = this.flipped;
             }
             this.onFlipped.emit({
                 data: {
-                    'front': this.getFlipcardFrontComponent(),
-                    'back': this.getFlipcardBackComponent(),
+                    'front': this.flipcardFrontComponent,
+                    'back': this.flipcardBackComponent,
                     'flipped': flipped,
                 },
             });
@@ -104,7 +104,7 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * @param flipped true for flipped; else false
      */
     public isFlipped(): boolean {
-        return (this.flipped || (this.getFlipcardComponent() && this.getFlipcardComponent().flipped));
+        return (this.flipped || (this.flipcardComponent && this.flipcardComponent.flipped));
     }
 
     /**
@@ -113,8 +113,8 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      */
     public setShowToggleButton(showToggleButton?: boolean): void {
         this.showToggleButton = showToggleButton || false;
-        if (this.getFlipcardComponent()) {
-            this.getFlipcardComponent().showToggleButton = this.showToggleButton;
+        if (this.flipcardComponent) {
+            this.flipcardComponent.showToggleButton = this.showToggleButton;
         }
     }
 
@@ -173,14 +173,14 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.flipcardComponent) {
-            this.flipcardComponent = ComponentUtils.queryComponent(this.queryFlipcardComponent);
+        if (!this._flipcardComponent) {
+            this._flipcardComponent = ComponentUtils.queryComponent(this.queryFlipcardComponent);
         }
-        if (!this.flipcardFrontComponent) {
-            this.flipcardFrontComponent = ComponentUtils.queryComponent(this.queryFlipcardFrontComponent);
+        if (!this._flipcardFrontComponent) {
+            this._flipcardFrontComponent = ComponentUtils.queryComponent(this.queryFlipcardFrontComponent);
         }
-        if (!this.flipcardBackComponent) {
-            this.flipcardBackComponent = ComponentUtils.queryComponent(this.queryFlipcardBackComponent);
+        if (!this._flipcardBackComponent) {
+            this._flipcardBackComponent = ComponentUtils.queryComponent(this.queryFlipcardBackComponent);
         }
     }
 }
