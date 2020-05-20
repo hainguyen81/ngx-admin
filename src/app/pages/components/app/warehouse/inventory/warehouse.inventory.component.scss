@@ -5,6 +5,10 @@
 		height: 100%;
 		nb-card.ngx-flipcard-pane {
 			height: 100%;
+			nb-card-body.ngx-flipcard-pane-body {
+				padding-left: 0;
+				padding-right: 0;
+			}
 		}
 	}
 }

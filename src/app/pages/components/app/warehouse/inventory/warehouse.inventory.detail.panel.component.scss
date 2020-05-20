@@ -6,14 +6,15 @@
 		nb-card.card-panel.inventory-detail-panel {
 			box-shadow: none;
 
-			nb-card-header.card-panel-header.inventory-detail-main-header,
-			nb-card-footer.card-panel-footer.inventory-detail-table-footer {
-				padding: 0;
-			}
-			nb-card-footer.card-panel-footer.inventory-detail-table-footer {
-				ngx-smart-table-app-warehouse-inventory-detail nb-card {
-					box-shadow: none;
+			@media screen and (min-width: 2048px) {
+				nb-card-header.card-panel-header.inventory-detail-main-header {
+					margin: auto;
+					max-width: 75%;
 				}
+			}
+
+			nb-card-footer.card-panel-footer.inventory-detail-table-footer {
+				padding: 1rem 1.25rem;
 			}
 		}
 	}

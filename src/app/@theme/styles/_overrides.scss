@@ -16,6 +16,10 @@
                     &.fixed {
                         top: 0;
                     }
+                    &.fixed ~ .layout-container nb-sidebar .main-container-fixed {
+                        top: 4.75rem;
+                        height: calc(100vh - 4.75rem);
+                    }
                 }
             }
         }
