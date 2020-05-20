@@ -369,4 +369,30 @@
     .mat-form-field.form-field-ngx-select-image .mat-form-field-infix {
         padding: 0.2775rem 0;
     }
+
+    /* smart table */
+    ng2-smart-table tr td {
+        ng2-smart-table-cell {
+            table-cell-edit-mode {
+                input:read-only,
+                input:disabled,
+                input[readonly='true'],
+                input[disabled='true'] {
+                    border: none !important;
+                }
+            }
+        }
+    }
+
+    /* HTML5 input number - Hide spin box */
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 }

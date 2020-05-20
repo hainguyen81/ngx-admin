@@ -10,8 +10,8 @@
     <input #barcodeInput
            matInput
            class="cell-editor-barcode text-center"
-           [disabled]="getConfigValue('disabled', false)"
-           [readonly]="getConfigValue('readonly', false)"
+           [disabled]="disabled"
+           [readonly]="readonly"
            type="number"
            [(ngModel)]="newCellValue"
            (ngModelChange)="onBarcodeChanged({ data: newCellValue })">

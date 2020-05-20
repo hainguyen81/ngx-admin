@@ -20,6 +20,9 @@
                 border-radius: 3px;
                 border: 1px solid rgb(162, 163, 165);
             }
+            input:read-only, input:disabled {
+                border: none;
+            }
             input {
                 min-height: 30px;
                 padding: 3px;
@@ -33,25 +36,25 @@
                     text-overflow: ellipsis;
                 }
                 &.item_code {
-                    min-width: 250px !important;
+                    width: 20% !important;
                 }
                 &.batches {
-                    min-width: 300px !important;
+                    width: 20% !important;
                 }
                 &.series {
-                    min-width: 120px !important;
-                }
-                &.batches {
-                    min-width: 300px !important;
+                    width: 10% !important;
                 }
                 &.storage {
-                    min-width: 250px !important;
+                    width: 20% !important;
                 }
                 &.quantity_orders {
-                    min-width: 100px !important;
+                    width: 10% !important;
                 }
                 &.unit_price {
-                    min-width: 150px !important;
+                    width: 10% !important;
+                }
+                &.amount {
+                    width: 10% !important;
                 }
             }
         }
@@ -66,6 +69,7 @@
                 min-height: 30px;
                 padding: 3px;
                 width: 100%;
+                font-weight: bolder;
             }
         }
     }

@@ -5,7 +5,10 @@ import {
     ComponentFactoryResolver,
     ComponentRef,
     ElementRef,
-    Inject, Input, OnDestroy, OnInit,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -49,7 +52,7 @@ import {
     AppMultilinguageLabelComponent,
 } from '../../module.components/common/app.multilinguage.label.component';
 import {Cell, LocalDataSource} from 'ng2-smart-table';
-import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
+import {BehaviorSubject, throwError} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
@@ -100,19 +103,7 @@ export const WarehouseInventoryDetailTableSettings = {
             editor: {
                 type: 'custom',
                 component: WarehouseInventoryDetailBatchNoCellComponent,
-                config: {
-                    cellChanged: (e: IEvent) => {
-                        const row: Row =
-                            (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const batches: IWarehouseInventoryDetailBatch[] =
-                            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
-                        if (!isNullOrUndefined(row) && !isNullOrUndefined(batches)) {
-                            const batchQuantities: number[] = [];
-                            batches.forEach(batch => batchQuantities.push(batch.quantity));
-                            row.getCells()[5].setValue(CalculatorUtils.plusMulti(...batchQuantities));
-                        }
-                    },
-                },
+                config: {},
             },
         },
         series: {
@@ -135,19 +126,7 @@ export const WarehouseInventoryDetailTableSettings = {
             editor: {
                 type: 'custom',
                 component: WarehouseInventoryDetailStorageCellComponent,
-                config: {
-                    cellChanged: (e: IEvent) => {
-                        const row: Row =
-                            (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const storages: IWarehouseInventoryDetailStorage[] =
-                            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailStorage[] : undefined);
-                        if (!isNullOrUndefined(row) && !isNullOrUndefined(storages)) {
-                            const storageQuantities: number[] = [];
-                            storages.forEach(storage => storageQuantities.push(storage.quantity));
-                            row.getCells()[5].setValue(CalculatorUtils.plusMulti(...storageQuantities));
-                        }
-                    },
-                },
+                config: {},
             },
         },
         unit_price: {
@@ -161,15 +140,6 @@ export const WarehouseInventoryDetailTableSettings = {
                 component: NumberCellComponent,
                 config: {
                     isCurrency: false,
-                    cellChanged: (e: IEvent) => {
-                        const row: Row =
-                            (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const unitPriceVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
-                        if (!isNullOrUndefined(row)) {
-                            const quantityCell: Cell = row.getCells()[5];
-                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityCell.newValue, unitPriceVal));
-                        }
-                    },
                 },
             },
         },
@@ -184,14 +154,18 @@ export const WarehouseInventoryDetailTableSettings = {
                 component: NumberCellComponent,
                 config: {
                     isCurrency: false,
-                    cellChanged: (e: IEvent) => {
-                        const row: Row =
-                            (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const quantityVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
-                        if (!isNullOrUndefined(row)) {
-                            const unitPriceCell: Cell = row.getCells()[4];
-                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityVal, unitPriceCell.newValue));
-                        }
+                    readonly: (cell: Cell, row: Row, rowData: IWarehouseInventoryDetail, config: any) => {
+                        const batchesCell: Cell = row.cells[1];
+                        const storagesCell: Cell = row.cells[3];
+                        const batches: IWarehouseInventoryDetailBatch[] = batchesCell.newValue;
+                        const storages: IWarehouseInventoryDetailBatch[] = storagesCell.newValue;
+                        const anyBatch: IWarehouseInventoryDetailBatch =
+                            (batches || []).find(
+                                batch => !isNullOrUndefined(batch.quantity) && batch.quantity > 0);
+                        const anyStorage: IWarehouseInventoryDetailStorage =
+                            (storages || []).find(
+                                storage => !isNullOrUndefined(storage.quantity) && storage.quantity > 0);
+                        return (!isNullOrUndefined(anyBatch) || !isNullOrUndefined(anyStorage));
                     },
                 },
             },
@@ -204,6 +178,7 @@ export const WarehouseInventoryDetailTableSettings = {
             renderComponent: NumberCellComponent,
             config: {
                 isCurrency: false,
+                readonly: true,
             },
             editor: {
                 type: 'custom',
@@ -383,6 +358,82 @@ export class WarehouseInventoryDetailSmartTableComponent
         super.ngAfterViewInit();
     }
 
+    /**
+     * Fire while batches cell data had been changed
+     * @param e {IEvent}
+     */
+    protected onBatchCellChanged(e: IEvent) {
+        const row: Row =
+            (e &&  e.data ? e.data['row'] as Row : undefined);
+        const batches: IWarehouseInventoryDetailBatch[] =
+            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
+        if (!isNullOrUndefined(row) && !isNullOrUndefined(batches)) {
+            const batchQuantities: number[] = [];
+            batches.forEach(batch => batchQuantities.push(batch.quantity));
+            const quantityCell: Cell = row.cells[5];
+            quantityCell.setValue(CalculatorUtils.plusMulti(...batchQuantities));
+            const unitPriceCell: Cell = row.cells[4];
+            const amountCell: Cell = row.cells[6];
+            amountCell.setValue(CalculatorUtils.multiply(
+                quantityCell.newValue, unitPriceCell.newValue));
+        }
+        this.__calculateFooterSummary();
+    }
+
+    /**
+     * Fire while storages cell data had been changed
+     * @param e {IEvent}
+     */
+    protected onStorageCellChanged(e: IEvent) {
+        const row: Row =
+            (e &&  e.data ? e.data['row'] as Row : undefined);
+        const storages: IWarehouseInventoryDetailStorage[] =
+            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailStorage[] : undefined);
+        if (!isNullOrUndefined(row) && !isNullOrUndefined(storages)) {
+            const storageQuantities: number[] = [];
+            storages.forEach(storage => storageQuantities.push(storage.quantity));
+            const quantityCell: Cell = row.cells[5];
+            quantityCell.setValue(CalculatorUtils.plusMulti(...storageQuantities));
+            const unitPriceCell: Cell = row.cells[4];
+            const amountCell: Cell = row.cells[6];
+            amountCell.setValue(CalculatorUtils.multiply(
+                quantityCell.newValue, unitPriceCell.newValue));
+        }
+        this.__calculateFooterSummary();
+    }
+
+    /**
+     * Fire while unit-prices cell data had been changed
+     * @param e {IEvent}
+     */
+    protected onUnitPriceCellChanged(e: IEvent) {
+        const row: Row =
+            (e &&  e.data ? e.data['row'] as Row : undefined);
+        const unitPriceVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
+        if (!isNullOrUndefined(row)) {
+            const quantityCell: Cell = row.cells[5];
+            const amountCell: Cell = row.cells[6];
+            amountCell.setValue(CalculatorUtils.multiply(quantityCell.newValue, unitPriceVal));
+        }
+        this.__calculateFooterSummary();
+    }
+
+    /**
+     * Fire while quantities cell data had been changed
+     * @param e {IEvent}
+     */
+    protected onQuantityCellChanged(e: IEvent) {
+        const row: Row =
+            (e &&  e.data ? e.data['row'] as Row : undefined);
+        const quantityVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
+        if (!isNullOrUndefined(row)) {
+            const unitPriceCell: Cell = row.cells[4];
+            const amountCell: Cell = row.cells[6];
+            amountCell.setValue(CalculatorUtils.multiply(quantityVal, unitPriceCell.newValue));
+        }
+        this.__calculateFooterSummary();
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
@@ -418,23 +469,15 @@ export class WarehouseInventoryDetailSmartTableComponent
         // first summary row
         let rowIndex: number = 0;
         let cell: HTMLTableCellElement = rows[rowIndex].insertCell(0);
-        cell.colSpan = 4;
-        cell = rows[rowIndex].insertCell(1);
+        cell.colSpan = 5;
         this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), AppMultilinguageLabelComponent, {
                 innerHtml: 'warehouse.inventory.detail.table.summary',
                 componentClass: 'inventory-sum-label',
             }, cell);
-        cell = rows[rowIndex].insertCell(2);
+        cell = rows[rowIndex].insertCell(1);
+        cell.colSpan = 2;
         this._sumQuantityComponent = this.injectionService.appendComponentByFactory(
-            this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
-                isCurrency: false,
-                componentClass: 'inventory-sum-quantity',
-                summaryColumn: 4,
-                tableComponent: this.tableComponent,
-            }, cell);
-        cell = rows[rowIndex].insertCell(3);
-        this._sumPriceComponent = this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
                 isCurrency: false,
                 componentClass: 'inventory-sum-price',
@@ -445,21 +488,80 @@ export class WarehouseInventoryDetailSmartTableComponent
         // second summary row
         rowIndex++;
         cell = rows[rowIndex].insertCell(0);
-        cell.colSpan = 4;
-        cell = rows[rowIndex].insertCell(1);
+        cell.colSpan = 5;
         this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), AppMultilinguageLabelComponent, {
                 innerHtml: 'warehouse.inventory.detail.table.total',
                 componentClass: 'inventory-sum-label',
             }, cell);
-        cell = rows[rowIndex].insertCell(2);
+        cell = rows[rowIndex].insertCell(1);
         cell.colSpan = 2;
-        this._sumQuantityComponent = this.injectionService.appendComponentByFactory(
+        this._sumPriceComponent = this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
                 isCurrency: false,
                 componentClass: 'inventory-total-quantity',
                 summaryColumn: 5,
                 tableComponent: this.tableComponent,
             }, cell);
+    }
+
+    /**
+     * Calculate the footer summary cell
+     * @private
+     */
+    private __calculateFooterSummary() {
+        const rows: Row[] = this.rows;
+        const quantities: number[] = [];
+        const prices: number[] = [];
+        (rows || []).forEach(row => {
+            const rowData: IWarehouseInventoryDetail =
+                (row.isInEditing ? row.getNewData() as IWarehouseInventoryDetail
+                    : row.getData() as IWarehouseInventoryDetail);
+            if (!isNullOrUndefined(rowData)) {
+                quantities.push(rowData.quantity_orders);
+                prices.push(rowData.amount);
+            }
+        });
+        this._sumQuantityComponent.instance.value = CalculatorUtils.plusMulti(...quantities);
+        this._sumPriceComponent.instance.value = CalculatorUtils.plusMulti(...prices);
+    }
+
+    /**
+     * Translate table settings
+     */
+    protected translateSettings(): void {
+        // translate as default
+        super.translateSettings();
+
+        // Attach `cellChanged` event into table settings
+        this.__attachCellChangedEventsSettings();
+    }
+
+    /**
+     * Attach `cellChanged` event into table settings
+     * @private
+     */
+    private __attachCellChangedEventsSettings() {
+        const settings: any = this.config;
+
+        settings['columns']['batches']['editor']['config'] =
+            (settings['columns']['batches']['editor']['config'] || {});
+        const batchesColumnConfig = settings['columns']['batches']['editor']['config'];
+        batchesColumnConfig['cellChanged'] = (e: IEvent) => this.onBatchCellChanged(e);
+
+        settings['columns']['storage']['editor']['config'] =
+            (settings['columns']['storage']['editor']['config'] || {});
+        const storagesColumnConfig = settings['columns']['storage']['editor']['config'];
+        storagesColumnConfig['cellChanged']  = (e: IEvent) => this.onStorageCellChanged(e);
+
+        settings['columns']['unit_price']['editor']['config'] =
+            (settings['columns']['unit_price']['editor']['config'] || {});
+        const pricesColumnConfig = settings['columns']['unit_price']['editor']['config'];
+        pricesColumnConfig['cellChanged']  = (e: IEvent) => this.onUnitPriceCellChanged(e);
+
+        settings['columns']['quantity_orders']['editor']['config'] =
+            (settings['columns']['quantity_orders']['editor']['config'] || {});
+        const quantitiesColumnConfig = settings['columns']['quantity_orders']['editor']['config'];
+        quantitiesColumnConfig['cellChanged']  = (e: IEvent) => this.onQuantityCellChanged(e);
     }
 }

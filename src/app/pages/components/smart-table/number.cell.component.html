@@ -2,8 +2,8 @@
     <input #serialInput
            matInput
            class="cell-editor-number text-right number-cell mr-sm-1"
-           [disabled]="getConfigValue('disabled', false)"
-           [readonly]="getConfigValue('readonly', false)"
+           [disabled]="disabled"
+           [readonly]="readonly"
            [class.currency]="isCurrency"
            type="number"
            [(ngModel)]="newCellValue"

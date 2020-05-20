@@ -1,5 +1,5 @@
 <nb-checkbox status="basic"
              [(ngModel)]="viewMode ? cellValue : newCellValue"
-             [disabled]="!viewMode && !getConfigValue('disabled', false) && !getConfigValue('readonly', false)"
+             [disabled]="disabled || readonly"
              (ngModelChange)="onCheckChanged({ data: newCellValue })"
 ></nb-checkbox>

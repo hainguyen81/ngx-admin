@@ -103,6 +103,8 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
         isSKey = KeyboardUtils.isSpecifiedKey(kbEvent, 'S', 's', S);
         let isDelKey: boolean;
         isDelKey = KeyboardUtils.isDeleteKey(kbEvent);
+        let needToDelete: boolean;
+        needToDelete = (isDelKey && kbEvent.ctrlKey);
         let isInsertKey: boolean;
         isInsertKey = KeyboardUtils.isInsertKey(kbEvent);
         let needToSave: boolean;
@@ -137,8 +139,8 @@ export abstract class BaseSmartTableComponent<T extends DataSource> extends Smar
             // stop firing event
             this.preventEvent(event.event as Event);
 
-            // delete row by [DELETE]
-        } else if (isDelKey) {
+            // delete row by [CTRL + DELETE]
+        } else if (needToDelete) {
             this.deleteData(actionRow);
 
             // stop firing event

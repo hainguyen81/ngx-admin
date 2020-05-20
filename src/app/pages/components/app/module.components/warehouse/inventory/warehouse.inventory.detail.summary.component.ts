@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Input,
     OnInit,
     Renderer2,
     ViewContainerRef,
@@ -43,6 +43,7 @@ export class WarehouseInventoryDetailSummaryComponent extends AbstractComponent
     private _summaryColumn: number;
     private _currency: boolean;
     private _componentClass: string;
+    private _value: number;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -80,8 +81,12 @@ export class WarehouseInventoryDetailSummaryComponent extends AbstractComponent
         this._summaryColumn = _summaryColumn;
     }
 
-    get total(): number {
-        return undefined;
+    @Input() get value(): number {
+        return (isNaN(this._value) ? undefined : this._value);
+    }
+
+    set value(_value: number) {
+        this._value = _value;
     }
 
     // -------------------------------------------------

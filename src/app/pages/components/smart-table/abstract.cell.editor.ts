@@ -173,6 +173,14 @@ export abstract class AbstractCellEditor extends DefaultEditor
     }
 
     /**
+     * Get the {Cell} array of the present {Row}
+     * @return the {Cell} array of the present {Row}
+     */
+    get cells(): Cell[] {
+        return (this.cellRow ? this.cellRow.getCells() : []);
+    }
+
+    /**
      * Get the current {Row} data
      * @return the current {Row} data
      */
@@ -290,6 +298,34 @@ export abstract class AbstractCellEditor extends DefaultEditor
      */
     protected cellChangedListener(): ((e: IEvent) => void) {
         return this.getConfigValue('cellChanged') as ((e: IEvent) => void);
+    }
+
+    /**
+     * Get a boolean value indicating the cell whether is disabled in edit mode
+     */
+    get disabled(): boolean {
+        if (this.viewMode) return true;
+        const disabledConfig: any = this.getConfigValue('disabled', false);
+        if (isNullOrUndefined(disabledConfig)) return false;
+        if (typeof disabledConfig === 'function') {
+            return (disabledConfig as Function).apply(this,
+                [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
+        }
+        return (disabledConfig === true);
+    }
+
+    /**
+     * Get a boolean value indicating the cell whether is readonly in edit mode
+     */
+    get readonly(): boolean {
+        if (this.viewMode) return true;
+        const readonlyConfig: any = this.getConfigValue('readonly', false);
+        if (isNullOrUndefined(readonlyConfig)) return false;
+        if (typeof readonlyConfig === 'function') {
+            return (readonlyConfig as Function).apply(this,
+                [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
+        }
+        return (readonlyConfig === true);
     }
 
     // -------------------------------------------------
