@@ -473,14 +473,14 @@ export class WarehouseInventoryDetailSmartTableComponent
         this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), AppMultilinguageLabelComponent, {
                 innerHtml: 'warehouse.inventory.detail.table.summary',
-                componentClass: 'inventory-sum-label',
+                componentClass: 'inventory-total-quantity-label',
             }, cell);
         cell = rows[rowIndex].insertCell(1);
         cell.colSpan = 2;
         this._sumQuantityComponent = this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
                 isCurrency: false,
-                componentClass: 'inventory-sum-price',
+                componentClass: 'inventory-total-quantity',
                 summaryColumn: 5,
                 tableComponent: this.tableComponent,
             }, cell);
@@ -492,14 +492,14 @@ export class WarehouseInventoryDetailSmartTableComponent
         this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), AppMultilinguageLabelComponent, {
                 innerHtml: 'warehouse.inventory.detail.table.total',
-                componentClass: 'inventory-sum-label',
+                componentClass: 'inventory-total-amount-label',
             }, cell);
         cell = rows[rowIndex].insertCell(1);
         cell.colSpan = 2;
         this._sumPriceComponent = this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), WarehouseInventoryDetailSummaryComponent, {
                 isCurrency: false,
-                componentClass: 'inventory-total-quantity',
+                componentClass: 'inventory-total-amount',
                 summaryColumn: 5,
                 tableComponent: this.tableComponent,
             }, cell);
