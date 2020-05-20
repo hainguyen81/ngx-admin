@@ -193,7 +193,8 @@ export abstract class AbstractCellEditor extends DefaultEditor
      * @return the current {Column#getConfig} instance
      */
     get cellColumnConfig(): any {
-        return (this.cellColumn ? this.cellColumn.getConfig() : undefined);
+        return (isNullOrUndefined(this.cellColumn)
+            ? {} : (this.cellColumn.getConfig() || this.cellColumn['config'] || {}));
     }
 
     /**

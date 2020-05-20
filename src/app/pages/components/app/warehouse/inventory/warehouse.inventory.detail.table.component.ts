@@ -94,6 +94,19 @@ export const WarehouseInventoryDetailTableSettings = {
             editor: {
                 type: 'custom',
                 component: WarehouseInventoryDetailBatchNoCellComponent,
+                config: {
+                    'cellChanged': (e: IEvent) => {
+                        const inventoryDetail: IWarehouseInventoryDetail =
+                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
+                        const batches: IWarehouseInventoryDetailBatch[] =
+                            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
+                        if (!isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(batches)) {
+                            const batchQuantities: number[] = [];
+                            batches.forEach(batch => batchQuantities.push(batch.quantity));
+                            inventoryDetail.quantity_orders = CalculatorUtils.plusMulti(batchQuantities);
+                        }
+                    },
+                },
             },
         },
         series: {
@@ -116,33 +129,19 @@ export const WarehouseInventoryDetailTableSettings = {
             editor: {
                 type: 'custom',
                 component: WarehouseInventoryDetailStorageCellComponent,
-            },
-        },
-        quantity_orders: {
-            title: 'warehouse.inventory.detail.table.quantity_orders',
-            type: 'custom',
-            sort: false,
-            filter: false,
-            renderComponent: NumberCellComponent,
-            config: {
-                isCurrency: false,
-                'cellChanged': (e: IEvent) => {
-                    const inventoryDetail: IWarehouseInventoryDetail =
-                        (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
-                    const batches: IWarehouseInventoryDetailBatch[] =
-                        (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
-                    if (!isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(batches)) {
-                        const batchQuantities: number[] = [];
-                        batches.forEach(batch => batchQuantities.push(batch.quantity));
-                        inventoryDetail.amount = CalculatorUtils.multiply(
-                            batchQuantities.reduce(CalculatorUtils.plus),
-                            inventoryDetail.unit_price);
-                    }
+                config: {
+                    'cellChanged': (e: IEvent) => {
+                        const inventoryDetail: IWarehouseInventoryDetail =
+                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
+                        const batches: IWarehouseInventoryDetailBatch[] =
+                            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
+                        if (!isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(batches)) {
+                            const batchQuantities: number[] = [];
+                            batches.forEach(batch => batchQuantities.push(batch.quantity));
+                            inventoryDetail.quantity_orders = CalculatorUtils.plusMulti(batchQuantities);
+                        }
+                    },
                 },
-            },
-            editor: {
-                type: 'custom',
-                component: NumberCellComponent,
             },
         },
         unit_price: {
@@ -151,25 +150,42 @@ export const WarehouseInventoryDetailTableSettings = {
             sort: false,
             filter: false,
             renderComponent: NumberCellComponent,
-            config: {
-                isCurrency: false,
-                'cellChanged': (e: IEvent) => {
-                    const inventoryDetail: IWarehouseInventoryDetail =
-                        (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
-                    const batches: IWarehouseInventoryDetailBatch[] =
-                        (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
-                    if (!isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(batches)) {
-                        const batchQuantities: number[] = [];
-                        batches.forEach(batch => batchQuantities.push(batch.quantity));
-                        inventoryDetail.amount = CalculatorUtils.multiply(
-                            batchQuantities.reduce(CalculatorUtils.plus),
-                            inventoryDetail.unit_price);
-                    }
-                },
-            },
             editor: {
                 type: 'custom',
                 component: NumberCellComponent,
+                config: {
+                    isCurrency: false,
+                    'cellChanged': (e: IEvent) => {
+                        const inventoryDetail: IWarehouseInventoryDetail =
+                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
+                        if (!isNullOrUndefined(inventoryDetail)) {
+                            inventoryDetail.amount = CalculatorUtils.multiply(
+                                inventoryDetail.quantity_orders, inventoryDetail.unit_price);
+                        }
+                    },
+                },
+            },
+        },
+        quantity_orders: {
+            title: 'warehouse.inventory.detail.table.quantity_orders',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            renderComponent: NumberCellComponent,
+            editor: {
+                type: 'custom',
+                component: NumberCellComponent,
+                config: {
+                    isCurrency: false,
+                    'cellChanged': (e: IEvent) => {
+                        const inventoryDetail: IWarehouseInventoryDetail =
+                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
+                        if (!isNullOrUndefined(inventoryDetail)) {
+                            inventoryDetail.amount = CalculatorUtils.multiply(
+                                inventoryDetail.quantity_orders, inventoryDetail.unit_price);
+                        }
+                    },
+                },
             },
         },
         amount: {
@@ -392,7 +408,7 @@ export class WarehouseInventoryDetailSmartTableComponent
         // first summary row
         let rowIndex: number = 0;
         let cell: HTMLTableCellElement = rows[rowIndex].insertCell(0);
-        cell.colSpan = 3;
+        cell.colSpan = 4;
         cell = rows[rowIndex].insertCell(1);
         this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), AppMultilinguageLabelComponent, {
@@ -419,7 +435,7 @@ export class WarehouseInventoryDetailSmartTableComponent
         // second summary row
         rowIndex++;
         cell = rows[rowIndex].insertCell(0);
-        cell.colSpan = 3;
+        cell.colSpan = 4;
         cell = rows[rowIndex].insertCell(1);
         this.injectionService.appendComponentByFactory(
             this.getFactoryResolver(), AppMultilinguageLabelComponent, {
