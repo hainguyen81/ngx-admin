@@ -49,6 +49,7 @@ import {throwError} from 'rxjs';
     styleUrls: [
         '../../../flipcard/flipcard.component.scss',
         '../../components/app.flipcard.component.scss',
+        './warehouse.inventory.component.scss',
     ],
 })
 export class WarehouseInventoryComponent

@@ -1,0 +1,20 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+	::ng-deep {
+		box-shadow: none;
+		nb-card.card-panel.inventory-detail-panel {
+			box-shadow: none;
+
+			nb-card-header.card-panel-header.inventory-detail-main-header,
+			nb-card-footer.card-panel-footer.inventory-detail-table-footer {
+				padding: 0;
+			}
+			nb-card-footer.card-panel-footer.inventory-detail-table-footer {
+				ngx-smart-table-app-warehouse-inventory-detail nb-card {
+					box-shadow: none;
+				}
+			}
+		}
+	}
+}

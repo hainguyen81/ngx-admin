@@ -1,0 +1,10 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+	::ng-deep {
+		height: 100%;
+		nb-card.ngx-flipcard-pane {
+			height: 100%;
+		}
+	}
+}

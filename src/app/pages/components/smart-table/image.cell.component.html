@@ -1,7 +1,7 @@
 <ngx-image-gallery #imageGallery
                    [showAlbum]="true"
                    [onlyPrimary]="true"
-                   [allowModified]="false"
+                   [allowModified]="!viewMode && !getConfigValue('disabled', false) && !getConfigValue('readonly', false)"
                    [images]="images">
 </ngx-image-gallery>
 <div [class.d-table-cell]="true"

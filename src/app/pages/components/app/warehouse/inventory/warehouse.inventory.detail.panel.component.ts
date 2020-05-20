@@ -36,6 +36,7 @@ import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse
         '../../../panel/panel.component.scss',
         '../../components/app.search.panel.component.scss',
         './warehouse.inventory.panel.component.scss',
+        './warehouse.inventory.detail.panel.component.scss',
     ],
 })
 export class WarehouseInventoryDetailPanelComponent

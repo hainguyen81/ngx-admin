@@ -5,6 +5,7 @@
                 class="form-control"
                 [(ngModel)]="newCellValue"
                 (ngModelChange)="onSelectionChanged({ data: newCellValue })"
+                [disabled]="getConfigValue('disabled', false)"
                 [name]="cellId"
                 (click)="onClick.emit($event)"
                 (keydown.enter)="onEdited.emit($event)"
