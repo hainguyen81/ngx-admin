@@ -47,7 +47,10 @@ export const WarehouseItemSummaryAreaConfig: ISplitAreaConfig = {
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-split-pane-app-warehouse-item',
     templateUrl: '../../../splitpane/splitpane.component.html',
-    styleUrls: ['../../../splitpane/splitpane.component.scss'],
+    styleUrls: [
+        '../../../splitpane/splitpane.component.scss',
+        '../../components/app.splitpane.component.scss',
+    ],
 })
 export class WarehouseItemSplitPaneComponent
     extends AppSplitPaneComponent<

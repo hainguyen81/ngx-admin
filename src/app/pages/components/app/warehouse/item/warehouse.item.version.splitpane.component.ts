@@ -55,6 +55,7 @@ export const WarehouseItemVersionSummaryAreaConfig: ISplitAreaConfig = {
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: [
         '../../../splitpane/splitpane.component.scss',
+        '../../components/app.splitpane.component.scss',
         './warehouse.item.version.splitpane.component.scss',
     ],
 })

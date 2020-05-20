@@ -41,7 +41,10 @@ import {ActivatedRoute, Router} from '@angular/router';
     moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-split-pane-app-warehouse-category',
     templateUrl: '../../../splitpane/splitpane.component.html',
-    styleUrls: ['../../../splitpane/splitpane.component.scss'],
+    styleUrls: [
+        '../../../splitpane/splitpane.component.scss',
+        '../../components/app.splitpane.component.scss',
+    ],
 })
 export class WarehouseCategorySplitPaneComponent
     extends AppTreeSplitFormComponent<

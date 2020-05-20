@@ -53,7 +53,10 @@ export const RightFormAreaConfig: ISplitAreaConfig = {
 @Component({
     selector: 'ngx-split-pane-app',
     templateUrl: '../../splitpane/splitpane.component.html',
-    styleUrls: ['../../splitpane/splitpane.component.scss'],
+    styleUrls: [
+        '../../splitpane/splitpane.component.scss',
+        './app.splitpane.component.scss',
+    ],
 })
 export abstract class AppSplitPaneComponent<
     T extends IModel, D extends DataSource,

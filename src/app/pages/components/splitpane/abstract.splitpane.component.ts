@@ -187,31 +187,6 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
         this.getLogger().debug('onDragEnd', event);
     }
 
-    /**
-     * Perform action on resize event
-     * @param event {IEvent} that contains {$data} as ResizedEvent
-     */
-    onResized(event: IEvent): void {
-        super.onResized(event);
-
-        let splitAreaEls: NodeListOf<HTMLElement>;
-        splitAreaEls = this.getElementsBySelector(
-            AbstractSplitpaneComponent.SPLIT_AREA_ELEMENT_SELECTOR);
-        let splitGutterEls: NodeListOf<HTMLElement>;
-        splitGutterEls = this.getElementsBySelector(
-            AbstractSplitpaneComponent.SPLIT_GUTTER_ELEMENT_SELECTOR);
-        if (splitAreaEls && splitAreaEls.length && splitGutterEls && splitGutterEls.length) {
-            let maxHeight: number;
-            maxHeight = 0;
-            splitAreaEls.forEach(splitAreaEl => {
-                maxHeight = Math.max(splitAreaEl.offsetHeight, maxHeight);
-            });
-            let splitGutterEl: HTMLElement;
-            splitGutterEl = splitGutterEls.item(0);
-            this.getRenderer().setStyle(splitGutterEl, 'height', maxHeight + 'px');
-        }
-    }
-
     // -------------------------------------------------
     // FUNCTION
     // -------------------------------------------------

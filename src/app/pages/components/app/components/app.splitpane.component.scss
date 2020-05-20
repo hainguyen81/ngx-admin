@@ -1,0 +1,13 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+	::ng-deep {
+		height: 100%;
+		nb-card {
+			transform: translate3d(0, 0, 0);
+			&.ngx-split-pane {
+				height: 100%;
+			}
+		}
+	}
+}

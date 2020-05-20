@@ -29,7 +29,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 @Component({
     selector: 'ngx-split-pane-app-tree-form',
     templateUrl: '../../splitpane/splitpane.component.html',
-    styleUrls: ['../../splitpane/splitpane.component.scss'],
+    styleUrls: [
+        '../../splitpane/splitpane.component.scss',
+        './app.splitpane.component.scss',
+    ],
 })
 export abstract class AppTreeSplitFormComponent<
     T extends IModel, D extends DataSource,

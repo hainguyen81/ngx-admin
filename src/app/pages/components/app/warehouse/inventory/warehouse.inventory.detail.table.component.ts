@@ -105,16 +105,12 @@ export const WarehouseInventoryDetailTableSettings = {
                     cellChanged: (e: IEvent) => {
                         const row: Row =
                             (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const inventoryDetail: IWarehouseInventoryDetail =
-                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
                         const batches: IWarehouseInventoryDetailBatch[] =
                             (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
-                        if (!isNullOrUndefined(row)
-                            && !isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(batches)) {
+                        if (!isNullOrUndefined(row) && !isNullOrUndefined(batches)) {
                             const batchQuantities: number[] = [];
                             batches.forEach(batch => batchQuantities.push(batch.quantity));
-                            inventoryDetail.quantity_orders = CalculatorUtils.plusMulti(...batchQuantities);
-                            row.getCells()[5].setValue(inventoryDetail.quantity_orders);
+                            row.getCells()[5].setValue(CalculatorUtils.plusMulti(...batchQuantities));
                         }
                     },
                 },
@@ -144,16 +140,12 @@ export const WarehouseInventoryDetailTableSettings = {
                     cellChanged: (e: IEvent) => {
                         const row: Row =
                             (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const inventoryDetail: IWarehouseInventoryDetail =
-                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
                         const storages: IWarehouseInventoryDetailStorage[] =
                             (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailStorage[] : undefined);
-                        if (!isNullOrUndefined(row)
-                            && !isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(storages)) {
+                        if (!isNullOrUndefined(row) && !isNullOrUndefined(storages)) {
                             const storageQuantities: number[] = [];
                             storages.forEach(storage => storageQuantities.push(storage.quantity));
-                            inventoryDetail.quantity_orders = CalculatorUtils.plusMulti(...storageQuantities);
-                            row.getCells()[5].setValue(inventoryDetail.quantity_orders);
+                            row.getCells()[5].setValue(CalculatorUtils.plusMulti(...storageQuantities));
                         }
                     },
                 },
@@ -173,12 +165,10 @@ export const WarehouseInventoryDetailTableSettings = {
                     cellChanged: (e: IEvent) => {
                         const row: Row =
                             (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const inventoryDetail: IWarehouseInventoryDetail =
-                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
-                        if (!isNullOrUndefined(row) && !isNullOrUndefined(inventoryDetail)) {
-                            inventoryDetail.amount = CalculatorUtils.multiply(
-                                inventoryDetail.quantity_orders, inventoryDetail.unit_price);
-                            row.getCells()[6].setValue(inventoryDetail.amount);
+                        const unitPriceVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
+                        if (!isNullOrUndefined(row)) {
+                            const quantityCell: Cell = row.getCells()[5];
+                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityCell.getValue(), unitPriceVal));
                         }
                     },
                 },
@@ -198,12 +188,10 @@ export const WarehouseInventoryDetailTableSettings = {
                     cellChanged: (e: IEvent) => {
                         const row: Row =
                             (e &&  e.data ? e.data['row'] as Row : undefined);
-                        const inventoryDetail: IWarehouseInventoryDetail =
-                            (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
-                        if (!isNullOrUndefined(row) && !isNullOrUndefined(inventoryDetail)) {
-                            inventoryDetail.amount = CalculatorUtils.multiply(
-                                inventoryDetail.quantity_orders, inventoryDetail.unit_price);
-                            row.getCells()[6].setValue(inventoryDetail.amount);
+                        const quantityVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
+                        if (!isNullOrUndefined(row)) {
+                            const unitPriceCell: Cell = row.getCells()[4];
+                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityVal, unitPriceCell.getValue()));
                         }
                     },
                 },
@@ -214,14 +202,16 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
-            editable: false,
-            renderComponent: ObserveCellComponent,
+            renderComponent: NumberCellComponent,
             config: {
                 isCurrency: false,
             },
             editor: {
                 type: 'custom',
-                component: ObserveCellComponent,
+                component: NumberCellComponent,
+                config: {
+                    readonly: true,
+                },
             },
         },
     },
