@@ -32,6 +32,8 @@ import {
 import {
     WarehouseDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
+import {IWarehouseInventoryDetailBatch} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
+import {IWarehouseInventoryDetail} from '../../../../../../@core/data/warehouse/warehouse.inventory.detail';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -270,8 +272,9 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         const storages: IWarehouseInventoryDetailStorage[] =
             this.newCellValue as IWarehouseInventoryDetailStorage[];
         if (0 <= dataIndex && dataIndex < (storages || []).length) {
-            storages.splice(dataIndex, 1);
+            const deletedStorages: IWarehouseInventoryDetailStorage[] = storages.splice(dataIndex, 1);
             this.newCellValue = [].concat(storages);
+            this.fireCellChanged({ data: (deletedStorages.length ? deletedStorages[0] : undefined) });
             this.detectChanges();
         }
     }
@@ -280,26 +283,40 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
      * Add a new storage at the bottom position
      */
     public addStorage(): void {
-        this.newCellValue.push({
+        const newStorage: IWarehouseInventoryDetailStorage = {
             id: undefined,
             storage_id: undefined,
             storage_code: undefined,
             storage_name: undefined,
             storage: undefined,
             quantity: undefined,
-        });
+        };
+        this.newCellValue.push(newStorage);
+        this.fireCellChanged({ data: newStorage });
     }
 
     /**
      * Fire `cellChanged` event
-     * @param $event {IEvent} with data as {IWarehouseInventoryDetailStorage}
+     * @param $event {IEvent} with data as object:
+     *      - changedData: {IWarehouseInventoryDetailStorage} that has been changed (added/removed/modified)
+     *      - cellData: {IWarehouseInventoryDetailStorage}[]
+     *      - cell: {Cell}
+     *      - rowData: {IWarehouseInventoryDetail}
+     *      - row: {Row}
      */
     private fireCellChanged($event: IEvent): void {
         // check column settings for change listener
+        const firedEvent: IEvent = { data: {
+                changedData: $event.data as IWarehouseInventoryDetailStorage,
+                cellData: this.newCellValue as IWarehouseInventoryDetailStorage[],
+                cell: this.cell,
+                rowData: this.cellRowData as IWarehouseInventoryDetail,
+                row: this.cellRow,
+            } };
         const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
         if (!isNullOrUndefined(cellChangedListener)) {
-            cellChangedListener.apply(this, [$event]);
+            cellChangedListener.apply(this, [firedEvent]);
         }
-        this.cellChanged.emit($event);
+        this.cellChanged.emit(firedEvent);
     }
 }

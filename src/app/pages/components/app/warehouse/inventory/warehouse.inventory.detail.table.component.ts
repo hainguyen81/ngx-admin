@@ -54,6 +54,8 @@ import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {IWarehouseInventoryDetailBatch} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
+import CalculatorUtils from '../../../../../utils/calculator.utils';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -124,6 +126,19 @@ export const WarehouseInventoryDetailTableSettings = {
             renderComponent: NumberCellComponent,
             config: {
                 isCurrency: false,
+                'cellChanged': (e: IEvent) => {
+                    const inventoryDetail: IWarehouseInventoryDetail =
+                        (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
+                    const batches: IWarehouseInventoryDetailBatch[] =
+                        (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
+                    if (!isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(batches)) {
+                        const batchQuantities: number[] = [];
+                        batches.forEach(batch => batchQuantities.push(batch.quantity));
+                        inventoryDetail.amount = CalculatorUtils.multiply(
+                            batchQuantities.reduce(CalculatorUtils.plus),
+                            inventoryDetail.unit_price);
+                    }
+                },
             },
             editor: {
                 type: 'custom',
@@ -138,6 +153,19 @@ export const WarehouseInventoryDetailTableSettings = {
             renderComponent: NumberCellComponent,
             config: {
                 isCurrency: false,
+                'cellChanged': (e: IEvent) => {
+                    const inventoryDetail: IWarehouseInventoryDetail =
+                        (e && e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
+                    const batches: IWarehouseInventoryDetailBatch[] =
+                        (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
+                    if (!isNullOrUndefined(inventoryDetail) && !isNullOrUndefined(batches)) {
+                        const batchQuantities: number[] = [];
+                        batches.forEach(batch => batchQuantities.push(batch.quantity));
+                        inventoryDetail.amount = CalculatorUtils.multiply(
+                            batchQuantities.reduce(CalculatorUtils.plus),
+                            inventoryDetail.unit_price);
+                    }
+                },
             },
             editor: {
                 type: 'custom',

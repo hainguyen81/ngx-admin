@@ -34,7 +34,7 @@ import {MatInput} from '@angular/material/input';
 import {
     WarehouseBatchNoDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import PromiseUtils from '../../../../../../utils/promise.utils';
+import {IWarehouseInventoryDetail} from '../../../../../../@core/data/warehouse/warehouse.inventory.detail';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -279,8 +279,9 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         const batches: IWarehouseInventoryDetailBatch[] =
             this.newCellValue as IWarehouseInventoryDetailBatch[];
         if (0 <= dataIndex && dataIndex < (batches || []).length) {
-            batches.splice(dataIndex, 1);
+            const deletedBatches: IWarehouseInventoryDetailBatch[] = batches.splice(dataIndex, 1);
             this.newCellValue = [].concat(batches);
+            this.fireCellChanged({ data: (deletedBatches.length ? deletedBatches[0] : undefined) });
             this.detectChanges();
         }
     }
@@ -289,26 +290,40 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
      * Add a new batch at the bottom position
      */
     public addBatch(): void {
-        this.newCellValue.push({
+        const newBatch: IWarehouseInventoryDetailBatch = {
             id: undefined,
             batch_id: undefined,
             batch_code: undefined,
             batch_name: undefined,
             batch: undefined,
             quantity: undefined,
-        });
+        };
+        this.newCellValue.push(newBatch);
+        this.fireCellChanged({ data: newBatch });
     }
 
     /**
      * Fire `cellChanged` event
-     * @param $event {IEvent} with data as {IWarehouseInventoryDetailBatch}
+     * @param $event {IEvent} with data as object:
+     *      - changedData: {IWarehouseInventoryDetailBatch} that has been changed (added/removed/modified)
+     *      - cellData: {IWarehouseInventoryDetailBatch}[]
+     *      - cell: {Cell}
+     *      - rowData: {IWarehouseInventoryDetail}
+     *      - row: {Row}
      */
     private fireCellChanged($event: IEvent): void {
         // check column settings for change listener
+        const firedEvent: IEvent = { data: {
+                changedData: $event.data as IWarehouseInventoryDetailBatch,
+                cellData: this.newCellValue as IWarehouseInventoryDetailBatch[],
+                cell: this.cell,
+                rowData: this.cellRowData as IWarehouseInventoryDetail,
+                row: this.cellRow,
+        } };
         const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
         if (!isNullOrUndefined(cellChangedListener)) {
-            cellChangedListener.apply(this, [$event]);
+            cellChangedListener.apply(this, [firedEvent]);
         }
-        this.cellChanged.emit($event);
+        this.cellChanged.emit(firedEvent);
     }
 }
