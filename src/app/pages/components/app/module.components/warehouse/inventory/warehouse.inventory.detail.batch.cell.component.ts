@@ -3,10 +3,10 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     forwardRef,
     Inject,
-    OnInit,
+    OnInit, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -64,6 +64,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
 
     private _warehouseDetailBatches: IWarehouseInventoryDetailBatch[] = [];
     private _warehouseBatches: IWarehouseBatchNo[];
+    @Output() readonly cellChanged: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -99,6 +100,14 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             (batch.batch_code || '').length && batchCodes.push(batch.batch_code);
         });
         return (batchCodes.length ? batchCodes : undefined);
+    }
+
+    /**
+     * Get the cell changed event listener from the configuration
+     * @return the cell changed event listener from the configuration
+     */
+    protected cellChangedListener(): ((e: IEvent) => void) {
+        return this.getConfigValue('cellChanged') as ((e: IEvent) => void);
     }
 
     // -------------------------------------------------
@@ -179,6 +188,15 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         batch.batch_id = (isNullOrUndefined(selBatch) ? undefined : selBatch.id);
         batch.batch_code = (isNullOrUndefined(selBatch) ? undefined : selBatch.code);
         batch.batch_name = (isNullOrUndefined(selBatch) ? undefined : selBatch.name);
+        this.fireCellChanged({ data: batch });
+    }
+
+    /**
+     * Raise when batch quantity amount has been changed
+     * @param $event {IEvent} with data as {IWarehouseInventoryDetailBatch}
+     */
+    onQuantityChanged($event: IEvent): void {
+        this.fireCellChanged($event);
     }
 
     // -------------------------------------------------
@@ -279,5 +297,18 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             batch: undefined,
             quantity: undefined,
         });
+    }
+
+    /**
+     * Fire `cellChanged` event
+     * @param $event {IEvent} with data as {IWarehouseInventoryDetailBatch}
+     */
+    private fireCellChanged($event: IEvent): void {
+        // check column settings for change listener
+        const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
+        if (!isNullOrUndefined(cellChangedListener)) {
+            cellChangedListener.apply(this, [$event]);
+        }
+        this.cellChanged.emit($event);
     }
 }

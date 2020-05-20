@@ -144,6 +144,21 @@ export const WarehouseInventoryDetailTableSettings = {
                 component: NumberCellComponent,
             },
         },
+        amount: {
+            title: 'warehouse.inventory.detail.table.amount',
+            type: 'custom',
+            sort: false,
+            filter: false,
+            editable: false,
+            renderComponent: NumberCellComponent,
+            config: {
+                isCurrency: false,
+            },
+            editor: {
+                type: 'custom',
+                component: NumberCellComponent,
+            },
+        },
     },
 };
 

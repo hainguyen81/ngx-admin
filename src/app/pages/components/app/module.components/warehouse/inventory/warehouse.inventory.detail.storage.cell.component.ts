@@ -3,10 +3,10 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     forwardRef,
     Inject,
-    OnInit,
+    OnInit, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -58,6 +58,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
 
     private _warehouseDetailStorages: IWarehouseInventoryDetailStorage[] = [];
     private _warehouseStorages: IWarehouse[];
+    @Output() readonly cellChanged: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -93,6 +94,14 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
             (storage.storage_code || '').length && storageCodes.push(storage.storage_code);
         });
         return (storageCodes.length ? storageCodes : undefined);
+    }
+
+    /**
+     * Get the cell changed event listener from the configuration
+     * @return the cell changed event listener from the configuration
+     */
+    protected cellChangedListener(): ((e: IEvent) => void) {
+        return this.getConfigValue('cellChanged') as ((e: IEvent) => void);
     }
 
     // -------------------------------------------------
@@ -169,6 +178,15 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         storage.storage_id = (isNullOrUndefined(selStorage) ? undefined : selStorage.id);
         storage.storage_code = (isNullOrUndefined(selStorage) ? undefined : selStorage.code);
         storage.storage_name = (isNullOrUndefined(selStorage) ? undefined : selStorage.name);
+        this.fireCellChanged({ data: storage });
+    }
+
+    /**
+     * Raise when batch quantity amount has been changed
+     * @param $event {IEvent} with data as {IWarehouseInventoryDetailStorage}
+     */
+    onQuantityChanged($event: IEvent): void {
+        this.fireCellChanged($event);
     }
 
     // -------------------------------------------------
@@ -270,5 +288,18 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
             storage: undefined,
             quantity: undefined,
         });
+    }
+
+    /**
+     * Fire `cellChanged` event
+     * @param $event {IEvent} with data as {IWarehouseInventoryDetailStorage}
+     */
+    private fireCellChanged($event: IEvent): void {
+        // check column settings for change listener
+        const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
+        if (!isNullOrUndefined(cellChangedListener)) {
+            cellChangedListener.apply(this, [$event]);
+        }
+        this.cellChanged.emit($event);
     }
 }
