@@ -62,7 +62,6 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {
     IWarehouseInventoryDetailStorage,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
-import {ObserveCellComponent} from '../../../smart-table/observe.cell.component';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -168,7 +167,7 @@ export const WarehouseInventoryDetailTableSettings = {
                         const unitPriceVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
                         if (!isNullOrUndefined(row)) {
                             const quantityCell: Cell = row.getCells()[5];
-                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityCell.getValue(), unitPriceVal));
+                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityCell.newValue, unitPriceVal));
                         }
                     },
                 },
@@ -191,7 +190,7 @@ export const WarehouseInventoryDetailTableSettings = {
                         const quantityVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
                         if (!isNullOrUndefined(row)) {
                             const unitPriceCell: Cell = row.getCells()[4];
-                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityVal, unitPriceCell.getValue()));
+                            row.getCells()[6].setValue(CalculatorUtils.multiply(quantityVal, unitPriceCell.newValue));
                         }
                     },
                 },
