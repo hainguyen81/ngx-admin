@@ -9,6 +9,13 @@
         ng2-smart-table {
             table-cell-edit-mode {
                 margin: 0 !important;
+
+                input:read-only,
+                input:disabled,
+                input[readonly='true'],
+                input[disabled='true'] {
+                    border: none !important;
+                }
             }
 
             table:focus {
@@ -36,11 +43,18 @@
 
                 tr.ng2-smart-titles th {
                     padding: 0.5rem 1rem;
+                    text-align: center;
                 }
 
                 tbody {
                     tr.selected, tr.hover, tr:hover, tr:active, tr:focus {
                         background-color: nb-theme(color-basic-focus-border) !important;
+                    }
+                }
+
+                tfoot {
+                    tr {
+                        background-color: nb-theme(background-basic-color-2);
                     }
                 }
             }
