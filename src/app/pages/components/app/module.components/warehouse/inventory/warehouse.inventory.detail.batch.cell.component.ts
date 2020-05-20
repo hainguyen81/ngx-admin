@@ -3,10 +3,10 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef, EventEmitter,
+    ElementRef,
     forwardRef,
     Inject,
-    OnInit, Output,
+    OnInit,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -34,7 +34,6 @@ import {MatInput} from '@angular/material/input';
 import {
     WarehouseBatchNoDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import {IWarehouseInventoryDetail} from '../../../../../../@core/data/warehouse/warehouse.inventory.detail';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -64,7 +63,6 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
 
     private _warehouseDetailBatches: IWarehouseInventoryDetailBatch[] = [];
     private _warehouseBatches: IWarehouseBatchNo[];
-    @Output() readonly cellChanged: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -100,14 +98,6 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             (batch.batch_code || '').length && batchCodes.push(batch.batch_code);
         });
         return (batchCodes.length ? batchCodes : undefined);
-    }
-
-    /**
-     * Get the cell changed event listener from the configuration
-     * @return the cell changed event listener from the configuration
-     */
-    protected cellChangedListener(): ((e: IEvent) => void) {
-        return this.getConfigValue('cellChanged') as ((e: IEvent) => void);
     }
 
     // -------------------------------------------------
@@ -300,30 +290,5 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         };
         this.newCellValue.push(newBatch);
         this.fireCellChanged({ data: newBatch });
-    }
-
-    /**
-     * Fire `cellChanged` event
-     * @param $event {IEvent} with data as object:
-     *      - changedData: {IWarehouseInventoryDetailBatch} that has been changed (added/removed/modified)
-     *      - cellData: {IWarehouseInventoryDetailBatch}[]
-     *      - cell: {Cell}
-     *      - rowData: {IWarehouseInventoryDetail}
-     *      - row: {Row}
-     */
-    private fireCellChanged($event: IEvent): void {
-        // check column settings for change listener
-        const firedEvent: IEvent = { data: {
-                changedData: $event.data as IWarehouseInventoryDetailBatch,
-                cellData: this.newCellValue as IWarehouseInventoryDetailBatch[],
-                cell: this.cell,
-                rowData: this.cellRowData as IWarehouseInventoryDetail,
-                row: this.cellRow,
-        } };
-        const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
-        if (!isNullOrUndefined(cellChangedListener)) {
-            cellChangedListener.apply(this, [firedEvent]);
-        }
-        this.cellChanged.emit(firedEvent);
     }
 }

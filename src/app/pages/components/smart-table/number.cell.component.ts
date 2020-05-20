@@ -12,6 +12,7 @@ import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {IEvent} from "../abstract.component";
 
 /**
  * Smart table number cell component base on {DefaultEditor}
@@ -68,5 +69,13 @@ export class NumberCellComponent extends AbstractCellEditor {
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    onDataChanged($event: IEvent): void {
+        this.fireCellChanged($event);
     }
 }

@@ -4,7 +4,6 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef, forwardRef,
-    Host,
     Inject,
     Renderer2,
     ViewContainerRef,

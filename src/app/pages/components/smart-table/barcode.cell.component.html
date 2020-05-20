@@ -1,8 +1,16 @@
-<span class="d-table-cell text-center barcode-cell" [title]="cellValue">
+<span class="d-table-cell text-center barcode-cell" [title]="cellValue" *ngIf="viewMode">
     <ngx-barcode [bc-value]="cellValue"
                  [bc-width]="2"
                  [bc-height]="24"
                  [bc-display-value]="false"
                  bc-background="transparent"
     ></ngx-barcode>
+</span>
+<span class="d-table-cell text-center barcode-cell" *ngIf="!viewMode">
+    <input #barcodeInput
+           matInput
+           class="cell-editor-barcode text-center"
+           type="number"
+           [(ngModel)]="newCellValue"
+           (ngModelChange)="onBarcodeChanged({ data: newCellValue })">
 </span>

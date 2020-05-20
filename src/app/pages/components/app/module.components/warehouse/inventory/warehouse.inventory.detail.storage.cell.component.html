@@ -12,7 +12,7 @@
                class="cell-editor-storage-number text-right number-cell mr-sm-1"
                type="number"
                [(ngModel)]="storage.quantity"
-               (change)="onQuantityChanged({ data: storage })">
+               (ngModelChange)="onQuantityChanged({ data: storage })">
         <div class="cell-editor-storage-remover mr-sm-1">
             <nb-icon [pack]="'fas'"
                      [icon]="'minus'"

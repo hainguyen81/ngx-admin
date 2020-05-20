@@ -3,7 +3,6 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef, forwardRef,
-    Host,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -12,6 +11,7 @@ import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {IEvent} from '../abstract.component';
 
 /**
  * Smart table checkbox cell component base on {DefaultEditor}
@@ -48,5 +48,13 @@ export class CheckboxCellComponent extends AbstractCellEditor {
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(_parentCell, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    onCheckChanged($event: IEvent): void {
+        this.fireCellChanged($event);
     }
 }

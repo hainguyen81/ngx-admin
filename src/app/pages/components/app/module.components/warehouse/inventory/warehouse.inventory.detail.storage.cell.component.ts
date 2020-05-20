@@ -3,10 +3,10 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef, EventEmitter,
+    ElementRef,
     forwardRef,
     Inject,
-    OnInit, Output,
+    OnInit,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -32,8 +32,6 @@ import {
 import {
     WarehouseDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
-import {IWarehouseInventoryDetailBatch} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
-import {IWarehouseInventoryDetail} from '../../../../../../@core/data/warehouse/warehouse.inventory.detail';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -60,7 +58,6 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
 
     private _warehouseDetailStorages: IWarehouseInventoryDetailStorage[] = [];
     private _warehouseStorages: IWarehouse[];
-    @Output() readonly cellChanged: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -96,14 +93,6 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
             (storage.storage_code || '').length && storageCodes.push(storage.storage_code);
         });
         return (storageCodes.length ? storageCodes : undefined);
-    }
-
-    /**
-     * Get the cell changed event listener from the configuration
-     * @return the cell changed event listener from the configuration
-     */
-    protected cellChangedListener(): ((e: IEvent) => void) {
-        return this.getConfigValue('cellChanged') as ((e: IEvent) => void);
     }
 
     // -------------------------------------------------
@@ -293,30 +282,5 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         };
         this.newCellValue.push(newStorage);
         this.fireCellChanged({ data: newStorage });
-    }
-
-    /**
-     * Fire `cellChanged` event
-     * @param $event {IEvent} with data as object:
-     *      - changedData: {IWarehouseInventoryDetailStorage} that has been changed (added/removed/modified)
-     *      - cellData: {IWarehouseInventoryDetailStorage}[]
-     *      - cell: {Cell}
-     *      - rowData: {IWarehouseInventoryDetail}
-     *      - row: {Row}
-     */
-    private fireCellChanged($event: IEvent): void {
-        // check column settings for change listener
-        const firedEvent: IEvent = { data: {
-                changedData: $event.data as IWarehouseInventoryDetailStorage,
-                cellData: this.newCellValue as IWarehouseInventoryDetailStorage[],
-                cell: this.cell,
-                rowData: this.cellRowData as IWarehouseInventoryDetail,
-                row: this.cellRow,
-            } };
-        const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
-        if (!isNullOrUndefined(cellChangedListener)) {
-            cellChangedListener.apply(this, [firedEvent]);
-        }
-        this.cellChanged.emit(firedEvent);
     }
 }

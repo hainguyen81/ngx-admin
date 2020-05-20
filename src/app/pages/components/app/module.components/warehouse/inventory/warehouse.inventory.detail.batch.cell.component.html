@@ -12,7 +12,7 @@
                class="cell-editor-batch-number text-right number-cell mr-sm-1"
                type="number"
                [(ngModel)]="batch.quantity"
-               (change)="onQuantityChanged({ data: batch })">
+               (ngModelChange)="onQuantityChanged({ data: batch })">
         <div class="cell-editor-batch-remover mr-sm-1">
             <nb-icon [pack]="'fas'"
                      [icon]="'minus'"

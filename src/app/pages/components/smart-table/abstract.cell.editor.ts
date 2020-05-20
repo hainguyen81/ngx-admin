@@ -2,10 +2,10 @@ import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, EventEmitter,
     forwardRef,
     Inject,
-    OnDestroy,
+    OnDestroy, Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -34,6 +34,7 @@ export abstract class AbstractCellEditor extends DefaultEditor
 
     private _valueFormatter: (value: any) => any;
     private _valueParser: (value: any) => any;
+    @Output() readonly cellChanged: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -282,6 +283,14 @@ export abstract class AbstractCellEditor extends DefaultEditor
         return this._elementRef;
     }
 
+    /**
+     * Get the cell changed event listener from the configuration
+     * @return the cell changed event listener from the configuration
+     */
+    protected cellChangedListener(): ((e: IEvent) => void) {
+        return this.getConfigValue('cellChanged') as ((e: IEvent) => void);
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -434,5 +443,32 @@ export abstract class AbstractCellEditor extends DefaultEditor
         if (!(<any>this.changeDetectorRef).destroyed) {
             this.changeDetectorRef.detectChanges();
         }
+    }
+
+    /**
+     * Fire `cellChanged` event
+     * @param $event {IEvent} with data as object:
+     *      - changedData: $event#data that has been changed (added/removed/modified)
+     *      - cellData: {#newCellValue}
+     *      - cell: {Cell}
+     *      - rowData: {#cellRowData}
+     *      - row: {Row}
+     */
+    protected fireCellChanged($event: IEvent): void {
+        if (this.viewMode) return;
+
+        // check column settings for change listener
+        const firedEvent: IEvent = { data: {
+                changedData: $event.data,
+                cellData: this.newCellValue,
+                cell: this.cell,
+                rowData: this.cellRowData,
+                row: this.cellRow,
+            } };
+        const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
+        if (!isNullOrUndefined(cellChangedListener)) {
+            cellChangedListener.apply(this, [firedEvent]);
+        }
+        this.cellChanged.emit(firedEvent);
     }
 }
