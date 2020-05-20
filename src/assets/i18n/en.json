@@ -1000,9 +1000,9 @@
                     "storage": "Archive",
                     "quantity_orders": "Quantity",
                     "unit_price": "Unit price",
-                    "amount": "Total amount",
-                    "summary": "Sum",
-                    "total": "Total"
+                    "amount": "Amount",
+                    "summary": "Sum of quantities",
+                    "total": "Total amount"
                 }
             }
         }

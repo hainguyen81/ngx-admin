@@ -1000,9 +1000,9 @@
                     "storage": "Vị trí lưu trữ",
                     "quantity_orders": "SL",
                     "unit_price": "Đơn giá",
-                    "amount": "Tổng tiền",
-                    "summary": "Tổng",
-                    "total": "Thành tiền"
+                    "amount": "Thành tiền",
+                    "summary": "Tổng SL",
+                    "total": "Tổng tiền"
                 }
             }
         }
