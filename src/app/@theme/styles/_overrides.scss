@@ -1,6 +1,26 @@
 @import './themes';
 
 @mixin nb-overrides() {
+    // for large screen such as 2560px PC
+    @media screen and (min-width: 2048px) {
+        nb-layout.window-mode {
+            padding-top: 0;
+            .scrollable-container {
+                height: 100vh;
+                max-width: 100vw;
+                nb-layout-header {
+                    max-width: 100vw;
+                    nav {
+                        max-width: 100vw;
+                    }
+                    &.fixed {
+                        top: 0;
+                    }
+                }
+            }
+        }
+    }
+
     nb-select.size-medium button {
         padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
 
