@@ -65,6 +65,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {
     IWarehouseInventoryDetailStorage,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
+import {Validators} from '@angular/forms';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -166,6 +167,9 @@ export const WarehouseInventoryDetailTableSettings = {
                             (storages || []).find(
                                 storage => !isNullOrUndefined(storage.quantity) && storage.quantity > 0);
                         return (!isNullOrUndefined(anyBatch) || !isNullOrUndefined(anyStorage));
+                    },
+                    validators: {
+                        required: Validators.required,
                     },
                 },
             },
