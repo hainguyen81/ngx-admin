@@ -2,7 +2,8 @@ import {
     AbstractControl,
     AbstractControlOptions,
     AsyncValidatorFn,
-    FormControl, FormGroup,
+    FormControl,
+    FormGroup,
     ValidatorFn,
 } from '@angular/forms';
 import {
@@ -25,7 +26,7 @@ import {IEvent} from '../abstract.component';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {DefaultEditor} from 'ng2-smart-table';
 import {Cell} from 'ng2-smart-table/lib/data-set/cell';
-import {isNullOrUndefined} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 
@@ -257,6 +258,90 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
         this._inputClass = _inputClass;
     }
 
+    /**
+     * Get the current {Row} data
+     * @return the current {Row} data
+     */
+    get cellRowData(): any {
+        return (this.cellRow ? this.cellRow.getData() : undefined);
+    }
+
+    /**
+     * Get the current {Cell} identity
+     * @return the current {Cell} identity
+     */
+    get cellId(): string {
+        return (this.cell ? this.cell.getId() : undefined);
+    }
+
+    /**
+     * Get the current {Cell} value
+     * @return the current {Cell} value
+     */
+    get cellValue(): any {
+        return (this.cell ? this.cell.getValue() : undefined);
+    }
+
+    /**
+     * Get the current {Column#getConfig} instance
+     * @return the current {Column#getConfig} instance
+     */
+    get cellColumnConfig(): any {
+        return (isNullOrUndefined(this.cellColumn)
+            ? {} : (this.cellColumn.getConfig() || this.cellColumn['config'] || {}));
+    }
+
+    /**
+     * Get the configuration value of the specified configuration property key
+     * @param propertyKey configuration key
+     * @param defaultValue default value if not found or undefined
+     */
+    protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
+        const _config: any = this.cellColumnConfig;
+        const value: any = (_config || {})[propertyKey];
+        return (isNullOrUndefined(value) ? defaultValue : value);
+    }
+
+    /**
+     * Set the configuration value of the specified configuration property key
+     * @param propertyKey configuration key
+     * @param configValue configuration value
+     */
+    protected setConfigValue(propertyKey: string, configValue?: any | null): void {
+        const _config: any = this.cellColumnConfig;
+        if (!isNullOrUndefined(_config)) {
+            _config[propertyKey] = configValue;
+        }
+    }
+
+    /**
+     * Get a boolean value indicating the cell whether is disabled in edit mode
+     */
+    get disabled(): boolean {
+        if (this.viewMode) return true;
+        const disabledConfig: any = this.getConfigValue('disabled', false);
+        if (isNullOrUndefined(disabledConfig)) return false;
+        if (typeof disabledConfig === 'function') {
+            return (disabledConfig as Function).apply(this,
+                [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
+        }
+        return (disabledConfig === true);
+    }
+
+    /**
+     * Get a boolean value indicating the cell whether is readonly in edit mode
+     */
+    get readonly(): boolean {
+        if (this.viewMode) return true;
+        const readonlyConfig: any = this.getConfigValue('readonly', false);
+        if (isNullOrUndefined(readonlyConfig)) return false;
+        if (typeof readonlyConfig === 'function') {
+            return (readonlyConfig as Function).apply(this,
+                [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
+        }
+        return (readonlyConfig === true);
+    }
+
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -284,9 +369,9 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
                           @Inject(ViewContainerRef) private _viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) private _changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) private _elementRef: ElementRef,
-                          _formState?: any | null,
-                          _validator?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
-                          _asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
+                          private _formState?: any | null,
+                          private _validator?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
+                          private _asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
                           private _validationMessages?: { [error: string]: string } | null) {
         super(_formState, _validator, _asyncValidator);
         _translateService || throwError('Could not inject TranslateService');
@@ -309,6 +394,10 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     ngAfterViewInit() {
+        // check config for validation
+        this.__detectValidationConfig();
+
+        // register form control for cell
         this.cell && this.formGroup && !this.formGroup.contains(this.cell.getId())
         && this.formGroup.registerControl(this.cell.getId(), this);
     }
@@ -316,6 +405,63 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
+
+    /**
+     * Detect the validation in configuration
+     * @private
+     */
+    private __detectValidationConfig(): void {
+        const configValidators: any = this.getConfigValue('validators');
+        const parsedValidators: ValidatorFn[] = this.__parseValidatorFunctions(configValidators);
+        const presentValidators: ValidatorFn[] = this.__parseValidatorFunctions(this._validator);
+        const configAsyncValidators: any = this.getConfigValue('asyncValidators');
+        const parsedAsyncValidators: AsyncValidatorFn[] = this.__parseAsyncValidatorFunctions(configAsyncValidators);
+        const presentAsyncValidators: AsyncValidatorFn[] = this.__parseAsyncValidatorFunctions(this._asyncValidator);
+        this.setValidators([].concat(presentValidators).concat(parsedValidators));
+        this.setAsyncValidators([].concat(presentAsyncValidators).concat(parsedAsyncValidators));
+    }
+
+    /**
+     * Parse the {ValidatorFn} from the specified value
+     * @param validators to parse
+     * @private
+     */
+    private __parseValidatorFunctions(validators: any): ValidatorFn[] {
+        if (isNullOrUndefined(validators)) {
+            return  [];
+
+        } else if (isArray(validators) && Array.from(validators as ValidatorFn[]).length) {
+            return [].concat(Array.from(validators as ValidatorFn[]));
+
+        } else if (validators && validators.hasOwnProperty('validators')) {
+            return [].concat(this.__parseValidatorFunctions(validators['validators']));
+
+        } else if (typeof validators === 'function' && !isNullOrUndefined(<ValidatorFn>validators)) {
+            return [validators];
+        }
+        return [];
+    }
+
+    /**
+     * Parse the {AsyncValidatorFn} from the specified value
+     * @param validators to parse
+     * @private
+     */
+    private __parseAsyncValidatorFunctions(validators: any): AsyncValidatorFn[] {
+        if (isNullOrUndefined(validators)) {
+            return  [];
+
+        } else if (isArray(validators) && Array.from(validators as AsyncValidatorFn[]).length) {
+            return [].concat(Array.from(validators as AsyncValidatorFn[]));
+
+        } else if (validators && validators.hasOwnProperty('asyncValidators')) {
+            return [].concat(this.__parseValidatorFunctions(validators['asyncValidators']));
+
+        } else if (typeof validators === 'function' && !isNullOrUndefined(<AsyncValidatorFn>validators)) {
+            return [validators];
+        }
+        return [];
+    }
 
     /**
      * Translate the specified value

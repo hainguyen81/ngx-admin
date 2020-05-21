@@ -14,7 +14,6 @@ import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, of} from 'rxjs';
 import {IEvent} from '../abstract.component';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {isNullOrUndefined} from 'util';
 import PromiseUtils from '../../../utils/promise.utils';
 import {isPromise} from 'rxjs/internal-compatibility';
@@ -79,37 +78,6 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
     }
 
     /**
-     * Get the configuration value of the specified configuration property key
-     * @param propertyKey configuration key
-     * @param defaultValue default value if not found or undefined
-     */
-    protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
-        const _config: any = this.cellColumnConfig;
-        const value: any = (_config || {})[propertyKey];
-        return (isNullOrUndefined(value) ? defaultValue : value);
-    }
-
-    /**
-     * Set the configuration value of the specified configuration property key
-     * @param propertyKey configuration key
-     * @param configValue configuration value
-     */
-    protected setConfigValue(propertyKey: string, configValue?: any | null): void {
-        const _config: any = this.cellColumnConfig;
-        if (!isNullOrUndefined(_config)) {
-            _config[propertyKey] = configValue;
-        }
-    }
-
-    /**
-     * Get the current {Cell} value
-     * @return the current {Cell} value
-     */
-    get cellValue(): any {
-        return (this.cell ? this.cell.getValue() : undefined);
-    }
-
-    /**
      * Get the current {Cell} new value
      * @return the current {Cell} new value
      */
@@ -131,64 +99,11 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
     }
 
     /**
-     * Get the current {Row} data
-     * @return the current {Row} data
-     */
-    get cellRowData(): any {
-        return (this.cellRow ? this.cellRow.getData() : undefined);
-    }
-
-    /**
-     * Get the current {Cell} identity
-     * @return the current {Cell} identity
-     */
-    get cellId(): string {
-        return (this.cell ? this.cell.getId() : undefined);
-    }
-
-    /**
-     * Get the current {Column#getConfig} instance
-     * @return the current {Column#getConfig} instance
-     */
-    get cellColumnConfig(): any {
-        return (isNullOrUndefined(this.cellColumn)
-            ? {} : (this.cellColumn.getConfig() || this.cellColumn['config'] || {}));
-    }
-
-    /**
      * Get the cell changed event listener from the configuration
      * @return the cell changed event listener from the configuration
      */
     protected cellChangedListener(): ((e: IEvent) => void) {
         return this.getConfigValue('cellChanged') as ((e: IEvent) => void);
-    }
-
-    /**
-     * Get a boolean value indicating the cell whether is disabled in edit mode
-     */
-    get disabled(): boolean {
-        if (this.viewMode) return true;
-        const disabledConfig: any = this.getConfigValue('disabled', false);
-        if (isNullOrUndefined(disabledConfig)) return false;
-        if (typeof disabledConfig === 'function') {
-            return (disabledConfig as Function).apply(this,
-                [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
-        }
-        return (disabledConfig === true);
-    }
-
-    /**
-     * Get a boolean value indicating the cell whether is readonly in edit mode
-     */
-    get readonly(): boolean {
-        if (this.viewMode) return true;
-        const readonlyConfig: any = this.getConfigValue('readonly', false);
-        if (isNullOrUndefined(readonlyConfig)) return false;
-        if (typeof readonlyConfig === 'function') {
-            return (readonlyConfig as Function).apply(this,
-                [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
-        }
-        return (readonlyConfig === true);
     }
 
     // -------------------------------------------------
