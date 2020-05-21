@@ -375,7 +375,8 @@ export class WarehouseInventoryDetailSmartTableComponent
             (e && e.data ? e.data['changedData'] as IWarehouseItem : undefined);
         if (!isNullOrUndefined(row) && !isNullOrUndefined(item)) {
             const unitPriceCell: Cell = row.cells[4];
-            unitPriceCell.setValue(item.selling_price);
+            (!isNaN(unitPriceCell.getValue()) || parseFloat(unitPriceCell.getValue()) <= 0)
+            && unitPriceCell.setValue(item.selling_price);
         }
         this.__calculateFooterSummary();
     }
@@ -393,7 +394,8 @@ export class WarehouseInventoryDetailSmartTableComponent
             const batchQuantities: number[] = [];
             batches.forEach(batch => batchQuantities.push(batch.quantity));
             const quantityCell: Cell = row.cells[5];
-            quantityCell.setValue(CalculatorUtils.plusMulti(...batchQuantities));
+            (!isNaN(quantityCell.getValue()) || parseInt(quantityCell.getValue(), 10) <= 0)
+            && quantityCell.setValue(CalculatorUtils.plusMulti(...batchQuantities));
             const unitPriceCell: Cell = row.cells[4];
             const amountCell: Cell = row.cells[6];
             amountCell.setValue(CalculatorUtils.multiply(
@@ -415,7 +417,8 @@ export class WarehouseInventoryDetailSmartTableComponent
             const storageQuantities: number[] = [];
             storages.forEach(storage => storageQuantities.push(storage.quantity));
             const quantityCell: Cell = row.cells[5];
-            quantityCell.setValue(CalculatorUtils.plusMulti(...storageQuantities));
+            (!isNaN(quantityCell.getValue()) || parseInt(quantityCell.getValue(), 10) <= 0)
+            && quantityCell.setValue(CalculatorUtils.plusMulti(...storageQuantities));
             const unitPriceCell: Cell = row.cells[4];
             const amountCell: Cell = row.cells[6];
             amountCell.setValue(CalculatorUtils.multiply(
