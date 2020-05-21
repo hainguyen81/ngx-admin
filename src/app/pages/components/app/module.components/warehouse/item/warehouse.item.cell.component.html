@@ -1,5 +1,6 @@
 <div class="cell-editor" *ngIf="!viewMode">
     <ngx-select-2-app-module-warehouse-item
+        [(ngModel)]="newCellValue"
         [formGroup]="formGroup"
         [formControl]="control"
         [required]="required"
