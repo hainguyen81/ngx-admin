@@ -21,6 +21,8 @@ import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {DefaultEditor} from 'ng2-smart-table';
 import {Cell} from 'ng2-smart-table/lib/data-set/cell';
 import {isNullOrUndefined} from 'util';
+import {Column} from 'ng2-smart-table/lib/data-set/column';
+import {Row} from 'ng2-smart-table/lib/data-set/row';
 
 /**
  * Abstract cell editor as form {FormControl}
@@ -49,6 +51,54 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     get control(): AbstractControl {
         return this;
+    }
+
+    /**
+     * Get a boolean value indicating cell whether is in view-mode or edit-mode
+     * @return true for view mode; else false
+     */
+    get viewMode(): boolean {
+        return !this.isEditable || !this.isInEditingMode;
+    }
+
+    /**
+     * Get a boolean value indicating the current {Cell} whether is editable
+     * @return true for editable; else false
+     */
+    get isEditable(): boolean {
+        return (this.cell ? this.cell.isEditable() : false);
+    }
+
+    /**
+     * Get a boolean value indicating the current {Cell} whether is in edit mode
+     * @return true for being in edit mode; else false
+     */
+    get isInEditingMode(): boolean {
+        return (this.cellRow ? this.cellRow.isInEditing : false);
+    }
+
+    /**
+     * Get the current {Column} instance
+     * @return the current {Column} instance
+     */
+    get cellColumn(): Column {
+        return (this.cell ? this.cell.getColumn() : undefined);
+    }
+
+    /**
+     * Get the current {Row} instance
+     * @return the current {Row} instance
+     */
+    get cellRow(): Row {
+        return (this.cell ? this.cell.getRow() : undefined);
+    }
+
+    /**
+     * Get the {Cell} array of the present {Row}
+     * @return the {Cell} array of the present {Row}
+     */
+    get cells(): Cell[] {
+        return (this.cellRow ? this.cellRow.getCells() : []);
     }
 
     /**

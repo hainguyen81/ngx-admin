@@ -39,14 +39,6 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
     // -------------------------------------------------
 
     /**
-     * Get a boolean value indicating cell whether is in view-mode or edit-mode
-     * @return true for view mode; else false
-     */
-    get viewMode(): boolean {
-        return !this.isEditable || !this.isInEditingMode;
-    }
-
-    /**
      * Get the method to format field value to show
      * @return the method to format field value to show
      */
@@ -118,22 +110,6 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
     }
 
     /**
-     * Get a boolean value indicating the current {Cell} whether is editable
-     * @return true for editable; else false
-     */
-    get isEditable(): boolean {
-        return (this.cell ? this.cell.isEditable() : false);
-    }
-
-    /**
-     * Get a boolean value indicating the current {Cell} whether is in edit mode
-     * @return true for being in edit mode; else false
-     */
-    get isInEditingMode(): boolean {
-        return (this.cellRow ? this.cellRow.isInEditing : false);
-    }
-
-    /**
      * Get the current {Cell} new value
      * @return the current {Cell} new value
      */
@@ -152,30 +128,6 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
                 this.cell.newValue = newValue;
             }
         }
-    }
-
-    /**
-     * Get the current {Column} instance
-     * @return the current {Column} instance
-     */
-    get cellColumn(): Column {
-        return (this.cell ? this.cell.getColumn() : undefined);
-    }
-
-    /**
-     * Get the current {Row} instance
-     * @return the current {Row} instance
-     */
-    get cellRow(): Row {
-        return (this.cell ? this.cell.getRow() : undefined);
-    }
-
-    /**
-     * Get the {Cell} array of the present {Row}
-     * @return the {Cell} array of the present {Row}
-     */
-    get cells(): Cell[] {
-        return (this.cellRow ? this.cellRow.getCells() : []);
     }
 
     /**

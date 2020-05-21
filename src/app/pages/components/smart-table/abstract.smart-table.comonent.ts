@@ -4,7 +4,8 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     EventEmitter,
-    Inject, Output,
+    Inject,
+    Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -29,6 +30,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
+import {AbstractCellEditorFormControlComponent} from './abstract.cell.editor.form.control.component';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -1056,14 +1058,14 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param row to save
      */
     protected saveRow(row: Row) {
-        row && this.removeEditingRow(row);
-        if (row && !row.isInEditing) {
+        if (!row || !row.isInEditing) {
             return;
         }
 
-        row && this.gridComponent.save(row,
-            this.tableComponent.editConfirm || new EventEmitter<any>());
-        !row && this.getLogger().warn('Undefined row to edit');
+        if (!this.validateRow(row)) {
+            this.removeEditingRow(row);
+            this.gridComponent.save(row, this.tableComponent.editConfirm || new EventEmitter<any>());
+        }
     }
 
     /**
@@ -1519,5 +1521,45 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 && this.footerCreation.emit({ data: this._tableFooterRows });
             }
         }
+    }
+
+    /**
+     * Validate the specified {Row}
+     * @param row to validate
+     * @return true for valid; else false
+     */
+    protected validateRow(row: Row): boolean {
+        if (isNullOrUndefined(row)) {
+            return true;
+        }
+
+        let invalid: boolean;
+        invalid = false;
+        (row.cells || []).forEach((cell: Cell) => {
+            if (cell instanceof AbstractCellEditorFormControlComponent) {
+                const cellControl: AbstractCellEditorFormControlComponent =
+                    <AbstractCellEditorFormControlComponent>cell;
+                invalid = invalid || cellControl.validate(!cellControl.viewMode);
+
+            } else {
+                const validateFn: any = this.getConfigValue('validate');
+                if (typeof validateFn === 'function') {
+                    invalid = invalid || (validateFn as Function).apply(
+                        this, [cell, row, row.getData(), row.getNewData(), this.config]) as boolean;
+                }
+            }
+        });
+        return !invalid;
+    }
+
+    /**
+     * Validate all {Row} in table
+     * @return true for valid; else false
+     */
+    protected validate(): boolean {
+        let invalid: boolean;
+        invalid = false;
+        (this.rows || []).forEach(row => invalid = invalid || this.validateRow(row));
+        return !invalid;
     }
 }
