@@ -176,6 +176,9 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                         component.open.subscribe(e => {
                             if (this.field) this.field.focus = true;
                         });
+                        component.focus.subscribe(e => {
+                            if (this.field) this.field.focus = true;
+                        });
                         component.close.subscribe(e => {
                             if (this.field) this.field.focus = false;
                         });

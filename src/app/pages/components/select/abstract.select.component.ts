@@ -589,6 +589,12 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     @Output() readonly open: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     /**
+     * Fired on select focused
+     * @param $event {IEvent} no data
+     */
+    @Output() readonly focus: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
      * Fired when item is removed while [multiple]='true'
      * @param $event {IEvent} with data is a removed item
      */
@@ -948,6 +954,16 @@ export abstract class AbstractSelectComponent<T extends DataSource>
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onAddNewOption', $event);
         this.addNewOption.emit($event);
+    }
+
+    /**
+     * Raise by focusing on `select` component.
+     * @param $event {IEvent} no data
+     */
+    onFocus($event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onFocus', $event);
+        this.focus.emit($event);
     }
 
     // -------------------------------------------------

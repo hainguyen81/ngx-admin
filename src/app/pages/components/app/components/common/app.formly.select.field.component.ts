@@ -35,6 +35,7 @@ export abstract class AppFormlySelectFieldComponent<T extends IModel>
     // -------------------------------------------------
 
     @Output() readonly onSelect: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+    @Output() readonly onFocus: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -74,6 +75,9 @@ export abstract class AppFormlySelectFieldComponent<T extends IModel>
         if (!isNullOrUndefined(super.selectComponent)) {
             super.selectComponent.change.subscribe(($event: IEvent) => {
                 this.onSelect.emit($event);
+            });
+            super.selectComponent.focus.subscribe(($event: IEvent) => {
+                this.onFocus.emit($event);
             });
         }
     }

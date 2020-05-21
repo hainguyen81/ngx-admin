@@ -1,4 +1,9 @@
 <div class="cell-editor" *ngIf="!viewMode">
-    <ngx-select-2-app-module-warehouse-item></ngx-select-2-app-module-warehouse-item>
+    <ngx-select-2-app-module-warehouse-item
+        [formGroup]="formGroup"
+        [formControl]="control"
+        [required]="required"
+        [class.mat-error]="control.invalid && control.touched"
+    ></ngx-select-2-app-module-warehouse-item>
 </div>
 <div class="cell-viewer" *ngIf="viewMode" [innerHTML]="viewValue"></div>
