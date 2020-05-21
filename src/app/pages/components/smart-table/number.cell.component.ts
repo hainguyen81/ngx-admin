@@ -29,15 +29,15 @@ export class NumberCellComponent extends AbstractCellEditor {
     // -------------------------------------------------
 
     get cellValue(): number {
-        return super.cellValue as number;
+        return (isNaN(super.cellValue) ? undefined : super.cellValue as number);
     }
 
     get newCellValue(): number {
-        return super.newCellValue as number;
+        return (isNaN(super.newCellValue) ? undefined : super.newCellValue as number);
     }
 
     set newCellValue(_value: number) {
-        super.newCellValue = _value;
+        super.newCellValue = (isNaN(_value) ? undefined : _value);
     }
 
     get isCurrency(): boolean {

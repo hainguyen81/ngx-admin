@@ -82,7 +82,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      * @return the current {Cell} new value
      */
     get newCellValue(): any {
-        return this.formatValue(this.cell ? this.cell.newValue : undefined);
+        return this.formatValue(super.newCellValue);
     }
 
     /**
@@ -91,10 +91,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      */
     set newCellValue(_value: any) {
         if (this.cell && this.isEditable && this.isInEditingMode) {
-            const newValue: any = this.parseValue(_value);
-            if (this.cell.newValue !== newValue) {
-                this.cell.newValue = newValue;
-            }
+            super.newCellValue = this.parseValue(_value);
         }
     }
 

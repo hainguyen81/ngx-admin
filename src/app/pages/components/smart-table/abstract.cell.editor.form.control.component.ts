@@ -26,7 +26,7 @@ import {IEvent} from '../abstract.component';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {DefaultEditor} from 'ng2-smart-table';
 import {Cell} from 'ng2-smart-table/lib/data-set/cell';
-import {isArray, isNullOrUndefined} from 'util';
+import {isArray, isNullOrUndefined, isObject} from 'util';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 
@@ -46,8 +46,8 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     private _inputClass: string;
 
     @Output() readonly onStopEditing: EventEmitter<any> = new EventEmitter<any>(true);
-    @Output() onEdited: EventEmitter<any> = new EventEmitter<any>(true);
-    @Output() onClick: EventEmitter<any> = new EventEmitter<any>(true);
+    @Output() readonly onEdited: EventEmitter<any> = new EventEmitter<any>(true);
+    @Output() readonly onClick: EventEmitter<any> = new EventEmitter<any>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -283,6 +283,25 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     /**
+     * Get the current {Cell} new value
+     * @return the current {Cell} new value
+     */
+    get newCellValue(): any {
+        return this.cell.newValue;
+    }
+
+    /**
+     * Set the current {Cell} new value
+     * @param _value to apply
+     */
+    set newCellValue(_value: any) {
+        if (this.cell && this.isEditable && this.isInEditingMode
+            && this.cell.newValue !== _value) {
+            this.cell.newValue = _value;
+        }
+    }
+
+    /**
      * Get the current {Column#getConfig} instance
      * @return the current {Column#getConfig} instance
      */
@@ -428,13 +447,25 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     private __parseValidatorFunctions(validators: any): ValidatorFn[] {
         if (isNullOrUndefined(validators)) {
-            return  [];
+            return [];
 
         } else if (isArray(validators) && Array.from(validators as ValidatorFn[]).length) {
             return [].concat(Array.from(validators as ValidatorFn[]));
 
-        } else if (validators && validators.hasOwnProperty('validators')) {
-            return [].concat(this.__parseValidatorFunctions(validators['validators']));
+        } else if (isObject(validators)) {
+            if (validators.hasOwnProperty('validators')) {
+                return [].concat(this.__parseValidatorFunctions(validators['validators']));
+
+            } else if (validators.hasOwnProperty('validation')) {
+                return [].concat(this.__parseValidatorFunctions(validators['validation']));
+
+            } else {
+                let validatorFn: ValidatorFn[] = [];
+                Object.keys(validators).forEach(key => {
+                    validatorFn = validatorFn.concat(this.__parseValidatorFunctions(validators[key]));
+                });
+                return validatorFn;
+            }
 
         } else if (typeof validators === 'function' && !isNullOrUndefined(<ValidatorFn>validators)) {
             return [validators];
@@ -449,15 +480,27 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     private __parseAsyncValidatorFunctions(validators: any): AsyncValidatorFn[] {
         if (isNullOrUndefined(validators)) {
-            return  [];
+            return [];
 
         } else if (isArray(validators) && Array.from(validators as AsyncValidatorFn[]).length) {
             return [].concat(Array.from(validators as AsyncValidatorFn[]));
 
-        } else if (validators && validators.hasOwnProperty('asyncValidators')) {
-            return [].concat(this.__parseValidatorFunctions(validators['asyncValidators']));
+        } else if (isObject(validators)) {
+            if (validators.hasOwnProperty('asyncValidators')) {
+                return [].concat(this.__parseAsyncValidatorFunctions(validators['asyncValidators']));
 
-        } else if (typeof validators === 'function' && !isNullOrUndefined(<AsyncValidatorFn>validators)) {
+            } else if (validators.hasOwnProperty('validation')) {
+                return [].concat(this.__parseAsyncValidatorFunctions(validators['validation']));
+
+            } else {
+                let validatorFn: AsyncValidatorFn[] = [];
+                Object.keys(validators).forEach(key => {
+                    validatorFn = validatorFn.concat(this.__parseAsyncValidatorFunctions(validators[key]));
+                });
+                return validatorFn;
+            }
+
+        } else if (typeof validators === 'function' && !isNullOrUndefined(<ValidatorFn>validators)) {
             return [validators];
         }
         return [];
