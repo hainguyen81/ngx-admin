@@ -2,7 +2,7 @@ import {
     AbstractControl,
     AbstractControlOptions,
     AsyncValidatorFn,
-    FormControl,
+    FormControl, FormGroup,
     ValidatorFn,
 } from '@angular/forms';
 import {
@@ -37,6 +37,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // DECLARATION
     // -------------------------------------------------
 
+    private _formGroup: FormGroup = new FormGroup({});
     private _errorMessages: string[];
     private _cell: Cell;
     private _inputClass: string;
@@ -48,6 +49,22 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the present {FormGroup} instance
+     * @return the present {FormGroup} instance
+     */
+    @Input() get formGroup(): FormGroup {
+        return this._formGroup;
+    }
+
+    /**
+     * Set the present {FormGroup} instance
+     * @param _formGroup to apply
+     */
+    set formGroup(_formGroup: FormGroup) {
+        this._formGroup = _formGroup || new FormGroup({});
+    }
 
     /**
      * Get the present {FormControl} instance
