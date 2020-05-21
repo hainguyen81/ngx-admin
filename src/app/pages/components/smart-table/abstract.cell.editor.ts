@@ -1,17 +1,17 @@
-import {Cell, DefaultEditor} from 'ng2-smart-table';
+import {Cell} from 'ng2-smart-table';
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
     forwardRef,
     Inject,
-    OnDestroy, Output,
+    Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {isObservable, Observable, of, throwError} from 'rxjs';
+import {isObservable, Observable, of} from 'rxjs';
 import {IEvent} from '../abstract.component';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
@@ -19,18 +19,16 @@ import {isNullOrUndefined} from 'util';
 import PromiseUtils from '../../../utils/promise.utils';
 import {isPromise} from 'rxjs/internal-compatibility';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {BaseCellEditorFormControlComponent} from './base.cell.editor.form.control.component';
 
 /**
  * Customization smart table cell editor/render component
  */
-export abstract class AbstractCellEditor extends DefaultEditor
-    implements OnDestroy {
+export abstract class AbstractCellEditor extends BaseCellEditorFormControlComponent {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
-
-    private _cell: Cell;
 
     private _valueFormatter: (value: any) => any;
     private _valueParser: (value: any) => any;
@@ -206,93 +204,6 @@ export abstract class AbstractCellEditor extends DefaultEditor
     }
 
     /**
-     * Get the current {Cell} instance
-     * @return the current {Cell} instance
-     */
-    get cell(): Cell {
-        if (isNullOrUndefined(this._cell)) {
-            if (super.cell) {
-                this._cell = super.cell;
-            } else if (this.parentCell) {
-                this._cell = this.parentCell.cell;
-            }
-        }
-        return this._cell;
-    }
-
-    /**
-     * Set the current {Cell} instance
-     * @param _cell to apply
-     */
-    set cell(_cell: Cell) {
-        this._cell = _cell;
-    }
-
-    /**
-     * Get the parent {CellComponent} instance
-     * @return the parent {CellComponent} instance
-     */
-    protected get parentCell(): CellComponent {
-        return this._parentCell;
-    }
-
-    /**
-     * Get the {TranslateService} instance for applying multilingual
-     * @return the {TranslateService} instance
-     */
-    protected get translateService(): TranslateService {
-        return this._translateService;
-    }
-
-    /**
-     * Get the {Renderer2} instance for applying HTML element attributes
-     * @return the {Renderer2} instance
-     */
-    protected get renderer(): Renderer2 {
-        return this._renderer;
-    }
-
-    /**
-     * Get the {Renderer2} instance for applying HTML element attributes
-     * @return the {Renderer2} instance
-     */
-    protected get logger(): NGXLogger {
-        return this._logger;
-    }
-
-    /**
-     * Get the {ComponentFactoryResolver} instance
-     * @return the {ComponentFactoryResolver} instance
-     */
-    protected get factoryResolver(): ComponentFactoryResolver {
-        return this._factoryResolver;
-    }
-
-    /**
-     * Get the {ViewContainerRef} instance
-     * @return the {ViewContainerRef} instance
-     */
-    protected get viewContainerRef(): ViewContainerRef {
-        return this._viewContainerRef;
-    }
-
-    /**
-     * Get the {ChangeDetectorRef} instance
-     * @return the {ChangeDetectorRef} instance
-     */
-    protected get changeDetectorRef(): ChangeDetectorRef {
-        return this._changeDetectorRef;
-    }
-
-    /**
-     * Get the {ElementRef} instance
-     * @return the {ElementRef} instance
-     */
-    protected get elementRef(): ElementRef {
-        return this._elementRef;
-    }
-
-    /**
      * Get the cell changed event listener from the configuration
      * @return the cell changed event listener from the configuration
      */
@@ -343,57 +254,21 @@ export abstract class AbstractCellEditor extends DefaultEditor
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(forwardRef(() => CellComponent)) private _parentCell: CellComponent,
-                          @Inject(TranslateService) private _translateService: TranslateService,
-                          @Inject(Renderer2) private _renderer: Renderer2,
-                          @Inject(NGXLogger) private _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) private _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) private _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) private _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) private _elementRef: ElementRef) {
-        super();
-        _parentCell || throwError('Could not inject CellComponent');
-        _translateService || throwError('Could not inject TranslateService');
-        _renderer || throwError('Could not inject Renderer2');
-        _logger || throwError('Could not inject NGXLogger');
-        _translateService.onLangChange.subscribe(value => this.onLangChange({event: value}));
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    /**
-     * Triggered `languageChange` event
-     * @param event {IEvent} that contains {$event} as LangChangeEvent
-     */
-    onLangChange(event: IEvent): void {
-        // TODO Waiting for implementing from children component
-        this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
-    }
-
-    ngOnDestroy(): void {
-        // this.changeDetectorRef.detach();
+    protected constructor(@Inject(forwardRef(() => CellComponent)) _parentCell: CellComponent,
+                          @Inject(TranslateService) _translateService: TranslateService,
+                          @Inject(Renderer2) _renderer: Renderer2,
+                          @Inject(NGXLogger) _logger: NGXLogger,
+                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                          @Inject(ElementRef) _elementRef: ElementRef) {
+        super(_parentCell, _translateService, _renderer, _logger,
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
 
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
-
-    /**
-     * Translate the specified value
-     * @param value to translate
-     * @param interpolateParams message parameters
-     * @return translated value or itself
-     */
-    public translate(value?: string, interpolateParams?: Object | null): string {
-        if (!(value || '').length || !this.translateService) {
-            return value;
-        }
-        return (interpolateParams
-            ? this.translateService.instant(value, interpolateParams)
-            : this.translateService.instant(value));
-    }
 
     /**
      * Formatter function to format the model field value to viewed value
@@ -471,15 +346,6 @@ export abstract class AbstractCellEditor extends DefaultEditor
             return of(this.cellValue);
         }
         return of(undefined);
-    }
-
-    /**
-     * Detect changes
-     */
-    public detectChanges(): void {
-        if (!(<any>this.changeDetectorRef).destroyed) {
-            this.changeDetectorRef.detectChanges();
-        }
     }
 
     /**
