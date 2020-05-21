@@ -1,15 +1,19 @@
 <div [ngSwitch]="viewMode">
-    <div *ngSwitchCase="true" [innerHTML]="(cellValue || '') | translate"></div>
+    <div *ngSwitchCase="true" class="cell-viewer w-100 d-table select-cell" [innerHTML]="(cellValue || '') | translate"></div>
     <div *ngSwitchDefault>
         <select [ngClass]="inputClass"
-                class="form-control"
+                class="cell-editor w-100 d-table select-cell"
                 [(ngModel)]="newCellValue"
                 (ngModelChange)="onSelectionChanged({ data: newCellValue })"
                 [disabled]="disabled || readonly"
                 [name]="cellId"
                 (click)="onClick.emit($event)"
                 (keydown.enter)="onEdited.emit($event)"
-                (keydown.esc)="onStopEditing.emit()">
+                (keydown.esc)="onStopEditing.emit()"
+                [formControl]="control"
+                [formGroup]="formGroup"
+                [class.mat-error]="control.invalid && control.touched"
+        >
             <option *ngFor="let option of cellColumnConfig?.list" [value]="option.value"
                     [selected]="option.value === newCellValue">
                 {{(option.title || option.label || "") | translate}}

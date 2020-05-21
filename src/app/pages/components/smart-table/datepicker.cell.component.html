@@ -1,1 +1,13 @@
-<ngx-date-picker [config]="cellColumnConfig" [model]="newCellValue"></ngx-date-picker>
+<div class="cell-viewer w-100 d-table text-center date-time-cell" [title]="cellValue" *ngIf="viewMode">
+    <span class="d-table-cell w-100 text-center date-time-cell" [innerHTML]="cellValue"></span>
+</div>
+<div class="cell-editor w-100 d-table date-time-cell" *ngIf="!viewMode">
+    <ngx-date-picker [config]="cellColumnConfig"
+                     [model]="newCellValue"
+                     [required]="required"
+                     [disabled]="disabled || readonly"
+                     [formControl]="control"
+                     [formGroup]="formGroup"
+                     [class.mat-error]="control.invalid && control.touched"
+    ></ngx-date-picker>
+</div>

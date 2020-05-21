@@ -4,7 +4,7 @@ import {
     AsyncValidatorFn,
     FormControl,
     FormGroup,
-    ValidatorFn,
+    ValidatorFn, Validators,
 } from '@angular/forms';
 import {
     AfterViewInit,
@@ -335,6 +335,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
 
     /**
      * Get a boolean value indicating the cell whether is disabled in edit mode
+     * @return true for disabled; else false
      */
     get disabled(): boolean {
         if (this.viewMode) return true;
@@ -348,7 +349,23 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     /**
+     * Get a boolean value indicating the cell whether is required in edit mode
+     * @return true for required; else false
+     */
+    get required(): boolean {
+        if (this.viewMode) return true;
+        const requiredConfig: any = this.getConfigValue('required', false);
+        if (isNullOrUndefined(requiredConfig)) return false;
+        if (typeof requiredConfig === 'function') {
+            return (requiredConfig as Function).apply(this,
+                [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
+        }
+        return (requiredConfig === true);
+    }
+
+    /**
      * Get a boolean value indicating the cell whether is readonly in edit mode
+     * @return true for readonly; else false
      */
     get readonly(): boolean {
         if (this.viewMode) return true;
@@ -436,7 +453,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
         const configAsyncValidators: any = this.getConfigValue('asyncValidators');
         const parsedAsyncValidators: AsyncValidatorFn[] = this.__parseAsyncValidatorFunctions(configAsyncValidators);
         const presentAsyncValidators: AsyncValidatorFn[] = this.__parseAsyncValidatorFunctions(this._asyncValidator);
-        this.setValidators([].concat(presentValidators).concat(parsedValidators));
+        this.setValidators((require ? [Validators.required] : []).concat(presentValidators).concat(parsedValidators));
         this.setAsyncValidators([].concat(presentAsyncValidators).concat(parsedAsyncValidators));
     }
 

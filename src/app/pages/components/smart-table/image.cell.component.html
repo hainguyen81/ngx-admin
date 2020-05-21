@@ -2,8 +2,13 @@
                    [showAlbum]="true"
                    [onlyPrimary]="true"
                    [allowModified]="!disabled && !readonly"
-                   [images]="images">
-</ngx-image-gallery>
+                   [images]="images"
+                   [formControl]="control"
+                   [formGroup]="formGroup"
+                   [required]="required"
+                   [disabled]="disabled || readonly"
+                   [class.mat-error]="control.invalid && control.touched"
+></ngx-image-gallery>
 <div [class.d-table-cell]="true"
      *ngIf="(descriptor || '').length"
      [innerHTML]="descriptor"

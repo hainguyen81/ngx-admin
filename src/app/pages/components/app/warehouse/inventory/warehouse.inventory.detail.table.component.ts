@@ -65,7 +65,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {
     IWarehouseInventoryDetailStorage,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
-import {Validators} from '@angular/forms';
+import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -93,6 +93,9 @@ export const WarehouseInventoryDetailTableSettings = {
             editor: {
                 type: 'custom',
                 component: WarehouseItemCellComponent,
+                config: {
+                    required: true,
+                },
             },
         },
         batches: {
@@ -141,6 +144,7 @@ export const WarehouseInventoryDetailTableSettings = {
                 component: NumberCellComponent,
                 config: {
                     isCurrency: false,
+                    required: true,
                 },
             },
         },
@@ -168,9 +172,7 @@ export const WarehouseInventoryDetailTableSettings = {
                                 storage => !isNullOrUndefined(storage.quantity) && storage.quantity > 0);
                         return (!isNullOrUndefined(anyBatch) || !isNullOrUndefined(anyStorage));
                     },
-                    validators: {
-                        required: Validators.required,
-                    },
+                    required: true,
                 },
             },
         },
@@ -363,6 +365,22 @@ export class WarehouseInventoryDetailSmartTableComponent
     }
 
     /**
+     * Fire while item cell data had been changed
+     * @param e {IEvent}
+     */
+    protected onItemCellChanged(e: IEvent) {
+        const row: Row =
+            (e &&  e.data ? e.data['row'] as Row : undefined);
+        const item: IWarehouseItem =
+            (e && e.data ? e.data['changedData'] as IWarehouseItem : undefined);
+        if (!isNullOrUndefined(row) && !isNullOrUndefined(item)) {
+            const unitPriceCell: Cell = row.cells[4];
+            unitPriceCell.setValue(item.selling_price);
+        }
+        this.__calculateFooterSummary();
+    }
+
+    /**
      * Fire while batches cell data had been changed
      * @param e {IEvent}
      */
@@ -547,6 +565,11 @@ export class WarehouseInventoryDetailSmartTableComponent
      */
     private __attachCellChangedEventsSettings() {
         const settings: any = this.config;
+
+        settings['columns']['item_code']['editor']['config'] =
+            (settings['columns']['item_code']['editor']['config'] || {});
+        const itemColumnConfig = settings['columns']['item_code']['editor']['config'];
+        itemColumnConfig['cellChanged'] = (e: IEvent) => this.onItemCellChanged(e);
 
         settings['columns']['batches']['editor']['config'] =
             (settings['columns']['batches']['editor']['config'] || {});

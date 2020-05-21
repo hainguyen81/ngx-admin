@@ -1,1 +1,1 @@
-<div [class.d-table-cell]="true" [innerHTML]="cellValue"></div>
+<div [class.d-table-cell]="true" [innerHTML]="((cellValue || '') | translate)"></div>

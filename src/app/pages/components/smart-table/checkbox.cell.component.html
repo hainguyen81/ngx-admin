@@ -2,4 +2,8 @@
              [(ngModel)]="viewMode ? cellValue : newCellValue"
              [disabled]="disabled || readonly"
              (ngModelChange)="onCheckChanged({ data: newCellValue })"
+             [required]="required"
+             [formControl]="control"
+             [formGroup]="formGroup"
+             [class.mat-error]="control.invalid && control.touched"
 ></nb-checkbox>

@@ -124,6 +124,7 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
                         });
                         component.onSelect.subscribe(($event: IEvent) => {
                             this.newCellValue = $event.data;
+                            this.fireCellChanged($event);
                         });
                         component.refresh();
                     }
