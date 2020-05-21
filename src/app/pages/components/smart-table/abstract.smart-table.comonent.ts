@@ -1062,7 +1062,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             return;
         }
 
-        if (!this.validateRow(row)) {
+        if (this.validateRow(row)) {
             this.removeEditingRow(row);
             this.gridComponent.save(row, this.tableComponent.editConfirm || new EventEmitter<any>());
         }
