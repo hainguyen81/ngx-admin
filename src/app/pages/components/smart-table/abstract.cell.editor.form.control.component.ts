@@ -6,6 +6,7 @@ import {
     ValidatorFn,
 } from '@angular/forms';
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
@@ -31,7 +32,8 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 /**
  * Abstract cell editor as form {FormControl}
  */
-export abstract class AbstractCellEditorFormControlComponent extends FormControl implements DefaultEditor {
+export abstract class AbstractCellEditorFormControlComponent extends FormControl
+    implements DefaultEditor, AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -64,6 +66,8 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     set formGroup(_formGroup: FormGroup) {
         this._formGroup = _formGroup || new FormGroup({});
+        this.cell && this._formGroup && !this._formGroup.contains(this.cell.getId())
+        && this._formGroup.registerControl(this.cell.getId(), this);
     }
 
     /**
@@ -302,6 +306,11 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     onLangChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
+    }
+
+    ngAfterViewInit() {
+        this.cell && this.formGroup && !this.formGroup.contains(this.cell.getId())
+        && this.formGroup.registerControl(this.cell.getId(), this);
     }
 
     // -------------------------------------------------
