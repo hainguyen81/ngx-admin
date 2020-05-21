@@ -1,4 +1,5 @@
 import {
+    AbstractControl,
     AbstractControlOptions,
     AsyncValidatorFn,
     FormControl,
@@ -41,6 +42,14 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the present {FormControl} instance
+     * @return the present {FormControl} instance
+     */
+    get control(): AbstractControl {
+        return this;
+    }
 
     /**
      * Get the present validation error messages

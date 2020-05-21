@@ -7,7 +7,8 @@
            [class.currency]="isCurrency"
            type="number"
            [(ngModel)]="newCellValue"
-           (ngModelChange)="onDataChanged({ data: newCellValue })">
+           (ngModelChange)="onDataChanged({ data: newCellValue })"
+           [formControl]="control">
 </div>
 <div class="cell-viewer w-100 d-table" *ngIf="viewMode">
     <span class="d-table-cell w-100 text-right number-cell currency" *ngIf="isCurrency">{{cellValue | currency}}</span>
