@@ -140,7 +140,6 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
 
     ngOnDestroy(): void {
         PromiseUtils.unsubscribe(this._warehouseItemBehavior);
-        super.ngOnDestroy();
     }
 
     // -------------------------------------------------
