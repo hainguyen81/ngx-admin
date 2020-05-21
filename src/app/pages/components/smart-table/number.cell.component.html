@@ -1,4 +1,4 @@
-<div class="cell-editor d-table-cell" *ngIf="!viewMode">
+<div class="cell-editor w-100 d-table" *ngIf="!viewMode">
     <input #serialInput
            matInput
            class="cell-editor-number text-right number-cell mr-sm-1"
@@ -7,8 +7,7 @@
            [class.currency]="isCurrency"
            type="number"
            [(ngModel)]="newCellValue"
-           (ngModelChange)="onDataChanged({ data: newCellValue })"
-           [formControl]="control">
+           (ngModelChange)="onDataChanged({ data: newCellValue })">
 </div>
 <div class="cell-viewer w-100 d-table" *ngIf="viewMode">
     <span class="d-table-cell w-100 text-right number-cell currency" *ngIf="isCurrency">{{cellValue | currency}}</span>

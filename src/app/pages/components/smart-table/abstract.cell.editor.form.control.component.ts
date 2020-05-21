@@ -8,8 +8,12 @@ import {
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef, EventEmitter, forwardRef,
-    Inject, Input, Output,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Inject,
+    Input,
+    Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -37,9 +41,9 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     private _cell: Cell;
     private _inputClass: string;
 
-    private _onStopEditing: EventEmitter<any>;
-    private _onEdited: EventEmitter<any>;
-    private _onClick: EventEmitter<any>;
+    @Output() readonly onStopEditing: EventEmitter<any> = new EventEmitter<any>(true);
+    @Output() onEdited: EventEmitter<any> = new EventEmitter<any>(true);
+    @Output() onClick: EventEmitter<any> = new EventEmitter<any>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -230,54 +234,6 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     set inputClass(_inputClass: string) {
         this._inputClass = _inputClass;
-    }
-
-    /**
-     * Get the present {Cell} `onStopEditing` event
-     * @return the present {Cell} `onStopEditing` event
-     */
-    @Output() get onStopEditing(): EventEmitter<any> {
-        return this._onStopEditing;
-    }
-
-    /**
-     * Set the present {Cell} `onStopEditing` event
-     * @param _onStopEditing to apply
-     */
-    set onStopEditing(_onStopEditing: EventEmitter<any>) {
-        this._onStopEditing = _onStopEditing;
-    }
-
-    /**
-     * Get the present {Cell} `onEdited` event
-     * @return the present {Cell} `onEdited` event
-     */
-    @Output() get onEdited(): EventEmitter<any> {
-        return this._onEdited;
-    }
-
-    /**
-     * Set the present {Cell} `onEdited` event
-     * @param _onEdited to apply
-     */
-    set onEdited(_onEdited: EventEmitter<any>) {
-        this._onEdited = _onEdited;
-    }
-
-    /**
-     * Get the present {Cell} `onClick` event
-     * @return the present {Cell} `onClick` event
-     */
-    @Output() get onClick(): EventEmitter<any> {
-        return this._onClick;
-    }
-
-    /**
-     * Set the present {Cell} `onClick` event
-     * @param _onClick to apply
-     */
-    set onClick(_onClick: EventEmitter<any>) {
-        this._onClick = _onClick;
     }
 
     // -------------------------------------------------
