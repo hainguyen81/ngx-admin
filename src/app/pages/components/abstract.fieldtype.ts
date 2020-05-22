@@ -29,6 +29,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     private _config: any;
     /* use for standalone component */
     private __internalValue: any;
+    private _accessorName: string;
 
     private _valueFormatter: (value: any) => any;
     private _valueParser: (value: any) => any;
@@ -37,6 +38,18 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    @Input('name') get name(): string {
+        return (this.field ? this.field.id : this._accessorName);
+    }
+
+    set name(_accessorName: string) {
+        this._accessorName = _accessorName;
+        if (this.field) {
+            this.field.id = _accessorName;
+        }
+    }
+
+    /**
     /**
      * Get the component configuration
      * @return the component configuration

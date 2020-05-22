@@ -631,10 +631,27 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * Items that have children may omit to have an ID.
      */
     private _items: any[];
+    private _id: string;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the component identity
+     * @return the component identity
+     */
+    @Input() get id(): string {
+        return this._id;
+    }
+
+    /**
+     * Set the component identity
+     * @param _id to apply
+     */
+    set id(_id: string) {
+        this._id = _id;
+    }
 
     /**
      * Get the {NgSelectComponent} component

@@ -2,7 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
+    ElementRef, forwardRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -21,6 +21,8 @@ import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abs
 import {
     AppModuleDataIndexSettingsFormlySelectFieldComponent,
 } from '../../../components/common/app.module.data.index.formly.select.field.component';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {WarehouseItemCellComponent} from './warehouse.item.cell.component';
 
 export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -59,6 +61,11 @@ export const WarehouseItemNgxSelectOptions: INgxSelectOptions =
     selector: 'ngx-select-2-app-module-warehouse-item',
     templateUrl: '../../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../../formly/formly.select.field.component.scss'],
+    providers: [{
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => WarehouseItemCellComponent),
+        multi: true,
+    }],
 })
 export class WarehouseItemFormlySelectFieldComponent
     extends AppModuleDataIndexSettingsFormlySelectFieldComponent<IWarehouseItem, WarehouseItemDatasource> {

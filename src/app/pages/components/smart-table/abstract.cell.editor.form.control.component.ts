@@ -2,6 +2,7 @@ import {
     AbstractControl,
     AbstractControlOptions,
     AsyncValidatorFn,
+    ControlValueAccessor,
     FormControl,
     FormGroup,
     ValidatorFn, Validators,
@@ -34,7 +35,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
  * Abstract cell editor as form {FormControl}
  */
 export abstract class AbstractCellEditorFormControlComponent extends FormControl
-    implements DefaultEditor, AfterViewInit {
+    implements DefaultEditor, AfterViewInit, ControlValueAccessor {
 
     // -------------------------------------------------
     // DECLARATION
@@ -49,9 +50,44 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     @Output() readonly onEdited: EventEmitter<any> = new EventEmitter<any>(true);
     @Output() readonly onClick: EventEmitter<any> = new EventEmitter<any>(true);
 
+    private _onTouch: any[];
+    private _onChange: any[];
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the `onTouch` callback from {ControlValueAccessor#onTouch}
+     * @return the `onTouch` callback from {ControlValueAccessor#onTouch}
+     */
+    @Input() get onTouch(): any[] {
+        return this._onTouch || [];
+    }
+
+    /**
+     * Set the `onTouch` callback from {ControlValueAccessor#onTouch}
+     * @param _onTouch to apply
+     */
+    set onTouch(_onTouch: any[]) {
+        this._onTouch = _onTouch || [];
+    }
+
+    /**
+     * Get the `onChange` callback from {ControlValueAccessor#onChange}
+     * @return the `onChange` callback from {ControlValueAccessor#onChange}
+     */
+    @Input() get onChange(): any[] {
+        return this._onChange || [];
+    }
+
+    /**
+     * Set the `onChange` callback from {ControlValueAccessor#onTouch}
+     * @param _onChange to apply
+     */
+    set onChange(_onChange: any[]) {
+        this._onChange = _onChange || [];
+    }
 
     /**
      * Get the present {FormGroup} instance
@@ -67,8 +103,8 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     set formGroup(_formGroup: FormGroup) {
         this._formGroup = _formGroup || new FormGroup({});
-        this.cell && this._formGroup && !this._formGroup.contains(this.cell.getId())
-        && this._formGroup.registerControl(this.cell.getId(), this);
+        this.cell && this._formGroup && !this._formGroup.contains(this.cellId)
+        && this._formGroup.registerControl(this.cellId, this);
     }
 
     /**
@@ -434,8 +470,27 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
         this.__detectValidationConfig();
 
         // register form control for cell
-        this.cell && this.formGroup && !this.formGroup.contains(this.cell.getId())
-        && this.formGroup.registerControl(this.cell.getId(), this);
+        this.cell && this.formGroup && !this.formGroup.contains(this.cellId)
+        && this.formGroup.registerControl(this.cellId, this.control);
+    }
+
+    registerOnTouched(fn: any) {
+        if (this.viewMode) return;
+        const _onTouches: any[] = this.onTouch;
+        _onTouches.push(fn);
+        this.onTouch = _onTouches;
+    }
+
+    registerOnChange(fn: Function) {
+        if (this.viewMode) return;
+        const _onChanges: any[] = this.onChange;
+        _onChanges.push(fn);
+        this.onChange = _onChanges;
+    }
+
+    writeValue(obj: any) {
+        if (this.viewMode) return;
+        this.newCellValue = obj;
     }
 
     // -------------------------------------------------

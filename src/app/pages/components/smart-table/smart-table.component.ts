@@ -4,8 +4,10 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, QueryList,
-    Renderer2, ViewChildren,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
