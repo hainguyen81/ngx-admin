@@ -119,6 +119,8 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     }
 
     ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
         if (!this._selectComponent && !this.viewMode) {
             this._selectComponent = ComponentUtils.queryComponent(
                 this.querySelectComponent, component => {

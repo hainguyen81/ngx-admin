@@ -157,6 +157,8 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     }
 
     ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
         if (!this.viewMode) {
             if (!(this._selectComponents || []).length) {
                 this._selectComponents = ComponentUtils.queryComponents(this.querySelectComponent);

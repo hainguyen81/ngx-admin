@@ -77,6 +77,8 @@ export class ObserveCellComponent extends AbstractCellEditor
     // -------------------------------------------------
 
     ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
         // observe images
         this.observeConfigProperty(ObserveCellComponent.OBSERVE_CELL_VALUE_PREPARE)
             .subscribe(observedValue => this._observedValue = observedValue);

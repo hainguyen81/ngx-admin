@@ -4,8 +4,10 @@ import {
     AsyncValidatorFn,
     ControlValueAccessor,
     FormControl,
+    FormControlDirective,
     FormGroup,
-    ValidatorFn, Validators,
+    ValidatorFn,
+    Validators,
 } from '@angular/forms';
 import {
     AfterViewInit,
@@ -17,7 +19,9 @@ import {
     Inject,
     Input,
     Output,
+    QueryList,
     Renderer2,
+    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -30,6 +34,7 @@ import {Cell} from 'ng2-smart-table/lib/data-set/cell';
 import {isArray, isNullOrUndefined, isObject} from 'util';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
+import ComponentUtils from '../../../utils/component.utils';
 
 /**
  * Abstract cell editor as form {FormControl}
@@ -40,6 +45,10 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
+
+    @ViewChildren(FormControlDirective)
+    private readonly queryFormControlDirectives: QueryList<FormControlDirective>;
+    private _formControlDirectives: FormControlDirective[];
 
     private _formGroup: FormGroup = new FormGroup({});
     private _errorMessages: string[];
@@ -56,6 +65,23 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get a boolean value indicating the `formControl` directive
+     * whether should apply value accessor as the present if undefined
+     * @return true for should applying; else false
+     */
+    protected get shouldValueAccessorAsThis() {
+        return true;
+    }
+
+    /**
+     * Get the {FormControlDirective} instances
+     * @return the {FormControlDirective} instances
+     */
+    protected get formControlDirectives(): FormControlDirective[] {
+        return this._formControlDirectives;
+    }
 
     /**
      * Get the `onTouch` callback from {ControlValueAccessor#onTouch}
@@ -466,6 +492,18 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     ngAfterViewInit() {
+        // detect formControl directives
+        if (!(this._formControlDirectives || []).length && !this.viewMode) {
+            const _thisValueAccessor: AbstractCellEditorFormControlComponent = this;
+            this._formControlDirectives = ComponentUtils.queryComponents(
+                this.queryFormControlDirectives, formControlDirective => {
+                    if (_thisValueAccessor.shouldValueAccessorAsThis && formControlDirective
+                        && isNullOrUndefined(formControlDirective.valueAccessor)) {
+                        formControlDirective.valueAccessor = _thisValueAccessor;
+                    }
+                });
+        }
+
         // check config for validation
         this.__detectValidationConfig();
 

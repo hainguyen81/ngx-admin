@@ -1,15 +1,29 @@
-<ngx-image-gallery #imageGallery
-                   [showAlbum]="true"
-                   [onlyPrimary]="true"
-                   [allowModified]="!disabled && !readonly"
-                   [images]="images"
-                   [formControl]="control"
-                   [formGroup]="formGroup"
-                   [required]="required"
-                   [disabled]="disabled || readonly"
-                   [class.mat-error]="control.invalid && control.touched"
-></ngx-image-gallery>
-<div [class.d-table-cell]="true"
-     *ngIf="(descriptor || '').length"
-     [innerHTML]="descriptor"
-></div>
+<div class="cell-viewer w-100 d-table text-center image-cell" [title]="cellValue" *ngIf="viewMode">
+    <ngx-image-gallery #imageGallery
+                       [showAlbum]="true"
+                       [onlyPrimary]="true"
+                       [allowModified]="false"
+                       [images]="images"
+    ></ngx-image-gallery>
+    <div [class.d-table-cell]="true"
+         *ngIf="(descriptor || '').length"
+         [innerHTML]="descriptor"
+    ></div>
+</div>
+<div class="cell-editor w-100 d-table image-cell" *ngIf="!viewMode">
+    <ngx-image-gallery #imageGallery
+                       [showAlbum]="true"
+                       [onlyPrimary]="true"
+                       [allowModified]="!disabled && !readonly"
+                       [images]="images"
+                       [formControl]="control"
+                       [formGroup]="formGroup"
+                       [required]="required"
+                       [disabled]="disabled || readonly"
+                       [class.mat-error]="control.invalid && control.touched"
+    ></ngx-image-gallery>
+    <div [class.d-table-cell]="true"
+         *ngIf="(descriptor || '').length"
+         [innerHTML]="descriptor"
+    ></div>
+</div>

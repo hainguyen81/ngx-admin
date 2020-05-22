@@ -92,6 +92,8 @@ export class ImageCellComponent extends AbstractCellEditor
     // -------------------------------------------------
 
     ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
         // observe images
         this.observeConfigProperty(ImageCellComponent.IMAGES_PREPARE)
             .subscribe(images => {
