@@ -595,6 +595,12 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     @Output() readonly focus: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     /**
+     * Fired on select blur
+     * @param $event {IEvent} no data
+     */
+    @Output() readonly blur: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
+
+    /**
      * Fired when item is removed while [multiple]='true'
      * @param $event {IEvent} with data is a removed item
      */
@@ -981,6 +987,16 @@ export abstract class AbstractSelectComponent<T extends DataSource>
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onFocus', $event);
         this.focus.emit($event);
+    }
+
+    /**
+     * Triggered `blur` event
+     * @param $event {IEvent} that contains {$event} as FocusEvent
+     */
+    onBlur($event: IEvent): void {
+        // TODO Waiting for implementing from children component
+        this.getLogger().debug('onBlur', $event);
+        this.blur.emit($event);
     }
 
     // -------------------------------------------------

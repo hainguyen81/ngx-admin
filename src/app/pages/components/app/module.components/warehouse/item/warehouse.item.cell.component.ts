@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    forwardRef,
+    forwardRef, HostBinding,
     Inject,
     OnDestroy,
     OnInit,
@@ -29,7 +29,6 @@ import {
 } from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/promise.utils';
-import {FormControlDirective, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -129,11 +128,12 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
                         component.onLoad.subscribe(e => {
                             component.value = this.cellValue;
                         });
-                        component.onFocus.subscribe(($event: IEvent) => {
+                        component.onBlur.subscribe(($event: IEvent) => {
                             this.control.markAsTouched({ onlySelf: true });
                         });
                         component.onSelect.subscribe(($event: IEvent) => {
                             this.newCellValue = $event.data;
+                            this.control.updateValueAndValidity({ onlySelf: true, emitEvent: true });
                             this.fireCellChanged($event);
                         });
                         component.refresh();
