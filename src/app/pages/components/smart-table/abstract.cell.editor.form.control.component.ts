@@ -333,7 +333,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      * @return the current {Cell} new value
      */
     get newCellValue(): any {
-        return this.cell.newValue;
+        return (this.viewMode ? this.cell.getValue() : this.cell.newValue);
     }
 
     /**
@@ -341,8 +341,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      * @param _value to apply
      */
     set newCellValue(_value: any) {
-        if (this.cell && this.isEditable && this.isInEditingMode
-            && this.cell.newValue !== _value) {
+        if (this.cell && !this.viewMode && this.cell.newValue !== _value) {
             this.cell.newValue = _value;
         }
     }
@@ -503,7 +502,6 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     writeValue(obj: any) {
         this.logger.debug('writeValue', obj);
         if (this.viewMode) return;
-        this.newCellValue = obj;
     }
 
     setDisabledState(isDisabled: boolean): void {

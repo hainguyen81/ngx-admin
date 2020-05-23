@@ -90,7 +90,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      * @param _value to apply
      */
     set newCellValue(_value: any) {
-        if (this.cell && this.isEditable && this.isInEditingMode) {
+        if (this.cell && !this.viewMode) {
             super.newCellValue = this.parseValue(_value);
         }
     }

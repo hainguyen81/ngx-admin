@@ -56,6 +56,10 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    /**
+     * Get the {WarehouseItemFormlySelectFieldComponent} instance
+     * @return the {WarehouseItemFormlySelectFieldComponent} instance
+     */
     protected get selectComponent(): WarehouseItemFormlySelectFieldComponent {
         return this._selectComponent;
     }
@@ -133,7 +137,6 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
                         });
                         component.onSelect.subscribe(($event: IEvent) => {
                             this.newCellValue = $event.data;
-                            this.control.updateValueAndValidity({ onlySelf: true, emitEvent: true });
                             this.fireCellChanged($event);
                         });
                         component.refresh();
