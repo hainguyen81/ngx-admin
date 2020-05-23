@@ -4,7 +4,6 @@ import {
     AsyncValidatorFn,
     ControlValueAccessor,
     FormControl,
-    FormControlDirective,
     FormGroup,
     ValidatorFn,
     Validators,
@@ -19,9 +18,7 @@ import {
     Inject,
     Input,
     Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -34,7 +31,6 @@ import {Cell} from 'ng2-smart-table/lib/data-set/cell';
 import {isArray, isNullOrUndefined, isObject} from 'util';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import ComponentUtils from '../../../utils/component.utils';
 
 /**
  * Abstract cell editor as form {FormControl}
@@ -45,10 +41,6 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
-
-    @ViewChildren(FormControlDirective)
-    private readonly queryFormControlDirectives: QueryList<FormControlDirective>;
-    private _formControlDirectives: FormControlDirective[];
 
     private _formGroup: FormGroup = new FormGroup({});
     private _errorMessages: string[];
@@ -73,14 +65,6 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     protected get shouldValueAccessorAsThis() {
         return true;
-    }
-
-    /**
-     * Get the {FormControlDirective} instances
-     * @return the {FormControlDirective} instances
-     */
-    protected get formControlDirectives(): FormControlDirective[] {
-        return this._formControlDirectives;
     }
 
     /**
@@ -492,18 +476,6 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     ngAfterViewInit() {
-        // detect formControl directives
-        if (!(this._formControlDirectives || []).length && !this.viewMode) {
-            const _thisValueAccessor: AbstractCellEditorFormControlComponent = this;
-            this._formControlDirectives = ComponentUtils.queryComponents(
-                this.queryFormControlDirectives, formControlDirective => {
-                    if (_thisValueAccessor.shouldValueAccessorAsThis && formControlDirective
-                        && isNullOrUndefined(formControlDirective.valueAccessor)) {
-                        formControlDirective.valueAccessor = _thisValueAccessor;
-                    }
-                });
-        }
-
         // check config for validation
         this.__detectValidationConfig();
 
@@ -513,6 +485,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     registerOnTouched(fn: any) {
+        this.logger.debug('registerOnTouched', fn);
         if (this.viewMode) return;
         const _onTouches: any[] = this.onTouch;
         _onTouches.push(fn);
@@ -520,6 +493,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     registerOnChange(fn: Function) {
+        this.logger.debug('registerOnChange', fn);
         if (this.viewMode) return;
         const _onChanges: any[] = this.onChange;
         _onChanges.push(fn);
@@ -527,8 +501,15 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     writeValue(obj: any) {
+        this.logger.debug('writeValue', obj);
         if (this.viewMode) return;
         this.newCellValue = obj;
+    }
+
+    setDisabledState(isDisabled: boolean): void {
+        this.logger.debug('setDisabledState', isDisabled);
+        this.setConfigValue('disabled', isDisabled);
+        this.setConfigValue('readonly', isDisabled);
     }
 
     // -------------------------------------------------

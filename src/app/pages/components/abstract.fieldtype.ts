@@ -17,9 +17,10 @@ import {NGXLogger} from 'ngx-logger';
 import {IEvent} from './abstract.component';
 import {isNullOrUndefined} from 'util';
 import HtmlUtils from '../../utils/html.utils';
+import {ControlValueAccessor} from '@angular/forms';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
-    extends FieldType<F> implements OnDestroy, AfterViewInit {
+    extends FieldType<F> implements OnDestroy, AfterViewInit, ControlValueAccessor {
 
     // -------------------------------------------------
     // DECLARATION
@@ -30,6 +31,8 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     /* use for standalone component */
     private __internalValue: any;
     private _accessorName: string;
+    private _onTouchCallback: any[];
+    private _onChangeCallback: any[];
 
     private _valueFormatter: (value: any) => any;
     private _valueParser: (value: any) => any;
@@ -37,6 +40,38 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the `onTouch` callback from {ControlValueAccessor}
+     * @return the `onTouch` callback
+     */
+    @Input('onTouchCallback') get onTouchCallback(): any[] {
+        return this._onTouchCallback;
+    }
+
+    /**
+     * Set the `onTouch` callback from {ControlValueAccessor}
+     * @param _onTouchCallback to apply
+     */
+    set onTouchCallback(_onTouchCallback: any[]) {
+        this._onTouchCallback = _onTouchCallback;
+    }
+
+    /**
+     * Get the `onChange` callback from {ControlValueAccessor}
+     * @return the `onChange` callback
+     */
+    @Input('onChangeCallback') get onChangeCallback(): any[] {
+        return this._onChangeCallback;
+    }
+
+    /**
+     * Set the `onChange` callback from {ControlValueAccessor}
+     * @param _onChangeCallback to apply
+     */
+    set onChangeCallback(_onChangeCallback: any[]) {
+        this._onChangeCallback = _onChangeCallback;
+    }
 
     @Input('name') get name(): string {
         return (this.field ? this.field.id : this._accessorName);
@@ -338,6 +373,28 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
 
     protected onStatusChanges(value: any): void {
         this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
+    }
+
+    registerOnChange(fn: any): void {
+        this.logger.debug('registerOnChange', fn);
+        this._onChangeCallback = (this._onChangeCallback || []);
+        fn && this._onChangeCallback.push(fn);
+    }
+
+    registerOnTouched(fn: any): void {
+        this.logger.debug('registerOnTouched', fn);
+        this._onTouchCallback = (this._onTouchCallback || []);
+        fn && this._onTouchCallback.push(fn);
+    }
+
+    setDisabledState(isDisabled: boolean): void {
+        this.logger.debug('setDisabledState', isDisabled);
+        this.setConfigValue('disabled', isDisabled);
+    }
+
+    writeValue(obj: any): void {
+        this.logger.debug('writeValue', obj);
+        this.value = obj;
     }
 
     // -------------------------------------------------

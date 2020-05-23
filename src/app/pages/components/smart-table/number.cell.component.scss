@@ -3,7 +3,7 @@
 @include nb-install-component() {
     ::ng-deep .cell-editor {
         .cell-editor-number.mat-error {
-            border-color: red;
+            border-color: #f44336;
         }
     }
 }

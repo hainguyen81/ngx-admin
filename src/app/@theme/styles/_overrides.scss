@@ -380,6 +380,15 @@
                 input[disabled='true'] {
                     border: none !important;
                 }
+                table-cell-custom-editor {
+                    .cell-editor-number.mat-error,
+                    .mat-error {
+                        border-color: #f44336 !important;
+                        ng-select, input {
+                            border-color: #f44336 !important;
+                        }
+                    }
+                }
             }
         }
     }

@@ -9,7 +9,8 @@ import {
     ComponentRef,
     DoCheck,
     ElementRef,
-    Inject, Input,
+    Inject,
+    Input,
     OnChanges,
     OnDestroy,
     OnInit,
@@ -31,7 +32,12 @@ import KeyboardUtils from '../../utils/keyboard.utils';
 import ComponentUtils from '../../utils/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
-import {IModalDialog, IModalDialogOptions, ModalDialogComponent, ModalDialogService} from 'ngx-modal-dialog';
+import {
+    IModalDialog,
+    IModalDialogOptions,
+    ModalDialogComponent,
+    ModalDialogService,
+} from 'ngx-modal-dialog';
 import {
     BaseElementKeydownHandlerService,
     BaseElementKeypressHandlerService,
@@ -54,6 +60,7 @@ import {NgxLocalStorageEncryptionService} from '../../services/storage.services/
 import {AppConfig} from '../../config/app.config';
 import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';
 import {ActivatedRoute, Data, ParamMap, Params, Router} from '@angular/router';
+import {ControlValueAccessor} from '@angular/forms';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -69,7 +76,7 @@ export abstract class AbstractComponent
     implements OnChanges, OnInit, DoCheck,
         AfterContentInit, AfterContentChecked,
         AfterViewInit, AfterViewChecked,
-        OnDestroy, IModalDialog {
+        OnDestroy, IModalDialog, ControlValueAccessor {
 
     protected static CONTEXT_MENU_SELECTOR: string = '.ngx-contextmenu';
 
@@ -90,6 +97,8 @@ export abstract class AbstractComponent
     private componentKeyPressHandlerService: AbstractKeypressEventHandlerService<Element>;
 
     private _config: any;
+    private _onTouchCallback: any[];
+    private _onChangeCallback: any[];
 
     // unique hack for {ModalDialogService}
     private __originalOpenDialog: Function;
@@ -97,6 +106,38 @@ export abstract class AbstractComponent
     // -------------------------------------------------
     // GETTER/SETTER
     // -------------------------------------------------
+
+    /**
+     * Get the `onTouch` callback from {ControlValueAccessor}
+     * @return the `onTouch` callback
+     */
+    @Input('onTouchCallback') get onTouchCallback(): any[] {
+        return this._onTouchCallback;
+    }
+
+    /**
+     * Set the `onTouch` callback from {ControlValueAccessor}
+     * @param _onTouchCallback to apply
+     */
+    set onTouchCallback(_onTouchCallback: any[]) {
+        this._onTouchCallback = _onTouchCallback;
+    }
+
+    /**
+     * Get the `onChange` callback from {ControlValueAccessor}
+     * @return the `onChange` callback
+     */
+    @Input('onChangeCallback') get onChangeCallback(): any[] {
+        return this._onChangeCallback;
+    }
+
+    /**
+     * Set the `onChange` callback from {ControlValueAccessor}
+     * @param _onChangeCallback to apply
+     */
+    set onChangeCallback(_onChangeCallback: any[]) {
+        this._onChangeCallback = _onChangeCallback;
+    }
 
     /**
      * Get the component configuration
@@ -844,6 +885,27 @@ export abstract class AbstractComponent
                 });
             }
         }
+    }
+
+    registerOnChange(fn: any): void {
+        this.getLogger().debug('registerOnChange', fn);
+        this._onChangeCallback = (this._onChangeCallback || []);
+        fn && this._onChangeCallback.push(fn);
+    }
+
+    registerOnTouched(fn: any): void {
+        this.getLogger().debug('registerOnTouched', fn);
+        this._onTouchCallback = (this._onTouchCallback || []);
+        fn && this._onTouchCallback.push(fn);
+    }
+
+    setDisabledState(isDisabled: boolean): void {
+        this.getLogger().debug('setDisabledState', isDisabled);
+        this.setConfigValue('disabled', isDisabled);
+    }
+
+    writeValue(obj: any): void {
+        this.getLogger().debug('writeValue', obj);
     }
 
     // -------------------------------------------------

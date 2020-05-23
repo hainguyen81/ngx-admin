@@ -29,6 +29,7 @@ import {
 } from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/promise.utils';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -37,6 +38,11 @@ import PromiseUtils from '../../../../../../utils/promise.utils';
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-warehouse-item-cell',
     templateUrl: './warehouse.item.cell.component.html',
+    providers: [{
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => WarehouseItemCellComponent),
+        multi: true,
+    }],
 })
 export class WarehouseItemCellComponent extends AbstractCellEditor
     implements OnInit, AfterViewInit, OnDestroy {
