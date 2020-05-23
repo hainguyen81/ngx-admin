@@ -1,11 +1,12 @@
 <div class="cell-editor" *ngIf="!viewMode">
     <ngx-select-2-app-module-warehouse-item
-            [disabled]="disabled || readonly"
-            [(ngModel)]="newCellValue"
-            [formControl]="control"
-            [formGroup]="formGroup"
-            [required]="required"
-            [class.mat-error]="control.invalid && control.touched"
+        #selectFieldComponentFormControl
+        [disabled]="disabled || readonly"
+        [(ngModel)]="newCellValue"
+        [formControl]="control"
+        [formGroup]="formGroup"
+        [required]="required"
+        [class.mat-error]="control.invalid && control.touched"
     ></ngx-select-2-app-module-warehouse-item>
 </div>
 <div class="cell-viewer" *ngIf="viewMode" [innerHTML]="viewValue"></div>
