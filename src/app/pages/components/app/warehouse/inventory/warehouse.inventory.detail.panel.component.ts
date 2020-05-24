@@ -70,7 +70,7 @@ export class WarehouseInventoryDetailPanelComponent
      * @return the {WarehouseInventoryDetailSmartTableComponent} instance
      */
     protected get detailTable(): WarehouseInventoryDetailSmartTableComponent {
-        return this.body as WarehouseInventoryDetailSmartTableComponent;
+        return this.footer as WarehouseInventoryDetailSmartTableComponent;
     }
 
     /**
