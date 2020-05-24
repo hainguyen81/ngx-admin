@@ -327,7 +327,7 @@
         color: inherit;
     }
     .ng-select.ng-select-single .ng-select-container .ng-arrow-wrapper {
-        bottom: 10px;
+        bottom: 9px;
     }
     .ng-select.ng-select-single .ng-select-container .ng-clear-wrapper {
         bottom: 5px;
@@ -368,6 +368,14 @@
     .mat-form-field.form-field-ngx-select .mat-form-field-infix,
     .mat-form-field.form-field-ngx-select-image .mat-form-field-infix {
         padding: 0.2775rem 0;
+    }
+    .mat-form-field.form-field-ngx-select .mat-form-field-wrapper .mat-form-field-flex,
+    .mat-form-field.form-field-ngx-select-image .mat-form-field-wrapper .mat-form-field-flex {
+        padding-top: 0;
+    }
+    .mat-form-field.form-field-ngx-select .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix,
+    .mat-form-field.form-field-ngx-select-image .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+        padding-bottom: 0;
     }
 
     /* smart table */
