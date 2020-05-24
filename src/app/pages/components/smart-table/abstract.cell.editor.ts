@@ -91,9 +91,10 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      */
     set newCellValue(_value: any) {
         if (this.cell && !this.viewMode) {
-            window.console.error(['newCellValue set', this,
-                'Parsed value', this.parseValue(_value), 'origin value', _value]);
-            super.newCellValue = this.parseValue(_value);
+            const parsedValue: any = this.parseValue(_value);
+            if (parsedValue !== super.newCellValue) {
+                super.newCellValue = parsedValue;
+            }
         }
     }
 
