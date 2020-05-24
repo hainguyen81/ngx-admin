@@ -77,7 +77,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                             {
                                 className: 'col-6',
                                 key: 'warehouse_id',
-                                type: 'input',
+                                type: 'ngx-warehouse-storage',
                                 templateOptions: {
                                     label: 'warehouse.inventory.form.storage.label',
                                     placeholder: 'warehouse.inventory.form.storage.placeholder',
