@@ -1536,11 +1536,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         let invalid: boolean;
         invalid = false;
         (row.cells || []).forEach((cell: Cell) => {
-            if (cell instanceof AbstractCellEditorFormControlComponent) {
-                const cellControl: AbstractCellEditorFormControlComponent =
-                    <AbstractCellEditorFormControlComponent>cell;
-                invalid = invalid || cellControl.validate(!cellControl.viewMode);
-
+            if (row.isInEditing && cell.isEditable()) {
+                const componentRef: AbstractCellEditorFormControlComponent =
+                    <AbstractCellEditorFormControlComponent>cell['componentRef'];
+                invalid = invalid || (!isNullOrUndefined(componentRef)
+                    && !componentRef.validate(!componentRef.viewMode));
             } else {
                 const validateFn: any = this.getConfigValue('validate');
                 if (typeof validateFn === 'function') {
