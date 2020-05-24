@@ -152,7 +152,6 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
                             this.control.markAsTouched({ onlySelf: true });
                         });
                         component.onSelect.subscribe(($event: IEvent) => {
-                            window.console.error(['Select', $event.data]);
                             this.newCellValue = $event.data;
                             this.fireCellChanged($event);
                         });
