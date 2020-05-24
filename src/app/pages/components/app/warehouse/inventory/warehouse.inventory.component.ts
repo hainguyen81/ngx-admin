@@ -40,6 +40,7 @@ import WarehouseInventory, {IWarehouseInventory} from '../../../../../@core/data
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {throwError} from 'rxjs';
+import {IdGenerators} from '../../../../../config/generator.config';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -80,6 +81,10 @@ export class WarehouseInventoryComponent
 
     protected get fulfillComponentsAtStartup(): boolean {
         return false;
+    }
+
+    get selectedModel(): IWarehouseInventory {
+        return this._selectedModel;
     }
 
     // -------------------------------------------------
@@ -191,5 +196,29 @@ export class WarehouseInventoryComponent
      */
     protected onDeleteData($event: IEvent): void {
         this.getLogger().debug('Flip-table wanna delete data', $event);
+    }
+
+    /**
+     * Perform saving data
+     */
+    protected doSave(): void {
+        if (!this.backComponent.submit()) {
+            if (this.toolbarComponent) {
+                this.showError(this.toolbarComponent.getToolbarHeader().title,
+                    'common.form.invalid_data');
+            } else {
+                this.showError('app', 'common.form.invalid_data');
+            }
+            return;
+        }
+
+        // update model if necessary
+        const model: IWarehouseInventory = this.backComponent.dataModel;
+        if (!(model.id || '').length) {
+            model.id = IdGenerators.oid.generate();
+        }
+        this.getDataSource().update(this.selectedModel, model)
+            .then(() => { this.showSaveDataSuccess(); this.doBack(); })
+            .catch(() => this.showSaveDataError());
     }
 }

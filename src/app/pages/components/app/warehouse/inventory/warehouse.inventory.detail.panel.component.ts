@@ -147,4 +147,16 @@ export class WarehouseInventoryDetailPanelComponent
         this.bodyClass = 'inventory-detail-sale-orders-body';
         this.footerClass = 'inventory-detail-table-footer';
     }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Save/SUbmit data model
+     * @return true for valid; else false
+     */
+    submit(): boolean {
+        return (this.mainForm.submit() && this.detailTable.validate());
+    }
 }
