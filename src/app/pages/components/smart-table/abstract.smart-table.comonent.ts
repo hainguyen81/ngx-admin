@@ -1528,7 +1528,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param row to validate
      * @return true for valid; else false
      */
-    protected validateRow(row: Row): boolean {
+    validateRow(row: Row): boolean {
         if (isNullOrUndefined(row)) {
             return true;
         }
@@ -1556,7 +1556,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * Validate all {Row} in table
      * @return true for valid; else false
      */
-    protected validate(): boolean {
+    validate(): boolean {
         let invalid: boolean;
         invalid = false;
         (this.rows || []).forEach(row => invalid = invalid || this.validateRow(row));
