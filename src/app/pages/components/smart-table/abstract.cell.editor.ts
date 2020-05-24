@@ -91,6 +91,8 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      */
     set newCellValue(_value: any) {
         if (this.cell && !this.viewMode) {
+            window.console.error(['newCellValue set', this,
+                'Parsed value', this.parseValue(_value), 'origin value', _value]);
             super.newCellValue = this.parseValue(_value);
         }
     }
@@ -149,8 +151,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      * @param value to parse
      */
     protected parseValue(value?: any): any {
-        let retValue: any;
-        retValue = value;
+        let retValue: any = value;
         const __valPrepareFunc: (value: any) => any = this.getConfigValue('valuePrepareFunction');
         const parser: (value: any) => any = this.valueParser;
         if ((isNullOrUndefined(parser) || typeof parser !== 'function')

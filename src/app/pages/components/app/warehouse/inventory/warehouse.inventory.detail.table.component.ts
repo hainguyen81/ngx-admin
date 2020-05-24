@@ -103,6 +103,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: WarehouseInventoryDetailBatchNoCellComponent,
             editor: {
                 type: 'custom',
@@ -115,6 +116,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: WarehouseInventoryDetailSerialCellComponent,
             editor: {
                 type: 'custom',
@@ -126,6 +128,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: WarehouseInventoryDetailStorageCellComponent,
             editor: {
                 type: 'custom',
@@ -138,6 +141,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: NumberCellComponent,
             editor: {
                 type: 'custom',
@@ -153,6 +157,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: NumberCellComponent,
             editor: {
                 type: 'custom',
@@ -181,6 +186,7 @@ export const WarehouseInventoryDetailTableSettings = {
             type: 'custom',
             sort: false,
             filter: false,
+            editable: false,
             renderComponent: NumberCellComponent,
             config: {
                 isCurrency: false,

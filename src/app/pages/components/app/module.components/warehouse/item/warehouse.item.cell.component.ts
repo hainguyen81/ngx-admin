@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    forwardRef, HostBinding,
+    forwardRef,
     Inject,
     OnDestroy,
     OnInit,
@@ -23,12 +23,13 @@ import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.field.component';
 import {IEvent} from '../../../../abstract.component';
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
-import {isNullOrUndefined} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 import {
     WarehouseItemDbService,
 } from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/promise.utils';
+import {NgOption} from '@ng-select/ng-select';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -113,12 +114,31 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     ngOnInit(): void {
         const _this: WarehouseItemCellComponent = this;
         this.valueParser = (value: any) => {
-            const item: IWarehouseItem = value as IWarehouseItem;
-            return (item ? item.code : null);
+            // check if multiple selection
+            let values: any[] = [];
+            if (isArray(value)) {
+                values = Array.from(value);
+            } else if (!isNullOrUndefined(value)) {
+                values = Array.of(value);
+            }
+
+            const items: IWarehouseItem[] = [];
+            values.forEach(val => {
+                let item: IWarehouseItem = val as IWarehouseItem;
+                if (!isNullOrUndefined(val) && val.hasOwnProperty('htmlId')) {
+                    item = (val as NgOption).value as IWarehouseItem;
+                }
+                items.push(item);
+            });
+            return (!items.length || isNullOrUndefined(items[0]) || !(items[0].code || '').length
+                ? undefined : items[0].code);
         };
         this.valueFormatter = (value: any) => {
-            if (isNullOrUndefined(_this.selectComponent)) return undefined;
-            return _this.selectComponent.findItems([value]);
+            let retValue: any = value;
+            if (!isNullOrUndefined(_this.selectComponent)) {
+                retValue = _this.selectComponent.findItems([value]);
+            }
+            return retValue;
         };
     }
 
@@ -136,6 +156,7 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
                             this.control.markAsTouched({ onlySelf: true });
                         });
                         component.onSelect.subscribe(($event: IEvent) => {
+                            window.console.error(['Select', $event.data]);
                             this.newCellValue = $event.data;
                             this.fireCellChanged($event);
                         });

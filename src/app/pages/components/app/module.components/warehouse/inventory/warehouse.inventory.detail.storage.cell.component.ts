@@ -71,10 +71,6 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         return this._inputComponents;
     }
 
-    get isEditable(): boolean {
-        return true;
-    }
-
     get warehouseDetailStorages(): IWarehouseInventoryDetailStorage[] {
         return this._warehouseDetailStorages;
     }

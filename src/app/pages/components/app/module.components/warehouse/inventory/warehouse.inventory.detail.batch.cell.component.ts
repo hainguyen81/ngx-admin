@@ -76,10 +76,6 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         return this._inputComponents;
     }
 
-    get isEditable(): boolean {
-        return true;
-    }
-
     get warehouseDetailBatches(): IWarehouseInventoryDetailBatch[] {
         return this._warehouseDetailBatches;
     }
