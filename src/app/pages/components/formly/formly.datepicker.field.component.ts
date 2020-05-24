@@ -32,6 +32,8 @@ import {IEvent} from '../abstract.component';
 })
 export class DatePickerFormFieldComponent extends AbstractFieldType implements AfterViewInit {
 
+    private static DEFAULT_CLASS_FORM_FIELD: string = 'form-field-date-picker';
+
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
@@ -153,6 +155,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                         component.model = e.data['date'];
                         this.value = component.model;
                     });
+                    this.checkOverrideFormFieldClass();
                 });
         }
     }
@@ -166,6 +169,22 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                 this.datePickerComponent.selected = (this.viewValue ? [this.viewValue] : []);
                 window.clearTimeout(timer);
             }, 200);
+        }
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Check for adding/removing form field class for customizing
+     */
+    private checkOverrideFormFieldClass() {
+        if (this.field && this.formField && this.formField._elementRef
+            && this.formField._elementRef.nativeElement) {
+            this.renderer.removeClass(
+                this.formField._elementRef.nativeElement,
+                DatePickerFormFieldComponent.DEFAULT_CLASS_FORM_FIELD);
         }
     }
 }
