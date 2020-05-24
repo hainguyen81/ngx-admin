@@ -17,4 +17,18 @@ export class WarehouseInventoryDetailDatasource
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
     }
+
+    public save(elements: IWarehouseInventoryDetail[]): Promise<number> {
+        return this.getDbService().saveEntities(elements)
+            .then(value => {
+                this.refresh();
+                return value;
+            }, reason => {
+                this.getLogger().error(reason);
+                return 0;
+            }).catch(reason => {
+                this.getLogger().error(reason);
+                return 0;
+            });
+    }
 }

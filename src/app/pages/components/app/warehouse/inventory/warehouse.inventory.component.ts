@@ -6,7 +6,8 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     Inject,
-    Renderer2, ViewContainerRef,
+    Renderer2,
+    ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
@@ -42,6 +43,10 @@ import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.deta
 import {throwError} from 'rxjs';
 import {IdGenerators} from '../../../../../config/generator.config';
 import {DeepCloner} from '../../../../../utils/object.utils';
+import {
+    WarehouseInventoryDetailDatasource,
+} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -109,6 +114,7 @@ export class WarehouseInventoryComponent
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param warehouseInventoryDatasource {WarehouseInventoryDetailDatasource}
      */
     constructor(@Inject(WarehouseInventoryDatasource) dataSource: WarehouseInventoryDatasource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -124,7 +130,9 @@ export class WarehouseInventoryComponent
                 @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
-                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                @Inject(WarehouseInventoryDetailDatasource)
+                private warehouseInventoryDatasource?: WarehouseInventoryDetailDatasource) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -133,6 +141,8 @@ export class WarehouseInventoryComponent
             WarehouseInventoryToolbarComponent,
             WarehouseInventoryPanelComponent,
             WarehouseInventoryDetailPanelComponent);
+        this.warehouseInventoryDatasource
+        || throwError('Could not inject WarehouseInventoryDetailDatasource');
     }
 
     // -------------------------------------------------
@@ -215,11 +225,24 @@ export class WarehouseInventoryComponent
 
         // update model if necessary
         const model: IWarehouseInventory = this.backComponent.dataModel;
+        const detailData: IWarehouseInventoryDetail[] = this.backComponent.dataModelDetail;
         if (!(model.id || '').length) {
             model.id = IdGenerators.oid.generate();
         }
+        detailData.forEach(detail => {
+            detail.inventory_id = model.id;
+            delete detail.inventory;
+            (detail.batches || []).forEach(batch => {
+                delete batch['batch'];
+            });
+            (detail.storage || []).forEach(storage => {
+                delete storage['storage'];
+            });
+        });
         this.getDataSource().update(this.selectedModel, model)
-            .then(() => { this.showSaveDataSuccess(); this.doBack(); })
+            .then(() => this.warehouseInventoryDatasource.save(detailData)
+                .then(() => { this.showSaveDataSuccess(); this.doBack(); })
+                .catch(() => this.showSaveDataError()))
             .catch(() => this.showSaveDataError());
     }
 

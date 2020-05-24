@@ -27,6 +27,7 @@ import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
+import {isNullOrUndefined} from 'util';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -87,6 +88,23 @@ export class WarehouseInventoryDetailPanelComponent
      */
     set dataModel(_dataModel: IWarehouseInventory) {
         this._dataModel = _dataModel;
+    }
+
+    /**
+     * Get the {IWarehouseInventoryDetail} data array
+     * @return the {IWarehouseInventoryDetail} data array
+     */
+    get dataModelDetail(): IWarehouseInventoryDetail[] {
+        const detailData: IWarehouseInventoryDetail[] = [];
+        if (isNullOrUndefined(this.detailTable)) {
+            return detailData;
+        }
+        (this.detailTable.rows || []).forEach(row => {
+            const detail: IWarehouseInventoryDetail =
+                (row ? row.getData() as IWarehouseInventoryDetail : undefined);
+            detail && detailData.push(detail);
+        });
+        return detailData;
     }
 
     // -------------------------------------------------
