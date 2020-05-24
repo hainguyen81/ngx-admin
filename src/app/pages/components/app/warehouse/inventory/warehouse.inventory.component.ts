@@ -41,6 +41,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {throwError} from 'rxjs';
 import {IdGenerators} from '../../../../../config/generator.config';
+import {DeepCloner} from '../../../../../utils/object.utils';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -220,5 +221,13 @@ export class WarehouseInventoryComponent
         this.getDataSource().update(this.selectedModel, model)
             .then(() => { this.showSaveDataSuccess(); this.doBack(); })
             .catch(() => this.showSaveDataError());
+    }
+
+    /**
+     * Perform resetting data
+     */
+    protected doReset(): void {
+        const cloned: IWarehouseInventory = DeepCloner(this.selectedModel);
+        this.backComponent.dataModel = cloned;
     }
 }

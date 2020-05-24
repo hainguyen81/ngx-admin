@@ -469,15 +469,19 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @private
      */
     private __loadInventoryDetail(model: IWarehouseInventory): void {
-        if (isNullOrUndefined(model) || (model.id || '').length) {
-            this.getDataSource().load([]);
-        } else {
-            this._warehouseInventoryDetailDatasource.getAllByIndex(
-                this.dataIndexName, this.dataIndexKey)
-                .then((detail: IWarehouseInventoryDetail[]) => this.getDataSource().load(detail),
-                    reason => this.getLogger().error(reason))
-                .catch(reason => this.getLogger().error(reason));
-        }
+        this.getDataSource().empty().then(() => {
+            if (isNullOrUndefined(model) || (model.id || '').length) {
+                this.getDataSource().load([]);
+
+            } else {
+                this._warehouseInventoryDetailDatasource.getAllByIndex(
+                    this.dataIndexName, this.dataIndexKey)
+                    .then((detail: IWarehouseInventoryDetail[]) => this.getDataSource().load(detail),
+                        reason => this.getLogger().error(reason))
+                    .catch(reason => this.getLogger().error(reason));
+            }
+        }, reason => this.getLogger().error(reason))
+            .catch(reason => this.getLogger().error(reason));
     }
 
     /**
