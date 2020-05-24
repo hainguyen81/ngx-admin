@@ -65,10 +65,6 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
         return this._selectComponent;
     }
 
-    get isEditable(): boolean {
-        return true;
-    }
-
     get warehouseItem(): IWarehouseItem {
         return this._warehouseItem;
     }
