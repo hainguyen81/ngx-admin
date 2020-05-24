@@ -371,21 +371,28 @@
     }
 
     /* smart table */
-    ng2-smart-table tr td {
-        ng2-smart-table-cell {
-            table-cell-edit-mode {
-                input:read-only,
-                input:disabled,
-                input[readonly='true'],
-                input[disabled='true'] {
-                    border: none !important;
-                }
-                table-cell-custom-editor {
-                    .cell-editor-number.mat-error,
-                    .mat-error {
-                        border-color: #f44336 !important;
-                        ng-select, input {
+    ng2-smart-table {
+        tr.ng2-smart-row {
+            height: 37px;
+        }
+        tr td {
+            ng2-smart-table-cell {
+                table-cell-edit-mode {
+                    input:read-only,
+                    input:disabled,
+                    input[readonly='true'],
+                    input[disabled='true'] {
+                        border: none !important;
+                    }
+
+                    table-cell-custom-editor {
+                        .cell-editor-number.mat-error,
+                        .mat-error {
                             border-color: #f44336 !important;
+
+                            ng-select, input {
+                                border-color: #f44336 !important;
+                            }
                         }
                     }
                 }

@@ -76,6 +76,8 @@ export class WarehouseInventoryDetailSerialCellComponent extends AbstractCellEdi
     // -------------------------------------------------
 
     ngOnInit(): void {
+        super.ngOnInit();
+
         if (!(this.newCellValue || []).length) {
             this.newCellValue = [];
         }

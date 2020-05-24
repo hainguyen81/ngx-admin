@@ -125,6 +125,8 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
     // -------------------------------------------------
 
     ngOnInit(): void {
+        super.ngOnInit();
+
         if (!(this.newCellValue || []).length) {
             this.newCellValue = [];
         }

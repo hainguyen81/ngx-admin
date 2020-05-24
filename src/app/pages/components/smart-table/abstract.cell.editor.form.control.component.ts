@@ -16,7 +16,7 @@ import {
     EventEmitter,
     forwardRef,
     Inject,
-    Input,
+    Input, OnInit,
     Output,
     Renderer2,
     ViewContainerRef,
@@ -36,7 +36,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
  * Abstract cell editor as form {FormControl}
  */
 export abstract class AbstractCellEditorFormControlComponent extends FormControl
-    implements DefaultEditor, AfterViewInit, ControlValueAccessor {
+    implements DefaultEditor, AfterViewInit, ControlValueAccessor, OnInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -464,6 +464,12 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
+
+    ngOnInit(): void {
+        if (this.cell && isNullOrUndefined(this.cell['componentRef'])) {
+            this.cell['componentRef'] = this;
+        }
+    }
 
     /**
      * Triggered `languageChange` event

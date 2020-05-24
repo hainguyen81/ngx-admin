@@ -130,6 +130,8 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
     // -------------------------------------------------
 
     ngOnInit(): void {
+        super.ngOnInit();
+
         if (!(this.newCellValue || []).length) {
             this.newCellValue = [];
         }

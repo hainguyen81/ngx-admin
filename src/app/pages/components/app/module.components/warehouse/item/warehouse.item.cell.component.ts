@@ -108,6 +108,8 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     // -------------------------------------------------
 
     ngOnInit(): void {
+        super.ngOnInit();
+
         const _this: WarehouseItemCellComponent = this;
         this.valueParser = (value: any) => {
             // check if multiple selection
