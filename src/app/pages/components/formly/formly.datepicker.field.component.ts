@@ -182,7 +182,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
     private checkOverrideFormFieldClass() {
         if (this.field && this.formField && this.formField._elementRef
             && this.formField._elementRef.nativeElement) {
-            this.renderer.removeClass(
+            this.renderer.addClass(
                 this.formField._elementRef.nativeElement,
                 DatePickerFormFieldComponent.DEFAULT_CLASS_FORM_FIELD);
         }
