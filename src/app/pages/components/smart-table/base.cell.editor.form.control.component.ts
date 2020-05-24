@@ -71,14 +71,21 @@ export class BaseCellEditorFormControlComponent extends AbstractCellEditorFormCo
      */
     validate(unmodified?: boolean): boolean {
         const errorMessages: string[] = [];
-        if ((this.dirty || unmodified) && this.invalid) {
-            const validationMessages: { [error: string]: string } = this.validationMessages || {};
-            Object.keys(this.errors || {}).forEach(key => {
-                const _errorMessage: string = validationMessages[key] || '';
-                _errorMessage.length && errorMessages.push(_errorMessage);
-            });
-            this.markAsTouched();
+        if (this.dirty || unmodified) {
+            let invalid: boolean = this.invalid;
+            if (!invalid) {
+                this.updateValueAndValidity({onlySelf: true, emitEvent: false});
+                invalid = this.invalid;
+            }
+            if (invalid) {
+                const validationMessages: { [error: string]: string } = this.validationMessages || {};
+                Object.keys(this.errors || {}).forEach(key => {
+                    const _errorMessage: string = validationMessages[key] || '';
+                    _errorMessage.length && errorMessages.push(_errorMessage);
+                });
+            }
         }
+        this.markAsTouched();
         this.errorMessages = errorMessages;
         return !this.invalid;
     }
