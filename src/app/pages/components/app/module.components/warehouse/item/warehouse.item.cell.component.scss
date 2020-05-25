@@ -1,0 +1,21 @@
+@import '../../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep .images-album {
+        .primary-image.border,
+        .primary-image .primary-image-preview,
+        .primary-image .primary-image-preview.border {
+            border: none !important;
+            img {
+                width: 32px;
+                height: 32px;
+                max-width: 32px;
+                max-height: 32px;
+            }
+        }
+    }
+    ::ng-deep ngx-image-gallery {
+        display: table-cell;
+        padding-right: 10px;
+    }
+}

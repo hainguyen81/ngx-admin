@@ -48,6 +48,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 import CalculatorUtils from '../../../../../utils/calculator.utils';
+import {isArray} from 'util';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -235,15 +236,21 @@ export class WarehouseInventoryComponent
             detail.inventory_id = model.id;
             detail.inventory_code = model.code;
             delete detail.inventory;
+
+            if (!isArray(detail.batches)) {
+                detail.batches = [];
+            }
             (detail.batches || []).forEach(batch => {
                 delete batch['batch'];
             });
+
+            if (!isArray(detail.storage)) {
+                detail.storage = [];
+            }
             (detail.storage || []).forEach(storage => {
                 delete storage['storage'];
             });
-            amountValues.push(detail.amount);
         });
-        model.total_amount = CalculatorUtils.plusMulti(amountValues);
         this.getDataSource().update(this.selectedModel, model)
             .then(() => this.warehouseInventoryDatasource.save(detailData)
                 .then(() => { this.showSaveDataSuccess(); this.doBack(); })

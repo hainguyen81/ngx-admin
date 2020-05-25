@@ -38,6 +38,7 @@ import {NgOption} from '@ng-select/ng-select';
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-warehouse-item-cell',
     templateUrl: './warehouse.item.cell.component.html',
+    styleUrls: ['./warehouse.item.cell.component.scss'],
 })
 export class WarehouseItemCellComponent extends AbstractCellEditor
     implements OnInit, AfterViewInit, OnDestroy {
@@ -67,6 +68,10 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
 
     get warehouseItem(): IWarehouseItem {
         return this._warehouseItem;
+    }
+
+    get images(): string[] {
+        return (!isNullOrUndefined(this.warehouseItem) ? this.warehouseItem.image : undefined);
     }
 
     get viewValue(): string {

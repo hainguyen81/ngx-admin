@@ -9,4 +9,16 @@
         [class.mat-error]="control.invalid && control.touched"
     ></ngx-select-2-app-module-warehouse-item>
 </div>
-<div class="cell-viewer" *ngIf="viewMode" [innerHTML]="viewValue"></div>
+<div class="cell-viewer" *ngIf="viewMode">
+    <ngx-image-gallery #imageGallery
+                       [showAlbum]="true"
+                       [onlyPrimary]="true"
+                       [allowModified]="false"
+                       [images]="images"
+    ></ngx-image-gallery>
+    <div [class.d-table-cell]="true"
+         [class.mt-auto]="true"
+         [class.mb-auto]="true"
+         [innerHTML]="viewValue"
+    ></div>
+</div>
