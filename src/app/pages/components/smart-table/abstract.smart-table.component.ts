@@ -1541,6 +1541,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                     <AbstractCellEditorFormControlComponent>cell['componentRef'];
                 invalid = invalid || (!isNullOrUndefined(componentRef)
                     && !componentRef.validate(!componentRef.viewMode));
+
             } else {
                 const validateFn: any = this.getConfigValue('validate');
                 if (typeof validateFn === 'function') {

@@ -371,12 +371,17 @@ export class WarehouseInventoryDetailSmartTableComponent
     protected onItemCellChanged(e: IEvent) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
+        const rowData: IWarehouseInventoryDetail =
+            (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
         const item: IWarehouseItem =
             (e && e.data ? e.data['changedData'] as IWarehouseItem : undefined);
-        if (!isNullOrUndefined(row) && !isNullOrUndefined(item)) {
+        if (!isNullOrUndefined(row)) {
             const unitPriceCell: Cell = row.cells[4];
             (!isNaN(unitPriceCell.getValue()) || parseFloat(unitPriceCell.getValue()) <= 0)
-            && unitPriceCell.setValue(item.selling_price);
+            && unitPriceCell.setValue(isNullOrUndefined(item) ? undefined : item.selling_price);
+            rowData.item = item;
+            rowData.item_id = (isNullOrUndefined(item) ? undefined : item.id);
+            rowData.item_code = (isNullOrUndefined(item) ? undefined : item.code);
         }
         this.__calculateFooterSummary();
     }
@@ -553,6 +558,8 @@ export class WarehouseInventoryDetailSmartTableComponent
         });
         this._sumQuantityComponent.instance.value = CalculatorUtils.plusMulti(...quantities);
         this._sumPriceComponent.instance.value = CalculatorUtils.plusMulti(...prices);
+        this._model.total_amount = (isNaN(this._sumPriceComponent.instance.value)
+            ? undefined : this._sumPriceComponent.instance.value);
     }
 
     /**

@@ -35,10 +35,6 @@ import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import {ObserveCellComponent} from '../../../smart-table/observe.cell.component';
-import {Constants as WHConstants} from '../../../../../@core/data/constants/warehouse.inventory.constants';
-import WAREHOUSE_INVENTORY_TYPE = WHConstants.WarehouseConstants
-    .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_TYPE;
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {
     WarehouseInventoryDatasource,
@@ -114,33 +110,28 @@ export const WarehouseInventoryTableSettings = {
             editable: false,
             renderComponent: SelectTranslateCellComponent,
         },
-        vendor_customer: {
+        vendor_customer_code: {
             title: 'warehouse.inventory.table.vendor_customer',
             type: 'custom',
             sort: false,
             filter: false,
             editable: false,
-            renderComponent: ObserveCellComponent,
+            renderComponent: ImageCellComponent,
             editor: {
                 type: 'custom',
-                component: ObserveCellComponent,
+                component: ImageCellComponent,
                 config: {
-                    'valuePrepare': (c: DefaultEditor,
+                    'imagesPrepare': (c: DefaultEditor,
                                       cell: Cell, row: Row,
                                       data: IWarehouseInventory,
                                       config: any) => {
-                        const invInType: string = Object.keys(WAREHOUSE_INVENTORY_TYPE)
-                            .find(key => WAREHOUSE_INVENTORY_TYPE[key] === WAREHOUSE_INVENTORY_TYPE.IN);
-                        const invOutType: string = Object.keys(WAREHOUSE_INVENTORY_TYPE)
-                            .find(key => WAREHOUSE_INVENTORY_TYPE[key] === WAREHOUSE_INVENTORY_TYPE.OUT);
-                        const invType: string = (data && data.type ? data.type || '' : '');
-                        switch (invType) {
-                            case invOutType:
-                            case invInType: {
-                                return (data && data.vendor_customer ? data.vendor_customer.name || '' : '');
-                            }
-                        }
-                        return '';
+                        return (data && data.vendor_customer ? data.vendor_customer.image : []);
+                    },
+                    'descriptorPrepare': (c: DefaultEditor,
+                                          cell: Cell, row: Row,
+                                          data: IWarehouseInventory,
+                                          config: any) => {
+                        return (data && data.vendor_customer ? data.vendor_customer.name : '');
                     },
                 },
             },

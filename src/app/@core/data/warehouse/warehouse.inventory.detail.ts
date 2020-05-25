@@ -22,8 +22,10 @@ export interface IWarehouseInventoryDetail extends IModel {
 
     // foreign keys
     inventory_id?: string | null;
+    inventory_code?: string | null;
     inventory?: IWarehouseInventory | null;
     item_id?: string | null;
+    item_code?: string | null;
     item?: IWarehouseItem | null;
 }
 

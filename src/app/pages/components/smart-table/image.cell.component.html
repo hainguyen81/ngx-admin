@@ -1,4 +1,4 @@
-<div class="cell-viewer w-100 d-table text-center image-cell" [title]="cellValue" *ngIf="viewMode">
+<div class="cell-viewer w-100 d-flex text-center image-cell" [title]="cellValue" *ngIf="viewMode">
     <ngx-image-gallery #imageGallery
                        [showAlbum]="true"
                        [onlyPrimary]="true"
@@ -6,6 +6,8 @@
                        [images]="images"
     ></ngx-image-gallery>
     <div [class.d-table-cell]="true"
+         [class.mt-auto]="true"
+         [class.mb-auto]="true"
          *ngIf="(descriptor || '').length"
          [innerHTML]="descriptor"
     ></div>
