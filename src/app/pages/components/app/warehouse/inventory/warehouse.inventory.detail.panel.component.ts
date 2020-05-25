@@ -88,6 +88,10 @@ export class WarehouseInventoryDetailPanelComponent
      */
     set dataModel(_dataModel: IWarehouseInventory) {
         this._dataModel = _dataModel;
+        this.mainForm && this.mainForm.setModel(this._dataModel);
+        if (!isNullOrUndefined(this.detailTable)) {
+            this.detailTable.model = this._dataModel;
+        }
     }
 
     /**
@@ -175,6 +179,10 @@ export class WarehouseInventoryDetailPanelComponent
      * @return true for valid; else false
      */
     submit(): boolean {
-        return (this.mainForm.submit() && this.detailTable.validate());
+        const valid: boolean = (this.mainForm.submit() && this.detailTable.validate());
+        if (valid) {
+            this._dataModel = Object.assign({}, this._dataModel, this.mainForm.getModel());
+        }
+        return valid;
     }
 }
