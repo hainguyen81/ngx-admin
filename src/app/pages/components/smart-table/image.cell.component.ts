@@ -40,10 +40,6 @@ export class ImageCellComponent extends AbstractCellEditor
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    get isEditable(): boolean {
-        return false;
-    }
-
     get images(): string[] {
         return this._images;
     }

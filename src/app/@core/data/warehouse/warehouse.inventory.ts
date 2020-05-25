@@ -30,13 +30,12 @@ export interface IWarehouseInventory extends IModel {
     // foreign keys
     // Mã kho
     warehouse_id?: string | null;
+    warehouse_code?: string | null;
     warehouse?: IWarehouse | null;
-    // Mã nhà cung cấp
-    vendor_id?: string | null;
-    vendor?: ICustomer | null;
-    // Mã khách hàng
-    customer_id?: string | null;
-    customer?: ICustomer | null;
+    // Mã nhà cung cấp/khách hàng
+    vendor_customer_id?: string | null;
+    vendor_customer_code?: string | null;
+    vendor_customer?: ICustomer | null;
 }
 
 export default class WarehouseInventory extends BaseModel implements IWarehouseInventory {

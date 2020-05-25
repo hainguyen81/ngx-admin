@@ -1,11 +1,10 @@
 import {
     AfterContentChecked,
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, OnInit,
     Renderer2,
     RendererStyleFlags2,
     ViewContainerRef,
@@ -13,7 +12,7 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {FormlyConfig, FormlyFieldConfig, FormlyForm} from '@ngx-formly/core';
+import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -28,6 +27,14 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {isNullOrUndefined} from 'util';
+import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
+import {
+    WarehouseStorageFormlySelectFieldComponent,
+} from '../../module.components/warehouse/storage/warehouse.storage.select.field.component';
+import {
+    VendorCustomerFormlySelectFieldComponent,
+} from '../../module.components/common/vendor.customer.select.field.component';
+import {ICustomer} from '../../../../../@core/data/system/customer';
 
 /* default warehouse in/out main formly config */
 export const WarehouseInventoryMainFormConfig: FormlyConfig = new FormlyConfig();
@@ -59,7 +66,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                             },
                             {
                                 className: 'col-6',
-                                key: 'vendor_customer',
+                                key: 'vendor_customer_code',
                                 type: 'ngx-vendor-customer',
                                 templateOptions: {
                                     label: 'warehouse.inventory.form.customer.label',
@@ -76,7 +83,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroup: [
                             {
                                 className: 'col-6',
-                                key: 'warehouse_id',
+                                key: 'warehouse_code',
                                 type: 'ngx-warehouse-storage',
                                 templateOptions: {
                                     label: 'warehouse.inventory.form.storage.label',
@@ -218,7 +225,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
 })
 export class WarehouseInventoryMainFormlyComponent
     extends AppFormlyComponent<IWarehouseInventory, WarehouseInventoryDatasource>
-    implements AfterContentChecked {
+    implements OnInit, AfterContentChecked {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -270,6 +277,13 @@ export class WarehouseInventoryMainFormlyComponent
     // EVENTS
     // -------------------------------------------------
 
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        // observe fields
+        this.__observeFields();
+    }
+
     ngAfterContentChecked(): void {
         super.ngAfterContentChecked();
 
@@ -317,6 +331,65 @@ export class WarehouseInventoryMainFormlyComponent
             (maxHeight > 0 && statusOffset.height > 0)
             && renderer.setStyle(remarkField, 'height',
                 [(maxHeight - statusOffset.height), 'px'].join(''), RendererStyleFlags2.Important);
+        }
+    }
+
+    /**
+     * Observe model fields for applying values
+     */
+    private __observeFields(): void {
+        const fields: FormlyFieldConfig[] = this.fields;
+        fields[0].expressionProperties = {
+            'warehouse_code': (model: IWarehouseInventory) => {
+                if ((model.warehouse_code || '') !== ((model.warehouse || {})['code'] || '')) {
+                    this.__observeWarehouseField(fields, model);
+                }
+            },
+            'vendor_customer_code': (model: IWarehouseInventory) => {
+                if ((model.vendor_customer_code || '') !== ((model.vendor_customer || {})['code'] || '')) {
+                    this.__observeWarehouseField(fields, model);
+                }
+            },
+        };
+    }
+
+    /**
+     * Observe {ICustomer} field to apply model
+     * @param fields to observe
+     * @param model form model
+     */
+    private __observeWarehouseField(fields: FormlyFieldConfig[], model: IWarehouseInventory): void {
+        const customerVendorField: FormlyFieldConfig =
+            fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1];
+        const customerVendorFieldComponent: VendorCustomerFormlySelectFieldComponent =
+            super.getFormFieldComponent(customerVendorField, VendorCustomerFormlySelectFieldComponent);
+        if (customerVendorFieldComponent) {
+            const customerVendors: ICustomer[] = customerVendorFieldComponent.selectedValues as ICustomer[];
+            model.vendor_customer_id = ((customerVendors || []).length ? customerVendors[0].id : undefined);
+            model.vendor_customer = ((customerVendors || []).length ? customerVendors[0] : undefined);
+        } else {
+            model.vendor_customer_id = undefined;
+            model.vendor_customer = undefined;
+        }
+    }
+
+    /**
+     * Observe {ICustomer} field to apply model
+     * @param fields to observe
+     * @param model form model
+     */
+    private __observeCustomerField(fields: FormlyFieldConfig[], model: IWarehouseInventory): void {
+        const warehouseField: FormlyFieldConfig =
+            fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0];
+        const warehouseFieldComponent: WarehouseStorageFormlySelectFieldComponent =
+            super.getFormFieldComponent(warehouseField, WarehouseStorageFormlySelectFieldComponent);
+        if (warehouseFieldComponent) {
+            const warehouses: IWarehouse[] = warehouseFieldComponent.selectedValues as IWarehouse[];
+            model.warehouse_id = ((warehouses || []).length ? warehouses[0].id : undefined);
+            model.warehouse = ((warehouses || []).length ? warehouses[0] : undefined);
+        } else {
+            model.warehouse_id = undefined;
+            model.warehouse = undefined;
         }
     }
 }

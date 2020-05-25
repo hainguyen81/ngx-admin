@@ -80,7 +80,7 @@ export const WarehouseInventoryTableSettings = {
             filter: false,
             editable: false,
         },
-        warehouse: {
+        warehouse_code: {
             title: 'warehouse.inventory.table.warehouse',
             type: 'custom',
             sort: false,
@@ -135,11 +135,9 @@ export const WarehouseInventoryTableSettings = {
                             .find(key => WAREHOUSE_INVENTORY_TYPE[key] === WAREHOUSE_INVENTORY_TYPE.OUT);
                         const invType: string = (data && data.type ? data.type || '' : '');
                         switch (invType) {
+                            case invOutType:
                             case invInType: {
-                                return (data && data.vendor ? data.vendor.name || '' : '');
-                            }
-                            case invOutType: {
-                                return (data && data.customer ? data.customer.name || '' : '');
+                                return (data && data.vendor_customer ? data.vendor_customer.name || '' : '');
                             }
                         }
                         return '';
