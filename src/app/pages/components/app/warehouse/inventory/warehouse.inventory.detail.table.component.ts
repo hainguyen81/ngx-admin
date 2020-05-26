@@ -408,6 +408,7 @@ export class WarehouseInventoryDetailSmartTableComponent
             const amount: number = CalculatorUtils.multiply(
                 quantityCell.newValue, unitPriceCell.newValue);
             amountCell.setValue(amount);
+            amountCell.newValue = (isNaN(amount) ? undefined : amount);
             rowData.amount = (isNaN(amount) ? undefined : amount);
         }
         this.__calculateFooterSummary();
@@ -435,6 +436,7 @@ export class WarehouseInventoryDetailSmartTableComponent
             const amount: number = CalculatorUtils.multiply(
                 quantityCell.newValue, unitPriceCell.newValue);
             amountCell.setValue(amount);
+            amountCell.newValue = (isNaN(amount) ? undefined : amount);
             rowData.amount = (isNaN(amount) ? undefined : amount);
         }
         this.__calculateFooterSummary();
@@ -455,6 +457,7 @@ export class WarehouseInventoryDetailSmartTableComponent
             const amountCell: Cell = row.cells[6];
             const amount: number = CalculatorUtils.multiply(quantityCell.newValue, unitPriceVal);
             amountCell.setValue(amount);
+            amountCell.newValue = (isNaN(amount) ? undefined : amount);
             rowData.amount = (isNaN(amount) ? undefined : amount);
         }
         this.__calculateFooterSummary();
@@ -475,6 +478,7 @@ export class WarehouseInventoryDetailSmartTableComponent
             const amountCell: Cell = row.cells[6];
             const amount: number = CalculatorUtils.multiply(quantityVal, unitPriceCell.newValue);
             amountCell.setValue(amount);
+            amountCell.newValue = (isNaN(amount) ? undefined : amount);
             rowData.amount = (isNaN(amount) ? undefined : amount);
         }
         this.__calculateFooterSummary();
