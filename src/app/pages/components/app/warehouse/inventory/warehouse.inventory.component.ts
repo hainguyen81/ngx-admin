@@ -48,7 +48,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 import CalculatorUtils from '../../../../../utils/calculator.utils';
-import {isArray} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -227,7 +227,6 @@ export class WarehouseInventoryComponent
 
         // update model if necessary
         const model: IWarehouseInventory = this.backComponent.dataModel;
-        const amountValues: number[] = [];
         const detailData: IWarehouseInventoryDetail[] = this.backComponent.dataModelDetail;
         if (!(model.id || '').length) {
             model.id = IdGenerators.oid.generate();
@@ -240,16 +239,25 @@ export class WarehouseInventoryComponent
             if (!isArray(detail.batches)) {
                 detail.batches = [];
             }
-            (detail.batches || []).forEach(batch => {
-                delete batch['batch'];
+            detail.batches.removeSelfIf(batch => {
+                return (isNullOrUndefined(batch)
+                    || (!(batch.batch_code || '').length && isNaN(batch.quantity)));
             });
+            (detail.batches || []).forEach(batch => delete batch['batch']);
 
             if (!isArray(detail.storage)) {
                 detail.storage = [];
             }
-            (detail.storage || []).forEach(storage => {
-                delete storage['storage'];
+            detail.storage.removeSelfIf(storage => {
+                return (isNullOrUndefined(storage)
+                    || (!(storage.warehouse_code || '').length && isNaN(storage.quantity)));
             });
+            (detail.storage || []).forEach(storage => delete storage['storage']);
+
+            if (!isArray(detail.series)) {
+                detail.series = [];
+            }
+            detail.series.removeSelfIf(serial => !(serial || '').length);
         });
         this.getDataSource().update(this.selectedModel, model)
             .then(() => this.warehouseInventoryDatasource.save(detailData)

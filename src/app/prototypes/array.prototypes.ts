@@ -9,6 +9,12 @@ declare global {
         removeIf(condition: (item: T, index?: number) => boolean): T[];
 
         /**
+         * Remove items if they match the specified condition function base on the present instance.
+         * @param condition function with item as parameter to check
+         */
+        removeSelfIf(condition: (item: T, index?: number) => boolean): void;
+
+        /**
          * Remove the specified items out of the present array
          * @param items to remove
          */
@@ -83,6 +89,14 @@ export function __removeIf<T>(array: Array<T> | T[], condition: (item: T, index?
 if (!Array.prototype.removeIf) {
     Array.prototype.removeIf = function<T>(condition: (item: T, index?: number) => boolean) {
         return __removeIf<T>(this, condition);
+    };
+}
+
+if (!Array.prototype.removeSelfIf) {
+    Array.prototype.removeSelfIf = function<T>(condition: (item: T, index?: number) => boolean) {
+        const removedThis = __removeIf<T>(this, condition);
+        this.clear();
+        this.push(...(removedThis || []));
     };
 }
 

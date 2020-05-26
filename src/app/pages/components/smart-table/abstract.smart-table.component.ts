@@ -1533,22 +1533,23 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             return true;
         }
 
-        let invalid: boolean;
-        invalid = false;
+        let invalid: boolean = false;
         (row.cells || []).forEach((cell: Cell) => {
+            let cellValid: boolean;
             if (row.isInEditing && cell.isEditable()) {
                 const componentRef: AbstractCellEditorFormControlComponent =
                     <AbstractCellEditorFormControlComponent>cell['componentRef'];
-                invalid = invalid || (!isNullOrUndefined(componentRef)
-                    && !componentRef.validate(!componentRef.viewMode));
+                cellValid = (!isNullOrUndefined(componentRef) && componentRef.validate(!componentRef.viewMode));
 
             } else {
                 const validateFn: any = this.getConfigValue('validate');
                 if (typeof validateFn === 'function') {
-                    invalid = invalid || (validateFn as Function).apply(
+                    cellValid = (validateFn as Function).apply(
                         this, [cell, row, row.getData(), row.getNewData(), this.config]) as boolean;
                 }
             }
+            invalid = invalid || !cellValid;
+            !cellValid && this.getLogger().warn('Invalid cell', cell);
         });
         return !invalid;
     }
@@ -1558,9 +1559,9 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return true for valid; else false
      */
     validate(): boolean {
-        let invalid: boolean;
-        invalid = false;
-        (this.rows || []).forEach(row => invalid = invalid || this.validateRow(row));
+        let invalid: boolean = false;
+        (this.rows || []).forEach(
+            row => invalid = invalid || !this.validateRow(row));
         return !invalid;
     }
 }

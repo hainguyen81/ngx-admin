@@ -71,12 +71,11 @@ export class BaseCellEditorFormControlComponent extends AbstractCellEditorFormCo
      */
     validate(unmodified?: boolean): boolean {
         const errorMessages: string[] = [];
+        let invalid: boolean = this.invalid;
         if (this.dirty || unmodified) {
-            let invalid: boolean = this.invalid;
-            if (!invalid) {
-                this.updateValueAndValidity({onlySelf: true, emitEvent: false});
-                invalid = this.invalid;
-            }
+            this.patchValue(this.viewMode ? this.cellValue : this.newCellValue);
+            this.updateValueAndValidity({onlySelf: true, emitEvent: false});
+            invalid = this.invalid;
             if (invalid) {
                 const validationMessages: { [error: string]: string } = this.validationMessages || {};
                 Object.keys(this.errors || {}).forEach(key => {
@@ -87,6 +86,6 @@ export class BaseCellEditorFormControlComponent extends AbstractCellEditorFormCo
         }
         this.markAsTouched();
         this.errorMessages = errorMessages;
-        return !this.invalid;
+        return !invalid;
     }
 }
