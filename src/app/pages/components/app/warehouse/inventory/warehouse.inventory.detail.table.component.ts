@@ -371,18 +371,28 @@ export class WarehouseInventoryDetailSmartTableComponent
     protected onItemCellChanged(e: IEvent) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
+        if (isNullOrUndefined(row)) return;
+
         const rowData: IWarehouseInventoryDetail =
             (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
         const item: IWarehouseItem =
             (e && e.data ? e.data['changedData'] as IWarehouseItem : undefined);
-        if (!isNullOrUndefined(row)) {
-            const unitPriceCell: Cell = row.cells[4];
-            (!isNaN(unitPriceCell.getValue()) || parseFloat(unitPriceCell.getValue()) <= 0)
-            && unitPriceCell.setValue(isNullOrUndefined(item) ? undefined : item.selling_price);
-            rowData.item = item;
-            rowData.item_id = (isNullOrUndefined(item) ? undefined : item.id);
-            rowData.item_code = (isNullOrUndefined(item) ? undefined : item.code);
+
+        // calculate unit price
+        const unitPriceCell: Cell = row.cells[4];
+        if (!isNaN(unitPriceCell.getValue()) || parseFloat(unitPriceCell.getValue()) <= 0) {
+            const price: number = isNullOrUndefined(item) || isNaN(item.selling_price)
+                ? undefined : item.selling_price;
+            unitPriceCell.setValue(price);
+            unitPriceCell.newValue = price;
         }
+
+        // calculate row item
+        rowData.item = item;
+        rowData.item_id = (isNullOrUndefined(item) ? undefined : item.id);
+        rowData.item_code = (isNullOrUndefined(item) ? undefined : item.code);
+
+        // calculate footer amount
         this.__calculateFooterSummary();
     }
 
@@ -391,27 +401,7 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @param e {IEvent}
      */
     protected onBatchCellChanged(e: IEvent) {
-        const row: Row =
-            (e &&  e.data ? e.data['row'] as Row : undefined);
-        const rowData: IWarehouseInventoryDetail =
-            (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
-        const batches: IWarehouseInventoryDetailBatch[] =
-            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
-        if (!isNullOrUndefined(row)) {
-            const batchQuantities: number[] = [];
-            (batches || []).forEach(batch => batchQuantities.push(batch.quantity));
-            const quantityCell: Cell = row.cells[5];
-            (!isNaN(quantityCell.getValue()) || parseInt(quantityCell.getValue(), 10) <= 0)
-            && quantityCell.setValue(CalculatorUtils.plusMulti(...batchQuantities));
-            const unitPriceCell: Cell = row.cells[4];
-            const amountCell: Cell = row.cells[6];
-            const amount: number = CalculatorUtils.multiply(
-                quantityCell.newValue, unitPriceCell.newValue);
-            amountCell.setValue(amount);
-            amountCell.newValue = (isNaN(amount) ? undefined : amount);
-            rowData.amount = (isNaN(amount) ? undefined : amount);
-        }
-        this.__calculateFooterSummary();
+        this.__updateQuantities(e, true);
     }
 
     /**
@@ -419,27 +409,7 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @param e {IEvent}
      */
     protected onStorageCellChanged(e: IEvent) {
-        const row: Row =
-            (e &&  e.data ? e.data['row'] as Row : undefined);
-        const rowData: IWarehouseInventoryDetail =
-            (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
-        const storages: IWarehouseInventoryDetailStorage[] =
-            (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailStorage[] : undefined);
-        if (!isNullOrUndefined(row)) {
-            const storageQuantities: number[] = [];
-            (storages || []).forEach(storage => storageQuantities.push(storage.quantity));
-            const quantityCell: Cell = row.cells[5];
-            (!isNaN(quantityCell.getValue()) || parseInt(quantityCell.getValue(), 10) <= 0)
-            && quantityCell.setValue(CalculatorUtils.plusMulti(...storageQuantities));
-            const unitPriceCell: Cell = row.cells[4];
-            const amountCell: Cell = row.cells[6];
-            const amount: number = CalculatorUtils.multiply(
-                quantityCell.newValue, unitPriceCell.newValue);
-            amountCell.setValue(amount);
-            amountCell.newValue = (isNaN(amount) ? undefined : amount);
-            rowData.amount = (isNaN(amount) ? undefined : amount);
-        }
-        this.__calculateFooterSummary();
+        this.__updateQuantities(e, false);
     }
 
     /**
@@ -449,17 +419,22 @@ export class WarehouseInventoryDetailSmartTableComponent
     protected onUnitPriceCellChanged(e: IEvent) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
+        if (isNullOrUndefined(row)) return;
+
         const rowData: IWarehouseInventoryDetail =
             (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
         const unitPriceVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
-        if (!isNullOrUndefined(row)) {
-            const quantityCell: Cell = row.cells[5];
-            const amountCell: Cell = row.cells[6];
-            const amount: number = CalculatorUtils.multiply(quantityCell.newValue, unitPriceVal);
-            amountCell.setValue(amount);
-            amountCell.newValue = (isNaN(amount) ? undefined : amount);
-            rowData.amount = (isNaN(amount) ? undefined : amount);
-        }
+
+        // calculate row amount
+        const quantityCell: Cell = row.cells[5];
+        const amountCell: Cell = row.cells[6];
+        let amount: number = CalculatorUtils.multiply(quantityCell.newValue, unitPriceVal);
+        amount = (isNaN(amount) ? undefined : amount);
+        amountCell.setValue(amount);
+        amountCell.newValue = amount;
+        rowData.amount = amount;
+
+        // calculate footer amount
         this.__calculateFooterSummary();
     }
 
@@ -470,17 +445,22 @@ export class WarehouseInventoryDetailSmartTableComponent
     protected onQuantityCellChanged(e: IEvent) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
+        if (isNullOrUndefined(row)) return;
+
         const rowData: IWarehouseInventoryDetail =
             (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
         const quantityVal: number = (e && e.data ? e.data['changedData'] as number : undefined);
-        if (!isNullOrUndefined(row)) {
-            const unitPriceCell: Cell = row.cells[4];
-            const amountCell: Cell = row.cells[6];
-            const amount: number = CalculatorUtils.multiply(quantityVal, unitPriceCell.newValue);
-            amountCell.setValue(amount);
-            amountCell.newValue = (isNaN(amount) ? undefined : amount);
-            rowData.amount = (isNaN(amount) ? undefined : amount);
-        }
+
+        // calculate row amount
+        const unitPriceCell: Cell = row.cells[4];
+        const amountCell: Cell = row.cells[6];
+        let amount: number = CalculatorUtils.multiply(quantityVal, unitPriceCell.newValue);
+        amount = (isNaN(amount) ? undefined : amount);
+        amountCell.setValue(amount);
+        amountCell.newValue = amount;
+        rowData.amount = amount;
+
+        // calculate footer amount
         this.__calculateFooterSummary();
     }
 
@@ -554,6 +534,54 @@ export class WarehouseInventoryDetailSmartTableComponent
                 summaryColumn: 5,
                 tableComponent: this.tableComponent,
             }, cell);
+    }
+
+    /**
+     * Fire while storages cell data had been changed
+     * @param e {IEvent}
+     * @param byBatch by changing batches cell; else changing storages cell
+     */
+    private __updateQuantities(e: IEvent, byBatch: boolean | false) {
+        const row: Row =
+            (e &&  e.data ? e.data['row'] as Row : undefined);
+        if (isNullOrUndefined(row)) return;
+
+        const rowData: IWarehouseInventoryDetail =
+            (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
+        const quantitiesList: number[] = [];
+        if (byBatch) {
+            const batches: IWarehouseInventoryDetailBatch[] =
+                (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
+            (batches || []).forEach(batch => quantitiesList.push(batch.quantity));
+
+        } else {
+            const storages: IWarehouseInventoryDetailStorage[] =
+                (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailStorage[] : undefined);
+            (storages || []).forEach(storage => quantitiesList.push(storage.quantity));
+        }
+
+        // calculate quantities cell
+        const quantityCell: Cell = row.cells[5];
+        let quantities = quantityCell.newValue;
+        if (!isNaN(quantities) || parseInt(quantities, 10) <= 0) {
+            quantities = CalculatorUtils.plusMulti(...quantitiesList);
+        }
+        quantities = (isNaN(quantities) ? undefined : quantities);
+        quantityCell.setValue(quantities);
+        quantityCell.newValue = quantities;
+
+        // calculate row amount
+        const unitPriceCell: Cell = row.cells[4];
+        const amountCell: Cell = row.cells[6];
+        let amount: number = CalculatorUtils.multiply(
+            quantityCell.newValue, unitPriceCell.newValue);
+        amount = (isNaN(amount) ? undefined : amount);
+        amountCell.setValue(amount);
+        amountCell.newValue = amount;
+        rowData.amount = amount;
+
+        // calculate footer amount
+        this.__calculateFooterSummary();
     }
 
     /**
