@@ -100,9 +100,8 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
     get valueFormatter(): (value: any) => any {
         return value => {
             if (isNullOrUndefined(this.selectComponent)) {
-                return undefined;
+                return value;
             }
-
             return this.selectComponent.findItems(value);
         };
     }
@@ -110,9 +109,12 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
     get valueParser(): (value: any) => any {
         return value => {
             if (isNullOrUndefined(this.selectComponent)) {
-                return undefined;
+                return value;
             }
 
+            // check if multiple selection
+            const values: any[] = (isArray(value) ? Array.from(value)
+                : !isNullOrUndefined(value) ? Array.of(value) : []);
             const parsedValues: any[] = [];
             const rawValues: any[] = (isArray(value)
                 ? Array.from(value) : !isNullOrUndefined(value) ? [value] : []);
@@ -122,7 +124,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 parsedValue && parsedValues.push(parsedValue);
                 isNullOrUndefined(parsedValue) && parsedValues.push(rawValue);
             });
-            return (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : undefined);
+            return (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : value);
         };
     }
 

@@ -552,18 +552,24 @@ export class WarehouseInventoryDetailSmartTableComponent
         if (byBatch) {
             const batches: IWarehouseInventoryDetailBatch[] =
                 (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailBatch[] : undefined);
-            (batches || []).forEach(batch => quantitiesList.push(batch.quantity));
+            (batches || []).forEach(batch => {
+                (batch.batch_code || '').length && !isNaN(batch.quantity)
+                && quantitiesList.push(batch.quantity);
+            });
 
         } else {
             const storages: IWarehouseInventoryDetailStorage[] =
                 (e && e.data ? e.data['cellData'] as IWarehouseInventoryDetailStorage[] : undefined);
-            (storages || []).forEach(storage => quantitiesList.push(storage.quantity));
+            (storages || []).forEach(storage => {
+                (storage.storage_code || '').length && !isNaN(storage.quantity)
+                && quantitiesList.push(storage.quantity);
+            });
         }
 
         // calculate quantities cell
         const quantityCell: Cell = row.cells[5];
         let quantities = quantityCell.newValue;
-        if (!isNaN(quantities) || parseInt(quantities, 10) <= 0) {
+        if (quantitiesList.length && (!isNaN(quantities) || parseFloat(quantities) <= 0)) {
             quantities = CalculatorUtils.plusMulti(...quantitiesList);
         }
         quantities = (isNaN(quantities) ? undefined : quantities);
