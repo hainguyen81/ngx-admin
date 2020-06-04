@@ -69,6 +69,7 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
+                            "serviceWorker": true,
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -85,7 +86,8 @@
                             "aot": false,
                             "extractLicenses": true,
                             "vendorChunk": false,
-                            "buildOptimizer": false
+                            "buildOptimizer": false,
+                            "serviceWorker": true
                         },
                         "github_dev": {
                             "optimization": true,
@@ -97,6 +99,7 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": false,
+                            "serviceWorker": true,
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -114,6 +117,7 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
+                            "serviceWorker": true,
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -131,17 +135,21 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "ngx-admin:build:production",
-                            "proxyConfig": "proxy.conf.json"
+                            "proxyConfig": "proxy.conf.json",
+                            "serviceWorker": true
                         },
                         "dev": {
                             "browserTarget": "ngx-admin:build:production",
-                            "proxyConfig": "proxy.conf.json"
+                            "proxyConfig": "proxy.conf.json",
+                            "serviceWorker": true
                         },
                         "github_dev": {
-                            "browserTarget": "ngx-admin:build"
+                            "browserTarget": "ngx-admin:build",
+                            "serviceWorker": true
                         },
                         "github_prod": {
-                            "browserTarget": "ngx-admin:build:production"
+                            "browserTarget": "ngx-admin:build:production",
+                            "serviceWorker": true
                         }
                     }
                 },
