@@ -28,6 +28,7 @@ export const DB_STORE: any = {
     warehouse_adjust_detail: 'warehouse_adjust_detail',
     warehouse_settings: 'warehouse_settings',
     warehouse_batch_no: 'warehouse_batch_no',
+    warehouse_management: 'warehouse_management',
 };
 
 // Ahead of time compiles requires an exported function for factories
@@ -86,6 +87,25 @@ export function indexFactory() {
             warehouseInvDetailStore.createIndex(
                 '__warehouse_inv_detail_index_by_inventory_code',
                 ['inventory_code'],
+                { unique: false });
+
+            // warehouse_management
+            const warehouseManagementStore = transaction.objectStore(DB_STORE.warehouse_management);
+            warehouseManagementStore.createIndex(
+                '__whman_index_by_id',
+                ['warehouse_id', 'item_id', 'object_id'],
+                { unique: true });
+            warehouseManagementStore.createIndex(
+                '__whman_index_by_code',
+                ['warehouse_code', 'item_code'],
+                { unique: false });
+            warehouseManagementStore.createIndex(
+                '__whman_object_item_index_by_code',
+                ['warehouse_code', 'object_code', 'item_code'],
+                { unique: false });
+            warehouseManagementStore.createIndex(
+                '__whman_object_index_by_code',
+                ['warehouse_code', 'object_code'],
                 { unique: false });
         },
     };
@@ -481,6 +501,22 @@ export const dbConfig: DBConfig = {
             {name: 'mfg_date', keypath: 'mfg_date', options: {unique: false}},
             {name: 'exp_date', keypath: 'exp_date', options: {unique: false}},
             {name: 'remark', keypath: 'remark', options: {unique: false}},
+        ],
+    }, {
+        store: DB_STORE.warehouse_management,
+        storeConfig: {keyPath: 'uid', autoIncrement: true},
+        storeSchema: [
+            {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'item_id', keypath: 'item_id', options: {unique: false}},
+            {name: 'item_code', keypath: 'item_code', options: {unique: false}},
+            {name: 'item', keypath: 'item', options: {unique: false}},
+            {name: 'warehouse_id', keypath: 'warehouse_id', options: {unique: false}},
+            {name: 'warehouse_code', keypath: 'warehouse_code', options: {unique: false}},
+            {name: 'warehouse', keypath: 'warehouse', options: {unique: false}},
+            {name: 'object_id', keypath: 'object_id', options: {unique: false}},
+            {name: 'object_code', keypath: 'object_code', options: {unique: false}},
+            {name: 'object', keypath: 'object', options: {unique: false}},
+            {name: 'quantity', keypath: 'quantity', options: {unique: false}},
         ],
     }],
     // provide the migration factory to the DBConfig
