@@ -70,6 +70,7 @@
                             "vendorChunk": false,
                             "buildOptimizer": true,
                             "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -87,7 +88,8 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": false,
-                            "serviceWorker": true
+                            "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json"
                         },
                         "github_dev": {
                             "optimization": true,
@@ -100,6 +102,7 @@
                             "vendorChunk": false,
                             "buildOptimizer": false,
                             "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -118,6 +121,7 @@
                             "vendorChunk": false,
                             "buildOptimizer": true,
                             "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -136,20 +140,24 @@
                         "production": {
                             "browserTarget": "ngx-admin:build:production",
                             "proxyConfig": "proxy.conf.json",
-                            "serviceWorker": true
+                            "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json"
                         },
                         "dev": {
                             "browserTarget": "ngx-admin:build:production",
                             "proxyConfig": "proxy.conf.json",
-                            "serviceWorker": true
+                            "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json"
                         },
                         "github_dev": {
                             "browserTarget": "ngx-admin:build",
-                            "serviceWorker": true
+                            "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json"
                         },
                         "github_prod": {
                             "browserTarget": "ngx-admin:build:production",
-                            "serviceWorker": true
+                            "serviceWorker": true,
+                            "ngswConfigPath": "src/ngsw-config.json"
                         }
                     }
                 },
