@@ -1,0 +1,1 @@
+console.warn('This is just a simple WORKER test!');
