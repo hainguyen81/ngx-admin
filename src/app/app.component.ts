@@ -16,6 +16,7 @@ import {isArray} from 'util';
 import {Meta, Title} from '@angular/platform-browser';
 import HtmlUtils from './utils/html.utils';
 import * as moment from 'moment';
+import {WorkerService} from './sw/core/background.task.service';
 
 @Component({
     selector: 'ngx-app',
@@ -35,7 +36,8 @@ export class AppComponent implements OnInit {
                 @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
                 @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
                 @Inject(ApplicationRef) private applicationRef: ApplicationRef,
-                @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef) {
+                @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
+                @Inject(WorkerService) private workerService: WorkerService) {
         analytics || throwError('Could not inject AnalyticsService');
         seoService || throwError('Could not inject SeoService');
         logger || throwError('Could not inject TranslateService');
@@ -48,6 +50,12 @@ export class AppComponent implements OnInit {
 
         AppConfig.appRef = this.applicationRef;
         AppConfig.viewRef = this.viewContainerRef;
+        workerService.startTask({
+            id: 'TEST WORKER',
+            jobs: [{
+                id: 'TEST WORKER JOB',
+            }],
+        });
     }
 
     ngOnInit(): void {

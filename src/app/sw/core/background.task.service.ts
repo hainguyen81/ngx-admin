@@ -1,9 +1,8 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BackgroundWorker, WorkerActionListener, WorkerProperties} from './background.task.listener';
 import {environment} from '../../../environments/environment';
 import {BackgroundTask, BackgroundTaskMessage, JobManager, JobQueue} from './background.task.model';
-import {Observable, throwError} from 'rxjs';
-import {NGXLogger} from 'ngx-logger';
+import {Observable} from 'rxjs';
 
 export type WorkerAction = 'start' | 'stop' | 'pause' | 'resume';
 
@@ -73,7 +72,8 @@ export class WorkerService {
         const webWorkerTemplate = `
             ${this.createWorkerTemplate()}
             self.addEventListener('message', function(event) {
-                (${WorkerService.workerListener.toString()})(worker, event.data.action, event.data.payload);
+                var listener = function ${this.workerListener.toString()};
+                listener(worker, event.data.action, event.data.payload);
             });`;
         return URL.createObjectURL(new Blob([webWorkerTemplate], { type: 'text/javascript' }));
     }
@@ -101,7 +101,7 @@ export class WorkerService {
     /**
      * Will be executed by the worker thanks to the 'template injection'.
      */
-    private static workerListener(worker: WorkerActionListener, action: WorkerAction, payload: any) {
+    protected workerListener(worker: WorkerActionListener, action: WorkerAction, payload: any) {
         switch (action) {
             case 'start':
                 worker.start(payload);

@@ -42,7 +42,7 @@ export class BackgroundWorker implements WorkerActionListener {
 
     // external JS scripts to import
     private _SCRIPTS: string[] = [
-        '/assets/base.worker.js',
+        '/assets/workers/base.worker.js',
     ];
 
     // 'injected' dependencies by the template worker creation
