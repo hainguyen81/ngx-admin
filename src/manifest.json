@@ -1,5 +1,9 @@
 {
     "name": "Hi! System",
+    "dir": "ltr",
+    "lang": "en",
+    "scope": "/",
+    "display": "fullscreen",
     "short_name": "2S",
     "icons": [
         {
@@ -13,8 +17,7 @@
     "permissions": [
         "gcm"
     ],
-    "scope": "",
-    "orientation": "portrait",
+    "orientation": "any",
     "display": "standalone",
     "theme_color": "#ffffff",
     "background_color": "#ffffff"
