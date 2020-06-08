@@ -169,6 +169,7 @@ import {
 import {InjectionService} from '../services/injection.service';
 import {WarehouseManagementDbService, WarehouseManagementHttpService} from '../services/implementation/warehouse/warehouse.management/warehouse.management.service';
 import {WarehouseManagementDatasource} from '../services/implementation/warehouse/warehouse.management/warehouse.management.datasource';
+import {WorkerProviders} from './worker.providers';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -659,4 +660,5 @@ export const Providers: StaticProvider[] = []
     .concat(CountryProviders)
     .concat(WarehouseProviders)
     .concat(MenuProviders)
+    .concat(WorkerProviders)
     .concat(ExampleProviders);

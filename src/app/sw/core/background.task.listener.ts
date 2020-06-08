@@ -7,8 +7,6 @@ import {
     JobManager,
     JobQueue,
 } from './background.task.model';
-import {Inject, Injectable} from '@angular/core';
-import {NGXLogger} from 'ngx-logger';
 
 export interface WorkerConfig {
     properties: WorkerProperties;
@@ -40,7 +38,6 @@ declare function postMessage(message: any): void;
 /**
  * Background task worker
  */
-@Injectable()
 export class BackgroundWorker implements WorkerActionListener {
 
     // external JS scripts to import
@@ -60,20 +57,15 @@ export class BackgroundWorker implements WorkerActionListener {
     private progress: BackgroundTaskProgress;
     private pendingJobs: BackgroundTaskJob[] = [];
 
-    protected constructor(@Inject(NGXLogger) private _logger: NGXLogger,
-                          config: WorkerConfig) {
+    constructor(config: WorkerConfig) {
         this.properties = config.properties;
         this.createUploadQueue = config.dependencies.createJobQueue;
         this.jobManager = new config.dependencies.createJobManager();
         importScripts(...this._SCRIPTS.map(path => this.properties.baseLocation.concat(path)));
     }
 
-    protected get logger(): NGXLogger {
-        return this._logger;
-    }
-
     start = (task: BackgroundTask) => {
-        this.logger.debug(`START TASK: ${task.id}`, task);
+        window.console.debug([`START TASK: ${task.id}`, task]);
 
         this.task = task;
         const progress: BackgroundTaskProgress = {
@@ -89,19 +81,19 @@ export class BackgroundWorker implements WorkerActionListener {
     }
 
     pause = (taskId: string) => {
-        this.logger.debug(`PAUSE TASK: ${taskId}`);
+        window.console.debug([`PAUSE TASK: ${taskId}`]);
         this.cancelPendingJobs();
         this.changeTaskStatus('PAUSED');
     }
 
     resume = (taskId: string) => {
-        this.logger.debug(`RESUME TASK: ${taskId}`);
+        window.console.debug([`RESUME TASK: ${taskId}`]);
         this.changeTaskStatus('RUNNING');
         this.runTask();
     }
 
     stop = (taskId: string) => {
-        this.logger.debug(`STOP TASK: ${taskId}`);
+        window.console.debug([`STOP TASK: ${taskId}`]);
         this.changeTaskStatus('STOPPED');
         this.terminateTask();
     }

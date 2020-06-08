@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {BackgroundWorker, WorkerActionListener, WorkerProperties} from './background.task.listener';
 import {environment} from '../../../environments/environment';
 import {BackgroundTask, BackgroundTaskMessage, JobManager, JobQueue} from './background.task.model';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import {NGXLogger} from 'ngx-logger';
 
 export type WorkerAction = 'start' | 'stop' | 'pause' | 'resume';
 
