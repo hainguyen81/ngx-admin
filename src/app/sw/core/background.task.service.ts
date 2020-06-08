@@ -23,6 +23,10 @@ export class WorkerService {
         return this.createWorkerObservableForTask(worker, task);
     }
 
+    findWorker = (taskId: string) => {
+        return this.workers.get(taskId);
+    }
+
     pauseTask(taskId: string) {
         this.notify(taskId, 'pause', taskId);
     }
@@ -38,7 +42,7 @@ export class WorkerService {
     private createWorkerObservableForTask(worker: Worker, task: BackgroundTask): Observable<BackgroundTaskMessage> {
         return new Observable((observer: any) => {
             worker.addEventListener('message', event => {
-                const message: BackgroundTaskMessage = event.data;
+                const message: BackgroundTaskMessage = event.data || {};
                 if (message.taskId === task.id) {
                     observer.next(message);
                     if (message.taskStatus === 'TERMINATED') {

@@ -65,7 +65,7 @@ export class BackgroundWorker implements WorkerActionListener {
     }
 
     start = (task: BackgroundTask) => {
-        window.console.debug([`START TASK: ${task.id}`, task]);
+        console.warn([`START TASK: ${task.id}`, task]);
 
         this.task = task;
         const progress: BackgroundTaskProgress = {
@@ -81,19 +81,19 @@ export class BackgroundWorker implements WorkerActionListener {
     }
 
     pause = (taskId: string) => {
-        window.console.debug([`PAUSE TASK: ${taskId}`]);
+        console.warn([`PAUSE TASK: ${taskId}`]);
         this.cancelPendingJobs();
         this.changeTaskStatus('PAUSED');
     }
 
     resume = (taskId: string) => {
-        window.console.debug([`RESUME TASK: ${taskId}`]);
+        console.warn([`RESUME TASK: ${taskId}`]);
         this.changeTaskStatus('RUNNING');
         this.runTask();
     }
 
     stop = (taskId: string) => {
-        window.console.debug([`STOP TASK: ${taskId}`]);
+        console.warn([`STOP TASK: ${taskId}`]);
         this.changeTaskStatus('STOPPED');
         this.terminateTask();
     }
@@ -113,7 +113,7 @@ export class BackgroundWorker implements WorkerActionListener {
             return;
         }
         if (this.pendingJobs.length < this.properties.concurrentJobs) {
-            if (this.queue.isEmpty() && this.pendingJobs.length === 0) {
+            if (this.queue.isEmpty() && !this.pendingJobs.length) {
                 // task is over
                 this.terminateTask();
                 return;
@@ -131,7 +131,6 @@ export class BackgroundWorker implements WorkerActionListener {
      * callback when a job is over
      */
     private jobOver = (job: BackgroundTaskJob, success: boolean) => {
-
         // remove pending job
         const jobIndex = this.pendingJobs.indexOf(job);
         if (jobIndex !== -1) {

@@ -55,7 +55,14 @@ export class AppComponent implements OnInit {
             jobs: [{
                 id: 'TEST WORKER JOB',
             }],
+        }).subscribe(value => {
+            logger.warn('Task subscribe', value);
         });
+        const interval: number = window.setInterval(function () {
+            const worker: Worker = workerService.findWorker('TEST WORKER');
+            worker && worker.postMessage('INTERVAL');
+            !worker && clearInterval(interval);
+        }, 1000);
     }
 
     ngOnInit(): void {
