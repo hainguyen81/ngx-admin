@@ -179,6 +179,8 @@ export class WarehouseInventoryComponent
                 this.setFlipped(false);
             });
         }
+
+        postMessage('INVENTORY_CHANGED', location.origin);
     }
 
     /**
