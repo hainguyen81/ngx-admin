@@ -16,7 +16,6 @@ export const ServiceWorkerScripts: string[] = [
 
 export const ServiceWorkerRegistrationOptions: SwRegistrationOptions = {
     enabled: environment.mock,
-    scope: environment.baseHref,
     registrationStrategy: 'registerImmediately',
 };
 
