@@ -1,15 +1,5 @@
-importScripts('../../libs/idbstore/1.7.2/idbstore.min.js');
-
-var dbStore = new IDBStore({
-    dbVersion: 1,
-    storePrefix: '',
-    storeName: 'HiDemo',
-    keyPath: 'id',
-    autoIncrement: true,
-    onStoreReady: function(){
-        console.log('Store ready!');
-    }
-});
+importScripts('../../libs/ydn-db/1.4.3/1.4.3_ydn.db-is-core-qry.js');
+importScripts('../../libs/db.service.js');
 
 /**
  * Update the inventory quantity

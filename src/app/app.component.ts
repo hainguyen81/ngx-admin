@@ -16,7 +16,6 @@ import {isArray} from 'util';
 import {Meta, Title} from '@angular/platform-browser';
 import HtmlUtils from './utils/html.utils';
 import * as moment from 'moment';
-import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
 
 @Component({
     selector: 'ngx-app',
@@ -80,9 +79,6 @@ export class AppComponent implements OnInit {
 
         // apply application header configuration
         this.detectForPageHeaderConfig();
-
-        // register application service workers
-        registerBrowserServiceWorkers();
     }
 
     /**

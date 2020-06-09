@@ -80,6 +80,8 @@ import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
 import {ServiceWorkerProviders} from './config/worker.providers';
+import {environment} from '../environments/environment';
+import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
 
 @NgModule({
     declarations: [AppComponent],
@@ -239,5 +241,12 @@ export class AppModule {
         iconLibraries.registerFontPack('fas', {packClass: 'fas', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
+
+        if (navigator) {
+            navigator['environment'] = Object.assign({}, environment);
+
+            // register application service workers
+            registerBrowserServiceWorkers();
+        }
    }
 }
