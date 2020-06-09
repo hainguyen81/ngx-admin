@@ -261,7 +261,13 @@ export class WarehouseInventoryComponent
         });
         this.getDataSource().update(this.selectedModel, model)
             .then(() => this.warehouseInventoryDatasource.save(detailData)
-                .then(() => { this.showSaveDataSuccess(); this.doBack(); })
+                .then(() => {
+                    this.showSaveDataSuccess();
+                    this.doBack();
+
+                    // post message to calculate warehouse management
+                    this.doUpdateWarehouseManagement();
+                })
                 .catch(() => this.showSaveDataError()))
             .catch(() => this.showSaveDataError());
     }
@@ -272,5 +278,12 @@ export class WarehouseInventoryComponent
     protected doReset(): void {
         const cloned: IWarehouseInventory = DeepCloner(this.selectedModel);
         this.backComponent.dataModel = cloned;
+    }
+
+    /**
+     * Post message to require service worker to update warehouse management
+     */
+    private doUpdateWarehouseManagement() {
+        postMessage('INVENTORY_CHANGED', super.baseHref);
     }
 }

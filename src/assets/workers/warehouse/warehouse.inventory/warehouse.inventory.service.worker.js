@@ -1,13 +1,5 @@
-importScripts('../../libs/idbstore/1.7.2/idbstore.min.js')
+importScripts('./warehouse.inventory.service.js');
 
-var inventories = new IDBStore({
-    dbVersion: 1,
-    storeName: 'warehouse_inventory',
-    keyPath: 'id',
-    autoIncrement: true,
-    onStoreReady: function(){
-        console.log('Store ready!');
-    }
+self.addEventListener('message', function (e) {
+    console.error(['Service worker received message', e]);
 });
-
-
