@@ -79,12 +79,12 @@ import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 /* Mock data while application initialization */
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
-import {ServiceWorkerModule} from '@angular/service-worker';
+import {ServiceWorkerProviders} from './config/worker.providers';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
-        ServiceWorkerModule,
+        ServiceWorkerProviders,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,

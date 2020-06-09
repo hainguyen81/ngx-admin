@@ -13,9 +13,10 @@ import {FormlyFormBuilder} from '@ngx-formly/core';
 import {NgxFormlyFormBuilderRuntime} from './app/runtime/formly.form.builder.runtime';
 import {ComponentLifeCycleRuntime} from './app/runtime/component.lifecycle.runtime';
 import {mixins} from './app/runtime/runtime';
+import {registerBrowserServiceWorkers} from './app/sw/core/service.workers.registration';
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }
 
 // TODO should mixins prototypes before bootstrap application module
@@ -25,6 +26,10 @@ mixins(FormlyFormBuilder, [NgxFormlyFormBuilderRuntime]);
 
 const platformRef: PlatformRef = platformBrowserDynamic();
 platformRef.bootstrapModule(AppModule).then(
-    module => window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]),
-        reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]))
+    module => {
+        window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]);
+
+        // register service worker with browser
+        registerBrowserServiceWorkers();
+    }, reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]))
     .catch(reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]));

@@ -1,4 +1,4 @@
-importScripts('./assets/workers/libs/idbstore/1.7.2/idbstore.min.js')
+importScripts('../../libs/idbstore/1.7.2/idbstore.min.js')
 
 var inventories = new IDBStore({
     dbVersion: 1,
