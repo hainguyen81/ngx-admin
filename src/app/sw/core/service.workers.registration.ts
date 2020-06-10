@@ -3,6 +3,7 @@ import {isNullOrUndefined} from 'util';
 
 export function registerBrowserServiceWorkers() {
     if (navigator && 'serviceWorker' in navigator) {
+        console.warn(['Start browser service worker registration', navigator.serviceWorker]);
         navigator.serviceWorker.getRegistrations().then(registration => {
             console.warn(['Browser service registration', registration]);
 
@@ -45,11 +46,6 @@ export function registerBrowserServiceWorkers() {
                     console.warn([`Register ${serviceWorker} successfully`, newRegistration]);
                     return navigator.serviceWorker.ready.then(readyRegistration => {
                         serviceWorker.controller = readyRegistration.active;
-                        readyRegistration.active.postMessage(
-                            `Send test message for checking service worker ${serviceWorker}`);
-                        navigator.serviceWorker.onmessage = e => {
-                            console.warn([`Main application onmessage ${serviceWorker}`, e]);
-                        };
                     });
                 }, reason => {
                     console.error(`Could not register ${serviceWorker}: ${reason}`);

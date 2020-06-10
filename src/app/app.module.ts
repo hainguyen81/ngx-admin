@@ -242,11 +242,7 @@ export class AppModule {
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
 
-        if (navigator) {
-            navigator['environment'] = Object.assign({}, environment);
-
-            // register application service workers
-            registerBrowserServiceWorkers();
-        }
+        // register application service workers
+        registerBrowserServiceWorkers();
    }
 }
