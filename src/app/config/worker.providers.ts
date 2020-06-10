@@ -10,9 +10,12 @@ export const BackgroundTaskProviders: StaticProvider[] = [
 export const WorkerProviders: StaticProvider[] = []
     .concat(BackgroundTaskProviders);
 
-export const ServiceWorkerScripts: string[] = [
-    './assets/workers/warehouse/warehouse.inventory/warehouse.inventory.service.worker.js',
-];
+export const ServiceWorkerScripts: { [key: string]: { script: string, controller: ServiceWorker } } = {
+    'WAREHOUSE_INVENTORY': {
+        script: './assets/workers/warehouse/warehouse.inventory/warehouse.inventory.service.worker.js',
+        controller: null,
+    },
+};
 
 export const ServiceWorkerRegistrationOptions: SwRegistrationOptions = {
     enabled: environment.mock,
@@ -24,8 +27,9 @@ export const ServiceWorkerRegistrationOptions: SwRegistrationOptions = {
  */
 export function registerServiceWorkers(): ModuleWithProviders<{}>[] {
     const serviceWorkers: ModuleWithProviders<{}>[] = [];
-    ServiceWorkerScripts.forEach(serviceWorker => {
-        serviceWorkers.push(ServiceWorkerModule.register(serviceWorker, ServiceWorkerRegistrationOptions));
+    Object.keys(ServiceWorkerScripts).forEach(serviceWorkerKey => {
+        const serviceWorker: { script: string, controller: ServiceWorker } = ServiceWorkerScripts[serviceWorkerKey];
+        serviceWorkers.push(ServiceWorkerModule.register(serviceWorker.script, ServiceWorkerRegistrationOptions));
     });
     return serviceWorkers;
 }

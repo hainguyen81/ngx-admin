@@ -1,19 +1,11 @@
-// importScripts('./warehouse.inventory.service.js');
+importScripts('../../libs/base.service.js');
 
-var serviceWorker = 'WAREHOUSE_INVENTORY';
-console.warn(`Load service worker ${serviceWorker} completely`);
-self.addEventListener('activate', e => {
-    console.warn([`Activated service worker ${serviceWorker}`, e]);
+var warehouseInventoryServiceWorker = new ServiceWorker({
+    name: 'WAREHOUSE_INVENTORY',
+    onActivate: function(e) {},
+    onFetch: function(e) {},
+    onSync: function(e) {},
+    onPush: function(e) {},
+    onMessage: function(e) {},
 });
-self.addEventListener('fetch', e => {
-    console.warn([`Fetched service worker ${serviceWorker}`, e]);
-});
-self.addEventListener('sync', e => {
-    console.warn([`Synchronized service worker ${serviceWorker}`, e]);
-});
-self.addEventListener('push', e => {
-    console.warn([`Pushed service worker ${serviceWorker}`, e]);
-});
-self.addEventListener('message', e => {
-    console.warn([`Received message in service worker ${serviceWorker}`, e]);
-});
+warehouseInventoryServiceWorker.initialize();

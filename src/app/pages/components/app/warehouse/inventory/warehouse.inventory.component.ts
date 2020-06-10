@@ -47,8 +47,8 @@ import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
-import CalculatorUtils from '../../../../../utils/calculator.utils';
 import {isArray, isNullOrUndefined} from 'util';
+import {AppConfig} from "../../../../../config/app.config";
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -180,7 +180,9 @@ export class WarehouseInventoryComponent
             });
         }
 
-        postMessage('INVENTORY_CHANGED', location.origin);
+        this.postMessage(
+            AppConfig.ServiceWorkers['WAREHOUSE_INVENTORY'].controller,
+            'TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
     }
 
     /**

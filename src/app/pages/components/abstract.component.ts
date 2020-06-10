@@ -1532,4 +1532,37 @@ export abstract class AbstractComponent
             this.changeDetectorRef.detectChanges();
         }
     }
+
+    /**
+     * Post message to service worker
+     * @param serviceWorker {ServiceWorker} controller
+     * @param messageChannel {MessageChannel}
+     * @param data to post
+     */
+    protected postMessageChannel(serviceWorker: ServiceWorker, messageChannel: MessageChannel, data: any): void {
+        const msgChannel: MessageChannel = (isNullOrUndefined(messageChannel) ? new MessageChannel() : messageChannel);
+        msgChannel.port1.addEventListener('message', this.receiveMessage);
+        msgChannel.port2.addEventListener('message', this.receiveMessage);
+        if (!isNullOrUndefined(serviceWorker)) {
+            serviceWorker.postMessage(data, [msgChannel.port1, msgChannel.port2]);
+        } else {
+            this.getLogger().warn(
+                'Could not found service worker controller from navigator to post message', navigator);
+        }
+    }
+    /**
+     * Post message to service worker
+     * @param serviceWorker {ServiceWorker} controller
+     * @param data to post
+     */
+    protected postMessage(serviceWorker: ServiceWorker, data: any): void {
+        this.postMessageChannel(serviceWorker, null, data);
+    }
+    /**
+     * TODO Override this method for receiving message from service worker
+     * @param e to receive
+     */
+    protected receiveMessage(e: any): void {
+        this.getLogger().debug('Receive message from service worker', e);
+    }
 }

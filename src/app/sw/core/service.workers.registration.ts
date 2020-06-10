@@ -7,19 +7,30 @@ export function registerBrowserServiceWorkers() {
             console.warn(['Browser service registration', registration]);
 
             // check for registered services
-            let serviceWorkerScripts: string[];
+            let serviceWorkerScripts: { [key: string]: { script: string, controller: ServiceWorker } }[];
             if (!isNullOrUndefined(registration) && Array.from(registration).length) {
-                const unRegistServices: string[] = ServiceWorkerScripts.filter(serviceWorker => {
-                    if (serviceWorker.startsWith('./')) {
-                        serviceWorker = serviceWorker.right(serviceWorker.length - 2);
+                serviceWorkerScripts = [];
+                Object.keys(ServiceWorkerScripts).forEach(serviceWorkerKey => {
+                    const serviceWorker: { script: string, controller: ServiceWorker } =
+                        ServiceWorkerScripts[serviceWorkerKey];
+                    let scriptURL: string = serviceWorker.script;
+                    if (scriptURL.startsWith('./')) {
+                        scriptURL = scriptURL.right(scriptURL.length - 2);
                     }
-                    return !Array.from(registration).filter(registeredService => {
-                        return (!isNullOrUndefined(registeredService.active)
+                    const checkRegistered: boolean = !Array.from(registration).filter(registeredService => {
+                        const registered: boolean = (!isNullOrUndefined(registeredService.active)
                             && (registeredService.active.scriptURL || '').length
-                            && registeredService.active.scriptURL.indexOf(serviceWorker) >= 0);
+                            && registeredService.active.scriptURL.indexOf(scriptURL) >= 0);
+                        if (registered) {
+                            serviceWorker.controller = registeredService.active;
+                            registeredService.update();
+                        }
+                        return registered;
                     }).length;
+                    if (!checkRegistered) {
+                        serviceWorkerScripts.push({ [serviceWorkerKey]: serviceWorker });
+                    }
                 });
-                serviceWorkerScripts = [].concat(unRegistServices);
 
             } else {
                 serviceWorkerScripts = [].concat(ServiceWorkerScripts);
@@ -27,10 +38,13 @@ export function registerBrowserServiceWorkers() {
 
             // register service worker if necessary
             console.warn(['Need to register service workers', serviceWorkerScripts]);
-            serviceWorkerScripts.forEach(serviceWorker => {
-                navigator.serviceWorker.register(serviceWorker).then(newRegistration => {
+            Object.keys(serviceWorkerScripts).forEach(serviceWorkerKey => {
+                const serviceWorker: { script: string, controller: ServiceWorker } =
+                    serviceWorkerScripts[serviceWorkerKey];
+                navigator.serviceWorker.register(serviceWorker.script).then(newRegistration => {
                     console.warn([`Register ${serviceWorker} successfully`, newRegistration]);
                     return navigator.serviceWorker.ready.then(readyRegistration => {
+                        serviceWorker.controller = readyRegistration.active;
                         readyRegistration.active.postMessage(
                             `Send test message for checking service worker ${serviceWorker}`);
                         navigator.serviceWorker.onmessage = e => {

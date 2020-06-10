@@ -8,6 +8,7 @@ import {i18n} from './i18n.config';
 import {IdGenerators} from './generator.config';
 import {SecureStorageConfiguration, StorageConfiguration} from './storage.config';
 import {CryptoService} from './crypto.config';
+import {ServiceWorkerScripts} from './worker.providers';
 
 export const AppConfig = {
     PageConfig: {
@@ -29,4 +30,5 @@ export const AppConfig = {
         storageConfig: StorageConfiguration,
         secureConfig: SecureStorageConfiguration,
     },
+    ServiceWorkers: ServiceWorkerScripts,
 };
