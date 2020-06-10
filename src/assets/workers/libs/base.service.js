@@ -69,12 +69,14 @@ class ServiceWorker {
                     console.warn([`${this.options.name} didn't implement onEnvironment callback to apply`, e]);
                 }
 
-            } else if (typeof this.options.onMessage === 'function') {
-                console.warn([`Receiving message service worker ${this.options.name}`, e]);
-                this.options.onMessage.apply(this.options.self, [e]);
-
             } else {
-                console.warn([`${this.options.name} didn't implement onMessage callback to apply`, e]);
+                if (typeof this.options.onMessage === 'function') {
+                    console.warn([`Receiving message service worker ${this.options.name}`, e]);
+                    this.options.onMessage.apply(this.options.self, [e]);
+
+                } else {
+                    console.warn([`${this.options.name} didn't implement onMessage callback to apply`, e]);
+                }
             }
         });
         this.options.self.addEventListener('pushsubscriptionchange', e => {

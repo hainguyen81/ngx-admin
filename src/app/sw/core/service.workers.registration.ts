@@ -26,6 +26,7 @@ export function registerBrowserServiceWorkers() {
                             && registeredService.active.scriptURL.indexOf(scriptURL) >= 0);
                         if (registered) {
                             serviceWorker.controller = registeredService.active;
+                            serviceWorker.controller.postMessage({ type: 'environment', environment: environment });
                             registeredService.update();
                         }
                         return registered;
