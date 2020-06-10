@@ -1,8 +1,10 @@
 import {ServiceWorkerScripts} from '../../config/worker.providers';
 import {isNullOrUndefined} from 'util';
+import {environment} from '../../../environments/environment';
 
 export function registerBrowserServiceWorkers() {
     if (navigator && 'serviceWorker' in navigator) {
+        // register service worker
         console.warn(['Start browser service worker registration', navigator.serviceWorker]);
         navigator.serviceWorker.getRegistrations().then(registration => {
             console.warn(['Browser service registration', registration]);
