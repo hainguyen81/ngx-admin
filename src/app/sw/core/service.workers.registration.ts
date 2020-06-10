@@ -8,9 +8,8 @@ export function registerBrowserServiceWorkers() {
             console.warn(['Browser service registration', registration]);
 
             // check for registered services
-            let serviceWorkerScripts: { [key: string]: { script: string, controller: ServiceWorker } }[];
+            let workers: { [key: string]: { script: string, controller: ServiceWorker } }[] = [];
             if (!isNullOrUndefined(registration) && Array.from(registration).length) {
-                serviceWorkerScripts = [];
                 Object.keys(ServiceWorkerScripts).forEach(serviceWorkerKey => {
                     const serviceWorker: { script: string, controller: ServiceWorker } =
                         ServiceWorkerScripts[serviceWorkerKey];
@@ -29,20 +28,20 @@ export function registerBrowserServiceWorkers() {
                         return registered;
                     }).length;
                     if (!checkRegistered) {
-                        serviceWorkerScripts.push({ [serviceWorkerKey]: serviceWorker });
+                        workers.push({ [serviceWorkerKey]: serviceWorker });
                     }
                 });
 
             } else {
-                serviceWorkerScripts = [].concat(ServiceWorkerScripts);
+                workers = [].concat(ServiceWorkerScripts);
             }
 
             // register service worker if necessary
-            console.warn(['Need to register service workers', serviceWorkerScripts]);
-            Object.keys(serviceWorkerScripts).forEach(serviceWorkerKey => {
-                const serviceWorker: { script: string, controller: ServiceWorker } =
-                    serviceWorkerScripts[serviceWorkerKey];
-                navigator.serviceWorker.register(serviceWorker.script).then(newRegistration => {
+            console.warn(['Need to register service workers', workers]);
+            Object.keys(workers).forEach(serviceWorkerKey => {
+                const serviceWorker: { script: string, controller: ServiceWorker } = workers[serviceWorkerKey];
+                (serviceWorker.script || '').length
+                && navigator.serviceWorker.register(serviceWorker.script).then(newRegistration => {
                     console.warn([`Register ${serviceWorker} successfully`, newRegistration]);
                     return navigator.serviceWorker.ready.then(readyRegistration => {
                         serviceWorker.controller = readyRegistration.active;

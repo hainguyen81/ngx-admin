@@ -25,7 +25,6 @@ mixins(FormlyFormBuilder, [NgxFormlyFormBuilderRuntime]);
 
 const platformRef: PlatformRef = platformBrowserDynamic();
 platformRef.bootstrapModule(AppModule).then(
-    module => {
-        window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]);
-    }, reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]))
+    module => window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]),
+        reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]))
     .catch(reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]));
