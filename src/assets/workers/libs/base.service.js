@@ -59,9 +59,20 @@ class ServiceWorker {
             }
         });
         this.options.self.addEventListener('message', e => {
-            if (typeof this.options.onMessage === 'function') {
+            if (e && e.data && e.data.type === 'environment') {
+                this.options.environment = e.data.environment;
+                if (typeof this.options.onEnvironment === 'function') {
+                    console.warn([`Initialize environment message service worker ${this.options.name}`, e]);
+                    this.options.onEnvironment.apply(this.options.self, [e]);
+
+                } else {
+                    console.warn([`${this.options.name} didn't implement onEnvironment callback to apply`, e]);
+                }
+
+            } else if (typeof this.options.onMessage === 'function') {
                 console.warn([`Receiving message service worker ${this.options.name}`, e]);
                 this.options.onMessage.apply(this.options.self, [e]);
+
             } else {
                 console.warn([`${this.options.name} didn't implement onMessage callback to apply`, e]);
             }

@@ -1,6 +1,7 @@
 import {ServiceWorkerScripts} from '../../config/worker.providers';
 import {isNullOrUndefined} from 'util';
 import {environment} from '../../../environments/environment';
+import EncryptionUtils from '../../utils/encryption.utils';
 
 export function registerBrowserServiceWorkers() {
     if (navigator && 'serviceWorker' in navigator) {
@@ -10,7 +11,7 @@ export function registerBrowserServiceWorkers() {
             console.warn(['Browser service registration', registration]);
 
             // check for registered services
-            let workers: { [key: string]: { script: string, controller: ServiceWorker } }[] = [];
+            let workers: { [key: string]: { script: string, controller: ServiceWorker } } = {};
             if (!isNullOrUndefined(registration) && Array.from(registration).length) {
                 Object.keys(ServiceWorkerScripts).forEach(serviceWorkerKey => {
                     const serviceWorker: { script: string, controller: ServiceWorker } =
@@ -30,29 +31,34 @@ export function registerBrowserServiceWorkers() {
                         return registered;
                     }).length;
                     if (!checkRegistered) {
-                        workers.push({ [serviceWorkerKey]: serviceWorker });
+                        workers[serviceWorkerKey] = serviceWorker;
                     }
                 });
 
             } else {
-                workers = [].concat(ServiceWorkerScripts);
+                workers = Object.assign({}, ServiceWorkerScripts);
             }
 
             // register service worker if necessary
             console.warn(['Need to register service workers', workers]);
             Object.keys(workers).forEach(serviceWorkerKey => {
                 const serviceWorker: { script: string, controller: ServiceWorker } = workers[serviceWorkerKey];
-                (serviceWorker.script || '').length
-                && navigator.serviceWorker.register(serviceWorker.script).then(newRegistration => {
-                    console.warn([`Register ${serviceWorker} successfully`, newRegistration]);
-                    return navigator.serviceWorker.ready.then(readyRegistration => {
-                        serviceWorker.controller = readyRegistration.active;
+                if ((serviceWorker.script || '').length) {
+                    navigator.serviceWorker.register(serviceWorker.script).then(newRegistration => {
+                        console.warn([`Register ${serviceWorkerKey} successfully`, newRegistration]);
+                        return navigator.serviceWorker.ready.then(readyRegistration => {
+                            serviceWorker.controller = readyRegistration.active;
+                            serviceWorker.controller.postMessage({ type: 'environment', environment: environment });
+                        });
+                    }, reason => {
+                        console.error(`Could not register ${serviceWorkerKey}: ${reason}`);
+                    }).catch(reason => {
+                        console.error(`Could not register ${serviceWorkerKey}: ${reason}`);
                     });
-                }, reason => {
-                    console.error(`Could not register ${serviceWorker}: ${reason}`);
-                }).catch(reason => {
-                    console.error(`Could not register ${serviceWorker}: ${reason}`);
-                });
+
+                } else {
+                    console.warn(`Invalid worker script to register ${serviceWorkerKey}`);
+                }
             });
         });
     }
