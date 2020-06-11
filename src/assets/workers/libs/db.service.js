@@ -32,6 +32,10 @@ class ServiceWorkerDatabase {
         return this.options.crypto;
     }
 
+    get databaseName() {
+        return (this.options.environment || {}).databaseName || '';
+    }
+
     /**
      * Open the specified database name
      * @param databaseName to open
@@ -39,7 +43,8 @@ class ServiceWorkerDatabase {
      * @param onSuccess to callback for returning {IDBDatabase} instance. formula: function(database, e) {}
      */
     openDb(onSuccess, onError) {
-        if (!((this.options.environment || {}).databaseName || '').length) {
+        var databaseName = this.databaseName;
+        if (!databaseName.length) {
             (typeof onError === 'function')
             && onError.apply(this, [`${this.options.name}: Could not open the invalid database name`]);
             (typeof onError !== 'function')
@@ -61,20 +66,21 @@ class ServiceWorkerDatabase {
             return;
         }
 
+        var _this = this;
         var dbRequest = this.options.dbFactory.open(databaseName);
         // these two event handlers act on the database being opened successfully, or not
         dbRequest.onerror = function(e) {
             (typeof onError === 'function')
-            && onError.apply(this, [e]);
+            && onError.apply(_this, [e]);
             (typeof onError !== 'function')
-            && console.error([`${this.options.name}: Could not open database: ${databaseName}`, e]);
+            && console.error([`${_this.options.name}: Could not open database: ${databaseName}`, e]);
         };
         dbRequest.onsuccess = function(e) {
-            console.debug([`${this.options.name}: Open database successfully: ${databaseName}`, e]);
+            console.debug([`${_this.options.name}: Open database successfully: ${databaseName}`, e]);
             (typeof onSuccess === 'function')
-            && onSuccess.apply(this, [DBOpenRequest.result, e]);
+            && onSuccess.apply(_this, [dbRequest.result, e]);
             (typeof onSuccess !== 'function')
-            && console.warn([`${this.options.name} didn't implement onSuccess callback to apply`, e, DBOpenRequest.result]);
+            && console.warn([`${_this.options.name} didn't implement onSuccess callback to apply`, e, dbRequest.result]);
         };
     }
 

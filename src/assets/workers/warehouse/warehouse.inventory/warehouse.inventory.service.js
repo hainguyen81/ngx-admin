@@ -27,6 +27,27 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
 
             // recalculate INPUT
             if (!inventory || inventory.type === 'common.enum.warehouseInventoryType.in') {
+                var cursor = null;
+                var index = null;
+                if (inventory) {
+                    index = invStore.index('code');
+                    cursor = index.openCursor(IDBKeyRange.only([inventory.code]));
+
+                } else {
+                    index = invStore.index('type');
+                    cursor = index.openCursor(IDBKeyRange.only(['common.enum.warehouseInventoryType.in']));
+                }
+                cursor.onsuccess = function(e) {
+                    var ecur = e.target.result;
+                    if (ecur) {
+
+
+                        cursor.continue();
+
+                    } else {
+                        console.warn(`${_this.options.name}: Finish WAREHOUSE_INVENTORY calculation`);
+                    }
+                };
                 _this.recalculateInput(invStore, invDetailStore, wmStore, inventory, details);
             }
 

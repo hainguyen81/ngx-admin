@@ -7,7 +7,7 @@ class WarehouseInventoryServiceWorker extends ServiceWorker {
     }
 
     onEnvironment = function(e) {
-        this.databaseService = new WarehouseInventoryServiceWorkerDatabase(this.options.environment.databaseName);
+        this.databaseService = new WarehouseInventoryServiceWorkerDatabase(this.options);
         console.warn([`${this.options.name}: Initialize database service worker`, e, this.databaseService]);
     }
 
