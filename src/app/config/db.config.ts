@@ -507,6 +507,7 @@ export const dbConfig: DBConfig = {
         storeConfig: {keyPath: 'uid', autoIncrement: true},
         storeSchema: [
             {name: 'id', keypath: 'id', options: {unique: true}},
+            {name: 'type', keypath: 'type', options: {unique: false}},
             {name: 'item_id', keypath: 'item_id', options: {unique: false}},
             {name: 'item_code', keypath: 'item_code', options: {unique: false}},
             {name: 'item', keypath: 'item', options: {unique: false}},

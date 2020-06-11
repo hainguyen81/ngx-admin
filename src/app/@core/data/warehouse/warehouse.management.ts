@@ -3,6 +3,7 @@ import {IWarehouseItem} from './warehouse.item';
 import {IWarehouse} from './warehouse';
 
 export interface IWarehouseManagement extends IModel {
+    type?: string | null;
     item_id?: string | null;
     item_code?: string | null;
     item?: IWarehouseItem | null;
