@@ -147,7 +147,8 @@
                 "import": "Import",
                 "deletedb": "Delete DB",
                 "close": "Close",
-                "search": "Search"
+                "search": "Search",
+                "sw_exec": "Call Service"
             },
             "treeview": {
                 "not_selection": "",

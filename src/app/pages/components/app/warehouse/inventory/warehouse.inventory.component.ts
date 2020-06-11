@@ -25,6 +25,8 @@ import {
     ACTION_IMPORT,
     ACTION_RESET,
     ACTION_SAVE,
+    ACTION_SERVICE_WORKER,
+    IToolbarActionsConfig,
 } from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
@@ -48,7 +50,8 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 import {isArray, isNullOrUndefined} from 'util';
-import {AppConfig} from "../../../../../config/app.config";
+import {AppConfig} from '../../../../../config/app.config';
+import {ServiceWorkerKeys} from '../../../../../config/worker.providers';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -80,7 +83,7 @@ export class WarehouseInventoryComponent
     // -------------------------------------------------
 
     protected get visibleSpecialActionsOnFront(): String[] {
-        return [ACTION_IMPORT];
+        return [ACTION_IMPORT, ACTION_SERVICE_WORKER];
     }
 
     protected get visibleActionsOnBack(): String[] {
@@ -179,10 +182,19 @@ export class WarehouseInventoryComponent
                 this.setFlipped(false);
             });
         }
+    }
 
-        this.postMessage(
-            AppConfig.ServiceWorkers['WAREHOUSE_INVENTORY'].controller,
-            'TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+    protected onToolbarAction($event: IEvent) {
+        if (!$event || !$event.data || !($event.data as IToolbarActionsConfig)) {
+            return;
+        }
+        let action: IToolbarActionsConfig;
+        action = $event.data as IToolbarActionsConfig;
+        switch (action.id) {
+            case ACTION_SERVICE_WORKER:
+                this.doExecuteService();
+                break;
+        }
     }
 
     /**
@@ -270,7 +282,7 @@ export class WarehouseInventoryComponent
                     this.doBack();
 
                     // post message to calculate warehouse management
-                    this.doUpdateWarehouseManagement();
+                    this.doExecuteService();
                 })
                 .catch(() => this.showSaveDataError()))
             .catch(() => this.showSaveDataError());
@@ -287,7 +299,9 @@ export class WarehouseInventoryComponent
     /**
      * Post message to require service worker to update warehouse management
      */
-    private doUpdateWarehouseManagement() {
-        postMessage('INVENTORY_CHANGED', super.baseHref);
+    private doExecuteService() {
+        const serviceController: ServiceWorker =
+            AppConfig.ServiceWorkers[ServiceWorkerKeys.warehouse_inventory].controller;
+        this.postMessage(serviceController, { command: 'RECALC' });
     }
 }

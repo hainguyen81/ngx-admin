@@ -147,7 +147,8 @@
                 "import": "Import",
                 "deletedb": "Xóa DB",
                 "close": "Đóng",
-                "search": "Tìm kiếm"
+                "search": "Tìm kiếm",
+                "sw_exec": "Call Service"
             },
             "treeview": {
                 "not_selection": "",

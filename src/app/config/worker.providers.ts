@@ -10,9 +10,12 @@ export const BackgroundTaskProviders: StaticProvider[] = [
 export const WorkerProviders: StaticProvider[] = []
     .concat(BackgroundTaskProviders);
 
+export const ServiceWorkerKeys: any = {
+    warehouse_inventory: 'WAREHOUSE_INVENTORY',
+};
 export const ServiceWorkerScriptBase: string = './assets/workers/';
 export const ServiceWorkerScripts: { [key: string]: { script: string, controller: ServiceWorker } } = {
-    'WAREHOUSE_INVENTORY': {
+    [ServiceWorkerKeys.warehouse_inventory]: {
         script: ServiceWorkerScriptBase.concat('warehouse/warehouse.inventory/warehouse.inventory.service.worker.js'),
         controller: null,
     },

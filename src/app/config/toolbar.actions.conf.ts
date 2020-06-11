@@ -9,6 +9,7 @@ export const ACTION_DELETE: string = 'ACTION_DELETE';
 export const ACTION_BACK: string = 'ACTION_BACK';
 export const ACTION_SEARCH: string = 'ACTION_SEARCH';
 export const ACTION_IMPORT: string = 'ACTION_IMPORT';
+export const ACTION_SERVICE_WORKER: string = 'ACTION_SERVICE_WORKER';
 export const ACTION_DELETE_DATABASE: string = 'ACTION_DELETE_DATABASE';
 
 /* toolbar actions configuration */

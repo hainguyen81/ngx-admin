@@ -20,6 +20,7 @@ import {
     ACTION_BACK,
     ACTION_DELETE_DATABASE,
     ACTION_IMPORT,
+    ACTION_SERVICE_WORKER,
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -37,6 +38,16 @@ export const AppToolbarBackActionsConfig: IToolbarActionsConfig[] =
             size: 'small',
             shape: 'rectangle',
         }]);
+export const AppToolbarServiceWorkerExecActionsConfig: IToolbarActionsConfig[] =
+    [].concat([{
+        id: ACTION_SERVICE_WORKER,
+        label: 'common.form.action.sw_exec',
+        type: 'button',
+        status: 'success',
+        icon: {icon: 'upload', pack: 'fa'},
+        size: 'small',
+        shape: 'rectangle',
+    }]).concat(AppToolbarBackActionsConfig);
 export const AppToolbarImportActionsConfig: IToolbarActionsConfig[] =
     [].concat([{
         id: ACTION_IMPORT,
@@ -46,7 +57,7 @@ export const AppToolbarImportActionsConfig: IToolbarActionsConfig[] =
         icon: {icon: 'upload', pack: 'fa'},
         size: 'small',
         shape: 'rectangle',
-    }]).concat(AppToolbarBackActionsConfig);
+    }]).concat(AppToolbarServiceWorkerExecActionsConfig);
 export const AppToolbarDeleteDbActionsConfig: IToolbarActionsConfig[] =
     [].concat([{
         id: ACTION_DELETE_DATABASE,
