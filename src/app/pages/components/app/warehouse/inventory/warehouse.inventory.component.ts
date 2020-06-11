@@ -192,7 +192,14 @@ export class WarehouseInventoryComponent
         action = $event.data as IToolbarActionsConfig;
         switch (action.id) {
             case ACTION_SERVICE_WORKER:
-                this.doExecuteService();
+                this.doExecuteService({
+                    oldInv: this.selectedModel,
+                    newInv: this.selectedModel,
+                    oldDetails: this.backComponent.oldDataModelDetail,
+                    newDetails: this.backComponent.dataModelDetail,
+                });
+                break;
+            default:
                 break;
         }
     }
@@ -282,7 +289,12 @@ export class WarehouseInventoryComponent
                     this.doBack();
 
                     // post message to calculate warehouse management
-                    this.doExecuteService();
+                    this.doExecuteService({
+                        oldInv: this.selectedModel,
+                        newInv: model,
+                        oldDetails: this.backComponent.oldDataModelDetail,
+                        newDetails: this.backComponent.dataModelDetail,
+                    });
                 })
                 .catch(() => this.showSaveDataError()))
             .catch(() => this.showSaveDataError());
@@ -298,10 +310,16 @@ export class WarehouseInventoryComponent
 
     /**
      * Post message to require service worker to update warehouse management
+     * @param data to send to service worker
      */
-    private doExecuteService() {
+    private doExecuteService(data: {
+        oldInv: IWarehouseInventory,
+        newInv: IWarehouseInventory,
+        oldDetails: IWarehouseInventoryDetail[],
+        newDetails: IWarehouseInventoryDetail[],
+    }) {
         const serviceController: ServiceWorker =
             AppConfig.ServiceWorkers[ServiceWorkerKeys.warehouse_inventory].controller;
-        this.postMessage(serviceController, { command: 'RECALC' });
+        this.postMessage(serviceController, { command: 'RECALC', data: data });
     }
 }

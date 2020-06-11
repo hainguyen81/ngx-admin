@@ -98,6 +98,17 @@ export class WarehouseInventoryDetailPanelComponent
      * Get the {IWarehouseInventoryDetail} data array
      * @return the {IWarehouseInventoryDetail} data array
      */
+    get oldDataModelDetail(): IWarehouseInventoryDetail[] {
+        if (isNullOrUndefined(this.detailTable)) {
+            return [];
+        }
+        return this.detailTable.details || [];
+    }
+
+    /**
+     * Get the {IWarehouseInventoryDetail} data array
+     * @return the {IWarehouseInventoryDetail} data array
+     */
     get dataModelDetail(): IWarehouseInventoryDetail[] {
         const detailData: IWarehouseInventoryDetail[] = [];
         if (isNullOrUndefined(this.detailTable)) {

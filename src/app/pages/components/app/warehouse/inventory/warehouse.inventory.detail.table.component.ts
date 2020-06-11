@@ -66,6 +66,7 @@ import {
     IWarehouseInventoryDetailStorage,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
+import ObjectUtils from '../../../../../utils/object.utils';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -218,6 +219,7 @@ export class WarehouseInventoryDetailSmartTableComponent
 
     private _behaviorSubject: BehaviorSubject<IWarehouseInventory>;
     private _model: IWarehouseInventory;
+    private _details: IWarehouseInventoryDetail[];
     private _sumQuantityComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
     private _sumPriceComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
 
@@ -260,6 +262,14 @@ export class WarehouseInventoryDetailSmartTableComponent
      */
     protected get sumPriceComponent(): ComponentRef<WarehouseInventoryDetailSummaryComponent> {
         return this._sumPriceComponent;
+    }
+
+    /**
+     * Get the {IWarehouseInventoryDetail} instance
+     * @return the {IWarehouseInventoryDetail} instance
+     */
+    get details(): IWarehouseInventoryDetail[] {
+        return this._details;
     }
 
     /**
@@ -478,8 +488,10 @@ export class WarehouseInventoryDetailSmartTableComponent
             if (!isNullOrUndefined(model) && (model.id || '').length) {
                 this._warehouseInventoryDetailDatasource.getAllByIndex(
                     this.dataIndexName, this.dataIndexKey)
-                    .then((detail: IWarehouseInventoryDetail[]) => this.getDataSource().load(detail),
-                        reason => this.getLogger().error(reason))
+                    .then((details: IWarehouseInventoryDetail[]) => {
+                        this._details = ObjectUtils.deepCopy(details);
+                        this.getDataSource().load(details);
+                    }, reason => this.getLogger().error(reason))
                     .catch(reason => this.getLogger().error(reason));
             }
         }, reason => this.getLogger().error(reason))
