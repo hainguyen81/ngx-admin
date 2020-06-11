@@ -3,10 +3,15 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {
     AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, OnInit, Renderer2, Type,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    OnInit,
+    Renderer2,
+    Type,
     ViewContainerRef,
 } from '@angular/core';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
@@ -20,9 +25,12 @@ import {throwError} from 'rxjs';
 import {isNullOrUndefined} from 'util';
 import {
     ACTION_BACK,
-    ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT,
+    ACTION_DELETE,
+    ACTION_DELETE_DATABASE,
+    ACTION_IMPORT,
     ACTION_RESET,
     ACTION_SAVE,
+    ACTION_SERVICE_WORKER,
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
@@ -152,6 +160,9 @@ export abstract class AppFlipcardComponent<
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param toolbarComponentType toolbar component type
+     * @param frontComponentType front side component type
+     * @param backComponentType back side component type
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -331,7 +342,8 @@ export abstract class AppFlipcardComponent<
             switch (action.id) {
                 // special actions, then default not visible
                 case ACTION_DELETE_DATABASE:
-                case ACTION_IMPORT: {
+                case ACTION_IMPORT:
+                case ACTION_SERVICE_WORKER: {
                     action.visible = (!super.isFlipped()
                         && this.visibleSpecialActionsOnFront.contains(action.id));
                     break;

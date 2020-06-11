@@ -38,16 +38,6 @@ export const AppToolbarBackActionsConfig: IToolbarActionsConfig[] =
             size: 'small',
             shape: 'rectangle',
         }]);
-export const AppToolbarServiceWorkerExecActionsConfig: IToolbarActionsConfig[] =
-    [].concat([{
-        id: ACTION_SERVICE_WORKER,
-        label: 'common.form.action.sw_exec',
-        type: 'button',
-        status: 'success',
-        icon: {icon: 'headset', pack: 'fas'},
-        size: 'small',
-        shape: 'rectangle',
-    }]).concat(AppToolbarBackActionsConfig);
 export const AppToolbarImportActionsConfig: IToolbarActionsConfig[] =
     [].concat([{
         id: ACTION_IMPORT,
@@ -57,7 +47,17 @@ export const AppToolbarImportActionsConfig: IToolbarActionsConfig[] =
         icon: {icon: 'upload', pack: 'fa'},
         size: 'small',
         shape: 'rectangle',
-    }]).concat(AppToolbarServiceWorkerExecActionsConfig);
+    }]).concat(AppToolbarBackActionsConfig);
+export const AppToolbarServiceWorkerExecActionsConfig: IToolbarActionsConfig[] =
+    [].concat([{
+        id: ACTION_SERVICE_WORKER,
+        label: 'common.form.action.sw_exec',
+        type: 'button',
+        status: 'success',
+        icon: {icon: 'headset', pack: 'fas'},
+        size: 'small',
+        shape: 'rectangle',
+    }]).concat(AppToolbarImportActionsConfig);
 export const AppToolbarDeleteDbActionsConfig: IToolbarActionsConfig[] =
     [].concat([{
         id: ACTION_DELETE_DATABASE,

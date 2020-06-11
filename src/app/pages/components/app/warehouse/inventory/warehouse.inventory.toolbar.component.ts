@@ -16,7 +16,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {
     AppToolbarComponent,
-    AppToolbarImportActionsConfig,
+    AppToolbarServiceWorkerExecActionsConfig,
 } from '../../components/app.toolbar.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
@@ -35,7 +35,7 @@ export const WarehouseInventoryToolbarHeaderConfig: IToolbarHeaderConfig = {
 
 /* default warehouse inventory toolbar actions config */
 export const WarehouseInventoryToolbarActionsConfig: IToolbarActionsConfig[] =
-    [].concat(ObjectUtils.deepCopy(AppToolbarImportActionsConfig));
+    [].concat(ObjectUtils.deepCopy(AppToolbarServiceWorkerExecActionsConfig));
 
 /**
  * Toolbar component base on {MatToolbar}
