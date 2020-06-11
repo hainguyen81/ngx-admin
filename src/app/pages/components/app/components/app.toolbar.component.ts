@@ -44,7 +44,7 @@ export const AppToolbarServiceWorkerExecActionsConfig: IToolbarActionsConfig[] =
         label: 'common.form.action.sw_exec',
         type: 'button',
         status: 'success',
-        icon: {icon: 'upload', pack: 'fa'},
+        icon: {icon: 'headset', pack: 'fas'},
         size: 'small',
         shape: 'rectangle',
     }]).concat(AppToolbarBackActionsConfig);
