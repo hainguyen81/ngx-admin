@@ -1,7 +1,7 @@
 import {ServiceWorkerScripts} from '../../config/worker.providers';
 import {isNullOrUndefined} from 'util';
 import {environment} from '../../../environments/environment';
-import EncryptionUtils from '../../utils/encryption.utils';
+import {DB_STORE} from '../../config/db.config';
 
 export function registerBrowserServiceWorkers() {
     if (navigator && 'serviceWorker' in navigator) {
@@ -26,7 +26,8 @@ export function registerBrowserServiceWorkers() {
                             && registeredService.active.scriptURL.indexOf(scriptURL) >= 0);
                         if (registered) {
                             serviceWorker.controller = registeredService.active;
-                            serviceWorker.controller.postMessage({ type: 'environment', environment: environment });
+                            serviceWorker.controller.postMessage({
+                                type: 'environment', environment: environment, dbStores: DB_STORE });
                             registeredService.update();
                         }
                         return registered;
@@ -49,7 +50,8 @@ export function registerBrowserServiceWorkers() {
                         console.warn([`Register ${serviceWorkerKey} successfully`, newRegistration]);
                         return navigator.serviceWorker.ready.then(readyRegistration => {
                             serviceWorker.controller = readyRegistration.active;
-                            serviceWorker.controller.postMessage({ type: 'environment', environment: environment });
+                            serviceWorker.controller.postMessage({
+                                type: 'environment', environment: environment, dbStores: DB_STORE });
                         });
                     }, reason => {
                         console.error(`Could not register ${serviceWorkerKey}: ${reason}`);

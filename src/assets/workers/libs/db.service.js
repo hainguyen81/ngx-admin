@@ -38,8 +38,8 @@ class ServiceWorkerDatabase {
      * @param onError to callback while error occurred. formula: function(e) {}
      * @param onSuccess to callback for returning {IDBDatabase} instance. formula: function(database, e) {}
      */
-    openDb(databaseName, onError, onSuccess) {
-        if (!(databaseName || '').length) {
+    openDb(onSuccess, onError) {
+        if (!((this.options.environment || {}).databaseName || '').length) {
             (typeof onError === 'function')
             && onError.apply(this, [`${this.options.name}: Could not open the invalid database name`]);
             (typeof onError !== 'function')

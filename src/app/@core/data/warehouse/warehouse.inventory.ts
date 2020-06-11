@@ -1,9 +1,6 @@
 import BaseModel, {IModel} from '../base';
 import {IWarehouse} from './warehouse';
 import {ICustomer} from '../system/customer';
-import {Constants} from '../constants/warehouse.inventory.constants';
-import WAREHOUSE_INVENTORY_TYPE = Constants.WarehouseConstants.WarehouseInventoryConstants.WAREHOUSE_INVENTORY_TYPE;
-import WAREHOUSE_INVENTORY_STATUS = Constants.WarehouseConstants.WarehouseInventoryConstants.WAREHOUSE_INVENTORY_STATUS;
 
 export interface IWarehouseInventory extends IModel {
     // Mã phiếu
