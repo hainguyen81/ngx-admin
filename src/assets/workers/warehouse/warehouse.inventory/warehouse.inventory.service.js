@@ -11,7 +11,59 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
     }
 
     /**
-     * Recalculate the inventory quantities
+     * Recalculate the `warehouse_management` data from the `warehouse_inventory` store
+     */
+    recalculateAll() {
+        try {
+            var _this = this;
+            _this.openDb(function (db, e) {
+                var dbStores = _this.options.dbStores || {};
+                var objectStores = [dbStores.warehouse_inventory, dbStores.warehouse_inventory_detail, dbStores.warehouse_management];
+                var transaction = _this.openTransaction(db, objectStores, 'readwrite');
+                var invStore = transaction.objectStore(dbStores.warehouse_inventory);
+                var invDetailStore = transaction.objectStore(dbStores.warehouse_inventory_detail);
+                var wmStore = transaction.objectStore(dbStores.warehouse_management);
+
+                var invCursor = invStore.openCursor();
+                invCursor.onerror = function(e) {
+                    console.error([`${_this.options.name}: Could open warehouse_inventory store`, e]);
+                }
+                invCursor.onsuccess = function(e) {
+                    var invCsr = e.target.result;
+                    if (invCsr) {
+                        var inventory = invCsr.value;
+                        var invDetailIndex = invDetailStore.index('inventory_code');
+                        var invDetailCursor = invDetailIndex.getAll(IDBKeyRange.only(inventory.code || ''));
+                        invDetailCursor.onerror = function(ie) {
+                            console.error([`${_this.options.name}: Could open warehouse_inventory_detail store`, ie]);
+                        }
+                        invDetailCursor.onsuccess = function(ie) {
+                            console.warn([`${_this.options.name}: Start process inventory`, inventory, ie.result]);
+                            // process data
+                            _this.recalculate({
+                                inventory: inventory,
+                                details: ie.result,
+                            }, {
+                                inventory: inventory,
+                                details: ie.result,
+                            });
+                        }
+
+                        // continue to processing next record
+                        invCsr.continue();
+
+                    } else {
+                        console.warn(`:::${_this.options.name}: Finish warehouse processing`);
+                    }
+                }
+            });
+        } catch (e) {
+            console.error([`${_this.options.name}: Error while processing`, e]);
+        }
+    }
+
+    /**
+     * Recalculate the `warehouse_management` data from the specified inventory data
      * @param oldValue old value to calculate revert if necessary. formula { inventory, details }
      * @param newValue new value to calculate. required, formula { inventory, details }
      */
@@ -44,10 +96,10 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
                 });
 
             } else {
-                console.warn([`${_this.options.name}: Invalid new data to calculate WAREHOUSE_INVENTORY`, oldValue, newValue]);
+                console.warn([`${_this.options.name}: Invalid new data to process`, oldValue, newValue]);
             }
         } catch (e) {
-            console.error([`${_this.options.name}: Error while calculating WAREHOUSE_INVENTORY`, e]);
+            console.error([`${_this.options.name}: Error while processing`, e]);
         }
     }
 
@@ -205,11 +257,11 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
                 // check for updating existing and inserting new if necessary
             } else if (!isNaN(count) && count > 0 && inventory && (details || []).length) {
                 var cursor = dbStore.openCursor();
-                cursor.onerror = function(e) {
-                    console.error([`:::${_this.options.name}: Could not process data`, inventory, details, e]);
+                cursor.onerror = function(oe) {
+                    console.error([`:::${_this.options.name}: Could not process data`, inventory, details, oe]);
                 };
-                cursor.onsuccess = function(e) {
-                    var csr = e.target.result;
+                cursor.onsuccess = function(oe) {
+                    var csr = oe.target.result;
                     if (csr) {
                         var record = csr.value;
                         var recordKey  = [record.type || '', record.warehouse_code || '', record.object_code || ''].join('_');
