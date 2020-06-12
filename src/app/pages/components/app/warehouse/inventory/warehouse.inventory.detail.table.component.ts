@@ -149,7 +149,7 @@ export const WarehouseInventoryDetailTableSettings = {
                 },
             },
         },
-        quantity_orders: {
+        quantity_actually: {
             title: 'warehouse.inventory.detail.table.quantity_orders',
             type: 'custom',
             sort: false,
@@ -615,7 +615,7 @@ export class WarehouseInventoryDetailSmartTableComponent
                 (row.isInEditing ? row.getNewData() as IWarehouseInventoryDetail
                     : row.getData() as IWarehouseInventoryDetail);
             if (!isNullOrUndefined(rowData)) {
-                quantities.push(rowData.quantity_orders);
+                quantities.push(rowData.quantity_actually);
                 prices.push(rowData.amount);
             }
         });
@@ -663,9 +663,9 @@ export class WarehouseInventoryDetailSmartTableComponent
         const pricesColumnConfig = settings['columns']['unit_price']['editor']['config'];
         pricesColumnConfig['cellChanged']  = (e: IEvent) => this.onUnitPriceCellChanged(e);
 
-        settings['columns']['quantity_orders']['editor']['config'] =
-            (settings['columns']['quantity_orders']['editor']['config'] || {});
-        const quantitiesColumnConfig = settings['columns']['quantity_orders']['editor']['config'];
+        settings['columns']['quantity_actually']['editor']['config'] =
+            (settings['columns']['quantity_actually']['editor']['config'] || {});
+        const quantitiesColumnConfig = settings['columns']['quantity_actually']['editor']['config'];
         quantitiesColumnConfig['cellChanged']  = (e: IEvent) => this.onQuantityCellChanged(e);
     }
 }

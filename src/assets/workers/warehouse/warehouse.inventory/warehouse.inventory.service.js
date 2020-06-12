@@ -254,7 +254,7 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
                 });
 
                 // check for updating existing and inserting new if necessary
-            } else if (!isNaN(count) && count > 0 && inventory && (details || []).length) {
+            } else if (inventory && (details || []).length) {
                 var cursor = dbStore.openCursor();
                 cursor.onerror = function(oe) {
                     console.error([`:::${_this.options.name}: Could not process data`, inventory, details, oe]);
