@@ -72,6 +72,9 @@ export class WarehouseInventoryComponent
         WarehouseInventoryDetailPanelComponent>
     implements AfterViewInit {
 
+    private static SW_COMMAND_RECALC: string = 'RECALC';
+    private static SW_COMMAND_RECALC_ALL: string = 'RECALC_ALL';
+
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
@@ -192,12 +195,7 @@ export class WarehouseInventoryComponent
         action = $event.data as IToolbarActionsConfig;
         switch (action.id) {
             case ACTION_SERVICE_WORKER:
-                this.doExecuteService({
-                    oldInv: this.selectedModel,
-                    newInv: this.selectedModel,
-                    oldDetails: this.backComponent.oldDataModelDetail,
-                    newDetails: this.backComponent.dataModelDetail,
-                });
+                this.doExecuteService(WarehouseInventoryComponent.SW_COMMAND_RECALC_ALL);
                 break;
             default:
                 break;
@@ -289,12 +287,13 @@ export class WarehouseInventoryComponent
                     this.doBack();
 
                     // post message to calculate warehouse management
-                    this.doExecuteService({
-                        oldInv: this.selectedModel,
-                        newInv: model,
-                        oldDetails: this.backComponent.oldDataModelDetail,
-                        newDetails: this.backComponent.dataModelDetail,
-                    });
+                    this.doExecuteService(
+                        WarehouseInventoryComponent.SW_COMMAND_RECALC, {
+                            oldInv: this.selectedModel,
+                            newInv: model,
+                            oldDetails: this.backComponent.oldDataModelDetail,
+                            newDetails: this.backComponent.dataModelDetail,
+                        });
                 })
                 .catch(() => this.showSaveDataError()))
             .catch(() => this.showSaveDataError());
@@ -310,16 +309,17 @@ export class WarehouseInventoryComponent
 
     /**
      * Post message to require service worker to update warehouse management
+     * @param command service worker command
      * @param data to send to service worker
      */
-    private doExecuteService(data: {
+    private doExecuteService(command: string, data?: {
         oldInv: IWarehouseInventory,
         newInv: IWarehouseInventory,
         oldDetails: IWarehouseInventoryDetail[],
         newDetails: IWarehouseInventoryDetail[],
-    }) {
+    } | null) {
         const serviceController: ServiceWorker =
             AppConfig.ServiceWorkers[ServiceWorkerKeys.warehouse_inventory].controller;
-        this.postMessage(serviceController, { command: 'RECALC', data: data });
+        this.postMessage(serviceController, { command: command, data: data });
     }
 }
