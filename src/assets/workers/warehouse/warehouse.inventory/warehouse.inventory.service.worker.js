@@ -6,8 +6,15 @@ class WarehouseInventoryServiceWorker extends ServiceWorker {
         super({name: 'SW_WAREHOUSE_INVENTORY'});
     }
 
+    get databaseService() {
+        if (!this._databaseService) {
+            this._databaseService = new WarehouseInventoryServiceWorkerDatabase(this.options);
+        }
+        return this._databaseService;
+    }
+
     onEnvironment = function(e) {
-        this.databaseService = new WarehouseInventoryServiceWorkerDatabase(this.options);
+        this._databaseService = null;
         console.warn([`${this.options.name}: Initialize database service worker`, e, this.databaseService]);
     }
 
@@ -23,5 +30,6 @@ class WarehouseInventoryServiceWorker extends ServiceWorker {
     }
 }
 
+// initialize service worker instance
 var warehouseInventoryServiceWorker = new WarehouseInventoryServiceWorker();
 warehouseInventoryServiceWorker.initialize();
