@@ -1,3 +1,7 @@
+import {IWarehouseItem} from "../../../../app/@core/data/warehouse/warehouse.item";
+import {IWarehouse} from "../../../../app/@core/data/warehouse/warehouse";
+import {IModel} from "../../../../app/@core/data/base";
+
 importScripts('../../libs/db.service.js');
 
 class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
@@ -29,12 +33,18 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
                     var transaction = _this.openTransaction(db, objectStores, 'readwrite');
                     var wmStore = transaction.objectStore(dbStores.warehouse_management);
                     var inInvType = 'common.enum.warehouseInventoryType.in';
-                    _this.process(wmStore, _oldInv, _oldDetails,
-                        (((_oldInv || {}).type || '') === inInvType), true,
-                        function () {
-                            _this.process(wmStore, _newInv, _newDetails,
-                                (((_newInv || {}).type || '') === inInvType), false);
-                        });
+                    if (_oldInv) {
+                        _this.process(wmStore, _oldInv, _oldDetails,
+                            (((_oldInv || {}).type || '') === inInvType), true,
+                            function () {
+                                _this.process(wmStore, _newInv, _newDetails,
+                                    (((_newInv || {}).type || '') === inInvType), false);
+                            });
+
+                    } else {
+                        _this.process(wmStore, _newInv, _newDetails,
+                            (((_newInv || {}).type || '') === inInvType), false);
+                    }
                 });
 
             } else {
@@ -43,6 +53,109 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
         } catch (e) {
             console.error([`${_this.options.name}: Error while calculating WAREHOUSE_INVENTORY`, e]);
         }
+    }
+
+    /**
+     * Build new `warehouse_management` data
+     * @param type `warehouse_management` data type
+     * @param inventory to build
+     * @param sumQuantities sum of detail quantities
+     * @param detail to build
+     * @param innerDetail batch/storage data to build batch
+     * @return single management data or null if invalid
+     */
+    buildNewManagement(type, inventory, sumQuantities, detail, innerDetail) {
+        var valid = false;
+        var data = {
+            item_id: detail.item_id,
+            item_code: detail.item_code,
+            item: detail.item,
+        };
+        switch (type || '') {
+            case 'WAREHOUSE':
+                data.type = type;
+                data.warehouse_id = inventory.warehouse_id;
+                data.warehouse_code = inventory.warehouse_code;
+                data.warehouse = inventory.warehouse;
+                data.quantity = (isNaN(sumQuantities) || sumQuantities <= 0 ? 0 : sumQuantities);
+                valid = true;
+                break;
+            case 'BATCH':
+            case 'STORAGE':
+                if (detail && innerDetail) {
+                    data.type = type;
+                    data.warehouse_id = inventory.warehouse_id;
+                    data.warehouse_code = inventory.warehouse_code;
+                    data.warehouse = inventory.warehouse;
+                    if (type === 'BATCH') {
+                        data.object_id = innerDetail.batch_id;
+                        data.object_code = innerDetail.batch_code;
+                        data.quantity = innerDetail.quantity;
+
+                    } else {
+                        data.object_id = innerDetail.warehouse_id;
+                        data.object_code = innerDetail.warehouse_code;
+                        data.quantity = innerDetail.quantity;
+                    }
+                    data.quantity = (isNaN(data.quantity) || data.quantity <= 0 ? 0 : data.quantity);
+                    valid = true;
+                }
+                break;
+            default:
+                if (!(type || '').length) {
+                    data.quantity = (isNaN(sumQuantities) || sumQuantities <= 0 ? 0 : sumQuantities);
+                    valid = true;
+                }
+                break;
+        }
+        return (valid ? data : null);
+    }
+
+    /**
+     * Build new warehouse management data
+     * @param inventory to recalculate
+     * @param details to recalculate
+     * @return multiple management data array or empty if invalid
+     */
+    processNew(inventory, details) {
+        var data = {};
+        var sumQuantities = 0;
+        (details || []).forEach(detail => {
+            sumQuantities += (isNaN(detail.quantity_actually) || detail.quantity_actually <= 0 ? 0 : detail.quantity_actually);
+        });
+        for (var i = 0; i < (details || []).length; i++) {
+            var detail = details[i];
+            // root item
+            var key = null;
+            var item = this.buildNewManagement(null, inventory, sumQuantities, detail, null);
+            if (item) {
+                key = [item.type || '', item.warehouse_code || '', item.object_code || ''].join('_');
+                data[key] = item;
+            }
+            // warehouse item
+            item = this.buildNewManagement('WAREHOUSE', inventory, sumQuantities, detail, null);
+            if (item) {
+                key = [item.type || '', item.warehouse_code || '', item.object_code || ''].join('_');
+                data[key] = item;
+            }
+            // batch items
+            (detail.batches || []).forEach(batch => {
+                item = this.buildNewManagement('BATCH', inventory, -1, detail, batch);
+                if (item) {
+                    key = [item.type || '', item.warehouse_code || '', item.object_code || ''].join('_');
+                    data[key] = item;
+                }
+            });
+            // storage items
+            (detail.storage || []).forEach(storage => {
+                item = this.buildNewManagement('BATCH', inventory, -1, detail, storage);
+                if (item) {
+                    key = [item.type || '', item.warehouse_code || '', item.object_code || ''].join('_');
+                    data[key] = item;
+                }
+            });
+        }
+        return data;
     }
 
     /**
@@ -55,83 +168,114 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
      * @param callbackSuccess callback after processing successfully
      */
     process(dbStore, inventory, details, isIn, isOld, callbackSuccess) {
+        var _this = this;
         if (!dbStore) {
-            console.warn(`${_this.options.name}: Invalid database store to process WAREHOUSE_INVENTORY`);
+            console.warn(`${_this.options.name}: Invalid database store to process`);
             return;
         }
         if (!inventory || !(details || []).length) {
-            console.warn(`${_this.options.name}: Invalid inventory or details data to process WAREHOUSE_INVENTORY`);
+            console.warn(`${_this.options.name}: Invalid inventory or details data to process`);
             return;
         }
 
-        // process
-        var _this = this;
-        var cursor = dbStore.openCursor();
-        cursor.onerror = function(e) {
-            console.error([`${_this.options.name}: Could not process data`, inventory, details, e]);
-        };
-        cursor.onsuccess = function(e) {
-            var csr = e.target.result;
-            if (cursor) {
-                var data = cursor.value;
-                for (var i = 0; i < details.length; i++) {
-                    var detail = details[i];
-                    var updated = false;
-                    if ((data.item_code || '') === (detail.item_code || '')) {
-                        var needToProcess = ((data.type || '') === 'ITEM');
-                        needToProcess = needToProcess
-                            || ((data.type || '') === 'WAREHOUSE' && (data.warehouse_code || '') === (inventory.warehouse_code || ''));
-                        // process by warehouse, root item
-                        if (needToProcess) {
-                            data.quantity += (isIn ? ((isOld ? -1 : 1) * detail.quantity_actually)
-                                : ((isOld ? 1 : -1) * detail.quantity_actually));
-                            updated = true;
+        // build data
+        var data = _this.processNew(inventory, details);
+        console.warn([`${_this.options.name}: Build processed data`, data]);
 
-                            // check for processing by batch
-                        } else if ((data.type || '') === 'BATCH' && (detail.batches || []).length
-                            && (data.warehouse_code || '') === (inventory.warehouse_code || '')) {
-                            for (var j = 0; j < detail.batches; j++) {
-                                var batch = detail.batches[j];
-                                if ((data.object_code || '') === (batch.batch_code || '')) {
-                                    data.quantity += (isIn ? ((isOld ? -1 : 1) * batch.quantity)
-                                        : ((isOld ? 1 : -1) * batch.quantity));
-                                    updated = true;
-                                    break;
-                                }
-                            }
-
-                            // check for processing by storage
-                        } else if ((data.type || '') === 'STORAGE' && (detail.storage || []).length
-                            && (data.warehouse_code || '') === (inventory.warehouse_code || '')) {
-                            for (var j = 0; j < detail.storage; j++) {
-                                var storage = detail.storage[j];
-                                if ((data.object_code || '') === (storage.warehouse_code || '')) {
-                                    data.quantity += (isIn ? ((isOld ? -1 : 1) * storage.quantity)
-                                        : ((isOld ? 1 : -1) * storage.quantity));
-                                    updated = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    // update value
-                    if (updated) {
-                        cursor.update(data).onsuccess = function() {
-                            console.debug([`${_this.options.name}: Update data successfully`, data]);
+        // check for inserting new data
+        console.warn(`${_this.options.name}: Start processing data`);
+        var reqCount = dbStore.count();
+        reqCount.onerror = function(e) {
+            console.error([`:::${_this.options.name}: Could not process data`, inventory, details, e]);
+        }
+        reqCount.onsuccess = function(e) {
+            var count = e.result;
+            // if insert new if database is empty
+            if ((isNaN(count) || count <= 0) && !isOld && Object.keys(data).length) {
+                Object.keys(data).forEach(key => {
+                    if (!isNaN(data[key].quantity) && data[key].quantity > 0) {
+                        var insReq = dbStore.add(data[key]);
+                        insReq.onsuccess = function(ie) {
+                            console.debug([`:::${_this.options.name}: Insert data successfully`, data[key], ie]);
+                            delete data[key];
+                        };
+                        insReq.onerror = function(ie) {
+                            console.error([`:::${_this.options.name}: Could not insert data`, data[key], ie]);
+                            delete data[key];
                         };
                     }
-                }
+                });
 
-                // continue processing next record
-                cursor.continue();
+                // check for updating existing and inserting new if necessary
+            } else if (!isNaN(count) && count > 0 && inventory && (details || []).length) {
+                var cursor = dbStore.openCursor();
+                cursor.onerror = function(e) {
+                    console.error([`:::${_this.options.name}: Could not process data`, inventory, details, e]);
+                };
+                cursor.onsuccess = function(e) {
+                    var csr = e.target.result;
+                    if (csr) {
+                        var record = csr.value;
+                        var recordKey  = [record.type || '', record.warehouse_code || '', record.object_code || ''].join('_');
+                        Object.keys(data).forEach(key => {
+                            if (key === recordKey) {
+                                var item = data[key];
+                                record.quantity += (isIn ? ((isOld ? -1 : 1) * item.quantity) : ((isOld ? 1 : -1) * item.quantity));
 
-            } else {
-                console.warn(`${_this.options.name}: Finish WAREHOUSE_INVENTORY calculation`);
-                if (typeof callbackSuccess === 'function') {
-                    callbackSuccess.apply(_this);
-                }
+                                // delete 0 quantity data
+                                if (isNaN(record.quantity) || record.quantity <= 0) {
+                                    var delReq = csr.delete();
+                                    delReq.onsuccess = function(de) {
+                                        console.debug([`:::${_this.options.name}: Delete 0 quantity data successfully`, record, de]);
+                                        delete data[key];
+                                    };
+                                    delReq.onerror = function(de) {
+                                        console.error([`:::${_this.options.name}: Could not delete 0 quantity data`, record, de]);
+                                        delete data[key];
+                                    };
+
+                                } else {
+                                    var updReq = csr.update(record);
+                                    updReq.onsuccess = function(ue) {
+                                        console.debug([`:::${_this.options.name}: Update data successfully`, record, ue]);
+                                        delete data[key];
+                                    };
+                                    updReq.onerror = function(ue) {
+                                        console.error([`:::${_this.options.name}: Could not update data`, record, ue]);
+                                        delete data[key];
+                                    };
+                                }
+                            }
+                        });
+
+                        // continue processing next record
+                        csr.continue();
+
+                    } else {
+                        // check for inserting new if adding more data in updating case
+                        if (Object.keys(data).length && !isOld) {
+                            console.warn([`:::${_this.options.name}: Insert new data in UPDATING case`, data]);
+                            Object.keys(data).forEach(key => {
+                                if (!isNaN(data[key].quantity) && data[key].quantity > 0) {
+                                    var insReq = dbStore.add(data[key]);
+                                    insReq.onsuccess = function(ie) {
+                                        console.debug([`::::::${_this.options.name}: Insert data successfully`, data[key], ie]);
+                                        delete data[key];
+                                    };
+                                    insReq.onerror = function(ie) {
+                                        console.error([`::::::${_this.options.name}: Could not insert data`, data[key], ie]);
+                                        delete data[key];
+                                    };
+                                }
+                            });
+                        }
+                        console.warn(`:::${_this.options.name}: Finish warehouse processing`);
+                        if (typeof callbackSuccess === 'function') {
+                            callbackSuccess.apply(_this);
+                        }
+                    }
+                };
             }
-        };
+        }
     }
 }
