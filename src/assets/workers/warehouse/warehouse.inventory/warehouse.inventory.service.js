@@ -1,7 +1,3 @@
-import {IWarehouseItem} from "../../../../app/@core/data/warehouse/warehouse.item";
-import {IWarehouse} from "../../../../app/@core/data/warehouse/warehouse";
-import {IModel} from "../../../../app/@core/data/base";
-
 importScripts('../../libs/db.service.js');
 
 class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
