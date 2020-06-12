@@ -19,7 +19,8 @@ class WarehouseInventoryServiceWorker extends ServiceWorker {
     }
 
     onMessage = function(e) {
-        if (!this.databaseService) {
+        var dataService = this.databaseService;
+        if (!dataService) {
             console.error([`${this.options.name}: Invalid database service worker to process data`, e]);
             return;
         }
@@ -27,10 +28,10 @@ class WarehouseInventoryServiceWorker extends ServiceWorker {
         if (e && e.data) {
             switch (e.data.command || '') {
                 case 'RECALC':
-                    this.databaseService.recalculate(e.data.inventory, e.data.details);
+                    dataService.recalculate(e.data.inventory, e.data.details);
                     break;
                 case 'RECALC_ALL':
-                    this.databaseService.recalculateAll();
+                    dataService.recalculateAll();
                     break;
                 default:
                     console.warn([`${this.options.name}: Invalid service worker command`, e]);
