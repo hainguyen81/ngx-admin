@@ -1546,6 +1546,8 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 if (typeof validateFn === 'function') {
                     cellValid = (validateFn as Function).apply(
                         this, [cell, row, row.getData(), row.getNewData(), this.config]) as boolean;
+                } else {
+                    cellValid = true; // already validated before saving from/going out of the editing mode
                 }
             }
             invalid = invalid || !cellValid;
