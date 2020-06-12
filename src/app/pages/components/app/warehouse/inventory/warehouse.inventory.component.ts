@@ -44,7 +44,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {throwError} from 'rxjs';
 import {IdGenerators} from '../../../../../config/generator.config';
-import {DeepCloner} from '../../../../../utils/object.utils';
+import ObjectUtils, {DeepCloner} from '../../../../../utils/object.utils';
 import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
@@ -283,17 +283,18 @@ export class WarehouseInventoryComponent
         this.getDataSource().update(this.selectedModel, model)
             .then(() => this.warehouseInventoryDatasource.save(detailData)
                 .then(() => {
-                    this.showSaveDataSuccess();
-                    this.doBack();
-
                     // post message to calculate warehouse management
                     this.doExecuteService(
                         WarehouseInventoryComponent.SW_COMMAND_RECALC, {
-                            oldInv: this.selectedModel,
-                            newInv: model,
-                            oldDetails: this.backComponent.oldDataModelDetail,
-                            newDetails: this.backComponent.dataModelDetail,
+                            oldInv: ObjectUtils.deepCopy(this.selectedModel),
+                            newInv: ObjectUtils.deepCopy(model),
+                            oldDetails: ObjectUtils.deepCopy(this.backComponent.oldDataModelDetail),
+                            newDetails: ObjectUtils.deepCopy(this.backComponent.dataModelDetail),
                         });
+
+                    // show notification and back to front view
+                    this.showSaveDataSuccess();
+                    this.doBack();
                 })
                 .catch(() => this.showSaveDataError()))
             .catch(() => this.showSaveDataError());
