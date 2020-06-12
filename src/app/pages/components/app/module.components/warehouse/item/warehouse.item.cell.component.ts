@@ -6,7 +6,7 @@ import {
     ElementRef,
     forwardRef,
     Inject,
-    OnDestroy,
+    OnDestroy, OnInit,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -22,12 +22,13 @@ import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.field.component';
 import {IEvent} from '../../../../abstract.component';
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
-import {isNullOrUndefined} from 'util';
+import {isArray, isNullOrUndefined} from 'util';
 import {
     WarehouseItemDbService,
 } from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/promise.utils';
+import {NgOption} from '@ng-select/ng-select';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}

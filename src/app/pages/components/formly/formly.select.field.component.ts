@@ -221,6 +221,14 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         }
     }
 
+    protected onValueChanges(value: any): void {
+        super.onValueChanges(value);
+        const timer: number = window.setTimeout(() => {
+            this.setSelectedValue(this.value);
+            window.clearTimeout(timer);
+        }, 200);
+    }
+
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------

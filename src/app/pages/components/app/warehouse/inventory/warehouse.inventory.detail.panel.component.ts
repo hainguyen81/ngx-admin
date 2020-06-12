@@ -27,7 +27,7 @@ import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import {isNullOrUndefined} from 'util';
+import {isNullOrUndefined, isObject} from 'util';
 
 @Component({
     moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,

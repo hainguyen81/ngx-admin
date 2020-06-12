@@ -286,8 +286,7 @@ export class WarehouseInventoryDetailSmartTableComponent
      */
     set model(_model: IWarehouseInventory) {
         this._model = _model;
-        this._model && (this._model.id || '').length
-        && this._behaviorSubject
+        this._behaviorSubject
         && this._behaviorSubject.next(this._model);
     }
 
@@ -493,6 +492,9 @@ export class WarehouseInventoryDetailSmartTableComponent
                         this.getDataSource().load(details);
                     }, reason => this.getLogger().error(reason))
                     .catch(reason => this.getLogger().error(reason));
+            } else {
+                this._details = [];
+                this.getDataSource().load(this._details);
             }
         }, reason => this.getLogger().error(reason))
             .catch(reason => this.getLogger().error(reason));
