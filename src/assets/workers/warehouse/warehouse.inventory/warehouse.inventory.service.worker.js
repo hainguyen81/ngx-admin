@@ -28,7 +28,9 @@ class WarehouseInventoryServiceWorker extends ServiceWorker {
         if (e && e.data) {
             switch (e.data.command || '') {
                 case 'RECALC':
-                    dataService.recalculate(e.data.inventory, e.data.details);
+                    var _this = this;
+                    dataService.recalculate(e.data.inventory, e.data.details,
+                        function () { _this.postMessage({ message: 'OK', status: 200 }); });
                     break;
                 case 'RECALC_ALL':
                     dataService.recalculateAll();

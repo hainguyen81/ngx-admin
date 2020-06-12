@@ -65,8 +65,9 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
      * Recalculate the `warehouse_management` data from the specified inventory data
      * @param oldValue old value to calculate revert if necessary. formula { inventory, details }
      * @param newValue new value to calculate. required, formula { inventory, details }
+     * @param callbackSuccess callback after processing successfully
      */
-    recalculate(oldValue, newValue) {
+    recalculate(oldValue, newValue, callbackSuccess) {
         try {
             var _this = this;
             var _oldInv = (oldValue || {}).inventory;
@@ -85,12 +86,22 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
                             (((_oldInv || {}).type || '') === inInvType), true,
                             function () {
                                 _this.process(wmStore, _newInv, _newDetails,
-                                    (((_newInv || {}).type || '') === inInvType), false);
+                                    (((_newInv || {}).type || '') === inInvType), false,
+                                    function () {
+                                        if (typeof callbackSuccess === 'function') {
+                                            callbackSuccess.apply(_this);
+                                        }
+                                    });
                             });
 
                     } else {
                         _this.process(wmStore, _newInv, _newDetails,
-                            (((_newInv || {}).type || '') === inInvType), false);
+                            (((_newInv || {}).type || '') === inInvType), false,
+                            function () {
+                                if (typeof callbackSuccess === 'function') {
+                                    callbackSuccess.apply(_this);
+                                }
+                            });
                     }
                 });
 

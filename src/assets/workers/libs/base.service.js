@@ -35,6 +35,11 @@ class ServiceWorker {
         return this.options.crypto;
     }
 
+    postMessage(message) {
+        const channel = new BroadcastChannel((message || {}).name || this.options.name);
+        channel.postMessage(message);
+    }
+
     initialize() {
         if (this._initialized || !this.options.self) {
             if (!this.options.self) {
