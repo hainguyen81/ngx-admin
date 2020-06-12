@@ -22,7 +22,6 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
                 var transaction = _this.openTransaction(db, objectStores, 'readwrite');
                 var invStore = transaction.objectStore(dbStores.warehouse_inventory);
                 var invDetailStore = transaction.objectStore(dbStores.warehouse_inventory_detail);
-                var wmStore = transaction.objectStore(dbStores.warehouse_management);
 
                 var invCursor = invStore.openCursor();
                 invCursor.onerror = function(e) {
@@ -33,19 +32,19 @@ class WarehouseInventoryServiceWorkerDatabase extends ServiceWorkerDatabase {
                     if (invCsr) {
                         var inventory = invCsr.value;
                         var invDetailIndex = invDetailStore.index('inventory_code');
-                        var invDetailCursor = invDetailIndex.getAll(IDBKeyRange.only(inventory.code || ''));
-                        invDetailCursor.onerror = function(ie) {
+                        var invDetailReq = invDetailIndex.getAll(IDBKeyRange.only(inventory.code || ''));
+                        invDetailReq.onerror = function(ie) {
                             console.error([`${_this.options.name}: Could open warehouse_inventory_detail store`, ie]);
                         }
-                        invDetailCursor.onsuccess = function(ie) {
-                            console.warn([`${_this.options.name}: Start process inventory`, inventory, ie.result]);
+                        invDetailReq.onsuccess = function(ie) {
+                            console.warn([`${_this.options.name}: Start process inventory`, inventory, invDetailReq.result]);
                             // process data
                             _this.recalculate({
                                 inventory: inventory,
-                                details: ie.result,
+                                details: invDetailReq.result,
                             }, {
                                 inventory: inventory,
-                                details: ie.result,
+                                details: invDetailReq.result,
                             });
                         }
 
