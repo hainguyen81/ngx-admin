@@ -38,7 +38,7 @@ export function registerBrowserServiceWorkers() {
                 });
 
             } else {
-                workers = Object.assign({}, ServiceWorkerScripts);
+                workers = ServiceWorkerScripts;
             }
 
             // register service worker if necessary
