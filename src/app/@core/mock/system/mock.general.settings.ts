@@ -20,7 +20,7 @@ import WAREHOUSE_INVENTORY_TYPE = WarehouseInventoryConstants.WarehouseConstants
 import WAREHOUSE_INVENTORY_STATUS = WarehouseInventoryConstants.WarehouseConstants
     .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_STATUS;
 import {Constants as WarehouseStorageConstants} from '../../data/constants/warehouse.storage.constants';
-import WAREHOUSE_STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.WAREHOUSE_STORAGE_TYPE;
+import STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE;
 
 export function generalSystemSettingsStatusGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
@@ -187,14 +187,14 @@ export function generalWarehouseSettingsStorageGenerate(): IGeneralSettings[] {
     systemSettings = [];
 
     // -------------------------------------------------
-    // WAREHOUSE_STORAGE_TYPE
+    // STORAGE_TYPE
     // -------------------------------------------------
-    Object.keys(WAREHOUSE_STORAGE_TYPE).forEach(k => {
+    Object.keys(STORAGE_TYPE).forEach(k => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_STORAGE_TYPE.code;
         systemSetting.name = k;
-        systemSetting.value = WAREHOUSE_STORAGE_TYPE[k];
+        systemSetting.value = STORAGE_TYPE[k];
         systemSetting.module_id = MockModuleWarehouse.id;
         systemSetting.module_code = MockModuleWarehouse.code;
         systemSetting.module = MockModuleWarehouse;
@@ -267,6 +267,9 @@ export function generalSettingsGenerate(): IGeneralSettings[] {
 
     // Warehouse inventory
     mockSettings = mockSettings.concat(generalWarehouseSettingsInventoryGenerate());
+
+    // Warehouse storage
+    mockSettings = mockSettings.concat(generalWarehouseSettingsStorageGenerate());
 
     return mockSettings;
 }

@@ -34,7 +34,7 @@ import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 import {$enum} from 'ts-enum-util';
 import {Constants as WarehouseStorageConstants} from '../../../../../@core/data/constants/warehouse.storage.constants';
-import WAREHOUSE_STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.WAREHOUSE_STORAGE_TYPE;
+import STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE;
 
 /* default warehouse storage formly config */
 export const WarehouseStorageFormConfig: FormlyConfig = new FormlyConfig();
@@ -112,8 +112,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                                 expressionProperties: {
                                     'templateOptions.visible':
-                                        model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                            .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                        model => (!model || $enum(STORAGE_TYPE)
+                                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                                 },
                             },
                             {
@@ -130,8 +130,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                     'templateOptions.disabled':
                                         model => (!model || !(model['country_id'] || '').length),
                                     'templateOptions.visible':
-                                        model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                            .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                        model => (!model || $enum(STORAGE_TYPE)
+                                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                                 },
                             },
                         ],
@@ -154,8 +154,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                     'templateOptions.disabled':
                                         model => (!model || !(model['province_id'] || '').length),
                                     'templateOptions.visible':
-                                        model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                            .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                        model => (!model || $enum(STORAGE_TYPE)
+                                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                                 },
                             },
                             {
@@ -172,8 +172,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                     'templateOptions.disabled':
                                         model => (!model || !(model['city_id'] || '').length),
                                     'templateOptions.visible':
-                                        model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                            .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                        model => (!model || $enum(STORAGE_TYPE)
+                                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                                 },
                             },
                         ],
@@ -193,8 +193,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                                 expressionProperties: {
                                     'templateOptions.visible':
-                                        model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                            .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                        model => (!model || $enum(STORAGE_TYPE)
+                                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                                 },
                             },
                             {
@@ -208,8 +208,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                                 expressionProperties: {
                                     'templateOptions.visible':
-                                        model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                            .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                        model => (!model || $enum(STORAGE_TYPE)
+                                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                                 },
                             },
                             {
@@ -224,8 +224,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                                 expressionProperties: {
                                     'templateOptions.visible':
-                                        model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                            .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                        model => (!model || $enum(STORAGE_TYPE)
+                                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                                 },
                             },
                         ],
@@ -241,8 +241,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         },
                         expressionProperties: {
                             'templateOptions.visible':
-                                model => (!model || $enum(WAREHOUSE_STORAGE_TYPE)
-                                    .getKeyOrThrow(WAREHOUSE_STORAGE_TYPE.STORAGE) === model.type),
+                                model => (!model || $enum(STORAGE_TYPE)
+                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) === model.type),
                         },
                     },
                     {
