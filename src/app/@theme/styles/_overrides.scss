@@ -437,6 +437,7 @@
         -moz-appearance: textfield;
     }
     /* Context Menu */
+    *:focus,
     .ngx-contextmenu,
     .ngx-contextmenu:focus,
     .ngx-contextmenu:active,
