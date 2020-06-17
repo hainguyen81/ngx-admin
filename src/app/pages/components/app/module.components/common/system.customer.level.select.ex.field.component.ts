@@ -44,7 +44,7 @@ export class SystemCustomerLevelFormlySelectExFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {SystemStatusFormlySelectExFieldComponent} class
+     * Create a new instance of {SystemCustomerLevelFormlySelectExFieldComponent} class
      * @param dataSource {GeneralSettingsDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}

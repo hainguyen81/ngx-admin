@@ -44,7 +44,7 @@ export class WarehouseSettingsTypeFormlySelectFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {SystemStatusFormlySelectFieldComponent} class
+     * Create a new instance of {WarehouseSettingsTypeFormlySelectFieldComponent} class
      * @param dataSource {GeneralSettingsDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}

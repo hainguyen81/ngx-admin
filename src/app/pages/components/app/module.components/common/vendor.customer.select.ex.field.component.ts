@@ -107,7 +107,7 @@ export class VendorCustomerFormlySelectExFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {WarehouseInventoryVendorCustomerFormlySelectExFieldComponent} class
+     * Create a new instance of {VendorCustomerFormlySelectExFieldComponent} class
      * @param dataSource {CustomerDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}

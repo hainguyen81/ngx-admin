@@ -19,6 +19,8 @@ import WAREHOUSE_INVENTORY_TYPE = WarehouseInventoryConstants.WarehouseConstants
     .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_TYPE;
 import WAREHOUSE_INVENTORY_STATUS = WarehouseInventoryConstants.WarehouseConstants
     .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_STATUS;
+import {Constants as WarehouseStorageConstants} from '../../data/constants/warehouse.storage.constants';
+import WAREHOUSE_STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.WAREHOUSE_STORAGE_TYPE;
 
 export function generalSystemSettingsStatusGenerate(): IGeneralSettings[] {
     let systemSettings: IGeneralSettings[];
@@ -169,6 +171,30 @@ export function generalWarehouseSettingsCategoryGenerate(): IGeneralSettings[] {
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code;
         systemSetting.name = k;
         systemSetting.value = CATEGORY_TYPE[k];
+        systemSetting.module_id = MockModuleWarehouse.id;
+        systemSetting.module_code = MockModuleWarehouse.code;
+        systemSetting.module = MockModuleWarehouse;
+        systemSetting.builtin = true;
+        systemSettings.push(systemSetting);
+    });
+
+    return systemSettings;
+}
+
+export function generalWarehouseSettingsStorageGenerate(): IGeneralSettings[] {
+    let systemSettings: IGeneralSettings[];
+    let systemSetting: IGeneralSettings;
+    systemSettings = [];
+
+    // -------------------------------------------------
+    // WAREHOUSE_STORAGE_TYPE
+    // -------------------------------------------------
+    Object.keys(WAREHOUSE_STORAGE_TYPE).forEach(k => {
+        systemSetting = new GeneralSettings(null, null, null, null);
+        systemSetting.id = IdGenerators.oid.generate();
+        systemSetting.code = BUILTIN_CODES.WAREHOUSE_STORAGE_TYPE.code;
+        systemSetting.name = k;
+        systemSetting.value = WAREHOUSE_STORAGE_TYPE[k];
         systemSetting.module_id = MockModuleWarehouse.id;
         systemSetting.module_code = MockModuleWarehouse.code;
         systemSetting.module = MockModuleWarehouse;

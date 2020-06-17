@@ -42,7 +42,7 @@ export abstract class GeneralWarehouseSettingsFormlySelectFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {SystemSettingsFormlySelectFieldComponent} class
+     * Create a new instance of {GeneralWarehouseSettingsFormlySelectFieldComponent} class
      * @param dataSource {GeneralSettingsDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}

@@ -145,6 +145,12 @@ import {
     WarehouseInventoryDetailSummaryComponent,
 } from './warehouse/inventory/warehouse.inventory.detail.summary.component';
 import {AppMultilinguageLabelComponent} from './common/app.multilinguage.label.component';
+import {
+    WarehouseStorageTypeFormlySelectExFieldComponent,
+} from './common/warehouse.storage.type.select.ex.field.component';
+import {
+    WarehouseStorageTypeFormlySelectFieldComponent,
+} from './common/warehouse.storage.type.select.field.component';
 
 @NgModule({
     imports: [
@@ -282,6 +288,16 @@ import {AppMultilinguageLabelComponent} from './common/app.multilinguage.label.c
                     wrappers: ['form-field'],
                 },
                 {
+                    name: 'warehouse-storage-type',
+                    component: WarehouseStorageTypeFormlySelectExFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'ngx-warehouse-storage-type',
+                    component: WarehouseStorageTypeFormlySelectFieldComponent,
+                    wrappers: ['form-field'],
+                },
+                {
                     name: 'warehouse-settings-type',
                     component: WarehouseSettingsTypeFormlySelectExFieldComponent,
                     wrappers: ['form-field'],
@@ -402,6 +418,8 @@ import {AppMultilinguageLabelComponent} from './common/app.multilinguage.label.c
         WarehouseInventoryStatusFormlySelectFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseInventoryTypeFormlySelectFieldComponent,
+        WarehouseStorageTypeFormlySelectExFieldComponent,
+        WarehouseStorageTypeFormlySelectFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
@@ -444,6 +462,8 @@ import {AppMultilinguageLabelComponent} from './common/app.multilinguage.label.c
         WarehouseInventoryStatusFormlySelectFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseInventoryTypeFormlySelectFieldComponent,
+        WarehouseStorageTypeFormlySelectExFieldComponent,
+        WarehouseStorageTypeFormlySelectFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,
@@ -486,6 +506,8 @@ import {AppMultilinguageLabelComponent} from './common/app.multilinguage.label.c
         WarehouseInventoryStatusFormlySelectFieldComponent,
         WarehouseInventoryTypeFormlySelectExFieldComponent,
         WarehouseInventoryTypeFormlySelectFieldComponent,
+        WarehouseStorageTypeFormlySelectExFieldComponent,
+        WarehouseStorageTypeFormlySelectFieldComponent,
         WarehouseSettingsTypeFormlySelectExFieldComponent,
         WarehouseSettingsTypeFormlySelectFieldComponent,
         WarehouseCategoryTypeFormlySelectExFieldComponent,

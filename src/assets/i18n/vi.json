@@ -55,11 +55,25 @@
             },
             "warehouseSettings": {
                 "name": "Thiếp lập kho",
+                "category": {
+                    "name": "Thiết lập chủng loại"
+                },
                 "brand": {
                     "name": "Thiết lập hãng sản xuất"
                 },
                 "item": {
                     "name": "Thiết lập trang thiết bị"
+                },
+                "inventory": {
+                    "type": {
+                        "name": "Thiết lập loại nhập/xuất"
+                    },
+                    "status": {
+                        "name": "Thiết lập trạng thái xuất/nhập"
+                    }
+                },
+                "storage": {
+                    "name": "Thiết lập kho/kệ/tầng/etc."
                 },
                 "others": {
                     "name": "Thiết lập khác"
@@ -69,6 +83,13 @@
                 "category": "Chủng loại",
                 "type": "Loại",
                 "brand": "Hãng sản xuất"
+            },
+            "warehouseStorage": {
+                "storage": "Kho bãi",
+                "floor": "Tầng",
+                "shelves": "Kệ",
+                "compartment": "Ngăn/Hộc",
+                "others": "Khác"
             },
             "warehouseInventoryType": {
                 "in": "Nhập",
@@ -618,6 +639,10 @@
                 "collapse": "Thu nhỏ"
             },
             "form": {
+                "type": {
+                    "label": "Loại",
+                    "placeholder": "Loại"
+                },
                 "code": {
                     "label": "Mã",
                     "placeholder": "Mã"

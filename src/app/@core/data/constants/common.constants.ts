@@ -53,11 +53,19 @@ export namespace Constants {
                 name: 'common.enum.warehouseSettingsType.name',
             },
             // warehouse category
-            WAREHOUSE_CATEGORY_TYPE: { code: 'CATEGORY_TYPE', name: 'common.enum.warehouseCategoryType.name' },
+            WAREHOUSE_CATEGORY_TYPE: { code: 'CATEGORY_TYPE', name: 'common.enum.warehouseSettings.category.name' },
+            // warehouse storage
+            WAREHOUSE_STORAGE_TYPE: { code: 'STORAGE_TYPE', name: 'common.enum.warehouseSettings.storage.name' },
             // warehouse inventory type
-            WAREHOUSE_INVENTORY_TYPE: { code: 'INVENTORY_TYPE', name: 'common.enum.warehouseInventoryType.name' },
+            WAREHOUSE_INVENTORY_TYPE: {
+                code: 'INVENTORY_TYPE',
+                name: 'common.enum.warehouseSettings.inventory.type.name',
+            },
             // warehouse inventory status
-            WAREHOUSE_INVENTORY_STATUS: { code: 'INVENTORY_STATUS', name: 'common.enum.warehouseInventoryStatus.name' },
+            WAREHOUSE_INVENTORY_STATUS: {
+                code: 'INVENTORY_STATUS',
+                name: 'common.enum.warehouseSettings.inventory.status.name',
+            },
         };
     }
 }

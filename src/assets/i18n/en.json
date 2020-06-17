@@ -55,11 +55,25 @@
             },
             "warehouseSettings": {
                 "name": "Warehouse settings",
+                "category": {
+                    "name": "Category settings"
+                },
                 "brand": {
                     "name": "Branch settings"
                 },
                 "item": {
                     "name": "Item settings"
+                },
+                "inventory": {
+                    "type": {
+                        "name": "Item settings"
+                    },
+                    "status": {
+                        "name": "Status settings"
+                    }
+                },
+                "storage": {
+                    "name": "Archive/Storage/Floor/etc. settings"
                 },
                 "others": {
                     "name": "Other settings"
@@ -69,6 +83,13 @@
                 "category": "Category",
                 "type": "Type",
                 "brand": "Brand"
+            },
+            "warehouseStorage": {
+                "storage": "Storage",
+                "floor": "Floor",
+                "shelves": "Shelves",
+                "compartment": "Compartment",
+                "others": "Others"
             },
             "warehouseInventoryType": {
                 "in": "In",
@@ -618,6 +639,10 @@
                 "collapse": "Collapse"
             },
             "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type"
+                },
                 "code": {
                     "label": "Code",
                     "placeholder": "Code"

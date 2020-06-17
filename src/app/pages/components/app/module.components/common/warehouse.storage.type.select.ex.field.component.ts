@@ -15,18 +15,20 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
-import {GeneralSystemSettingsFormlySelectFieldComponent} from './general.system.settings.select.field.component';
+import {
+    GeneralWarehouseSettingsFormlySelectExFieldComponent,
+} from './general.warehouse.settings.select.ex.field.component';
 
 /**
- * Custom module formly field for selecting general system customer type settings
+ * Custom module formly field for selecting general warehouse inventory type settings
  */
 @Component({
-    selector: 'ngx-select-2-app-module-general-settings-system-customer-type',
-    templateUrl: '../../../formly/formly.select.field.component.html',
-    styleUrls: ['../../../formly/formly.select.field.component.scss'],
+    selector: 'ngx-select-ex-app-module-general-settings-warehouse-storage-type',
+    templateUrl: '../../../formly/formly.select.ex.field.component.html',
+    styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export class SystemCustomerTypeFormlySelectFieldComponent
-    extends GeneralSystemSettingsFormlySelectFieldComponent
+export class WarehouseStorageTypeFormlySelectExFieldComponent
+    extends GeneralWarehouseSettingsFormlySelectExFieldComponent
     implements OnInit {
 
     // -------------------------------------------------
@@ -34,7 +36,7 @@ export class SystemCustomerTypeFormlySelectFieldComponent
     // -------------------------------------------------
 
     protected get dataIndexKey(): IDBKeyRange {
-        return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.CUSTOMER_TYPE.code]);
+        return IDBKeyRange.only([this.moduleCode, BUILTIN_CODES.WAREHOUSE_STORAGE_TYPE.code]);
     }
 
     // -------------------------------------------------
@@ -42,7 +44,7 @@ export class SystemCustomerTypeFormlySelectFieldComponent
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {SystemCustomerTypeFormlySelectFieldComponent} class
+     * Create a new instance of {WarehouseStorageTypeFormlySelectExFieldComponent} class
      * @param dataSource {GeneralSettingsDatasource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
