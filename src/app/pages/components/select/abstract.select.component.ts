@@ -890,7 +890,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * $event {IEvent} with data is an added item
      */
     protected onAdd($event: IEvent): void {
-        this.getLogger().debug('onAdd', $event);
+        // this.getLogger().debug('onAdd', $event);
         this.add.emit($event);
     }
 
@@ -899,7 +899,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} with data is model
      */
     protected onChange($event: IEvent): void {
-        this.getLogger().debug('onChange', $event);
+        // this.getLogger().debug('onChange', $event);
         this.change.emit($event);
     }
 
@@ -908,7 +908,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} no data
      */
     protected onClose($event: IEvent): void {
-        this.getLogger().debug('onClose', $event);
+        // this.getLogger().debug('onClose', $event);
         this.close.emit($event);
     }
 
@@ -917,7 +917,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} no data
      */
     protected onClear($event: IEvent): void {
-        this.getLogger().debug('onClear', $event);
+        // this.getLogger().debug('onClear', $event);
         this.clear.emit($event);
     }
 
@@ -926,7 +926,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} with data is { term, items: this.itemsList.filteredItems.map(x => x.value) }
      */
     protected onSearch($event: IEvent): void {
-        this.getLogger().debug('onSearch', $event);
+        // this.getLogger().debug('onSearch', $event);
         this.search.emit($event);
     }
 
@@ -935,7 +935,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} no data
      */
     protected onOpen($event: IEvent): void {
-        this.getLogger().debug('onOpen', $event);
+        // this.getLogger().debug('onOpen', $event);
         this.open.emit($event);
     }
 
@@ -944,7 +944,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} with data is a removed item
      */
     protected onRemove($event: IEvent): void {
-        this.getLogger().debug('onRemove', $event);
+        // this.getLogger().debug('onRemove', $event);
         this.remove.emit($event);
     }
 
@@ -955,7 +955,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} with data is { start: number; end: number }
      */
     protected onScroll($event: IEvent): void {
-        this.getLogger().debug('onScroll', $event);
+        // this.getLogger().debug('onScroll', $event);
         this.scroll.emit($event);
     }
 
@@ -965,7 +965,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param $event {IEvent} no data
      */
     protected onScrollToEnd($event: IEvent): void {
-        this.getLogger().debug('onScrollToEnd', $event);
+        // this.getLogger().debug('onScrollToEnd', $event);
         this.scrollToEnd.emit($event);
     }
 
@@ -975,7 +975,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     protected onAddNewOption($event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onAddNewOption', $event);
+        // this.getLogger().debug('onAddNewOption', $event);
         this.addNewOption.emit($event);
     }
 
@@ -985,7 +985,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     onFocus($event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFocus', $event);
+        // this.getLogger().debug('onFocus', $event);
         this.focus.emit($event);
     }
 
@@ -995,7 +995,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     onBlur($event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onBlur', $event);
+        // this.getLogger().debug('onBlur', $event);
         this.blur.emit($event);
     }
 
