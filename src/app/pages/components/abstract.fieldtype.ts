@@ -364,36 +364,36 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     onLangChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
+        // this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
     }
 
     protected onValueChanges(value: any): void {
-        this.logger.debug('onValueChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
+        // this.logger.debug('onValueChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     protected onStatusChanges(value: any): void {
-        this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
+        // this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     registerOnChange(fn: any): void {
-        this.logger.debug('registerOnChange', fn);
+        // this.logger.debug('registerOnChange', fn);
         this._onChangeCallback = (this._onChangeCallback || []);
         fn && this._onChangeCallback.push(fn);
     }
 
     registerOnTouched(fn: any): void {
-        this.logger.debug('registerOnTouched', fn);
+        // this.logger.debug('registerOnTouched', fn);
         this._onTouchCallback = (this._onTouchCallback || []);
         fn && this._onTouchCallback.push(fn);
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.logger.debug('setDisabledState', isDisabled);
+        // this.logger.debug('setDisabledState', isDisabled);
         this.setConfigValue('disabled', isDisabled);
     }
 
     writeValue(obj: any): void {
-        this.logger.debug('writeValue', obj);
+        // this.logger.debug('writeValue', obj);
         this.value = obj;
     }
 
@@ -406,7 +406,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      * @param value to subscribe
      */
     protected subscribeExpressionProperty(value: any): void {
-        this.logger.error('Subscribe', value);
+        // this.logger.error('Subscribe', value);
     }
 
     /**

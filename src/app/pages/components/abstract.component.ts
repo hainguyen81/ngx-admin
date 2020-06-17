@@ -561,7 +561,7 @@ export abstract class AbstractComponent
      */
     onKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyDown', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onKeyDown', event, '[', this.constructor.name, ']');
 
         // check whether navigating on context menu
         let isOnContextMenu: boolean;
@@ -598,7 +598,7 @@ export abstract class AbstractComponent
      */
     onNavigateKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onNavigateKeyDown', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onNavigateKeyDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -607,7 +607,7 @@ export abstract class AbstractComponent
      */
     onContextMenuKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenuKeyDown', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onContextMenuKeyDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -616,7 +616,7 @@ export abstract class AbstractComponent
      */
     onActionKeyDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenuKeyDown', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onContextMenuKeyDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -625,7 +625,7 @@ export abstract class AbstractComponent
      */
     onKeyUp(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyUp', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onKeyUp', event, '[', this.constructor.name, ']');
         if (event && event.event instanceof KeyboardEvent
             && (KeyboardUtils.isNavigateKey(event.event as KeyboardEvent)
                 || KeyboardUtils.isContextMenuKey(event.event as KeyboardEvent))) {
@@ -640,7 +640,7 @@ export abstract class AbstractComponent
      */
     onKeyPress(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onKeyPress', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onKeyPress', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -649,7 +649,7 @@ export abstract class AbstractComponent
      */
     onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenu', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onContextMenu', event, '[', this.constructor.name, ']');
         if (event && event.event instanceof MouseEvent
             && ((!this.getContextMenu() || !this.getContextMenu().length)
                 || this.showHideContextMenu(event.event, event.event.target, event.data))) {
@@ -663,7 +663,7 @@ export abstract class AbstractComponent
      */
     onContextMenuClose(): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onContextMenuClose', '[', this.constructor.name, ']');
+        // this.getLogger().debug('onContextMenuClose', '[', this.constructor.name, ']');
     }
 
     /**
@@ -675,7 +675,7 @@ export abstract class AbstractComponent
      */
     onMenuEvent(event: IEvent) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMenuEvent', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMenuEvent', event, '[', this.constructor.name, ']');
         if (event && event.data && event.data['menu']) {
             if (typeof event.data['menu']['click'] === 'function') {
                 event.data['menu']['click']['apply'](this, [event.data['item']]);
@@ -696,7 +696,7 @@ export abstract class AbstractComponent
      */
     onResize(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onResize', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onResize', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -705,7 +705,7 @@ export abstract class AbstractComponent
      */
     onResized(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onResized', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onResized', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -714,7 +714,7 @@ export abstract class AbstractComponent
      */
     onDataSourceChanged(value: IEvent) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onDataSourceChanged', value, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onDataSourceChanged', value, '[', this.constructor.name, ']');
     }
 
     /**
@@ -723,7 +723,7 @@ export abstract class AbstractComponent
      */
     onClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onClick', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onClick', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -732,7 +732,7 @@ export abstract class AbstractComponent
      */
     onDoubleClick(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onDoubleClick', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onDoubleClick', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -741,7 +741,7 @@ export abstract class AbstractComponent
      */
     onMouseDown(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseDown', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseDown', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -750,7 +750,7 @@ export abstract class AbstractComponent
      */
     onMouseEnter(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseEnter', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseEnter', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -759,7 +759,7 @@ export abstract class AbstractComponent
      */
     onMouseLeave(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseLeave', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseLeave', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -768,7 +768,7 @@ export abstract class AbstractComponent
      */
     onMouseMove(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseMove', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseMove', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -777,7 +777,7 @@ export abstract class AbstractComponent
      */
     onMouseOut(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseOut', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseOut', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -786,7 +786,7 @@ export abstract class AbstractComponent
      */
     onMouseOver(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseOver', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseOver', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -795,7 +795,7 @@ export abstract class AbstractComponent
      */
     onMouseUp(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseUp', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseUp', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -804,7 +804,7 @@ export abstract class AbstractComponent
      */
     onMouseWheel(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onMouseWheel', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onMouseWheel', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -813,7 +813,7 @@ export abstract class AbstractComponent
      */
     onFocus(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFocus', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onFocus', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -822,7 +822,7 @@ export abstract class AbstractComponent
      */
     onFocusIn(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFocusIn', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onFocusIn', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -831,7 +831,7 @@ export abstract class AbstractComponent
      */
     onFocusOut(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFocusOut', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onFocusOut', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -840,7 +840,7 @@ export abstract class AbstractComponent
      */
     onBlur(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onBlur', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onBlur', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -849,7 +849,7 @@ export abstract class AbstractComponent
      */
     onLangChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onLangChange', event, '[', this.constructor.name, ']');
+        // this.getLogger().debug('onLangChange', event, '[', this.constructor.name, ']');
     }
 
     /**
@@ -858,7 +858,7 @@ export abstract class AbstractComponent
      * @param options {IModalDialogOptions}
      */
     dialogInit(reference: ComponentRef<IModalDialog>, options: Partial<IModalDialogOptions<any>>): void {
-        this.getLogger().debug('Dialog Initialization', reference, options);
+        // this.getLogger().debug('Dialog Initialization', reference, options);
     }
 
     /**
@@ -888,24 +888,24 @@ export abstract class AbstractComponent
     }
 
     registerOnChange(fn: any): void {
-        this.getLogger().debug('registerOnChange', fn);
+        // this.getLogger().debug('registerOnChange', fn);
         this._onChangeCallback = (this._onChangeCallback || []);
         fn && this._onChangeCallback.push(fn);
     }
 
     registerOnTouched(fn: any): void {
-        this.getLogger().debug('registerOnTouched', fn);
+        // this.getLogger().debug('registerOnTouched', fn);
         this._onTouchCallback = (this._onTouchCallback || []);
         fn && this._onTouchCallback.push(fn);
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.getLogger().debug('setDisabledState', isDisabled);
+        // this.getLogger().debug('setDisabledState', isDisabled);
         this.setConfigValue('disabled', isDisabled);
     }
 
     writeValue(obj: any): void {
-        this.getLogger().debug('writeValue', obj);
+        // this.getLogger().debug('writeValue', obj);
     }
 
     // -------------------------------------------------
@@ -1035,7 +1035,7 @@ export abstract class AbstractComponent
      */
     protected doMenuAction(event: IEvent, menuId?: string | null, data?: any | null) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('doMenuAction', menuId, data);
+        // this.getLogger().debug('doMenuAction', menuId, data);
     }
 
     /**
@@ -1046,7 +1046,7 @@ export abstract class AbstractComponent
      * @return true for showing context menu; else false
      */
     protected showHideContextMenu(event?: Event, target?: Element | EventTarget, data?: any): boolean {
-        this.getLogger().debug('showHideContextMenu', data);
+        // this.getLogger().debug('showHideContextMenu', data);
         let mouseEvent: MouseEvent;
         mouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
         let kbEvent: KeyboardEvent;
@@ -1394,7 +1394,7 @@ export abstract class AbstractComponent
      * Log current actived element
      */
     protected debugActiveElement() {
-        this.getLogger().debug('Current activated element', document.activeElement);
+        // this.getLogger().debug('Current activated element', document.activeElement);
     }
 
     /**

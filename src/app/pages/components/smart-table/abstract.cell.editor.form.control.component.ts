@@ -477,7 +477,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     onLangChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
+        // this.logger.debug('onLangChange', event, '[', this.constructor.name, ']');
     }
 
     ngAfterViewInit() {
@@ -490,7 +490,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     registerOnTouched(fn: any) {
-        this.logger.debug('registerOnTouched', fn);
+        // this.logger.debug('registerOnTouched', fn);
         if (this.viewMode) return;
         const _onTouches: any[] = this.onTouch;
         _onTouches.push(fn);
@@ -498,7 +498,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     registerOnChange(fn: Function) {
-        this.logger.debug('registerOnChange', fn);
+        // this.logger.debug('registerOnChange', fn);
         if (this.viewMode) return;
         const _onChanges: any[] = this.onChange;
         _onChanges.push(fn);
@@ -506,12 +506,12 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     }
 
     writeValue(obj: any) {
-        this.logger.debug('writeValue', obj);
+        // this.logger.debug('writeValue', obj);
         if (this.viewMode) return;
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.logger.debug('setDisabledState', isDisabled);
+        // this.logger.debug('setDisabledState', isDisabled);
         this.setConfigValue('disabled', isDisabled);
         this.setConfigValue('readonly', isDisabled);
     }

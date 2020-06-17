@@ -94,7 +94,5 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
      */
     public onChange(e: IEvent): void {
         this.value = e.data || [];
-        this.field && this.formControl
-        && this.formControl.setValue(this.value);
     }
 }
