@@ -53,7 +53,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         fieldGroupClassName: 'row ml-0 mr-0',
                         fieldGroup: [
                             {
-                                className: 'col-4',
+                                className: 'w-1-3 p-0',
                                 key: 'type',
                                 type: 'ngx-warehouse-storage-type',
                                 templateOptions: {
@@ -63,7 +63,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'col-4',
+                                className: 'w-1-3 pl-3 pr-3',
                                 key: 'code',
                                 type: 'input',
                                 templateOptions: {
@@ -77,7 +77,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 },
                             },
                             {
-                                className: 'col-4',
+                                className: 'w-1-3 p-0',
                                 key: 'name',
                                 type: 'input',
                                 templateOptions: {

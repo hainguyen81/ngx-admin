@@ -2,6 +2,15 @@
 @import './themes';
 
 @mixin nb-overrides() {
+    @for $i from 0 through 100 {
+        .w-#{$i} { width : round(percentage($i/100)); }
+    }
+    @for $i from 1 through 10 {
+        @for $j from 1 through 10 {
+            .w-#{$i}-#{$j} { width : percentage($i/$j); }
+        }
+    }
+
     // for large screen such as 2560px PC
     @media screen and (min-width: 2048px) {
         nb-layout.window-mode {
