@@ -91,6 +91,6 @@ export abstract class AppFormlyComponent<T extends IModel, D extends DataSource>
      * Raise when the model of form had been changed
      */
     protected onModelChanged() {
-        this.getLogger().debug('onModelChanged', this.getModel());
+        // this.getLogger().debug('onModelChanged', this.getModel());
     }
 }

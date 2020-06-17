@@ -196,7 +196,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      */
     onSubmit(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onSubmit', event);
+        // this.getLogger().debug('onSubmit', event);
     }
 
     /**

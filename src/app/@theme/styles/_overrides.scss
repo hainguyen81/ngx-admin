@@ -436,4 +436,11 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+    /* Context Menu */
+    .ngx-contextmenu,
+    .ngx-contextmenu:focus,
+    .ngx-contextmenu:active,
+    .ngx-contextmenu:hover {
+        outline: none;
+    }
 }

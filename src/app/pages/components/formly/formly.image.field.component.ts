@@ -93,6 +93,11 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
      * @param e {IEvent} as $data is images list
      */
     public onChange(e: IEvent): void {
-        this.value = e.data || [];
+        const images: string[] = (e.data || []) as string[];
+        if (images !== this.value) {
+            this.value = e.data || [];
+            this.field && this.formControl
+            && this.formControl.patchValue(this.value, {onlySelf: true});
+        }
     }
 }
