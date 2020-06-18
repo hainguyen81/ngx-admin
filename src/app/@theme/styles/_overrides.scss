@@ -164,6 +164,7 @@
     .mat-form-field.mat-form-field-disabled ngx-tree-view-dropdown ngx-dropdown-treeview .btn.dropdown-toggle {
         pointer-events: none;
     }
+    ngx-treeview .dropdown-divider { display: none }
 
     /* ngx-select-ex */
     ngx-select {
