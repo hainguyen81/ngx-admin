@@ -354,7 +354,7 @@
         padding: 0 4px;
     }
     .ng-select .ng-select-container .ng-value-container .ng-input input[role='combobox'] {
-        min-height: 20px !important;
+        min-height: 30px !important;
     }
     .ng-select .ng-select-container .ng-value-container .ng-value {
         padding: 5px;
@@ -378,18 +378,22 @@
             }
         }
     }
+    .custom-form-field.form-field.form-ngx-select .mat-form-field-label-wrapper .mat-form-field-label,
     .mat-form-field.form-field-ngx-select .mat-form-field-label-wrapper .mat-form-field-label,
     .mat-form-field.form-field-ngx-select-image .mat-form-field-label-wrapper .mat-form-field-label {
         top: 1.65125em;
     }
+    .custom-form-field.form-field.form-ngx-select .mat-form-field-infix,
     .mat-form-field.form-field-ngx-select .mat-form-field-infix,
     .mat-form-field.form-field-ngx-select-image .mat-form-field-infix {
         padding: 0.3775rem 0;
     }
+    .custom-form-field.form-field.form-ngx-select .mat-form-field-wrapper .mat-form-field-flex,
     .mat-form-field.form-field-ngx-select .mat-form-field-wrapper .mat-form-field-flex,
     .mat-form-field.form-field-ngx-select-image .mat-form-field-wrapper .mat-form-field-flex {
         padding-top: 0;
     }
+    .custom-form-field.form-field.form-ngx-select .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix,
     .mat-form-field.form-field-ngx-select .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix,
     .mat-form-field.form-field-ngx-select-image .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
         padding-bottom: 0;

@@ -32,7 +32,7 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
      * @return image sources
      */
     get images(): string[] {
-        return (Array.isArray(this.value) ? this.value as string[] : []);
+        return (Array.isArray(this.value || []) ? this.value as string[] : []);
     }
 
     public get allowModified(): boolean {
@@ -94,8 +94,9 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
      */
     public onChange(e: IEvent): void {
         const images: string[] = (e.data || []) as string[];
-        if (images !== this.value) {
-            this.value = e.data || [];
+        const currentImages: string[] = (this.value || []);
+        if (images.length !== currentImages.length || (images.length && images !== currentImages)) {
+            this.value = images;
             this.field && this.formControl
             && this.formControl.patchValue(this.value, {onlySelf: true});
         }

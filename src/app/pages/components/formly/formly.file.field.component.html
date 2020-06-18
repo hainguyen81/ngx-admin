@@ -1,4 +1,4 @@
-<div class="form-field form-files-gallery-file">
+<div class="form-field form-files-gallery-file" *ngIf="visible">
     <ngx-file-gallery #filesGallery
                       [allowModified]="allowModified"
                       [files]="files"

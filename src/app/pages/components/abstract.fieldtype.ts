@@ -42,6 +42,25 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating this field whether is visible
+     * @return true for visible; else false
+     */
+    get visible(): boolean {
+        let hide: boolean = (this.field && this.field.hide === true);
+        if (!hide && this.field) {
+            if (typeof this.field.hideExpression === 'function') {
+                hide = this.field.hideExpression['apply'](
+                    this.field, [this.model, this.formState, this.field]) as boolean;
+            } else if (typeof this.field.hideExpression === 'string') {
+                hide = (this.field.hideExpression === 'true' || this.field.hideExpression === '1');
+            } else {
+                hide = this.field.hideExpression as boolean;
+            }
+        }
+        return !hide;
+    }
+
+    /**
      * Get the `onTouch` callback from {ControlValueAccessor}
      * @return the `onTouch` callback
      */
@@ -368,11 +387,11 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     }
 
     protected onValueChanges(value: any): void {
-        // this.logger.debug('onValueChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
+        this.logger.debug('onValueChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     protected onStatusChanges(value: any): void {
-        // this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
+        this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     registerOnChange(fn: any): void {

@@ -65,8 +65,11 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * @param _images to apply
      */
     set images(_images: string[]) {
-        this._images = _images || [];
-        this.onChange && this.onChange.emit({data: this.images});
+        if ((_images || []).length !== (this._images || []).length
+            || ((_images || []).length && _images !== this._images)) {
+            this._images = _images || [];
+            this.onChange && this.onChange.emit({data: this.images});
+        }
     }
 
     /**
