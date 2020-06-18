@@ -49,7 +49,6 @@ import {isArray, isNullOrUndefined} from 'util';
  */
 export class NgxTreeviewConfig extends TreeviewConfig {
 
-    hasDivider: boolean | false;
     dropdown?: boolean | false;
     itemBuilder?: (data: any) => TreeviewItem | null;
     treeBuilder?: (data: any[]) => TreeviewItem[] | null;
@@ -65,7 +64,6 @@ export class NgxTreeviewConfig extends TreeviewConfig {
         hasCollapseExpand?: boolean | true;
         decoupleChildFromParent?: boolean | false;
         maxHeight?: number | 500;
-        hasDivider?: boolean | false;
         dropdown?: boolean | false;
         itemBuilder?: (data: any) => TreeviewItem | null;
         treeBuilder?: (data: any[]) => TreeviewItem[] | null;
@@ -85,7 +83,6 @@ export class NgxTreeviewConfig extends TreeviewConfig {
 
 /* default tree-view config */
 export const DefaultTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
-    hasDivider: false,
     hasAllCheckBox: false,
     hasCollapseExpand: true,
     hasFilter: false,
