@@ -37,6 +37,9 @@ export interface IWarehouse extends IModel {
     email?: string | null;
     // Remark
     remark?: string | null;
+    parentId?: string | null;
+    parent?: IWarehouse | null;
+    children?: IWarehouse[] | null;
 }
 
 export default class Warehouse extends BaseModel implements IWarehouse {
