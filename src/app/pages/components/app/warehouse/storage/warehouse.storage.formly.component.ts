@@ -92,6 +92,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         className: 'w-100',
                         key: 'street_address',
                         type: 'textarea',
+                        hideExpression: model => (model && $enum(STORAGE_TYPE)
+                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
                         templateOptions: {
                             label: 'warehouse.storage.form.street_address.label',
                             placeholder: 'warehouse.storage.form.street_address.placeholder',
@@ -234,6 +236,8 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                 className: 'col-4 images-gallery',
                 key: 'image',
                 type: 'images-gallery',
+                hideExpression: model => (model && $enum(STORAGE_TYPE)
+                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
             },
         ],
     },
