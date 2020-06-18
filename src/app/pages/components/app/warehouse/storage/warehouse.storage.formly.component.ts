@@ -60,6 +60,11 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                     label: 'warehouse.storage.form.type.label',
                                     placeholder: 'warehouse.storage.form.type.placeholder',
                                     required: true,
+                                    disabled: false,
+                                },
+                                expressionProperties: {
+                                    'templateOptions.disabled':
+                                        model => (!model || !(model['parentId'] || '').length),
                                 },
                             },
                             {
