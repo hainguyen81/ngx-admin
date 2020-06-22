@@ -55,11 +55,25 @@
             },
             "warehouseSettings": {
                 "name": "Warehouse settings",
+                "category": {
+                    "name": "Category settings"
+                },
                 "brand": {
                     "name": "Branch settings"
                 },
                 "item": {
                     "name": "Item settings"
+                },
+                "inventory": {
+                    "type": {
+                        "name": "Item settings"
+                    },
+                    "status": {
+                        "name": "Status settings"
+                    }
+                },
+                "storage": {
+                    "name": "Archive/Storage/Floor/etc. settings"
                 },
                 "others": {
                     "name": "Other settings"
@@ -69,6 +83,13 @@
                 "category": "Category",
                 "type": "Type",
                 "brand": "Brand"
+            },
+            "warehouseStorage": {
+                "storage": "Storage",
+                "floor": "Floor",
+                "shelves": "Shelves",
+                "compartment": "Compartment",
+                "others": "Others"
             },
             "warehouseInventoryType": {
                 "in": "In",
@@ -147,7 +168,8 @@
                 "import": "Import",
                 "deletedb": "Delete DB",
                 "close": "Close",
-                "search": "Search"
+                "search": "Search",
+                "sw_exec": "Call Service"
             },
             "treeview": {
                 "not_selection": "",
@@ -617,6 +639,10 @@
                 "collapse": "Collapse"
             },
             "form": {
+                "type": {
+                    "label": "Type",
+                    "placeholder": "Type"
+                },
                 "code": {
                     "label": "Code",
                     "placeholder": "Code"
@@ -988,6 +1014,21 @@
                 "status": {
                     "label": "Status",
                     "placeholder": "Status"
+                }
+            },
+            "detail": {
+                "table": {
+                    "noData": "Not found any information",
+                    "item": "Item",
+                    "unit": "Unit",
+                    "batch": "Batch",
+                    "series": "Serial No./IMEI",
+                    "storage": "Archive",
+                    "quantity_orders": "Quantity",
+                    "unit_price": "Unit price",
+                    "amount": "Amount",
+                    "summary": "Sum of quantities",
+                    "total": "Total amount"
                 }
             }
         }
