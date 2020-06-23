@@ -1094,7 +1094,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     }
 
     /**
-     * The comparation from configuration. If not found in config, then it will compare by `bidnValue`
+     * The comparation from configuration. If not found in config, then it will compare by `bindValue`
      * @param a to compare
      * @param b to compare
      */
