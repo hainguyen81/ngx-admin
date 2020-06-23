@@ -20,7 +20,7 @@
         "build:prod": "ng build --prod --aot",
         "build:github_dev": "ng build --configuration github_dev --base-href https://hainguyen81.github.io/ngx-admin/",
         "build:github_prod": "ng build --prod --aot --configuration github_prod --base-href https://hainguyen81.github.io/ngx-admin/",
-        "publish:to_github": "ngh --no-silent",
+        "publish:to_github": "ngh -S",
         "test": "ng test",
         "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
         "lint": "ng lint",
