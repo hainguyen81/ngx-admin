@@ -152,6 +152,13 @@ import {
     WarehouseStorageTypeFormlySelectFieldComponent,
 } from './common/warehouse.storage.type.select.field.component';
 import {GeneralSettingsFormlySelectExFieldComponent} from './common/general.settings.select.ex.field.component';
+import {GeneralSystemSettingsFormlySelectExFieldComponent} from './common/general.system.settings.select.ex.field.component';
+import {GeneralSettingsFormlySelectFieldComponent} from './common/general.settings.select.field.component';
+import {GeneralSystemSettingsFormlySelectFieldComponent} from './common/general.system.settings.select.field.component';
+import {GeneralWarehouseSettingsFormlySelectExFieldComponent} from './common/general.warehouse.settings.select.ex.field.component';
+import {GeneralWarehouseSettingsFormlySelectFieldComponent} from './common/general.warehouse.settings.select.field.component';
+import {WarehouseSettingsFormlySelectExFieldComponent} from './warehouse/settings/warehouse.settings.select.ex.field.component';
+import {WarehouseSettingsFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.select.field.component';
 
 @NgModule({
     imports: [
@@ -443,6 +450,13 @@ import {GeneralSettingsFormlySelectExFieldComponent} from './common/general.sett
         WarehouseInventoryDetailStorageCellComponent,
         WarehouseInventoryDetailSummaryComponent,
         GeneralSettingsFormlySelectExFieldComponent,
+        GeneralSystemSettingsFormlySelectExFieldComponent,
+        GeneralSettingsFormlySelectFieldComponent,
+        GeneralSystemSettingsFormlySelectFieldComponent,
+        GeneralWarehouseSettingsFormlySelectExFieldComponent,
+        GeneralWarehouseSettingsFormlySelectFieldComponent,
+        WarehouseSettingsFormlySelectExFieldComponent,
+        WarehouseSettingsFormlySelectFieldComponent,
     ],
     exports: [
         AppMultilinguageLabelComponent,
@@ -488,6 +502,13 @@ import {GeneralSettingsFormlySelectExFieldComponent} from './common/general.sett
         WarehouseInventoryDetailStorageCellComponent,
         WarehouseInventoryDetailSummaryComponent,
         GeneralSettingsFormlySelectExFieldComponent,
+        GeneralSystemSettingsFormlySelectExFieldComponent,
+        GeneralSettingsFormlySelectFieldComponent,
+        GeneralSystemSettingsFormlySelectFieldComponent,
+        GeneralWarehouseSettingsFormlySelectExFieldComponent,
+        GeneralWarehouseSettingsFormlySelectFieldComponent,
+        WarehouseSettingsFormlySelectExFieldComponent,
+        WarehouseSettingsFormlySelectFieldComponent,
     ],
     declarations: [
         AppMultilinguageLabelComponent,
@@ -533,6 +554,13 @@ import {GeneralSettingsFormlySelectExFieldComponent} from './common/general.sett
         WarehouseInventoryDetailStorageCellComponent,
         WarehouseInventoryDetailSummaryComponent,
         GeneralSettingsFormlySelectExFieldComponent,
+        GeneralSystemSettingsFormlySelectExFieldComponent,
+        GeneralSettingsFormlySelectFieldComponent,
+        GeneralSystemSettingsFormlySelectFieldComponent,
+        GeneralWarehouseSettingsFormlySelectExFieldComponent,
+        GeneralWarehouseSettingsFormlySelectFieldComponent,
+        WarehouseSettingsFormlySelectExFieldComponent,
+        WarehouseSettingsFormlySelectFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {

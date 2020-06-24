@@ -51,7 +51,7 @@ export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
     templateUrl: '../../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],
 })
-export abstract class WarehouseSettingsFormlySelectExFieldComponent
+export class WarehouseSettingsFormlySelectExFieldComponent
     extends AppModuleDataIndexSettingsFormlySelectExFieldComponent<IWarehouseSetting, WarehouseSettingsDatasource>
     implements OnInit {
 
@@ -67,7 +67,13 @@ export abstract class WarehouseSettingsFormlySelectExFieldComponent
         return IDBKeyRange.only($enum(WAREHOUSE_SETTINGS_TYPE).getKeyOrThrow(this.settingsType));
     }
 
-    protected abstract get settingsType(): WAREHOUSE_SETTINGS_TYPE;
+    /**
+     * Get the settings type enumeration value
+     * TODO Children classes should override this property for filtering data
+     */
+    protected get settingsType(): WAREHOUSE_SETTINGS_TYPE {
+        return null;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -84,14 +90,14 @@ export abstract class WarehouseSettingsFormlySelectExFieldComponent
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
-                          @Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2,
-                          @Inject(NGXLogger) _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+    constructor(@Inject(WarehouseSettingsDatasource) dataSource: WarehouseSettingsDatasource,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this.config = WarehouseSettingsSelectOptions;

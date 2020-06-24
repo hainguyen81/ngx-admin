@@ -24,7 +24,7 @@ import {GeneralSettingsFormlySelectFieldComponent} from './general.settings.sele
     templateUrl: '../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../formly/formly.select.field.component.scss'],
 })
-export abstract class GeneralSystemSettingsFormlySelectFieldComponent
+export class GeneralSystemSettingsFormlySelectFieldComponent
     extends GeneralSettingsFormlySelectFieldComponent
     implements OnInit {
 
@@ -51,14 +51,14 @@ export abstract class GeneralSystemSettingsFormlySelectFieldComponent
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(GeneralSettingsDatasource) dataSource: GeneralSettingsDatasource,
-                          @Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2,
-                          @Inject(NGXLogger) _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+    constructor(@Inject(GeneralSettingsDatasource) dataSource: GeneralSettingsDatasource,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
