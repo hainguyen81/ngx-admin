@@ -152,7 +152,9 @@ export class UserComponent
     protected onEditUser(user: IUser) {
         !user && this.showGlobalError();
         user && super.backComponent.setModel(user);
-        user && super.setFlipped(true);
+        if (user) {
+            this.flipped = true;
+        }
     }
 
     protected doBack(): void {

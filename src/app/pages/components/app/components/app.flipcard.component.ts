@@ -248,13 +248,13 @@ export class AppFlipcardComponent<D extends DataSource,
                         .subscribe(value => {
                             if (value) {
                                 this.doBack();
-                                this.setFlipped(false);
+                                this.flipped = false;
                             }
                         });
 
                 } else {
                     this.doBack();
-                    this.setFlipped(false);
+                    this.flipped = false;
                 }
                 break;
             case ACTION_DELETE_DATABASE:
@@ -343,12 +343,12 @@ export class AppFlipcardComponent<D extends DataSource,
                 case ACTION_DELETE_DATABASE:
                 case ACTION_IMPORT:
                 case ACTION_SERVICE_WORKER: {
-                    action.visible = (!super.isFlipped()
+                    action.visible = (!this.flipped
                         && this.visibleSpecialActionsOnFront.contains(action.id));
                     break;
                 }
                 default: {
-                    if (super.isFlipped()) {
+                    if (this.flipped) {
                         action.visible = this.visibleActionsOnBack.contains(action.id)
                             || this.visibleSpecialActionsOnBack.contains(action.id);
                     } else {

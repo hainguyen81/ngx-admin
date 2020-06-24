@@ -165,7 +165,7 @@ export class WarehouseInventoryComponent
                 this._selectedModel = null;
                 this.ensureBackComponent();
                 this.onNewData($event);
-                this.setFlipped(true);
+                this.flipped = true;
             });
             this.frontComponent.setEditItemListener($event => {
                 this._selectedModel = ($event && $event.data
@@ -173,7 +173,7 @@ export class WarehouseInventoryComponent
                     ? ($event.data['row'] as Row).getData() as IWarehouseInventory : undefined);
                 this.ensureBackComponent();
                 this.onEditData($event);
-                this.setFlipped(true);
+                this.flipped = true;
             });
             this.frontComponent.setDeleteItemListener($event => {
                 this._selectedModel = ($event && $event.data
@@ -181,7 +181,7 @@ export class WarehouseInventoryComponent
                     ? ($event.data['row'] as Row).getData() as IWarehouseInventory : undefined);
                 this.ensureBackComponent();
                 this.onDeleteData($event);
-                this.setFlipped(false);
+                this.flipped = false;
             });
         }
     }
@@ -207,7 +207,7 @@ export class WarehouseInventoryComponent
     protected doBack(): void {
         // back to front
         this._selectedModel = undefined;
-        this.setFlipped(false);
+        this.flipped = false;
     }
 
     protected onNewData($event: IEvent): void {

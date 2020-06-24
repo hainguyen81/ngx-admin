@@ -671,7 +671,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * Get the option items array to show
      * @return the option items array
      */
-    @Input('items') get items(): any[] {
+    @Input() get items(): any[] {
         return this._items || [];
     }
 

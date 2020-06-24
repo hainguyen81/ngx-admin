@@ -137,7 +137,7 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
                     this._selectedModel = null;
                     this.ensureBackComponent();
                     this.onNewData($event);
-                    this.setFlipped(true);
+                    this.flipped = true;
                 });
             (<AppSmartTableComponent<D>>this.frontComponent)
                 .setEditItemListener($event => {
@@ -146,7 +146,7 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
                         ? ($event.data['row'] as Row).getData() as T : undefined);
                     this.ensureBackComponent();
                     this.onEditData($event);
-                    this.setFlipped(true);
+                    this.flipped = true;
                 });
             (<AppSmartTableComponent<D>>this.frontComponent)
                 .setDeleteItemListener($event => {
@@ -155,7 +155,7 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
                         ? ($event.data['row'] as Row).getData() as T : undefined);
                     this.ensureBackComponent();
                     this.onDeleteData($event);
-                    this.setFlipped(false);
+                    this.flipped = false;
                 });
         }
     }
@@ -194,6 +194,6 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
     protected doBack(): void {
         // back to front
         this._selectedModel = undefined;
-        this.setFlipped(false);
+        this.flipped = false;
     }
 }
