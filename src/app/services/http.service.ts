@@ -31,9 +31,7 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
         return this.dbService;
     }
 
-    protected constructor(@Inject(HttpClient) private http: HttpClient,
-                          @Inject(NGXLogger) private logger: NGXLogger,
-                          private dbService?: IDbService<K> | null) {
+    protected constructor(private http: HttpClient, private logger: NGXLogger, private dbService: IDbService<K>) {
         http || throwError('Could not inject HttpClient!');
         logger || throwError('Could not inject logger!');
         logger.updateConfig(LogConfig);

@@ -1,10 +1,14 @@
 import {
     AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, OnInit,
-    Renderer2, ViewContainerRef,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    OnInit,
+    Renderer2,
+    ViewContainerRef,
 } from '@angular/core';
 import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -26,7 +30,14 @@ import {GeneralSettingsFormlyComponent} from './general.settings.formly.componen
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {throwError} from 'rxjs';
-import {ACTION_BACK, ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
+import {
+    ACTION_BACK,
+    ACTION_DELETE,
+    ACTION_DELETE_DATABASE,
+    ACTION_IMPORT,
+    ACTION_RESET,
+    ACTION_SAVE,
+} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

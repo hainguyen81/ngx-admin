@@ -16,7 +16,7 @@ export const COMMON = {
     },
     /* default HTTP request */
     request: {
-        headers: RC_DEFAULT_HEADERS,
+        headers: {},
         // number (in milliseconds) | date
         timeout: 300000,
     },
@@ -25,3 +25,4 @@ export const COMMON = {
     baseToolbarActions: BaseToolbarActions,
     imageFileExtensions: IMAGE_FILE_EXTENSIONS,
 };
+COMMON.request.headers = Object.assign({}, RC_DEFAULT_HEADERS);

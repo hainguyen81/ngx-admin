@@ -5,7 +5,6 @@ import {Observable, throwError} from 'rxjs';
 import {NbAuthSimpleInterceptor} from '@nebular/auth';
 import {isNullOrUndefined} from 'util';
 
-@Injectable()
 export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor implements HttpInterceptor {
 
     // -------------------------------------------------
@@ -28,12 +27,10 @@ export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor im
      * Create a new instance of {AbstractHttpInterceptor}
      * @param _injector {Injector}
      * @param _logger {NGXLogger}
-     * @param headerName request header name for applying token if necessary
+     * @param _headerName request header name for applying token if necessary
      */
-    protected constructor(private _injector: Injector,
-                          @Inject(NGXLogger) private _logger: NGXLogger,
-                          headerName?: string) {
-        super(_injector, headerName);
+    protected constructor(private _injector: Injector, private _logger: NGXLogger, _headerName: string) {
+        super(_injector, _headerName);
         _injector || throwError('Could not inject Injector instance');
         _logger || throwError('Could not inject NGXLogger instance');
     }

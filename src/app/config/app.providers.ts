@@ -134,10 +134,6 @@ import {
     TOKEN_STORAGE_SERIALIZER,
 } from '../services/storage.services/local.storage.services';
 import {
-    SecureStorageConfiguration,
-    StorageConfiguration,
-} from './storage.config';
-import {
     WarehouseSettingsDbService,
     WarehouseSettingsHttpService,
 } from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.service';
@@ -170,6 +166,10 @@ import {InjectionService} from '../services/injection.service';
 import {WarehouseManagementDbService, WarehouseManagementHttpService} from '../services/implementation/warehouse/warehouse.management/warehouse.management.service';
 import {WarehouseManagementDatasource} from '../services/implementation/warehouse/warehouse.management/warehouse.management.datasource';
 import {WorkerProviders} from './worker.providers';
+import {
+    createDefaultSecureStorageConfig,
+    createDefaultStorageConfig,
+} from './storage.config';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -231,8 +231,8 @@ export const CommonProviders: StaticProvider[] = [
     },
 
     // local storage
-    {provide: TOKEN_STORAGE_CONFIG, useValue: StorageConfiguration, deps: []},
-    {provide: TOKEN_SECURE_ENCRYPTION_CONFIG, useValue: SecureStorageConfiguration, deps: []},
+    {provide: TOKEN_STORAGE_CONFIG, useFactory: createDefaultStorageConfig, deps: []},
+    {provide: TOKEN_SECURE_ENCRYPTION_CONFIG, useFactory: createDefaultSecureStorageConfig, deps: []},
     {provide: TOKEN_STORAGE_SERIALIZER, useClass: DefaultLocalStorageSerializerService, deps: [NGXLogger]},
     {
         provide: NgxLocalStorageService, useClass: NgxLocalStorageService,

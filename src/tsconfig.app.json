@@ -12,7 +12,8 @@
 			]
 		},
 		"resolveJsonModule": true,
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"alwaysStrict": true
 	},
 	"files": [
 		"main.ts",

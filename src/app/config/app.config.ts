@@ -6,7 +6,10 @@ import {COMMON} from './common.config';
 import {environment} from '../../environments/environment';
 import {i18n} from './i18n.config';
 import {IdGenerators} from './generator.config';
-import {SecureStorageConfiguration, StorageConfiguration} from './storage.config';
+import {
+    createDefaultSecureStorageConfig,
+    createDefaultStorageConfig,
+} from './storage.config';
 import {CryptoService} from './crypto.config';
 import {ServiceWorkerScripts} from './worker.providers';
 
@@ -19,7 +22,7 @@ export const AppConfig = {
     viewRef: undefined,
     COMMON: COMMON,
     TOASTER: TOASTER,
-    API: API,
+    API: {},
     Db: dbConfig,
     Providers: Providers,
     Env: environment,
@@ -27,8 +30,11 @@ export const AppConfig = {
     IdGenerators: IdGenerators,
     CryptoService: CryptoService,
     Storage: {
-        storageConfig: StorageConfiguration,
-        secureConfig: SecureStorageConfiguration,
+        storageConfig: {},
+        secureConfig: {},
     },
     ServiceWorkers: ServiceWorkerScripts,
 };
+AppConfig.API = Object.assign({}, API);
+AppConfig.Storage.storageConfig = Object.assign({}, createDefaultStorageConfig());
+AppConfig.Storage.secureConfig = Object.assign({}, createDefaultSecureStorageConfig());

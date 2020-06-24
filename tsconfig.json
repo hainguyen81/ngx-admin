@@ -26,6 +26,7 @@
         // TODO true for importing moment
         // TODO to fix [error TS2349: Cannot invoke an expression whose type lacks a call signature.
         // TODO         Type 'typeof moment' has no compatible call signatures.]
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true
     }
 }

@@ -14,12 +14,13 @@ export const ServiceWorkerKeys: any = {
     warehouse_inventory: 'WAREHOUSE_INVENTORY',
 };
 export const ServiceWorkerScriptBase: string = './assets/workers/';
-export const ServiceWorkerScripts: { [key: string]: { script: string, controller: ServiceWorker } } = {
-    [ServiceWorkerKeys.warehouse_inventory]: {
-        script: ServiceWorkerScriptBase.concat('warehouse/warehouse.inventory/warehouse.inventory.service.worker.js'),
-        controller: null,
-    },
+export const ServiceWorkerScripts: { [key: string]: { script: string, controller: ServiceWorker } } = {};
+ServiceWorkerScripts[ServiceWorkerKeys.warehouse_inventory] = {
+    script: '',
+    controller: null,
 };
+ServiceWorkerScripts[ServiceWorkerKeys.warehouse_inventory].script =
+    ServiceWorkerScriptBase.concat('warehouse/warehouse.inventory/warehouse.inventory.service.worker.js');
 
 export const ServiceWorkerRegistrationOptions: SwRegistrationOptions = {
     enabled: environment.mock,

@@ -160,9 +160,9 @@ import {registerBrowserServiceWorkers} from './sw/core/service.workers.registrat
                     },
 
                     login: {
-                        endpoint: AppConfig.API.login.api.login.call(undefined),
-                        method: AppConfig.API.login.api.method,
-                        headers: AppConfig.API.headers,
+                        endpoint: AppConfig.API['login']['api']['login'].call(undefined),
+                        method: AppConfig.API['login']['api']['method'],
+                        headers: AppConfig.API['headers'],
                         redirect: {
                             success: '/dashboard',
                             failure: null, // stay on the same page

@@ -18,8 +18,9 @@ export const StorageConfig: {
     prefix: 'hi_system_',
     allowNull: false,
 };
-export const StorageConfiguration: NgxLocalstorageConfiguration =
-    new LocalStorageConfiguration(StorageConfig.prefix, StorageConfig.allowNull);
+export function createDefaultStorageConfig(): NgxLocalstorageConfiguration {
+    return new LocalStorageConfiguration(StorageConfig.prefix, StorageConfig.allowNull);
+}
 
 export const SecureStorageConfig: {
     isCompression?: boolean | false;
@@ -32,9 +33,10 @@ export const SecureStorageConfig: {
     encryptionNamespace: 'hi-system',
     encryptionSecret: 's3cr3tPa$$w0rd@h1System',
 };
-export const SecureStorageConfiguration: ISecureEncryptionConfig =
-    new SecuredLocalStorageEncryptionConfig(
+export function createDefaultSecureStorageConfig(): ISecureEncryptionConfig {
+    return new SecuredLocalStorageEncryptionConfig(
         SecureStorageConfig.isCompression,
         SecureStorageConfig.encodingType,
         SecureStorageConfig.encryptionSecret,
         SecureStorageConfig.encryptionNamespace);
+}
