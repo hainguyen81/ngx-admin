@@ -29,6 +29,7 @@ import {
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
 import {isNullOrUndefined} from 'util';
+import {throwError} from 'rxjs';
 
 export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
     = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
@@ -38,7 +39,7 @@ export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponen
     templateUrl: '../../tab/tab.component.html',
     styleUrls: ['../../tab/tab.component.scss'],
 })
-export abstract class AppTabsetComponent<
+export class AppTabsetComponent<
     T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     TC extends AbstractComponent>
@@ -84,7 +85,7 @@ export abstract class AppTabsetComponent<
      */
     protected getTabConfig(tabIndex: number): ITabConfig {
         return ((this.tabConfigs || []).length
-            && 0 <= tabIndex && tabIndex < this.tabConfigs.length
+        && 0 <= tabIndex && tabIndex < this.tabConfigs.length
             ? this.tabConfigs[tabIndex] : undefined);
     }
 
@@ -147,24 +148,24 @@ export abstract class AppTabsetComponent<
      * @param _toolbarComponentType toolbar component type
      * @param _tabComponentTypes tab component types
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          @Inject(TAB_CONFIG_TOKEN) private _tabConfigs?: ITabConfig[] | null,
-                          private _toolbarComponentType?: Type<TB> | null,
-                          @Inject(APP_TAB_COMPONENT_TYPES_TOKEN) private _tabComponentTypes?: Type<TC>[] | null) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                @Inject(TAB_CONFIG_TOKEN) private _tabConfigs?: ITabConfig[] | null,
+                private _toolbarComponentType?: Type<TB> | null,
+                @Inject(APP_TAB_COMPONENT_TYPES_TOKEN) private _tabComponentTypes?: Type<TC>[] | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -254,13 +255,19 @@ export abstract class AppTabsetComponent<
 
     /**
      * Perform saving data
+     * TODO Children classes should override this method for saving data
      */
-    protected abstract doSave(): void;
+    protected doSave(): void {
+        throwError('Children classes should override this method for saving data');
+    }
 
     /**
      * Perform resetting data
+     * TODO Children classes should override this method for resetting data
      */
-    protected abstract doReset(): void;
+    protected doReset(): void {
+        throwError('Children classes should override this method for resetting data');
+    }
 
     /**
      * Perform deleting data
@@ -280,8 +287,11 @@ export abstract class AppTabsetComponent<
 
     /**
      * Perform deleting data after YES on confirmation dialog
+     * TODO Children classes should override this method for deleting data
      */
-    protected abstract performDelete(): void;
+    protected performDelete(): void {
+        throwError('Children classes should override this method for deleting data');
+    }
 
     /**
      * Apply toolbar actions settings while flipping

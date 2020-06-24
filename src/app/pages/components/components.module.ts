@@ -80,6 +80,9 @@ import {BaseNgxToolbarComponent} from './toolbar/base.toolbar.component';
 import {BaseFlipcardComponent} from './flipcard/base.flipcard.component';
 import {BaseNgxTreeviewComponent} from './treeview/base.treeview.component';
 import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdown.component';
+import {BaseSplitPaneComponent} from './splitpane/base.splitpane.component';
+import {BaseTabsetComponent} from './tab/base.tab.component';
+import {BasePanelComponent} from './panel/base.panel.component';
 
 @NgModule({
     imports: [
@@ -251,10 +254,12 @@ import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdow
         CheckboxCellComponent,
         ImageCellComponent,
         NgxSplitPaneComponent,
+        BaseSplitPaneComponent,
         NgxFlipCardComponent,
         BaseFlipcardComponent,
         NgxRevealCardComponent,
         NgxTabsetComponent,
+        BaseTabsetComponent,
         NotFoundComponent,
         ComponentPlaceholderDirective,
         NgxImageGalleryComponent,
@@ -270,6 +275,7 @@ import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdow
         DatePickerCellComponent,
         DatePickerFormFieldComponent,
         NgxPanelComponent,
+        BasePanelComponent,
         ObserveCellComponent,
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,

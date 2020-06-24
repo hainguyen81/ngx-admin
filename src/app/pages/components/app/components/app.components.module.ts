@@ -38,6 +38,10 @@ import {AppFlipcardComponent} from './app.flipcard.component';
 import {AppTableFlipComponent} from './app.table.flip.component';
 import {AppTableFlipFormComponent} from './app.table.flip.form.component';
 import {AppTreeviewComponent} from './app.treeview.component';
+import {AppSplitPaneComponent} from './app.splitpane.component';
+import {AppTreeSplitFormComponent} from './app.treeview.splitpane.form.component';
+import {AppTabsetComponent} from './app.tabset.component';
+import {AppPanelComponent} from './app.panel.component';
 
 @NgModule({
     imports: [
@@ -132,6 +136,10 @@ import {AppTreeviewComponent} from './app.treeview.component';
         AppTableFlipComponent,
         AppTableFlipFormComponent,
         AppTreeviewComponent,
+        AppSplitPaneComponent,
+        AppTreeSplitFormComponent,
+        AppTabsetComponent,
+        AppPanelComponent,
     ],
     exports: [
         AppSmartTableComponent,
@@ -141,6 +149,10 @@ import {AppTreeviewComponent} from './app.treeview.component';
         AppTableFlipComponent,
         AppTableFlipFormComponent,
         AppTreeviewComponent,
+        AppSplitPaneComponent,
+        AppTreeSplitFormComponent,
+        AppTabsetComponent,
+        AppPanelComponent,
     ],
     declarations: [
         AppSmartTableComponent,
@@ -150,6 +162,10 @@ import {AppTreeviewComponent} from './app.treeview.component';
         AppTableFlipComponent,
         AppTableFlipFormComponent,
         AppTreeviewComponent,
+        AppSplitPaneComponent,
+        AppTreeSplitFormComponent,
+        AppTabsetComponent,
+        AppPanelComponent,
     ],
 })
 export class AppComponentsModule {

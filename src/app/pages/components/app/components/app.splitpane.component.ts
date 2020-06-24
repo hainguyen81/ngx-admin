@@ -58,7 +58,7 @@ export const RightFormAreaConfig: ISplitAreaConfig = {
         './app.splitpane.component.scss',
     ],
 })
-export abstract class AppSplitPaneComponent<
+export class AppSplitPaneComponent<
     T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     L extends AbstractComponent,
@@ -137,25 +137,28 @@ export abstract class AppSplitPaneComponent<
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param toolBarType toolbar component type
+     * @param leftSideType left side component type
+     * @param rightRightType right side component type
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private toolBarType?: Type<TB> | null,
-                          private leftSideType?: Type<L> | null,
-                          private rightRightType?: Type<R> | null) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                private toolBarType?: Type<TB> | null,
+                private leftSideType?: Type<L> | null,
+                private rightRightType?: Type<R> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -264,13 +267,19 @@ export abstract class AppSplitPaneComponent<
 
     /**
      * Perform saving data
+     * TODO Children classes should override this method for saving data
      */
-    protected abstract doSave(): void;
+    protected doSave(): void {
+        throwError('Children classes should override this method for saving data');
+    }
 
     /**
      * Perform resetting data
+     * TODO Children classes should override this method for resetting data
      */
-    protected abstract doReset(): void;
+    protected doReset(): void {
+        throwError('Children classes should override this method for resetting data');
+    }
 
     /**
      * Perform deleting data
@@ -290,8 +299,11 @@ export abstract class AppSplitPaneComponent<
 
     /**
      * Perform deleting data after YES on confirmation dialog
+     * TODO Children classes should override this method for deleting data
      */
-    protected abstract performDelete(): void;
+    protected performDelete(): void {
+        throwError('Children classes should override this method for deleting data');
+    }
 
     /**
      * Apply toolbar actions settings while flipping
