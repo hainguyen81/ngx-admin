@@ -41,7 +41,7 @@ import {isPromise} from 'rxjs/internal-compatibility';
         },
     ],
 })
-export abstract class AppModuleDataFormlyTreeviewFieldComponent<
+export class AppModuleDataFormlyTreeviewFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
     extends AppFormlyTreeviewDropdownFieldComponent<M>
     implements OnInit {
@@ -85,14 +85,14 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(DataSource) private _dataSource: D,
-                          @Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2,
-                          @Inject(NGXLogger) _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+    constructor(@Inject(DataSource) private _dataSource: D,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this._dataSource || throwError('Could not inject DataSource instance');
@@ -149,8 +149,11 @@ export abstract class AppModuleDataFormlyTreeviewFieldComponent<
 
     /**
      * Abstract method to load data into select
+     * TODO Children classes should override this method for loading data at start-up
      */
-    protected abstract loadData(): Observable<M | M[]> | Promise<M | M[]> | (M | M[]);
+    protected loadData(): Observable<M | M[]> | Promise<M | M[]> | (M | M[]) {
+        return null;
+    }
 
     /**
      * Internal apply data items

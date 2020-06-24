@@ -36,6 +36,10 @@ import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.fi
 import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.select.field.component';
 import {AppModuleSettingsFormlySelectFieldComponent} from './app.module.settings.formly.select.field.component';
 import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
+import {AppFormlyTreeviewDropdownFieldComponent} from './app.formly.treeview.dropdown.field.component';
+import {AppModuleDataFormlyTreeviewFieldComponent} from './app.module.data.formly.treeview.field.component';
+import {AppModuleDataIndexFormlyTreeviewFieldComponent} from './app.module.data.index.formly.treeview.field.component';
+import {AppModuleDataFormlySelectExFieldComponent} from './app.module.data.formly.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -168,6 +172,10 @@ import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.comp
         AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
         AppFormlySelectExFieldComponent,
+        AppFormlyTreeviewDropdownFieldComponent,
+        AppModuleDataFormlyTreeviewFieldComponent,
+        AppModuleDataIndexFormlyTreeviewFieldComponent,
+        AppModuleDataFormlySelectExFieldComponent,
     ],
     exports: [
         AppModuleSettingsFormlySelectFieldComponent,
@@ -182,6 +190,10 @@ import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.comp
         AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
         AppFormlySelectExFieldComponent,
+        AppFormlyTreeviewDropdownFieldComponent,
+        AppModuleDataFormlyTreeviewFieldComponent,
+        AppModuleDataIndexFormlyTreeviewFieldComponent,
+        AppModuleDataFormlySelectExFieldComponent,
     ],
     declarations: [
         AppModuleSettingsFormlySelectFieldComponent,
@@ -196,6 +208,10 @@ import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.comp
         AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
         AppFormlySelectExFieldComponent,
+        AppFormlyTreeviewDropdownFieldComponent,
+        AppModuleDataFormlyTreeviewFieldComponent,
+        AppModuleDataIndexFormlyTreeviewFieldComponent,
+        AppModuleDataFormlySelectExFieldComponent,
     ],
 })
 export class AppCommonComponentsModule {

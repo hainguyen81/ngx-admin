@@ -40,7 +40,7 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
         },
     ],
 })
-export abstract class AppModuleDataIndexFormlyTreeviewFieldComponent<
+export class AppModuleDataIndexFormlyTreeviewFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
     extends AppModuleDataFormlyTreeviewFieldComponent<M, D> {
 
@@ -50,14 +50,21 @@ export abstract class AppModuleDataIndexFormlyTreeviewFieldComponent<
 
     /**
      * Define the database index name to query settings
+     * TODO Children classes should override this property for filtering data
      * @return the database index name
      */
-    protected abstract get dataIndexName(): string
+    protected get dataIndexName(): string {
+        return null;
+    }
+
     /**
      * Define the database index key to query settings
+     * TODO Children classes should override this property for filtering data
      * @return the database index key
      */
-    protected abstract get dataIndexKey(): IDBKeyRange;
+    protected get dataIndexKey(): IDBKeyRange {
+        return null;
+    }
 
     /**
      * Specify whether using data index to filter
@@ -82,14 +89,14 @@ export abstract class AppModuleDataIndexFormlyTreeviewFieldComponent<
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(DataSource) _dataSource: D,
-                          @Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2,
-                          @Inject(NGXLogger) _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+    constructor(@Inject(DataSource) _dataSource: D,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
         super(_dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
@@ -102,7 +109,7 @@ export abstract class AppModuleDataIndexFormlyTreeviewFieldComponent<
         const useFilter: boolean = this.useDataFilter;
         const needToFilter: boolean = ((this.dataIndexName || '').length && !isNullOrUndefined(this.dataIndexKey));
         if (useFilter && !needToFilter) {
-            return  [];
+            return [];
 
         } else if (!useFilter && !needToFilter) {
             return SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(this.dataSource, this.translateService);

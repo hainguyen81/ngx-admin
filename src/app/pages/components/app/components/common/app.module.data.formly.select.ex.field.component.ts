@@ -28,7 +28,7 @@ import {isPromise} from 'rxjs/internal-compatibility';
     templateUrl: '../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../formly/formly.select.ex.field.component.scss'],
 })
-export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel, D extends DataSource>
+export class AppModuleDataFormlySelectExFieldComponent<M extends IModel, D extends DataSource>
     extends AppFormlySelectExFieldComponent<M>
     implements OnInit {
 
@@ -74,14 +74,14 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(DataSource) private _datasource: D,
-                          @Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2,
-                          @Inject(NGXLogger) _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+    constructor(@Inject(DataSource) private _datasource: D,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this._datasource || throwError('Could not inject DataSource instance');
@@ -120,7 +120,7 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
         if (!isNullOrUndefined(_loadData) && isPromise(_loadData)) {
             (<Promise<M | M[]>>_loadData).then(
                 data => this.loadDataInternal(data),
-                    reason => this.logger.error(reason))
+                reason => this.logger.error(reason))
                 .catch(reason => this.logger.error(reason));
 
             // observe data
@@ -135,8 +135,11 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
 
     /**
      * Abstract method to load data into select
+     * TODO Children classes should override this method for loading data at start-up
      */
-    protected abstract loadData(): Observable<M | M[]> | Promise<M | M[]> | (M | M[]);
+    protected loadData(): Observable<M | M[]> | Promise<M | M[]> | (M | M[]) {
+        return null;
+    }
 
     /**
      * Internal apply data items
