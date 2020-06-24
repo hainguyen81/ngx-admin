@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {ThemeModule} from '../@theme/theme.module';
 import {PagesComponent} from './pages.component';
 import {PagesRoutingModule} from './pages-routing.module';
@@ -58,6 +58,10 @@ import {WarehouseModule} from './components/app/warehouse/warehouse.module';
     ],
     declarations: [
         PagesComponent,
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA,
     ],
 })
 export class PagesModule {
