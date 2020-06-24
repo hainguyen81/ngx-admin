@@ -6,6 +6,7 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     Inject,
+    InjectionToken,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -87,6 +88,8 @@ export interface ITabConfig {
      */
     badgePosition?: NbBadgePosition | null;
 }
+export const TAB_CONFIG_TOKEN: InjectionToken<ITabConfig[]> =
+    new InjectionToken<ITabConfig[]>('Tab configuration injection token');
 
 /**
  * Abstract FlipCard component base on {NbTabsetComponent} and {NbTabComponent}

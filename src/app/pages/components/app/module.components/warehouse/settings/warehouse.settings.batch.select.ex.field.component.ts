@@ -101,7 +101,7 @@ export class WarehouseSettingsBatchFormlySelectExFieldComponent
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            WarehouseSettingsBatchSelectOptions);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+        this.config = WarehouseSettingsBatchSelectOptions;
     }
 }

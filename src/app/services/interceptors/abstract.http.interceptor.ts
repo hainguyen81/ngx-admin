@@ -1,9 +1,12 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Inject, Injectable, Injector} from '@angular/core';
+import {Inject, InjectionToken, Injector} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, throwError} from 'rxjs';
 import {NbAuthSimpleInterceptor} from '@nebular/auth';
 import {isNullOrUndefined} from 'util';
+
+export const HEADER_INTERCEPTOR_TOKEN: InjectionToken<String>
+    = new InjectionToken<String>('Request header name interceptor token');
 
 export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor implements HttpInterceptor {
 
@@ -29,7 +32,9 @@ export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor im
      * @param _logger {NGXLogger}
      * @param _headerName request header name for applying token if necessary
      */
-    protected constructor(private _injector: Injector, private _logger: NGXLogger, _headerName: string) {
+    protected constructor(private _injector: Injector,
+                          private _logger: NGXLogger,
+                          @Inject(HEADER_INTERCEPTOR_TOKEN) _headerName: string) {
         super(_injector, _headerName);
         _injector || throwError('Could not inject Injector instance');
         _logger || throwError('Could not inject NGXLogger instance');

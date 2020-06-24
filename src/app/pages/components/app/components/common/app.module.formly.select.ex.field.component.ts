@@ -70,9 +70,9 @@ export class AppModuleFormlySelectExFieldComponent
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            AppModulesSelectOptions);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         moduleDataSource || throwError('Could not inject ModuleDatasource instance');
+        this.config = AppModulesSelectOptions;
     }
 
     // -------------------------------------------------

@@ -65,7 +65,7 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
 
     /**
      * Create a new instance of {AppModuleDataSettingsFormlySelectExFieldComponent} class
-     * @param datasource {DataSource}
+     * @param _datasource {DataSource}
      * @param _translateService {TranslateService}
      * @param _renderer {Renderer2}
      * @param _logger {NGXLogger}
@@ -73,7 +73,6 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
-     * @param _config select configuration
      */
     protected constructor(@Inject(DataSource) private _datasource: D,
                           @Inject(TranslateService) _translateService: TranslateService,
@@ -82,12 +81,10 @@ export abstract class AppModuleDataFormlySelectExFieldComponent<M extends IModel
                           @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef,
-                          _config?: INgxSelectExOptions | null) {
+                          @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef, _config);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this._datasource || throwError('Could not inject DataSource instance');
-        _config || throwError('Configuration must be required');
     }
 
     // -------------------------------------------------

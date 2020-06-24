@@ -43,10 +43,8 @@ export abstract class AppFormlySelectExFieldComponent<T extends IModel>
                           @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef,
-                          _config?: INgxSelectExOptions | null) {
+                          @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        this.config = _config;
     }
 }

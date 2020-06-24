@@ -20,7 +20,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IModel} from '../../../../@core/data/base';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
-import {ITabConfig} from '../../tab/abstract.tab.component';
+import {ITabConfig, TAB_CONFIG_TOKEN} from '../../tab/abstract.tab.component';
 import {
     ACTION_DELETE,
     ACTION_DELETE_DATABASE, ACTION_IMPORT,
@@ -72,7 +72,7 @@ export abstract class AppTabsetComponent<
      * @return all {ITabConfig}
      */
     protected get tabConfigs(): ITabConfig[] {
-        return this._tabConfigs;
+        return this._tabConfigs || [];
     }
 
     /**
@@ -140,6 +140,9 @@ export abstract class AppTabsetComponent<
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param _tabConfigs {ITabConfig}
+     * @param _toolbarComponentType toolbar component type
+     * @param _tabComponentTypes tab component types
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -156,9 +159,9 @@ export abstract class AppTabsetComponent<
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private _tabConfigs?: ITabConfig[] | [],
+                          @Inject(TAB_CONFIG_TOKEN) private _tabConfigs?: ITabConfig[] | null,
                           private _toolbarComponentType?: Type<TB> | null,
-                          private _tabComponentTypes?: Type<TC>[] | []) {
+                          private _tabComponentTypes?: Type<TC>[] | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

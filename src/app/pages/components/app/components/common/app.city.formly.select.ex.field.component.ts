@@ -94,8 +94,8 @@ export class AppCityFormlySelectExFieldComponent
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            AppCitiesSelectOptions);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+        this.config = AppCitiesSelectOptions;
     }
 
     // -------------------------------------------------
