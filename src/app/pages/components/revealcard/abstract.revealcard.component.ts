@@ -52,6 +52,14 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    get revealed(): boolean {
+        return this._revealed;
+    }
+
+    get showToggleButton(): boolean {
+        return this._showToggleButton;
+    }
+
     /**
      * Get the {NbRevealCardComponent} instance
      * @return the {NbRevealCardComponent} instance
@@ -137,8 +145,8 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private revealed?: boolean | false,
-                          private showToggleButton?: boolean | false) {
+                          private _revealed?: boolean | false,
+                          private _showToggleButton?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

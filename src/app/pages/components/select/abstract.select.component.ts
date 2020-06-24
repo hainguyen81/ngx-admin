@@ -1098,7 +1098,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param a to compare
      * @param b to compare
      */
-    protected compareWith(a: any, b: any): boolean {
+    compareWith(a: any, b: any): boolean {
         const _this: AbstractSelectComponent<T> =
             (this[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] || this);
         if (isNullOrUndefined(_this)) return false;

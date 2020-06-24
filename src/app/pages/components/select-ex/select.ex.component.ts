@@ -179,7 +179,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fired on changing search input. Returns string with that value.
      * @param $event {IEvent} as {IEvent#$data} is event data
      */
-    protected onTyped($event: IEvent): void {
+    onTyped($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onTyped', $event);
     }
@@ -189,7 +189,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fired on select dropdown open.
      * @param $event {IEvent} as {IEvent#$event} is event data
      */
-    protected onOpen($event: IEvent): void {
+    onOpen($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onOpen', $event);
     }
@@ -199,7 +199,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fired on select dropdown close.
      * @param $event {IEvent} as {IEvent#$event} is event data
      */
-    protected onClose($event: IEvent): void {
+    onClose($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClose', $event);
         this.close.emit($event);
@@ -210,7 +210,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fired on an item selected by user. Returns value of the selected item.
      * @param $event {IEvent} as {IEvent#$data} is event data
      */
-    protected onSelect($event: IEvent): void {
+    onSelect($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSelect', $event);
         this.select.emit($event);
@@ -221,7 +221,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fired on an item removed by user. Returns value of the removed item.
      * @param $event {IEvent} as {IEvent#$data} is event data
      */
-    protected onRemove($event: IEvent): void {
+    onRemove($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onRemove', $event);
     }
@@ -231,7 +231,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fired on navigate by the dropdown list. Returns: {INgxOptionNavigated}.
      * @param $event {IEvent} as {IEvent#$data} is event data
      */
-    protected onNavigated($event: IEvent): void {
+    onNavigated($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onNavigated', $event);
     }
@@ -241,7 +241,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Fired on change selected options. Returns: {INgxSelectOption[]}.
      * @param $event {IEvent} as {IEvent#$data} is event data
      */
-    protected onSelectionChanges($event: IEvent): void {
+    onSelectionChanges($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSelectionChanges', $event);
     }
@@ -250,7 +250,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * Raise by clicking on 'Add new option' action.
      * @param $event {IEvent} as {IEvent#$event} is event data
      */
-    protected onAddNewOption($event: IEvent): void {
+    onAddNewOption($event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onAddNewOption', $event);
     }
@@ -322,7 +322,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     /**
      * Alias of {AbstractSelectExComponent#configValue} for 'Add new option' action
      */
-    protected addNewActionConfig(): IToolbarActionsConfig {
+    addNewActionConfig(): IToolbarActionsConfig {
         return this.getConfigValue('addNewOptionConfig', null) as IToolbarActionsConfig;
     }
 

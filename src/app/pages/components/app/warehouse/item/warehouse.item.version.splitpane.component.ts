@@ -82,7 +82,7 @@ export class WarehouseItemVersionSplitPaneComponent
         return true;
     }
 
-    protected isShowHeader(): boolean {
+    isShowHeader(): boolean {
         return false;
     }
 

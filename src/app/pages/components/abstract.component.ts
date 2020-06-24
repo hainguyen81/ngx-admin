@@ -1020,7 +1020,7 @@ export abstract class AbstractComponent
      * Prevent the specified event
      * @param event to prevent
      */
-    protected preventEvent(event: any): boolean {
+    preventEvent(event: any): boolean {
         return HtmlUtils.preventEvent(event);
     }
 

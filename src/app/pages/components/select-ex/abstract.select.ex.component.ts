@@ -237,7 +237,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     protected static SELECT_ELEMENT_SELECTOR: string = 'ngx-select';
     protected static SELECT_ITEM_GROUP_ELEMENT_SELECTOR: string = 'ngx-select__item-group';
     protected static SELECT_ITEM_ELEMENT_SELECTOR: string = 'ngx-select__item';
-    private SELECT_SEARCH_CALLBACK: SelectSearchCallbackDelegate =
+    SELECT_SEARCH_CALLBACK: SelectSearchCallbackDelegate =
         (search?: string | null, item?: NgxSelectOption) => {
             return this.onSearchCallback({ data: { search: search, item: item } });
         }

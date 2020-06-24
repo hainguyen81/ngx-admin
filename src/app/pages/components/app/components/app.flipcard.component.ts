@@ -93,7 +93,7 @@ export class AppFlipcardComponent<D extends DataSource,
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    protected get isShowHeader(): boolean {
+    get isShowHeader(): boolean {
         return true;
     }
 

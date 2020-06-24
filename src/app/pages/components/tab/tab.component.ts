@@ -53,7 +53,7 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    protected isShowHeader(): boolean {
+    isShowHeader(): boolean {
         return false;
     }
 
