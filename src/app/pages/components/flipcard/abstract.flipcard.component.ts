@@ -5,7 +5,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
-    Inject, Output,
+    Inject, Input, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -80,41 +80,47 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
     }
 
     /**
+     * Get a boolean value indicating this component whether is flipped
+     * @return true for flipped; else false
+     */
+    @Input() get flipped(): boolean {
+        return (this._flipped || (this.flipcardComponent && this.flipcardComponent.flipped));
+    }
+    /**
      * Set a boolean value indicating this component whether is flipped
      * @param flipped true for flipped; else false
      */
-    public setFlipped(flipped?: boolean): void {
-        if (this.flipped !== (flipped || false)) {
-            this.flipped = flipped || false;
+    set flipped(_flipped: boolean) {
+        if (this._flipped !== (_flipped || false)) {
+            this._flipped = _flipped || false;
             if (this.flipcardComponent) {
-                this.flipcardComponent.flipped = this.flipped;
+                this.flipcardComponent.flipped = this._flipped;
             }
             this.onFlipped.emit({
                 data: {
                     'front': this.flipcardFrontComponent,
                     'back': this.flipcardBackComponent,
-                    'flipped': flipped,
+                    'flipped': this._flipped,
                 },
             });
         }
     }
 
     /**
-     * Get a boolean value indicating this component whether is flipped
-     * @param flipped true for flipped; else false
+     * Get a boolean value indicating this component whether shows the toggle button to flip
+     * @return true for shown; else false
      */
-    public isFlipped(): boolean {
-        return (this.flipped || (this.flipcardComponent && this.flipcardComponent.flipped));
+    @Input() get showToggleButton(): boolean {
+        return this._showToggleButton;
     }
-
     /**
      * Set a boolean value indicating this component whether shows the toggle button to flip
      * @param showToggleButton true for shown; else false
      */
-    public setShowToggleButton(showToggleButton?: boolean): void {
-        this.showToggleButton = showToggleButton || false;
+    set showToggleButton(_showToggleButton: boolean) {
+        this._showToggleButton = _showToggleButton || false;
         if (this.flipcardComponent) {
-            this.flipcardComponent.showToggleButton = this.showToggleButton;
+            this.flipcardComponent.showToggleButton = this._showToggleButton;
         }
     }
 
@@ -139,8 +145,8 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param flipped specify the component whether had been flipped
-     * @param showToggleButton specify whether showing toggle button to flip
+     * @param _flipped specify the component whether had been flipped
+     * @param _showToggleButton specify whether showing toggle button to flip
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -157,8 +163,8 @@ export abstract class AbstractFlipcardComponent<T extends DataSource>
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private flipped?: boolean | false,
-                          private showToggleButton?: boolean | false) {
+                          private _flipped?: boolean | false,
+                          private _showToggleButton?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

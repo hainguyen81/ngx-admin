@@ -5,7 +5,7 @@ import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Input,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -52,12 +52,20 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    get revealed(): boolean {
+    @Input() get revealed(): boolean {
         return this._revealed;
     }
 
-    get showToggleButton(): boolean {
+    set revealed(_revealed: boolean) {
+        this._revealed = _revealed;
+    }
+
+    @Input() get showToggleButton(): boolean {
         return this._showToggleButton;
+    }
+
+    set showToggleButton(_showToggleButton: boolean) {
+        this._showToggleButton = _showToggleButton;
     }
 
     /**
@@ -84,28 +92,6 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
         return this.revealcardBackComponent;
     }
 
-    /**
-     * Set a boolean value indicating this component whether is revealed
-     * @param revealed true for revealed; else false
-     */
-    public setRevealed(revealed?: boolean): void {
-        this.revealed = revealed || false;
-        if (this.getRevealcardComponent()) {
-            this.getRevealcardComponent().revealed = this.revealed;
-        }
-    }
-
-    /**
-     * Set a boolean value indicating this component whether shows the toggle button to reveal
-     * @param showToggleButton true for shown; else false
-     */
-    public setShowToggleButton(showToggleButton?: boolean): void {
-        this.showToggleButton = showToggleButton || false;
-        if (this.getRevealcardComponent()) {
-            this.getRevealcardComponent().showToggleButton = this.showToggleButton;
-        }
-    }
-
     // -------------------------------------------------
     // CONSTRUCTION
     // -------------------------------------------------
@@ -127,8 +113,8 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param revealed specify the component whether had been revealed
-     * @param showToggleButton specify whether showing toggle button to reveal
+     * @param _revealed specify the component whether had been revealed
+     * @param _showToggleButton specify whether showing toggle button to reveal
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
