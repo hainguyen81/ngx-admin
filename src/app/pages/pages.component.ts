@@ -17,10 +17,14 @@ import {throwError} from 'rxjs';
 })
 export class PagesComponent implements AfterViewInit {
 
-    private menu: NbMenuItem[];
+    private _menu: NbMenuItem[];
 
-    protected getMenu(): NbMenuItem[] {
-        return this.menu;
+    get menu(): NbMenuItem[] {
+        return this._menu;
+    }
+
+    set menu(_menu: NbMenuItem[]) {
+        this._menu = _menu || [];
     }
 
     protected getMenuService(): MenuService {
@@ -41,7 +45,7 @@ export class PagesComponent implements AfterViewInit {
         menuService || throwError('Could not inject MenuService');
         logger || throwError('Could not inject NGXLogger');
         translateService || throwError('Could not inject TranslateService');
-        this.menu = [];
+        this._menu = [];
     }
 
     ngAfterViewInit(): void {

@@ -151,7 +151,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
      * Raise while changing the images list of the data model
      * @param e {IEvent} with $data as images list
      */
-    protected onChange(e: IEvent): void {
+    onChange(e: IEvent): void {
         this.isChanged = true;
         if (this.getDataModel()) {
             this.getDataModel().image = e.data;
