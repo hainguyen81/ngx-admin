@@ -1,6 +1,6 @@
 import {COMMON} from '../../../../config/common.config';
 import {
-    ChangeDetectorRef, Component,
+    ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
@@ -28,11 +28,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
-@Component({
-    selector: 'ngx-smart-table-app',
-    templateUrl: '../../smart-table/smart-table.component.html',
-    styleUrls: ['../../smart-table/smart-table.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-smart-table-app',
+//     templateUrl: '../../smart-table/smart-table.component.html',
+//     styleUrls: ['../../smart-table/smart-table.component.scss'],
+// })
 export abstract class AppSmartTableComponent<D extends DataSource> extends BaseSmartTableComponent<D> {
 
     // -------------------------------------------------

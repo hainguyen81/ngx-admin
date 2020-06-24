@@ -78,7 +78,6 @@ export abstract class AppModuleDataIndexSettingsFormlySelectFieldComponent<
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
-     * @param _config {INgxSelectExOptions}
      */
     protected constructor(@Inject(DataSource) dataSource: D,
                           @Inject(TranslateService) _translateService: TranslateService,
@@ -87,10 +86,9 @@ export abstract class AppModuleDataIndexSettingsFormlySelectFieldComponent<
                           @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef,
-                          _config?: INgxSelectOptions | null) {
+                          @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef, _config);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }
 
     // -------------------------------------------------

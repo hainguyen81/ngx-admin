@@ -21,11 +21,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Toolbar component base on {MatToolbar}
  */
-@Component({
-    selector: 'ngx-toolbar',
-    templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-toolbar',
+//     templateUrl: './toolbar.component.html',
+//     styleUrls: ['./toolbar.component.scss'],
+// })
 export abstract class BaseNgxToolbarComponent<T extends DataSource> extends NgxToolbarComponent {
 
     // -------------------------------------------------

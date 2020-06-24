@@ -22,16 +22,16 @@ import {AppToolbarComponent} from './app.toolbar.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ActivatedRoute, Router} from '@angular/router';
 
-@Component({
-    selector: 'ngx-flip-card-app-table',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../flipcard/flipcard.component.html',
-    styleUrls: [
-        '../../flipcard/flipcard.component.scss',
-        './app.flipcard.component.scss',
-        './app.table.flip.component.scss',
-    ],
-})
+// @Component({
+//     selector: 'ngx-flip-card-app-table',
+//     changeDetection: ChangeDetectionStrategy.OnPush,
+//     templateUrl: '../../flipcard/flipcard.component.html',
+//     styleUrls: [
+//         '../../flipcard/flipcard.component.scss',
+//         './app.flipcard.component.scss',
+//         './app.table.flip.component.scss',
+//     ],
+// })
 export abstract class AppTableFlipComponent<
     T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,

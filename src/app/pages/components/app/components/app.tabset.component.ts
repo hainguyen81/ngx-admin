@@ -4,7 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
-    Inject,
+    Inject, InjectionToken,
     Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
@@ -29,6 +29,9 @@ import {
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
 import {isNullOrUndefined} from 'util';
+
+export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
+    = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
 
 @Component({
     selector: 'ngx-tabset-app',
@@ -161,7 +164,7 @@ export abstract class AppTabsetComponent<
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                           @Inject(TAB_CONFIG_TOKEN) private _tabConfigs?: ITabConfig[] | null,
                           private _toolbarComponentType?: Type<TB> | null,
-                          private _tabComponentTypes?: Type<TC>[] | null) {
+                          @Inject(APP_TAB_COMPONENT_TYPES_TOKEN) private _tabComponentTypes?: Type<TC>[] | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

@@ -267,29 +267,6 @@ import {SelectFormFieldComponent} from './formly/formly.select.field.component';
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
     ],
-    exports: [
-        NgxImageGalleryComponent,
-        NumberCellComponent,
-        RowNumberCellComponent,
-        ImageGalleryFormFieldComponent,
-        NgxTreeviewComponent,
-        NgxDropdownTreeviewComponent,
-        DropdownTreeviewFormFieldComponent,
-        NgxSelectExComponent,
-        SelectExFormFieldComponent,
-        PasswordFormFieldComponent,
-        BarcodeCellComponent,
-        HtmlCellComponent,
-        NgxDatePickerComponent,
-        DatePickerCellComponent,
-        DatePickerFormFieldComponent,
-        NgxPanelComponent,
-        ObserveCellComponent,
-        NgxFileGalleryComponent,
-        FileGalleryFormFieldComponent,
-        NgxSelectComponent,
-        SelectFormFieldComponent,
-    ],
 })
 export class ComponentsModule {
 }

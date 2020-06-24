@@ -72,11 +72,11 @@ export const AppToolbarDeleteDbActionsConfig: IToolbarActionsConfig[] =
 /**
  * Toolbar component base on {MatToolbar}
  */
-@Component({
-    selector: 'ngx-toolbar-app',
-    templateUrl: '../../toolbar/toolbar.component.html',
-    styleUrls: ['../../toolbar/toolbar.component.scss', './app.toolbar.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-toolbar-app',
+//     templateUrl: '../../toolbar/toolbar.component.html',
+//     styleUrls: ['../../toolbar/toolbar.component.scss', './app.toolbar.component.scss'],
+// })
 export abstract class AppToolbarComponent<D extends DataSource>
     extends BaseNgxToolbarComponent<D> {
 

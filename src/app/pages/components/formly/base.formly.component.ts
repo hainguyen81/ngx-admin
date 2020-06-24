@@ -22,11 +22,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Base form component base on {FormlyModule}
  */
-@Component({
-    selector: 'ngx-formly-form',
-    templateUrl: './formly.component.html',
-    styleUrls: ['./formly.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-formly-form',
+//     templateUrl: './formly.component.html',
+//     styleUrls: ['./formly.component.scss'],
+// })
 export abstract class BaseFormlyComponent<T, D extends DataSource> extends NgxFormlyComponent {
 
     // -------------------------------------------------

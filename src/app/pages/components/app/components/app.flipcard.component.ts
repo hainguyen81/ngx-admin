@@ -36,12 +36,12 @@ import {
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 
-@Component({
-    selector: 'ngx-flip-card-app',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../flipcard/flipcard.component.html',
-    styleUrls: ['../../flipcard/flipcard.component.scss', './app.flipcard.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-flip-card-app',
+//     changeDetection: ChangeDetectionStrategy.OnPush,
+//     templateUrl: '../../flipcard/flipcard.component.html',
+//     styleUrls: ['../../flipcard/flipcard.component.scss', './app.flipcard.component.scss'],
+// })
 export abstract class AppFlipcardComponent<
     D extends DataSource,
     TB extends AppToolbarComponent<D>,

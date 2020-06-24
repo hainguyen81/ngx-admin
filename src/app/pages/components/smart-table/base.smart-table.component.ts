@@ -30,11 +30,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Base smart table component base on {Ng2SmartTableComponent}
  */
-@Component({
-    selector: 'ngx-smart-table',
-    templateUrl: './smart-table.component.html',
-    styleUrls: ['./smart-table.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-smart-table',
+//     templateUrl: './smart-table.component.html',
+//     styleUrls: ['./smart-table.component.scss'],
+// })
 export abstract class BaseSmartTableComponent<T extends DataSource> extends SmartTableComponent {
 
     // -------------------------------------------------

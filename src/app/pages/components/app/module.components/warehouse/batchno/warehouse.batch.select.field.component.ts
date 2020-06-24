@@ -108,7 +108,7 @@ export class WarehouseBatchNoFormlySelectFieldComponent
                 @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
-            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef,
-            WarehouseBatchNoNgxSelectOptions);
+            _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
+        this.config = WarehouseBatchNoNgxSelectOptions;
     }
 }

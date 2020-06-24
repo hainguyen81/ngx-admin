@@ -22,11 +22,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Base tree-view component base on {DropdownTreeviewComponent}
  */
-@Component({
-    selector: 'ngx-tree-view-dropdown',
-    templateUrl: './treeview.component.html',
-    styleUrls: ['./treeview.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-tree-view-dropdown',
+//     templateUrl: './treeview.component.html',
+//     styleUrls: ['./treeview.component.scss'],
+// })
 export abstract class BaseNgxDropdownTreeviewComponent<T extends DataSource> extends NgxTreeviewComponent {
 
     // -------------------------------------------------

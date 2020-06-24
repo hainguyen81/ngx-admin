@@ -23,12 +23,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Base flip-card base on {NbFlipCardComponent}
  */
-@Component({
-    selector: 'ngx-flip-card',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './flipcard.component.html',
-    styleUrls: ['./flipcard.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-flip-card',
+//     changeDetection: ChangeDetectionStrategy.OnPush,
+//     templateUrl: './flipcard.component.html',
+//     styleUrls: ['./flipcard.component.scss'],
+// })
 export abstract class BaseFlipcardComponent<T extends DataSource> extends NgxFlipCardComponent {
 
     // -------------------------------------------------

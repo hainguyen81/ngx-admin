@@ -20,11 +20,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Form component base on {FormlyModule}
  */
-@Component({
-    selector: 'ngx-formly-form-app',
-    templateUrl: '../../formly/formly.component.html',
-    styleUrls: ['../../formly/formly.component.scss', './app.formly.component.scss'],
-})
+// @Component({
+//     selector: 'ngx-formly-form-app',
+//     templateUrl: '../../formly/formly.component.html',
+//     styleUrls: ['../../formly/formly.component.scss', './app.formly.component.scss'],
+// })
 export abstract class AppFormlyComponent<T extends IModel, D extends DataSource>
     extends BaseFormlyComponent<T, D> implements AfterViewInit {
 

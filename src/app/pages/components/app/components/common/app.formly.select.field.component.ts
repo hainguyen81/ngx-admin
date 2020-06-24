@@ -14,7 +14,6 @@ import {IModel} from '../../../../../@core/data/base';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {SelectFormFieldComponent} from '../../../formly/formly.select.field.component';
-import {INgxSelectOptions} from '../../../select/abstract.select.component';
 import {IEvent} from '../../../abstract.component';
 import {isNullOrUndefined} from 'util';
 
@@ -51,7 +50,6 @@ export abstract class AppFormlySelectFieldComponent<T extends IModel>
      * @param _viewContainerRef {ViewContainerRef}
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
-     * @param _config {INgxSelectOptions}
      */
     protected constructor(@Inject(TranslateService) _translateService: TranslateService,
                           @Inject(Renderer2) _renderer: Renderer2,
@@ -59,11 +57,9 @@ export abstract class AppFormlySelectFieldComponent<T extends IModel>
                           @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
                           @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
                           @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef,
-                          _config?: INgxSelectOptions | null) {
+                          @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        this.config = _config;
     }
 
     // -------------------------------------------------
