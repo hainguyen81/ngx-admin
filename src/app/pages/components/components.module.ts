@@ -74,6 +74,12 @@ import {NgxFileGalleryComponent} from './file/file.component';
 import {FileGalleryFormFieldComponent} from './formly/formly.file.field.component';
 import {NgxSelectComponent} from './select/select.component';
 import {SelectFormFieldComponent} from './formly/formly.select.field.component';
+import {BaseSmartTableComponent} from './smart-table/base.smart-table.component';
+import {BaseFormlyComponent} from './formly/base.formly.component';
+import {BaseNgxToolbarComponent} from './toolbar/base.toolbar.component';
+import {BaseFlipcardComponent} from './flipcard/base.flipcard.component';
+import {BaseNgxTreeviewComponent} from './treeview/base.treeview.component';
+import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdown.component';
 
 @NgModule({
     imports: [
@@ -230,10 +236,15 @@ import {SelectFormFieldComponent} from './formly/formly.select.field.component';
         SelectFormFieldComponent,
     ],
     declarations: [
+        BaseSmartTableComponent,
         SmartTableComponent,
         NgxToolbarComponent,
+        BaseNgxToolbarComponent,
         NgxTreeviewComponent,
+        BaseNgxTreeviewComponent,
+        BaseNgxDropdownTreeviewComponent,
         NgxFormlyComponent,
+        BaseFormlyComponent,
         SelectTranslateCellComponent,
         NumberCellComponent,
         RowNumberCellComponent,
@@ -241,6 +252,7 @@ import {SelectFormFieldComponent} from './formly/formly.select.field.component';
         ImageCellComponent,
         NgxSplitPaneComponent,
         NgxFlipCardComponent,
+        BaseFlipcardComponent,
         NgxRevealCardComponent,
         NgxTabsetComponent,
         NotFoundComponent,

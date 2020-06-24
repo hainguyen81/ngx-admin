@@ -36,14 +36,13 @@ import {
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 
-// @Component({
-//     selector: 'ngx-flip-card-app',
-//     changeDetection: ChangeDetectionStrategy.OnPush,
-//     templateUrl: '../../flipcard/flipcard.component.html',
-//     styleUrls: ['../../flipcard/flipcard.component.scss', './app.flipcard.component.scss'],
-// })
-export abstract class AppFlipcardComponent<
-    D extends DataSource,
+@Component({
+    selector: 'ngx-flip-card-app',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: '../../flipcard/flipcard.component.html',
+    styleUrls: ['../../flipcard/flipcard.component.scss', './app.flipcard.component.scss'],
+})
+export class AppFlipcardComponent<D extends DataSource,
     TB extends AppToolbarComponent<D>,
     F extends AbstractComponent,
     B extends AbstractComponent>
@@ -164,24 +163,24 @@ export abstract class AppFlipcardComponent<
      * @param frontComponentType front side component type
      * @param backComponentType back side component type
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private toolbarComponentType?: Type<TB> | null,
-                          private frontComponentType?: Type<F> | null,
-                          private backComponentType?: Type<B> | null) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                private toolbarComponentType?: Type<TB> | null,
+                private frontComponentType?: Type<F> | null,
+                private backComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

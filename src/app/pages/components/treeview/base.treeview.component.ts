@@ -27,7 +27,7 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './treeview.component.html',
     styleUrls: ['./treeview.component.scss'],
 })
-export abstract class BaseNgxTreeviewComponent<T extends DataSource> extends NgxTreeviewComponent {
+export class BaseNgxTreeviewComponent<T extends DataSource> extends NgxTreeviewComponent {
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -63,21 +63,21 @@ export abstract class BaseNgxTreeviewComponent<T extends DataSource> extends Ngx
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      */
-    protected constructor(@Inject(DataSource) dataSource: T,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+    constructor(@Inject(DataSource) dataSource: T,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

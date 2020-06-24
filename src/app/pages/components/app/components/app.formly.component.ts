@@ -20,12 +20,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Form component base on {FormlyModule}
  */
-// @Component({
-//     selector: 'ngx-formly-form-app',
-//     templateUrl: '../../formly/formly.component.html',
-//     styleUrls: ['../../formly/formly.component.scss', './app.formly.component.scss'],
-// })
-export abstract class AppFormlyComponent<T extends IModel, D extends DataSource>
+@Component({
+    selector: 'ngx-formly-form-app',
+    templateUrl: '../../formly/formly.component.html',
+    styleUrls: ['../../formly/formly.component.scss', './app.formly.component.scss'],
+})
+export class AppFormlyComponent<T extends IModel, D extends DataSource>
     extends BaseFormlyComponent<T, D> implements AfterViewInit {
 
     // -------------------------------------------------
@@ -56,21 +56,21 @@ export abstract class AppFormlyComponent<T extends IModel, D extends DataSource>
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

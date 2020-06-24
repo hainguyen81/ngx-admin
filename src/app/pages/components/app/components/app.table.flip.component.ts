@@ -22,18 +22,17 @@ import {AppToolbarComponent} from './app.toolbar.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ActivatedRoute, Router} from '@angular/router';
 
-// @Component({
-//     selector: 'ngx-flip-card-app-table',
-//     changeDetection: ChangeDetectionStrategy.OnPush,
-//     templateUrl: '../../flipcard/flipcard.component.html',
-//     styleUrls: [
-//         '../../flipcard/flipcard.component.scss',
-//         './app.flipcard.component.scss',
-//         './app.table.flip.component.scss',
-//     ],
-// })
-export abstract class AppTableFlipComponent<
-    T extends IModel, D extends DataSource,
+@Component({
+    selector: 'ngx-flip-card-app-table',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: '../../flipcard/flipcard.component.html',
+    styleUrls: [
+        '../../flipcard/flipcard.component.scss',
+        './app.flipcard.component.scss',
+        './app.table.flip.component.scss',
+    ],
+})
+export class AppTableFlipComponent<T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     F extends AppSmartTableComponent<D>,
     B extends AbstractComponent>
@@ -98,24 +97,24 @@ export abstract class AppTableFlipComponent<
      * @param tableComponentType front table component type
      * @param formComponentType back form component type
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          toolbarComponentType?: Type<TB> | null,
-                          tableComponentType?: Type<F> | null,
-                          formComponentType?: Type<B> | null) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                toolbarComponentType?: Type<TB> | null,
+                tableComponentType?: Type<F> | null,
+                formComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -143,7 +142,7 @@ export abstract class AppTableFlipComponent<
             (<AppSmartTableComponent<D>>this.frontComponent)
                 .setEditItemListener($event => {
                     this._selectedModel = ($event && $event.data
-                        && $event.data['row'] instanceof Row
+                    && $event.data['row'] instanceof Row
                         ? ($event.data['row'] as Row).getData() as T : undefined);
                     this.ensureBackComponent();
                     this.onEditData($event);

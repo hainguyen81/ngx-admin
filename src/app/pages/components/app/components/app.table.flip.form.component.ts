@@ -33,8 +33,7 @@ import {AppTableFlipComponent} from './app.table.flip.component';
         './app.table.flip.component.scss',
     ],
 })
-export abstract class AppTableFlipFormComponent<
-    T extends IModel, D extends DataSource,
+export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     F extends AppSmartTableComponent<D>,
     B extends AppFormlyComponent<T, D>>
@@ -65,24 +64,24 @@ export abstract class AppTableFlipFormComponent<
      * @param tableComponentType front table component type
      * @param formComponentType front form component type
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          toolbarComponentType?: Type<TB> | null,
-                          tableComponentType?: Type<F> | null,
-                          formComponentType?: Type<B> | null) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                toolbarComponentType?: Type<TB> | null,
+                tableComponentType?: Type<F> | null,
+                formComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -119,7 +118,10 @@ export abstract class AppTableFlipFormComponent<
             model.id = IdGenerators.oid.generate();
         }
         this.getDataSource().update(this.selectedModel, model)
-            .then(() => { this.showSaveDataSuccess(); this.doBack(); })
+            .then(() => {
+                this.showSaveDataSuccess();
+                this.doBack();
+            })
             .catch(() => this.showSaveDataError());
     }
 
@@ -145,7 +147,10 @@ export abstract class AppTableFlipFormComponent<
                 : this.translate(this.toolbarComponent.getToolbarHeader().title)),
         }).toPromise().then(value => {
             value && this.getDataSource().remove(this.backComponent.getModel())
-                .then(() => { this.showDeleteDataSuccess(); this.doBack(); })
+                .then(() => {
+                    this.showDeleteDataSuccess();
+                    this.doBack();
+                })
                 .catch(() => this.showSaveDataError());
         });
     }

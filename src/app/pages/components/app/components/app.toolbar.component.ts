@@ -72,12 +72,12 @@ export const AppToolbarDeleteDbActionsConfig: IToolbarActionsConfig[] =
 /**
  * Toolbar component base on {MatToolbar}
  */
-// @Component({
-//     selector: 'ngx-toolbar-app',
-//     templateUrl: '../../toolbar/toolbar.component.html',
-//     styleUrls: ['../../toolbar/toolbar.component.scss', './app.toolbar.component.scss'],
-// })
-export abstract class AppToolbarComponent<D extends DataSource>
+@Component({
+    selector: 'ngx-toolbar-app',
+    templateUrl: '../../toolbar/toolbar.component.html',
+    styleUrls: ['../../toolbar/toolbar.component.scss', './app.toolbar.component.scss'],
+})
+export class AppToolbarComponent<D extends DataSource>
     extends BaseNgxToolbarComponent<D> {
 
     // -------------------------------------------------
@@ -104,21 +104,21 @@ export abstract class AppToolbarComponent<D extends DataSource>
      * @param headerConfig {IToolbarHeaderConfig}
      * @param actionsConfig {IToolbarActionsConfig}
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

@@ -31,6 +31,13 @@ import {ValidatorsModule} from 'ngx-validators';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {ModalDialogModule} from 'ngx-modal-dialog';
+import {AppSmartTableComponent} from './app.table.component';
+import {AppFormlyComponent} from './app.formly.component';
+import {AppToolbarComponent} from './app.toolbar.component';
+import {AppFlipcardComponent} from './app.flipcard.component';
+import {AppTableFlipComponent} from './app.table.flip.component';
+import {AppTableFlipFormComponent} from './app.table.flip.form.component';
+import {AppTreeviewComponent} from './app.treeview.component';
 
 @NgModule({
     imports: [
@@ -116,6 +123,33 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
+    ],
+    entryComponents: [
+        AppSmartTableComponent,
+        AppFormlyComponent,
+        AppToolbarComponent,
+        AppFlipcardComponent,
+        AppTableFlipComponent,
+        AppTableFlipFormComponent,
+        AppTreeviewComponent,
+    ],
+    exports: [
+        AppSmartTableComponent,
+        AppFormlyComponent,
+        AppToolbarComponent,
+        AppFlipcardComponent,
+        AppTableFlipComponent,
+        AppTableFlipFormComponent,
+        AppTreeviewComponent,
+    ],
+    declarations: [
+        AppSmartTableComponent,
+        AppFormlyComponent,
+        AppToolbarComponent,
+        AppFlipcardComponent,
+        AppTableFlipComponent,
+        AppTableFlipFormComponent,
+        AppTreeviewComponent,
     ],
 })
 export class AppComponentsModule {

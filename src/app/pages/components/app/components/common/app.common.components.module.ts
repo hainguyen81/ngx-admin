@@ -35,6 +35,7 @@ import {AppCountryFormlySelectFieldComponent} from './app.country.formly.select.
 import {AppModuleFormlySelectFieldComponent} from './app.module.formly.select.field.component';
 import {AppProvinceFormlySelectFieldComponent} from './app.province.formly.select.field.component';
 import {AppModuleSettingsFormlySelectFieldComponent} from './app.module.settings.formly.select.field.component';
+import {AppFormlySelectExFieldComponent} from './app.formly.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -166,6 +167,7 @@ import {AppModuleSettingsFormlySelectFieldComponent} from './app.module.settings
         AppProvinceFormlySelectExFieldComponent,
         AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
+        AppFormlySelectExFieldComponent,
     ],
     exports: [
         AppModuleSettingsFormlySelectFieldComponent,
@@ -179,6 +181,7 @@ import {AppModuleSettingsFormlySelectFieldComponent} from './app.module.settings
         AppProvinceFormlySelectExFieldComponent,
         AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
+        AppFormlySelectExFieldComponent,
     ],
     declarations: [
         AppModuleSettingsFormlySelectFieldComponent,
@@ -192,6 +195,7 @@ import {AppModuleSettingsFormlySelectFieldComponent} from './app.module.settings
         AppProvinceFormlySelectExFieldComponent,
         AppProvinceFormlySelectFieldComponent,
         AppModuleSettingsFormlySelectExFieldComponent,
+        AppFormlySelectExFieldComponent,
     ],
 })
 export class AppCommonComponentsModule {

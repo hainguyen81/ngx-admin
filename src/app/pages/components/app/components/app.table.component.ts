@@ -1,6 +1,6 @@
 import {COMMON} from '../../../../config/common.config';
 import {
-    ChangeDetectorRef,
+    ChangeDetectorRef, Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
@@ -28,12 +28,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export const AppCommonContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
-// @Component({
-//     selector: 'ngx-smart-table-app',
-//     templateUrl: '../../smart-table/smart-table.component.html',
-//     styleUrls: ['../../smart-table/smart-table.component.scss'],
-// })
-export abstract class AppSmartTableComponent<D extends DataSource> extends BaseSmartTableComponent<D> {
+@Component({
+    selector: 'ngx-smart-table-app',
+    templateUrl: '../../smart-table/smart-table.component.html',
+    styleUrls: ['../../smart-table/smart-table.component.scss'],
+})
+export class AppSmartTableComponent<D extends DataSource> extends BaseSmartTableComponent<D> {
 
     // -------------------------------------------------
     // DECLARATION
@@ -96,21 +96,21 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -160,7 +160,7 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
 
         if (this.editItemDelegate) {
             this.editItemDelegate.apply(this,
-                [{ data: { rowIndex: rowIndex, columnIndex: columnIndex, row: row } }]);
+                [{data: {rowIndex: rowIndex, columnIndex: columnIndex, row: row}}]);
         } else {
             super.editCellByIndex(rowIndex, columnIndex);
         }
@@ -173,7 +173,7 @@ export abstract class AppSmartTableComponent<D extends DataSource> extends BaseS
     protected deleteRow(row: Row) {
         if (row && this.deleteItemDelegate) {
             this.deleteItemDelegate.apply(this,
-                [{ data: { rowIndex: row.index, columnIndex: 0, row: row } }]);
+                [{data: {rowIndex: row.index, columnIndex: 0, row: row}}]);
         } else {
             super.deleteRow(row);
         }
