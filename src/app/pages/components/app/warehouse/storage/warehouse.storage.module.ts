@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {TreeviewModule} from 'ngx-treeview';
 import {AppComponentsModule} from '../../components/app.components.module';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -111,6 +111,10 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         WarehouseStorageSplitPaneComponent,
     ],
     providers: WarehouseProviders,
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA,
+    ],
 })
 export class WarehouseStorageModule {
 }

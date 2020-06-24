@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {
     NbButtonModule,
     NbCardModule,
@@ -155,6 +155,10 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
         WarehouseInventoryDetailPanelComponent,
     ],
     providers: WarehouseProviders,
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA,
+    ],
 })
 export class WarehouseInventoryModule {
 }

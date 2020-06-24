@@ -1,4 +1,8 @@
-import {NgModule} from '@angular/core';
+import {
+    CUSTOM_ELEMENTS_SCHEMA,
+    NgModule,
+    NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import {SmartTableComponent} from './smart-table/smart-table.component';
 import {
     NbButtonModule,
@@ -284,6 +288,10 @@ import {BasePanelComponent} from './panel/base.panel.component';
     ],
     providers: [
         {provide: DataSource, useClass: LocalDataSource, deps: []},
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA,
     ],
 })
 export class ComponentsModule {

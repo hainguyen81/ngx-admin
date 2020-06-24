@@ -6,7 +6,7 @@
 import {CoreModule} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
@@ -231,6 +231,10 @@ import {registerBrowserServiceWorkers} from './sw/core/service.workers.registrat
     ],
     providers: AppConfig.Providers,
     bootstrap: [AppComponent],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA,
+    ],
 })
 export class AppModule {
     constructor(injector: Injector,
