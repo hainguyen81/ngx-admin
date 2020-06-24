@@ -36,8 +36,7 @@ import {isNullOrUndefined} from 'util';
         './app.search.panel.component.scss',
     ],
 })
-export abstract class AppSearchPanelComponent<
-    T extends IModel, D extends DataSource,
+export class AppSearchPanelComponent<T extends IModel, D extends DataSource,
     SF extends AbstractFormlyComponent<T, D>,
     STB extends AbstractToolbarComponent<D>>
     extends AppPanelComponent<T, D, AbstractComponent, SF, STB>
@@ -94,23 +93,23 @@ export abstract class AppSearchPanelComponent<
      * @param _searchFormComponentType the body component type
      * @param _searchToolbarComponentType the footer component type
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(ContextMenuService) contextMenuService: ContextMenuService,
-                          @Inject(ToastrService) toasterService: ToastrService,
-                          @Inject(NGXLogger) logger: NGXLogger,
-                          @Inject(Renderer2) renderer: Renderer2,
-                          @Inject(TranslateService) translateService: TranslateService,
-                          @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) elementRef: ElementRef,
-                          @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
-                          @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
-                          @Inject(Lightbox) lightbox?: Lightbox,
-                          @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          _searchFormComponentType?: Type<SF> | null,
-                          _searchToolbarComponentType?: Type<STB> | null) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(ContextMenuService) contextMenuService: ContextMenuService,
+                @Inject(ToastrService) toasterService: ToastrService,
+                @Inject(NGXLogger) logger: NGXLogger,
+                @Inject(Renderer2) renderer: Renderer2,
+                @Inject(TranslateService) translateService: TranslateService,
+                @Inject(ComponentFactoryResolver) factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) elementRef: ElementRef,
+                @Inject(ModalDialogService) modalDialogService?: ModalDialogService,
+                @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
+                @Inject(Lightbox) lightbox?: Lightbox,
+                @Inject(Router) router?: Router,
+                @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
+                _searchFormComponentType?: Type<SF> | null,
+                _searchToolbarComponentType?: Type<STB> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

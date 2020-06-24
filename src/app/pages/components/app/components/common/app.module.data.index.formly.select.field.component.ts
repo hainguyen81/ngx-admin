@@ -29,7 +29,7 @@ import {INgxSelectOptions} from '../../../select/abstract.select.component';
     templateUrl: '../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../formly/formly.select.field.component.scss'],
 })
-export abstract class AppModuleDataIndexSettingsFormlySelectFieldComponent<
+export class AppModuleDataIndexSettingsFormlySelectFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
     extends AppModuleDataFormlySelectFieldComponent<M, D> {
 
@@ -39,14 +39,21 @@ export abstract class AppModuleDataIndexSettingsFormlySelectFieldComponent<
 
     /**
      * Define the database index name to query settings
+     * TODO Children classes should override this property for filtering data
      * @return the database index name
      */
-    protected abstract get dataIndexName(): string
+    protected get dataIndexName(): string {
+        return null;
+    }
+
     /**
      * Define the database index key to query settings
+     * TODO Children classes should override this property for filtering data
      * @return the database index key
      */
-    protected abstract get dataIndexKey(): IDBKeyRange;
+    protected get dataIndexKey(): IDBKeyRange {
+        return null;
+    }
 
     /**
      * Specify whether using data index to filter
@@ -79,14 +86,14 @@ export abstract class AppModuleDataIndexSettingsFormlySelectFieldComponent<
      * @param _changeDetectorRef {ChangeDetectorRef}
      * @param _elementRef {ElementRef}
      */
-    protected constructor(@Inject(DataSource) dataSource: D,
-                          @Inject(TranslateService) _translateService: TranslateService,
-                          @Inject(Renderer2) _renderer: Renderer2,
-                          @Inject(NGXLogger) _logger: NGXLogger,
-                          @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
-                          @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
-                          @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
-                          @Inject(ElementRef) _elementRef: ElementRef) {
+    constructor(@Inject(DataSource) dataSource: D,
+                @Inject(TranslateService) _translateService: TranslateService,
+                @Inject(Renderer2) _renderer: Renderer2,
+                @Inject(NGXLogger) _logger: NGXLogger,
+                @Inject(ComponentFactoryResolver) _factoryResolver: ComponentFactoryResolver,
+                @Inject(ViewContainerRef) _viewContainerRef: ViewContainerRef,
+                @Inject(ChangeDetectorRef) _changeDetectorRef: ChangeDetectorRef,
+                @Inject(ElementRef) _elementRef: ElementRef) {
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
     }

@@ -40,6 +40,10 @@ import {AppFormlyTreeviewDropdownFieldComponent} from './app.formly.treeview.dro
 import {AppModuleDataFormlyTreeviewFieldComponent} from './app.module.data.formly.treeview.field.component';
 import {AppModuleDataIndexFormlyTreeviewFieldComponent} from './app.module.data.index.formly.treeview.field.component';
 import {AppModuleDataFormlySelectExFieldComponent} from './app.module.data.formly.select.ex.field.component';
+import {AppFormlySelectFieldComponent} from './app.formly.select.field.component';
+import {AppModuleDataFormlySelectFieldComponent} from './app.module.data.formly.select.field.component';
+import {AppModuleDataIndexSettingsFormlySelectFieldComponent} from './app.module.data.index.formly.select.field.component';
+import {AppModuleDataIndexSettingsFormlySelectExFieldComponent} from './app.module.data.index.formly.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -176,6 +180,10 @@ import {AppModuleDataFormlySelectExFieldComponent} from './app.module.data.forml
         AppModuleDataFormlyTreeviewFieldComponent,
         AppModuleDataIndexFormlyTreeviewFieldComponent,
         AppModuleDataFormlySelectExFieldComponent,
+        AppFormlySelectFieldComponent,
+        AppModuleDataFormlySelectFieldComponent,
+        AppModuleDataIndexSettingsFormlySelectFieldComponent,
+        AppModuleDataIndexSettingsFormlySelectExFieldComponent,
     ],
     exports: [
         AppModuleSettingsFormlySelectFieldComponent,
@@ -194,6 +202,10 @@ import {AppModuleDataFormlySelectExFieldComponent} from './app.module.data.forml
         AppModuleDataFormlyTreeviewFieldComponent,
         AppModuleDataIndexFormlyTreeviewFieldComponent,
         AppModuleDataFormlySelectExFieldComponent,
+        AppFormlySelectFieldComponent,
+        AppModuleDataFormlySelectFieldComponent,
+        AppModuleDataIndexSettingsFormlySelectFieldComponent,
+        AppModuleDataIndexSettingsFormlySelectExFieldComponent,
     ],
     declarations: [
         AppModuleSettingsFormlySelectFieldComponent,
@@ -212,6 +224,10 @@ import {AppModuleDataFormlySelectExFieldComponent} from './app.module.data.forml
         AppModuleDataFormlyTreeviewFieldComponent,
         AppModuleDataIndexFormlyTreeviewFieldComponent,
         AppModuleDataFormlySelectExFieldComponent,
+        AppFormlySelectFieldComponent,
+        AppModuleDataFormlySelectFieldComponent,
+        AppModuleDataIndexSettingsFormlySelectFieldComponent,
+        AppModuleDataIndexSettingsFormlySelectExFieldComponent,
     ],
 })
 export class AppCommonComponentsModule {

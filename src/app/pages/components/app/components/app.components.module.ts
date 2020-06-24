@@ -42,6 +42,7 @@ import {AppSplitPaneComponent} from './app.splitpane.component';
 import {AppTreeSplitFormComponent} from './app.treeview.splitpane.form.component';
 import {AppTabsetComponent} from './app.tabset.component';
 import {AppPanelComponent} from './app.panel.component';
+import {AppSearchPanelComponent} from './app.search.panel.component';
 
 @NgModule({
     imports: [
@@ -140,6 +141,7 @@ import {AppPanelComponent} from './app.panel.component';
         AppTreeSplitFormComponent,
         AppTabsetComponent,
         AppPanelComponent,
+        AppSearchPanelComponent,
     ],
     exports: [
         AppSmartTableComponent,
@@ -153,6 +155,7 @@ import {AppPanelComponent} from './app.panel.component';
         AppTreeSplitFormComponent,
         AppTabsetComponent,
         AppPanelComponent,
+        AppSearchPanelComponent,
     ],
     declarations: [
         AppSmartTableComponent,
@@ -166,6 +169,7 @@ import {AppPanelComponent} from './app.panel.component';
         AppTreeSplitFormComponent,
         AppTabsetComponent,
         AppPanelComponent,
+        AppSearchPanelComponent,
     ],
 })
 export class AppComponentsModule {

@@ -151,6 +151,7 @@ import {
 import {
     WarehouseStorageTypeFormlySelectFieldComponent,
 } from './common/warehouse.storage.type.select.field.component';
+import {GeneralSettingsFormlySelectExFieldComponent} from './common/general.settings.select.ex.field.component';
 
 @NgModule({
     imports: [
@@ -441,6 +442,7 @@ import {
         WarehouseStorageFormlySelectFieldComponent,
         WarehouseInventoryDetailStorageCellComponent,
         WarehouseInventoryDetailSummaryComponent,
+        GeneralSettingsFormlySelectExFieldComponent,
     ],
     exports: [
         AppMultilinguageLabelComponent,
@@ -485,6 +487,7 @@ import {
         WarehouseStorageFormlySelectFieldComponent,
         WarehouseInventoryDetailStorageCellComponent,
         WarehouseInventoryDetailSummaryComponent,
+        GeneralSettingsFormlySelectExFieldComponent,
     ],
     declarations: [
         AppMultilinguageLabelComponent,
@@ -529,6 +532,7 @@ import {
         WarehouseStorageFormlySelectFieldComponent,
         WarehouseInventoryDetailStorageCellComponent,
         WarehouseInventoryDetailSummaryComponent,
+        GeneralSettingsFormlySelectExFieldComponent,
     ],
 })
 export class FeaturesComponentsModule {
