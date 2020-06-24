@@ -124,7 +124,7 @@
 </li>
 
 <context-menu #selectContextMenuComponent
-              [disabled]="!contextMenu || !contextMenu.length"
+              [disabled]="!(getContextMenu() || []).length"
               (close)="onContextMenuClose()">
     <ng-template
         contextMenuItem

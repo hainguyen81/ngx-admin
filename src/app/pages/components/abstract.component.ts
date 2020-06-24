@@ -352,7 +352,7 @@ export abstract class AbstractComponent
      * Get the component {DataSource} instance
      * @return the component {DataSource} instance
      */
-    protected getDataSource(): DataSource {
+    public getDataSource(): DataSource {
         return this.dataSource;
     }
 
@@ -360,7 +360,7 @@ export abstract class AbstractComponent
      * Set the component {DataSource} instance
      * @param dataSource to apply
      */
-    protected setDataSource(dataSource: DataSource) {
+    public setDataSource(dataSource: DataSource) {
         dataSource || throwError('Not found data source!');
         this.dataSource = dataSource;
     }

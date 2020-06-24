@@ -143,8 +143,9 @@
 </ng-template>
 
 <context-menu #treeviewContextMenuComponent
-              [disabled]="!contextMenu || !contextMenu.length"
-              (close)="onContextMenuClose()">
+              (close)="onContextMenuClose()"
+              *ngIf="(getContextMenu() || []).length"
+>
     <ng-template
         contextMenuItem
         *ngFor="let item of contextMenu"

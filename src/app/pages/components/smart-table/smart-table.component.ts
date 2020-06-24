@@ -62,11 +62,19 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
     }
 
     /**
-     * Get the {ViewContainerRef} instance of header panel
-     * @return the {ViewContainerRef} instance of header panel
+     * Get the {ViewContainerRef} instance of search components panel
+     * @return the {ViewContainerRef} instance of search components panel
      */
     protected get searchViewContainerComponent(): ViewContainerRef {
         return this._searchViewContainerRef;
+    }
+
+    /**
+     * Get the number of the {ViewContainerRef} instance of search components panel
+     * @return the number of the {ViewContainerRef} instance of search components panel
+     */
+    get numberOfSearchComponents(): number {
+        return (this.searchViewContainerComponent ? this.searchViewContainerComponent.length : 0);
     }
 
     // -------------------------------------------------

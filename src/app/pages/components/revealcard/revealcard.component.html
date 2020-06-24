@@ -29,7 +29,7 @@
     </nb-card-back>
 </nb-reveal-card>
 <context-menu #revealCardContextMenuComponent
-              [disabled]="!contextMenu || !contextMenu.length"
+              [disabled]="!(getContextMenu() || []).length"
               (close)="onContextMenuClose()">
     <ng-template
         contextMenuItem

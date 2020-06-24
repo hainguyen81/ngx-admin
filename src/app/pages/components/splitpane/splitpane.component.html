@@ -21,7 +21,7 @@
             </as-split-area>
         </as-split>
         <context-menu #splitPaneContextMenuComponent
-                      [disabled]="!contextMenu || !contextMenu.length"
+                      [disabled]="!(getContextMenu() || []).length"
                       (close)="onContextMenuClose()">
             <ng-template
                 contextMenuItem
