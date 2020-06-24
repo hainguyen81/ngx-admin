@@ -23,7 +23,7 @@ import {ActivatedRoute, Router} from '@angular/router';
  * Base tree-view component base on {DropdownTreeviewComponent}
  */
 @Component({
-    selector: 'ngx-tree-view-dropdown',
+    selector: 'ngx-tree-view-dropdown-base',
     templateUrl: './treeview.component.html',
     styleUrls: ['./treeview.component.scss'],
 })

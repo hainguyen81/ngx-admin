@@ -3,10 +3,10 @@
         <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
             <nb-icon icon="menu-2-outline"></nb-icon>
         </a>
-        <a class="logo" href="#" (click)="navigateHome()">{{(user['company'] || 'Home') | uppercase}}</a>
+        <a class="logo" href="#" (click)="navigateHome()">{{(_user['company'] || 'Home') | uppercase}}</a>
     </div>
-    <nb-select [selected]="currentLang" (selectedChange)="changeLanguage($event)" status="primary">
-        <nb-option *ngFor="let lang of languages"
+    <nb-select [selected]="_currentLang" (selectedChange)="changeLanguage($event)" status="primary">
+        <nb-option *ngFor="let lang of _languages"
                    [value]="lang">{{'common.languages.'.concat(lang) | translate}}</nb-option>
     </nb-select>
     <!--<nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
@@ -25,7 +25,7 @@
         <nb-action class="user-action" *nbIsGranted="['view', 'user']">
             <nb-user [nbContextMenu]="getUserMenu()"
                      [onlyPicture]="userPictureOnly"
-                     [name]="user?.name"
+                     [name]="_user?.name"
                      [picture]="getProfileImage()"
                      [nbContextMenuTag]="userMenuTag"
             ></nb-user>

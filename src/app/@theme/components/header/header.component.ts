@@ -48,11 +48,11 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
 
     /* Authentication */
     private token: NbAuthToken;
-    private user: any = {};
+    private _user: any = {};
 
-    private languages = AppConfig.i18n.languages;
+    private _languages: string[] = AppConfig.i18n.languages;
     currentTheme = 'default';
-    private currentLang = 'en';
+    private _currentLang = 'en';
 
     // private userMenu: NbMenuItem[] = [{title: 'Profile'}, {title: 'Log out'}];
     private userMenuTag: string = 'userProfileMenu';
@@ -70,6 +70,18 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
             data: 'logoutMenu',
         },
     ];
+
+    get user(): any {
+        return this._user;
+    }
+
+    get currentLang(): string {
+        return this._currentLang;
+    }
+
+    get languages(): string[] {
+        return this._languages || [];
+    }
 
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -117,9 +129,9 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
             .subscribe((token: NbAuthOAuth2Token) => {
                 // here we receive a payload from the token and assigns it to our `user` variable
                 this.token = (token && token.isValid() ? token : undefined);
-                this.user = (this.token ? this.token.getPayload() : {});
-                this.currentLang = this.user['lang'] || this.languages[0];
-                this.user['lang'] = this.currentLang;
+                this._user = (this.token ? this.token.getPayload() : {});
+                this._currentLang = this._user['lang'] || this._languages[0];
+                this._user['lang'] = this._currentLang;
                 this.token && this.initialize();
             });
     }
@@ -131,22 +143,22 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
 
     private initialize() {
         this.currentTheme = this.themeService.currentTheme;
-        this.languages = this.getTranslateService().getLangs();
-        if (!this.languages || !this.languages.length) {
-            this.languages = [];
+        this._languages = this.getTranslateService().getLangs();
+        if (!this._languages || !this._languages.length) {
+            this._languages = [];
             (this.getTranslateService().defaultLang || '').length
-            && this.languages.push(this.getTranslateService().defaultLang);
+            && this._languages.push(this.getTranslateService().defaultLang);
         }
         let currentLang: string;
         currentLang = ((this.getTranslateService().currentLang || '').length
             ? this.getTranslateService().currentLang
             : (this.getTranslateService().defaultLang || '').length
                 ? this.getTranslateService().defaultLang
-                : this.languages && this.languages.length ? this.languages[0] : '');
-        (this.languages.indexOf(currentLang) < 0)
-        && this.languages.push(currentLang);
-        this.currentLang = currentLang;
-        this.getLogger().debug('CURRENT LANGUAGE', this.currentLang);
+                : this._languages && this._languages.length ? this._languages[0] : '');
+        (this._languages.indexOf(currentLang) < 0)
+        && this._languages.push(currentLang);
+        this._currentLang = currentLang;
+        this.getLogger().debug('CURRENT LANGUAGE', this._currentLang);
 
         /*this.userService.getUsers()
           .pipe(takeUntil(this.destroy$))
@@ -172,9 +184,9 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
                 map(({item}) => item))
             .subscribe(value => this.onMenuClick(value));
 
-        this.userDbService.findEntities('id', IDBKeyRange.only(this.user['id']))
+        this.userDbService.findEntities('id', IDBKeyRange.only(this._user['id']))
             .then(value => {
-                this.user['image'] = (value || {})['image'] || [];
+                this._user['image'] = (value || {})['image'] || [];
             }, reason => {
                 this.getLogger().error(reason);
             })
@@ -192,7 +204,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
         moment.locale(language);
 
         this.getTranslateService().use(language);
-        this.user['lang'] = language;
+        this._user['lang'] = language;
         this.authDbService.update(this.token);
     }
 
@@ -229,7 +241,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
     }
     private doProfile(): void {
         const profileLink: string = ['/dashboard/system/user',
-            (this.user['id'] || '').length ? '/'.concat(this.user['id']) : ''].join('');
+            (this._user['id'] || '').length ? '/'.concat(this._user['id']) : ''].join('');
         this.getRouter().navigate([profileLink], { skipLocationChange: false });
     }
     private doLogout(): void {
@@ -251,12 +263,12 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
     }
 
     private getProfileImage(): string {
-        if (!this.user || !this.user['image']) return '';
-        if (isArray(this.user['image']) && Array.from(this.user['image']).length) {
-            return Array.from(this.user['image'])[0] as string;
+        if (!this._user || !this._user['image']) return '';
+        if (isArray(this._user['image']) && Array.from(this._user['image']).length) {
+            return Array.from(this._user['image'])[0] as string;
 
-        } else if (this.user['image']) {
-            return this.user['image'];
+        } else if (this._user['image']) {
+            return this._user['image'];
         }
     }
 }
