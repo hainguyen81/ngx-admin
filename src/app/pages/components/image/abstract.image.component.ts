@@ -56,7 +56,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
      * Get all images in album
      * @return all images in album
      */
-    @Input('images') get images(): string[] {
+    @Input() get images(): string[] {
         return (!this.showAlbum ? [] : this.getInternalImages());
     }
 
@@ -92,7 +92,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     /**
      * Get a boolean value indicating whether allows adding/deleting/modifying images
      */
-    @Input('allowModified') get allowModified(): boolean {
+    @Input() get allowModified(): boolean {
         return this.isAllowModified;
     }
 
@@ -107,7 +107,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     /**
      * Get a boolean value indicating whether allows showing all images in album
      */
-    @Input('showAlbum') get showAlbum(): boolean {
+    @Input() get showAlbum(): boolean {
         return this.isShowAlbum;
     }
 
@@ -122,7 +122,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     /**
      * Get a boolean value indicating whether allows showing only primary image in album
      */
-    @Input('onlyPrimary') get onlyPrimary(): boolean {
+    @Input() get onlyPrimary(): boolean {
         return this.isOnlyPrimary;
     }
 
