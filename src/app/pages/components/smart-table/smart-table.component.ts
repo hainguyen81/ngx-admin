@@ -49,7 +49,7 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    protected get isShowHeader(): boolean {
+    get isShowHeader(): boolean {
         return true;
     }
 
@@ -57,7 +57,7 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
      * Get a boolean value indicating whether showing panel search
      * @return true (default) for showing; else false
      */
-    protected get isShowSearch(): boolean {
+    get isShowSearch(): boolean {
         return false;
     }
 

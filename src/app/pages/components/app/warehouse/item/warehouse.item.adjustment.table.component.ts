@@ -110,7 +110,7 @@ export class WarehouseItemAdjustmentSmartTableComponent
      * Remove panel header
      * @return false
      */
-    protected get isShowHeader(): boolean {
+    get isShowHeader(): boolean {
         return false;
     }
 

@@ -117,7 +117,7 @@ export class WarehouseSettingsSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected get isShowHeader(): boolean {
+    get isShowHeader(): boolean {
         return false;
     }
 

@@ -161,7 +161,7 @@ export class WarehouseBatchNoSmartTableComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected get isShowHeader(): boolean {
+    get isShowHeader(): boolean {
         return false;
     }
 

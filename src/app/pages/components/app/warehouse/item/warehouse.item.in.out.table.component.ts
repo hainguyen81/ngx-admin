@@ -98,7 +98,7 @@ export class WarehouseItemInOutSmartTableComponent
      * Remove panel header
      * @return false
      */
-    protected get isShowHeader(): boolean {
+    get isShowHeader(): boolean {
         return false;
     }
 
