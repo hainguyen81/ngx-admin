@@ -25,7 +25,6 @@ import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse
 import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {isNullOrUndefined} from 'util';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {
@@ -214,7 +213,7 @@ export const WarehouseInventoryMainFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-formly-form-app-warehouse-inventory',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

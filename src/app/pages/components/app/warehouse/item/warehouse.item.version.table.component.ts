@@ -21,7 +21,6 @@ import {
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -136,7 +135,7 @@ export const WarehouseItemVersionTableSettings = {
 export const WarehouseItemVersionContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-app-warehouse-item-version',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: [

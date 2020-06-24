@@ -26,8 +26,6 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
@@ -106,7 +104,7 @@ export const WarehouseSettingsTableSettings = {
 export const WarehouseSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-smart-table-app-warehouse-settings',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
@@ -194,8 +192,7 @@ export class WarehouseSettingsSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'type',
-                BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code,
-                null),
+                CommonConstants.COMMON.BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code, null),
         ]).then(
             value => {
                 this.getLogger().debug('Loading general settings successful');

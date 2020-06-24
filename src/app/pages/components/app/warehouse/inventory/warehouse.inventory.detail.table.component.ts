@@ -23,7 +23,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
@@ -201,7 +200,7 @@ export const WarehouseInventoryDetailTableSettings = {
 export const WarehouseInventoryDetailContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-app-warehouse-inventory-detail',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: [

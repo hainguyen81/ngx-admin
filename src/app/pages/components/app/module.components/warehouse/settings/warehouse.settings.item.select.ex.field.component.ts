@@ -19,13 +19,12 @@ import {
     WarehouseSettingsFormlySelectExFieldComponent,
 } from './warehouse.settings.select.ex.field.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 
 /**
  * Custom module formly field for selecting general warehouse settings item settings
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS,
     selector: 'ngx-select-ex-app-module-general-settings-warehouse-settings-item',
     templateUrl: '../../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],

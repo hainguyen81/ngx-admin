@@ -15,7 +15,6 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
@@ -34,7 +33,7 @@ import {NgOption} from '@ng-select/ng-select';
  * Smart table warehouse item cell component base on {DefaultEditor}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-warehouse-item-cell',
     templateUrl: './warehouse.item.cell.component.html',
     styleUrls: ['./warehouse.item.cell.component.scss'],

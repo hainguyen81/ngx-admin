@@ -19,7 +19,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppTreeSplitFormComponent} from '../../components/app.treeview.splitpane.form.component';
 import {ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -28,7 +27,7 @@ import {ActivatedRoute, Router} from '@angular/router';
  * Organization split-pane component base on {AngularSplitModule}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-split-pane-app-system-organization',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: [

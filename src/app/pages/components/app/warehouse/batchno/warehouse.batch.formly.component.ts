@@ -17,7 +17,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl, Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
@@ -213,7 +212,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
     selector: 'ngx-formly-form-app-warehouse-batch-no',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss',

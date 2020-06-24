@@ -17,7 +17,6 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import User, {IUser} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {UserSmartTableComponent} from './user.table.component';
@@ -35,7 +34,7 @@ import {Observable, throwError} from 'rxjs';
 import {isArray} from 'util';
 
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_USER,
+    moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_USER,
     selector: 'ngx-flip-card-app-system-user',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

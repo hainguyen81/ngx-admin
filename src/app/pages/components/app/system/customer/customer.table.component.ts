@@ -23,8 +23,6 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import PromiseUtils from '../../../../../utils/promise.utils';
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
@@ -125,7 +123,7 @@ export const CustomerTableSettings = {
 export const CustomerContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_CUSTOMER,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_CUSTOMER,
     selector: 'ngx-smart-table-app-system-customer',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
@@ -211,13 +209,13 @@ export class CustomerSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.STATUS.code, null),
+                CommonConstants.COMMON.BUILTIN_CODES.STATUS.code, null),
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'level',
-                BUILTIN_CODES.CUSTOMER_LEVEL.code, null),
+                CommonConstants.COMMON.BUILTIN_CODES.CUSTOMER_LEVEL.code, null),
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'type',
-                BUILTIN_CODES.CUSTOMER_TYPE.code, null),
+                CommonConstants.COMMON.BUILTIN_CODES.CUSTOMER_TYPE.code, null),
         ]).then(
             value => {
                 this.getLogger().debug('Loading settings successful');

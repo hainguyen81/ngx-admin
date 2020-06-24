@@ -15,7 +15,6 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Constants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
@@ -39,7 +38,7 @@ import {
  * Smart table warehouse batch cell component base on {DefaultEditor}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-warehouse-inventory-batch-no-cell',
     templateUrl: './warehouse.inventory.detail.batch.cell.component.html',
     styleUrls: ['./warehouse.inventory.detail.batch.cell.component.scss'],

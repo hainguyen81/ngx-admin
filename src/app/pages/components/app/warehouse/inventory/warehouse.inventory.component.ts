@@ -18,7 +18,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {
     ACTION_BACK,
     ACTION_DELETE,
@@ -54,7 +53,7 @@ import {AppConfig} from '../../../../../config/app.config';
 import {ServiceWorkerKeys} from '../../../../../config/worker.providers';
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-flip-card-app-warehouse-inventory',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

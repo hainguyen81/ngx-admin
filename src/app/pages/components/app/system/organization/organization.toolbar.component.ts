@@ -16,7 +16,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppToolbarComponent, AppToolbarImportActionsConfig} from '../../components/app.toolbar.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -33,7 +32,7 @@ export const OrganizationToolbarActionsConfig: IToolbarActionsConfig[] = [].conc
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-toolbar-app-system-organization',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss', '../../components/app.toolbar.component.scss'],

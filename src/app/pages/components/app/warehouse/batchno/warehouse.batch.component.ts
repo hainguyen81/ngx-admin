@@ -16,7 +16,6 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {
     ACTION_BACK,
     ACTION_DELETE,
@@ -34,7 +33,7 @@ import {WarehouseBatchNoSmartTableComponent} from './warehouse.batch.table.compo
 import {WarehouseBatchNoFormlyComponent} from './warehouse.batch.formly.component';
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
     selector: 'ngx-flip-card-app-warehouse-batch-no',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

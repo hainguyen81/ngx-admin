@@ -19,7 +19,6 @@ import {
     AppToolbarComponent,
 } from '../../components/app.toolbar.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IToolbarActionsConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
@@ -32,7 +31,7 @@ export const WarehouseInventorySearchToolbarActionsConfig: IToolbarActionsConfig
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-toolbar-app-warehouse-inventory-search',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: [

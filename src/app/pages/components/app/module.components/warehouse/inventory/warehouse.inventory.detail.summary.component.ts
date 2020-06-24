@@ -10,7 +10,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AbstractComponent} from '../../../../abstract.component';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -27,7 +26,7 @@ import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component'
  * Smart table warehouse summary component
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-warehouse-inventory-quantity-summary-cell',
     templateUrl: './warehouse.inventory.detail.summary.component.html',
     styleUrls: ['./warehouse.inventory.detail.summary.component.scss'],

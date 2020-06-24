@@ -20,13 +20,12 @@ import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item
 import {AppConfig} from '../../../../../config/app.config';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-warehouse-item-summary',
     templateUrl: './warehouse.item.summary.component.html',
     styleUrls: ['./warehouse.item.summary.component.scss'],

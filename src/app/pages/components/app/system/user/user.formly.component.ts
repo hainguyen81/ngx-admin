@@ -17,7 +17,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {EmailValidators} from 'ngx-validators';
 import {
     GeneralSettingsDatasource,
@@ -164,7 +163,7 @@ export const UserFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_USER,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_USER,
     selector: 'ngx-formly-form-app-system-user',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

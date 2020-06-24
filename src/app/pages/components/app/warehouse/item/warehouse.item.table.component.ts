@@ -21,8 +21,6 @@ import {
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -157,7 +155,7 @@ export const WarehouseItemTableSettings = {
 export const WarehouseItemContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-app-warehouse-item',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
@@ -242,8 +240,7 @@ export class WarehouseItemSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.STATUS.code,
-                null),
+                CommonConstants.COMMON.BUILTIN_CODES.STATUS.code, null),
         ]).then(value => {
             this.getLogger().debug('Loading general settings successful');
             this.getDataSource().refresh();

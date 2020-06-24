@@ -21,7 +21,6 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {WarehouseCategoryTreeviewConfig} from '../category/warehouse.category.treeview.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CustomValidators} from 'ngx-custom-validators';
@@ -326,7 +325,7 @@ export const WarehouseItemOverviewFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-formly-form-app-warehouse-item-overview',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss'],

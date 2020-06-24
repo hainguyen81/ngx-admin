@@ -21,9 +21,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Constants as OrderConstants} from '../../../../../@core/data/constants/warehouse.order.constants';
-import WAREHOUSE_ORDER_TYPE = OrderConstants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE;
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -90,7 +88,7 @@ export const WarehouseItemOrdersTableSettings = {
 export const WarehouseItemOrdersContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-app-warehouse-item-orders',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
@@ -121,7 +119,7 @@ export class WarehouseItemOrdersSmartTableComponent
      * Get the {WAREHOUSE_ORDER_TYPE} order type
      * @return the {WAREHOUSE_ORDER_TYPE} order type
      */
-    protected getOrderType(): WAREHOUSE_ORDER_TYPE {
+    protected getOrderType(): OrderConstants.WarehouseConstants.WarehouseOrderConstants.WAREHOUSE_ORDER_TYPE {
         return null;
     }
 

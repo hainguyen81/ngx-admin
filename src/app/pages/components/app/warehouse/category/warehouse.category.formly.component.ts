@@ -22,7 +22,6 @@ import {WarehouseCategoryTreeviewConfig} from './warehouse.category.treeview.com
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
@@ -141,7 +140,7 @@ export const WarehouseCategoryFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-formly-form-app-warehouse-category',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

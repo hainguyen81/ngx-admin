@@ -24,7 +24,6 @@ import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
 // import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 // import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTabsetComponent} from '../../components/app.tabset.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
@@ -221,7 +220,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
 }];
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-tabset-app-warehouse-item',
     templateUrl: '../../../tab/tab.component.html',
     styleUrls: ['../../../tab/tab.component.scss'],

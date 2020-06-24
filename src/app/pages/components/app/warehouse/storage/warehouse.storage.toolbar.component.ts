@@ -20,7 +20,6 @@ import {
 } from '../../components/app.toolbar.component';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -37,7 +36,7 @@ export const WarehouseStorageToolbarActionsConfig: IToolbarActionsConfig[] = [].
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
     selector: 'ngx-toolbar-app-warehouse-storage',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

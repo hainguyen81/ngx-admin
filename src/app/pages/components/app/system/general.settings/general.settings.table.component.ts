@@ -26,7 +26,6 @@ import {throwError} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {isArray, isNullOrUndefined} from 'util';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -94,7 +93,7 @@ export const GeneralSettingsTableSettings = {
 export const GeneralSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_SETTINGS,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-smart-table-system-general-settings',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

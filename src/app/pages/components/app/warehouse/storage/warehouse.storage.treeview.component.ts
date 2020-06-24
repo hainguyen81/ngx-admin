@@ -26,7 +26,6 @@ import {COMMON} from '../../../../../config/common.config';
 import {TranslateService} from '@ngx-translate/core';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
@@ -95,7 +94,7 @@ export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
     selector: 'ngx-tree-view-app-warehouse-storage',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: [

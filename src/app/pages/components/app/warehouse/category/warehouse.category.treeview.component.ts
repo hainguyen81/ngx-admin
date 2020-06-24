@@ -27,7 +27,6 @@ import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
@@ -50,7 +49,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
  * Base tree-view component base on {TreeviewComponent}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-tree-view-app-warehouse-category',
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],

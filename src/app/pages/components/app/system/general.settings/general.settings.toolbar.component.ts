@@ -22,7 +22,6 @@ import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -39,7 +38,7 @@ export const GeneralSettingsToolbarActionsConfig: IToolbarActionsConfig[] = [].c
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_SETTINGS,
+    moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-toolbar-app-system-general-settings',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

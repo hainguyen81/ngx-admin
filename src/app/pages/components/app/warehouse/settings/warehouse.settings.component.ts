@@ -23,7 +23,6 @@ import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {
     ACTION_BACK,
     ACTION_DELETE,
@@ -34,7 +33,7 @@ import {
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-flip-card-app-warehouse-settings',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

@@ -10,7 +10,6 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abstract.select.component';
 import {
     AppModuleDataIndexSettingsFormlySelectFieldComponent,
@@ -51,7 +50,7 @@ export const WarehouseStorageNgxSelectOptions: INgxSelectOptions =
  * Custom module formly field for selecting warehouse items
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
     selector: 'ngx-select-2-app-module-warehouse-storage',
     templateUrl: '../../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../../formly/formly.select.field.component.scss'],

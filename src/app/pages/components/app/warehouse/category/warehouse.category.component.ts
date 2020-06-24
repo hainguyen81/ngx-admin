@@ -24,7 +24,6 @@ import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.co
 import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
 import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppTreeSplitFormComponent} from '../../components/app.treeview.splitpane.form.component';
 import {
     ACTION_DELETE,
@@ -38,7 +37,7 @@ import {ActivatedRoute, Router} from '@angular/router';
  * Warehouse Category split-pane component base on {AngularSplitModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-split-pane-app-warehouse-category',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: [

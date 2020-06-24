@@ -28,13 +28,11 @@ import {
     AppCityFormlySelectExFieldComponent,
 } from '../../components/common/app.city.formly.select.ex.field.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 import {$enum} from 'ts-enum-util';
 import {Constants as WarehouseStorageConstants} from '../../../../../@core/data/constants/warehouse.storage.constants';
-import STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE;
 
 /* default warehouse storage formly config */
 export const WarehouseStorageFormConfig: FormlyConfig = new FormlyConfig();
@@ -97,8 +95,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         className: 'w-100',
                         key: 'street_address',
                         type: 'textarea',
-                        hideExpression: model => (model && $enum(STORAGE_TYPE)
-                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                        hideExpression: model =>
+                            (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                .getKeyOrThrow(WarehouseStorageConstants
+                                    .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                         templateOptions: {
                             label: 'warehouse.storage.form.street_address.label',
                             placeholder: 'warehouse.storage.form.street_address.placeholder',
@@ -112,8 +112,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 className: 'w-50 pl-0 pr-2',
                                 key: 'country_id',
                                 type: 'select-ngx-country',
-                                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                                hideExpression: model =>
+                                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                        .getKeyOrThrow(WarehouseStorageConstants
+                                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                                 templateOptions: {
                                     label: 'warehouse.storage.form.country.label',
                                     placeholder: 'warehouse.storage.form.country.placeholder',
@@ -123,8 +125,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 className: 'w-50 pl-2 pr-0',
                                 key: 'province_id',
                                 type: 'select-ngx-province',
-                                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                                hideExpression: model =>
+                                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                        .getKeyOrThrow(WarehouseStorageConstants
+                                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                                 templateOptions: {
                                     label: 'warehouse.storage.form.province.label',
                                     placeholder: 'warehouse.storage.form.province.placeholder',
@@ -145,8 +149,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 className: 'w-50 pl-0 pr-2',
                                 key: 'city_id',
                                 type: 'select-ngx-city',
-                                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                                hideExpression: model =>
+                                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                        .getKeyOrThrow(WarehouseStorageConstants
+                                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                                 templateOptions: {
                                     label: 'warehouse.storage.form.city.label',
                                     placeholder: 'warehouse.storage.form.city.placeholder',
@@ -161,8 +167,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 className: 'w-50 pl-2 pr-0',
                                 key: 'district_id',
                                 type: 'select',
-                                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                                hideExpression: model =>
+                                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                        .getKeyOrThrow(WarehouseStorageConstants
+                                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                                 templateOptions: {
                                     label: 'warehouse.storage.form.district.label',
                                     placeholder: 'warehouse.storage.form.district.placeholder',
@@ -183,8 +191,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 className: 'w-30 pl-0 pr-2',
                                 key: 'zip_code',
                                 type: 'input',
-                                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                                hideExpression: model =>
+                                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                        .getKeyOrThrow(WarehouseStorageConstants
+                                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                                 templateOptions: {
                                     label: 'warehouse.storage.form.zip_code.label',
                                     placeholder: 'warehouse.storage.form.zip_code.placeholder',
@@ -194,8 +204,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 className: 'w-30 pl-1 pr-1',
                                 key: 'tel',
                                 type: 'input',
-                                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                                hideExpression: model =>
+                                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                        .getKeyOrThrow(WarehouseStorageConstants
+                                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                                 templateOptions: {
                                     label: 'warehouse.storage.form.tel.label',
                                     placeholder: 'warehouse.storage.form.tel.placeholder',
@@ -205,8 +217,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                                 className: 'w-30 pl-2 pr-0',
                                 key: 'fax',
                                 type: 'input',
-                                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                                hideExpression: model =>
+                                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                        .getKeyOrThrow(WarehouseStorageConstants
+                                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                                 templateOptions: {
                                     label: 'warehouse.storage.form.fax.label',
                                     placeholder: 'warehouse.storage.form.fax.placeholder',
@@ -219,8 +233,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                         className: 'w-100',
                         key: 'email',
                         type: 'input',
-                        hideExpression: model => (model && $enum(STORAGE_TYPE)
-                            .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                        hideExpression: model =>
+                            (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                                .getKeyOrThrow(WarehouseStorageConstants
+                                    .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
                         templateOptions: {
                             label: 'warehouse.storage.form.email.label',
                             placeholder: 'warehouse.storage.form.email.placeholder',
@@ -241,8 +257,10 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
                 className: 'col-4 images-gallery',
                 key: 'image',
                 type: 'images-gallery',
-                hideExpression: model => (model && $enum(STORAGE_TYPE)
-                    .getKeyOrThrow(STORAGE_TYPE.STORAGE) !== model.type),
+                hideExpression: model =>
+                    (model && $enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                        .getKeyOrThrow(WarehouseStorageConstants
+                            .WarehouseStorageConstants.STORAGE_TYPE.STORAGE) !== model.type),
             },
         ],
     },
@@ -252,7 +270,7 @@ export const WarehouseStorageFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
     selector: 'ngx-formly-form-app-warehouse-storage',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss',

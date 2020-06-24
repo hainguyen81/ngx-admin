@@ -24,7 +24,6 @@ import {
     AppModuleFormlySelectExFieldComponent,
 } from '../../components/common/app.module.formly.select.ex.field.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
@@ -126,7 +125,7 @@ export const GeneralSettingsFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_SETTINGS,
+    moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-formly-form-app-system-general-settings',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

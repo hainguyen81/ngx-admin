@@ -18,7 +18,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {EmailValidators} from 'ngx-validators';
 import {ICustomer} from '../../../../../@core/data/system/customer';
 import {
@@ -319,7 +318,7 @@ export const CustomerFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_CUSTOMER,
+    moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_CUSTOMER,
     selector: 'ngx-formly-form-app-system-customer',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

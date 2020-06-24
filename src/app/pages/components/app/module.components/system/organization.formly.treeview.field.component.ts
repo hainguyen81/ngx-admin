@@ -15,7 +15,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {
     AppModuleDataIndexFormlyTreeviewFieldComponent,
@@ -81,7 +80,7 @@ export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
  * Custom organization formly field for selecting parent organization
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-formly-treeview-dropdown-app-module-data-index-organization',
     templateUrl: '../../../formly/formly.treeview.dropdown.field.component.html',
     styleUrls: ['../../../formly/formly.treeview.dropdown.field.component.scss'],

@@ -24,8 +24,6 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
@@ -160,7 +158,7 @@ export const WarehouseInventoryTableSettings = {
 export const WarehouseInventoryContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-app-warehouse-inventory',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: [
@@ -244,8 +242,7 @@ export class WarehouseInventorySmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultWarehouseGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'type',
-                BUILTIN_CODES.WAREHOUSE_INVENTORY_TYPE.code,
-                null),
+                CommonConstants.COMMON.BUILTIN_CODES.WAREHOUSE_INVENTORY_TYPE.code, null),
         ]).then(
             value => {
                 this.getLogger().debug('Loading general settings successful');

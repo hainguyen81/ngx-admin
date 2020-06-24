@@ -22,8 +22,6 @@ import {WarehouseItemSmartTableComponent} from './warehouse.item.table.component
 import {WarehouseItemSplitPaneComponent} from './warehouse.item.splitpane.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import STATUS = CommonConstants.COMMON.STATUS;
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTableFlipComponent} from '../../components/app.table.flip.component';
@@ -40,7 +38,7 @@ import {IdGenerators} from '../../../../../config/generator.config';
 import ObjectUtils from '../../../../../utils/object.utils';
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-flip-card-app-table-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',
@@ -124,7 +122,8 @@ export class WarehouseItemFlipcardComponent
 
     protected onNewData($event: IEvent): void {
         this.selectedModel = new WarehouseItem(IdGenerators.oid.generate(), null, null);
-        this.selectedModel.status = Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED);
+        this.selectedModel.status = Object.keys(CommonConstants.COMMON.STATUS)
+            .find(key => CommonConstants.COMMON.STATUS[key] === CommonConstants.COMMON.STATUS.ACTIVATED);
         this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
     }
 

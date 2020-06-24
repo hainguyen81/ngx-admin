@@ -16,7 +16,6 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import Customer, {ICustomer} from '../../../../../@core/data/system/customer';
 import {
     CustomerDatasource,
@@ -34,7 +33,7 @@ import {
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_CUSTOMER,
+    moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_CUSTOMER,
     selector: 'ngx-flip-card-app-system-customer',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

@@ -28,7 +28,6 @@ import {GeneralSettingsSmartTableComponent} from './general.settings.table.compo
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {throwError} from 'rxjs';
 import {
     ACTION_BACK,
@@ -41,7 +40,7 @@ import {
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_SETTINGS,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-flip-card-app-system-general-settings',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',

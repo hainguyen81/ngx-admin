@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
@@ -20,7 +19,7 @@ import {NGXLogger} from 'ngx-logger';
  * Smart table warehouse serial/IMEI cell component base on {DefaultEditor}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-smart-table-warehouse-inventory-serial-cell',
     templateUrl: './warehouse.inventory.detail.serial.cell.component.html',
     styleUrls: ['./warehouse.inventory.detail.serial.cell.component.scss'],

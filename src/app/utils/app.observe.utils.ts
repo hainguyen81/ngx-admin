@@ -12,7 +12,6 @@ import {
 } from '../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IDbService, IHttpService} from '../services/interface.service';
 import {BaseDataSource} from '../services/datasource.service';
 
@@ -113,7 +112,7 @@ export default class AppObserveUtils {
             noneOption?: IGeneralSettings | null): Promise<void> {
         return this.observeGeneralSettingsFormField(
             generalSettingsDatasource, field, null,
-            MODULE_CODES.SYSTEM, settingCode,
+            CommonConstants.COMMON.MODULE_CODES.SYSTEM, settingCode,
             settingFilter, noneOption);
     }
     /**
@@ -132,7 +131,7 @@ export default class AppObserveUtils {
         noneOption?: IGeneralSettings | null): Promise<void> {
         return this.observeGeneralSettingsFormField(
             generalSettingsDatasource, field, null,
-            MODULE_CODES.WAREHOUSE, settingCode,
+            CommonConstants.COMMON.MODULE_CODES.WAREHOUSE, settingCode,
             settingFilter, noneOption);
     }
     /**
@@ -246,7 +245,7 @@ export default class AppObserveUtils {
         settingFilter?: (setting: { [key: string]: string | string[] | IGeneralSettings; }) => boolean): Promise<void> {
         return this.observeGeneralSettingsTableColumn(
             generalSettingsDatasource, tableSettings, column,
-            MODULE_CODES.SYSTEM, settingCode,
+            CommonConstants.COMMON.MODULE_CODES.SYSTEM, settingCode,
             settingFilter);
     }
     /**
@@ -264,7 +263,7 @@ export default class AppObserveUtils {
         settingFilter?: (setting: { [key: string]: string | string[] | IGeneralSettings; }) => boolean): Promise<void> {
         return this.observeGeneralSettingsTableColumn(
             generalSettingsDatasource, tableSettings, column,
-            MODULE_CODES.WAREHOUSE, settingCode,
+            CommonConstants.COMMON.MODULE_CODES.WAREHOUSE, settingCode,
             settingFilter);
     }
     /**

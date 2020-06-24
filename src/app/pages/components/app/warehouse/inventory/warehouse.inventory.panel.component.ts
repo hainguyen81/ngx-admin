@@ -10,7 +10,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {
     WarehouseInventoryDatasource,
@@ -29,7 +28,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-card-panel-app-warehouse-inventory',
     templateUrl: '../../../panel/panel.component.html',
     styleUrls: [

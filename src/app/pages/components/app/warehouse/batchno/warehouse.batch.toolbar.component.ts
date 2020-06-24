@@ -19,7 +19,6 @@ import {
     AppToolbarImportActionsConfig,
 } from '../../components/app.toolbar.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
@@ -39,7 +38,7 @@ export const WarehouseBatchNoToolbarActionsConfig: IToolbarActionsConfig[] = [].
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
     selector: 'ngx-toolbar-app-warehouse-batch-no',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

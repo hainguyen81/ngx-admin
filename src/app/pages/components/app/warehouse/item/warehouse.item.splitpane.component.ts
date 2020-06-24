@@ -1,8 +1,10 @@
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {
     AfterViewInit,
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver, ElementRef,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
     Inject,
     Renderer2,
     ViewContainerRef,
@@ -19,7 +21,6 @@ import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item
 import {Lightbox} from 'ngx-lightbox';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
@@ -44,7 +45,7 @@ export const WarehouseItemSummaryAreaConfig: ISplitAreaConfig = {
 };
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-split-pane-app-warehouse-item',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: [

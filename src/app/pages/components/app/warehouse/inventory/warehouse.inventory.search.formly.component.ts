@@ -18,7 +18,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl} from '@angular/forms';
 import moment, {Moment} from 'moment';
@@ -179,7 +178,7 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-formly-form-app-warehouse-inventory-search',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

@@ -10,7 +10,6 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import STATUS = CommonConstants.COMMON.STATUS;
 import {$enum} from 'ts-enum-util';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abstract.select.component';
@@ -50,7 +49,7 @@ export const WarehouseBatchNoNgxSelectOptions: INgxSelectOptions =
  * Custom module formly field for selecting warehouse items
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
     selector: 'ngx-select-2-app-module-warehouse-batch-no',
     templateUrl: '../../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../../formly/formly.select.field.component.scss'],

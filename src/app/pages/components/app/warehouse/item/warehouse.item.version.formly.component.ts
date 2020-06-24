@@ -23,7 +23,6 @@ import {
     WarehouseCategoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {throwError} from 'rxjs';
@@ -308,7 +307,7 @@ export const WarehouseItemVersionFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-formly-form-app-warehouse-item-version',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: ['../../../formly/formly.component.scss'],

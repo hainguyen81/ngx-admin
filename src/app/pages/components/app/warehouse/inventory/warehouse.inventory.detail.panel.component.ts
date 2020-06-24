@@ -9,7 +9,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppPanelComponent} from '../../components/app.panel.component';
 import {AbstractComponent} from '../../../abstract.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -27,10 +26,10 @@ import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import {isNullOrUndefined, isObject} from 'util';
+import {isNullOrUndefined} from 'util';
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-card-panel-app-warehouse-inventory-detail',
     templateUrl: '../../../panel/panel.component.html',
     styleUrls: [

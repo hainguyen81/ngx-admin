@@ -22,7 +22,6 @@ import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -39,7 +38,7 @@ export const WarehouseSettingsToolbarActionsConfig: IToolbarActionsConfig[] = []
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-toolbar-app-warehouse-settings',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

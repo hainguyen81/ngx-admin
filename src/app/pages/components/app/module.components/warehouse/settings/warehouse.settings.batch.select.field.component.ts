@@ -10,9 +10,8 @@ import {
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
+import {DefaultNgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
 import {
     WarehouseBatchNoDatasource,
@@ -45,7 +44,7 @@ export const WarehouseSettingsBatchNgxSelectOptions: INgxSelectOptions =
  * Custom module formly field for selecting warehouse settings batch
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
     selector: 'ngx-select-2-app-module-warehouse-settings-batch',
     templateUrl: '../../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../../formly/formly.select.field.component.scss'],

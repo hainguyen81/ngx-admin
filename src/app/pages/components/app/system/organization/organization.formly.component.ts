@@ -33,7 +33,6 @@ import {
 } from '../../components/common/app.city.formly.select.ex.field.component';
 import {IOrganization} from '../../../../../@core/data/system/organization';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {throwError} from 'rxjs';
@@ -356,7 +355,7 @@ export const OrganizationFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_ORGANIZATION,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-formly-form-app-system-organization',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

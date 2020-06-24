@@ -19,8 +19,6 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import PromiseUtils from '../../../../../utils/promise.utils';
@@ -120,7 +118,7 @@ export const UserTableSettings = {
 export const UserContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_CUSTOMER,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_CUSTOMER,
     selector: 'ngx-smart-table-app-system-user',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
@@ -202,7 +200,7 @@ export class UserSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.STATUS.code, null),
+                CommonConstants.COMMON.BUILTIN_CODES.STATUS.code, null),
         ]).then(value => {
             this.getLogger().debug('Loading settings successful');
             this.getDataSource().refresh();

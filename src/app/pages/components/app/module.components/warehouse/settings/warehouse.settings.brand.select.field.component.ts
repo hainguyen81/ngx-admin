@@ -16,14 +16,13 @@ import {
 import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {WarehouseSettingsFormlySelectFieldComponent} from './warehouse.settings.select.field.component';
 
 /**
  * Custom module formly field for selecting general warehouse settings brand settings
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS,
     selector: 'ngx-select-2-app-module-general-settings-warehouse-settings-brand',
     templateUrl: '../../../../formly/formly.select.field.component.html',
     styleUrls: ['../../../../formly/formly.select.field.component.scss'],

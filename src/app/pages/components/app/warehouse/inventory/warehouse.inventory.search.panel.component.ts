@@ -10,7 +10,6 @@ import {
 import {IWarehouseInventorySearch} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {WarehouseInventorySearchFormlyComponent} from './warehouse.inventory.search.formly.component';
 import {WarehouseInventorySearchToolbarComponent} from './warehouse.inventory.search.toolbar.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -26,7 +25,7 @@ import {AppSearchPanelComponent} from '../../components/app.search.panel.compone
 import {ACTION_SEARCH} from '../../../../../config/toolbar.actions.conf';
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
     selector: 'ngx-card-panel-app-warehouse-inventory-search',
     templateUrl: '../../../panel/panel.component.html',
     styleUrls: [

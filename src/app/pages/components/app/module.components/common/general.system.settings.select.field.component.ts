@@ -14,7 +14,6 @@ import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {GeneralSettingsFormlySelectFieldComponent} from './general.settings.select.field.component';
 
 /**
@@ -34,7 +33,7 @@ export abstract class GeneralSystemSettingsFormlySelectFieldComponent
     // -------------------------------------------------
 
     get moduleCode(): string {
-        return MODULE_CODES.SYSTEM;
+        return CommonConstants.COMMON.MODULE_CODES.SYSTEM;
     }
 
     // -------------------------------------------------

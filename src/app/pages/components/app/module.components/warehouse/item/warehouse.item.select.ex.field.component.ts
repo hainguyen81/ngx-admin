@@ -15,7 +15,6 @@ import {
 } from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants, Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
 import {
     WarehouseItemDatasource,
@@ -51,7 +50,7 @@ export const WarehouseItemSelectOptions: INgxSelectExOptions =
  * Custom module formly field for selecting warehouse items
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-select-ex-app-module-warehouse-item',
     templateUrl: '../../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],

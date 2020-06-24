@@ -19,7 +19,6 @@ import {
     AppToolbarImportActionsConfig,
 } from '../../components/app.toolbar.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -37,7 +36,7 @@ export const UserToolbarActionsConfig: IToolbarActionsConfig[] = [].concat(AppTo
  * Toolbar component base on {MatToolbar}
  */
 @Component({
-    moduleId: MODULE_CODES.SYSTEM_USER,
+    moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_USER,
     selector: 'ngx-toolbar-app-system-user',
     templateUrl: '../../../toolbar/toolbar.component.html',
     styleUrls: ['../../../toolbar/toolbar.component.scss',

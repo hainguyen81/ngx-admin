@@ -21,7 +21,6 @@ import {
     WarehouseSettingsDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
@@ -105,7 +104,7 @@ export const WarehouseSettingsFormFieldsConfig: FormlyFieldConfig[] = [
  * Form component base on {FormlyModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
     selector: 'ngx-formly-form-app-warehouse-settings',
     templateUrl: '../../../formly/formly.component.html',
     styleUrls: [

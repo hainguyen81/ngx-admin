@@ -9,7 +9,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
@@ -50,7 +49,7 @@ export const WarehouseItemVersionSummaryAreaConfig: ISplitAreaConfig = {
  * Warehouse item version split-pane component base on {AngularSplitModule}
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-split-pane-app-warehouse-item-version',
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: [

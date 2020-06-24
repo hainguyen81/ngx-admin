@@ -15,7 +15,6 @@ import {
 } from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
 import {
     WarehouseBatchNoDatasource,
@@ -44,7 +43,7 @@ export const WarehouseSettingsBatchSelectOptions: INgxSelectExOptions =
  * Custom module formly field for selecting warehouse settings batch
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
     selector: 'ngx-select-ex-app-module-warehouse-settings-batch',
     templateUrl: '../../../../formly/formly.select.ex.field.component.html',
     styleUrls: ['../../../../formly/formly.select.ex.field.component.scss'],

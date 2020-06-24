@@ -21,7 +21,6 @@ import {
     WarehouseAdjustDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -88,7 +87,7 @@ export const WarehouseItemAdjustmentTableSettings = {
 export const WarehouseItemAdjustmentContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-smart-table-app-warehouse-item-adjustment',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],

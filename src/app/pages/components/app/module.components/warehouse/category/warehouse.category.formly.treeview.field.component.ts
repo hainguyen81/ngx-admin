@@ -13,7 +13,6 @@ import {IWarehouseCategory} from '../../../../../../@core/data/warehouse/warehou
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../../components/app.treeview.i18n';
 import {NGXLogger} from 'ngx-logger';
 import {Constants} from '../../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = Constants.COMMON.MODULE_CODES;
 import {
     WarehouseCategoryDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
@@ -81,7 +80,7 @@ export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
  * Custom warehouse category formly field for selecting parent category
  */
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
+    moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-formly-treeview-dropdown-app-module-data-index-warehouse-category',
     templateUrl: '../../../../formly/formly.treeview.dropdown.field.component.html',
     styleUrls: ['../../../../formly/formly.treeview.dropdown.field.component.scss'],

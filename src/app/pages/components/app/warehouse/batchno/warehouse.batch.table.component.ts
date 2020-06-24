@@ -22,8 +22,6 @@ import {
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import MODULE_CODES = CommonConstants.COMMON.MODULE_CODES;
-import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import AppObserveUtils from '../../../../../utils/app.observe.utils';
 import PromiseUtils from '../../../../../utils/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
@@ -150,7 +148,7 @@ export const WarehouseBatchNoTableSettings = {
 export const WarehouseBatchNoContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
+    moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
     selector: 'ngx-smart-table-app-warehouse-batch-no',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
@@ -238,8 +236,7 @@ export class WarehouseBatchNoSmartTableComponent
         PromiseUtils.parallelPromises(undefined, undefined, [
             AppObserveUtils.observeDefaultSystemGeneralSettingsTableColumn(
                 this.generalSettingsDatasource, settings, 'status',
-                BUILTIN_CODES.STATUS.code,
-                null),
+                CommonConstants.COMMON.BUILTIN_CODES.STATUS.code, null),
         ]).then(
             value => {
                 this.getLogger().debug('Loading general settings successful');
