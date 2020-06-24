@@ -33,7 +33,7 @@
               (close)="onContextMenuClose()">
     <ng-template
         contextMenuItem
-        *ngFor="let item of contextMenu"
+        *ngFor="let item of getContextMenu()"
         [visible]="evalContextMenuItem(item, 'visible', false)"
         [enabled]="evalContextMenuItem(item, 'enabled', false)"
         [divider]="evalContextMenuItem(item, 'divider', false)"

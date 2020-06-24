@@ -160,7 +160,7 @@ export abstract class AbstractComponent
      * @param propertyKey configuration key
      * @param defaultValue default value if not found or undefined
      */
-    protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
+    public getConfigValue(propertyKey: string, defaultValue?: any | null): any {
         const _config: any = this.config || {};
         const value: any = _config[propertyKey];
         return (isNullOrUndefined(value) ? defaultValue : value);
@@ -171,7 +171,7 @@ export abstract class AbstractComponent
      * @param propertyKey configuration key
      * @param configValue configuration value
      */
-    protected setConfigValue(propertyKey: string, configValue?: any | null): void {
+    public setConfigValue(propertyKey: string, configValue?: any | null): void {
         const _config: any = this.config;
         if (!isNullOrUndefined(_config)) {
             _config[propertyKey] = configValue;
