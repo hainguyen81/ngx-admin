@@ -106,9 +106,9 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      * @param item item has been clicked
      * @param onCheckedChange internal checked change listener
      */
-    private onClickItemLabel($event: MouseEvent,
-                             item: TreeviewItem,
-                             onCheckedChange: (checked: boolean) => void): void {
+    onClickItemLabel($event: MouseEvent,
+                     item: TreeviewItem,
+                     onCheckedChange: (checked: boolean) => void): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickItemLabel', $event, item);
         if (item) {
@@ -121,7 +121,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
                 (this.getTreeviewSelection().checkedItems || [])
                     .forEach(it => this.internalCheck(it, false));
                 // collect new item checked
-                let builtSelection: {checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[]};
+                let builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
                 builtSelection = this.collectSelection();
                 this.getTreeviewSelection().checkedItems = builtSelection.checkedItems;
                 this.getTreeviewSelection().uncheckedItems = builtSelection.uncheckedItems;

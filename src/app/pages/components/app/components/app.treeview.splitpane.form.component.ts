@@ -185,7 +185,7 @@ export class AppTreeSplitFormComponent<
             model = item.value as T;
             model || throwError('Could not apply undefined model to formly component!');
 
-            this.selectedModel = model;
+            this.selectedModel = DeepCloner(model);
             // create formly form component
             if (super.createRightSideComponent()) {
                 this.doReset();
