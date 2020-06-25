@@ -126,7 +126,9 @@
             cursor: not-allowed;
         }
         nb-icon,
-        .item-image {
+        .item-image,
+        .row-item .form-check,
+        .row-item .form-check-label {
             cursor: pointer;
         }
         nb-icon,
