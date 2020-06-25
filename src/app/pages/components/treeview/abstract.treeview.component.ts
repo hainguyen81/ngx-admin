@@ -830,10 +830,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             value: undefined,
         });
         if (parent) {
-            if (!parent.children) {
-                parent.children = [];
+            if (!parent.children || !parent.children.length) {
+                parent.children = [newItem];
+            } else {
+                parent.children.push(newItem);
             }
-            parent.children.push(newItem);
             // expand parent for new item
             parent.collapsed = false;
 
