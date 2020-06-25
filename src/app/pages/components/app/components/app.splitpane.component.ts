@@ -3,9 +3,14 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {
     AfterViewInit,
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2, Type,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Renderer2,
+    Type,
     ViewContainerRef,
 } from '@angular/core';
 import {BaseSplitPaneComponent} from '../../splitpane/base.splitpane.component';
@@ -46,6 +51,13 @@ export const RightFormAreaConfig: ISplitAreaConfig = {
     lockSize: false,
     visible: true,
 };
+
+export const APP_SPLIT_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+    = new InjectionToken<Type<AppToolbarComponent<any>>>(
+        'The toolbar component type injection token of the split-pane');
+export const APP_SPLIT_SIDE_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
+    = new InjectionToken<Type<AbstractComponent>>(
+        'The left/right side component type injection token of the split-pane');
 
 /**
  * Base split-pane component base on {AngularSplitModule}
@@ -156,9 +168,9 @@ export class AppSplitPaneComponent<
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                private toolBarType?: Type<TB> | null,
-                private leftSideType?: Type<L> | null,
-                private rightRightType?: Type<R> | null) {
+                @Inject(APP_SPLIT_TOOLBAR_COMPONENT_TYPE_TOKEN) private toolBarType?: Type<TB> | null,
+                @Inject(APP_SPLIT_SIDE_COMPONENT_TYPE_TOKEN) private leftSideType?: Type<L> | null,
+                @Inject(APP_SPLIT_SIDE_COMPONENT_TYPE_TOKEN) private rightRightType?: Type<R> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

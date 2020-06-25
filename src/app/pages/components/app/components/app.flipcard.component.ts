@@ -8,7 +8,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, InjectionToken,
     OnInit,
     Renderer2,
     Type,
@@ -35,6 +35,13 @@ import {
 } from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
+
+export const APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+    = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the flip-pane');
+export const APP_FLIP_FRONT_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
+    = new InjectionToken<Type<AbstractComponent>>('The front component type injection token of the flip-pane');
+export const APP_FLIP_BACK_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
+    = new InjectionToken<Type<AbstractComponent>>('The front component type injection token of the flip-pane');
 
 @Component({
     selector: 'ngx-flip-card-app',
@@ -178,9 +185,9 @@ export class AppFlipcardComponent<D extends DataSource,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                private toolbarComponentType?: Type<TB> | null,
-                private frontComponentType?: Type<F> | null,
-                private backComponentType?: Type<B> | null) {
+                @Inject(APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN) private toolbarComponentType?: Type<TB> | null,
+                @Inject(APP_FLIP_FRONT_COMPONENT_TYPE_TOKEN) private frontComponentType?: Type<F> | null,
+                @Inject(APP_FLIP_BACK_COMPONENT_TYPE_TOKEN) private backComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

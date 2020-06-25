@@ -6,7 +6,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef, Component,
     ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2, Type,
+    Inject, InjectionToken, Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -22,6 +22,13 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {AppSplitPaneComponent} from './app.splitpane.component';
 import {ActivatedRoute, Router} from '@angular/router';
+
+export const APP_TREE_SPLIT_FORM_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+    = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the split-pane between tree-view and form');
+export const APP_TREE_SPLIT_FORM_TREE_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppTreeviewComponent<any, any>>>
+    = new InjectionToken<Type<AppTreeviewComponent<any, any>>>('The table component type injection token of the split-pane between tree-view and form');
+export const APP_TREE_SPLIT_FORM_FORM_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppFormlyComponent<any, any>>>
+    = new InjectionToken<Type<AppFormlyComponent<any, any>>>('The table component type injection token of the split-pane between tree-view and form');
 
 /**
  * Base split-pane component base on {AngularSplitModule}
@@ -125,9 +132,9 @@ export class AppTreeSplitFormComponent<
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                toolBarType?: Type<TB> | null,
-                treeviewType?: Type<TR> | null,
-                formType?: Type<F> | null) {
+                @Inject(APP_TREE_SPLIT_FORM_TOOLBAR_COMPONENT_TYPE_TOKEN) toolBarType?: Type<TB> | null,
+                @Inject(APP_TREE_SPLIT_FORM_TREE_COMPONENT_TYPE_TOKEN) treeviewType?: Type<TR> | null,
+                @Inject(APP_TREE_SPLIT_FORM_FORM_COMPONENT_TYPE_TOKEN) formType?: Type<F> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

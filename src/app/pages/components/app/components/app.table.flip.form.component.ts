@@ -3,10 +3,15 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {
     AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2, Type,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Renderer2,
+    Type,
     ViewContainerRef,
 } from '@angular/core';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -22,6 +27,13 @@ import {DeepCloner} from '../../../../utils/object.utils';
 import {IdGenerators} from '../../../../config/generator.config';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTableFlipComponent} from './app.table.flip.component';
+
+export const APP_TABLE_FLIP_FORM_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+    = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the flip-pane between table and form');
+export const APP_TABLE_FLIP_FORM_TABLE_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppSmartTableComponent<any>>>
+    = new InjectionToken<Type<AppSmartTableComponent<any>>>('The table component type injection token of the flip-pane between table and form');
+export const APP_TABLE_FLIP_FORM_FORM_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppFormlyComponent<any, any>>>
+    = new InjectionToken<Type<AppFormlyComponent<any, any>>>('The table component type injection token of the flip-pane between table and form');
 
 @Component({
     selector: 'ngx-flip-card-app-table-form',
@@ -79,9 +91,9 @@ export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                toolbarComponentType?: Type<TB> | null,
-                tableComponentType?: Type<F> | null,
-                formComponentType?: Type<B> | null) {
+                @Inject(APP_TABLE_FLIP_FORM_TOOLBAR_COMPONENT_TYPE_TOKEN) toolbarComponentType?: Type<TB> | null,
+                @Inject(APP_TABLE_FLIP_FORM_TABLE_COMPONENT_TYPE_TOKEN) tableComponentType?: Type<F> | null,
+                @Inject(APP_TABLE_FLIP_FORM_FORM_COMPONENT_TYPE_TOKEN) formComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

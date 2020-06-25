@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, InjectionToken,
     Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
@@ -27,6 +27,11 @@ import {
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
 import {isNullOrUndefined} from 'util';
+
+export const APP_SEARCH_PANE_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractToolbarComponent<any>>>
+    = new InjectionToken<Type<AbstractToolbarComponent<any>>>('The toolbar component type injection token of the search-pane');
+export const APP_SEARCH_PANE_FORM_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractFormlyComponent<any, any>>>
+    = new InjectionToken<Type<AbstractFormlyComponent<any, any>>>('The toolbar component type injection token of the search-pane');
 
 @Component({
     selector: 'ngx-search-panel-app',
@@ -108,8 +113,8 @@ export class AppSearchPanelComponent<T extends IModel, D extends DataSource,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                _searchFormComponentType?: Type<SF> | null,
-                _searchToolbarComponentType?: Type<STB> | null) {
+                @Inject(APP_SEARCH_PANE_FORM_COMPONENT_TYPE_TOKEN) _searchFormComponentType?: Type<SF> | null,
+                @Inject(APP_SEARCH_PANE_TOOLBAR_COMPONENT_TYPE_TOKEN) _searchToolbarComponentType?: Type<STB> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

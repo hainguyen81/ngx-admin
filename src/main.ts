@@ -19,7 +19,7 @@ if (environment.production) {
 }
 
 // TODO should mixins prototypes before bootstrap application module
-window.console.warn(['Browser locale', navigator.language, navigator.languages]);
+// window.console.warn(['Browser locale', navigator.language, navigator.languages]);
 mixins(ModalDialogComponent, [ComponentLifeCycleRuntime]);
 mixins(FormlyFormBuilder, [NgxFormlyFormBuilderRuntime]);
 

@@ -3,10 +3,15 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {
     AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2, Type,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Renderer2,
+    Type,
     ViewContainerRef,
 } from '@angular/core';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -21,6 +26,16 @@ import {AbstractComponent, IEvent} from '../../abstract.component';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {ActivatedRoute, Router} from '@angular/router';
+
+export const APP_TABLE_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+    = new InjectionToken<Type<AppToolbarComponent<any>>>(
+        'The toolbar component type injection token of the flip-pane between table and another component');
+export const APP_TABLE_FLIP_TABLE_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppSmartTableComponent<any>>>
+    = new InjectionToken<Type<AppSmartTableComponent<any>>>(
+        'The table component type injection token of the flip-pane between table and another component');
+export const APP_TABLE_FLIP_BACKWARD_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
+    = new InjectionToken<Type<AbstractComponent>>(
+        'The backward component type injection token of the flip-pane between table and another component');
 
 @Component({
     selector: 'ngx-flip-card-app-table',
@@ -95,7 +110,7 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
      * @param activatedRoute {ActivatedRoute}
      * @param toolbarComponentType toolbar component type
      * @param tableComponentType front table component type
-     * @param formComponentType back form component type
+     * @param backComponentType back form component type
      */
     constructor(@Inject(DataSource) dataSource: D,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -112,15 +127,15 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                toolbarComponentType?: Type<TB> | null,
-                tableComponentType?: Type<F> | null,
-                formComponentType?: Type<B> | null) {
+                @Inject(APP_TABLE_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN) toolbarComponentType?: Type<TB> | null,
+                @Inject(APP_TABLE_FLIP_TABLE_COMPONENT_TYPE_TOKEN) tableComponentType?: Type<F> | null,
+                @Inject(APP_TABLE_FLIP_BACKWARD_COMPONENT_TYPE_TOKEN) backComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
-            toolbarComponentType, tableComponentType, formComponentType);
+            toolbarComponentType, tableComponentType, backComponentType);
     }
 
     // -------------------------------------------------

@@ -33,6 +33,8 @@ import {throwError} from 'rxjs';
 
 export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
     = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
+export const APP_TAB_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+    = new InjectionToken<Type<AppToolbarComponent<any>>>('Tab toolbar component type injection token');
 
 @Component({
     selector: 'ngx-tabset-app',
@@ -164,7 +166,7 @@ export class AppTabsetComponent<
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
                 @Inject(TAB_CONFIG_TOKEN) private _tabConfigs?: ITabConfig[] | null,
-                private _toolbarComponentType?: Type<TB> | null,
+                @Inject(APP_TAB_TOOLBAR_COMPONENT_TYPE_TOKEN) private _toolbarComponentType?: Type<TB> | null,
                 @Inject(APP_TAB_COMPONENT_TYPES_TOKEN) private _tabComponentTypes?: Type<TC>[] | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,

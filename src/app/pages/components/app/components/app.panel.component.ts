@@ -4,7 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, InjectionToken,
     Renderer2,
     Type,
     ViewContainerRef,
@@ -21,6 +21,9 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+
+export const APP_PANEL_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
+    = new InjectionToken<Type<AbstractComponent>>('Panel header/body/footer component type injection token');
 
 /**
  * Panel component base on {NbCardComponent}
@@ -114,9 +117,9 @@ export class AppPanelComponent<
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                private _headerComponentType?: Type<H> | null,
-                private _bodyComponentType?: Type<B> | null,
-                private _footerComponentType?: Type<F> | null) {
+                @Inject(APP_PANEL_COMPONENT_TYPE_TOKEN) private _headerComponentType?: Type<H> | null,
+                @Inject(APP_PANEL_COMPONENT_TYPE_TOKEN) private _bodyComponentType?: Type<B> | null,
+                @Inject(APP_PANEL_COMPONENT_TYPE_TOKEN) private _footerComponentType?: Type<F> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
