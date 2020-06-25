@@ -117,7 +117,7 @@
     }
 
     /* tree-view */
-    .ngx-treeview .dropdown-container .treeview-container .treeview-item,
+    ngx-treeview .dropdown-container .treeview-container .treeview-item,
     .treeview-container .treeview-item {
         .row-item-disabled [aria-disabled='true'],
         .row-item-disabled .form-check-label[aria-disabled='true'] {
@@ -138,10 +138,10 @@
             pointer-events: all;
         }
     }
-    .ngx-treeview .treeview-container .row-item.selected,
-    .ngx-treeview .treeview-container .row-item.selected:hover,
-    .ngx-treeview .treeview-container .row-item.selected:active,
-    .ngx-treeview .treeview-container .row-item.selected:focus {
+    ngx-treeview .treeview-container .row-item.selected,
+    ngx-treeview .treeview-container .row-item.selected:hover,
+    ngx-treeview .treeview-container .row-item.selected:active,
+    ngx-treeview .treeview-container .row-item.selected:focus {
         background-color: nb-theme(color-basic-focus-border);
     }
     .dropdown-menu .dropdown-container {

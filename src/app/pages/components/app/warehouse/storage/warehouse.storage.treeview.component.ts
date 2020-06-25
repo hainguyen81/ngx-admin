@@ -29,6 +29,7 @@ import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
+import {isNullOrUndefined} from 'util';
 
 export const WarehouseCategoryTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
@@ -182,12 +183,16 @@ export class WarehouseStorageTreeviewComponent
      * @return new tree-view item
      */
     protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): TreeviewItem {
+        const parentWarehouse: IWarehouse = (isNullOrUndefined(parent) ? null : parent.value as IWarehouse);
         let newItem: TreeviewItem;
         newItem = super.newItem(parent, treeItem);
         if (newItem) {
-            newItem.text = this.translate('warehouse.storage.new');
-            newItem.value = new Warehouse(
+            const newWarehouse: IWarehouse = new Warehouse(
                 undefined, undefined, undefined, undefined);
+            newWarehouse.parent = parentWarehouse;
+            newWarehouse.parentId = (isNullOrUndefined(parentWarehouse) ? null : parentWarehouse.id);
+            newItem.text = this.translate('warehouse.storage.new');
+            newItem.value = newWarehouse;
         }
         return newItem;
     }
