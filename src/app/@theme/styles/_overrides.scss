@@ -139,9 +139,9 @@
         }
     }
     ngx-treeview .treeview-container .row-item.selected,
-    ngx-treeview .treeview-container .row-item.selected:hover,
-    ngx-treeview .treeview-container .row-item.selected:active,
-    ngx-treeview .treeview-container .row-item.selected:focus {
+    ngx-treeview .treeview-container .row-item:hover,
+    ngx-treeview .treeview-container .row-item:active,
+    ngx-treeview .treeview-container .row-item:focus {
         background-color: nb-theme(color-basic-focus-border);
     }
     .dropdown-menu .dropdown-container {
