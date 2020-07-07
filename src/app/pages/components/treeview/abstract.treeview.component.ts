@@ -3,11 +3,14 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
-    ElementRef, EventEmitter, HostListener,
-    Inject, Input,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
     Output,
     QueryList,
-    Renderer2, RendererStyleFlags2,
+    Renderer2,
+    RendererStyleFlags2,
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
@@ -790,12 +793,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             case CONTEXT_MENU_ADD:
                 let newItem: TreeviewItem;
                 newItem = this.newItem(event.data['item']);
-                // wait for rendering new item
-                let timer: number;
-                timer = window.setTimeout(() => {
-                    this.toggleTreeviewItem(newItem);
-                    clearTimeout(timer);
-                }, 300);
+                this.setSelectedTreeviewItems([newItem], true);
+                this.onClickItem({ data: newItem });
                 break;
             case CONTEXT_MENU_EDIT:
                 this.toggleTreeviewItem(event.data['item']);
