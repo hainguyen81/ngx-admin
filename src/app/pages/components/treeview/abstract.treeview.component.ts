@@ -887,6 +887,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         }
 
         deletedItems.push(...parent.children.splice(itIdx, 1));
+        if (!parent.children.length) {
+            this.internalProperty(parent, 'internalChildren', null);
+        }
         return true;
     }
 

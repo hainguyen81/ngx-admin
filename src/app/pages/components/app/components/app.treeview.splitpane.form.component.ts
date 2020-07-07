@@ -179,18 +179,20 @@ export class AppTreeSplitFormComponent<
      * @param item to apply
      */
     private doApplyFormModel(item?: TreeviewItem): void {
-        this.selectedModelItem = item;
-        if (item && item.value) {
-            let model: T;
-            model = item.value as T;
-            model || throwError('Could not apply undefined model to formly component!');
+        if (this.selectedModelItem !== item) {
+            this.selectedModelItem = item;
+            if (item && item.value) {
+                let model: T;
+                model = item.value as T;
+                model || throwError('Could not apply undefined model to formly component!');
 
-            this.selectedModel = DeepCloner(model);
-            // create formly form component
-            if (super.createRightSideComponent()) {
-                this.doReset();
-            } else {
-                super.showGlobalError();
+                this.selectedModel = DeepCloner(model);
+                // create formly form component
+                if (super.createRightSideComponent()) {
+                    this.doReset();
+                } else {
+                    super.showGlobalError();
+                }
             }
         }
     }

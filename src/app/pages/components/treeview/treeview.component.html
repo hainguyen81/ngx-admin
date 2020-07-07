@@ -83,10 +83,10 @@
          (focusout)="onFocusOut({ event: $event, data: item })"
          (blur)="onBlur({ event: $event, data: item })"
     >
-        <nb-icon *ngIf="item.children && item.collapsed"
+        <nb-icon *ngIf="item.children && item.children.length && item.collapsed"
                  pack="fa" icon="caret-right"
                  (click)="onCollapseExpand()"></nb-icon>
-        <nb-icon *ngIf="item.children && !item.collapsed"
+        <nb-icon *ngIf="item.children && item.children.length && !item.collapsed"
                  pack="fa" icon="caret-down"
                  (click)="onCollapseExpand()"></nb-icon>
         <div class="form-check" [attr.aria-disabled]="item.disabled">
@@ -114,10 +114,10 @@
     <div class="form-inline row-item row-item-disabled"
          *ngIf="item.disabled"
          [id]="generateTreeviewItemKey(item) || ''">
-        <nb-icon *ngIf="item.children && item.collapsed"
+        <nb-icon *ngIf="item.children && item.children.length && item.collapsed"
                  pack="fa" icon="caret-right"
                  (click)="onCollapseExpand()"></nb-icon>
-        <nb-icon *ngIf="item.children && !item.collapsed"
+        <nb-icon *ngIf="item.children && item.children.length && !item.collapsed"
                  pack="fa" icon="caret-down"
                  (click)="onCollapseExpand()"></nb-icon>
         <div class="form-check" [attr.aria-disabled]="item.disabled">

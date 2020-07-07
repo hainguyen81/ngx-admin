@@ -140,6 +140,7 @@
             pointer-events: all;
         }
     }
+    ngx-treeview .treeview-container ngx-treeview-item.selected > .row-item,
     ngx-treeview .treeview-container .row-item.selected,
     ngx-treeview .treeview-container .row-item:hover,
     ngx-treeview .treeview-container .row-item:active,
