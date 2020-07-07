@@ -586,21 +586,13 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
                 const item: TreeviewItem = itemBuilder.apply(this, [element]);
                 item && items.push(item);
             });
-            if (items.length) {
-                this._items = items;
-            }
+            this._items = items;
 
         } else if (!isNullOrUndefined(treeBuilder) && typeof treeBuilder === 'function') {
-            const items: TreeviewItem[] = treeBuilder.apply(this, [elements || []]);
-            if (!isNullOrUndefined(items)) {
-                this._items = items;
-            }
+            this._items = treeBuilder.apply(this, [elements || []]);
 
         } else {
-            const items: TreeviewItem[] = this.mappingDataSourceToTreeviewItems(elements);
-            if (!isNullOrUndefined(items)) {
-                this._items = items;
-            }
+            this._items = this.mappingDataSourceToTreeviewItems(elements);
         }
     }
 
@@ -857,9 +849,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         let itIdx: number;
         itIdx = this.items.indexOf(treeviewItem);
         if (itIdx < 0) {
+            const deletedItems: TreeviewItem[] = [];
             for (const it of this.items) {
-                if (it.children && this.doDeleteItem(it, treeviewItem)) {
-                    return it;
+                if (it.children && this.doDeleteItem(it, treeviewItem, deletedItems)) {
+                    return (deletedItems.length ? deletedItems[0] : undefined);
                 }
             }
 
@@ -874,9 +867,10 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * Delete the specified {TreeviewItem} out of the specified {TreeviewItem} parent if existed
      * @param parent to detect
      * @param delItem to delete
-     * @return true for deleted; else false
+     * @return deleted {TreeviewItem}
      */
-    private doDeleteItem(parent: TreeviewItem, delItem: TreeviewItem): boolean {
+    private doDeleteItem(parent: TreeviewItem, delItem: TreeviewItem, deletedItems: TreeviewItem[]): boolean {
+        deletedItems = (deletedItems || []);
         if (!parent || !parent.children) {
             return false;
         }
@@ -885,14 +879,14 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         itIdx = parent.children.indexOf(delItem);
         if (itIdx < 0) {
             for (const it of parent.children) {
-                if (it.children && this.doDeleteItem(it, delItem)) {
+                if (it.children && this.doDeleteItem(it, delItem, deletedItems)) {
                     return true;
                 }
             }
             return false;
         }
 
-        parent.children.splice(itIdx, 1);
+        deletedItems.push(...parent.children.splice(itIdx, 1));
         return true;
     }
 
