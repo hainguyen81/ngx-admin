@@ -216,9 +216,8 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
     }
 
     protected onStatusChanges(value: any): void {
-        if (value === 'DISABLED' && this.selectComponent) {
-            this.config.readonly = (this.field && this.field.formControl && this.field.formControl.disabled);
-        }
+        (this.config || {}).readonly = (this.selectComponent && value === 'DISABLED'
+            && this.field && this.field.formControl && this.field.formControl.disabled);
     }
 
     protected onValueChanges(value: any): void {
