@@ -351,7 +351,7 @@ export class WarehouseStorageFormlyComponent
     private observeFields(): void {
         const fields: FormlyFieldConfig[] = this.fields;
         fields[0].expressionProperties = {
-            'type': (model: IWarehouse) => this.observeTypeField(fields, model),
+            'warehouse_type': (model: IWarehouse) => this.observeTypeField(fields, model),
             'country_id': (model: IWarehouse) => {
                 if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {
                     this.observeCountryField(fields, model);
