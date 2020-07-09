@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1593015196069,
+  "timestamp": 1594302650803,
   "index": "https://hainguyen81.github.io/ngx-admin/index.html",
   "assetGroups": [
     {
@@ -164,8 +164,8 @@
         "https://hainguyen81.github.io/ngx-admin/ionicons.dd4781d1acc57ba4c480.ttf",
         "https://hainguyen81.github.io/ngx-admin/layers-2x.4f0283c6ce28e888000e.png",
         "https://hainguyen81.github.io/ngx-admin/layers.a6137456ed160d760698.png",
-        "https://hainguyen81.github.io/ngx-admin/main-es2015.8ebe9c0d3d4ab30c0b3e.js",
-        "https://hainguyen81.github.io/ngx-admin/main-es5.8ebe9c0d3d4ab30c0b3e.js",
+        "https://hainguyen81.github.io/ngx-admin/main-es2015.05c65df4bc6318da202c.js",
+        "https://hainguyen81.github.io/ngx-admin/main-es5.05c65df4bc6318da202c.js",
         "https://hainguyen81.github.io/ngx-admin/manifest.json",
         "https://hainguyen81.github.io/ngx-admin/marker-icon.2273e3d8ad9264b7daa5.png",
         "https://hainguyen81.github.io/ngx-admin/nebular.85e45e2f83750a4184af.eot",
@@ -181,7 +181,7 @@
         "https://hainguyen81.github.io/ngx-admin/socicon.944f06f5f65ef84a3a36.woff",
         "https://hainguyen81.github.io/ngx-admin/socicon.9a64ef938f9e55a70a4d.ttf",
         "https://hainguyen81.github.io/ngx-admin/socicon.a35b65744f557fab5424.svg",
-        "https://hainguyen81.github.io/ngx-admin/styles.3a84c2c90663ed611e5a.css"
+        "https://hainguyen81.github.io/ngx-admin/styles.669e85e7b516fb15e2a2.css"
       ],
       "patterns": []
     },
@@ -451,15 +451,15 @@
     "https://hainguyen81.github.io/ngx-admin/fa-solid-900.ec763292e583294612f1.svg": "a4115fd7ce47ed2b41f7d4e9e7448f28ba3f7508",
     "https://hainguyen81.github.io/ngx-admin/favicon.ico": "af8dff7ec44f26668855707a8666c37f8f33b231",
     "https://hainguyen81.github.io/ngx-admin/favicon.png": "07f1245863444f895d8df3a3110c07dccd3f65c8",
-    "https://hainguyen81.github.io/ngx-admin/index.html": "bfb2291772389922be8323938bde5eeb9b4f6b2e",
+    "https://hainguyen81.github.io/ngx-admin/index.html": "1bc7669a384b8d7022fe6dd081684f7db8352a0d",
     "https://hainguyen81.github.io/ngx-admin/ionicons.19e65b89cee273a249fb.eot": "78ed07ad0fdefd18688cf30646a6649908d8d2b5",
     "https://hainguyen81.github.io/ngx-admin/ionicons.28df6ee7b407fd8a14b4.svg": "303fb683ac35f24af7da097938754df7f93c4900",
     "https://hainguyen81.github.io/ngx-admin/ionicons.2c159d0d05473040b53e.woff": "5524e1137e3552ccc4b142e64703bf4123b4e9b1",
     "https://hainguyen81.github.io/ngx-admin/ionicons.dd4781d1acc57ba4c480.ttf": "956116ebe4b3a315b1a43009567e6f8ad0a9a720",
     "https://hainguyen81.github.io/ngx-admin/layers-2x.4f0283c6ce28e888000e.png": "152a162333e46d24f9d89f566312fc0c64011dee",
     "https://hainguyen81.github.io/ngx-admin/layers.a6137456ed160d760698.png": "c9e7528e491a39232ba24a2706c6c739d6fb0f06",
-    "https://hainguyen81.github.io/ngx-admin/main-es2015.8ebe9c0d3d4ab30c0b3e.js": "5eb2848e8efed5e92608b7a563470fb22111b8e7",
-    "https://hainguyen81.github.io/ngx-admin/main-es5.8ebe9c0d3d4ab30c0b3e.js": "8789488f8ed6387f8c3810a925f5b43fbfe7d146",
+    "https://hainguyen81.github.io/ngx-admin/main-es2015.05c65df4bc6318da202c.js": "e3dae8c7cfd523677c71c5c55ac6af418df5b588",
+    "https://hainguyen81.github.io/ngx-admin/main-es5.05c65df4bc6318da202c.js": "ef710db3e37cb094ee068fdd7d6fbd2e4dc409e2",
     "https://hainguyen81.github.io/ngx-admin/manifest.json": "dbe938826986e95f81691e91fdffc659f1a78d86",
     "https://hainguyen81.github.io/ngx-admin/marker-icon.2273e3d8ad9264b7daa5.png": "60a90bcbb2b42b7ddb4556db94eb7c1084b0e5da",
     "https://hainguyen81.github.io/ngx-admin/nebular.85e45e2f83750a4184af.eot": "290b6c75a0af38b8606a9d2b843e6b4af4dacf31",
@@ -475,7 +475,7 @@
     "https://hainguyen81.github.io/ngx-admin/socicon.944f06f5f65ef84a3a36.woff": "28a5937ba6c82ce39b1d581f42a23ce8eec6cc6c",
     "https://hainguyen81.github.io/ngx-admin/socicon.9a64ef938f9e55a70a4d.ttf": "75ab624aee5ff7c32420d705587517e22256e6a0",
     "https://hainguyen81.github.io/ngx-admin/socicon.a35b65744f557fab5424.svg": "8497253952c4f8d99af684982902912f15a079f0",
-    "https://hainguyen81.github.io/ngx-admin/styles.3a84c2c90663ed611e5a.css": "aee0a3ef2947e1956f545952744cde0387305fb7"
+    "https://hainguyen81.github.io/ngx-admin/styles.669e85e7b516fb15e2a2.css": "2fdf0d896f75ac14ae91d74ed799736098b3ad8a"
   },
   "navigationUrls": [
     {
