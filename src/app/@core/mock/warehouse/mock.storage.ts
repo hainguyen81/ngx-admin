@@ -25,6 +25,8 @@ export function warehouseGenerate(): IWarehouse[] {
         mockWarehouse.name = 'Warehouse '.concat(mockWarehouse.code);
         mockWarehouse.type = $enum(STORAGE_TYPE).getKeyOrThrow(STORAGE_TYPE.STORAGE);
         mockWarehouse.street_address = 'Address '.concat(mockWarehouse.code);
+        mockWarehouse.pathCodes = '/';
+        mockWarehouse.pathIds = '/';
         mockWarehouses.push(mockWarehouse);
     }
     return mockWarehouses;

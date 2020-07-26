@@ -266,6 +266,11 @@ export const dbConfig: DBConfig = {
             {name: 'fax', keypath: 'fax', options: {unique: false}},
             {name: 'email', keypath: 'email', options: {unique: false}},
             {name: 'remark', keypath: 'remark', options: {unique: false}},
+            {name: 'pathCodes', keypath: 'pathCodes', options: {unique: false}},
+            {name: 'pathIds', keypath: 'pathIds', options: {unique: false}},
+            {name: 'parentId', keypath: 'parentId', options: {unique: false}},
+            {name: 'parent', keypath: 'parent', options: {unique: false}},
+            {name: 'children', keypath: 'children', options: {unique: false}},
         ],
     }, {
         store: DB_STORE.warehouse_item,

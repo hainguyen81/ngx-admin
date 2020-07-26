@@ -37,6 +37,10 @@ export interface IWarehouse extends IModel {
     email?: string | null;
     // Remark
     remark?: string | null;
+    // parent codes path
+    pathCodes?: string | null;
+    // parent ids path
+    pathIds?: string | null;
     parentId?: string | null;
     parent?: IWarehouse | null;
     children?: IWarehouse[] | null;

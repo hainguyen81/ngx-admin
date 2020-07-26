@@ -3,7 +3,7 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
+    Inject, Input,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
@@ -59,6 +59,12 @@ export class WarehouseStorageFormlySelectFieldComponent
     extends AppModuleDataIndexSettingsFormlySelectFieldComponent<IWarehouse, WarehouseDatasource> {
 
     // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private _warehouse: IWarehouse;
+
+    // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
 
@@ -81,6 +87,16 @@ export class WarehouseStorageFormlySelectFieldComponent
                 return (model && model.code.length ? [model.name, ' (', model.code, ')'].join('') : '');
             },
         };
+    }
+
+    @Input() get warehouse(): IWarehouse {
+        return this._warehouse;
+    }
+
+    set warehouse(_warehouse: IWarehouse) {
+        if (this._warehouse !== _warehouse) {
+            this._warehouse = _warehouse;
+        }
     }
 
     // -------------------------------------------------

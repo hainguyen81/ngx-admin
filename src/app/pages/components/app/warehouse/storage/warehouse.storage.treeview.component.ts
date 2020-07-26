@@ -191,6 +191,10 @@ export class WarehouseStorageTreeviewComponent
                 undefined, undefined, undefined, undefined);
             newWarehouse.parent = parentWarehouse;
             newWarehouse.parentId = (isNullOrUndefined(parentWarehouse) ? null : parentWarehouse.id);
+            newWarehouse.pathCodes = [(isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.pathCodes),
+                (isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.code)].join('/');
+            newWarehouse.pathIds = [(isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.pathIds),
+                (isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.id)].join('/');
             newItem.text = this.translate('warehouse.storage.new');
             newItem.value = newWarehouse;
         }
