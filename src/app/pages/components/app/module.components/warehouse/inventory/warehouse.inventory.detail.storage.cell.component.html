@@ -5,6 +5,7 @@
             <ngx-select-2-app-module-warehouse-storage
                     (onSelect)="onSelect($event, index)"
                     [disabledValues]="selectedStorageCodes"
+                    [warehouse]="warehouse"
             ></ngx-select-2-app-module-warehouse-storage>
         </div>
         <input #quantityInput

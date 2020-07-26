@@ -57,6 +57,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
 
     private _warehouseDetailStorages: IWarehouseInventoryDetailStorage[] = [];
     private _warehouseStorages: IWarehouse[];
+    private _warehouse: IWarehouse;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -88,6 +89,16 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
             (storage.storage_code || '').length && storageCodes.push(storage.storage_code);
         });
         return (storageCodes.length ? storageCodes : undefined);
+    }
+
+    get warehouse(): IWarehouse {
+        return this._warehouse;
+    }
+
+    set warehouse(_warehouse: IWarehouse) {
+        if (this._warehouse !== _warehouse) {
+            this._warehouse = _warehouse;
+        }
     }
 
     // -------------------------------------------------
@@ -188,7 +199,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
      * @private
      */
     private __initializeEditMode(): void {
-        if (this.viewMode) return;
+        if (this.viewMode || isNullOrUndefined(this.warehouse) || !(this.warehouse.id || '').length) return;
 
         const components: WarehouseStorageFormlySelectFieldComponent[] = this.selectComponents;
         const inputComponents: MatInput[] = this.inputComponents;
