@@ -31,6 +31,7 @@ import {Cell} from 'ng2-smart-table/lib/data-set/cell';
 import {isArray, isNullOrUndefined, isObject} from 'util';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
 
 /**
  * Abstract cell editor as form {FormControl}
@@ -42,6 +43,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // DECLARATION
     // -------------------------------------------------
 
+    @Inject(forwardRef(() => Ng2SmartTableComponent)) private _parentTable: Ng2SmartTableComponent;
     private _formGroup: FormGroup = new FormGroup({});
     private _errorMessages: string[];
     private _cell: Cell;
@@ -259,6 +261,14 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     protected get elementRef(): ElementRef {
         return this._elementRef;
+    }
+
+    /**
+     * Get the parent {Ng2SmartTableComponent} instance
+     * @return the parent {Ng2SmartTableComponent} instance
+     */
+    protected get parentTable(): Ng2SmartTableComponent {
+        return this._parentTable;
     }
 
     /**
