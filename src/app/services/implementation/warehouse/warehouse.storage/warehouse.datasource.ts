@@ -12,4 +12,8 @@ export class WarehouseDatasource extends BaseDataSource<IWarehouse, WarehouseHtt
                 @Inject(NGXLogger) logger: NGXLogger) {
         super(httpService, dbService, logger);
     }
+
+    getStoragesByPath(warehouseIdOrCode: string, retStorages: IWarehouse[], byCode?: boolean | true): Promise<void> {
+        return this.getDbService().getStoragesByPath(warehouseIdOrCode, retStorages, byCode);
+    }
 }

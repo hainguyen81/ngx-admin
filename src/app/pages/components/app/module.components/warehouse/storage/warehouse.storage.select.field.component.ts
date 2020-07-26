@@ -16,6 +16,8 @@ import {
 } from '../../../components/common/app.module.data.index.formly.select.field.component';
 import {IWarehouse} from '../../../../../../@core/data/warehouse/warehouse';
 import {WarehouseDatasource} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
+import {Observable} from 'rxjs';
+import {isNullOrUndefined} from 'util';
 
 export const WarehouseStorageNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -96,6 +98,7 @@ export class WarehouseStorageFormlySelectFieldComponent
     set warehouse(_warehouse: IWarehouse) {
         if (this._warehouse !== _warehouse) {
             this._warehouse = _warehouse;
+            this.refresh();
         }
     }
 
@@ -125,5 +128,24 @@ export class WarehouseStorageFormlySelectFieldComponent
         super(dataSource, _translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
         this.config = WarehouseStorageNgxSelectOptions;
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    protected loadData(): Observable<IWarehouse[] | IWarehouse>
+        | Promise<IWarehouse[] | IWarehouse> | IWarehouse[] | IWarehouse {
+        if (isNullOrUndefined(this.warehouse) || !(this.warehouse.code || '').length) {
+            return super.loadData();
+        } else {
+            const _storages: IWarehouse[] = [];
+            const code: string = this.warehouse.code;
+            const id: string = this.warehouse.id;
+            (<WarehouseDatasource>this.dataSource).getStoragesByPath(
+                ((code || '').length ? code : id),
+                _storages, (code || '').length > 0)
+                .then(voidVal => this.loadDataInternal(_storages));
+        }
     }
 }
