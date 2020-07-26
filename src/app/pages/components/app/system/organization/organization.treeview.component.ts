@@ -25,6 +25,7 @@ import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
 import {OrganizationTreeviewI18n} from '../../module.components/system/organization.formly.treeview.field.component';
+import {IdGenerators} from '../../../../../config/generator.config';
 
 export const OrganizationTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
@@ -121,7 +122,7 @@ export class OrganizationTreeviewComponent
         if (newItem) {
             newItem.text = this.translate('system.organization.new');
             newItem.value = new Organization(
-                undefined, undefined, undefined, undefined);
+                IdGenerators.oid.generate(), undefined, undefined, undefined);
         }
         return newItem;
     }

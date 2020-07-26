@@ -180,9 +180,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
 
     protected onStatusChanges(value: any): void {
-        if (value === 'DISABLED' && this.selectExComponent && this.config) {
-            this.config.disabled = (this.field && this.field.formControl && this.field.formControl.disabled);
-        }
+        (this.config || {}).disabled = (value === 'DISABLED' && this.selectExComponent && this.config
+            && this.field && this.field.formControl && this.field.formControl.disabled);
     }
 
     // -------------------------------------------------

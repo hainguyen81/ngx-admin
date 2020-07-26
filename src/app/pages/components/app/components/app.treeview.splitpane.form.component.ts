@@ -212,10 +212,20 @@ export class AppTreeSplitFormComponent<
         }
 
         // update model if necessary
-        const model: T = this.getFormlyComponent().getModel();
+        const model: T = this.requireFormModel(true);
         this.getDataSource().update(this.getSelectedModel(), model)
             .then(() => this.showSaveDataSuccess())
             .catch(() => this.showSaveDataError());
+    }
+
+    /**
+     * Get the model of the form component for saving/deleting
+     * TODO Children classes could override this method for customizing model
+     * @param isSave specify whether is SAVE action
+     * @return the model of the form component for saving/deleting
+     */
+    protected requireFormModel(isSave?: boolean | true): T {
+        return this.getFormlyComponent().getModel();
     }
 
     /**
@@ -231,7 +241,7 @@ export class AppTreeSplitFormComponent<
      * Perform deleting data
      */
     protected performDelete(): void {
-        this.getDataSource().remove(this.getFormlyComponent().getModel())
+        this.getDataSource().remove(this.requireFormModel(false))
             .then(() => this.showDeleteDataSuccess())
             .catch(() => this.showSaveDataError());
     }

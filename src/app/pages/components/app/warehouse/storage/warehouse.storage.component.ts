@@ -110,4 +110,16 @@ export class WarehouseStorageSplitPaneComponent
             WarehouseStorageTreeviewComponent,
             WarehouseStorageFormlyComponent);
     }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    protected requireFormModel(isSave?: boolean): IWarehouse {
+        const model: IWarehouse = super.requireFormModel(isSave);
+        if (isSave) {
+            delete model['parent'], model['children'];
+        }
+        return model;
+    }
 }

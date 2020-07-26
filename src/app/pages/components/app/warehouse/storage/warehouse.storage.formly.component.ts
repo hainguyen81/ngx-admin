@@ -33,6 +33,9 @@ import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/validation.utils';
 import {$enum} from 'ts-enum-util';
 import {Constants as WarehouseStorageConstants} from '../../../../../@core/data/constants/warehouse.storage.constants';
+import {
+    AppModuleDataIndexSettingsFormlySelectFieldComponent,
+} from '../../components/common/app.module.data.index.formly.select.field.component';
 
 /* default warehouse storage formly config */
 export const WarehouseStorageFormConfig: FormlyConfig = new FormlyConfig();
@@ -348,6 +351,7 @@ export class WarehouseStorageFormlyComponent
     private observeFields(): void {
         const fields: FormlyFieldConfig[] = this.fields;
         fields[0].expressionProperties = {
+            'warehouse_type': (model: IWarehouse) => this.observeTypeField(fields, model),
             'country_id': (model: IWarehouse) => {
                 if ((model.country_id || '') !== ((model.country || {})['id'] || '')) {
                     this.observeCountryField(fields, model);
@@ -359,6 +363,22 @@ export class WarehouseStorageFormlyComponent
                 }
             },
         };
+    }
+
+    /**
+     * Observe type field to apply model country
+     * @param fields to observe
+     * @param model form model
+     */
+    private observeTypeField(fields: FormlyFieldConfig[], model: IWarehouse): void {
+        const typeField: FormlyFieldConfig = fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0];
+        const typeFieldComponent: AppModuleDataIndexSettingsFormlySelectFieldComponent<any, any> =
+            this.getFormFieldComponent(typeField, AppModuleDataIndexSettingsFormlySelectFieldComponent);
+        if (typeFieldComponent) {
+            typeFieldComponent.disabledValues = (model.parentId || '').length
+                ? [$enum(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE)
+                    .getKeyOrThrow(WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE.STORAGE)] : [];
+        }
     }
 
     /**
