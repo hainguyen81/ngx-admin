@@ -233,8 +233,17 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
      * @param cursorCallback cursor callback for handling
      * @param keyRange key range for filtering
      */
-    openCursor(cursorCallback: (event: Event) => void, keyRange?: IDBKeyRange): Promise<void> {
+    openCursorByKeyRange(cursorCallback: (event: Event) => void, keyRange?: IDBKeyRange): Promise<void> {
         return this.getDbService().openCursor(this.getDbStore(), cursorCallback, keyRange);
+    }
+
+    /**
+     * TODO ngx-indexed-db v5.0.2
+     * Open cursor by the specified key range
+     * @param cursorCallback cursor callback for handling
+     */
+    openCursor(cursorCallback: (event: Event) => void): Promise<void> {
+        return this.getDbService().openCursor(this.getDbStore(), cursorCallback, undefined);
     }
 
     /**
