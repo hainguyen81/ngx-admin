@@ -1,4 +1,4 @@
-import {AppConfig} from '../config/app.config';
+import {AppConfig} from '../../config/app.config';
 import {ApplicationRef, Injector, ViewContainerRef} from '@angular/core';
 
 export default class AppUtils {

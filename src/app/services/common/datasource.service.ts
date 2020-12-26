@@ -3,7 +3,7 @@ import {IDbService, IHttpService} from './interface.service';
 import {throwError} from 'rxjs';
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {LogConfig} from '../config/log.config';
+import {LogConfig} from '../../config/log.config';
 import {LocalPager} from 'ng2-smart-table/lib/data-source/local/local.pager';
 import {LocalFilter} from 'ng2-smart-table/lib/data-source/local/local.filter';
 import {LocalSorter} from 'ng2-smart-table/lib/data-source/local/local.sorter';

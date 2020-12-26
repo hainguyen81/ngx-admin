@@ -43,7 +43,7 @@ import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {throwError} from 'rxjs';
 import {IdGenerators} from '../../../../../config/generator.config';
-import ObjectUtils, {DeepCloner} from '../../../../../utils/object.utils';
+import ObjectUtils, {DeepCloner} from '../../../../../utils/common/object.utils';
 import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';

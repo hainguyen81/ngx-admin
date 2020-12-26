@@ -15,7 +15,7 @@ import {isObservable, Observable, of} from 'rxjs';
 import {IEvent} from '../abstract.component';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {isNullOrUndefined} from 'util';
-import PromiseUtils from '../../../utils/promise.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 import {isPromise} from 'rxjs/internal-compatibility';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {BaseCellEditorFormControlComponent} from './base.cell.editor.form.control.component';

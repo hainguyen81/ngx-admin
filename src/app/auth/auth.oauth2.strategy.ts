@@ -15,9 +15,9 @@ import {isArray} from 'util';
 import {IRole} from '../@core/data/system/role';
 import {isObject} from 'rxjs/internal-compatibility';
 import {map} from 'rxjs/operators';
-import EncryptionUtils from '../utils/encryption.utils';
+import EncryptionUtils from '../utils/common/encryption.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
-import JsonUtils from '../utils/json.utils';
+import JsonUtils from '../utils/common/json.utils';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {

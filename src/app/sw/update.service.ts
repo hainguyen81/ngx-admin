@@ -1,11 +1,11 @@
-import {BaseHttpService} from '../services/http.service';
+import {BaseHttpService} from '../services/common/http.service';
 import {ApplicationRef, Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {SwUpdate, UpdateAvailableEvent} from '@angular/service-worker';
 import {first} from 'rxjs/operators';
 import {concat, interval, Subscription, throwError} from 'rxjs';
-import {BaseDbService} from '../services/database.service';
+import {BaseDbService} from '../services/common/database.service';
 import {IModel} from '../@core/data/base';
 
 /**

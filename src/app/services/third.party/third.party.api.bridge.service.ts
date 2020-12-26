@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../@core/data/base';
 import {ThirdPartyApiDatasource} from './third.party.api.datasource';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import {AbstractBaseDbService} from '../database.service';
+import {AbstractBaseDbService} from '../common/database.service';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import {Observable, throwError} from 'rxjs';
 import {isArray} from 'util';

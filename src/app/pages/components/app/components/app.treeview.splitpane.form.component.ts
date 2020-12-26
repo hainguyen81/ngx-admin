@@ -13,7 +13,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AppTreeviewComponent} from './app.treeview.component';
 import {IModel} from '../../../../@core/data/base';
-import {DeepCloner} from '../../../../utils/object.utils';
+import {DeepCloner} from '../../../../utils/common/object.utils';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {AppFormlyComponent} from './app.formly.component';
 import {Lightbox} from 'ngx-lightbox';

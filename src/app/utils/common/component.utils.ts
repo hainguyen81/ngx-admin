@@ -1,5 +1,5 @@
 import {ComponentRef, QueryList, ViewContainerRef} from '@angular/core';
-import {AbstractComponentService} from '../services/component.service';
+import {AbstractComponentService} from '../../services/common/component.service';
 
 /**
  * Component utilities

@@ -2,7 +2,7 @@ import {NbMenuItem} from '@nebular/theme';
 import {IModule} from '../../@core/data/system/module';
 import ApiMapperUtils from './api.mapper.utils';
 import {Type} from '@angular/core';
-import HierarchyUtils from '../hierarchy.utils';
+import HierarchyUtils from '../common/hierarchy.utils';
 
 /**
  * Menu utilities

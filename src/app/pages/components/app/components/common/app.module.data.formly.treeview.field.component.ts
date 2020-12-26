@@ -15,8 +15,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AppFormlyTreeviewDropdownFieldComponent,
 } from './app.formly.treeview.dropdown.field.component';
-import {BaseDataSource} from '../../../../../services/datasource.service';
-import {IDbService, IHttpService} from '../../../../../services/interface.service';
+import {BaseDataSource} from '../../../../../services/common/datasource.service';
+import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, throwError} from 'rxjs';

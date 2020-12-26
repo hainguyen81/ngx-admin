@@ -12,7 +12,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {F2, S} from '@angular/cdk/keycodes';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import KeyboardUtils from '../../../utils/keyboard.utils';
+import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';

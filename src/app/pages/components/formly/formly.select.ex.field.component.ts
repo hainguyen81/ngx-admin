@@ -13,7 +13,7 @@ import {
 } from 'ngx-select-ex';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
 import {IEvent} from '../abstract.component';
 import {isArray, isNullOrUndefined} from 'util';

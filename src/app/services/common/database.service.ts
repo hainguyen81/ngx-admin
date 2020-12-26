@@ -2,12 +2,12 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
-import {LogConfig} from '../config/log.config';
+import {LogConfig} from '../../config/log.config';
 import {IDbService} from './interface.service';
 import {ConnectionService} from 'ng-connection-service';
-import PromiseUtils from '../utils/promise.utils';
-import {IModel} from '../@core/data/base';
-import {IdGenerators} from '../config/generator.config';
+import PromiseUtils from '../../utils/common/promise.utils';
+import {IModel} from '../../@core/data/base';
+import {IdGenerators} from '../../config/generator.config';
 import {isNullOrUndefined} from 'util';
 
 /**
@@ -141,7 +141,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     clear(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.getDbService().clear(this.getDbStore())
-                .then(() => resolve(), (errors) => {
+                .then(() => resolve(true), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
                 });

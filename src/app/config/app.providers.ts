@@ -19,7 +19,7 @@ import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
 import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
 import {ActivatedRoute, Router} from '@angular/router';
-import {EmptyService} from '../services/empty.service';
+import {EmptyService} from '../services/common/empty.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
 import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
@@ -49,7 +49,7 @@ import {
     OrganizationHttpService,
 } from '../services/implementation/system/organization/organization.service';
 import {OrganizationDataSource} from '../services/implementation/system/organization/organization.datasource';
-import {PageHeaderService} from '../services/header.service';
+import {PageHeaderService} from '../services/common/header.service';
 import {PagesGuard} from '../pages/pages.guard.service';
 import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
 import {
@@ -147,7 +147,7 @@ import {
 import {
     GeneralSettingsDatasource,
 } from '../services/implementation/system/general.settings/general.settings.datasource';
-import HtmlUtils from '../utils/html.utils';
+import HtmlUtils from '../utils/common/html.utils';
 import {
     WarehouseItemVersionDbService,
     WarehouseItemVersionHttpService,
@@ -162,7 +162,7 @@ import {
 import {
     WarehouseBatchNoDatasource,
 } from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import {InjectionService} from '../services/injection.service';
+import {InjectionService} from '../services/common/injection.service';
 import {WarehouseManagementDbService, WarehouseManagementHttpService} from '../services/implementation/warehouse/warehouse.management/warehouse.management.service';
 import {WarehouseManagementDatasource} from '../services/implementation/warehouse/warehouse.management/warehouse.management.datasource';
 import {WorkerProviders} from './worker.providers';

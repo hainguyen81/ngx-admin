@@ -21,7 +21,7 @@ import Customer, {ICustomer} from '../../../../../@core/data/system/customer';
 import {
     CustomerDatasource,
 } from '../../../../../services/implementation/system/customer/customer.datasource';
-import PromiseUtils from '../../../../../utils/promise.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {$enum} from 'ts-enum-util';
 import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
 import {

@@ -27,7 +27,7 @@ import {IUser} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 
 /* default user formly config */
 export const UserFormConfig: FormlyConfig = new FormlyConfig();

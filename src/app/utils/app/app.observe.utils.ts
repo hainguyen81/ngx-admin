@@ -1,19 +1,19 @@
 import {FormlyFieldConfig} from '@ngx-formly/core';
-import SystemDataUtils from './system/system.data.utils';
-import {IGeneralSettings} from '../@core/data/system/general.settings';
-import {IModel} from '../@core/data/base';
+import SystemDataUtils from '../system/system.data.utils';
+import {IGeneralSettings} from '../../@core/data/system/general.settings';
+import {IModel} from '../../@core/data/base';
 import {isArray, isNullOrUndefined} from 'util';
 import {Type} from '@angular/core';
 import {
     AppFormlySelectExFieldComponent,
-} from '../pages/components/app/components/common/app.formly.select.ex.field.component';
+} from '../../pages/components/app/components/common/app.formly.select.ex.field.component';
 import {
     GeneralSettingsDatasource,
-} from '../services/implementation/system/general.settings/general.settings.datasource';
+} from '../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
-import {Constants as CommonConstants} from '../@core/data/constants/common.constants';
-import {IDbService, IHttpService} from '../services/interface.service';
-import {BaseDataSource} from '../services/datasource.service';
+import {Constants as CommonConstants} from '../../@core/data/constants/common.constants';
+import {IDbService, IHttpService} from '../../services/common/interface.service';
+import {BaseDataSource} from '../../services/common/datasource.service';
 
 export default class AppObserveUtils {
 

@@ -16,7 +16,7 @@ import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
 import {IEvent} from './abstract.component';
 import {isNullOrUndefined} from 'util';
-import HtmlUtils from '../../utils/html.utils';
+import HtmlUtils from '../../utils/common/html.utils';
 import {ControlValueAccessor} from '@angular/forms';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>

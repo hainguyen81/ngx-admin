@@ -31,7 +31,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {CustomValidators} from 'ngx-custom-validators';
 import {Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 
 export const WarehouseItemVersionFormConfig: FormlyConfig = new FormlyConfig();
 

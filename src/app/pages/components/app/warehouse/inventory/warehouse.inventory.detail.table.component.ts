@@ -43,7 +43,7 @@ import {
 } from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
 import {IEvent} from '../../../abstract.component';
 import {isNullOrUndefined} from 'util';
-import {InjectionService} from '../../../../../services/injection.service';
+import {InjectionService} from '../../../../../services/common/injection.service';
 import {
     WarehouseInventoryDetailSummaryComponent,
 } from '../../module.components/warehouse/inventory/warehouse.inventory.detail.summary.component';
@@ -53,19 +53,19 @@ import {
 import {Cell, LocalDataSource} from 'ng2-smart-table';
 import {BehaviorSubject, throwError} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import PromiseUtils from '../../../../../utils/promise.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {
     IWarehouseInventoryDetailBatch,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
-import CalculatorUtils from '../../../../../utils/calculator.utils';
+import CalculatorUtils from '../../../../../utils/common/calculator.utils';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {
     IWarehouseInventoryDetailStorage,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import ObjectUtils from '../../../../../utils/object.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {

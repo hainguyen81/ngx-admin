@@ -25,7 +25,7 @@ import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CustomValidators} from 'ngx-custom-validators';
 import {Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 
 export const WarehouseItemOverviewFormConfig: FormlyConfig = new FormlyConfig();
 

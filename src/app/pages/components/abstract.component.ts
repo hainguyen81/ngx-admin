@@ -27,9 +27,9 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, throwError} from 'rxjs';
 import {LocalDataSource} from 'ng2-smart-table';
-import HtmlUtils from '../../utils/html.utils';
-import KeyboardUtils from '../../utils/keyboard.utils';
-import ComponentUtils from '../../utils/component.utils';
+import HtmlUtils from '../../utils/common/html.utils';
+import KeyboardUtils from '../../utils/common/keyboard.utils';
+import ComponentUtils from '../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
 import {
@@ -47,15 +47,15 @@ import {
     AbstractKeydownEventHandlerService,
     AbstractKeypressEventHandlerService,
     AbstractKeyupEventHandlerService,
-} from '../../services/event.handler.service';
-import {IComponentService} from '../../services/interface.service';
-import {AbstractComponentService, BaseComponentService} from '../../services/component.service';
+} from '../../services/common/event.handler.service';
+import {IComponentService} from '../../services/common/interface.service';
+import {AbstractComponentService, BaseComponentService} from '../../services/common/component.service';
 import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 import {AutoUnsubscribe} from './customization/extend.component';
 import {isNullOrUndefined} from 'util';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
-import AppUtils from '../../utils/app.utils';
+import AppUtils from '../../utils/app/app.utils';
 import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
 import {AppConfig} from '../../config/app.config';
 import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';

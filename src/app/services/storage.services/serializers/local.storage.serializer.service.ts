@@ -4,7 +4,7 @@ import {isNullOrUndefined} from 'util';
 import {StorageSerializer} from 'ngx-localstorage';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
-import EncryptionUtils from '../../../utils/encryption.utils';
+import EncryptionUtils from '../../../utils/common/encryption.utils';
 
 /**
  * Local storage serializer/deserializer service

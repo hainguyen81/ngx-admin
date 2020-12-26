@@ -1,4 +1,4 @@
-import ObjectUtils from '../../../utils/object.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import {MockUserAdmin} from './mock.user';
 import {IOrganization} from '../../data/system/organization';

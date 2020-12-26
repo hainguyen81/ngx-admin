@@ -1,8 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {ServiceResponse} from '../../response.service';
-import JsonUtils from '../../../utils/json.utils';
+import {ServiceResponse} from '../../common/response.service';
+import JsonUtils from '../../../utils/common/json.utils';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {ConnectionService} from 'ng-connection-service';
 import {IApiThirdParty, UniversalApiThirdParty} from '../../../@core/data/system/api.third.party';

@@ -3,7 +3,7 @@ import {Type} from '@angular/core';
 import {IThirdPartyApiDataParser, IThirdPartyApiDataParserDefinition} from '../third.party.api.datasource';
 import {IModel} from '../../../@core/data/base';
 import {throwError} from 'rxjs';
-import JsonUtils from '../../../utils/json.utils';
+import JsonUtils from '../../../utils/common/json.utils';
 import {isArray} from 'util';
 
 /**

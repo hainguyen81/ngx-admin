@@ -3,7 +3,7 @@ import {Type} from '@angular/core';
 import {throwError} from 'rxjs';
 import {isArray} from 'util';
 import {TreeviewItem} from 'ngx-treeview';
-import {IModel} from '../@core/data/base';
+import {IModel} from '../../@core/data/base';
 
 export default class HierarchyUtils {
 

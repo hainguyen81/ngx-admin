@@ -20,7 +20,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 
 /**
  * Reveal-card base on {NbCardComponent}

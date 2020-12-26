@@ -26,7 +26,7 @@ import {
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 
 /* default general settings formly config */
 export const GeneralSettingsFormConfig: FormlyConfig = new FormlyConfig();

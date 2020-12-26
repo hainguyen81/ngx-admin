@@ -5,7 +5,7 @@ import {
     ViewChildren, ViewContainerRef,
 } from '@angular/core';
 import {TreeviewItem} from 'ngx-treeview';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 import {IEvent} from '../abstract.component';
 import {NgxDropdownTreeviewComponent} from '../treeview/treeview.dropdown.component';
 import {isArray, isNullOrUndefined} from 'util';
@@ -13,7 +13,7 @@ import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable} from 'rxjs';
-import ObjectUtils from '../../../utils/object.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Formly Treeview Dropdown field component base on {FieldType}

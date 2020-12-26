@@ -25,7 +25,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subject, throwError} from 'rxjs';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
-import ObjectUtils from '../../../../../utils/object.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* Warehouse item version left area configuration */
 export const WarehouseItemVersionFormAreaConfig: ISplitAreaConfig = {

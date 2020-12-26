@@ -14,8 +14,8 @@ import {TreeviewItem} from 'ngx-treeview';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {ICity} from '../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
-import {IDbService, IHttpService} from '../../services/interface.service';
-import {BaseDataSource} from '../../services/datasource.service';
+import {IDbService, IHttpService} from '../../services/common/interface.service';
+import {BaseDataSource} from '../../services/common/datasource.service';
 
 export default class SystemDataUtils {
 

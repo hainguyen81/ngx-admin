@@ -16,7 +16,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractComponent, IEvent,
 } from '../abstract.component';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';

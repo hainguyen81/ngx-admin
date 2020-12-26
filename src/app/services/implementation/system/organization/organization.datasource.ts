@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {BaseDataSource} from '../../../datasource.service';
+import {BaseDataSource} from '../../../common/datasource.service';
 import {NGXLogger} from 'ngx-logger';
 import {IOrganization} from '../../../../@core/data/system/organization';
 import {OrganizationDbService, OrganizationHttpService} from './organization.service';

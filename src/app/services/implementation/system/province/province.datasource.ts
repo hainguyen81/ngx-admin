@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {ProvinceDbService, ProvinceHttpService} from './province.service';
-import {BaseDataSource} from '../../../datasource.service';
+import {BaseDataSource} from '../../../common/datasource.service';
 import {IProvince} from '../../../../@core/data/system/province';
 import {NGXLogger} from 'ngx-logger';
 import {ICountry} from '../../../../@core/data/system/country';

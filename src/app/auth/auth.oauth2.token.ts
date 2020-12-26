@@ -1,5 +1,5 @@
 import {NbAuthOAuth2Token} from '@nebular/auth';
-import JsonUtils from '../utils/json.utils';
+import JsonUtils from '../utils/common/json.utils';
 import {IUser} from '../@core/data/system/user';
 import {Constants as CommonConstants} from '../@core/data/constants/common.constants';
 import STATUS = CommonConstants.COMMON.STATUS;

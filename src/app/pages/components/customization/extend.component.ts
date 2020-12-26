@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import {Component} from '@angular/core';
-import PromiseUtils from '../../../utils/promise.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 export const COMPONENT_ANNOTATIONS_PROPERTY: string = '__annotations__';
 export const COMPONENT_PARAMETERS_PROPERTY: string = '__paramaters__';

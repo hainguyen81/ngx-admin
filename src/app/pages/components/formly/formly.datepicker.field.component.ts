@@ -19,7 +19,7 @@ import {isNullOrUndefined} from 'util';
 import {Moment} from 'moment';
 import moment from 'moment';
 import {NgxDatePickerComponent} from '../datepicker/datepicker.component';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 import {IEvent} from '../abstract.component';
 
 /**

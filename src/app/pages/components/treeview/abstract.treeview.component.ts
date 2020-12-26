@@ -29,11 +29,11 @@ import {
     TreeviewComponent,
     TreeviewItem,
 } from 'ngx-treeview';
-import HtmlUtils from '../../../utils/html.utils';
-import KeyboardUtils from '../../../utils/keyboard.utils';
-import ObjectUtils from '../../../utils/object.utils';
+import HtmlUtils from '../../../utils/common/html.utils';
+import KeyboardUtils from '../../../utils/common/keyboard.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
 import {throwError} from 'rxjs';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';

@@ -2,7 +2,7 @@ import {EventEmitter, Inject, Output} from '@angular/core';
 import {fromEvent, Subscribable, throwError} from 'rxjs';
 import {FromEventTarget} from 'rxjs/internal/observable/fromEvent';
 import {NGXLogger} from 'ngx-logger';
-import KeyboardUtils from '../utils/keyboard.utils';
+import KeyboardUtils from '../../utils/common/keyboard.utils';
 
 /**
  * The delegate Subscribe function type for handling event

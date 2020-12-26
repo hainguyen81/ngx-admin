@@ -23,7 +23,7 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {AppSmartTableComponent} from './app.table.component';
 import {AppFormlyComponent} from './app.formly.component';
 import {AppToolbarComponent} from './app.toolbar.component';
-import {DeepCloner} from '../../../../utils/object.utils';
+import {DeepCloner} from '../../../../utils/common/object.utils';
 import {IdGenerators} from '../../../../config/generator.config';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTableFlipComponent} from './app.table.flip.component';

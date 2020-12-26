@@ -8,7 +8,7 @@ import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import {isNullOrUndefined} from 'util';
 import * as SecureLS from 'secure-ls';
-import JsonUtils from '../../utils/json.utils';
+import JsonUtils from '../../utils/common/json.utils';
 
 /**
  * Secure configuration

@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {BaseDataSource} from '../../../datasource.service';
+import {BaseDataSource} from '../../../common/datasource.service';
 import {NGXLogger} from 'ngx-logger';
 import {IWarehouseBatchNo} from '../../../../@core/data/warehouse/warehouse.batch.no';
 import {WarehouseBatchNoDbService, WarehouseBatchNoHttpService} from './warehouse.batchno.service';

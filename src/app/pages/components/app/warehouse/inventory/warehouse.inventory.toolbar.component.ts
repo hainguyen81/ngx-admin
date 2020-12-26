@@ -24,7 +24,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
-import ObjectUtils from '../../../../../utils/object.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* default warehouse inventory toolbar header config */
 export const WarehouseInventoryToolbarHeaderConfig: IToolbarHeaderConfig = {

@@ -34,11 +34,11 @@ import {
 import {IOrganization} from '../../../../../@core/data/system/organization';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {CustomValidators} from 'ngx-custom-validators';
-import PromiseUtils from '../../../../../utils/promise.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {throwError} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();

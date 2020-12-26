@@ -35,7 +35,7 @@ import {
 } from '../../../../../config/toolbar.actions.conf';
 import {IEvent} from '../../../abstract.component';
 import {IdGenerators} from '../../../../../config/generator.config';
-import ObjectUtils from '../../../../../utils/object.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,

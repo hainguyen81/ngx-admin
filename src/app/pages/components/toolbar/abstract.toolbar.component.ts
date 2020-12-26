@@ -16,7 +16,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 import {MatToolbar} from '@angular/material/toolbar';
 import {NbButtonComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';

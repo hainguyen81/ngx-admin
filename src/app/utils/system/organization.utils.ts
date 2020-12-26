@@ -1,4 +1,4 @@
-import HierarchyUtils from '../hierarchy.utils';
+import HierarchyUtils from '../common/hierarchy.utils';
 import {IOrganization} from '../../@core/data/system/organization';
 import {TreeviewItem} from 'ngx-treeview';
 

@@ -1,14 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
-import {BaseDbService} from '../database.service';
+import {BaseDbService} from '../common/database.service';
 import {IModule} from '../../@core/data/system/module';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {BaseHttpService} from '../http.service';
+import {BaseHttpService} from '../common/http.service';
 import {HttpClient} from '@angular/common/http';
 import {throwError} from 'rxjs';
-import {BaseDataSource} from '../datasource.service';
+import {BaseDataSource} from '../common/datasource.service';
 
 @Injectable()
 export class ModuleService extends BaseDbService<IModule> {

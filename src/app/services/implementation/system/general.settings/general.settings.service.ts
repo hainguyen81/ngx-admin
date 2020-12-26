@@ -1,8 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {BaseHttpService} from '../../../http.service';
+import {BaseHttpService} from '../../../common/http.service';
 import {HttpClient} from '@angular/common/http';
-import {BaseDbService} from '../../../database.service';
+import {BaseDbService} from '../../../common/database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';

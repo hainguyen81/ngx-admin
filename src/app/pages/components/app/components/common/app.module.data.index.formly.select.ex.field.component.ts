@@ -15,8 +15,8 @@ import {
     AppModuleDataFormlySelectExFieldComponent,
 } from './app.module.data.formly.select.ex.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {IDbService, IHttpService} from '../../../../../services/interface.service';
-import {BaseDataSource} from '../../../../../services/datasource.service';
+import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
+import {BaseDataSource} from '../../../../../services/common/datasource.service';
 import {Observable, throwError} from 'rxjs';
 import {isNullOrUndefined} from 'util';
 import {INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';

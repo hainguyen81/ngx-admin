@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {CustomerDbService, CustomerHttpService} from './customer.service';
-import {BaseDataSource} from '../../../datasource.service';
+import {BaseDataSource} from '../../../common/datasource.service';
 import {ICustomer} from '../../../../@core/data/system/customer';
 import {NGXLogger} from 'ngx-logger';
 

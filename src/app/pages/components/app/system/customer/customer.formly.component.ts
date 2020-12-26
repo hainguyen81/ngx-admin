@@ -35,7 +35,7 @@ import {
 import {CustomValidators} from 'ngx-custom-validators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 
 /* default customer formly config */
 export const CustomerFormConfig: FormlyConfig = new FormlyConfig();

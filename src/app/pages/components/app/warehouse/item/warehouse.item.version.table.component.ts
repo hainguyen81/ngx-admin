@@ -37,7 +37,7 @@ import {
     WarehouseItemVersionDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 import {IdGenerators} from '../../../../../config/generator.config';
-import PromiseUtils from '../../../../../utils/promise.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {

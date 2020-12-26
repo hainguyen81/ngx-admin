@@ -39,7 +39,7 @@ import {
 } from '../../config/app.providers';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IMockService} from './mock.service';
-import PromiseUtils from '../../utils/promise.utils';
+import PromiseUtils from '../../utils/common/promise.utils';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {BrowserModule} from '@angular/platform-browser';

@@ -30,8 +30,8 @@ import {SelectTranslateCellComponent} from '../../../smart-table/select.translat
 import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import PromiseUtils from '../../../../../utils/promise.utils';
-import AppObserveUtils from '../../../../../utils/app.observe.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
+import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
 import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';

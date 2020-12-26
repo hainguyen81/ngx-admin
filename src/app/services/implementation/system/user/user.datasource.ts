@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {UserDbService, UserHttpService} from './user.service';
-import {BaseDataSource} from '../../../datasource.service';
+import {BaseDataSource} from '../../../common/datasource.service';
 import {IUser} from '../../../../@core/data/system/user';
 import {NGXLogger} from 'ngx-logger';
 

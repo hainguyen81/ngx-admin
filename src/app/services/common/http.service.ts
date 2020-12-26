@@ -5,12 +5,12 @@ import {Observable, ObservableInput, of, throwError} from 'rxjs';
 import {ServiceResponse} from './response.service';
 import {IDbService, IHttpService} from './interface.service';
 import {Inject} from '@angular/core';
-import {LogConfig} from '../config/log.config';
+import {LogConfig} from '../../config/log.config';
 import {isArray} from 'util';
 import {Cacheable} from 'ngx-cacheable';
-import {environment} from '../../environments/environment';
-import JsonUtils from '../utils/json.utils';
-import {IModel} from '../@core/data/base';
+import {environment} from '../../../environments/environment';
+import JsonUtils from '../../utils/common/json.utils';
+import {IModel} from '../../@core/data/base';
 import {BaseDbService} from './database.service';
 
 /**

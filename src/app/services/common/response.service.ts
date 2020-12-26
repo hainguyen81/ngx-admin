@@ -1,5 +1,5 @@
 import {HttpResponse} from '@angular/common/http';
-import JsonUtils from '../utils/json.utils';
+import JsonUtils from '../../utils/common/json.utils';
 
 /**
  * The response model container to receive response from HTTP service

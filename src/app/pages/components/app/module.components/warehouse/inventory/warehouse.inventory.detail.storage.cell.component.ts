@@ -16,7 +16,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Constants} from '../../../../../../@core/data/constants/common.constants';
 import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
-import ComponentUtils from '../../../../../../utils/component.utils';
+import ComponentUtils from '../../../../../../utils/common/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {IEvent} from '../../../../abstract.component';
 import {isNullOrUndefined, isNumber} from 'util';
@@ -32,7 +32,7 @@ import {
     WarehouseDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {BehaviorSubject} from 'rxjs';
-import PromiseUtils from '../../../../../../utils/promise.utils';
+import PromiseUtils from '../../../../../../utils/common/promise.utils';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}

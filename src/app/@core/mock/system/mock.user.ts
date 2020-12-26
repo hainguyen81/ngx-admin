@@ -1,7 +1,7 @@
 import {MockRolesAdmin} from './mock.role';
-import ObjectUtils from '../../../utils/object.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
-import EncryptionUtils from '../../../utils/encryption.utils';
+import EncryptionUtils from '../../../utils/common/encryption.utils';
 import {IUser} from '../../data/system/user';
 import {Constants as CommonConstants} from '../../data/constants/common.constants';
 import STATUS = CommonConstants.COMMON.STATUS;

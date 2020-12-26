@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {CountryDbService, CountryHttpService} from './country.service';
-import {BaseDataSource} from '../../../datasource.service';
+import {BaseDataSource} from '../../../common/datasource.service';
 import {ICountry} from '../../../../@core/data/system/country';
 import {NGXLogger} from 'ngx-logger';
 

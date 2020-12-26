@@ -24,7 +24,7 @@ import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 
 /* default warehouse category formly config */
 export const WarehouseCategoryFormConfig: FormlyConfig = new FormlyConfig();

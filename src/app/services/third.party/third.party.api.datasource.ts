@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken, Type} from '@angular/core';
-import {BaseDataSource} from '../datasource.service';
+import {BaseDataSource} from '../common/datasource.service';
 import {NGXLogger} from 'ngx-logger';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import {ThirdPartyApiDbService, ThirdPartyApiHttpService} from './third.party.api.service';

@@ -1,4 +1,4 @@
-import ObjectUtils from '../../../utils/object.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import {IWarehouseCategory} from '../../data/warehouse/warehouse.category';
 import {Constants as WarehouseConstants} from '../../data/constants/warehouse.category.constants';

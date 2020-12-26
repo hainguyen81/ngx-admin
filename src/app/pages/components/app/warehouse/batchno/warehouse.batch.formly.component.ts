@@ -19,7 +19,7 @@ import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl, Validators} from '@angular/forms';
-import ValidationUtils from '../../../../../utils/validation.utils';
+import ValidationUtils from '../../../../../utils/common/validation.utils';
 import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
 import {
     WarehouseBatchNoDatasource,

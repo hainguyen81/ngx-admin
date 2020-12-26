@@ -1,4 +1,4 @@
-import ObjectUtils from '../../../utils/object.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
 import {ICustomer} from '../../data/system/customer';

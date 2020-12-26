@@ -1,4 +1,4 @@
-import {SubscribeHandler} from '../event.handler.service';
+import {SubscribeHandler} from '../common/event.handler.service';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {

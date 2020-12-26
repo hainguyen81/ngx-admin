@@ -1,19 +1,19 @@
 import {Inject, Injectable} from '@angular/core';
 import {DB_STORE} from '../config/db.config';
-import {AbstractBaseDbService} from '../services/database.service';
+import {AbstractBaseDbService} from '../services/common/database.service';
 import {NbAuthToken} from '@nebular/auth';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
-import {AbstractHttpService} from '../services/http.service';
+import {AbstractHttpService} from '../services/common/http.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {ServiceResponse} from '../services/response.service';
+import {ServiceResponse} from '../services/common/response.service';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, of, throwError} from 'rxjs';
-import EncryptionUtils from '../utils/encryption.utils';
-import PromiseUtils from '../utils/promise.utils';
+import EncryptionUtils from '../utils/common/encryption.utils';
+import PromiseUtils from '../utils/common/promise.utils';
 import {IUser} from '../@core/data/system/user';
 import {UserDbService} from '../services/implementation/system/user/user.service';
-import JsonUtils from '../utils/json.utils';
+import JsonUtils from '../utils/common/json.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE, RC_AUTH_AUTHORIZATION_HEADER} from '../config/request.config';
 
 @Injectable()

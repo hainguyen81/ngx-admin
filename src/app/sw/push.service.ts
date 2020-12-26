@@ -1,9 +1,9 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BaseHttpService} from '../services/http.service';
+import {BaseHttpService} from '../services/common/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {SwPush} from '@angular/service-worker';
-import {BaseDbService} from '../services/database.service';
+import {BaseDbService} from '../services/common/database.service';
 import {IModel} from '../@core/data/base';
 
 export const SW_VAPID_PUBLIC_KEY = new InjectionToken<string>('Service Worker VAPID_PUBLIC_KEY to subscribe');

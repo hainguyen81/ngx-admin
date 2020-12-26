@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
-import ComponentUtils from '../../../utils/component.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
 import {isArray, isNullOrUndefined} from 'util';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable} from 'rxjs';

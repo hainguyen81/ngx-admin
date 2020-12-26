@@ -1,8 +1,8 @@
 import {ComponentFactoryResolver, Directive, Inject, Type, ViewContainerRef} from '@angular/core';
 import {throwError} from 'rxjs';
-import {IComponentService} from '../../services/interface.service';
-import {AbstractComponentService, BaseComponentService} from '../../services/component.service';
-import ComponentUtils from '../../utils/component.utils';
+import {IComponentService} from '../../services/common/interface.service';
+import {AbstractComponentService, BaseComponentService} from '../../services/common/component.service';
+import ComponentUtils from '../../utils/common/component.utils';
 import {NGXLogger} from 'ngx-logger';
 
 @Directive({selector: '[ngxComponentPlaceholder]', exportAs: 'ngxComponentPlaceholder'})
