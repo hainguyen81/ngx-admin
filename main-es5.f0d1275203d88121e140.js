@@ -10406,8 +10406,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             key: "access_token"
           },
           login: {
-            method: null,
-            headers: undefined,
             redirect: {
               success: "/dashboard",
               failure: null
@@ -11903,7 +11901,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     MainConfig.API = Object.assign({}, _api_config__WEBPACK_IMPORTED_MODULE_3__["API"]);
     MainConfig.Storage.storageConfig = Object.assign({}, Object(_storage_config__WEBPACK_IMPORTED_MODULE_8__["createDefaultStorageConfig"])());
     MainConfig.Storage.secureConfig = Object.assign({}, Object(_storage_config__WEBPACK_IMPORTED_MODULE_8__["createDefaultSecureStorageConfig"])());
-    window.console.debug(['Application Configuration', MainConfig]);
     var AppConfig = MainConfig;
     /***/
   },
@@ -13145,8 +13142,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /*! ../auth/auth.oauth2.token */
     "./src/app/auth/auth.oauth2.token.ts");
 
-    var API_CFG = Object.assign({}, _api_config__WEBPACK_IMPORTED_MODULE_0__["API"]);
-    var AUTH_STRATEGY_OPTIONS = {
+    var ApiCfg = Object.assign({}, _api_config__WEBPACK_IMPORTED_MODULE_0__["API"]);
+    var AuthStrategyOptions = {
       name: 'email',
       baseEndpoint: '',
       token: {
@@ -13154,9 +13151,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         key: 'access_token'
       },
       login: {
-        endpoint: API_CFG['login']['api']['login'].call(_api_config__WEBPACK_IMPORTED_MODULE_0__["API"]),
-        method: API_CFG['login']['api']['method'],
-        headers: API_CFG['headers'],
         redirect: {
           success: '/dashboard',
           failure: null
@@ -13169,6 +13163,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         }
       }
     };
+    AuthStrategyOptions.login = Object.assign(AuthStrategyOptions.login, {
+      endpoint: ApiCfg['login']['api']['login'].call(ApiCfg),
+      method: ApiCfg['login']['api']['method'],
+      headers: ApiCfg['headers']
+    });
+    window.console.debug(['Auth Strategy Options', AuthStrategyOptions]);
+    var AUTH_STRATEGY_OPTIONS = AuthStrategyOptions;
     /***/
   },
 
