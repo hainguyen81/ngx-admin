@@ -5103,17 +5103,19 @@ var AppModuleNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcmf"](_ap
 /*!*******************************!*\
   !*** ./src/app/app.module.ts ***!
   \*******************************/
-/*! exports provided: AppModule */
+/*! exports provided: AUTH_OPTIONS_STRATEGY, AppModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AUTH_OPTIONS_STRATEGY", function() { return AUTH_OPTIONS_STRATEGY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _config_prototypes_import__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config/prototypes.import */ "./src/app/config/prototypes.import.ts");
 /* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nebular/theme */ "./node_modules/@nebular/theme/fesm2015/index.js");
 /* harmony import */ var _config_app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config/app.config */ "./src/app/config/app.config.ts");
-/* harmony import */ var _sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sw/core/service.workers.registration */ "./src/app/sw/core/service.workers.registration.ts");
+/* harmony import */ var _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./auth/auth.oauth2.token */ "./src/app/auth/auth.oauth2.token.ts");
+/* harmony import */ var _sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sw/core/service.workers.registration */ "./src/app/sw/core/service.workers.registration.ts");
 
 /* Prototypes */
 
@@ -5122,6 +5124,30 @@ __webpack_require__.r(__webpack_exports__);
 /* API Configuration */
 
 
+
+const AUTH_OPTIONS_STRATEGY = {
+    name: 'email',
+    baseEndpoint: '',
+    token: {
+        class: _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_4__["NbxAuthOAuth2Token"],
+        key: 'access_token',
+    },
+    login: {
+        endpoint: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API['login']['api']['login'].call(undefined),
+        method: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API['login']['api']['method'],
+        headers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API['headers'],
+        redirect: {
+            success: '/dashboard',
+            failure: null,
+        },
+    },
+    register: {
+        redirect: {
+            success: '/dashboard',
+            failure: null,
+        },
+    },
+};
 class AppModule {
     constructor(injector, iconLibraries) {
         // @ts-ignore
@@ -5131,7 +5157,7 @@ class AppModule {
         iconLibraries.registerFontPack('far', { packClass: 'far', iconClassPrefix: 'fa' });
         iconLibraries.registerFontPack('ion', { iconClassPrefix: 'ion' });
         // register application service workers
-        Object(_sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_4__["registerBrowserServiceWorkers"])();
+        Object(_sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_5__["registerBrowserServiceWorkers"])();
     }
 }
 
@@ -5388,7 +5414,7 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
                 errors: oauth2.getOption(`${module}.errors`) || [],
                 messages: oauth2.getOption(`${module}.messages`) || [],
             };
-            return this.getHttpService().request(url, method, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(token => {
+            return this.getHttpService().request(url, method || 'POST', options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(token => {
                 return (!Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(token) && token
                     ? token : Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(token) ? token[0] : undefined);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(token => {

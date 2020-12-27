@@ -10444,13 +10444,19 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     !*** ./src/app/app.module.ts ***!
     \*******************************/
 
-  /*! exports provided: AppModule */
+  /*! exports provided: AUTH_OPTIONS_STRATEGY, AppModule */
 
   /***/
   function srcAppAppModuleTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AUTH_OPTIONS_STRATEGY", function () {
+      return AUTH_OPTIONS_STRATEGY;
+    });
     /* harmony export (binding) */
 
 
@@ -10484,7 +10490,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./auth/auth.oauth2.token */
+    "./src/app/auth/auth.oauth2.token.ts");
+    /* harmony import */
+
+
+    var _sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! ./sw/core/service.workers.registration */
     "./src/app/sw/core/service.workers.registration.ts");
     /* Prototypes */
@@ -10493,6 +10505,30 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     /* API Configuration */
 
+
+    var AUTH_OPTIONS_STRATEGY = {
+      name: 'email',
+      baseEndpoint: '',
+      token: {
+        "class": _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_4__["NbxAuthOAuth2Token"],
+        key: 'access_token'
+      },
+      login: {
+        endpoint: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API['login']['api']['login'].call(undefined),
+        method: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API['login']['api']['method'],
+        headers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API['headers'],
+        redirect: {
+          success: '/dashboard',
+          failure: null
+        }
+      },
+      register: {
+        redirect: {
+          success: '/dashboard',
+          failure: null
+        }
+      }
+    };
 
     var AppModule = function AppModule(injector, iconLibraries) {
       _classCallCheck(this, AppModule);
@@ -10518,7 +10554,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         iconClassPrefix: 'ion'
       }); // register application service workers
 
-      Object(_sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_4__["registerBrowserServiceWorkers"])();
+      Object(_sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_5__["registerBrowserServiceWorkers"])();
     };
     /***/
 
@@ -11032,7 +11068,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             errors: oauth2.getOption("".concat(module, ".errors")) || [],
             messages: oauth2.getOption("".concat(module, ".messages")) || []
           };
-          return _this29.getHttpService().request(url, method, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (token) {
+          return _this29.getHttpService().request(url, method || 'POST', options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (token) {
             return !Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(token) && token ? token : Object(util__WEBPACK_IMPORTED_MODULE_8__["isArray"])(token) ? token[0] : undefined;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (token) {
             return new _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["NbAuthResult"](token && Object.keys(token).length ? true : false, new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"]({
