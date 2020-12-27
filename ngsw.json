@@ -1,12 +1,12 @@
 {
   "configVersion": 1,
-  "timestamp": 1609045187485,
+  "timestamp": 1609046026640,
   "index": "https://hainguyen81.github.io/ngx-admin/index.html",
   "assetGroups": [
     {
       "name": "ngx-admin",
-      "installMode": "prefetch",
-      "updateMode": "prefetch",
+      "installMode": "preload",
+      "updateMode": "preload",
       "urls": [
         "https://hainguyen81.github.io/ngx-admin/Roboto-Black.2a82f89b0a35ee7f9d45.eot",
         "https://hainguyen81.github.io/ngx-admin/Roboto-Black.2b8d6922c2c9957356bc.woff2",
@@ -166,6 +166,7 @@
         "https://hainguyen81.github.io/ngx-admin/layers.a6137456ed160d760698.png",
         "https://hainguyen81.github.io/ngx-admin/main-es2015.1b277cd78854326021e2.js",
         "https://hainguyen81.github.io/ngx-admin/main-es5.1b277cd78854326021e2.js",
+        "https://hainguyen81.github.io/ngx-admin/manifest.appcache",
         "https://hainguyen81.github.io/ngx-admin/manifest.json",
         "https://hainguyen81.github.io/ngx-admin/marker-icon.2273e3d8ad9264b7daa5.png",
         "https://hainguyen81.github.io/ngx-admin/nebular.85e45e2f83750a4184af.eot",
@@ -190,7 +191,7 @@
     {
       "name": "assets",
       "installMode": "lazy",
-      "updateMode": "prefetch",
+      "updateMode": "preload",
       "urls": [
         "https://hainguyen81.github.io/ngx-admin/assets/data/countries.json",
         "https://hainguyen81.github.io/ngx-admin/assets/data/news.json",
@@ -462,6 +463,7 @@
     "https://hainguyen81.github.io/ngx-admin/layers.a6137456ed160d760698.png": "c9e7528e491a39232ba24a2706c6c739d6fb0f06",
     "https://hainguyen81.github.io/ngx-admin/main-es2015.1b277cd78854326021e2.js": "59934716ecfa7d8b133ed162e68646b8087eb1fb",
     "https://hainguyen81.github.io/ngx-admin/main-es5.1b277cd78854326021e2.js": "3dc14cc3b81cb1671ff1e9f4228f5578b8674f7f",
+    "https://hainguyen81.github.io/ngx-admin/manifest.appcache": "7f04a573cb23d0c33592e45c6ffe4529740b6b5b",
     "https://hainguyen81.github.io/ngx-admin/manifest.json": "dbe938826986e95f81691e91fdffc659f1a78d86",
     "https://hainguyen81.github.io/ngx-admin/marker-icon.2273e3d8ad9264b7daa5.png": "60a90bcbb2b42b7ddb4556db94eb7c1084b0e5da",
     "https://hainguyen81.github.io/ngx-admin/nebular.85e45e2f83750a4184af.eot": "290b6c75a0af38b8606a9d2b843e6b4af4dacf31",
