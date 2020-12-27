@@ -10529,6 +10529,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         }
       }
     };
+    window.console.info(['AUTH_OPTIONS_STRATEGY', AUTH_OPTIONS_STRATEGY]);
 
     var AppModule = function AppModule(injector, iconLibraries) {
       _classCallCheck(this, AppModule);

@@ -5148,6 +5148,7 @@ const AUTH_OPTIONS_STRATEGY = {
         },
     },
 };
+window.console.info(['AUTH_OPTIONS_STRATEGY', AUTH_OPTIONS_STRATEGY]);
 class AppModule {
     constructor(injector, iconLibraries) {
         // @ts-ignore
