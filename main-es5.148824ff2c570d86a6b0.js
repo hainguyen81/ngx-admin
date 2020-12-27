@@ -11782,7 +11782,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       return config;
     }
 
-    var API = buildApiConfig();
+    var API = buildApiConfig.call(undefined);
     /***/
   },
 

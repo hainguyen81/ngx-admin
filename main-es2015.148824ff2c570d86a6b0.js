@@ -5942,7 +5942,7 @@ function buildApiConfig() {
     };
     return config;
 }
-const API = buildApiConfig();
+const API = buildApiConfig.call(undefined);
 
 
 /***/ }),
