@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1609047013036,
+  "timestamp": 1609048046073,
   "index": "https://hainguyen81.github.io/ngx-admin/index.html",
   "assetGroups": [
     {
@@ -164,8 +164,8 @@
         "https://hainguyen81.github.io/ngx-admin/ionicons.dd4781d1acc57ba4c480.ttf",
         "https://hainguyen81.github.io/ngx-admin/layers-2x.4f0283c6ce28e888000e.png",
         "https://hainguyen81.github.io/ngx-admin/layers.a6137456ed160d760698.png",
-        "https://hainguyen81.github.io/ngx-admin/main-es2015.1b277cd78854326021e2.js",
-        "https://hainguyen81.github.io/ngx-admin/main-es5.1b277cd78854326021e2.js",
+        "https://hainguyen81.github.io/ngx-admin/main-es2015.b77bcc1ecf05c669a8d4.js",
+        "https://hainguyen81.github.io/ngx-admin/main-es5.b77bcc1ecf05c669a8d4.js",
         "https://hainguyen81.github.io/ngx-admin/manifest.appcache",
         "https://hainguyen81.github.io/ngx-admin/manifest.json",
         "https://hainguyen81.github.io/ngx-admin/marker-icon.2273e3d8ad9264b7daa5.png",
@@ -183,8 +183,8 @@
         "https://hainguyen81.github.io/ngx-admin/socicon.9a64ef938f9e55a70a4d.ttf",
         "https://hainguyen81.github.io/ngx-admin/socicon.a35b65744f557fab5424.svg",
         "https://hainguyen81.github.io/ngx-admin/styles.669e85e7b516fb15e2a2.css",
-        "https://hainguyen81.github.io/ngx-admin/vendor-es2015.e521dd4bc83cc3ae3772.js",
-        "https://hainguyen81.github.io/ngx-admin/vendor-es5.e521dd4bc83cc3ae3772.js"
+        "https://hainguyen81.github.io/ngx-admin/vendor-es2015.4572f8a56eb090f867f3.js",
+        "https://hainguyen81.github.io/ngx-admin/vendor-es5.4572f8a56eb090f867f3.js"
       ],
       "patterns": []
     },
@@ -454,15 +454,15 @@
     "https://hainguyen81.github.io/ngx-admin/fa-solid-900.ec763292e583294612f1.svg": "a4115fd7ce47ed2b41f7d4e9e7448f28ba3f7508",
     "https://hainguyen81.github.io/ngx-admin/favicon.ico": "af8dff7ec44f26668855707a8666c37f8f33b231",
     "https://hainguyen81.github.io/ngx-admin/favicon.png": "07f1245863444f895d8df3a3110c07dccd3f65c8",
-    "https://hainguyen81.github.io/ngx-admin/index.html": "2266a1fe8377f1e5bb635a2f5b97eacf1b1452b2",
+    "https://hainguyen81.github.io/ngx-admin/index.html": "db99f15fdb8dbd1e6f432363fdc1c22ffd726735",
     "https://hainguyen81.github.io/ngx-admin/ionicons.19e65b89cee273a249fb.eot": "78ed07ad0fdefd18688cf30646a6649908d8d2b5",
     "https://hainguyen81.github.io/ngx-admin/ionicons.28df6ee7b407fd8a14b4.svg": "303fb683ac35f24af7da097938754df7f93c4900",
     "https://hainguyen81.github.io/ngx-admin/ionicons.2c159d0d05473040b53e.woff": "5524e1137e3552ccc4b142e64703bf4123b4e9b1",
     "https://hainguyen81.github.io/ngx-admin/ionicons.dd4781d1acc57ba4c480.ttf": "956116ebe4b3a315b1a43009567e6f8ad0a9a720",
     "https://hainguyen81.github.io/ngx-admin/layers-2x.4f0283c6ce28e888000e.png": "152a162333e46d24f9d89f566312fc0c64011dee",
     "https://hainguyen81.github.io/ngx-admin/layers.a6137456ed160d760698.png": "c9e7528e491a39232ba24a2706c6c739d6fb0f06",
-    "https://hainguyen81.github.io/ngx-admin/main-es2015.1b277cd78854326021e2.js": "59934716ecfa7d8b133ed162e68646b8087eb1fb",
-    "https://hainguyen81.github.io/ngx-admin/main-es5.1b277cd78854326021e2.js": "3dc14cc3b81cb1671ff1e9f4228f5578b8674f7f",
+    "https://hainguyen81.github.io/ngx-admin/main-es2015.b77bcc1ecf05c669a8d4.js": "ef89af00f290a35fe3770cac795dcec338afcdea",
+    "https://hainguyen81.github.io/ngx-admin/main-es5.b77bcc1ecf05c669a8d4.js": "9e273d6cd372d649e5dfbb681e8314d9308e0eb2",
     "https://hainguyen81.github.io/ngx-admin/manifest.appcache": "7f04a573cb23d0c33592e45c6ffe4529740b6b5b",
     "https://hainguyen81.github.io/ngx-admin/manifest.json": "dbe938826986e95f81691e91fdffc659f1a78d86",
     "https://hainguyen81.github.io/ngx-admin/marker-icon.2273e3d8ad9264b7daa5.png": "60a90bcbb2b42b7ddb4556db94eb7c1084b0e5da",
@@ -480,8 +480,8 @@
     "https://hainguyen81.github.io/ngx-admin/socicon.9a64ef938f9e55a70a4d.ttf": "75ab624aee5ff7c32420d705587517e22256e6a0",
     "https://hainguyen81.github.io/ngx-admin/socicon.a35b65744f557fab5424.svg": "8497253952c4f8d99af684982902912f15a079f0",
     "https://hainguyen81.github.io/ngx-admin/styles.669e85e7b516fb15e2a2.css": "2fdf0d896f75ac14ae91d74ed799736098b3ad8a",
-    "https://hainguyen81.github.io/ngx-admin/vendor-es2015.e521dd4bc83cc3ae3772.js": "741ea23d022cf9fa94bb41c43734414a435291e6",
-    "https://hainguyen81.github.io/ngx-admin/vendor-es5.e521dd4bc83cc3ae3772.js": "c200d0b5a5b053a271488a7a4681838111f18008"
+    "https://hainguyen81.github.io/ngx-admin/vendor-es2015.4572f8a56eb090f867f3.js": "a15bd94770fddb599bd4c937f8e894f832f262f5",
+    "https://hainguyen81.github.io/ngx-admin/vendor-es5.4572f8a56eb090f867f3.js": "a0bb80491af3add831e8400d9cab5786d5da3c55"
   },
   "navigationUrls": [
     {
