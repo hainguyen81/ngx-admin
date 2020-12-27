@@ -31,7 +31,7 @@ export interface IPageHeaderService {
 }
 
 /* page header service */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PageHeaderService implements IPageHeaderService {
 
     // -------------------------------------------------

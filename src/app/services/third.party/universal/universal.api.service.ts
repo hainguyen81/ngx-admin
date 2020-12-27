@@ -55,7 +55,7 @@ export const UNIVERSAL_API_CONFIG: IThirdPartyApiConfig = {
     },
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UniversalApiDbService extends ThirdPartyApiDbService<UniversalApiThirdParty> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -65,7 +65,7 @@ export class UniversalApiDbService extends ThirdPartyApiDbService<UniversalApiTh
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UniversalApiHttpService extends ThirdPartyApiHttpService<UniversalApiThirdParty> {
 
     private static UNIVERSAL_ACCESS_TOKEN_API_PARAMETER_NAME: string = 'auth_token';

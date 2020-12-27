@@ -14,7 +14,7 @@ export const UNIVERSAL_API_DATA_PARSER_DEFINITION: IThirdPartyApiDataParserDefin
 /**
  * Universal third-party API data source
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UniversalApiDatasource extends ThirdPartyApiDatasource<UniversalApiThirdParty> {
 
     constructor(@Inject(UniversalApiHttpService) httpService: UniversalApiHttpService,

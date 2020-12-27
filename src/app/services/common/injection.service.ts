@@ -18,7 +18,7 @@ import {isNullOrUndefined} from 'util';
  * @export
  * @class InjectionService
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class InjectionService {
     // -------------------------------------------------
     // DECLARATION

@@ -6,7 +6,7 @@ import {UniversalApiThirdParty} from '../../../@core/data/system/api.third.party
 import {ThirdPartyApiBridgeDbService} from '../third.party.api.bridge.service';
 import {UniversalApiDatasource} from './universal.api.datasource';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UniversalApiBridgeDbService extends ThirdPartyApiBridgeDbService<UniversalApiThirdParty> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,

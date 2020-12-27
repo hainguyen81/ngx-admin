@@ -19,7 +19,7 @@ import EncryptionUtils from '../utils/common/encryption.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
 import JsonUtils from '../utils/common/json.utils';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     static setup(options: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
         return [NbxOAuth2AuthStrategy, options];

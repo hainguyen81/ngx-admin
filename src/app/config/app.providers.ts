@@ -7,6 +7,7 @@ import {
     InjectionToken,
     Injector,
     LOCALE_ID,
+    Provider,
     StaticProvider,
 } from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
@@ -180,7 +181,7 @@ export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
     return new TranslateHttpLoader(http, (baseHref || '').concat('/assets/i18n/'));
 }
 
-export const InitializationProviders: StaticProvider[] = [
+export const InitializationProviders: Provider[] = [
     {
         provide: APP_BOOTSTRAP_LISTENER,
         useFactory: () => {
@@ -215,7 +216,7 @@ export const InitializationProviders: StaticProvider[] = [
     },
 ];
 
-export const CommonProviders: StaticProvider[] = [
+export const CommonProviders: Provider[] = [
     {provide: DOCUMENT, useValue: document},
     {provide: APP_BASE_HREF, useFactory: HtmlUtils.getBaseHref, deps: []},
     {provide: BASE_HREF, useFactory: HtmlUtils.getBaseHref, deps: []},
@@ -288,7 +289,7 @@ export const InterceptorProviders = [
     },
 ];
 
-export const AuthenticationProviders: StaticProvider[] = [
+export const AuthenticationProviders: Provider[] = [
     {provide: AuthGuard, useClass: AuthGuard, deps: [NbAuthService, Router]},
     {
         provide: ModuleService, useClass: ModuleService,
@@ -317,7 +318,7 @@ export const AuthenticationProviders: StaticProvider[] = [
     },
 ];
 
-export const ThirdPartyApiProviders: StaticProvider[] = [
+export const ThirdPartyApiProviders: Provider[] = [
     // https://www.universal-tutorial.com/api
     {
         provide: UniversalApiDbService, useClass: UniversalApiDbService,
@@ -337,7 +338,7 @@ export const ThirdPartyApiProviders: StaticProvider[] = [
     },
 ];
 
-export const I18NProviders: StaticProvider[] = [
+export const I18NProviders: Provider[] = [
     {
         provide: TranslateLoader, useFactory: HttpLoaderFactory,
         deps: [HttpClient, APP_BASE_HREF],
@@ -348,7 +349,7 @@ export const I18NProviders: StaticProvider[] = [
     },
 ];
 
-export const UserProviders: StaticProvider[] = [
+export const UserProviders: Provider[] = [
     {
         provide: UserDbService, useClass: UserDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -363,7 +364,7 @@ export const UserProviders: StaticProvider[] = [
     },
 ];
 
-export const CustomerProviders: StaticProvider[] = [
+export const CustomerProviders: Provider[] = [
     {
         provide: CustomerDbService, useClass: CustomerDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -378,7 +379,7 @@ export const CustomerProviders: StaticProvider[] = [
     },
 ];
 
-export const GeneralSettingsProviders: StaticProvider[] = [
+export const GeneralSettingsProviders: Provider[] = [
     {
         provide: GeneralSettingsDbService, useClass: GeneralSettingsDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -393,7 +394,7 @@ export const GeneralSettingsProviders: StaticProvider[] = [
     },
 ];
 
-export const OrganizationProviders: StaticProvider[] = [
+export const OrganizationProviders: Provider[] = [
     {
         provide: OrganizationDbService, useClass: OrganizationDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -408,7 +409,7 @@ export const OrganizationProviders: StaticProvider[] = [
     },
 ];
 
-export const CountryProviders: StaticProvider[] = [
+export const CountryProviders: Provider[] = [
     // Country
     {
         provide: CountryDbService, useClass: CountryDbService,
@@ -452,7 +453,7 @@ export const CountryProviders: StaticProvider[] = [
     },
 ];
 
-export const WarehouseProviders: StaticProvider[] = [
+export const WarehouseProviders: Provider[] = [
     // Warehouse
     {
         provide: WarehouseDbService, useClass: WarehouseDbService,
@@ -636,7 +637,7 @@ export const WarehouseProviders: StaticProvider[] = [
     },
 ];
 
-export const MenuProviders: StaticProvider[] = [
+export const MenuProviders: Provider[] = [
     {
         provide: MenuService, useClass: MenuService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -647,23 +648,30 @@ export const MenuProviders: StaticProvider[] = [
     },
 ];
 
-export const ExampleProviders: StaticProvider[] = [
+export const ExampleProviders: Provider[] = [
     {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
 ];
 
-export const Providers: StaticProvider[] = []
-    .concat(InitializationProviders)
-    .concat(CommonProviders)
-    .concat(InterceptorProviders)
-    .concat(ThirdPartyApiProviders)
-    .concat(AuthenticationProviders)
-    .concat(I18NProviders)
-    .concat(GeneralSettingsProviders)
-    .concat(OrganizationProviders)
-    .concat(UserProviders)
-    .concat(CustomerProviders)
-    .concat(CountryProviders)
-    .concat(WarehouseProviders)
-    .concat(MenuProviders)
-    .concat(WorkerProviders)
-    .concat(ExampleProviders);
+export const BaseProviders: Provider[] = []
+    .concat(...InitializationProviders)
+    .concat(...CommonProviders)
+    .concat(...InterceptorProviders)
+    .concat(...ThirdPartyApiProviders)
+    .concat(...AuthenticationProviders)
+    .concat(...I18NProviders)
+    .concat(...GeneralSettingsProviders)
+    .concat(...OrganizationProviders)
+    .concat(...UserProviders);
+window.console.debug(['Base PROVIDERS', BaseProviders]);
+
+export const BusinessProviders: Provider[] = []
+    .concat(...CustomerProviders)
+    .concat(...CountryProviders)
+    .concat(...WarehouseProviders)
+    .concat(...MenuProviders)
+    .concat(...WorkerProviders)
+    .concat(...ExampleProviders);
+window.console.debug(['Business PROVIDERS', BusinessProviders]);
+
+export const Providers: Provider[] = [].concat(...BaseProviders).concat(...BusinessProviders);
+window.console.debug(['TOTAL PROVIDERS', Providers]);

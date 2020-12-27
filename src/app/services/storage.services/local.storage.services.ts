@@ -54,7 +54,7 @@ export const TOKEN_STORAGE_SERIALIZER: InjectionToken<StorageSerializer>
 /**
  * Local storage service
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NgxLocalStorageService extends LocalStorageService {
 
     protected get logger(): NGXLogger {
@@ -81,7 +81,7 @@ export class NgxLocalStorageService extends LocalStorageService {
 /**
  * Local storage secure service
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NgxLocalStorageEncryptionService {
 
     readonly _internalSecuredStorage: SecureLS;

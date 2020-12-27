@@ -16,17 +16,12 @@ import {isArray} from 'util';
 import {Meta, Title} from '@angular/platform-browser';
 import HtmlUtils from './utils/common/html.utils';
 import * as moment from 'moment';
+import AppUtils from './utils/app/app.utils';
 
 @Component({
     selector: 'ngx-app',
     template: `<router-outlet></router-outlet>`,
-    providers: [
-        Title,
-        Meta,
-        NGXLogger,
-        TranslateService,
-        PageHeaderService,
-    ],
+    providers: AppConfig.Providers.Base,
 })
 export class AppComponent implements OnInit {
 
@@ -38,7 +33,7 @@ export class AppComponent implements OnInit {
                 @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
                 @Inject(ApplicationRef) private applicationRef: ApplicationRef,
                 @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
-                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
+                @Inject(PageHeaderService) private pageHeaderService?: PageHeaderService,
                 @Inject(Title) _titleService?: Title,
                 @Inject(Meta) _metaService?: Meta) {
         analytics || throwError('Could not inject AnalyticsService');
@@ -49,13 +44,15 @@ export class AppComponent implements OnInit {
         activatedRoute || throwError('Could not inject ActivatedRoute');
         applicationRef || throwError('Could not inject ApplicationRef');
         viewContainerRef || throwError('Could not inject ViewContainerRef');
-        pageHeaderService || throwError('Could not inject PageHeaderService');
 
-        logger.info('Application component initialization',
+        logger.debug('Application Component Initialization',
             analytics, seoService, translateService, router,
             activatedRoute, applicationRef, viewContainerRef,
             pageHeaderService, _titleService, _metaService);
         // check for ensuring Title/Meta service in page header
+        pageHeaderService = pageHeaderService || AppUtils.getService(PageHeaderService);
+        pageHeaderService = pageHeaderService
+            || new PageHeaderService(translateService, logger, _titleService, _metaService);
         if (!pageHeaderService.titleService && _titleService) {
             pageHeaderService.titleService = _titleService;
         }

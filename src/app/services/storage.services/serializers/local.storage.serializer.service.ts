@@ -9,7 +9,7 @@ import EncryptionUtils from '../../../utils/common/encryption.utils';
 /**
  * Local storage serializer/deserializer service
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class DefaultLocalStorageSerializerService implements StorageSerializer {
 
     protected get logger(): NGXLogger {

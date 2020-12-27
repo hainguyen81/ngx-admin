@@ -229,7 +229,7 @@ import {registerBrowserServiceWorkers} from './sw/core/service.workers.registrat
         /* Mock data module */
         MockDataModule,
     ],
-    providers: AppConfig.Providers,
+    providers: AppConfig.Providers.All,
     bootstrap: [AppComponent],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -240,7 +240,7 @@ export class AppModule {
     constructor(injector: Injector,
                 iconLibraries: NbIconLibraries) {
         // @ts-ignore
-        AppConfig.Injector = Injector.create({providers: AppConfig.Providers, parent: injector});
+        AppConfig.Injector = Injector.create({providers: AppConfig.Providers.All, parent: injector});
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('fas', {packClass: 'fas', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});

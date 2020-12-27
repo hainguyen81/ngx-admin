@@ -16,7 +16,7 @@ import {UserDbService} from '../services/implementation/system/user/user.service
 import JsonUtils from '../utils/common/json.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE, RC_AUTH_AUTHORIZATION_HEADER} from '../config/request.config';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractBaseDbService<T> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -37,7 +37,7 @@ export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractBaseD
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHttpService<T, IUser> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

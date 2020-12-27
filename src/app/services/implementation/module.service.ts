@@ -10,7 +10,7 @@ import {HttpClient} from '@angular/common/http';
 import {throwError} from 'rxjs';
 import {BaseDataSource} from '../common/datasource.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ModuleService extends BaseDbService<IModule> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -20,7 +20,7 @@ export class ModuleService extends BaseDbService<IModule> {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ModuleHttpService extends BaseHttpService<IModule> {
 
     constructor(@Inject(HttpClient) http: HttpClient,
@@ -31,7 +31,7 @@ export class ModuleHttpService extends BaseHttpService<IModule> {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ModuleDatasource extends BaseDataSource<IModule, ModuleHttpService, ModuleService> {
 
     constructor(@Inject(ModuleHttpService) httpService: ModuleHttpService,
