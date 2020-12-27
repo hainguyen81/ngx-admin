@@ -13,7 +13,7 @@ import {
 import {CryptoService} from './crypto.config';
 import {ServiceWorkerScripts} from './worker.providers';
 
-export const AppConfig = {
+const MainConfig = {
     PageConfig: {
         title: 'app',
     },
@@ -39,6 +39,7 @@ export const AppConfig = {
     },
     ServiceWorkers: ServiceWorkerScripts,
 };
-AppConfig.API = Object.assign({}, API);
-AppConfig.Storage.storageConfig = Object.assign({}, createDefaultStorageConfig());
-AppConfig.Storage.secureConfig = Object.assign({}, createDefaultSecureStorageConfig());
+MainConfig.API = Object.assign({}, API);
+MainConfig.Storage.storageConfig = Object.assign({}, createDefaultStorageConfig());
+MainConfig.Storage.secureConfig = Object.assign({}, createDefaultSecureStorageConfig());
+export const AppConfig = MainConfig;

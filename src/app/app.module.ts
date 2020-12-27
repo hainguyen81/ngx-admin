@@ -35,6 +35,7 @@ import {AppConfig} from './config/app.config';
 /* Authentication */
 import {NbAuthModule} from '@nebular/auth';
 import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
+import {AUTH_STRATEGY_OPTIONS} from './config/auth.config';
 import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 /* Logger */
 import {LoggerModule} from 'ngx-logger';
@@ -82,6 +83,7 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 import {ServiceWorkerProviders} from './config/worker.providers';
 import {environment} from '../environments/environment';
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
+
 
 @NgModule({
     declarations: [AppComponent],
@@ -149,34 +151,7 @@ import {registerBrowserServiceWorkers} from './sw/core/service.workers.registrat
 
         /* Authentication */
         NbAuthModule.forRoot({
-            strategies: [
-                NbxOAuth2AuthStrategy.setup({
-                    name: 'email',
-                    baseEndpoint: '',
-
-                    token: {
-                        class: NbxAuthOAuth2Token,
-                        key: 'access_token', // this parameter tells where to look for the token
-                    },
-
-                    login: {
-                        endpoint: AppConfig.API['login']['api']['login'].call(undefined),
-                        method: AppConfig.API['login']['api']['method'],
-                        headers: AppConfig.API['headers'],
-                        redirect: {
-                            success: '/dashboard',
-                            failure: null, // stay on the same page
-                        },
-                    },
-
-                    register: {
-                        redirect: {
-                            success: '/dashboard',
-                            failure: null, // stay on the same page
-                        },
-                    },
-                }),
-            ],
+            strategies: [ [NbxOAuth2AuthStrategy, AUTH_STRATEGY_OPTIONS] ],
             forms: {
                 login: {
                     // delay before redirect after a successful login, while success message is shown to the user

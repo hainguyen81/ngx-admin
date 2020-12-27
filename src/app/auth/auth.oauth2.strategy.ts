@@ -1,7 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
-import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
-import {NbAuthStrategyClass} from '@nebular/auth/auth.options';
+import {deepExtend, NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
@@ -18,13 +16,10 @@ import {map} from 'rxjs/operators';
 import EncryptionUtils from '../utils/common/encryption.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
 import JsonUtils from '../utils/common/json.utils';
+import {AUTH_STRATEGY_OPTIONS} from '../config/auth.config';
 
 @Injectable({ providedIn: 'root' })
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
-    static setup(options: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
-        return [NbxOAuth2AuthStrategy, options];
-    }
-
     protected getLogger(): NGXLogger {
         return this.logger;
     }
@@ -41,6 +36,10 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
         return this.moduleDbService;
     }
 
+    setOptions(options: any): void {
+        super.setOptions(deepExtend({}, AUTH_STRATEGY_OPTIONS, options));
+    }
+
     constructor(@Inject(HttpClient) http: HttpClient,
                 @Inject(ActivatedRoute) route: ActivatedRoute,
                 @Inject(NbxOAuth2AuthHttpService) private authHttpService: NbxOAuth2AuthHttpService<NbxAuthOAuth2Token>,
@@ -55,6 +54,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
         authDbService || throwError('Could not inject IndexedDb!');
         logger || throwError('Could not inject logger!');
         logger.updateConfig(LogConfig);
+        this.defaultOptions = deepExtend({}, AUTH_STRATEGY_OPTIONS);
     }
 
     authenticate = (data?: any): Observable<NbAuthResult> => {
@@ -79,7 +79,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
             errors: oauth2.getOption(`${module}.errors`) || [],
             messages: oauth2.getOption(`${module}.messages`) || [],
         };
-        return this.getHttpService().request(url, method, options).pipe(
+        return this.getHttpService().request(url, method || 'POST', options).pipe(
             map(token => {
                 return (!isArray(token) && token
                     ? token : isArray(token) ? token[0] : undefined);

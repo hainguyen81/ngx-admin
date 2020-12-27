@@ -8,7 +8,6 @@ import {
     Injector,
     LOCALE_ID,
     Provider,
-    StaticProvider,
 } from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
 import {
@@ -18,7 +17,7 @@ import {
 } from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
-import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
+import {NB_AUTH_INTERCEPTOR_HEADER, NB_AUTH_STRATEGIES, NbAuthService} from '@nebular/auth';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EmptyService} from '../services/common/empty.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
@@ -171,6 +170,7 @@ import {
     createDefaultSecureStorageConfig,
     createDefaultStorageConfig,
 } from './storage.config';
+import {AUTH_STRATEGY_OPTIONS} from './auth.config';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -316,6 +316,7 @@ export const AuthenticationProviders: Provider[] = [
         deps: [HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService,
             NbxOAuth2AuthDbService, ModuleService, NGXLogger],
     },
+    {provide: NB_AUTH_STRATEGIES, useFactory: () => [NbxOAuth2AuthStrategy, AUTH_STRATEGY_OPTIONS], deps: []},
 ];
 
 export const ThirdPartyApiProviders: Provider[] = [
@@ -662,7 +663,6 @@ export const BaseProviders: Provider[] = []
     .concat(...GeneralSettingsProviders)
     .concat(...OrganizationProviders)
     .concat(...UserProviders);
-window.console.debug(['Base PROVIDERS', BaseProviders]);
 
 export const BusinessProviders: Provider[] = []
     .concat(...CustomerProviders)
@@ -671,7 +671,5 @@ export const BusinessProviders: Provider[] = []
     .concat(...MenuProviders)
     .concat(...WorkerProviders)
     .concat(...ExampleProviders);
-window.console.debug(['Business PROVIDERS', BusinessProviders]);
 
 export const Providers: Provider[] = [].concat(...BaseProviders).concat(...BusinessProviders);
-window.console.debug(['TOTAL PROVIDERS', Providers]);

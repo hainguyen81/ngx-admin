@@ -45,14 +45,11 @@ export class AppComponent implements OnInit {
         applicationRef || throwError('Could not inject ApplicationRef');
         viewContainerRef || throwError('Could not inject ViewContainerRef');
 
-        logger.debug('Application Component Initialization',
-            analytics, seoService, translateService, router,
-            activatedRoute, applicationRef, viewContainerRef,
-            pageHeaderService, _titleService, _metaService);
         // check for ensuring Title/Meta service in page header
         pageHeaderService = pageHeaderService || AppUtils.getService(PageHeaderService);
         pageHeaderService = pageHeaderService
             || new PageHeaderService(translateService, logger, _titleService, _metaService);
+        pageHeaderService || throwError('Could not inject PageHeaderService');
         if (!pageHeaderService.titleService && _titleService) {
             pageHeaderService.titleService = _titleService;
         }
