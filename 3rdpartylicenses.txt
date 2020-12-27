@@ -54,6 +54,9 @@ THE SOFTWARE.
 @angular/common
 MIT
 
+@angular/compiler
+MIT
+
 @angular/core
 MIT
 
@@ -85,29 +88,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-@angular/material/button
-
-@angular/material/checkbox
-
-@angular/material/core
-
-@angular/material/datepicker
-
-@angular/material/dialog
-
-@angular/material/form-field
-
-@angular/material/icon
-
-@angular/material/radio
-
-@angular/material/select
-
-@angular/material/toolbar
-
-@angular/material/tooltip
-
 @angular/platform-browser
+MIT
+
+@angular/platform-browser-dynamic
 MIT
 
 @angular/router
@@ -243,22 +227,6 @@ MIT
 
 @ngx-formly/material
 MIT
-
-@ngx-formly/material/checkbox
-
-@ngx-formly/material/datepicker
-
-@ngx-formly/material/form-field
-
-@ngx-formly/material/input
-
-@ngx-formly/material/multicheckbox
-
-@ngx-formly/material/radio
-
-@ngx-formly/material/select
-
-@ngx-formly/material/textarea
 
 @ngx-translate/core
 MIT
