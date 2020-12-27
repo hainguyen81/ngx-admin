@@ -23,6 +23,9 @@ import * as moment from 'moment';
     providers: [
         Title,
         Meta,
+        NGXLogger,
+        TranslateService,
+        PageHeaderService,
     ],
 })
 export class AppComponent implements OnInit {
@@ -33,88 +36,118 @@ export class AppComponent implements OnInit {
                 @Inject(TranslateService) private translateService: TranslateService,
                 @Inject(Router) private router: Router,
                 @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
-                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
                 @Inject(ApplicationRef) private applicationRef: ApplicationRef,
-                @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef) {
+                @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
+                @Inject(PageHeaderService) private pageHeaderService: PageHeaderService,
+                @Inject(Title) _titleService?: Title,
+                @Inject(Meta) _metaService?: Meta) {
         analytics || throwError('Could not inject AnalyticsService');
         seoService || throwError('Could not inject SeoService');
         logger || throwError('Could not inject TranslateService');
         translateService || throwError('Could not inject TranslateService');
         router || throwError('Could not inject Router');
         activatedRoute || throwError('Could not inject ActivatedRoute');
-        pageHeaderService || throwError('Could not inject PageHeaderService');
         applicationRef || throwError('Could not inject ApplicationRef');
         viewContainerRef || throwError('Could not inject ViewContainerRef');
+        pageHeaderService || throwError('Could not inject PageHeaderService');
+
+        logger.info('Application component initialization',
+            analytics, seoService, translateService, router,
+            activatedRoute, applicationRef, viewContainerRef,
+            pageHeaderService, _titleService, _metaService);
+        // check for ensuring Title/Meta service in page header
+        if (!pageHeaderService.titleService && _titleService) {
+            pageHeaderService.titleService = _titleService;
+        }
+        if (!pageHeaderService.metaService && _metaService) {
+            pageHeaderService.metaService = _metaService;
+        }
 
         AppConfig.appRef = this.applicationRef;
         AppConfig.viewRef = this.viewContainerRef;
     }
 
     ngOnInit(): void {
-        this.analytics.trackPageViews();
-        this.seoService.trackCanonicalChanges();
+        try {
+            this.analytics.trackPageViews();
+            this.seoService.trackCanonicalChanges();
 
-        // detect browser language and supported languages
-        let language: string = HtmlUtils.detectBrowserLanguage();
-        if (!language.length || AppConfig.i18n.languages.indexOf(language) < 0) {
-            language = AppConfig.i18n.defaultLang;
+            // detect browser language and supported languages
+            let language: string = HtmlUtils.detectBrowserLanguage();
+            if (!language.length || AppConfig.i18n.languages.indexOf(language) < 0) {
+                language = AppConfig.i18n.defaultLang;
 
-        } else if (AppConfig.i18n.defaultLang !== language) {
-            AppConfig.i18n.defaultLang = language;
+            } else if (AppConfig.i18n.defaultLang !== language) {
+                AppConfig.i18n.defaultLang = language;
+            }
+
+            this.logger.warn('Default application language', language);
+            this.translateService.setDefaultLang(language);
+            this.translateService.use(AppConfig.i18n.use);
+            this.translateService.addLangs(AppConfig.i18n.languages);
+            this.translateService.get('common.search.placeholder')
+                .subscribe(value => this.logger.debug(
+                    'Translated?', 'common.search.placeholder', ' -> ', value));
+            this.translateService.get('app')
+                .subscribe(value => this.logger.debug(
+                    'Translated?', 'app', ' -> ', value));
+
+            // apply moment locale for date/time
+            moment.locale(AppConfig.i18n.use);
+
+            // apply application header configuration
+            this.detectForPageHeaderConfig();
+        } catch (e) {
+            this.logger.error('Error on AppComponent::ngOnInit', e);
         }
-
-        this.logger.warn('Default application language', language);
-        this.translateService.setDefaultLang(language);
-        this.translateService.use(AppConfig.i18n.use);
-        this.translateService.addLangs(AppConfig.i18n.languages);
-        this.translateService.get('common.search.placeholder')
-            .subscribe(value => this.logger.debug(
-                'Translated?', 'common.search.placeholder', ' -> ', value));
-        this.translateService.get('app')
-            .subscribe(value => this.logger.debug(
-                'Translated?', 'app', ' -> ', value));
-
-        // apply moment locale for date/time
-        moment.locale(AppConfig.i18n.use);
-
-        // apply application header configuration
-        this.detectForPageHeaderConfig();
     }
 
     /**
      * Detect for applying page header configuration
      */
     private detectForPageHeaderConfig() {
-        // listen router for applying page header configuration
-        this.router.events.pipe(
-            filter(event => event instanceof NavigationEnd),
-            map(() => {
-                let headerConfig: IPageHeaderConfig;
-                const child = this.activatedRoute.firstChild;
-                if (child.snapshot.data['headerConfig']) {
-                    headerConfig = child.snapshot.data['headerConfig'] as IPageHeaderConfig;
-                    if (headerConfig) {
-                        let routeTitles: string[];
-                        routeTitles = [AppConfig.PageConfig.title];
-                        if (isArray(headerConfig.title)) {
-                            routeTitles = routeTitles.concat(Array.from(headerConfig.title));
-                        } else if ((headerConfig.title || '').length) {
-                            routeTitles.push(headerConfig.title as string);
+        try {
+            // listen router for applying page header configuration
+            this.router.events.pipe(
+                filter(event => event instanceof NavigationEnd),
+                map(() => {
+                    let headerConfig: IPageHeaderConfig;
+                    try {
+                        const child = this.activatedRoute.firstChild;
+                        if (child.snapshot.data['headerConfig']) {
+                            headerConfig = child.snapshot.data['headerConfig'] as IPageHeaderConfig;
+                            if (headerConfig) {
+                                let routeTitles: string[];
+                                routeTitles = [AppConfig.PageConfig.title];
+                                if (isArray(headerConfig.title)) {
+                                    routeTitles = routeTitles.concat(Array.from(headerConfig.title));
+                                } else if ((headerConfig.title || '').length) {
+                                    routeTitles.push(headerConfig.title as string);
+                                }
+                                headerConfig.title = routeTitles;
+                            }
                         }
-                        headerConfig.title = routeTitles;
+                    } catch (e) {
+                        this.logger.error('Error on AppComponent::detectForPageHeaderConfig', e);
                     }
+                    return (headerConfig || AppConfig.PageConfig);
+                }),
+            ).subscribe((headerConfig: IPageHeaderConfig) => {
+                // wait for translation service configuration
+                if (headerConfig) {
+                    let timer: number;
+                    timer = window.setTimeout(() => {
+                        try {
+                            this.pageHeaderService.setConfig(headerConfig);
+                        } catch (e) {
+                            this.logger.error('Error on AppComponent::detectForPageHeaderConfig', e);
+                        }
+                        window.clearTimeout(timer);
+                    }, 300);
                 }
-                return (headerConfig || AppConfig.PageConfig);
-            }),
-        ).subscribe((headerConfig: IPageHeaderConfig) => {
-            // wait for translation service configuration
-            if (headerConfig) {
-                let timer: number;
-                timer = window.setTimeout(() => {
-                    this.pageHeaderService.setConfig(headerConfig);
-                    window.clearTimeout(timer);
-                }, 300);
-            }
-        });
+            });
+        } catch (e) {
+            this.logger.error('Error on AppComponent::detectForPageHeaderConfig', e);
+        }
     }
 }

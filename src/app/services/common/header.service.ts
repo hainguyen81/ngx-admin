@@ -115,12 +115,10 @@ export class PageHeaderService implements IPageHeaderService {
      */
     constructor(@Inject(TranslateService) private translateService: TranslateService,
                 @Inject(NGXLogger) private logger: NGXLogger,
-                @Inject(Title) private _titleService: Title,
-                @Inject(Meta) private _metaService: Meta) {
+                @Inject(Title) private _titleService?: Title,
+                @Inject(Meta) private _metaService?: Meta) {
         logger || throwError('Could not inject NGXLogger');
         translateService || throwError('Could not inject TranslateService');
-        _titleService || throwError('Could not inject Title');
-        _metaService || throwError('Could not inject Meta');
     }
 
     // -------------------------------------------------
@@ -133,15 +131,12 @@ export class PageHeaderService implements IPageHeaderService {
         }
 
         // apply title
-        this.getLogger().debug('Resolve page header',
+        this.getLogger().info('Resolve page header',
             this.titleService, this.metaService, this.getConfig());
         if (this.titleService && (this.getConfig().title || '').length) {
-            let translate: TranslateService;
-            translate = this.getTranslateService();
-            let finalTitle: string[];
-            finalTitle = [];
-            let title: string | string[];
-            title = this.getConfig().title;
+            const translate: TranslateService = this.getTranslateService();
+            const finalTitle: string[] = [];
+            const title: string | string[] = this.getConfig().title;
             if (translate) {
                 if (isArray(title)) {
                     Array.from(title).forEach(t => {
@@ -155,21 +150,25 @@ export class PageHeaderService implements IPageHeaderService {
             this.getLogger().debug('Translate?',
                 this.getConfig().title, ' -> ', finalTitle.join(' - '));
             this.titleService.setTitle(finalTitle.join(' - '));
+        } else {
+            this.getLogger().warn('Could not inject Title or invalid title configuration?',
+                this.titleService, this.getConfig().title);
         }
 
         // apply meta-data
         if (this.metaService && this.getConfig().meta && this.getConfig().meta.length) {
-            let ms: Meta;
-            ms = this.metaService;
+            const ms: Meta = this.metaService;
             this.getConfig().meta.forEach(meta => {
-                let tag: HTMLMetaElement;
-                tag = ms.getTag(meta.id);
+                const tag: HTMLMetaElement = ms.getTag(meta.id);
                 if (!tag) {
                     ms.addTag(meta);
                 } else {
                     ms.updateTag(meta, meta.id);
                 }
             });
+        } else {
+            this.getLogger().warn('Could not inject Meta or invalid meta configuration?',
+                this.metaService, this.getConfig().meta);
         }
     }
 }

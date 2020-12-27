@@ -201,7 +201,12 @@ export const InitializationProviders: StaticProvider[] = [
             return () => {
                 return new Promise((resolve, reject) => {
                     window.console.info(['Application Initializer Listener']);
-                    resolve(true);
+                    try {
+                        resolve(true);
+                    } catch (e) {
+                        window.console.error(['Application Initializer Error', e]);
+                        reject(e);
+                    }
                 });
             };
         },
