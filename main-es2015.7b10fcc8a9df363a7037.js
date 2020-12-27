@@ -5969,6 +5969,7 @@ const AppConfig = {
     TOASTER: _toaststr_config__WEBPACK_IMPORTED_MODULE_2__["TOASTER"],
     API: {},
     Db: _db_config__WEBPACK_IMPORTED_MODULE_0__["dbConfig"],
+    BaseProviders: _app_providers__WEBPACK_IMPORTED_MODULE_1__["BaseProviders"],
     Providers: _app_providers__WEBPACK_IMPORTED_MODULE_1__["Providers"],
     Env: _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"],
     i18n: _i18n_config__WEBPACK_IMPORTED_MODULE_6__["i18n"],
@@ -5991,7 +5992,7 @@ AppConfig.Storage.secureConfig = Object.assign({}, Object(_storage_config__WEBPA
 /*!*****************************************!*\
   !*** ./src/app/config/app.providers.ts ***!
   \*****************************************/
-/*! exports provided: BASE_HREF, HttpLoaderFactory, InitializationProviders, CommonProviders, InterceptorProviders, AuthenticationProviders, ThirdPartyApiProviders, I18NProviders, UserProviders, CustomerProviders, GeneralSettingsProviders, OrganizationProviders, CountryProviders, WarehouseProviders, MenuProviders, ExampleProviders, BaseProviders, Providers, ɵ0, ɵ1, ɵ2, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9 */
+/*! exports provided: BASE_HREF, HttpLoaderFactory, InitializationProviders, CommonProviders, InterceptorProviders, AuthenticationProviders, ThirdPartyApiProviders, I18NProviders, UserProviders, CustomerProviders, GeneralSettingsProviders, OrganizationProviders, CountryProviders, WarehouseProviders, MenuProviders, ExampleProviders, BaseProviders, BusinessProviders, Providers, ɵ0, ɵ1, ɵ2, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6013,6 +6014,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MenuProviders", function() { return MenuProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExampleProviders", function() { return ExampleProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BaseProviders", function() { return BaseProviders; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BusinessProviders", function() { return BusinessProviders; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Providers", function() { return Providers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵ0", function() { return ɵ0; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵ1", function() { return ɵ1; });
@@ -6640,7 +6642,8 @@ const BaseProviders = []
     .concat(...ThirdPartyApiProviders)
     .concat(...AuthenticationProviders)
     .concat(...I18NProviders);
-const Providers = BaseProviders
+window.console.info(['Base PROVIDERS', BaseProviders]);
+const BusinessProviders = []
     .concat(...GeneralSettingsProviders)
     .concat(...OrganizationProviders)
     .concat(...UserProviders)
@@ -6650,6 +6653,9 @@ const Providers = BaseProviders
     .concat(...MenuProviders)
     .concat(..._worker_providers__WEBPACK_IMPORTED_MODULE_78__["WorkerProviders"])
     .concat(...ExampleProviders);
+window.console.info(['Business PROVIDERS', BusinessProviders]);
+const Providers = [].concat(...BaseProviders).concat(...BusinessProviders);
+window.console.info(['TOTAL PROVIDERS', Providers]);
 
 
 
