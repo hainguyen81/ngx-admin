@@ -18,7 +18,7 @@ import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
 import JsonUtils from '../utils/common/json.utils';
 import {AUTH_STRATEGY_OPTIONS} from '../config/auth.config';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     protected getLogger(): NGXLogger {
         return this.logger;

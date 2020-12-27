@@ -39,7 +39,7 @@ export function registerServiceWorkers(): ModuleWithProviders<{}>[] {
     return serviceWorkers;
 }
 
-export const WarehouseServiceWorkers: ModuleWithProviders<{}>[] = [].concat(...registerServiceWorkers());
+export const WarehouseServiceWorkers: ModuleWithProviders<{}>[] = [].concat(registerServiceWorkers());
 
 export const ServiceWorkerProviders: ModuleWithProviders<{}>[] = []
-    .concat(...WarehouseServiceWorkers);
+    .concat(WarehouseServiceWorkers);

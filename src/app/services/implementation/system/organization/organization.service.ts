@@ -8,7 +8,7 @@ import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {IOrganization} from '../../../../@core/data/system/organization';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class OrganizationDbService extends BaseDbService<IOrganization> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -30,7 +30,7 @@ export class OrganizationDbService extends BaseDbService<IOrganization> {
     }
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class OrganizationHttpService extends BaseHttpService<IOrganization> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

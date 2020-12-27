@@ -57,7 +57,7 @@ const routes: Routes = [
 
 const config: ExtraOptions = {
     useHash: false,
-    preloadingStrategy: PreloadAllModules
+    preloadingStrategy: PreloadAllModules,
 };
 
 @NgModule({

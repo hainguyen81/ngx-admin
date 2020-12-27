@@ -10,7 +10,7 @@ import {IUser} from '../../../../@core/data/system/user';
 import {Constants as CommonConstants} from '../../../../@core/data/constants/common.constants';
 import STATUS = CommonConstants.COMMON.STATUS;
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UserDbService extends BaseDbService<IUser> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -40,7 +40,7 @@ export class UserDbService extends BaseDbService<IUser> {
     }
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UserHttpService extends BaseHttpService<IUser> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

@@ -4,7 +4,7 @@ import {BaseDataSource} from '../../../common/datasource.service';
 import {IUser} from '../../../../@core/data/system/user';
 import {NGXLogger} from 'ngx-logger';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UserDataSource extends BaseDataSource<IUser, UserHttpService, UserDbService> {
 
     constructor(@Inject(UserHttpService) httpService: UserHttpService,

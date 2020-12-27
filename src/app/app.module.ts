@@ -36,7 +36,6 @@ import {AppConfig} from './config/app.config';
 import {NbAuthModule} from '@nebular/auth';
 import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 import {AUTH_STRATEGY_OPTIONS} from './config/auth.config';
-import {NbxAuthOAuth2Token} from './auth/auth.oauth2.token';
 /* Logger */
 import {LoggerModule} from 'ngx-logger';
 /* Database */
@@ -81,8 +80,8 @@ import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
 import {ServiceWorkerProviders} from './config/worker.providers';
-import {environment} from '../environments/environment';
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
+import {ServicesInjectionModule} from './services.injection.module';
 
 
 @NgModule({
@@ -201,6 +200,9 @@ import {registerBrowserServiceWorkers} from './sw/core/service.workers.registrat
         NgxBarcodeModule.forRoot(),
         BarecodeScannerLivestreamModule,
 
+        /* Services Injection Module */
+        ServicesInjectionModule.forRoot(),
+
         /* Mock data module */
         MockDataModule,
     ],
@@ -215,7 +217,7 @@ export class AppModule {
     constructor(injector: Injector,
                 iconLibraries: NbIconLibraries) {
         // @ts-ignore
-        AppConfig.Injector = Injector.create({providers: AppConfig.Providers.All, parent: injector});
+        AppConfig.Injector = Injector.create({ providers: AppConfig.Providers.All, parent: injector });
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('fas', {packClass: 'fas', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});

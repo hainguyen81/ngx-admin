@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {IOrganization} from '../../../../@core/data/system/organization';
 import {OrganizationDbService, OrganizationHttpService} from './organization.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class OrganizationDataSource
     extends BaseDataSource<IOrganization, OrganizationHttpService, OrganizationDbService> {
 

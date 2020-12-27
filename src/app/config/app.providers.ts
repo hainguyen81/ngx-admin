@@ -654,22 +654,22 @@ export const ExampleProviders: Provider[] = [
 ];
 
 export const BaseProviders: Provider[] = []
-    .concat(...InitializationProviders)
-    .concat(...CommonProviders)
-    .concat(...InterceptorProviders)
-    .concat(...ThirdPartyApiProviders)
-    .concat(...AuthenticationProviders)
-    .concat(...I18NProviders)
-    .concat(...GeneralSettingsProviders)
-    .concat(...OrganizationProviders)
-    .concat(...UserProviders);
+    .concat(InitializationProviders)
+    .concat(CommonProviders)
+    .concat(InterceptorProviders)
+    .concat(ThirdPartyApiProviders)
+    .concat(AuthenticationProviders)
+    .concat(I18NProviders)
+    .concat(GeneralSettingsProviders)
+    .concat(OrganizationProviders)
+    .concat(UserProviders);
 
 export const BusinessProviders: Provider[] = []
-    .concat(...CustomerProviders)
-    .concat(...CountryProviders)
-    .concat(...WarehouseProviders)
-    .concat(...MenuProviders)
-    .concat(...WorkerProviders)
-    .concat(...ExampleProviders);
+    .concat(CustomerProviders)
+    .concat(CountryProviders)
+    .concat(WarehouseProviders)
+    .concat(MenuProviders)
+    .concat(WorkerProviders)
+    .concat(ExampleProviders);
 
-export const Providers: Provider[] = [].concat(...BaseProviders).concat(...BusinessProviders);
+export const Providers: Provider[] = [].concat(BaseProviders).concat(BusinessProviders);

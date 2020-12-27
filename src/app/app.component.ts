@@ -21,7 +21,7 @@ import AppUtils from './utils/app/app.utils';
 @Component({
     selector: 'ngx-app',
     template: `<router-outlet></router-outlet>`,
-    providers: AppConfig.Providers.Base,
+    providers: AppConfig.Providers.All,
 })
 export class AppComponent implements OnInit {
 

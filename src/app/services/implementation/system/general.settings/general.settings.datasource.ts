@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {IGeneralSettings} from '../../../../@core/data/system/general.settings';
 import {GeneralSettingsDbService, GeneralSettingsHttpService} from './general.settings.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class GeneralSettingsDatasource
     extends BaseDataSource<IGeneralSettings, GeneralSettingsHttpService, GeneralSettingsDbService> {
 
