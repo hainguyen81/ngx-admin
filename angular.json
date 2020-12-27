@@ -115,13 +115,13 @@
                             ]
                         },
                         "github_prod": {
-                            "optimization": false,
+                            "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
                             "extractCss": true,
                             "namedChunks": true,
                             "aot": true,
-                            "buildOptimizer": false,
+                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "vendorChunk": true,
                             "commonChunk": true,
