@@ -7367,6 +7367,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
     var moment__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_12__);
+    /* harmony import */
+
+
+    var _utils_app_app_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ./utils/app/app.utils */
+    "./src/app/utils/app/app.utils.ts");
     /**
      * @license
      * Copyright Akveo. All Rights Reserved.
@@ -7395,8 +7401,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         activatedRoute || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject ActivatedRoute');
         applicationRef || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject ApplicationRef');
         viewContainerRef || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject ViewContainerRef');
-        pageHeaderService || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject PageHeaderService');
         logger.info('Application component initialization', analytics, seoService, translateService, router, activatedRoute, applicationRef, viewContainerRef, pageHeaderService, _titleService, _metaService); // check for ensuring Title/Meta service in page header
+
+        pageHeaderService = pageHeaderService || _utils_app_app_utils__WEBPACK_IMPORTED_MODULE_13__["default"].getService(_services_common_header_service__WEBPACK_IMPORTED_MODULE_6__["PageHeaderService"]);
+        pageHeaderService = pageHeaderService || new _services_common_header_service__WEBPACK_IMPORTED_MODULE_6__["PageHeaderService"](translateService, logger, _titleService, _metaService);
 
         if (!pageHeaderService.titleService && _titleService) {
           pageHeaderService.titleService = _titleService;
@@ -10491,7 +10499,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       // @ts-ignore
       _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Injector = _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"].create({
-        providers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Providers,
+        providers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Providers.All,
         parent: injector
       });
       iconLibraries.registerFontPack('fa', {
@@ -11843,8 +11851,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       TOASTER: _toaststr_config__WEBPACK_IMPORTED_MODULE_2__["TOASTER"],
       API: {},
       Db: _db_config__WEBPACK_IMPORTED_MODULE_0__["dbConfig"],
-      BaseProviders: _app_providers__WEBPACK_IMPORTED_MODULE_1__["BaseProviders"],
-      Providers: _app_providers__WEBPACK_IMPORTED_MODULE_1__["Providers"],
+      Providers: {
+        Base: _app_providers__WEBPACK_IMPORTED_MODULE_1__["BaseProviders"],
+        Business: _app_providers__WEBPACK_IMPORTED_MODULE_1__["BusinessProviders"],
+        All: _app_providers__WEBPACK_IMPORTED_MODULE_1__["Providers"]
+      },
       Env: _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"],
       i18n: _i18n_config__WEBPACK_IMPORTED_MODULE_6__["i18n"],
       IdGenerators: _generator_config__WEBPACK_IMPORTED_MODULE_7__["IdGenerators"],

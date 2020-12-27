@@ -4685,11 +4685,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_common_html_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utils/common/html.utils */ "./src/app/utils/common/html.utils.ts");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _utils_app_app_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./utils/app/app.utils */ "./src/app/utils/app/app.utils.ts");
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+
 
 
 
@@ -4722,9 +4724,11 @@ class AppComponent {
         activatedRoute || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject ActivatedRoute');
         applicationRef || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject ApplicationRef');
         viewContainerRef || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject ViewContainerRef');
-        pageHeaderService || Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Could not inject PageHeaderService');
         logger.info('Application component initialization', analytics, seoService, translateService, router, activatedRoute, applicationRef, viewContainerRef, pageHeaderService, _titleService, _metaService);
         // check for ensuring Title/Meta service in page header
+        pageHeaderService = pageHeaderService || _utils_app_app_utils__WEBPACK_IMPORTED_MODULE_13__["default"].getService(_services_common_header_service__WEBPACK_IMPORTED_MODULE_6__["PageHeaderService"]);
+        pageHeaderService = pageHeaderService
+            || new _services_common_header_service__WEBPACK_IMPORTED_MODULE_6__["PageHeaderService"](translateService, logger, _titleService, _metaService);
         if (!pageHeaderService.titleService && _titleService) {
             pageHeaderService.titleService = _titleService;
         }
@@ -5121,7 +5125,7 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
     constructor(injector, iconLibraries) {
         // @ts-ignore
-        _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Injector = _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"].create({ providers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Providers, parent: injector });
+        _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Injector = _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"].create({ providers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Providers.All, parent: injector });
         iconLibraries.registerFontPack('fa', { packClass: 'fa', iconClassPrefix: 'fa' });
         iconLibraries.registerFontPack('fas', { packClass: 'fas', iconClassPrefix: 'fa' });
         iconLibraries.registerFontPack('far', { packClass: 'far', iconClassPrefix: 'fa' });
@@ -5969,8 +5973,11 @@ const AppConfig = {
     TOASTER: _toaststr_config__WEBPACK_IMPORTED_MODULE_2__["TOASTER"],
     API: {},
     Db: _db_config__WEBPACK_IMPORTED_MODULE_0__["dbConfig"],
-    BaseProviders: _app_providers__WEBPACK_IMPORTED_MODULE_1__["BaseProviders"],
-    Providers: _app_providers__WEBPACK_IMPORTED_MODULE_1__["Providers"],
+    Providers: {
+        Base: _app_providers__WEBPACK_IMPORTED_MODULE_1__["BaseProviders"],
+        Business: _app_providers__WEBPACK_IMPORTED_MODULE_1__["BusinessProviders"],
+        All: _app_providers__WEBPACK_IMPORTED_MODULE_1__["Providers"],
+    },
     Env: _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"],
     i18n: _i18n_config__WEBPACK_IMPORTED_MODULE_6__["i18n"],
     IdGenerators: _generator_config__WEBPACK_IMPORTED_MODULE_7__["IdGenerators"],
