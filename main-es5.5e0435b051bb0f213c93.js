@@ -11878,6 +11878,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
   function srcAppConfigAppProvidersTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
+    var _concat$concat$concat, _concat$concat$concat2, _concat$concat$concat3, _concat$concat$concat4, _concat$concat$concat5, _concat$concat$concat6, _concat$concat$concat7, _concat$concat$concat8, _concat$concat$concat9, _concat$concat$concat10, _concat$concat$concat11, _concat$concat$concat12, _concat$concat, _concat, _ref7;
+
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
 
@@ -13021,8 +13023,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       useClass: _services_common_empty_service__WEBPACK_IMPORTED_MODULE_8__["EmptyService"],
       deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_23__["ConnectionService"]]
     }];
-    var Providers = [].concat(InitializationProviders).concat(CommonProviders).concat(InterceptorProviders).concat(ThirdPartyApiProviders).concat(AuthenticationProviders).concat(I18NProviders).concat(GeneralSettingsProviders).concat(OrganizationProviders).concat(UserProviders).concat(CustomerProviders).concat(CountryProviders).concat(WarehouseProviders).concat(MenuProviders).concat(_worker_providers__WEBPACK_IMPORTED_MODULE_78__["WorkerProviders"]).concat(ExampleProviders);
+
+    var Providers = (_concat$concat$concat = (_concat$concat$concat2 = (_concat$concat$concat3 = (_concat$concat$concat4 = (_concat$concat$concat5 = (_concat$concat$concat6 = (_concat$concat$concat7 = (_concat$concat$concat8 = (_concat$concat$concat9 = (_concat$concat$concat10 = (_concat$concat$concat11 = (_concat$concat$concat12 = (_concat$concat = (_concat = (_ref7 = []).concat.apply(_ref7, InitializationProviders)).concat.apply(_concat, CommonProviders)).concat.apply(_concat$concat, InterceptorProviders)).concat.apply(_concat$concat$concat12, ThirdPartyApiProviders)).concat.apply(_concat$concat$concat11, AuthenticationProviders)).concat.apply(_concat$concat$concat10, I18NProviders)).concat.apply(_concat$concat$concat9, GeneralSettingsProviders)).concat.apply(_concat$concat$concat8, OrganizationProviders)).concat.apply(_concat$concat$concat7, UserProviders)).concat.apply(_concat$concat$concat6, CustomerProviders)).concat.apply(_concat$concat$concat5, CountryProviders)).concat.apply(_concat$concat$concat4, WarehouseProviders)).concat.apply(_concat$concat$concat3, MenuProviders)).concat.apply(_concat$concat$concat2, _toConsumableArray(_worker_providers__WEBPACK_IMPORTED_MODULE_78__["WorkerProviders"]))).concat.apply(_concat$concat$concat, ExampleProviders);
     /***/
+
   },
 
   /***/
@@ -15949,6 +15953,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
   function srcAppConfigWorkerProvidersTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
+    var _ref8;
+
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
 
@@ -16057,8 +16063,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     }
 
     var WarehouseServiceWorkers = [].concat(registerServiceWorkers());
-    var ServiceWorkerProviders = [].concat(WarehouseServiceWorkers);
+
+    var ServiceWorkerProviders = (_ref8 = []).concat.apply(_ref8, _toConsumableArray(WarehouseServiceWorkers));
     /***/
+
   },
 
   /***/
@@ -18498,9 +18506,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }
 
       if (subItems.length && !isNaN(index) && 0 <= index && index < this.length) {
-        var _ref7;
+        var _ref9;
 
-        (_ref7 = array || []).splice.apply(_ref7, [index + 1, 0].concat(_toConsumableArray(subItems)));
+        (_ref9 = array || []).splice.apply(_ref9, [index + 1, 0].concat(_toConsumableArray(subItems)));
       }
     }
 
@@ -30355,10 +30363,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             return undefined;
           }
 
-          return Array.from(m).reduce(function (o, _ref8) {
-            var _ref9 = _slicedToArray(_ref8, 2),
-                k = _ref9[0],
-                v = _ref9[1];
+          return Array.from(m).reduce(function (o, _ref10) {
+            var _ref11 = _slicedToArray(_ref10, 2),
+                k = _ref11[0],
+                v = _ref11[1];
 
             // Be careful! Maps can have non-String keys; object literals can't.
             // @ts-ignore

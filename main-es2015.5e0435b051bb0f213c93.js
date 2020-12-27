@@ -6635,21 +6635,21 @@ const ExampleProviders = [
     { provide: _services_common_empty_service__WEBPACK_IMPORTED_MODULE_8__["EmptyService"], useClass: _services_common_empty_service__WEBPACK_IMPORTED_MODULE_8__["EmptyService"], deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_23__["ConnectionService"]] },
 ];
 const Providers = []
-    .concat(InitializationProviders)
-    .concat(CommonProviders)
-    .concat(InterceptorProviders)
-    .concat(ThirdPartyApiProviders)
-    .concat(AuthenticationProviders)
-    .concat(I18NProviders)
-    .concat(GeneralSettingsProviders)
-    .concat(OrganizationProviders)
-    .concat(UserProviders)
-    .concat(CustomerProviders)
-    .concat(CountryProviders)
-    .concat(WarehouseProviders)
-    .concat(MenuProviders)
-    .concat(_worker_providers__WEBPACK_IMPORTED_MODULE_78__["WorkerProviders"])
-    .concat(ExampleProviders);
+    .concat(...InitializationProviders)
+    .concat(...CommonProviders)
+    .concat(...InterceptorProviders)
+    .concat(...ThirdPartyApiProviders)
+    .concat(...AuthenticationProviders)
+    .concat(...I18NProviders)
+    .concat(...GeneralSettingsProviders)
+    .concat(...OrganizationProviders)
+    .concat(...UserProviders)
+    .concat(...CustomerProviders)
+    .concat(...CountryProviders)
+    .concat(...WarehouseProviders)
+    .concat(...MenuProviders)
+    .concat(..._worker_providers__WEBPACK_IMPORTED_MODULE_78__["WorkerProviders"])
+    .concat(...ExampleProviders);
 
 
 
@@ -7656,7 +7656,7 @@ function registerServiceWorkers() {
 }
 const WarehouseServiceWorkers = [].concat(registerServiceWorkers());
 const ServiceWorkerProviders = []
-    .concat(WarehouseServiceWorkers);
+    .concat(...WarehouseServiceWorkers);
 
 
 /***/ }),
