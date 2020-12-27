@@ -11918,7 +11918,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
   function srcAppConfigAppProvidersTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
-    var _concat$concat$concat, _concat$concat$concat2, _concat$concat$concat3, _concat$concat, _concat, _ref7, _concat$concat$concat4, _concat$concat$concat5, _concat$concat$concat6, _concat$concat$concat7, _concat$concat$concat8, _concat$concat$concat9, _concat$concat2, _concat2, _ref8, _concat3, _ref9;
+    var _concat$concat$concat, _concat$concat$concat2, _concat$concat$concat3, _concat$concat$concat4, _concat$concat$concat5, _concat$concat$concat6, _concat$concat, _concat, _ref7, _concat$concat$concat7, _concat$concat$concat8, _concat$concat$concat9, _concat$concat2, _concat2, _ref8, _concat3, _ref9;
 
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
@@ -13076,11 +13076,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       deps: [ngx_indexed_db__WEBPACK_IMPORTED_MODULE_9__["NgxIndexedDBService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"], ng_connection_service__WEBPACK_IMPORTED_MODULE_23__["ConnectionService"]]
     }];
 
-    var BaseProviders = (_concat$concat$concat = (_concat$concat$concat2 = (_concat$concat$concat3 = (_concat$concat = (_concat = (_ref7 = []).concat.apply(_ref7, InitializationProviders)).concat.apply(_concat, CommonProviders)).concat.apply(_concat$concat, InterceptorProviders)).concat.apply(_concat$concat$concat3, ThirdPartyApiProviders)).concat.apply(_concat$concat$concat2, AuthenticationProviders)).concat.apply(_concat$concat$concat, I18NProviders);
+    var BaseProviders = (_concat$concat$concat = (_concat$concat$concat2 = (_concat$concat$concat3 = (_concat$concat$concat4 = (_concat$concat$concat5 = (_concat$concat$concat6 = (_concat$concat = (_concat = (_ref7 = []).concat.apply(_ref7, InitializationProviders)).concat.apply(_concat, CommonProviders)).concat.apply(_concat$concat, InterceptorProviders)).concat.apply(_concat$concat$concat6, ThirdPartyApiProviders)).concat.apply(_concat$concat$concat5, AuthenticationProviders)).concat.apply(_concat$concat$concat4, I18NProviders)).concat.apply(_concat$concat$concat3, GeneralSettingsProviders)).concat.apply(_concat$concat$concat2, OrganizationProviders)).concat.apply(_concat$concat$concat, UserProviders);
 
     window.console.info(['Base PROVIDERS', BaseProviders]);
 
-    var BusinessProviders = (_concat$concat$concat4 = (_concat$concat$concat5 = (_concat$concat$concat6 = (_concat$concat$concat7 = (_concat$concat$concat8 = (_concat$concat$concat9 = (_concat$concat2 = (_concat2 = (_ref8 = []).concat.apply(_ref8, GeneralSettingsProviders)).concat.apply(_concat2, OrganizationProviders)).concat.apply(_concat$concat2, UserProviders)).concat.apply(_concat$concat$concat9, CustomerProviders)).concat.apply(_concat$concat$concat8, CountryProviders)).concat.apply(_concat$concat$concat7, WarehouseProviders)).concat.apply(_concat$concat$concat6, MenuProviders)).concat.apply(_concat$concat$concat5, _toConsumableArray(_worker_providers__WEBPACK_IMPORTED_MODULE_78__["WorkerProviders"]))).concat.apply(_concat$concat$concat4, ExampleProviders);
+    var BusinessProviders = (_concat$concat$concat7 = (_concat$concat$concat8 = (_concat$concat$concat9 = (_concat$concat2 = (_concat2 = (_ref8 = []).concat.apply(_ref8, CustomerProviders)).concat.apply(_concat2, CountryProviders)).concat.apply(_concat$concat2, WarehouseProviders)).concat.apply(_concat$concat$concat9, MenuProviders)).concat.apply(_concat$concat$concat8, _toConsumableArray(_worker_providers__WEBPACK_IMPORTED_MODULE_78__["WorkerProviders"]))).concat.apply(_concat$concat$concat7, ExampleProviders);
 
     window.console.info(['Business PROVIDERS', BusinessProviders]);
 
@@ -22860,6 +22860,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var _general_settings_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ./general.settings.service */
     "./src/app/services/implementation/system/general.settings/general.settings.service.ts");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
 
     var GeneralSettingsDatasource = /*#__PURE__*/function (_common_datasource_se5) {
       _inherits(GeneralSettingsDatasource, _common_datasource_se5);
@@ -22874,8 +22880,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return GeneralSettingsDatasource;
     }(_common_datasource_service__WEBPACK_IMPORTED_MODULE_0__["BaseDataSource"]);
-    /***/
 
+    GeneralSettingsDatasource.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({
+      factory: function GeneralSettingsDatasource_Factory() {
+        return new GeneralSettingsDatasource(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_general_settings_service__WEBPACK_IMPORTED_MODULE_2__["GeneralSettingsHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_general_settings_service__WEBPACK_IMPORTED_MODULE_2__["GeneralSettingsDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NGXLogger"]));
+      },
+      token: GeneralSettingsDatasource,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/
@@ -22945,6 +22958,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
 
     var GeneralSettingsDbService = /*#__PURE__*/function (_common_database_serv5) {
       _inherits(GeneralSettingsDbService, _common_database_serv5);
@@ -22960,6 +22979,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       return GeneralSettingsDbService;
     }(_common_database_service__WEBPACK_IMPORTED_MODULE_3__["BaseDbService"]);
 
+    GeneralSettingsDbService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({
+      factory: function GeneralSettingsDbService_Factory() {
+        return new GeneralSettingsDbService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"]));
+      },
+      token: GeneralSettingsDbService,
+      providedIn: "root"
+    });
+
     var GeneralSettingsHttpService = /*#__PURE__*/function (_common_http_service_5) {
       _inherits(GeneralSettingsHttpService, _common_http_service_5);
 
@@ -22973,8 +23000,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return GeneralSettingsHttpService;
     }(_common_http_service__WEBPACK_IMPORTED_MODULE_1__["BaseHttpService"]);
-    /***/
 
+    GeneralSettingsHttpService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({
+      factory: function GeneralSettingsHttpService_Factory() {
+        return new GeneralSettingsHttpService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](GeneralSettingsDbService));
+      },
+      token: GeneralSettingsHttpService,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/
@@ -23014,6 +23048,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var _organization_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ./organization.service */
     "./src/app/services/implementation/system/organization/organization.service.ts");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
 
     var OrganizationDataSource = /*#__PURE__*/function (_common_datasource_se6) {
       _inherits(OrganizationDataSource, _common_datasource_se6);
@@ -23028,8 +23068,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return OrganizationDataSource;
     }(_common_datasource_service__WEBPACK_IMPORTED_MODULE_0__["BaseDataSource"]);
-    /***/
 
+    OrganizationDataSource.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({
+      factory: function OrganizationDataSource_Factory() {
+        return new OrganizationDataSource(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_organization_service__WEBPACK_IMPORTED_MODULE_2__["OrganizationHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_organization_service__WEBPACK_IMPORTED_MODULE_2__["OrganizationDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NGXLogger"]));
+      },
+      token: OrganizationDataSource,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/
@@ -23099,6 +23146,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ng_connection_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ng-connection-service */
     "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
 
     var OrganizationDbService = /*#__PURE__*/function (_common_database_serv6) {
       _inherits(OrganizationDbService, _common_database_serv6);
@@ -23136,6 +23189,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       return OrganizationDbService;
     }(_common_database_service__WEBPACK_IMPORTED_MODULE_3__["BaseDbService"]);
 
+    OrganizationDbService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({
+      factory: function OrganizationDbService_Factory() {
+        return new OrganizationDbService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"]));
+      },
+      token: OrganizationDbService,
+      providedIn: "root"
+    });
+
     var OrganizationHttpService = /*#__PURE__*/function (_common_http_service_6) {
       _inherits(OrganizationHttpService, _common_http_service_6);
 
@@ -23149,8 +23210,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return OrganizationHttpService;
     }(_common_http_service__WEBPACK_IMPORTED_MODULE_1__["BaseHttpService"]);
-    /***/
 
+    OrganizationHttpService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({
+      factory: function OrganizationHttpService_Factory() {
+        return new OrganizationHttpService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](OrganizationDbService));
+      },
+      token: OrganizationHttpService,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/
@@ -23483,6 +23551,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ngx-logger */
     "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
 
     var UserDataSource = /*#__PURE__*/function (_common_datasource_se8) {
       _inherits(UserDataSource, _common_datasource_se8);
@@ -23497,8 +23571,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return UserDataSource;
     }(_common_datasource_service__WEBPACK_IMPORTED_MODULE_1__["BaseDataSource"]);
-    /***/
 
+    UserDataSource.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({
+      factory: function UserDataSource_Factory() {
+        return new UserDataSource(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_user_service__WEBPACK_IMPORTED_MODULE_0__["UserHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_user_service__WEBPACK_IMPORTED_MODULE_0__["UserDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"]));
+      },
+      token: UserDataSource,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/
@@ -23574,6 +23655,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var _core_data_constants_common_constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! ../../../../@core/data/constants/common.constants */
     "./src/app/@core/data/constants/common.constants.ts");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
 
     var STATUS = _core_data_constants_common_constants__WEBPACK_IMPORTED_MODULE_7__["Constants"].COMMON.STATUS;
 
@@ -23621,6 +23708,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       return UserDbService;
     }(_common_database_service__WEBPACK_IMPORTED_MODULE_3__["BaseDbService"]);
 
+    UserDbService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjectable"]({
+      factory: function UserDbService_Factory() {
+        return new UserDbService(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"]));
+      },
+      token: UserDbService,
+      providedIn: "root"
+    });
+
     var UserHttpService = /*#__PURE__*/function (_common_http_service_8) {
       _inherits(UserHttpService, _common_http_service_8);
 
@@ -23634,8 +23729,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return UserHttpService;
     }(_common_http_service__WEBPACK_IMPORTED_MODULE_1__["BaseHttpService"]);
-    /***/
 
+    UserHttpService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjectable"]({
+      factory: function UserHttpService_Factory() {
+        return new UserHttpService(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](UserDbService));
+      },
+      token: UserHttpService,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/

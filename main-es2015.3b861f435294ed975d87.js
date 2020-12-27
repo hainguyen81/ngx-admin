@@ -6665,12 +6665,12 @@ const BaseProviders = []
     .concat(...InterceptorProviders)
     .concat(...ThirdPartyApiProviders)
     .concat(...AuthenticationProviders)
-    .concat(...I18NProviders);
-window.console.info(['Base PROVIDERS', BaseProviders]);
-const BusinessProviders = []
+    .concat(...I18NProviders)
     .concat(...GeneralSettingsProviders)
     .concat(...OrganizationProviders)
-    .concat(...UserProviders)
+    .concat(...UserProviders);
+window.console.info(['Base PROVIDERS', BaseProviders]);
+const BusinessProviders = []
     .concat(...CustomerProviders)
     .concat(...CountryProviders)
     .concat(...WarehouseProviders)
@@ -11951,6 +11951,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_datasource_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/datasource.service */ "./src/app/services/common/datasource.service.ts");
 /* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
 /* harmony import */ var _general_settings_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./general.settings.service */ "./src/app/services/implementation/system/general.settings/general.settings.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+
 
 
 
@@ -11959,6 +11963,7 @@ class GeneralSettingsDatasource extends _common_datasource_service__WEBPACK_IMPO
         super(httpService, dbService, logger);
     }
 }
+GeneralSettingsDatasource.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ factory: function GeneralSettingsDatasource_Factory() { return new GeneralSettingsDatasource(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_general_settings_service__WEBPACK_IMPORTED_MODULE_2__["GeneralSettingsHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_general_settings_service__WEBPACK_IMPORTED_MODULE_2__["GeneralSettingsDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NGXLogger"])); }, token: GeneralSettingsDatasource, providedIn: "root" });
 
 
 /***/ }),
@@ -11981,6 +11986,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+
+
+
 
 
 
@@ -11993,11 +12004,13 @@ class GeneralSettingsDbService extends _common_database_service__WEBPACK_IMPORTE
         super(dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_5__["DB_STORE"].general_settings);
     }
 }
+GeneralSettingsDbService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({ factory: function GeneralSettingsDbService_Factory() { return new GeneralSettingsDbService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"])); }, token: GeneralSettingsDbService, providedIn: "root" });
 class GeneralSettingsHttpService extends _common_http_service__WEBPACK_IMPORTED_MODULE_1__["BaseHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
     }
 }
+GeneralSettingsHttpService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({ factory: function GeneralSettingsHttpService_Factory() { return new GeneralSettingsHttpService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](GeneralSettingsDbService)); }, token: GeneralSettingsHttpService, providedIn: "root" });
 
 
 /***/ }),
@@ -12015,6 +12028,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_datasource_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../common/datasource.service */ "./src/app/services/common/datasource.service.ts");
 /* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
 /* harmony import */ var _organization_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./organization.service */ "./src/app/services/implementation/system/organization/organization.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+
 
 
 
@@ -12023,6 +12040,7 @@ class OrganizationDataSource extends _common_datasource_service__WEBPACK_IMPORTE
         super(httpService, dbService, logger);
     }
 }
+OrganizationDataSource.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ factory: function OrganizationDataSource_Factory() { return new OrganizationDataSource(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_organization_service__WEBPACK_IMPORTED_MODULE_2__["OrganizationHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_organization_service__WEBPACK_IMPORTED_MODULE_2__["OrganizationDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_1__["NGXLogger"])); }, token: OrganizationDataSource, providedIn: "root" });
 
 
 /***/ }),
@@ -12045,6 +12063,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-indexed-db */ "./node_modules/ngx-indexed-db/fesm2015/ngx-indexed-db.js");
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+
+
+
 
 
 
@@ -12069,11 +12093,13 @@ class OrganizationDbService extends _common_database_service__WEBPACK_IMPORTED_M
         };
     }
 }
+OrganizationDbService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({ factory: function OrganizationDbService_Factory() { return new OrganizationDbService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"])); }, token: OrganizationDbService, providedIn: "root" });
 class OrganizationHttpService extends _common_http_service__WEBPACK_IMPORTED_MODULE_1__["BaseHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
     }
 }
+OrganizationHttpService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({ factory: function OrganizationHttpService_Factory() { return new OrganizationHttpService(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](OrganizationDbService)); }, token: OrganizationHttpService, providedIn: "root" });
 
 
 /***/ }),
@@ -12247,6 +12273,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user.service */ "./src/app/services/implementation/system/user/user.service.ts");
 /* harmony import */ var _common_datasource_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../common/datasource.service */ "./src/app/services/common/datasource.service.ts");
 /* harmony import */ var ngx_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-logger */ "./node_modules/ngx-logger/fesm2015/ngx-logger.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+
 
 
 
@@ -12255,6 +12285,7 @@ class UserDataSource extends _common_datasource_service__WEBPACK_IMPORTED_MODULE
         super(httpService, dbService, logger);
     }
 }
+UserDataSource.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ factory: function UserDataSource_Factory() { return new UserDataSource(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_user_service__WEBPACK_IMPORTED_MODULE_0__["UserHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_user_service__WEBPACK_IMPORTED_MODULE_0__["UserDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_2__["NGXLogger"])); }, token: UserDataSource, providedIn: "root" });
 
 
 /***/ }),
@@ -12278,6 +12309,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_db_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../config/db.config */ "./src/app/config/db.config.ts");
 /* harmony import */ var ng_connection_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-connection-service */ "./node_modules/ng-connection-service/fesm2015/ng-connection-service.js");
 /* harmony import */ var _core_data_constants_common_constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../@core/data/constants/common.constants */ "./src/app/@core/data/constants/common.constants.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 
 
 
@@ -12287,6 +12319,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var STATUS = _core_data_constants_common_constants__WEBPACK_IMPORTED_MODULE_7__["Constants"].COMMON.STATUS;
+
+
+
+
+
 class UserDbService extends _common_database_service__WEBPACK_IMPORTED_MODULE_3__["BaseDbService"] {
     constructor(dbService, logger, connectionService) {
         super(dbService, logger, connectionService, _config_db_config__WEBPACK_IMPORTED_MODULE_5__["DB_STORE"].user);
@@ -12312,11 +12349,13 @@ class UserDbService extends _common_database_service__WEBPACK_IMPORTED_MODULE_3_
         };
     }
 }
+UserDbService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjectable"]({ factory: function UserDbService_Factory() { return new UserDbService(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ngx_indexed_db__WEBPACK_IMPORTED_MODULE_4__["NgxIndexedDBService"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ng_connection_service__WEBPACK_IMPORTED_MODULE_6__["ConnectionService"])); }, token: UserDbService, providedIn: "root" });
 class UserHttpService extends _common_http_service__WEBPACK_IMPORTED_MODULE_1__["BaseHttpService"] {
     constructor(http, logger, dbService) {
         super(http, logger, dbService);
     }
 }
+UserHttpService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjectable"]({ factory: function UserHttpService_Factory() { return new UserHttpService(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_0__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](UserDbService)); }, token: UserHttpService, providedIn: "root" });
 
 
 /***/ }),
