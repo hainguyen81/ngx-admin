@@ -20803,6 +20803,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
     var util__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_4__);
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
     /* default page header configuration */
 
 
@@ -20962,8 +20968,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return PageHeaderService;
     }();
-    /***/
 
+    PageHeaderService.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjectable"]({
+      factory: function PageHeaderService_Factory() {
+        return new PageHeaderService(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_3__["NGXLogger"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["Title"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["Meta"]));
+      },
+      token: PageHeaderService,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/
