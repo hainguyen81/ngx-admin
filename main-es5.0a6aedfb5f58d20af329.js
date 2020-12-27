@@ -10987,7 +10987,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    var _config_auth_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! ../config/auth.config */
+    "./src/app/config/auth.config.ts");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/fesm2015/core.js");
 
@@ -10996,10 +11002,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       var _super10 = _createSuper(NbxOAuth2AuthStrategy);
 
-      // setOptions(options: any): void {
-      //     window.console.info(['Auth Strategy Creation Options', Object.assign({}, AUTH_STRATEGY_OPTIONS, options)]);
-      //     super.setOptions(deepExtend({}, AUTH_STRATEGY_OPTIONS, options));
-      // }
       function NbxOAuth2AuthStrategy(http, route, authHttpService, authDbService, moduleDbService, logger) {
         var _this29;
 
@@ -11079,6 +11081,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         key: "getModuleDbService",
         value: function getModuleDbService() {
           return this.moduleDbService;
+        }
+      }, {
+        key: "setOptions",
+        value: function setOptions(options) {
+          window.console.info(['Auth Strategy Creation Options', Object.assign({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options)]);
+
+          _get(_getPrototypeOf(NbxOAuth2AuthStrategy.prototype), "setOptions", this).call(this, Object(_nebular_auth__WEBPACK_IMPORTED_MODULE_0__["deepExtend"])({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options));
         }
       }, {
         key: "createToken",
@@ -11180,9 +11189,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       return NbxOAuth2AuthStrategy;
     }(_nebular_auth__WEBPACK_IMPORTED_MODULE_0__["NbPasswordAuthStrategy"]);
 
-    NbxOAuth2AuthStrategy.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjectable"]({
+    NbxOAuth2AuthStrategy.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineInjectable"]({
       factory: function NbxOAuth2AuthStrategy_Factory() {
-        return new NbxOAuth2AuthStrategy(_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_7__["ModuleService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]));
+        return new NbxOAuth2AuthStrategy(_angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_7__["ModuleService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]));
       },
       token: NbxOAuth2AuthStrategy,
       providedIn: "root"
