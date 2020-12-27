@@ -7,7 +7,7 @@ import {
     InjectionToken,
     Injector,
     LOCALE_ID,
-    Provider,
+    StaticProvider,
 } from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
 import {
@@ -170,7 +170,6 @@ import {
     createDefaultSecureStorageConfig,
     createDefaultStorageConfig,
 } from './storage.config';
-import {AUTH_STRATEGY_OPTIONS} from './auth.config';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
@@ -181,7 +180,7 @@ export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
     return new TranslateHttpLoader(http, (baseHref || '').concat('/assets/i18n/'));
 }
 
-export const InitializationProviders: Provider[] = [
+export const InitializationProviders: StaticProvider[] = [
     {
         provide: APP_BOOTSTRAP_LISTENER,
         useFactory: () => {
@@ -216,7 +215,7 @@ export const InitializationProviders: Provider[] = [
     },
 ];
 
-export const CommonProviders: Provider[] = [
+export const CommonProviders: StaticProvider[] = [
     {provide: DOCUMENT, useValue: document},
     {provide: APP_BASE_HREF, useFactory: HtmlUtils.getBaseHref, deps: []},
     {provide: BASE_HREF, useFactory: HtmlUtils.getBaseHref, deps: []},
@@ -289,7 +288,7 @@ export const InterceptorProviders = [
     },
 ];
 
-export const AuthenticationProviders: Provider[] = [
+export const AuthenticationProviders: StaticProvider[] = [
     {provide: AuthGuard, useClass: AuthGuard, deps: [NbAuthService, Router]},
     {
         provide: ModuleService, useClass: ModuleService,
@@ -316,10 +315,9 @@ export const AuthenticationProviders: Provider[] = [
         deps: [HttpClient, ActivatedRoute, NbxOAuth2AuthHttpService,
             NbxOAuth2AuthDbService, ModuleService, NGXLogger],
     },
-    {provide: NB_AUTH_STRATEGIES, useFactory: () => [NbxOAuth2AuthStrategy, AUTH_STRATEGY_OPTIONS], deps: []},
 ];
 
-export const ThirdPartyApiProviders: Provider[] = [
+export const ThirdPartyApiProviders: StaticProvider[] = [
     // https://www.universal-tutorial.com/api
     {
         provide: UniversalApiDbService, useClass: UniversalApiDbService,
@@ -339,7 +337,7 @@ export const ThirdPartyApiProviders: Provider[] = [
     },
 ];
 
-export const I18NProviders: Provider[] = [
+export const I18NProviders: StaticProvider[] = [
     {
         provide: TranslateLoader, useFactory: HttpLoaderFactory,
         deps: [HttpClient, APP_BASE_HREF],
@@ -350,7 +348,7 @@ export const I18NProviders: Provider[] = [
     },
 ];
 
-export const UserProviders: Provider[] = [
+export const UserProviders: StaticProvider[] = [
     {
         provide: UserDbService, useClass: UserDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -365,7 +363,7 @@ export const UserProviders: Provider[] = [
     },
 ];
 
-export const CustomerProviders: Provider[] = [
+export const CustomerProviders: StaticProvider[] = [
     {
         provide: CustomerDbService, useClass: CustomerDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -380,7 +378,7 @@ export const CustomerProviders: Provider[] = [
     },
 ];
 
-export const GeneralSettingsProviders: Provider[] = [
+export const GeneralSettingsProviders: StaticProvider[] = [
     {
         provide: GeneralSettingsDbService, useClass: GeneralSettingsDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -395,7 +393,7 @@ export const GeneralSettingsProviders: Provider[] = [
     },
 ];
 
-export const OrganizationProviders: Provider[] = [
+export const OrganizationProviders: StaticProvider[] = [
     {
         provide: OrganizationDbService, useClass: OrganizationDbService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -410,7 +408,7 @@ export const OrganizationProviders: Provider[] = [
     },
 ];
 
-export const CountryProviders: Provider[] = [
+export const CountryProviders: StaticProvider[] = [
     // Country
     {
         provide: CountryDbService, useClass: CountryDbService,
@@ -454,7 +452,7 @@ export const CountryProviders: Provider[] = [
     },
 ];
 
-export const WarehouseProviders: Provider[] = [
+export const WarehouseProviders: StaticProvider[] = [
     // Warehouse
     {
         provide: WarehouseDbService, useClass: WarehouseDbService,
@@ -638,7 +636,7 @@ export const WarehouseProviders: Provider[] = [
     },
 ];
 
-export const MenuProviders: Provider[] = [
+export const MenuProviders: StaticProvider[] = [
     {
         provide: MenuService, useClass: MenuService,
         deps: [NgxIndexedDBService, NGXLogger, ConnectionService],
@@ -649,11 +647,11 @@ export const MenuProviders: Provider[] = [
     },
 ];
 
-export const ExampleProviders: Provider[] = [
+export const ExampleProviders: StaticProvider[] = [
     {provide: EmptyService, useClass: EmptyService, deps: [NgxIndexedDBService, NGXLogger, ConnectionService]},
 ];
 
-export const BaseProviders: Provider[] = []
+export const BaseProviders: StaticProvider[] = []
     .concat(InitializationProviders)
     .concat(CommonProviders)
     .concat(InterceptorProviders)
@@ -664,7 +662,7 @@ export const BaseProviders: Provider[] = []
     .concat(OrganizationProviders)
     .concat(UserProviders);
 
-export const BusinessProviders: Provider[] = []
+export const BusinessProviders: StaticProvider[] = []
     .concat(CustomerProviders)
     .concat(CountryProviders)
     .concat(WarehouseProviders)
@@ -672,4 +670,4 @@ export const BusinessProviders: Provider[] = []
     .concat(WorkerProviders)
     .concat(ExampleProviders);
 
-export const Providers: Provider[] = [].concat(BaseProviders).concat(BusinessProviders);
+export const Providers: StaticProvider[] = [].concat(BaseProviders).concat(BusinessProviders);

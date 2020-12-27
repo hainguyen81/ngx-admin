@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {deepExtend, NbAuthResult, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
+import {deepExtend, NbAuthResult, NbAuthStrategyClass, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
@@ -17,9 +17,14 @@ import EncryptionUtils from '../utils/common/encryption.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
 import JsonUtils from '../utils/common/json.utils';
 import {AUTH_STRATEGY_OPTIONS} from '../config/auth.config';
+import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
+    static setup(options?: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
+        return [NbxOAuth2AuthStrategy, AUTH_STRATEGY_OPTIONS];
+    }
+
     protected getLogger(): NGXLogger {
         return this.logger;
     }

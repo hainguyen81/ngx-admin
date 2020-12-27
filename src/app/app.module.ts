@@ -150,7 +150,7 @@ import {ServicesInjectionModule} from './services.injection.module';
 
         /* Authentication */
         NbAuthModule.forRoot({
-            strategies: [ [NbxOAuth2AuthStrategy, AUTH_STRATEGY_OPTIONS] ],
+            strategies: [ NbxOAuth2AuthStrategy.setup() ],
             forms: {
                 login: {
                     // delay before redirect after a successful login, while success message is shown to the user
@@ -199,9 +199,6 @@ import {ServicesInjectionModule} from './services.injection.module';
         /* Barcode */
         NgxBarcodeModule.forRoot(),
         BarecodeScannerLivestreamModule,
-
-        /* Services Injection Module */
-        ServicesInjectionModule.forRoot(),
 
         /* Mock data module */
         MockDataModule,
