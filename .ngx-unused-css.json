@@ -1,0 +1,8 @@
+{
+    "path": "src/app",
+    "globalStyles": "src/app/@theme/styles/styles.scss",
+    "ignore": [
+        ".mat-",
+        "ng-star"
+    ]
+}

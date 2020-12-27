@@ -110,8 +110,8 @@ export class PageHeaderService implements IPageHeaderService {
      * Create a new instance of {PageHeaderService} class
      * @param translateService {TranslateService}
      * @param logger {NGXLogger}
-     * @param titleService {Title}
-     * @param metaService {Meta}
+     * @param _titleService {Title}
+     * @param _metaService {Meta}
      */
     constructor(@Inject(TranslateService) private translateService: TranslateService,
                 @Inject(NGXLogger) private logger: NGXLogger,

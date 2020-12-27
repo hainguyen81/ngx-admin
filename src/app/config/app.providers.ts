@@ -339,7 +339,7 @@ export const I18NProviders: StaticProvider[] = [
     },
     {
         provide: PageHeaderService, useClass: PageHeaderService,
-        deps: [TranslateService, NGXLogger],
+        deps: [TranslateService, NGXLogger, Title, Meta],
     },
 ];
 

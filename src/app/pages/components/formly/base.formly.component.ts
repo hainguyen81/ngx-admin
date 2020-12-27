@@ -12,7 +12,6 @@ import {NgxFormlyComponent} from './formly.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {FormlyConfig, FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';

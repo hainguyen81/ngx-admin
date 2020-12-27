@@ -1,4 +1,4 @@
-import {FORMLY_CONFIG, FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
+import {ConfigOption, FORMLY_CONFIG, FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {isNullOrUndefined} from 'util';
-import {ConfigOption, ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
+import {ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
 
 /**
  * Custom {FormlyFormBuilder} for translating form configuration
