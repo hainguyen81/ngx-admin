@@ -5339,9 +5339,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_common_encryption_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/common/encryption.utils */ "./src/app/utils/common/encryption.utils.ts");
 /* harmony import */ var _config_request_config__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../config/request.config */ "./src/app/config/request.config.ts");
 /* harmony import */ var _utils_common_json_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/common/json.utils */ "./src/app/utils/common/json.utils.ts");
-/* harmony import */ var _config_auth_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../config/auth.config */ "./src/app/config/auth.config.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 
 
 
@@ -5363,6 +5361,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["NbPasswordAuthStrategy"] {
+    // setOptions(options: any): void {
+    //     window.console.info(['Auth Strategy Creation Options', Object.assign({}, AUTH_STRATEGY_OPTIONS, options)]);
+    //     super.setOptions(deepExtend({}, AUTH_STRATEGY_OPTIONS, options));
+    // }
     constructor(http, route, authHttpService, authDbService, moduleDbService, logger) {
         super(http, route);
         this.authHttpService = authHttpService;
@@ -5409,9 +5411,6 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject logger!');
         logger.updateConfig(_config_log_config__WEBPACK_IMPORTED_MODULE_6__["LogConfig"]);
     }
-    static setup(options) {
-        return [NbxOAuth2AuthStrategy, options];
-    }
     getLogger() {
         return this.logger;
     }
@@ -5423,10 +5422,6 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
     }
     getModuleDbService() {
         return this.moduleDbService;
-    }
-    setOptions(options) {
-        window.console.info(['Auth Strategy Creation Options', Object.assign({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options)]);
-        super.setOptions(Object.assign({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options));
     }
     createToken(value, failWhenInvalidToken) {
         // TODO remove all profile images, just keep the first one
@@ -5498,7 +5493,7 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
         return modules;
     }
 }
-NbxOAuth2AuthStrategy.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineInjectable"]({ factory: function NbxOAuth2AuthStrategy_Factory() { return new NbxOAuth2AuthStrategy(_angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_7__["ModuleService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])); }, token: NbxOAuth2AuthStrategy, providedIn: "root" });
+NbxOAuth2AuthStrategy.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjectable"]({ factory: function NbxOAuth2AuthStrategy_Factory() { return new NbxOAuth2AuthStrategy(_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_7__["ModuleService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])); }, token: NbxOAuth2AuthStrategy, providedIn: "root" });
 
 
 /***/ }),
@@ -6331,9 +6326,8 @@ const InterceptorProviders = [
         multi: true,
     },
 ];
-const ɵ10 = () => _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthStrategy"].setup(_auth_config__WEBPACK_IMPORTED_MODULE_80__["AUTH_STRATEGY_OPTIONS"]);
+const ɵ10 = () => [_auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_11__["NbxOAuth2AuthStrategy"], _auth_config__WEBPACK_IMPORTED_MODULE_80__["AUTH_STRATEGY_OPTIONS"]];
 const AuthenticationProviders = [
-    { provide: _nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NB_AUTH_STRATEGIES"], useFactory: ɵ10, deps: [] },
     { provide: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"], useClass: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"], deps: [_nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NbAuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]] },
     {
         provide: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_17__["ModuleService"], useClass: _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_17__["ModuleService"],
@@ -6360,6 +6354,7 @@ const AuthenticationProviders = [
         deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"], _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthHttpService"],
             _auth_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_10__["NbxOAuth2AuthDbService"], _services_implementation_module_service__WEBPACK_IMPORTED_MODULE_17__["ModuleService"], ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"]],
     },
+    { provide: _nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NB_AUTH_STRATEGIES"], useFactory: ɵ10, deps: [] },
 ];
 const ThirdPartyApiProviders = [
     // https://www.universal-tutorial.com/api
