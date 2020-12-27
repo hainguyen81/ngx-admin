@@ -11315,7 +11315,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             },
             login: function login() {
               var parent = config.login.api;
-              return parent.url.call(undefined).concat('/oauth/token?grant_type=client_credentials');
+              return parent.url.call(parent).concat('/oauth/token?grant_type=client_credentials');
             },
             regexUrl: 'oauth/**',
             version: '1.0.0'
@@ -11344,7 +11344,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             },
             login: function login() {
               var parent = config.system.api;
-              return parent.url.call(undefined).concat('/oauth/token?grant_type=client_credentials');
+              return parent.url.call(parent).concat('/oauth/token?grant_type=client_credentials');
             },
             regexUrl: 'system/**',
             version: '1.0.0'
@@ -11362,7 +11362,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             generalSettings: {
               code: function code() {
                 var parent = config.system;
-                return parent.code.call(undefined).concat('_GENERAL_SETTINGS');
+                return parent.code.call(parent).concat('_GENERAL_SETTINGS');
               },
               name: function name() {
                 return 'system.general.settings.menu';
@@ -11371,11 +11371,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 method: 'POST',
                 url: function url() {
                   var parent = config.system.api;
-                  return parent.url.call(undefined).concat('/general/settings');
+                  return parent.url.call(parent).concat('/general/settings');
                 },
                 login: function login() {
                   var parent = config.system.api;
-                  return parent.login.call(undefined);
+                  return parent.login.call(parent);
                 },
                 regexUrl: 'system/general/**',
                 version: '1.0.0'
@@ -11387,14 +11387,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 },
                 url: function url() {
                   var parent = config.system.client;
-                  return parent.url.call(undefined).concat('/general/settings');
+                  return parent.url.call(parent).concat('/general/settings');
                 }
               }
             },
             organization: {
               code: function code() {
                 var parent = config.system;
-                return parent.code.call(undefined).concat('_ORGANIZATION');
+                return parent.code.call(parent).concat('_ORGANIZATION');
               },
               name: function name() {
                 return 'system.organization.menu';
@@ -11403,11 +11403,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 method: 'POST',
                 url: function url() {
                   var parent = config.system.api;
-                  return parent.url.call(undefined).concat('/organization');
+                  return parent.url.call(parent).concat('/organization');
                 },
                 login: function login() {
                   var parent = config.system.api;
-                  return parent.login.call(undefined);
+                  return parent.login.call(parent);
                 },
                 regexUrl: 'system/organization/**',
                 version: '1.0.0'
@@ -11419,14 +11419,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 },
                 url: function url() {
                   var parent = config.system.client;
-                  return parent.url.call(undefined).concat('/organization');
+                  return parent.url.call(parent).concat('/organization');
                 }
               }
             },
             user: {
               code: function code() {
                 var parent = config.system;
-                return parent.code.call(undefined).concat('_USER');
+                return parent.code.call(parent).concat('_USER');
               },
               name: function name() {
                 return 'system.user.menu';
@@ -11435,11 +11435,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 method: 'POST',
                 url: function url() {
                   var parent = config.system.api;
-                  return parent.url.call(undefined).concat('/user');
+                  return parent.url.call(parent).concat('/user');
                 },
                 login: function login() {
                   var parent = config.system.api;
-                  return parent.login.call(undefined);
+                  return parent.login.call(parent);
                 },
                 regexUrl: 'system/user/**',
                 version: '1.0.0'
@@ -11451,14 +11451,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 },
                 url: function url() {
                   var parent = config.system.client;
-                  return parent.url.call(undefined).concat('/user');
+                  return parent.url.call(parent).concat('/user');
                 }
               }
             },
             customer: {
               code: function code() {
                 var parent = config.system;
-                return parent.code.call(undefined).concat('_CUSTOMER');
+                return parent.code.call(parent).concat('_CUSTOMER');
               },
               name: function name() {
                 return 'system.customer.menu';
@@ -11467,11 +11467,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 method: 'POST',
                 url: function url() {
                   var parent = config.system.api;
-                  return parent.url.call(undefined).concat('/customer');
+                  return parent.url.call(parent).concat('/customer');
                 },
                 login: function login() {
                   var parent = config.system.api;
-                  return parent.login.call(undefined);
+                  return parent.login.call(parent);
                 },
                 regexUrl: 'system/customer/**',
                 version: '1.0.0'
@@ -11483,7 +11483,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 },
                 url: function url() {
                   var parent = config.system.client;
-                  return parent.url.call(undefined).concat('/customer');
+                  return parent.url.call(parent).concat('/customer');
                 }
               }
             }
@@ -11503,7 +11503,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             },
             login: function login() {
               var parent = config.warehouse.api;
-              return parent.url.call(undefined).concat('/oauth/token?grant_type=client_credentials');
+              return parent.url.call(parent).concat('/oauth/token?grant_type=client_credentials');
             },
             regexUrl: 'warehouse/**',
             version: '1.0.0'
@@ -11521,7 +11521,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             settings: {
               code: function code() {
                 var parent = config.warehouse;
-                return parent.code.call(undefined).concat('_SETTINGS');
+                return parent.code.call(parent).concat('_SETTINGS');
               },
               name: function name() {
                 return 'warehouse.menu.master';
@@ -11530,11 +11530,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 method: 'POST',
                 url: function url() {
                   var parent = config.warehouse.api;
-                  return parent.url.call(undefined).concat('/settings');
+                  return parent.url.call(parent).concat('/settings');
                 },
                 login: function login() {
                   var parent = config.warehouse.api;
-                  return parent.login.call(undefined);
+                  return parent.login.call(parent);
                 },
                 regexUrl: 'warehouse/settings/**',
                 version: '1.0.0'
@@ -11546,14 +11546,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 },
                 url: function url() {
                   var parent = config.warehouse.client;
-                  return parent.url.call(undefined).concat('/settings');
+                  return parent.url.call(parent).concat('/settings');
                 }
               },
               children: {
                 warehouseSettings: {
                   code: function code() {
                     var parent = config.warehouse.children.settings;
-                    return parent.code.call(undefined).concat('_GENERAL');
+                    return parent.code.call(parent).concat('_GENERAL');
                   },
                   name: function name() {
                     return 'warehouse.settings.menu';
@@ -11562,11 +11562,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     method: 'POST',
                     url: function url() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.url.call(undefined).concat('/general');
+                      return parent.url.call(parent).concat('/general');
                     },
                     login: function login() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.login.call(undefined);
+                      return parent.login.call(parent);
                     },
                     regexUrl: 'warehouse/settings/general/**',
                     version: '1.0.0'
@@ -11578,14 +11578,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     },
                     url: function url() {
                       var parent = config.warehouse.children.settings.client;
-                      return parent.url.call(undefined).concat('/general');
+                      return parent.url.call(parent).concat('/general');
                     }
                   }
                 },
                 warehouseStorage: {
                   code: function code() {
                     var parent = config.warehouse.children.settings;
-                    return parent.code.call(undefined).concat('_STORAGE');
+                    return parent.code.call(parent).concat('_STORAGE');
                   },
                   name: function name() {
                     return 'warehouse.storage.menu';
@@ -11594,11 +11594,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     method: 'POST',
                     url: function url() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.url.call(undefined).concat('/storage');
+                      return parent.url.call(parent).concat('/storage');
                     },
                     login: function login() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.login.call(undefined);
+                      return parent.login.call(parent);
                     },
                     regexUrl: 'warehouse/settings/storage/**',
                     version: '1.0.0'
@@ -11610,14 +11610,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     },
                     url: function url() {
                       var parent = config.warehouse.children.settings.client;
-                      return parent.url.call(undefined).concat('/storage');
+                      return parent.url.call(parent).concat('/storage');
                     }
                   }
                 },
                 warehouseCategory: {
                   code: function code() {
                     var parent = config.warehouse.children.settings;
-                    return parent.code.call(undefined).concat('_CATEGORY');
+                    return parent.code.call(parent).concat('_CATEGORY');
                   },
                   name: function name() {
                     return 'warehouse.category.menu';
@@ -11626,11 +11626,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     method: 'POST',
                     url: function url() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.url.call(undefined).concat('/category');
+                      return parent.url.call(parent).concat('/category');
                     },
                     login: function login() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.login.call(undefined);
+                      return parent.login.call(parent);
                     },
                     regexUrl: 'warehouse/settings/category/**',
                     version: '1.0.0'
@@ -11642,14 +11642,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     },
                     url: function url() {
                       var parent = config.warehouse.children.settings.client;
-                      return parent.url.call(undefined).concat('/category');
+                      return parent.url.call(parent).concat('/category');
                     }
                   }
                 },
                 warehouseBatchNo: {
                   code: function code() {
                     var parent = config.warehouse.children.settings;
-                    return parent.code.call(undefined).concat('_BATCH_NO');
+                    return parent.code.call(parent).concat('_BATCH_NO');
                   },
                   name: function name() {
                     return 'warehouse.batch_no.menu';
@@ -11658,11 +11658,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     method: 'POST',
                     url: function url() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.url.call(undefined).concat('/batchno');
+                      return parent.url.call(parent).concat('/batchno');
                     },
                     login: function login() {
                       var parent = config.warehouse.children.settings.api;
-                      return parent.login.call(undefined);
+                      return parent.login.call(parent);
                     },
                     regexUrl: 'warehouse/settings/batchno/**',
                     version: '1.0.0'
@@ -11674,7 +11674,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     },
                     url: function url() {
                       var parent = config.warehouse.children.settings.client;
-                      return parent.url.call(undefined).concat('/batchno');
+                      return parent.url.call(parent).concat('/batchno');
                     }
                   }
                 }
@@ -11683,7 +11683,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             features: {
               code: function code() {
                 var parent = config.warehouse;
-                return parent.code.call(undefined).concat('_FEATURES');
+                return parent.code.call(parent).concat('_FEATURES');
               },
               name: function name() {
                 return 'warehouse.menu.features';
@@ -11692,11 +11692,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 method: 'POST',
                 url: function url() {
                   var parent = config.warehouse.api;
-                  return parent.url.call(undefined).concat('/features');
+                  return parent.url.call(parent).concat('/features');
                 },
                 login: function login() {
                   var parent = config.warehouse.api;
-                  return parent.login.call(undefined);
+                  return parent.login.call(parent);
                 },
                 regexUrl: 'warehouse/features/**',
                 version: '1.0.0'
@@ -11708,14 +11708,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                 },
                 url: function url() {
                   var parent = config.warehouse.client;
-                  return parent.url.call(undefined).concat('/features');
+                  return parent.url.call(parent).concat('/features');
                 }
               },
               children: {
                 warehouseItem: {
                   code: function code() {
                     var parent = config.warehouse.children.features;
-                    return parent.code.call(undefined).concat('_ITEM');
+                    return parent.code.call(parent).concat('_ITEM');
                   },
                   name: function name() {
                     return 'warehouse.item.menu';
@@ -11724,11 +11724,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     method: 'POST',
                     url: function url() {
                       var parent = config.warehouse.children.features.api;
-                      return parent.url.call(undefined).concat('/item');
+                      return parent.url.call(parent).concat('/item');
                     },
                     login: function login() {
                       var parent = config.warehouse.children.features.api;
-                      return parent.login.call(undefined);
+                      return parent.login.call(parent);
                     },
                     regexUrl: 'warehouse/features/item/**',
                     version: '1.0.0'
@@ -11740,14 +11740,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     },
                     url: function url() {
                       var parent = config.warehouse.children.features.client;
-                      return parent.url.call(undefined).concat('/item');
+                      return parent.url.call(parent).concat('/item');
                     }
                   }
                 },
                 warehouseInventory: {
                   code: function code() {
                     var parent = config.warehouse.children.features;
-                    return parent.code.call(undefined).concat('_INVENTORY');
+                    return parent.code.call(parent).concat('_INVENTORY');
                   },
                   name: function name() {
                     return 'warehouse.inventory.menu';
@@ -11756,11 +11756,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     method: 'POST',
                     url: function url() {
                       var parent = config.warehouse.children.features.api;
-                      return parent.url.call(undefined).concat('/inventory');
+                      return parent.url.call(parent).concat('/inventory');
                     },
                     login: function login() {
                       var parent = config.warehouse.children.features.api;
-                      return parent.login.call(undefined);
+                      return parent.login.call(parent);
                     },
                     regexUrl: 'warehouse/features/inventory/**',
                     version: '1.0.0'
@@ -11772,7 +11772,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
                     },
                     url: function url() {
                       var parent = config.warehouse.children.features.client;
-                      return parent.url.call(undefined).concat('/inventory');
+                      return parent.url.call(parent).concat('/inventory');
                     }
                   }
                 }
@@ -12764,7 +12764,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
     var AuthenticationProviders = [{
       provide: _nebular_auth__WEBPACK_IMPORTED_MODULE_6__["NB_AUTH_STRATEGIES"],
-      useFactory: ɵ10
+      useFactory: ɵ10,
+      deps: []
     }, {
       provide: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"],
       useClass: _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"],
