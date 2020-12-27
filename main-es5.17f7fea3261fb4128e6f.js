@@ -8263,31 +8263,37 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_113__ = __webpack_require__(
+    var _services_injection_module__WEBPACK_IMPORTED_MODULE_113__ = __webpack_require__(
+    /*! ./services.injection.module */
+    "./src/app/services.injection.module.ts");
+    /* harmony import */
+
+
+    var _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_114__ = __webpack_require__(
     /*! ./@core/mock/mock.data.module */
     "./src/app/@core/mock/mock.data.module.ts");
     /* harmony import */
 
 
-    var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_114__ = __webpack_require__(
+    var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_115__ = __webpack_require__(
     /*! @angular/cdk/keycodes */
     "./node_modules/@angular/cdk/esm2015/keycodes.js");
     /* harmony import */
 
 
-    var _config_db_config__WEBPACK_IMPORTED_MODULE_115__ = __webpack_require__(
+    var _config_db_config__WEBPACK_IMPORTED_MODULE_116__ = __webpack_require__(
     /*! ./config/db.config */
     "./src/app/config/db.config.ts");
     /* harmony import */
 
 
-    var _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_116__ = __webpack_require__(
+    var _auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_117__ = __webpack_require__(
     /*! ./auth/auth.oauth2.strategy */
     "./src/app/auth/auth.oauth2.strategy.ts");
     /* harmony import */
 
 
-    var _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_117__ = __webpack_require__(
+    var _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_118__ = __webpack_require__(
     /*! ./auth/auth.oauth2.token */
     "./src/app/auth/auth.oauth2.token.ts");
     /**
@@ -8401,12 +8407,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             wrappers: ["form-field"]
           }]
         }, _ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["ɵa"](p8_0), {}];
-      }, [_ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyConfig"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyModule"], _ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyModule"], [_ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyConfig"], [2, _ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FORMLY_CONFIG"]]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_form_field__WEBPACK_IMPORTED_MODULE_99__["FormlyMatFormFieldModule"], _ngx_formly_material_form_field__WEBPACK_IMPORTED_MODULE_99__["FormlyMatFormFieldModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_input__WEBPACK_IMPORTED_MODULE_100__["FormlyMatInputModule"], _ngx_formly_material_input__WEBPACK_IMPORTED_MODULE_100__["FormlyMatInputModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_textarea__WEBPACK_IMPORTED_MODULE_101__["FormlyMatTextAreaModule"], _ngx_formly_material_textarea__WEBPACK_IMPORTED_MODULE_101__["FormlyMatTextAreaModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_core_select__WEBPACK_IMPORTED_MODULE_107__["FormlySelectModule"], _ngx_formly_core_select__WEBPACK_IMPORTED_MODULE_107__["FormlySelectModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_radio__WEBPACK_IMPORTED_MODULE_102__["FormlyMatRadioModule"], _ngx_formly_material_radio__WEBPACK_IMPORTED_MODULE_102__["FormlyMatRadioModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["_MatCheckboxRequiredValidatorModule"], _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["_MatCheckboxRequiredValidatorModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["MatCheckboxModule"], _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["MatCheckboxModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_checkbox__WEBPACK_IMPORTED_MODULE_103__["FormlyMatCheckboxModule"], _ngx_formly_material_checkbox__WEBPACK_IMPORTED_MODULE_103__["FormlyMatCheckboxModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_multicheckbox__WEBPACK_IMPORTED_MODULE_104__["FormlyMatMultiCheckboxModule"], _ngx_formly_material_multicheckbox__WEBPACK_IMPORTED_MODULE_104__["FormlyMatMultiCheckboxModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_select__WEBPACK_IMPORTED_MODULE_105__["FormlyMatSelectModule"], _ngx_formly_material_select__WEBPACK_IMPORTED_MODULE_105__["FormlyMatSelectModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material__WEBPACK_IMPORTED_MODULE_109__["FormlyMaterialModule"], _ngx_formly_material__WEBPACK_IMPORTED_MODULE_109__["FormlyMaterialModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_datepicker__WEBPACK_IMPORTED_MODULE_106__["FormlyMatDatepickerModule"], _ngx_formly_material_datepicker__WEBPACK_IMPORTED_MODULE_106__["FormlyMatDatepickerModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, ng2_date_picker__WEBPACK_IMPORTED_MODULE_110__["DpDatePickerModule"], ng2_date_picker__WEBPACK_IMPORTED_MODULE_110__["DpDatePickerModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, ngx_barcode__WEBPACK_IMPORTED_MODULE_111__["NgxBarcodeModule"], ngx_barcode__WEBPACK_IMPORTED_MODULE_111__["NgxBarcodeModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, ngx_barcode_scanner__WEBPACK_IMPORTED_MODULE_112__["BarecodeScannerLivestreamModule"], ngx_barcode_scanner__WEBPACK_IMPORTED_MODULE_112__["BarecodeScannerLivestreamModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_d"], _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_d"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](2048, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["XhrFactory"], null, [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_d"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpXhrBackend"], _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpXhrBackend"], [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["XhrFactory"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](2048, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpBackend"], null, [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpXhrBackend"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXMapperService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXMapperService"], [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpBackend"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLoggerHttpService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLoggerHttpService"], [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpBackend"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["LoggerConfig"], {
+      }, [_ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyConfig"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyModule"], _ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyModule"], [_ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FormlyConfig"], [2, _ngx_formly_core__WEBPACK_IMPORTED_MODULE_54__["FORMLY_CONFIG"]]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_form_field__WEBPACK_IMPORTED_MODULE_99__["FormlyMatFormFieldModule"], _ngx_formly_material_form_field__WEBPACK_IMPORTED_MODULE_99__["FormlyMatFormFieldModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_input__WEBPACK_IMPORTED_MODULE_100__["FormlyMatInputModule"], _ngx_formly_material_input__WEBPACK_IMPORTED_MODULE_100__["FormlyMatInputModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_textarea__WEBPACK_IMPORTED_MODULE_101__["FormlyMatTextAreaModule"], _ngx_formly_material_textarea__WEBPACK_IMPORTED_MODULE_101__["FormlyMatTextAreaModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_core_select__WEBPACK_IMPORTED_MODULE_107__["FormlySelectModule"], _ngx_formly_core_select__WEBPACK_IMPORTED_MODULE_107__["FormlySelectModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_radio__WEBPACK_IMPORTED_MODULE_102__["FormlyMatRadioModule"], _ngx_formly_material_radio__WEBPACK_IMPORTED_MODULE_102__["FormlyMatRadioModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["_MatCheckboxRequiredValidatorModule"], _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["_MatCheckboxRequiredValidatorModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["MatCheckboxModule"], _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_108__["MatCheckboxModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_checkbox__WEBPACK_IMPORTED_MODULE_103__["FormlyMatCheckboxModule"], _ngx_formly_material_checkbox__WEBPACK_IMPORTED_MODULE_103__["FormlyMatCheckboxModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_multicheckbox__WEBPACK_IMPORTED_MODULE_104__["FormlyMatMultiCheckboxModule"], _ngx_formly_material_multicheckbox__WEBPACK_IMPORTED_MODULE_104__["FormlyMatMultiCheckboxModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_select__WEBPACK_IMPORTED_MODULE_105__["FormlyMatSelectModule"], _ngx_formly_material_select__WEBPACK_IMPORTED_MODULE_105__["FormlyMatSelectModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material__WEBPACK_IMPORTED_MODULE_109__["FormlyMaterialModule"], _ngx_formly_material__WEBPACK_IMPORTED_MODULE_109__["FormlyMaterialModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _ngx_formly_material_datepicker__WEBPACK_IMPORTED_MODULE_106__["FormlyMatDatepickerModule"], _ngx_formly_material_datepicker__WEBPACK_IMPORTED_MODULE_106__["FormlyMatDatepickerModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, ng2_date_picker__WEBPACK_IMPORTED_MODULE_110__["DpDatePickerModule"], ng2_date_picker__WEBPACK_IMPORTED_MODULE_110__["DpDatePickerModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, ngx_barcode__WEBPACK_IMPORTED_MODULE_111__["NgxBarcodeModule"], ngx_barcode__WEBPACK_IMPORTED_MODULE_111__["NgxBarcodeModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, ngx_barcode_scanner__WEBPACK_IMPORTED_MODULE_112__["BarecodeScannerLivestreamModule"], ngx_barcode_scanner__WEBPACK_IMPORTED_MODULE_112__["BarecodeScannerLivestreamModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _services_injection_module__WEBPACK_IMPORTED_MODULE_113__["ServicesInjectionModule"], _services_injection_module__WEBPACK_IMPORTED_MODULE_113__["ServicesInjectionModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_d"], _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_d"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](2048, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["XhrFactory"], null, [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_d"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpXhrBackend"], _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpXhrBackend"], [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["XhrFactory"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](2048, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpBackend"], null, [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpXhrBackend"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXMapperService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXMapperService"], [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpBackend"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLoggerHttpService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLoggerHttpService"], [_angular_common_http__WEBPACK_IMPORTED_MODULE_32__["HttpBackend"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["LoggerConfig"], {
         level: 1,
         serverLogLevel: 7,
         disableConsoleLogging: false
-      }, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1024, _angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_core_core_p"], [[3, _angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_common__WEBPACK_IMPORTED_MODULE_26__["DatePipe"], _angular_common__WEBPACK_IMPORTED_MODULE_26__["DatePipe"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLogger"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLogger"], [ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXMapperService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLoggerHttpService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["LoggerConfig"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["PLATFORM_ID"], _angular_common__WEBPACK_IMPORTED_MODULE_26__["DatePipe"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_113__["MockDataModule"], _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_113__["MockDataModule"], [[3, _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_113__["MockDataModule"]], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLogger"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _app_module__WEBPACK_IMPORTED_MODULE_1__["AppModule"], _app_module__WEBPACK_IMPORTED_MODULE_1__["AppModule"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], _nebular_theme__WEBPACK_IMPORTED_MODULE_36__["NbIconLibraries"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵAPP_ROOT"], true, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_30__["ANIMATION_MODULE_TYPE"], "BrowserAnimations", []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_e"], "XSRF-TOKEN", []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_f"], "X-XSRF-TOKEN", []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_material_core__WEBPACK_IMPORTED_MODULE_28__["MAT_DATE_FORMATS"], _angular_material_core__WEBPACK_IMPORTED_MODULE_28__["MAT_NATIVE_DATE_FORMATS"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_material_chips__WEBPACK_IMPORTED_MODULE_85__["MAT_CHIPS_DEFAULT_OPTIONS"], {
-        separatorKeyCodes: [_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_114__["ENTER"]]
+      }, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1024, _angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_core_core_p"], [[3, _angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_common__WEBPACK_IMPORTED_MODULE_26__["DatePipe"], _angular_common__WEBPACK_IMPORTED_MODULE_26__["DatePipe"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLogger"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLogger"], [ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXMapperService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLoggerHttpService"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["LoggerConfig"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["PLATFORM_ID"], _angular_common__WEBPACK_IMPORTED_MODULE_26__["DatePipe"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_114__["MockDataModule"], _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_114__["MockDataModule"], [[3, _core_mock_mock_data_module__WEBPACK_IMPORTED_MODULE_114__["MockDataModule"]], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], ngx_logger__WEBPACK_IMPORTED_MODULE_53__["NGXLogger"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _app_module__WEBPACK_IMPORTED_MODULE_1__["AppModule"], _app_module__WEBPACK_IMPORTED_MODULE_1__["AppModule"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], _nebular_theme__WEBPACK_IMPORTED_MODULE_36__["NbIconLibraries"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵAPP_ROOT"], true, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_30__["ANIMATION_MODULE_TYPE"], "BrowserAnimations", []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_e"], "XSRF-TOKEN", []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_common_http__WEBPACK_IMPORTED_MODULE_32__["ɵangular_packages_common_http_http_f"], "X-XSRF-TOKEN", []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_material_core__WEBPACK_IMPORTED_MODULE_28__["MAT_DATE_FORMATS"], _angular_material_core__WEBPACK_IMPORTED_MODULE_28__["MAT_NATIVE_DATE_FORMATS"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _angular_material_chips__WEBPACK_IMPORTED_MODULE_85__["MAT_CHIPS_DEFAULT_OPTIONS"], {
+        separatorKeyCodes: [_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_115__["ENTER"]]
       }, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_98__["SELECTION_MODEL_FACTORY"], _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_98__["ɵb"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, ngx_indexed_db__WEBPACK_IMPORTED_MODULE_55__["CONFIG_TOKEN"], {
         name: "HiGithub",
         version: 1,
@@ -10365,7 +10371,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             }
           }]
         }],
-        migrationFactory: _config_db_config__WEBPACK_IMPORTED_MODULE_115__["indexFactory"]
+        migrationFactory: _config_db_config__WEBPACK_IMPORTED_MODULE_116__["indexFactory"]
       }, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, ngx_localstorage__WEBPACK_IMPORTED_MODULE_34__["NGX_LOCAL_STORAGE_CONFIG"], undefined, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _nebular_security__WEBPACK_IMPORTED_MODULE_57__["NB_SECURITY_OPTIONS_TOKEN"], {
         accessControl: {
           guest: {
@@ -10398,11 +10404,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           timeOut: 5000
         }
       }, []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](256, _nebular_auth__WEBPACK_IMPORTED_MODULE_66__["NB_AUTH_USER_OPTIONS"], {
-        strategies: [[_auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_116__["NbxOAuth2AuthStrategy"], {
+        strategies: [[_auth_auth_oauth2_strategy__WEBPACK_IMPORTED_MODULE_117__["NbxOAuth2AuthStrategy"], {
           name: "email",
           baseEndpoint: "",
           token: {
-            "class": _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_117__["NbxAuthOAuth2Token"],
+            "class": _auth_auth_oauth2_token__WEBPACK_IMPORTED_MODULE_118__["NbxAuthOAuth2Token"],
             key: "access_token"
           },
           login: {
@@ -10492,46 +10498,32 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* API Configuration */
 
 
-    var AppModule = /*#__PURE__*/function () {
-      function AppModule(injector, iconLibraries) {
-        _classCallCheck(this, AppModule);
+    var AppModule = function AppModule(injector, iconLibraries) {
+      _classCallCheck(this, AppModule);
 
-        // @ts-ignore
-        _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Injector = _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"].create({
-          providers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Providers.All,
-          parent: injector
-        });
-        iconLibraries.registerFontPack('fa', {
-          packClass: 'fa',
-          iconClassPrefix: 'fa'
-        });
-        iconLibraries.registerFontPack('fas', {
-          packClass: 'fas',
-          iconClassPrefix: 'fa'
-        });
-        iconLibraries.registerFontPack('far', {
-          packClass: 'far',
-          iconClassPrefix: 'fa'
-        });
-        iconLibraries.registerFontPack('ion', {
-          iconClassPrefix: 'ion'
-        }); // register application service workers
+      // @ts-ignore
+      _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Injector = _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"].create({
+        providers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Providers.All,
+        parent: injector
+      });
+      iconLibraries.registerFontPack('fa', {
+        packClass: 'fa',
+        iconClassPrefix: 'fa'
+      });
+      iconLibraries.registerFontPack('fas', {
+        packClass: 'fas',
+        iconClassPrefix: 'fa'
+      });
+      iconLibraries.registerFontPack('far', {
+        packClass: 'far',
+        iconClassPrefix: 'fa'
+      });
+      iconLibraries.registerFontPack('ion', {
+        iconClassPrefix: 'ion'
+      }); // register application service workers
 
-        Object(_sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_4__["registerBrowserServiceWorkers"])();
-      }
-
-      _createClass(AppModule, null, [{
-        key: "forRoot",
-        value: function forRoot() {
-          return {
-            ngModule: AppModule,
-            providers: _config_app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].Providers.All
-          };
-        }
-      }]);
-
-      return AppModule;
-    }();
+      Object(_sw_core_service_workers_registration__WEBPACK_IMPORTED_MODULE_4__["registerBrowserServiceWorkers"])();
+    };
     /***/
 
   },
@@ -19255,6 +19247,59 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         });
       });
     }
+    /***/
+
+  },
+
+  /***/
+  "./src/app/services.injection.module.ts":
+  /*!**********************************************!*\
+    !*** ./src/app/services.injection.module.ts ***!
+    \**********************************************/
+
+  /*! exports provided: ServicesInjectionModule */
+
+  /***/
+  function srcAppServicesInjectionModuleTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ServicesInjectionModule", function () {
+      return ServicesInjectionModule;
+    });
+    /* harmony import */
+
+
+    var _config_app_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! ./config/app.config */
+    "./src/app/config/app.config.ts");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+
+    var ServicesInjectionModule = /*#__PURE__*/function () {
+      function ServicesInjectionModule() {
+        _classCallCheck(this, ServicesInjectionModule);
+      }
+
+      _createClass(ServicesInjectionModule, null, [{
+        key: "forRoot",
+        value: function forRoot() {
+          return {
+            ngModule: ServicesInjectionModule,
+            providers: _config_app_config__WEBPACK_IMPORTED_MODULE_0__["AppConfig"].Providers.All
+          };
+        }
+      }]);
+
+      return ServicesInjectionModule;
+    }();
     /***/
 
   },
