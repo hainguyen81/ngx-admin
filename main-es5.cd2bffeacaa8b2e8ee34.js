@@ -10559,8 +10559,21 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
 
     var AuthGuard = /*#__PURE__*/function () {
+      function AuthGuard(authService, router) {
+        _classCallCheck(this, AuthGuard);
+
+        this.authService = authService;
+        this.router = router;
+      }
+
       _createClass(AuthGuard, [{
         key: "getAuthService",
         value: function getAuthService() {
@@ -10571,16 +10584,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         value: function getRouter() {
           return this.router;
         }
-      }]);
-
-      function AuthGuard(authService, router) {
-        _classCallCheck(this, AuthGuard);
-
-        this.authService = authService;
-        this.router = router;
-      }
-
-      _createClass(AuthGuard, [{
+      }, {
         key: "canActivate",
         value: function canActivate() {
           var _this25 = this;
@@ -10595,8 +10599,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
       return AuthGuard;
     }();
-    /***/
 
+    AuthGuard.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({
+      factory: function AuthGuard_Factory() {
+        return new AuthGuard(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_nebular_auth__WEBPACK_IMPORTED_MODULE_1__["NbAuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_0__["Router"]));
+      },
+      token: AuthGuard,
+      providedIn: "root"
+    });
+    /***/
   },
 
   /***/
