@@ -11903,6 +11903,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     AppConfig.API = Object.assign({}, _api_config__WEBPACK_IMPORTED_MODULE_3__["API"]);
     AppConfig.Storage.storageConfig = Object.assign({}, Object(_storage_config__WEBPACK_IMPORTED_MODULE_8__["createDefaultStorageConfig"])());
     AppConfig.Storage.secureConfig = Object.assign({}, Object(_storage_config__WEBPACK_IMPORTED_MODULE_8__["createDefaultSecureStorageConfig"])());
+    window.console.debug(['API Configuration', AppConfig]);
     /***/
   },
 
