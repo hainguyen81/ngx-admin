@@ -5339,7 +5339,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_common_encryption_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/common/encryption.utils */ "./src/app/utils/common/encryption.utils.ts");
 /* harmony import */ var _config_request_config__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../config/request.config */ "./src/app/config/request.config.ts");
 /* harmony import */ var _utils_common_json_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/common/json.utils */ "./src/app/utils/common/json.utils.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _config_auth_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../config/auth.config */ "./src/app/config/auth.config.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
 
 
 
@@ -5422,6 +5424,10 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
     getModuleDbService() {
         return this.moduleDbService;
     }
+    setOptions(options) {
+        window.console.info(['Auth Strategy Creation Options', Object.assign({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options)]);
+        super.setOptions(Object.assign({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options));
+    }
     createToken(value, failWhenInvalidToken) {
         // TODO remove all profile images, just keep the first one
         // TODO because of maximum quota exceed
@@ -5492,7 +5498,7 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
         return modules;
     }
 }
-NbxOAuth2AuthStrategy.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjectable"]({ factory: function NbxOAuth2AuthStrategy_Factory() { return new NbxOAuth2AuthStrategy(_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_7__["ModuleService"]), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])); }, token: NbxOAuth2AuthStrategy, providedIn: "root" });
+NbxOAuth2AuthStrategy.ngInjectableDef = _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineInjectable"]({ factory: function NbxOAuth2AuthStrategy_Factory() { return new NbxOAuth2AuthStrategy(_angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_auth_oauth2_service__WEBPACK_IMPORTED_MODULE_5__["NbxOAuth2AuthDbService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](_services_implementation_module_service__WEBPACK_IMPORTED_MODULE_7__["ModuleService"]), _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵinject"](ngx_logger__WEBPACK_IMPORTED_MODULE_4__["NGXLogger"])); }, token: NbxOAuth2AuthStrategy, providedIn: "root" });
 
 
 /***/ }),
@@ -5942,7 +5948,7 @@ function buildApiConfig() {
     };
     return config;
 }
-const API = buildApiConfig.call(undefined);
+const API = buildApiConfig();
 
 
 /***/ }),
