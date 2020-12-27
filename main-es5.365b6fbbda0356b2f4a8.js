@@ -11059,6 +11059,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         authDbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject IndexedDb!');
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject logger!');
         logger.updateConfig(_config_log_config__WEBPACK_IMPORTED_MODULE_6__["LogConfig"]);
+        _this29.options = Object(_nebular_auth__WEBPACK_IMPORTED_MODULE_0__["deepExtend"])({}, _this29.defaultOptions, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"]);
         return _this29;
       }
 
@@ -11081,13 +11082,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         key: "getModuleDbService",
         value: function getModuleDbService() {
           return this.moduleDbService;
-        }
-      }, {
-        key: "setOptions",
-        value: function setOptions(options) {
-          window.console.info(['Auth Strategy Creation Options', Object.assign({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options)]);
-
-          _get(_getPrototypeOf(NbxOAuth2AuthStrategy.prototype), "setOptions", this).call(this, Object(_nebular_auth__WEBPACK_IMPORTED_MODULE_0__["deepExtend"])({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options));
         }
       }, {
         key: "createToken",

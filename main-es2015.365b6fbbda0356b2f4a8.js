@@ -5408,6 +5408,7 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
         authDbService || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject IndexedDb!');
         logger || Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Could not inject logger!');
         logger.updateConfig(_config_log_config__WEBPACK_IMPORTED_MODULE_6__["LogConfig"]);
+        this.options = Object(_nebular_auth__WEBPACK_IMPORTED_MODULE_0__["deepExtend"])({}, this.defaultOptions, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"]);
     }
     getLogger() {
         return this.logger;
@@ -5420,10 +5421,6 @@ class NbxOAuth2AuthStrategy extends _nebular_auth__WEBPACK_IMPORTED_MODULE_0__["
     }
     getModuleDbService() {
         return this.moduleDbService;
-    }
-    setOptions(options) {
-        window.console.info(['Auth Strategy Creation Options', Object.assign({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options)]);
-        super.setOptions(Object(_nebular_auth__WEBPACK_IMPORTED_MODULE_0__["deepExtend"])({}, _config_auth_config__WEBPACK_IMPORTED_MODULE_14__["AUTH_STRATEGY_OPTIONS"], options));
     }
     createToken(value, failWhenInvalidToken) {
         // TODO remove all profile images, just keep the first one
