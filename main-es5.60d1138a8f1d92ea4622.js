@@ -31175,19 +31175,13 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     /* harmony import */
 
 
-    var _app_config_app_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-    /*! ./app/config/app.config */
-    "./src/app/config/app.config.ts");
-    /* harmony import */
-
-
-    var _app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! ./app/app.module.ngfactory */
     "./src/app/app.module.ngfactory.js");
     /* harmony import */
 
 
-    var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @angular/platform-browser */
     "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
     /**
@@ -31206,9 +31200,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
     Object(_app_runtime_runtime__WEBPACK_IMPORTED_MODULE_6__["mixins"])(ngx_modal_dialog__WEBPACK_IMPORTED_MODULE_2__["ModalDialogComponent"], [_app_runtime_component_lifecycle_runtime__WEBPACK_IMPORTED_MODULE_5__["ComponentLifeCycleRuntime"]]);
     Object(_app_runtime_runtime__WEBPACK_IMPORTED_MODULE_6__["mixins"])(_ngx_formly_core__WEBPACK_IMPORTED_MODULE_3__["FormlyFormBuilder"], [_app_runtime_formly_form_builder_runtime__WEBPACK_IMPORTED_MODULE_4__["NgxFormlyFormBuilderRuntime"]]);
 
-    _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__["platformBrowser"]().bootstrapModuleFactory(_app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_8__["AppModuleNgFactory"], {
-      providers: _app_config_app_config__WEBPACK_IMPORTED_MODULE_7__["AppConfig"].Providers.All
-    }).then(function (module) {
+    _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__["platformBrowser"]().bootstrapModuleFactory(_app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_7__["AppModuleNgFactory"]).then(function (module) {
       return window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]);
     }, function (reason) {
       return window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]);

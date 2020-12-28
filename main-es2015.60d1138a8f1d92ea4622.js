@@ -16528,15 +16528,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_runtime_formly_form_builder_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app/runtime/formly.form.builder.runtime */ "./src/app/runtime/formly.form.builder.runtime.ts");
 /* harmony import */ var _app_runtime_component_lifecycle_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app/runtime/component.lifecycle.runtime */ "./src/app/runtime/component.lifecycle.runtime.ts");
 /* harmony import */ var _app_runtime_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app/runtime/runtime */ "./src/app/runtime/runtime.ts");
-/* harmony import */ var _app_config_app_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app/config/app.config */ "./src/app/config/app.config.ts");
-/* harmony import */ var _app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app/app.module.ngfactory */ "./src/app/app.module.ngfactory.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+/* harmony import */ var _app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app/app.module.ngfactory */ "./src/app/app.module.ngfactory.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-
 
 
 
@@ -16553,7 +16551,7 @@ if (_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].produc
 // window.console.warn(['Browser locale', navigator.language, navigator.languages]);
 Object(_app_runtime_runtime__WEBPACK_IMPORTED_MODULE_6__["mixins"])(ngx_modal_dialog__WEBPACK_IMPORTED_MODULE_2__["ModalDialogComponent"], [_app_runtime_component_lifecycle_runtime__WEBPACK_IMPORTED_MODULE_5__["ComponentLifeCycleRuntime"]]);
 Object(_app_runtime_runtime__WEBPACK_IMPORTED_MODULE_6__["mixins"])(_ngx_formly_core__WEBPACK_IMPORTED_MODULE_3__["FormlyFormBuilder"], [_app_runtime_formly_form_builder_runtime__WEBPACK_IMPORTED_MODULE_4__["NgxFormlyFormBuilderRuntime"]]);
-_angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__["platformBrowser"]().bootstrapModuleFactory(_app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_8__["AppModuleNgFactory"], { providers: _app_config_app_config__WEBPACK_IMPORTED_MODULE_7__["AppConfig"].Providers.All }).then(module => window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]), reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]))
+_angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__["platformBrowser"]().bootstrapModuleFactory(_app_app_module_ngfactory__WEBPACK_IMPORTED_MODULE_7__["AppModuleNgFactory"]).then(module => window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]), reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]))
     .catch(reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]));
 
 
