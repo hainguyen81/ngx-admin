@@ -101,7 +101,7 @@
                             "extractCss": true,
                             "namedChunks": true,
                             "aot": false,
-                            "buildOptimizer": false,
+                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "vendorChunk": true,
                             "commonChunk": true,

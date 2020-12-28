@@ -6,7 +6,7 @@
 import {CoreModule} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, Inject, Injector, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
@@ -37,7 +37,7 @@ import {NbAuthModule} from '@nebular/auth';
 import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 import {AUTH_STRATEGY_OPTIONS} from './config/auth.config';
 /* Logger */
-import {LoggerModule} from 'ngx-logger';
+import {LoggerModule, NGXLogger} from 'ngx-logger';
 /* Database */
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* i18n */
@@ -81,8 +81,6 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
 import {ServiceWorkerProviders} from './config/worker.providers';
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
-import {ServicesInjectionModule} from './services.injection.module';
-
 
 @NgModule({
     declarations: [AppComponent],
@@ -212,7 +210,8 @@ import {ServicesInjectionModule} from './services.injection.module';
 })
 export class AppModule {
     constructor(injector: Injector,
-                iconLibraries: NbIconLibraries) {
+                iconLibraries: NbIconLibraries,
+                @Inject(NGXLogger) logger: NGXLogger) {
         // @ts-ignore
         AppConfig.Injector = Injector.create({ providers: AppConfig.Providers.All, parent: injector });
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
