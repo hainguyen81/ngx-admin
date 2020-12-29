@@ -15,7 +15,7 @@ import {NGXLogger} from 'ngx-logger';
  * Abstract component service support for rendering/loading component dynamically, etc.
  * @param <T> component type
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export abstract class AbstractComponentService<T> implements IComponentService<T> {
 
     // -------------------------------------------------
@@ -105,7 +105,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
  * Abstract component service support for rendering/loading component dynamically, etc.
  * @param <T> component type
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class BaseComponentService<T> extends AbstractComponentService<T> {
 
     // -------------------------------------------------

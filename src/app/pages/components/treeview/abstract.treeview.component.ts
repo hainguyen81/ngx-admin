@@ -45,7 +45,7 @@ import {
     CONTEXT_MENU_EDIT,
 } from '../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isArray, isNullOrUndefined} from 'util';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * The extended {TreeviewConfig}
@@ -136,7 +136,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @return the tree-view items array
      */
     @Input('items') get items(): TreeviewItem[] {
-        if (isNullOrUndefined(this._items)) {
+        if (ObjectUtils.isNou(this._items)) {
             this._items = [];
         }
         return this._items;
@@ -221,7 +221,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     public getItemImages(item?: TreeviewItem): string[] | string | null {
         const imageParser: any = this.getItemImageParser();
-        return (isNullOrUndefined(imageParser) || typeof imageParser !== 'function'
+        return (ObjectUtils.isNou(imageParser) || typeof imageParser !== 'function'
             ? null : imageParser.apply(this, [item]));
     }
 
@@ -579,11 +579,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
     onDataSourceChanged(event: IEvent) {
         this.getLogger().debug('DataSource has been changed', event);
         const elements: any[] = (event && event.data
-            && event.data.hasOwnProperty('elements') && isArray(event.data['elements'])
+            && event.data.hasOwnProperty('elements') && ArrayUtils.isArray(event.data['elements'])
             ? Array.from(event.data['elements']) : [event.data['elements']]);
         const treeBuilder: (data: any[]) => TreeviewItem[] = this.getTreeBuilder();
         const itemBuilder: (data: any) => TreeviewItem = this.getItemBuilder();
-        if (!isNullOrUndefined(itemBuilder) && typeof itemBuilder === 'function') {
+        if (ObjectUtils.isNotNou(itemBuilder) && typeof itemBuilder === 'function') {
             const items: TreeviewItem[] = [];
             (elements || []).forEach(element => {
                 const item: TreeviewItem = itemBuilder.apply(this, [element]);
@@ -591,7 +591,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
             });
             this._items = items;
 
-        } else if (!isNullOrUndefined(treeBuilder) && typeof treeBuilder === 'function') {
+        } else if (ObjectUtils.isNotNou(treeBuilder) && typeof treeBuilder === 'function') {
             this._items = treeBuilder.apply(this, [elements || []]);
 
         } else {
@@ -674,9 +674,9 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      * @param dropdownTreeviewComponent {DropdownTreeviewComponent}
      */
     private detectDropdownForAppendToBody(dropdownTreeviewComponent: DropdownTreeviewComponent): void {
-        if (!this.isDropDown() || isNullOrUndefined(dropdownTreeviewComponent)
-            || isNullOrUndefined(dropdownTreeviewComponent.dropdownDirective)
-            || isNullOrUndefined(dropdownTreeviewComponent.dropdownDirective.toggleElement)
+        if (!this.isDropDown() || ObjectUtils.isNou(dropdownTreeviewComponent)
+            || ObjectUtils.isNou(dropdownTreeviewComponent.dropdownDirective)
+            || ObjectUtils.isNou(dropdownTreeviewComponent.dropdownDirective.toggleElement)
             || !this.isAppendToBody()) {
             dropdownTreeviewComponent && dropdownTreeviewComponent.dropdownDirective
             && this.__originalDropdownOpen.apply(dropdownTreeviewComponent.dropdownDirective);
@@ -686,7 +686,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
         const dropdownMenuEl: Element = (dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] instanceof Element
             ? dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] as Element
                 : HtmlUtils.nextSibling(dropdownTreeviewComponent.dropdownDirective.toggleElement, '[ngxDropdownMenu].dropdown-menu'));
-        if (!isNullOrUndefined(dropdownMenuEl)) {
+        if (ObjectUtils.isNotNou(dropdownMenuEl)) {
             dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] = dropdownMenuEl;
             this.getRenderer().removeClass(dropdownMenuEl, 'ngx-treeview');
             this.getRenderer().addClass(dropdownMenuEl, 'ngx-treeview');
@@ -704,11 +704,11 @@ export abstract class AbstractTreeviewComponent<T extends DataSource>
      */
     private calculateDropdownPosition(
         dropdownTreeviewComponent: DropdownTreeviewComponent, dropdownMenuEl?: Element | null) {
-        const menuEl: Element = (!isNullOrUndefined(dropdownMenuEl) ? dropdownMenuEl
+        const menuEl: Element = (ObjectUtils.isNotNou(dropdownMenuEl) ? dropdownMenuEl
             : dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] instanceof Element
                 ? dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] as Element
                 : HtmlUtils.nextSibling(dropdownTreeviewComponent.dropdownDirective.toggleElement, '[ngxDropdownMenu].dropdown-menu'));
-        if (!isNullOrUndefined(menuEl) && this.isAppendToBody()) {
+        if (ObjectUtils.isNotNou(menuEl) && this.isAppendToBody()) {
             const offset: { top: number, left: number, width: number, height: number } =
                 super.offset(dropdownTreeviewComponent.dropdownDirective.toggleElement);
             this.getRenderer().setStyle(

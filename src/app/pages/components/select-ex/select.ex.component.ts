@@ -27,7 +27,7 @@ import {NgxSelectComponent, NgxSelectOption} from 'ngx-select-ex';
 import {throwError} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Select component base on {NgxSelectComponent}
@@ -273,13 +273,13 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
         if (selectComponent && selectComponent['choiceMenuElRef'] instanceof ElementRef) {
             // append add new option action
             const choiceMenuElRef: ElementRef = selectComponent['choiceMenuElRef'] as ElementRef;
-            if (!isNullOrUndefined(parentComponent.addNewOptionElRef)) {
+            if (ObjectUtils.isNotNou(parentComponent.addNewOptionElRef)) {
                 const addNewOptionEl: HTMLElement =
                     parentComponent.getFirstElementBySelector(
                         '.ngx-select__item_addNewOption', choiceMenuElRef.nativeElement);
                 const shouldShown: boolean = parentComponent.getConfigValue('showAddNewOption', false)
                     && parentComponent.getConfigValue('addNewOptionConfig', null);
-                if (isNullOrUndefined(addNewOptionEl) && choiceMenuElRef && shouldShown) {
+                if (ObjectUtils.isNou(addNewOptionEl) && choiceMenuElRef && shouldShown) {
                     parentComponent.getRenderer().appendChild(
                         choiceMenuElRef.nativeElement, parentComponent.addNewOptionElRef.nativeElement);
                     parentComponent.toggleElementClass(
@@ -292,7 +292,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
             if (this.appendToBody()) {
                 const mainInputElRef: ElementRef = selectComponent['inputElRef'] as ElementRef;
                 const shouldAppendToBody: boolean = parentComponent.getConfigValue('appendToBody', false);
-                if (shouldAppendToBody && choiceMenuElRef && mainInputElRef && isNullOrUndefined(mainInputElRef['appendToBody'])) {
+                if (shouldAppendToBody && choiceMenuElRef && mainInputElRef && ObjectUtils.isNou(mainInputElRef['appendToBody'])) {
                     parentComponent.getRenderer().appendChild(
                         document.body, choiceMenuElRef.nativeElement);
                     const offset: { top: number, left: number, width: number, height: number } =

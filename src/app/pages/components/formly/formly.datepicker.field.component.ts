@@ -15,12 +15,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {INgxDatePickerConfig} from '../datepicker/abstract.datepicker.component';
 import {IDatePickerConfig} from 'ng2-date-picker';
-import {isNullOrUndefined} from 'util';
 import {Moment} from 'moment';
 import moment from 'moment';
 import {NgxDatePickerComponent} from '../datepicker/datepicker.component';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {IEvent} from '../abstract.component';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Formly date-picker field component base on {FieldType}
@@ -62,7 +62,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
         super.config = _config;
         const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
-        if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
+        if (ObjectUtils.isNotNou(__dtConfig) && (__dtConfig.format || '').length) {
             __dtConfig.format = this.translate(__dtConfig.format);
         }
         if (this.datePickerComponent) {
@@ -77,7 +77,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
     get dateTimePattern(): string {
         const __config: INgxDatePickerConfig = this.config as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
-        return isNullOrUndefined(__dtConfig) ? '' : __dtConfig.format;
+        return ObjectUtils.isNou(__dtConfig) ? '' : __dtConfig.format;
     }
 
     get valueParser(): (value: any) => any {
@@ -132,7 +132,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
             this._datePickerComponent = ComponentUtils.queryComponent(
                 this.queryDatePickerComponent, component => {
                     component
-                    && component.openListener.subscribe(e => {
+                    && component.openListener.subscribe((e: any) => {
                         if (this.field) {
                             this.field.focus = true;
                             this.field.formControl
@@ -141,7 +141,7 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
                         this.stateChanges.next();
                     });
                     component
-                    && component.closeListener.subscribe(e => {
+                    && component.closeListener.subscribe((e: any) => {
                         if (this.field) this.field.focus = false;
                         this.stateChanges.next();
                     });

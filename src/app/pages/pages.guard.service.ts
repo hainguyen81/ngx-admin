@@ -6,7 +6,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class PagesGuard implements CanActivateChild {
 
     protected getModuleService(): ModuleService {

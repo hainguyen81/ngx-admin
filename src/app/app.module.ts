@@ -3,10 +3,19 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import {CoreModule} from './@core/core.module';
+import {CoreModule, throwIfAlreadyLoaded} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CUSTOM_ELEMENTS_SCHEMA, Inject, Injector, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {
+    CUSTOM_ELEMENTS_SCHEMA,
+    Inject,
+    Injector,
+    ModuleWithProviders,
+    NgModule,
+    NO_ERRORS_SCHEMA,
+    Optional,
+    SkipSelf,
+} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
@@ -35,7 +44,6 @@ import {AppConfig} from './config/app.config';
 /* Authentication */
 import {NbAuthModule} from '@nebular/auth';
 import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
-import {AUTH_STRATEGY_OPTIONS} from './config/auth.config';
 /* Logger */
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 /* Database */
@@ -81,11 +89,12 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
 import {ServiceWorkerProviders} from './config/worker.providers';
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
+import {ServicesInjectionModule} from './services.injection.module';
 
 @NgModule({
-    declarations: [AppComponent],
     imports: [
         ServiceWorkerProviders,
+        ServicesInjectionModule.forRoot(),
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -201,6 +210,7 @@ import {registerBrowserServiceWorkers} from './sw/core/service.workers.registrat
         /* Mock data module */
         MockDataModule,
     ],
+    declarations: [AppComponent],
     providers: AppConfig.Providers.All,
     bootstrap: [AppComponent],
     schemas: [
@@ -209,11 +219,17 @@ import {registerBrowserServiceWorkers} from './sw/core/service.workers.registrat
     ],
 })
 export class AppModule {
-    constructor(injector: Injector,
+
+    private readonly moduleInjector: Injector;
+
+    constructor(@Optional() @SkipSelf() parentModule: AppModule,
+                injector: Injector,
                 iconLibraries: NbIconLibraries,
                 @Inject(NGXLogger) logger: NGXLogger) {
         // @ts-ignore
-        AppConfig.Injector = Injector.create({ providers: AppConfig.Providers.All, parent: injector });
+        throwIfAlreadyLoaded(parentModule, 'AppModule');
+        this.moduleInjector = Injector.create({ providers: AppConfig.Providers.All, parent: injector, name: 'AppModuleInjector' });
+        AppConfig.Injector = this.moduleInjector;
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('fas', {packClass: 'fas', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
@@ -221,5 +237,19 @@ export class AppModule {
 
         // register application service workers
         registerBrowserServiceWorkers();
-   }
+    }
+
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: AppModule,
+            providers: AppConfig.Providers.All,
+        };
+    }
+
+    static forChild(): ModuleWithProviders {
+        return {
+            ngModule: AppModule,
+            providers: AppConfig.Providers.All,
+        };
+    }
 }

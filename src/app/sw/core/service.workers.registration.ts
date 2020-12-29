@@ -1,7 +1,7 @@
 import {ServiceWorkerScripts} from '../../config/worker.providers';
-import {isNullOrUndefined} from 'util';
 import {environment} from '../../../environments/environment';
 import {DB_STORE} from '../../config/db.config';
+import ObjectUtils from '../../utils/common/object.utils';
 
 export function registerBrowserServiceWorkers() {
     if (navigator && 'serviceWorker' in navigator) {
@@ -12,7 +12,7 @@ export function registerBrowserServiceWorkers() {
 
             // check for registered services
             let workers: { [key: string]: { script: string, controller: ServiceWorker } } = {};
-            if (!isNullOrUndefined(registration) && Array.from(registration).length) {
+            if (ObjectUtils.isNotNou(registration) && Array.from(registration).length) {
                 Object.keys(ServiceWorkerScripts).forEach(serviceWorkerKey => {
                     const serviceWorker: { script: string, controller: ServiceWorker } =
                         ServiceWorkerScripts[serviceWorkerKey];
@@ -21,7 +21,7 @@ export function registerBrowserServiceWorkers() {
                         scriptURL = scriptURL.right(scriptURL.length - 2);
                     }
                     const checkRegistered: boolean = !Array.from(registration).filter(registeredService => {
-                        const registered: boolean = (!isNullOrUndefined(registeredService.active)
+                        const registered: boolean = (ObjectUtils.isNotNou(registeredService.active)
                             && (registeredService.active.scriptURL || '').length
                             && registeredService.active.scriptURL.indexOf(scriptURL) >= 0);
                         if (registered) {

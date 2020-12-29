@@ -33,12 +33,11 @@ export default class ObjectUtils {
      * @return the converted value or undefined
      */
     public static cast<T, K>(value: T, type: Type<K>): K {
-        if (value instanceof type)
-            try {
-                return value as K;
-            } catch (e) {
-            }
-        return undefined;
+        try {
+            return (value instanceof type ? value as K : undefined);
+        } catch (e) {
+            return undefined;
+        }
     }
 
     /**
@@ -104,12 +103,12 @@ export default class ObjectUtils {
             (target as any[]).forEach((v) => {
                 cp.push(v);
             });
-            return cp.map((n: any) => this.deepCopy<any>(n)) as any;
+            return cp.map((n: any) => ObjectUtils.deepCopy<any>(n)) as any;
         }
         if (typeof target === 'object' && target !== {}) {
             const cp = {...(target as { [key: string]: any })} as { [key: string]: any };
             Object.keys(cp).forEach(k => {
-                cp[k] = this.deepCopy<any>(cp[k]);
+                cp[k] = ObjectUtils.deepCopy<any>(cp[k]);
             });
             return cp as T;
         }
@@ -147,7 +146,7 @@ export default class ObjectUtils {
      * @return all keys of the specified enum type
      */
     public static enumKeys<E extends Enum<E>>(enumType: Type<E>): string[] {
-        return Object.keys(enumType).filter(k => typeof enumType[k as any] === 'number');
+        return Object.keys(enumType).filter(k => typeof ObjectUtils.requireValue(enumType, k) === 'number');
     }
     /**
      * Get all values of the specified enum type
@@ -155,7 +154,75 @@ export default class ObjectUtils {
      * @return all values of the specified enum type
      */
     public static enumValues<E extends Enum<E>>(enumType: Type<E>): number[] {
-        const keys = Object.keys(enumType).filter(k => typeof enumType[k as any] === 'number');
-        return keys.map(k => enumType[k as any]);
+        const keys = Object.keys(enumType).filter(k => typeof ObjectUtils.requireValue(enumType, k) === 'number');
+        return keys.map(k => ObjectUtils.requireTypedValue<number>(enumType, k));
+    }
+
+    /**
+     * Get a boolean value indicating the specified object whether is null/undefined
+     * @param obj to check
+     * @return true for null/undefined; else false
+     */
+    public static isNou(obj: any): boolean {
+        return (obj === null || obj === undefined);
+    }
+
+    /**
+     * Get a boolean value indicating the specified object whether is not null/undefined
+     * @param obj to check
+     * @return true for non null/undefined; else false
+     */
+    public static isNotNou(obj: any): boolean {
+        return !ObjectUtils.isNou(obj);
+    }
+
+    /**
+     * Get a boolean value indicating the specified object whether is an object and not null/undefined
+     * @param obj to check
+     * @return true for non null/undefined object; else false
+     */
+    public static isObject(obj: any): boolean {
+        return ObjectUtils.isNotNou(obj) && typeof obj === 'object';
+    }
+
+    /**
+     * Require the property value of the specified object by key
+     * @param obj to parse
+     * @param k property key
+     * @param defVal default value if not found
+     * @return the property value or default value
+     */
+    public static requireValue(obj: any, k: string, defVal?: any): any {
+        return (typeof obj === 'object' && ObjectUtils.isNotNou(obj)
+        && (k || '').length && obj.hasOwnProperty(k) ? obj[k] : defVal);
+    }
+
+    /**
+     * Require the property value of the specified object by key
+     * @param obj to parse
+     * @param k property key
+     * @param defVal default value if not found
+     * @return the property value or default value
+     */
+    public static requireTypedValue<T>(obj: any, k: string, defVal?: T): T {
+        return <T>ObjectUtils.requireValue(obj, k, defVal);
+    }
+
+    /**
+     * Cast the specified object to the typed value
+     * @param obj to cast
+     * @return the casted object or null/undefined
+     */
+    public static as<T>(obj: any): T {
+        return <T>obj;
+    }
+
+    /**
+     * Cast the specified object to the 'any' typed value
+     * @param obj to cast
+     * @return the casted 'any' object or null/undefined
+     */
+    public static any(obj: any): any {
+        return <any>obj;
     }
 }

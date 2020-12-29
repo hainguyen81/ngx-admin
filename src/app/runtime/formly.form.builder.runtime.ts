@@ -8,8 +8,8 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {isNullOrUndefined} from 'util';
 import {ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
+import ObjectUtils from '../utils/common/object.utils';
 
 /**
  * Custom {FormlyFormBuilder} for translating form configuration
@@ -31,7 +31,7 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ComponentFactoryResolver} instance
      */
     get componentFactoryResolver(): ComponentFactoryResolver {
-        if (isNullOrUndefined(this._factoryResolver) && !isNullOrUndefined(this.injector)) {
+        if (ObjectUtils.isNou(this._factoryResolver) && ObjectUtils.isNotNou(this.injector)) {
             this._factoryResolver = this.injector.get(ComponentFactoryResolver);
         }
         return this._factoryResolver;
@@ -50,7 +50,7 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ViewContainerRef} instance
      */
     protected get viewContainerRef(): ViewContainerRef {
-        if (isNullOrUndefined(this._viewContainerRef) && !isNullOrUndefined(this.injector)) {
+        if (ObjectUtils.isNou(this._viewContainerRef) && ObjectUtils.isNotNou(this.injector)) {
             this._viewContainerRef = this.injector.get(ViewContainerRef);
         }
         return this._viewContainerRef;
@@ -61,7 +61,7 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ChangeDetectorRef} instance
      */
     protected get changeDetectorRef(): ChangeDetectorRef {
-        if (isNullOrUndefined(this._changeDetectorRef) && !isNullOrUndefined(this.injector)) {
+        if (ObjectUtils.isNou(this._changeDetectorRef) && ObjectUtils.isNotNou(this.injector)) {
             this._changeDetectorRef = this.injector.get(ChangeDetectorRef);
         }
         return this._changeDetectorRef;
@@ -72,7 +72,7 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {ElementRef} instance
      */
     protected get elementRef(): ElementRef {
-        if (isNullOrUndefined(this._elementRef) && !isNullOrUndefined(this.injector)) {
+        if (ObjectUtils.isNou(this._elementRef) && ObjectUtils.isNotNou(this.injector)) {
             this._elementRef = this.injector.get(ElementRef);
         }
         return this._elementRef;
@@ -99,7 +99,7 @@ export class NgxFormlyFormBuilderRuntime {
      * @return the {TranslateService} instance
      */
     protected get translateService(): TranslateService {
-        if (isNullOrUndefined(this._translateService) && !isNullOrUndefined(this.injector)) {
+        if (ObjectUtils.isNou(this._translateService) && ObjectUtils.isNotNou(this.injector)) {
             this._translateService = this.injector.get(TranslateService);
         }
         return this._translateService;
@@ -173,16 +173,17 @@ export class NgxFormlyFormBuilderRuntime {
      * @param _config {FormlyConfig}
      */
     private translateFormConfig(_config?: FormlyConfig): FormlyConfig {
-        if (!isNullOrUndefined(_config)) {
+        if (ObjectUtils.isNotNou(_config)) {
             const _this: NgxFormlyFormBuilderRuntime = this;
 
-            _config['messages:keys'] = {};
+            const _configAny: any = ObjectUtils.as<any>(_config);
+            _configAny['messages:keys'] = {};
             const messages: any = _config.messages;
             if (Object.keys(messages).length) {
                 Object.keys(messages).forEach(messageKey => {
                     const message: any = messages[messageKey];
                     messages[messageKey] = this.__translateFormValidationMessage(
-                        messageKey, message, _config['messages:keys']);
+                        messageKey, message, _configAny['messages:keys']);
                 });
             }
 
@@ -190,21 +191,21 @@ export class NgxFormlyFormBuilderRuntime {
             _config.addValidatorMessage =
                 (name: string, message: string | ((error: any, field: FormlyFieldConfig) => string)) => {
                     const translatedMessage: string | ((error: any, field: FormlyFieldConfig) => string) =
-                        _this.__translateFormValidationMessage(name, message, _config['messages:keys']);
+                        _this.__translateFormValidationMessage(name, message, _configAny['messages:keys']);
                     __originalAddValidatorMessage.apply(_config, [name, translatedMessage]);
                 };
 
             const __originalGetValidatorMessage: Function = _config.getValidatorMessage;
             _config.getValidatorMessage = (name: string) => {
                 return _this.__translateFormValidationMessage(
-                    name, __originalGetValidatorMessage.apply(_config, [name]), _config['messages:keys']);
+                    name, __originalGetValidatorMessage.apply(_config, [name]), _configAny['messages:keys']);
             };
 
             const __originalAddConfig: Function = _config.addConfig;
             _config.addConfig = (config: ConfigOption) => {
                 (config.validationMessages || []).forEach((validationMessage: ValidationMessageOption) => {
                     validationMessage.message = _this.__translateFormValidationMessage(
-                        validationMessage.name, validationMessage.message, _config['messages:keys']);
+                        validationMessage.name, validationMessage.message, _configAny['messages:keys']);
                 });
                 __originalAddConfig.apply(_config, [config]);
             };

@@ -29,7 +29,7 @@ import {
 import {BehaviorSubject} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * The interface of data while searching option items
@@ -240,7 +240,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     SELECT_SEARCH_CALLBACK: SelectSearchCallbackDelegate =
         (search?: string | null, item?: NgxSelectOption) => {
             return this.onSearchCallback({ data: { search: search, item: item } });
-        }
+        };
 
     // -------------------------------------------------
     // DECLARATION
@@ -513,7 +513,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
                     break;
                 }
             }
-            if (!isNullOrUndefined(foundOption)) {
+            if (ObjectUtils.isNotNou(foundOption)) {
                 break;
             }
         }

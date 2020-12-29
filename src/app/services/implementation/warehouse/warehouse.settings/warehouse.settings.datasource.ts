@@ -7,7 +7,7 @@ import {
     WarehouseSettingsHttpService,
 } from './warehouse.settings.service';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseSettingsDatasource
     extends BaseDataSource<IWarehouseSetting, WarehouseSettingsHttpService, WarehouseSettingsDbService> {
 

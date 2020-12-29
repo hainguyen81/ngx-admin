@@ -48,9 +48,9 @@ import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
-import {isArray, isNullOrUndefined} from 'util';
 import {AppConfig} from '../../../../../config/app.config';
 import {ServiceWorkerKeys} from '../../../../../config/worker.providers';
+import ArrayUtils from '../../../../../utils/common/array.utils';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -256,25 +256,25 @@ export class WarehouseInventoryComponent
             detail.inventory_code = model.code;
             delete detail.inventory;
 
-            if (!isArray(detail.batches)) {
+            if (!ArrayUtils.isArray(detail.batches)) {
                 detail.batches = [];
             }
             detail.batches.removeSelfIf(batch => {
-                return (isNullOrUndefined(batch)
+                return (ObjectUtils.isNou(batch)
                     || (!(batch.batch_code || '').length && isNaN(batch.quantity)));
             });
-            (detail.batches || []).forEach(batch => delete batch['batch']);
+            (detail.batches || []).forEach(batch => delete ObjectUtils.any(batch)['batch']);
 
-            if (!isArray(detail.storage)) {
+            if (!ArrayUtils.isArray(detail.storage)) {
                 detail.storage = [];
             }
             detail.storage.removeSelfIf(storage => {
-                return (isNullOrUndefined(storage)
+                return (ObjectUtils.isNou(storage)
                     || (!(storage.warehouse_code || '').length && isNaN(storage.quantity)));
             });
-            (detail.storage || []).forEach(storage => delete storage['storage']);
+            (detail.storage || []).forEach(storage => delete ObjectUtils.any(storage)['storage']);
 
-            if (!isArray(detail.series)) {
+            if (!ArrayUtils.isArray(detail.series)) {
                 detail.series = [];
             }
             detail.series.removeSelfIf(serial => !(serial || '').length);

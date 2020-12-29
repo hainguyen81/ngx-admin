@@ -12,7 +12,7 @@ import {IModel} from '../@core/data/base';
  * Abstract service for listening application updater
  * @param <T> entity type
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export abstract class AbstractUpdateService<T extends IModel> extends BaseHttpService<T> {
 
     protected getSwUpdate(): SwUpdate {

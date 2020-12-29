@@ -1,6 +1,6 @@
 import {IModel} from '../../@core/data/base';
 import {TranslateService} from '@ngx-translate/core';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../common/object.utils';
 
 /**
  * {IModel} utilities
@@ -20,8 +20,8 @@ export default class ModelUtils {
         if (Object.keys(keysMapper).length) {
             (models || []).forEach((model: T) => {
                 for (const [key, mapper] of Object.entries(keysMapper)) {
-                    if ((key || '').length && !isNullOrUndefined(mapper)) {
-                        model[key] = mapper.apply(this, [model]);
+                    if ((key || '').length && ObjectUtils.isNotNou(mapper)) {
+                        ObjectUtils.any(model)[key] = mapper.apply(this, [model]);
                     }
                 }
             });
@@ -37,9 +37,9 @@ export default class ModelUtils {
     public static buildModelsForDefaultSelectOptions<T extends IModel>(
         models: T[], translateService?: TranslateService | null, includedCode?: boolean | true): T[] {
         const titleTextMapper: (model: T) => string | string[] | T = model => {
-            const modelName: string = model['name'] || '';
+            const modelName: string = ObjectUtils.any(model)['name'] || '';
             const modelCode: string =
-                ((model['code'] || '').length ? ''.concat('(', model['code'], ')') : '');
+                ((ObjectUtils.any(model)['code'] || '').length ? ''.concat('(', ObjectUtils.any(model)['code'], ')') : '');
             if (includedCode) {
                 return [(translateService ? translateService.instant(modelName) : modelName),
                     modelCode].join(' ').trim();
@@ -70,7 +70,7 @@ export default class ModelUtils {
             (models || []).forEach((model: T) => {
                 const option: { [key: string]: string | string[]; } = {};
                 for (const [key, mapper] of Object.entries(keysMapper)) {
-                    if ((key || '').length && !isNullOrUndefined(mapper)) {
+                    if ((key || '').length && ObjectUtils.isNotNou(mapper)) {
                         option[key] = mapper.apply(this, [model]);
                     }
                 }
@@ -90,15 +90,15 @@ export default class ModelUtils {
         { [key: string]: string | string[] | T; }[] {
         const labelTitleTextMapper: (model: T) => string | string[] | T = model => {
             if (includedCode) {
-                return translateService ? translateService.instant(model['name'])
-                    .concat(' (', model['code'], ')') : model['name'].concat(' (', model['code'], ')');
+                return translateService ? translateService.instant(ObjectUtils.any(model)['name'])
+                    .concat(' (', ObjectUtils.any(model)['code'], ')') : ObjectUtils.any(model)['name'].concat(' (', ObjectUtils.any(model)['code'], ')');
             } else {
-                return translateService ? translateService.instant(model['name']) : model['name'];
+                return translateService ? translateService.instant(ObjectUtils.any(model)['name']) : ObjectUtils.any(model)['name'];
             }
         };
         return this.buildModelsForTableSelectOptions(
             models, translateService, includedCode, {
-                'value': model => model['code'],
+                'value': model => ObjectUtils.any(model)['code'],
                 'label': labelTitleTextMapper,
                 'title': labelTitleTextMapper,
                 'text': labelTitleTextMapper,

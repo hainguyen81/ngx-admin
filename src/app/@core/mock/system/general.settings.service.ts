@@ -8,7 +8,7 @@ import {generalSettingsGenerate} from './mock.general.settings';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class MockGeneralSettingsService implements IMockService {
 
     constructor(@Inject(GeneralSettingsDbService) private dbService: GeneralSettingsDbService,

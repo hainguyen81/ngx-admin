@@ -2,7 +2,6 @@ import {FormlyFieldConfig} from '@ngx-formly/core';
 import SystemDataUtils from '../system/system.data.utils';
 import {IGeneralSettings} from '../../@core/data/system/general.settings';
 import {IModel} from '../../@core/data/base';
-import {isArray, isNullOrUndefined} from 'util';
 import {Type} from '@angular/core';
 import {
     AppFormlySelectExFieldComponent,
@@ -14,6 +13,8 @@ import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../../@core/data/constants/common.constants';
 import {IDbService, IHttpService} from '../../services/common/interface.service';
 import {BaseDataSource} from '../../services/common/datasource.service';
+import ObjectUtils from '../common/object.utils';
+import ArrayUtils from '../common/array.utils';
 
 export default class AppObserveUtils {
 
@@ -45,7 +46,7 @@ export default class AppObserveUtils {
             datasource, indexName, keyRange, null, keysMapper).then(
                 (settings: IModel[]) => {
                     let options: T[] = [];
-                    !isNullOrUndefined(noneOption) && options.push(noneOption);
+                    ObjectUtils.isNotNou(noneOption) && options.push(noneOption);
                     options = options.concat(settings as T[]);
                     this.observeGeneralSettingsFormFieldComponent(
                         field, dataFilter, fieldComponentType, options);
@@ -149,7 +150,7 @@ export default class AppObserveUtils {
         const fieldComponentRef: any = (field.templateOptions && field.templateOptions['componentRef']
             ? <FC>field.templateOptions['componentRef'] : null);
         let settingsFieldComponent: AppFormlySelectExFieldComponent<T> = null;
-        if (isNullOrUndefined(fieldComponentType)) {
+        if (ObjectUtils.isNou(fieldComponentType)) {
             (fieldComponentRef && fieldComponentRef instanceof AppFormlySelectExFieldComponent)
             || throwError('Could not parse field component or invalid component type');
             settingsFieldComponent = <AppFormlySelectExFieldComponent<T>>fieldComponentRef;
@@ -159,8 +160,8 @@ export default class AppObserveUtils {
             settingsFieldComponent = <FC>fieldComponentRef;
         }
         settingsFieldComponent || throwError('Could not parse field component or invalid component type');
-        options = (isNullOrUndefined(settingFilter) ? options : (options || []).filter(settingFilter));
-        if (settingsFieldComponent && !isNullOrUndefined(options)) {
+        options = (ObjectUtils.isNou(settingFilter) ? options : (options || []).filter(settingFilter));
+        if (settingsFieldComponent && ObjectUtils.isNotNou(options)) {
             settingsFieldComponent.items = options;
         }
     }
@@ -203,7 +204,7 @@ export default class AppObserveUtils {
             datasource, indexName, keyRange, null, keysMapper).then(
                 (data: { [key: string]: string | string[] | T; }[]) => {
                     const filteredData: { [key: string]: string | string[] | T; }[] =
-                        (isNullOrUndefined(dataFilter) ? data : data.filter(dataFilter));
+                        (ObjectUtils.isNou(dataFilter) ? data : data.filter(dataFilter));
                     tableSettings['columns'][column]['editor']['config']['list'] = data;
                 });
     }
@@ -286,7 +287,7 @@ export default class AppObserveUtils {
         const options: { [key: string]: string | string[] | IGeneralSettings; }[] =
             <{ [key: string]: string | string[] | IGeneralSettings; }[]>
                 tableSettings['columns'][column]['editor']['config']['list'];
-        if (!isNullOrUndefined(options) && isArray(options)) {
+        if (ObjectUtils.isNotNou(options) && ArrayUtils.isArray(options)) {
             for (const option of options) {
                 if (option.value === value) {
                     return (option.label && option.label.toString().length

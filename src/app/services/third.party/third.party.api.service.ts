@@ -1,17 +1,17 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {AbstractHttpService, BaseHttpService} from '../common/http.service';
+import {BaseHttpService} from '../common/http.service';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../common/response.service';
 import JsonUtils from '../../utils/common/json.utils';
-import {AbstractBaseDbService, BaseDbService} from '../common/database.service';
+import {BaseDbService} from '../common/database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {Observable, throwError} from 'rxjs';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/common/object.utils';
-import {catchError, flatMap, map} from 'rxjs/operators';
+import {catchError, map, mergeMap} from 'rxjs/operators';
 import {RC_THIRD_PARTY_CUSTOM_TYPE} from '../../config/request.config';
 import {Cacheable} from 'ngx-cacheable';
 import {NgxLocalStorageEncryptionService} from '../storage.services/local.storage.services';
@@ -94,7 +94,7 @@ export class ThirdPartyApiExpiredException extends Error {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends BaseDbService<T> {
 
     protected constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -140,7 +140,7 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends B
                       reject: (reason?: any) => void, ...args: T[]) => {
         if (args && args.length) args[0].expiredAt = (new Date()).getTime();
         return super.deleteExecutor(resolve, reject);
-    }
+    };
 
     /**
      * Check valid non-expired data.
@@ -159,7 +159,7 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends B
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty> extends BaseHttpService<T> {
 
     protected static THIRD_PARTY_LATEST_ACCESS_TOKEN: string = 'XThirdPartyToken';
@@ -378,7 +378,7 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty> extends
                 return  _this.updateRequestOptionsBeforeRequest(options);
             }),
             // TODO this is way to call an observer in another observer
-            flatMap(tokenOptions => {
+            mergeMap(tokenOptions => {
                 return _this.getHttp().request(method, url, tokenOptions).pipe(
                     map(apiDataResp => {
                         if (apiDataResp instanceof HttpResponse) {

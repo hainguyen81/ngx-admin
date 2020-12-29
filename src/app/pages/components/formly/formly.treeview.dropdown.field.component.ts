@@ -8,12 +8,12 @@ import {TreeviewItem} from 'ngx-treeview';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {IEvent} from '../abstract.component';
 import {NgxDropdownTreeviewComponent} from '../treeview/treeview.dropdown.component';
-import {isArray, isNullOrUndefined} from 'util';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable} from 'rxjs';
 import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * Formly Treeview Dropdown field component base on {FieldType}
@@ -159,34 +159,34 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
                 ? this.field.templateOptions['itemBuilder'] : null)
             || this.getConfigValue('itemBuilder');
         let items: TreeviewItem[] = [];
-        if (isArray(options)) {
-            if (!isNullOrUndefined(treeBuilder) && typeof treeBuilder === 'function') {
+        if (ArrayUtils.isArray(options)) {
+            if (ObjectUtils.isNotNou(treeBuilder) && typeof treeBuilder === 'function') {
                 items = treeBuilder.apply(this, [Array.from(options as any[])]);
-                if (!isNullOrUndefined(items)) {
+                if (ObjectUtils.isNotNou(items)) {
                     this.items = items;
                 }
 
-            } if (!isNullOrUndefined(itemBuilder) && typeof itemBuilder === 'function') {
+            } if (ObjectUtils.isNotNou(itemBuilder) && typeof itemBuilder === 'function') {
                 Array.from(options as any[]).forEach(option => {
                     const item: TreeviewItem = itemBuilder.apply(this, [option]);
                     item && items.push(item);
                 });
                 this.items = items;
 
-            } else if (!isNullOrUndefined(this.getTreeviewComponent())) {
+            } else if (ObjectUtils.isNotNou(this.getTreeviewComponent())) {
                 items = this.getTreeviewComponent().mappingDataSourceToTreeviewItems(options);
-                if (!isNullOrUndefined(items)) {
+                if (ObjectUtils.isNotNou(items)) {
                     this.items = items;
                 }
             }
 
         } else if (isObservable(options)) {
             (<Observable<any[]>>options).subscribe(opts => {
-                const optValues: any[] = (opts && isArray(opts) ? Array.from(opts) : opts ? [opts] : []);
+                const optValues: any[] = (opts && ArrayUtils.isArray(opts) ? Array.from(opts) : opts ? [opts] : []);
                 this.buildTemplateOptionsToTree(optValues);
             });
 
-        } else if (!isNullOrUndefined(options) && !isArray(options) && !isObservable(options)) {
+        } else if (ObjectUtils.isNotNou(options) && !ArrayUtils.isArray(options) && !isObservable(options)) {
             this.buildTemplateOptionsToTree([options]);
         }
     }
@@ -197,7 +197,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      */
     protected onSelectedValue(e: IEvent): void {
         let item: any;
-        item = (e && e.data && isArray(e.data) && Array.from(e.data).length ? e.data[0] : null);
+        item = (e && e.data && ArrayUtils.isArray(e.data) && Array.from(e.data).length ? e.data[0] : null);
         if (!item || item instanceof TreeviewItem) {
             this.setTreeviewSelectedItem(item as TreeviewItem, false);
 

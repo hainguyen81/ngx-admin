@@ -9,7 +9,6 @@ import {NbxAuthOAuth2Token} from './auth.oauth2.token';
 import {LogConfig} from '../config/log.config';
 import {ModuleService} from '../services/implementation/module.service';
 import {IModule} from '../@core/data/system/module';
-import {isArray} from 'util';
 import {IRole} from '../@core/data/system/role';
 import {isObject} from 'rxjs/internal-compatibility';
 import {map} from 'rxjs/operators';
@@ -18,8 +17,10 @@ import {RC_AUTH_AUTHORIZATION_BASIC_TYPE} from '../config/request.config';
 import JsonUtils from '../utils/common/json.utils';
 import {AUTH_STRATEGY_OPTIONS} from '../config/auth.config';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
+import ArrayUtils from '../utils/common/array.utils';
+import ObjectUtils from '../utils/common/object.utils';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     static setup(options?: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
         return [NbxOAuth2AuthStrategy, AUTH_STRATEGY_OPTIONS];
@@ -86,8 +87,8 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
         };
         return this.getHttpService().request(url, method || 'POST', options).pipe(
             map(token => {
-                return (!isArray(token) && token
-                    ? token : isArray(token) ? token[0] : undefined);
+                return (!ArrayUtils.isArray(token) && token
+                    ? token : ArrayUtils.isArray(token) ? ObjectUtils.as<any[]>(token)[0] : undefined);
             }),
             map(token => {
                 return new NbAuthResult(
@@ -102,7 +103,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
                     options.messages,
                     (token && Object.keys(token).length ? token : undefined));
             })) as Observable<NbAuthResult>;
-    }
+    };
 
     createToken<T extends NbAuthToken>(value: any, failWhenInvalidToken?: boolean): T {
         // TODO remove all profile images, just keep the first one
@@ -162,7 +163,7 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
         // parse role from payload token
         isValidPayload = isValidPayload && (payload && payload.hasOwnProperty('rolesGroup'));
         isValidPayload = isValidPayload && (payload['rolesGroup'] && payload['rolesGroup'].hasOwnProperty('roles'));
-        isValidPayload = isValidPayload && (payload['rolesGroup']['roles'] && isArray(payload['rolesGroup']['roles']));
+        isValidPayload = isValidPayload && (payload['rolesGroup']['roles'] && ArrayUtils.isArray(payload['rolesGroup']['roles']));
         if (!isValidPayload) {
             return modules;
         }

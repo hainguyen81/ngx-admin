@@ -23,8 +23,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ComponentUtils from '../../../utils/common/component.utils';
-import {isNullOrUndefined} from 'util';
 import {Moment} from 'moment';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 export interface INgxDatePickerConfig {
     /**
@@ -116,7 +116,7 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
         super.config = _config;
         const __config: INgxDatePickerConfig = _config as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
-        if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
+        if (ObjectUtils.isNotNou(__dtConfig) && (__dtConfig.format || '').length) {
             __dtConfig.format = this.translate(__dtConfig.format);
         }
         if (this._datePickerComponent) {

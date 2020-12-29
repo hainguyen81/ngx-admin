@@ -3,7 +3,7 @@ import {Inject, InjectionToken, Injector} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, throwError} from 'rxjs';
 import {NbAuthSimpleInterceptor} from '@nebular/auth';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../utils/common/object.utils';
 
 export const HEADER_INTERCEPTOR_TOKEN: InjectionToken<String>
     = new InjectionToken<String>('Request header name interceptor token');
@@ -68,6 +68,6 @@ export abstract class AbstractHttpInterceptor extends NbAuthSimpleInterceptor im
      * @param req to check
      */
     protected isSupported(req: HttpRequest<any>): boolean {
-        return !isNullOrUndefined(req);
+        return ObjectUtils.isNotNou(req);
     }
 }

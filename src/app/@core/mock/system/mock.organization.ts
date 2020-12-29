@@ -14,7 +14,7 @@ export const MockOrganizationHeadTemplate: IOrganization = {
     code: 'Code',
     name: 'Name',
     type: Object.keys(ORGANIZATION_TYPE)
-        .find(key => ORGANIZATION_TYPE[key] === ORGANIZATION_TYPE.HEAD_CENTER),
+        .find(key => ObjectUtils.requireValue(ORGANIZATION_TYPE, key) === ORGANIZATION_TYPE.HEAD_CENTER),
 };
 
 export const MockOrganizationBranchTemplate: IOrganization = {
@@ -22,7 +22,7 @@ export const MockOrganizationBranchTemplate: IOrganization = {
     code: 'Code',
     name: 'Name',
     type: Object.keys(ORGANIZATION_TYPE)
-        .find(key => ORGANIZATION_TYPE[key] === ORGANIZATION_TYPE.BRANCH),
+        .find(key => ObjectUtils.requireValue(ORGANIZATION_TYPE, key) === ORGANIZATION_TYPE.BRANCH),
 };
 
 export const MockOrganizationDepartmentTemplate: IOrganization = {
@@ -30,7 +30,7 @@ export const MockOrganizationDepartmentTemplate: IOrganization = {
     code: 'Code',
     name: 'Name',
     type: Object.keys(ORGANIZATION_TYPE)
-        .find(key => ORGANIZATION_TYPE[key] === ORGANIZATION_TYPE.DEPARTMENT),
+        .find(key => ObjectUtils.requireValue(ORGANIZATION_TYPE, key) === ORGANIZATION_TYPE.DEPARTMENT),
 };
 
 export function organizationGenerate(): IOrganization[] {

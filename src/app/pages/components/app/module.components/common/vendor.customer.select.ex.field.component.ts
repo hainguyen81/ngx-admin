@@ -27,6 +27,7 @@ import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
 import {
     AppModuleDataIndexSettingsFormlySelectExFieldComponent,
 } from '../../components/common/app.module.data.index.formly.select.ex.field.component';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 export const VendorCustomerSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectExOptions, {
@@ -82,7 +83,7 @@ export class VendorCustomerFormlySelectExFieldComponent
 
     public set vendorCustomerTypeEnum(_vendorCustomerType: CUSTOMER_TYPE) {
         _vendorCustomerType = (_vendorCustomerType || CUSTOMER_TYPE.ALL);
-        if (this._vendorCustomerType !== CUSTOMER_TYPE[_vendorCustomerType]) {
+        if (this._vendorCustomerType !== ObjectUtils.any(CUSTOMER_TYPE)[_vendorCustomerType]) {
             this._vendorCustomerType = _vendorCustomerType;
             this.refresh();
         }
@@ -90,7 +91,7 @@ export class VendorCustomerFormlySelectExFieldComponent
 
     protected get noneOption(): ICustomer {
         const _noneCustomer: ICustomer = new Customer(null, null, null, null);
-        _noneCustomer['text'] = this.getConfigValue('placeholder');
+        ObjectUtils.any(_noneCustomer)['text'] = this.getConfigValue('placeholder');
         return _noneCustomer;
     }
 

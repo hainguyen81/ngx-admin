@@ -20,8 +20,9 @@ import {IDbService, IHttpService} from '../../../../../services/common/interface
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, throwError} from 'rxjs';
-import {isArray, isNullOrUndefined} from 'util';
 import {isPromise} from 'rxjs/internal-compatibility';
+import ObjectUtils from '../../../../../utils/common/object.utils';
+import ArrayUtils from '../../../../../utils/common/array.utils';
 
 /**
  * Custom formly field for selecting tree
@@ -113,7 +114,7 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
             if (this.shouldDisableValue) {
                 const timer: number = window.setTimeout(() => {
                     const disabledItemValue: any = this.disableValue;
-                    !isNullOrUndefined(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
+                    ObjectUtils.isNotNou(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
                     window.clearTimeout(timer);
                 }, 100);
             }
@@ -131,18 +132,18 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
         const _loadData: Observable<M | M[]> | Promise<M | M[]> | (M | M[]) = this.loadData();
 
         // promise data
-        if (!isNullOrUndefined(_loadData) && isPromise(_loadData)) {
+        if (ObjectUtils.isNotNou(_loadData) && isPromise(_loadData)) {
             (<Promise<M | M[]>>_loadData).then(
                 data => this.loadDataInternal(data),
                 reason => this.logger.error(reason))
                 .catch(reason => this.logger.error(reason));
 
             // observe data
-        } else if (!isNullOrUndefined(_loadData) && isObservable(_loadData)) {
+        } else if (ObjectUtils.isNotNou(_loadData) && isObservable(_loadData)) {
             (<Observable<M | M[]>>_loadData).subscribe(
                 data => this.loadDataInternal(data));
 
-        } else if (!isNullOrUndefined(_loadData)) {
+        } else if (ObjectUtils.isNotNou(_loadData)) {
             this.loadDataInternal(<M | M[]>_loadData);
         }
     }
@@ -161,10 +162,10 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
      */
     private loadDataInternal(data: M | M[]): void {
         let items: M[] = [];
-        if (!isNullOrUndefined(data) && isArray(data)) {
+        if (ObjectUtils.isNotNou(data) && ArrayUtils.isArray(data)) {
             items = [].concat(data as M[]);
 
-        } else if (!isNullOrUndefined(data)) {
+        } else if (ObjectUtils.isNotNou(data)) {
             items = [data as M];
         }
         super.buildTemplateOptionsToTree(items);
@@ -174,7 +175,7 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
         super.setSelectedValue(fieldValue, false);
         if (this.shouldDisableValue) {
             const disabledItemValue: any = this.disableValue;
-            !isNullOrUndefined(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
+            ObjectUtils.isNotNou(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
         }
     }
 }

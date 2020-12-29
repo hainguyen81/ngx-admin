@@ -1,5 +1,6 @@
-import {isArray, isBoolean, isObject} from 'util';
-import {NoParamConstructor} from './object.utils';
+import ObjectUtils, {NoParamConstructor} from './object.utils';
+import BooleanUtils from './boolean.utils';
+import ArrayUtils from './array.utils';
 
 /**
  * JSON utilities
@@ -13,10 +14,10 @@ export default class JsonUtils {
         data = this.safeParseJson(data);
         if (data) {
             let isValid: boolean;
-            isValid = (isObject(data) && Object.keys(data).length > 0);
-            isValid = isValid && (isObject(data['status']) && data['status']['code'] === 200);
-            isValid = isValid && (isBoolean(data['status']['success']) && (data['status']['success'] || false));
-            isValid = isValid && (isArray(data['elements']) && Array.from(data['elements']).length > 0);
+            isValid = (ObjectUtils.isObject(data) && Object.keys(data).length > 0);
+            isValid = isValid && (ObjectUtils.isObject(data['status']) && data['status']['code'] === 200);
+            isValid = isValid && (BooleanUtils.isBoolean(data['status']['success']) && (data['status']['success'] || false));
+            isValid = isValid && (ArrayUtils.isArray(data['elements']) && Array.from(data['elements']).length > 0);
             if (isValid) {
                 data = Array.from(data['elements']);
             }
@@ -30,7 +31,7 @@ export default class JsonUtils {
      */
     public static parseFisrtResponseJson(data?: any): any {
         data = JsonUtils.parseResponseJson(data);
-        if (isArray(data)) {
+        if (ArrayUtils.isArray(data)) {
             data = Array.from(data).shift();
         }
         return data;

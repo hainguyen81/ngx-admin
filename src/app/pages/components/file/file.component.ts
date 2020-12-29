@@ -18,6 +18,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {IEvent} from '../abstract.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractFileGalleryComponent} from './abstract.file.component';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Files Gallery component
@@ -83,7 +84,8 @@ export class NgxFileGalleryComponent extends AbstractFileGalleryComponent<DataSo
      */
     protected onSelectFile(e: IEvent) {
         let files: File[];
-        files = (e && e.event && e.event.target && e.event.target['files'] ? e.event.target['files'] : []);
+        files = (e && e.event && e.event.target && ObjectUtils.any(e.event.target)['files']
+            ? ObjectUtils.any(e.event.target)['files'] : []);
         if ((files || []).length) {
             const invalidFiles: string[] = [];
             Array.of(...files).forEach(f => {

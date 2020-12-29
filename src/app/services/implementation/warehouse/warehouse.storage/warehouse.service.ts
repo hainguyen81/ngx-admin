@@ -7,9 +7,9 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {IWarehouse} from '../../../../@core/data/warehouse/warehouse';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../../utils/common/object.utils';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseDbService extends BaseDbService<IWarehouse> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -26,12 +26,12 @@ export class WarehouseDbService extends BaseDbService<IWarehouse> {
         } else {
             this.openCursor((e) => {
                 const cursor: any = (<any>e.target).result;
-                byCode && cursor && !isNullOrUndefined(cursor.value)
+                byCode && cursor && ObjectUtils.isNotNou(cursor.value)
                 && ((<IWarehouse>cursor.value).pathCodes || '').length
                 && (((<IWarehouse>cursor.value).pathCodes || '')
                     .toLowerCase().indexOf(warehouseIdOrCode.toLowerCase()) >= 0)
                 && retStorages.push(cursor.value);
-                !byCode && cursor && !isNullOrUndefined(cursor.value)
+                !byCode && cursor && ObjectUtils.isNotNou(cursor.value)
                 && ((<IWarehouse>cursor.value).pathIds || '').length
                 && (((<IWarehouse>cursor.value).pathIds || '')
                     .toLowerCase().indexOf(warehouseIdOrCode.toLowerCase()) >= 0)
@@ -41,7 +41,7 @@ export class WarehouseDbService extends BaseDbService<IWarehouse> {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseHttpService extends BaseHttpService<IWarehouse> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

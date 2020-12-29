@@ -14,11 +14,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {isArray, isNullOrUndefined} from 'util';
 import {isObservable, Observable, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import {AppFormlySelectFieldComponent} from './app.formly.select.field.component';
-import {INgxSelectOptions} from '../../../select/abstract.select.component';
+import ObjectUtils from '../../../../../utils/common/object.utils';
+import ArrayUtils from '../../../../../utils/common/array.utils';
 
 /**
  * Custom module data formly field for selecting special
@@ -106,18 +106,18 @@ export class AppModuleDataFormlySelectFieldComponent<
         const _loadData: Observable<M | M[]> | Promise<M | M[]> | (M | M[]) = this.loadData();
 
         // promise data
-        if (!isNullOrUndefined(_loadData) && isPromise(_loadData)) {
+        if (ObjectUtils.isNotNou(_loadData) && isPromise(_loadData)) {
             (<Promise<M | M[]>>_loadData).then(
                 data => this.loadDataInternal(data),
                 reason => this.logger.error(reason))
                 .catch(reason => this.logger.error(reason));
 
             // observe data
-        } else if (!isNullOrUndefined(_loadData) && isObservable(_loadData)) {
+        } else if (ObjectUtils.isNotNou(_loadData) && isObservable(_loadData)) {
             (<Observable<M | M[]>>_loadData).subscribe(
                 data => this.loadDataInternal(data));
 
-        } else if (!isNullOrUndefined(_loadData)) {
+        } else if (ObjectUtils.isNotNou(_loadData)) {
             this.loadDataInternal(<M | M[]>_loadData);
         }
     }
@@ -137,12 +137,12 @@ export class AppModuleDataFormlySelectFieldComponent<
     protected loadDataInternal(data: M | M[]): void {
         const defaultOpt: M = this.noneOption;
         let items: M[] = [];
-        if (!isNullOrUndefined(data)) {
-            if (isArray(data)) {
-                items = (isNullOrUndefined(defaultOpt) ? [] : [defaultOpt]).concat(data as M[]);
+        if (ObjectUtils.isNotNou(data)) {
+            if (ArrayUtils.isArray(data)) {
+                items = (ObjectUtils.isNou(defaultOpt) ? [] : [defaultOpt]).concat(data as M[]);
 
             } else {
-                items = (isNullOrUndefined(defaultOpt) ? [] : [defaultOpt]).concat([data as M]);
+                items = (ObjectUtils.isNou(defaultOpt) ? [] : [defaultOpt]).concat([data as M]);
             }
         }
         this.items = items;

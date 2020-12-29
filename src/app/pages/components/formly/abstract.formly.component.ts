@@ -17,7 +17,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfigOption, FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
 import {FormGroup} from '@angular/forms';
-import {isArray, isNullOrUndefined, isObject} from 'util';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -27,6 +26,8 @@ import {FormlyTemplateOptions} from '@ngx-formly/core/lib/components/formly.fiel
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
+import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * Abstract formly component base on {FormlyModule}
@@ -231,14 +232,15 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
      * @param _config {FormlyConfig}
      */
     private translateFormConfig(_config?: FormlyConfig): FormlyConfig {
-        if (!isNullOrUndefined(_config)) {
-            _config['messages:keys'] = {};
+        if (ObjectUtils.isNotNou(_config)) {
+            const _configAny: any = ObjectUtils.any(_config);
+            _configAny['messages:keys'] = {};
             const messages: any = _config.messages;
             if (Object.keys(messages).length) {
                 Object.keys(messages).forEach(messageKey => {
                     const message: any = messages[messageKey];
                     messages[messageKey] = this.__translateFormValidationMessage(
-                        messageKey, message, _config['messages:keys']);
+                        messageKey, message, _configAny['messages:keys']);
                 });
             }
 
@@ -247,7 +249,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
             _config.addValidatorMessage =
                 (name: string, message: string | ((error: any, field: FormlyFieldConfig) => string)) => {
                     const translatedMessage: string | ((error: any, field: FormlyFieldConfig) => string) =
-                        _this.__translateFormValidationMessage(name, message, _config['messages:keys']);
+                        _this.__translateFormValidationMessage(name, message, _configAny['messages:keys']);
                     __originalAddValidatorMessage.apply(_config, [name, translatedMessage]);
                 };
 
@@ -255,7 +257,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
             _config.addConfig = (config: ConfigOption) => {
                 (config.validationMessages || []).forEach((validationMessage: ValidationMessageOption) => {
                     validationMessage.message = _this.__translateFormValidationMessage(
-                        validationMessage.name, validationMessage.message, _config['messages:keys']);
+                        validationMessage.name, validationMessage.message, _configAny['messages:keys']);
                 });
                 __originalAddConfig.apply(_config, [config]);
             };
@@ -285,11 +287,11 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         }
 
         // create field validation message cache key
-        field['validation:messages:keys'] = {};
+        const fieldAny: any = ObjectUtils.any(field);
+        fieldAny['validation:messages:keys'] = {};
 
         // translate template options
-        let templOpts: FormlyTemplateOptions;
-        templOpts = field.templateOptions;
+        const templOpts: any = field.templateOptions;
         if (templOpts) {
             // backup original field label/placeholder/etc. key for translating
             if (!(<Object>templOpts).hasOwnProperty('original')) {
@@ -310,7 +312,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
             if ((templOpts['original']['description'] || '').length) {
                 templOpts.description = translate.instant(templOpts['original']['description']);
             }
-            if (isArray(templOpts.options)) {
+            if (ArrayUtils.isArray(templOpts.options)) {
                 templOpts.options.forEach(option => {
                     if (option && (option['label'] || '').length) {
                         if (!(<Object>option).hasOwnProperty('original_label')) {
@@ -329,7 +331,7 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         // translate validator message key
         const validators: any = (field.validators ? field.validators || {} : {});
         if (Object.keys(validators).length) {
-            if (isArray(validators['validation'])) {
+            if (ArrayUtils.isArray(validators['validation'])) {
                 const validationInValidators: any[] = Array.from(validators['validation']);
                 for (let i: number = 0; i < validationInValidators.length; i++) {
                     const validator: any = validationInValidators[i];
@@ -337,26 +339,26 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
                         validationInValidators[i] =
                             this.__translateFormValidationMessage(
                                 ['validation', i.toString()].join(':'),
-                                validator, field['validation:messages:keys']);
+                                validator, fieldAny['validation:messages:keys']);
                     }
                 }
 
             } else {
                 Object.keys(validators).forEach(validatorKey => {
                     const validator: any = validators[validatorKey];
-                    if (isObject(validator)) {
+                    if (ObjectUtils.isObject(validator)) {
                         const validatorMessage: any = validator['message'];
                         validator['message'] =
                             this.__translateFormValidationMessage(
                                 [validatorKey, 'message'].join(':'),
-                                validatorMessage, field['validation:messages:keys']);
+                                validatorMessage, fieldAny['validation:messages:keys']);
                     }
                 });
             }
         }
 
         // translate children fields
-        if (isArray(field.fieldGroup)) {
+        if (ArrayUtils.isArray(field.fieldGroup)) {
             field.fieldGroup.forEach(f => {
                 this.translateFormFieldConfig(translate, f);
             });

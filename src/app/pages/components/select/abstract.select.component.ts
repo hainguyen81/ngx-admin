@@ -29,7 +29,8 @@ import {Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DropdownPosition, NgOption, NgSelectComponent} from '@ng-select/ng-select';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
-import {isArray, isNullOrUndefined, isObject} from 'util';
+import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * The extension of {NgSelectConfig}
@@ -697,12 +698,12 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @return the selected options
      */
     set selectedItems(items: NgOption[]) {
-        if (!isNullOrUndefined(this.selectComponent)) {
+        if (ObjectUtils.isNotNou(this.selectComponent)) {
             const control: NgSelectComponent = this.selectComponent;
             const multiple: boolean = this.getConfigValue('multiple', false);
             if (items.length) {
                 for (const item of items) {
-                    if (!isNullOrUndefined(item) && !item.selected) {
+                    if (ObjectUtils.isNotNou(item) && !item.selected) {
                         this.selectComponent.select(item);
                         if (!multiple) break;
                     }
@@ -728,7 +729,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param values value from `bindValue` to select
      */
     set selectedValues(values: any[]) {
-        if (!isNullOrUndefined(this.selectComponent)) {
+        if (ObjectUtils.isNotNou(this.selectComponent)) {
             this.selectedItems = this.findItems(values);
         }
     }
@@ -815,7 +816,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
             const _this: AbstractSelectComponent<T> = this;
             this.ngSelectComponent = ComponentUtils.queryComponent(
                 this.queryNgSelectComponent, component => {
-                    if (!isNullOrUndefined(component)) {
+                    if (ObjectUtils.isNotNou(component)) {
                         component[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] = _this;
                         component.addEvent.subscribe(addedItem => {
                             this.onAdd({ data: addedItem });
@@ -879,8 +880,8 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     private __checkForDropdownPanelPosition(): void {
         // check for reposition dropdown panel
         const selectComponent: NgSelectComponent = this.selectComponent;
-        if (!isNullOrUndefined(selectComponent) && selectComponent.isOpen
-            && !isNullOrUndefined(selectComponent.dropdownPanel)) {
+        if (ObjectUtils.isNotNou(selectComponent) && selectComponent.isOpen
+            && ObjectUtils.isNotNou(selectComponent.dropdownPanel)) {
             selectComponent.dropdownPanel.adjustPosition();
         }
     }
@@ -1014,17 +1015,17 @@ export abstract class AbstractSelectComponent<T extends DataSource>
 
         const parser: (item: any) => string | string[] | null = this.getBindImage(item);
         let images: string[] = [];
-        if (!isNullOrUndefined(parser)) {
+        if (ObjectUtils.isNotNou(parser)) {
             if (typeof parser === 'function') {
                 const image: string | string[] = parser.apply(this, [item]);
-                if (isArray(image)) {
+                if (ArrayUtils.isArray(image)) {
                     images = Array.from(image);
 
                 } else if ((image || '').length) {
                     images.push(image as string);
                 }
 
-            } else if (isArray(parser)) {
+            } else if (ArrayUtils.isArray(parser)) {
                 images = [].concat(Array.from(parser));
 
             } else {
@@ -1040,7 +1041,7 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     public parseOptionFirstImage(item: any): string {
         const images: string[] = this.parseOptionImages(item);
-        return (!isNullOrUndefined(images) && images.length ? images[0] : null);
+        return (ObjectUtils.isNotNou(images) && images.length ? images[0] : null);
     }
 
     /**
@@ -1101,12 +1102,12 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     compareWith(a: any, b: any): boolean {
         const _this: AbstractSelectComponent<T> =
             (this[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] || this);
-        if (isNullOrUndefined(_this)) return false;
+        if (ObjectUtils.isNou(_this)) return false;
 
         const _compareWith: (a1: any, b1: any) => boolean = _this.getConfigValue('compareWith');
-        if (isNullOrUndefined(_compareWith)) {
-            const aObj: boolean = isObject(a);
-            const bObj: boolean = isObject(b);
+        if (ObjectUtils.isNou(_compareWith)) {
+            const aObj: boolean = ObjectUtils.isObject(a);
+            const bObj: boolean = ObjectUtils.isObject(b);
             const aVal: any = (aObj ? _this.getBindValue(a) : a);
             const bVal: any = (bObj ? _this.getBindValue(b) : b);
             return (aVal === bVal);
@@ -1119,12 +1120,12 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param values to make disable
      */
     public setDisabledItemsByValues(values: any[]): void {
-        if (isNullOrUndefined(this.selectComponent)) {
+        if (ObjectUtils.isNou(this.selectComponent)) {
             return;
         }
         (values || []).forEach(value => {
             const option: NgOption = this.selectComponent.itemsList.findItem(value);
-            if (!isNullOrUndefined(option)) {
+            if (ObjectUtils.isNotNou(option)) {
                 option.disabled = true;
             }
         });
@@ -1135,18 +1136,18 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      * @param values to find
      */
     public findItems(values: any[]): NgOption[] {
-        if (isNullOrUndefined(this.selectComponent)) {
+        if (ObjectUtils.isNou(this.selectComponent)) {
             return [];
         }
 
-        const findValues: any[] = (isArray(values) ? Array.from(values)
-            : !isNullOrUndefined(values) ? [values] : []);
+        const findValues: any[] = (ArrayUtils.isArray(values) ? Array.from(values)
+            : ObjectUtils.isNotNou(values) ? [values] : []);
         const _selectedItems: NgOption[] = [];
         if (findValues.length) {
             const multiple: boolean = this.getConfigValue('multiple', false);
             for (const value of findValues) {
                 const item: NgOption = this.selectComponent.itemsList.findItem(value);
-                if (!isNullOrUndefined(item)) {
+                if (ObjectUtils.isNotNou(item)) {
                     _selectedItems.push(item);
                     if (!multiple) break;
                 }

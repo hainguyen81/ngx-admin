@@ -7,7 +7,8 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {AbstractBaseDbService} from '../common/database.service';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import {Observable, throwError} from 'rxjs';
-import {isArray} from 'util';
+import ObjectUtils from '../../utils/common/object.utils';
+import ArrayUtils from '../../utils/common/array.utils';
 
 /**
  * The third-party API data bridge parameter interface
@@ -32,7 +33,7 @@ export interface IThirdPartyApiDataBridgeParam<T extends IModel> {
     apiFulfilled?: ((apiData: T | T[]) => (T | T[]) | PromiseLike<T | T[]>) | undefined | null;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBaseDbService<T> {
 
     private static EXCEPTION_PERFORMANCE_REASON: string = 'Not support for getting all data because of performance!';
@@ -59,7 +60,7 @@ export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBase
             args[0].expiredAt = (new Date()).getTime();
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
-    }
+    };
 
     /**
      * TODO Not support for getting all data because of performance
@@ -75,21 +76,22 @@ export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBase
      */
     fetch(param: IThirdPartyApiDataBridgeParam<T>): Promise<any> {
         // check valid parameter
+        const thirdPartyApiAny: any = ObjectUtils.as<any>(this.thirdPartyApi);
         (param && param.dbCacheFilter)
         || throwError(ThirdPartyApiBridgeDbService.EXCEPTION_PERFORMANCE_REASON);
         (param.callApi && (param.callApi.method || '').length
-        && (typeof this.thirdPartyApi[param.callApi.method] === 'function'
-            || this.thirdPartyApi[param.callApi.method] instanceof Promise
-            || this.thirdPartyApi[param.callApi.method] instanceof Observable))
+        && (typeof thirdPartyApiAny[param.callApi.method] === 'function'
+            || thirdPartyApiAny[param.callApi.method] instanceof Promise
+            || thirdPartyApiAny[param.callApi.method] instanceof Observable))
         || throwError(ThirdPartyApiBridgeDbService.EXCEPTION_INVALID_API_GATEWAY);
         return this.getDbService().getAllByIndex(
             param.dbCacheFilter.dbStore, param.dbCacheFilter.indexName, param.dbCacheFilter.criteria)
             .then((value: any) => {
                 // if not found data from database storage;
                 // then calling third-party API to fetch data
-                if (!value || (isArray(value) && !(value || []).length)) {
+                if (!value || (ArrayUtils.isArray(value) && !(value || []).length)) {
                     // require third-part entry point
-                    const apiGatewayEntry: any = this.thirdPartyApi[param.callApi.method];
+                    const apiGatewayEntry: any = thirdPartyApiAny[param.callApi.method];
                     let apiGatewayEntryPromise: Promise<any>;
                     if (!(apiGatewayEntry instanceof Promise) && !(apiGatewayEntry instanceof Observable)) {
                         apiGatewayEntryPromise = new Promise(
@@ -114,7 +116,7 @@ export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBase
                         });
                 }
 
-                return (value && !isArray(value) ? Array.of(value) : value ? Array.from(value) : value);
+                return (value && !ArrayUtils.isArray(value) ? Array.of(value) : value ? Array.from(value) : value);
             }, reason => {
                 this.getLogger().error(reason);
                 return [];

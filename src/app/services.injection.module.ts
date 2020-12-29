@@ -1,5 +1,5 @@
 import {AppConfig} from './config/app.config';
-import {Inject, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {Injector, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {throwIfAlreadyLoaded} from './@core/core.module';
 
 @NgModule({})
@@ -11,7 +11,7 @@ export class ServicesInjectionModule {
                 injector: Injector) {
         throwIfAlreadyLoaded(parentModule, 'ServicesInjectionModule');
         // initialize mock data if necessary
-        this.moduleInjector = Injector.create({providers: AppConfig.Providers.All, parent: injector});
+        this.moduleInjector = Injector.create({ providers: AppConfig.Providers.All, parent: injector, name: 'ServicesModuleInjector' });
     }
 
     static forRoot(): ModuleWithProviders {

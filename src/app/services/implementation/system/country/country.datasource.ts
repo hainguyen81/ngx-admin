@@ -4,7 +4,7 @@ import {BaseDataSource} from '../../../common/datasource.service';
 import {ICountry} from '../../../../@core/data/system/country';
 import {NGXLogger} from 'ngx-logger';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class CountryDatasource extends BaseDataSource<ICountry, CountryHttpService, CountryDbService> {
 
     constructor(@Inject(CountryHttpService) httpService: CountryHttpService,

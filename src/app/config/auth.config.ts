@@ -14,14 +14,14 @@ const AuthStrategyOptions = {
     login: {
         redirect: {
             success: '/dashboard',
-            failure: null, // stay on the same page
+            failure: <any>null, // stay on the same page
         },
     },
 
     register: {
         redirect: {
             success: '/dashboard',
-            failure: null, // stay on the same page
+            failure: <any>null, // stay on the same page
         },
     },
 };

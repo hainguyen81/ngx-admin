@@ -5,9 +5,9 @@ import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import {ThirdPartyApiDbService, ThirdPartyApiHttpService} from './third.party.api.service';
 import {throwError} from 'rxjs';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {isArray} from 'util';
 import {IModel} from '../../@core/data/base';
 import {ThirdPartyApiDataParserDefinition} from './data.parsers/third.party.data.parser';
+import ArrayUtils from '../../utils/common/array.utils';
 
 /**
  * Third-party API data parser interface
@@ -26,7 +26,7 @@ export interface IThirdPartyApiDataParserDefinition<T extends IApiThirdParty> {
 export const TOKEN_THIRD_PARTY_API_DATA_PARSER_DEFINITION: InjectionToken<IThirdPartyApiDataParserDefinition<any>>
     = new InjectionToken<IThirdPartyApiDataParserDefinition<any>>('Third-party API data parsers definition');
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
     extends BaseDataSource<T, ThirdPartyApiHttpService<T>, ThirdPartyApiDbService<T>> {
 
@@ -92,7 +92,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
                     return _this.getHttpService().request(url, method, options).toPromise()
                         .then((data: T[]) => {
                             // catch for future from offline database
-                            if (data && !isArray(data)) {
+                            if (data && !ArrayUtils.isArray(data)) {
                                 data = [].concat(data);
                             }
 
@@ -106,7 +106,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
                                         if (parser) {
                                             (data || []).forEach(dat => {
                                                 const parsed: K | K[] = parser.parse(dat);
-                                                if (parsed && isArray(parsed)) {
+                                                if (parsed && ArrayUtils.isArray(parsed)) {
                                                     parsedData = parsedData.concat(parsed as K[]);
                                                 } else if (parsed) {
                                                     parsedData.push(parsed as K);

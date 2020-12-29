@@ -1,6 +1,6 @@
 import {from, isObservable, Observable, of, Subscribable} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from './object.utils';
 
 /**
  * Promise utilities
@@ -85,17 +85,18 @@ export default class PromiseUtils {
      * @param observer to unsubscribe
      */
     public static unsubscribe<T>(observer: Subscribable<T>): void {
-        if (!isNullOrUndefined(observer) && isObservable(observer)) {
+        const observerAny: any = ObjectUtils.as<any>(observer);
+        if (ObjectUtils.isNotNou(observer) && isObservable(observer)) {
             let closed: boolean;
             if ((<Object>observer).hasOwnProperty('closed')) {
-                closed = observer['closed'] as boolean || false;
+                closed = observerAny['closed'] as boolean || false;
 
             } else {
                 closed = false;
             }
-            if (!closed && typeof observer['unsubscribe'] === 'function') {
+            if (!closed && typeof observerAny['unsubscribe'] === 'function') {
                 try {
-                    observer['unsubscribe']['apply'](observer);
+                    observerAny['unsubscribe']['apply'](observer);
                 } catch (e) {
                     window.console.warn(['Could not unsubscribe', e]);
                 }

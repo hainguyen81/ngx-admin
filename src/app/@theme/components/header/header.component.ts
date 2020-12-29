@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver, ElementRef,
@@ -31,10 +30,11 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {NgxLocalStorageEncryptionService} from '../../../services/storage.services/local.storage.services';
-import {isArray, isNullOrUndefined} from 'util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserDbService} from '../../../services/implementation/system/user/user.service';
 import * as moment from 'moment';
+import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 @Component({
     selector: 'ngx-header',
@@ -186,7 +186,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
 
         this.userDbService.findEntities('id', IDBKeyRange.only(this._user['id']))
             .then(value => {
-                this._user['image'] = (value || {})['image'] || [];
+                this._user['image'] = ObjectUtils.requireTypedValue<string[]>(value, 'image', []);
             }, reason => {
                 this.getLogger().error(reason);
             })
@@ -225,7 +225,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
     }
 
     private onMenuClick(item: NbMenuItem): void {
-        if (isNullOrUndefined(item) || !item.data) {
+        if (ObjectUtils.isNou(item) || !item.data) {
             return;
         }
         switch (item.data) {
@@ -264,7 +264,7 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
 
     private getProfileImage(): string {
         if (!this._user || !this._user['image']) return '';
-        if (isArray(this._user['image']) && Array.from(this._user['image']).length) {
+        if (ArrayUtils.isArray(this._user['image']) && Array.from(this._user['image']).length) {
             return Array.from(this._user['image'])[0] as string;
 
         } else if (this._user['image']) {

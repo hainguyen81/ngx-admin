@@ -14,9 +14,10 @@ import {
     IThirdPartyApiDataBridgeParam,
     ThirdPartyApiBridgeDbService,
 } from '../../../third.party/third.party.api.bridge.service';
-import {isArray, isNullOrUndefined} from 'util';
+import ArrayUtils from '../../../../utils/common/array.utils';
+import ObjectUtils from '../../../../utils/common/object.utils';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class CityDbService extends BaseDbService<ICity> {
 
     private static EXCEPTION_PERFORMANCE_REASON: string = 'Not support for getting all cities because of performance!';
@@ -67,8 +68,8 @@ export class CityDbService extends BaseDbService<ICity> {
                 // apply province for city API data
                 let cities: ICity[];
                 const duplicatedCode: any = {};
-                cities = (isArray(apiData) ? apiData as ICity[] : apiData ? [apiData as ICity] : []);
-                cities = cities.removeIf(city => isNullOrUndefined(city));
+                cities = (ArrayUtils.isArray(apiData) ? apiData as ICity[] : apiData ? [apiData as ICity] : []);
+                cities = cities.removeIf(city => ObjectUtils.isNou(city));
                 cities.forEach(city => {
                     city.province_id = province.id;
 
@@ -99,7 +100,7 @@ export class CityDbService extends BaseDbService<ICity> {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class CityHttpService extends BaseHttpService<ICity> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

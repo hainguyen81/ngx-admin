@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import {Component} from '@angular/core';
 import PromiseUtils from '../../../utils/common/promise.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
 
 export const COMPONENT_ANNOTATIONS_PROPERTY: string = '__annotations__';
 export const COMPONENT_PARAMETERS_PROPERTY: string = '__paramaters__';
@@ -46,7 +48,7 @@ function __defineMetadata(target: any, metaKey: string, metaValue: any): void {
  * @param obs$ need to ub-subscribe more
  * @constructor
  */
-export function makeAutoUnsubscribeDecorator(obs$ = []): Function {
+export function makeAutoUnsubscribeDecorator(obs$?: any[]): Function {
     return function(target: any) {
         let unsubTarget: any;
         unsubTarget = target;
@@ -55,8 +57,10 @@ export function makeAutoUnsubscribeDecorator(obs$ = []): Function {
             obs$ = (obs$ || []);
             const overrideNgDestroy = function () {
                 for (const property in this) {
-                    if (property && typeof property['unsubscribe'] === 'function' && !obs$.includes(property)) {
-                        obs$.push(property);
+                    const propertyAny: any = ObjectUtils.any(property);
+                    const propertyUnsubFunc: Function = ObjectUtils.requireTypedValue<Function>(propertyAny, 'unsubscribe');
+                    if (FunctionUtils.isFunction(propertyUnsubFunc) && !obs$.includes(propertyAny)) {
+                        obs$.push(propertyAny);
                     }
                 }
                 for (const ob$ of obs$) {

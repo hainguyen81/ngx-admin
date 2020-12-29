@@ -4,7 +4,7 @@ import {IThirdPartyApiDataParser, IThirdPartyApiDataParserDefinition} from '../t
 import {IModel} from '../../../@core/data/base';
 import {throwError} from 'rxjs';
 import JsonUtils from '../../../utils/common/json.utils';
-import {isArray} from 'util';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * Default third-party API data parser definition
@@ -37,10 +37,10 @@ export abstract class AbstractThirdPartyApiDataParser<T extends IApiThirdParty, 
         if (!data || !(data.response || '').length) return parsedData;
         let receivedEntities: any[];
         receivedEntities = JsonUtils.parseResponseJson((<IApiThirdParty>data).response);
-        if (receivedEntities && !isArray(receivedEntities)) {
+        if (receivedEntities && !ArrayUtils.isArray(receivedEntities)) {
             receivedEntities = [receivedEntities];
         }
-        if (isArray(receivedEntities) && receivedEntities.length) {
+        if (ArrayUtils.isArray(receivedEntities) && receivedEntities.length) {
             parsedData = [];
             receivedEntities.forEach(receiveEntity => {
                 if (receiveEntity && receiveEntity.hasOwnProperty(this.dataPropertyName)

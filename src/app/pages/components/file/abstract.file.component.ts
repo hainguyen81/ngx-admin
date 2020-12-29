@@ -16,7 +16,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Abstract Files Gallery component
@@ -109,7 +109,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * @param f to check
      */
     protected supportedFile(f: File): boolean {
-        const fileExt: string = (isNullOrUndefined(f) ? '' : f.name.split('.').pop().toLowerCase());
+        const fileExt: string = (ObjectUtils.isNou(f) ? '' : f.name.split('.').pop().toLowerCase());
         return (!this.allowFileExtensions.length || this.allowFileExtensions.indexOf(fileExt) >= 0);
     }
 
@@ -193,7 +193,7 @@ export abstract class AbstractFileGalleryComponent<T extends DataSource> extends
      * @param file to remove
      */
     public removeFileData(file: File): void {
-        if (isNullOrUndefined(file)) return;
+        if (ObjectUtils.isNou(file)) return;
         this.removeFile(file.name);
     }
 }

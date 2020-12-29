@@ -1,4 +1,4 @@
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../utils/common/object.utils';
 
 export type BackgroundTaskStatus = 'STARTED' | 'RUNNING' | 'PAUSED' | 'STOPPED' | 'TERMINATED';
 
@@ -43,15 +43,15 @@ export class JobManager {
 
     findPendingJob = (jobId: string) => {
         return this.pendingJobs.get(jobId);
-    }
+    };
 
     cancelJob = (jobId: string) => {
         const job: JobWrapper = this.findPendingJob(jobId);
-        if (!isNullOrUndefined(job)) {
+        if (ObjectUtils.isNotNou(job)) {
             job.canceled = true;
             job.deleteOnCancel && this.pendingJobs.delete(jobId);
         }
-    }
+    };
 
     performJob = (
         job: BackgroundTaskJob,
@@ -82,17 +82,17 @@ export class JobQueue {
     constructor(private _jobs: BackgroundTaskJob[]) {}
 
     jobs = (): BackgroundTaskJob[] => {
-        this._jobs = (isNullOrUndefined(this._jobs) ? [] : this._jobs);
+        this._jobs = (ObjectUtils.isNou(this._jobs) ? [] : this._jobs);
         return this._jobs;
-    }
+    };
 
     addJobs = (...jobs: BackgroundTaskJob[]) => {
         this.jobs().push(...jobs);
-    }
+    };
 
     getJob = (): BackgroundTaskJob | null => {
         return this.jobs().shift();
-    }
+    };
 
     isEmpty = (): boolean => {
         return !this.jobs().length;

@@ -17,9 +17,9 @@ const MainConfig = {
     PageConfig: {
         title: 'app',
     },
-    Injector: undefined,
-    appRef: undefined,
-    viewRef: undefined,
+    Injector: <any>null,
+    appRef: <any>null,
+    viewRef: <any>null,
     COMMON: COMMON,
     TOASTER: TOASTER,
     API: {},

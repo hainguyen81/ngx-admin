@@ -25,7 +25,7 @@ export class PasswordFormFieldComponent extends AbstractFieldType implements Aft
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChild('passwordField', {static: false}) private passwordField;
+    @ViewChild('passwordField', {static: false}) private passwordField: any;
 
     // -------------------------------------------------
     // CONSTRUCTION

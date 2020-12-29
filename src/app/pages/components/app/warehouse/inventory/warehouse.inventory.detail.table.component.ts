@@ -42,7 +42,6 @@ import {
     WarehouseInventoryDetailStorageCellComponent,
 } from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
 import {IEvent} from '../../../abstract.component';
-import {isNullOrUndefined} from 'util';
 import {InjectionService} from '../../../../../services/common/injection.service';
 import {
     WarehouseInventoryDetailSummaryComponent,
@@ -166,11 +165,11 @@ export const WarehouseInventoryDetailTableSettings = {
                         const storages: IWarehouseInventoryDetailBatch[] = storagesCell.newValue;
                         const anyBatch: IWarehouseInventoryDetailBatch =
                             (batches || []).find(
-                                batch => !isNullOrUndefined(batch.quantity) && batch.quantity > 0);
+                                batch => ObjectUtils.isNotNou(batch.quantity) && batch.quantity > 0);
                         const anyStorage: IWarehouseInventoryDetailStorage =
                             (storages || []).find(
-                                storage => !isNullOrUndefined(storage.quantity) && storage.quantity > 0);
-                        return (!isNullOrUndefined(anyBatch) || !isNullOrUndefined(anyStorage));
+                                storage => ObjectUtils.isNotNou(storage.quantity) && storage.quantity > 0);
+                        return (ObjectUtils.isNotNou(anyBatch) || ObjectUtils.isNotNou(anyStorage));
                     },
                     required: true,
                 },
@@ -365,9 +364,7 @@ export class WarehouseInventoryDetailSmartTableComponent
 
     ngAfterViewInit(): void {
         // listen for creating footer components
-        this.footerCreation.subscribe(e => {
-            this.__createTableFooter(e);
-        });
+        this.footerCreation.subscribe((e: any) => this.__createTableFooter(e));
 
         super.ngAfterViewInit();
     }
@@ -379,7 +376,7 @@ export class WarehouseInventoryDetailSmartTableComponent
     protected onItemCellChanged(e: IEvent) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
-        if (isNullOrUndefined(row)) return;
+        if (ObjectUtils.isNou(row)) return;
 
         const rowData: IWarehouseInventoryDetail =
             (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
@@ -389,7 +386,7 @@ export class WarehouseInventoryDetailSmartTableComponent
         // calculate unit price
         const unitPriceCell: Cell = row.cells[4];
         if (!isNaN(unitPriceCell.getValue()) || parseFloat(unitPriceCell.getValue()) <= 0) {
-            const price: number = isNullOrUndefined(item) || isNaN(item.selling_price)
+            const price: number = ObjectUtils.isNou(item) || isNaN(item.selling_price)
                 ? undefined : item.selling_price;
             unitPriceCell.setValue(price);
             unitPriceCell.newValue = price;
@@ -397,8 +394,8 @@ export class WarehouseInventoryDetailSmartTableComponent
 
         // calculate row item
         rowData.item = item;
-        rowData.item_id = (isNullOrUndefined(item) ? undefined : item.id);
-        rowData.item_code = (isNullOrUndefined(item) ? undefined : item.code);
+        rowData.item_id = (ObjectUtils.isNou(item) ? undefined : item.id);
+        rowData.item_code = (ObjectUtils.isNou(item) ? undefined : item.code);
 
         // calculate footer amount
         this.__calculateFooterSummary();
@@ -427,7 +424,7 @@ export class WarehouseInventoryDetailSmartTableComponent
     protected onUnitPriceCellChanged(e: IEvent) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
-        if (isNullOrUndefined(row)) return;
+        if (ObjectUtils.isNou(row)) return;
 
         const rowData: IWarehouseInventoryDetail =
             (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
@@ -453,7 +450,7 @@ export class WarehouseInventoryDetailSmartTableComponent
     protected onQuantityCellChanged(e: IEvent) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
-        if (isNullOrUndefined(row)) return;
+        if (ObjectUtils.isNou(row)) return;
 
         const rowData: IWarehouseInventoryDetail =
             (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
@@ -483,7 +480,7 @@ export class WarehouseInventoryDetailSmartTableComponent
      */
     private __loadInventoryDetail(model: IWarehouseInventory): void {
         this.getDataSource().empty().then(() => {
-            if (!isNullOrUndefined(model) && (model.id || '').length) {
+            if (ObjectUtils.isNotNou(model) && (model.id || '').length) {
                 this._warehouseInventoryDetailDatasource.getAllByIndex(
                     this.dataIndexName, this.dataIndexKey)
                     .then((details: IWarehouseInventoryDetail[]) => {
@@ -504,8 +501,8 @@ export class WarehouseInventoryDetailSmartTableComponent
      * @private
      */
     private __createTableFooter($event: IEvent): void {
-        if (isNullOrUndefined($event) || isNullOrUndefined($event.data)
-            || isNullOrUndefined(this.injectionService)) return;
+        if (ObjectUtils.isNou($event) || ObjectUtils.isNou($event.data)
+            || ObjectUtils.isNou(this.injectionService)) return;
 
         const rows: HTMLTableRowElement[] = $event.data as HTMLTableRowElement[];
         if (!(rows || []).length) return;
@@ -557,7 +554,7 @@ export class WarehouseInventoryDetailSmartTableComponent
     private __updateQuantities(e: IEvent, byBatch: boolean | false) {
         const row: Row =
             (e &&  e.data ? e.data['row'] as Row : undefined);
-        if (isNullOrUndefined(row)) return;
+        if (ObjectUtils.isNou(row)) return;
 
         const rowData: IWarehouseInventoryDetail =
             (e &&  e.data ? e.data['rowData'] as IWarehouseInventoryDetail : undefined);
@@ -615,7 +612,7 @@ export class WarehouseInventoryDetailSmartTableComponent
             const rowData: IWarehouseInventoryDetail =
                 (row.isInEditing ? row.getNewData() as IWarehouseInventoryDetail
                     : row.getData() as IWarehouseInventoryDetail);
-            if (!isNullOrUndefined(rowData)) {
+            if (ObjectUtils.isNotNou(rowData)) {
                 quantities.push(rowData.quantity_actually);
                 prices.push(rowData.amount);
             }

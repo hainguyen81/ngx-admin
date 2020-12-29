@@ -17,7 +17,7 @@ import {
 import {IWarehouse} from '../../../../../../@core/data/warehouse/warehouse';
 import {WarehouseDatasource} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {Observable} from 'rxjs';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../../../../utils/common/object.utils';
 
 export const WarehouseStorageNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -136,7 +136,7 @@ export class WarehouseStorageFormlySelectFieldComponent
 
     protected loadData(): Observable<IWarehouse[] | IWarehouse>
         | Promise<IWarehouse[] | IWarehouse> | IWarehouse[] | IWarehouse {
-        if (isNullOrUndefined(this.warehouse) || !(this.warehouse.code || '').length) {
+        if (ObjectUtils.isNou(this.warehouse) || !(this.warehouse.code || '').length) {
             return super.loadData();
         } else {
             const _storages: IWarehouse[] = [];

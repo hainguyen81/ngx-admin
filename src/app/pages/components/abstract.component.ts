@@ -53,7 +53,6 @@ import {AbstractComponentService, BaseComponentService} from '../../services/com
 import {Lightbox} from 'ngx-lightbox';
 import {IAlbum} from 'ngx-lightbox/lightbox-event.service';
 import {AutoUnsubscribe} from './customization/extend.component';
-import {isNullOrUndefined} from 'util';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import AppUtils from '../../utils/app/app.utils';
 import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
@@ -61,6 +60,8 @@ import {AppConfig} from '../../config/app.config';
 import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';
 import {ActivatedRoute, Data, ParamMap, Params, Router} from '@angular/router';
 import {ControlValueAccessor} from '@angular/forms';
+import ObjectUtils from '../../utils/common/object.utils';
+import FunctionUtils from '../../utils/common/function.utils';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -163,7 +164,7 @@ export abstract class AbstractComponent
     public getConfigValue(propertyKey: string, defaultValue?: any | null): any {
         const _config: any = this.config || {};
         const value: any = _config[propertyKey];
-        return (isNullOrUndefined(value) ? defaultValue : value);
+        return (ObjectUtils.isNou(value) ? defaultValue : value);
     }
 
     /**
@@ -173,7 +174,7 @@ export abstract class AbstractComponent
      */
     public setConfigValue(propertyKey: string, configValue?: any | null): void {
         const _config: any = this.config;
-        if (!isNullOrUndefined(_config)) {
+        if (ObjectUtils.isNotNou(_config)) {
             _config[propertyKey] = configValue;
         }
     }
@@ -478,7 +479,7 @@ export abstract class AbstractComponent
         router || throwError('Could not inject Router');
         dataSource = dataSource || new LocalDataSource();
         dataSource.onChanged().subscribe(value => this.onDataSourceChanged({data: value}));
-        translateService.onLangChange.subscribe(value => this.onLangChange({event: value}));
+        translateService.onLangChange.subscribe((value: any) => this.onLangChange({event: value}));
     }
 
     // -------------------------------------------------
@@ -876,10 +877,10 @@ export abstract class AbstractComponent
         // add footer button style
         const dialogElementRef: ElementRef = modalDialogElementRef;
         const dialogElement: Element =
-            (isNullOrUndefined(dialogElementRef) ? undefined : dialogElementRef.nativeElement);
-        if (!isNullOrUndefined(dialogElement)) {
+            (ObjectUtils.isNou(dialogElementRef) ? undefined : dialogElementRef.nativeElement);
+        if (ObjectUtils.isNotNou(dialogElement)) {
             const footerButtons: NodeListOf<HTMLElement> = this.getElementsBySelector('button', dialogElement);
-            if (!isNullOrUndefined(footerButtons) && footerButtons.length) {
+            if (ObjectUtils.isNotNou(footerButtons) && footerButtons.length) {
                 footerButtons.forEach(footerButton => {
                     this.getRenderer().setAttribute(footerButton, 'nbbutton', '');
                 });
@@ -917,18 +918,18 @@ export abstract class AbstractComponent
      * Customize (unique hack) {ModalDialogService}
      */
     private uniqueHackModalDialogService(): void {
-        if (isNullOrUndefined(this.getModalDialogService())) return;
+        if (ObjectUtils.isNou(this.getModalDialogService())) return;
 
         const _this: AbstractComponent = this;
         const modalDialogService: ModalDialogService = _this.getModalDialogService();
-        if (!(<Object>modalDialogService).hasOwnProperty('close')
-            || typeof modalDialogService['close'] !== 'function') {
+        const modalDialogCloseFunc: Function = ObjectUtils.requireTypedValue<Function>(modalDialogService, 'close');
+        if (!FunctionUtils.isFunction(modalDialogCloseFunc)) {
             this.__originalOpenDialog = modalDialogService['openDialog'];
-            this.getModalDialogService()['openDialog'] =
+            ObjectUtils.as<any>(modalDialogService)['openDialog'] =
                 (target: ViewContainerRef, options: Partial<IModalDialogOptions<any>> = {}) => {
                     AbstractComponent.uniqueHackOpenDialogModalDialogService(modalDialogService, target, options);
                 };
-            this.getModalDialogService()['close'] =
+            ObjectUtils.as<any>(modalDialogService)['close'] =
                 () => AbstractComponent.uniqueHackCloseDialogModalDialogService(modalDialogService);
         }
     }
@@ -939,7 +940,7 @@ export abstract class AbstractComponent
      * @param modalDialogService {ModalDialogService}
      */
     private static uniqueHackCloseDialogModalDialogService(modalDialogService: ModalDialogService): void {
-        const modalDialogInstanceService: any = (isNullOrUndefined(modalDialogService)
+        const modalDialogInstanceService: any = (ObjectUtils.isNou(modalDialogService)
             ? undefined : modalDialogService['modalDialogInstanceService']);
         if (modalDialogInstanceService && typeof modalDialogInstanceService['closeAnyExistingModalDialog'] === 'function') {
             modalDialogInstanceService['closeAnyExistingModalDialog'].apply(modalDialogInstanceService);
@@ -955,32 +956,32 @@ export abstract class AbstractComponent
     private static uniqueHackOpenDialogModalDialogService<T extends AbstractComponent>(
         modalDialogService: ModalDialogService,
         target: ViewContainerRef, options: Partial<IModalDialogOptions<any>> = {}): void {
-        const modalDialogInstanceService: any = (isNullOrUndefined(modalDialogService)
+        const modalDialogInstanceService: any = (ObjectUtils.isNou(modalDialogService)
             ? undefined : modalDialogService['modalDialogInstanceService']);
         const componentFactoryResolver: ComponentFactoryResolver =
-            (isNullOrUndefined(modalDialogService) ? undefined
+            (ObjectUtils.isNou(modalDialogService) ? undefined
                 : modalDialogService['componentFactoryResolver'] as ComponentFactoryResolver);
 
-        if (!options.placeOnTop && !isNullOrUndefined(modalDialogInstanceService)
+        if (!options.placeOnTop && ObjectUtils.isNotNou(modalDialogInstanceService)
             && typeof modalDialogInstanceService['closeAnyExistingModalDialog'] === 'function') {
             modalDialogInstanceService['closeAnyExistingModalDialog'].apply(modalDialogInstanceService);
         }
 
         const factory: ComponentFactory<ModalDialogComponent> =
-            (isNullOrUndefined(componentFactoryResolver) ? undefined
+            (ObjectUtils.isNou(componentFactoryResolver) ? undefined
                 : componentFactoryResolver.resolveComponentFactory(ModalDialogComponent));
-        const componentRef = (isNullOrUndefined(factory) ? undefined : target.createComponent(factory));
-        if (!isNullOrUndefined(componentRef) && !isNullOrUndefined(modalDialogInstanceService)
+        const componentRef = (ObjectUtils.isNou(factory) ? undefined : target.createComponent(factory));
+        if (ObjectUtils.isNotNou(componentRef) && ObjectUtils.isNotNou(modalDialogInstanceService)
             && typeof modalDialogInstanceService['saveExistingModalDialog'] === 'function') {
             // TODO save first for customizing dialog on initialization
             modalDialogInstanceService['saveExistingModalDialog'].apply(modalDialogInstanceService, [componentRef]);
             // TODO hook ngAfterViewInit for customizing dialog initialization
             // TODO Because this library already mixed-ins component lifecycle hooks
             const modalDialogInstance: ModalDialogComponent = componentRef.instance;
-            if (!isNullOrUndefined(modalDialogInstance)
-                && typeof modalDialogInstance['ngAfterViewInit'] === 'function') {
-                const __originalOpenDialog: Function = modalDialogInstance['ngAfterViewInit'] as Function;
-                modalDialogInstance['ngAfterViewInit'] = function mixinNgAfterViewInit() {
+            const modalDialogAfterViewInitFunc: Function = ObjectUtils.requireTypedValue<Function>(modalDialogInstance, 'ngAfterViewInit');
+            if (FunctionUtils.isFunction(modalDialogAfterViewInitFunc)) {
+                const __originalOpenDialog: Function = modalDialogAfterViewInitFunc;
+                ObjectUtils.as<any>(modalDialogInstance)['ngAfterViewInit'] = function mixinNgAfterViewInit() {
                     __originalOpenDialog.apply(modalDialogInstance);
 
                     // call dialog onInit
@@ -1114,7 +1115,7 @@ export abstract class AbstractComponent
      * @return DOM elements or undefined
      */
     protected hasClosestElement(selector: string, element?: Element): boolean {
-        return (element && !isNullOrUndefined(this.getClosestElementBySelector(selector, element)));
+        return (element && ObjectUtils.isNotNou(this.getClosestElementBySelector(selector, element)));
     }
 
     /**
@@ -1466,9 +1467,10 @@ export abstract class AbstractComponent
     private __deleteDatabase(timer: number): void {
         const _this: AbstractComponent = this;
         const logger: NGXLogger = this.getLogger();
-        const indexDbDelRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
-        if (typeof indexDbDelRequest['close'] === 'function') {
-            (<Function>indexDbDelRequest['close']).call(indexDbDelRequest);
+        const indexDbDelRequest: IDBOpenDBRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
+        const indexDbRequestCloseFunc: Function = ObjectUtils.requireTypedValue<Function>(indexDbDelRequest, 'close');
+        if (FunctionUtils.isFunction(indexDbRequestCloseFunc)) {
+            indexDbRequestCloseFunc.call(indexDbDelRequest);
         }
         indexDbDelRequest.onblocked = function (event) {
             logger && logger.warn('Could not delete database because database has been blocked!', event);
@@ -1540,10 +1542,10 @@ export abstract class AbstractComponent
      * @param data to post
      */
     protected postMessageChannel(serviceWorker: ServiceWorker, messageChannel: MessageChannel, data: any): void {
-        const msgChannel: MessageChannel = (isNullOrUndefined(messageChannel) ? new MessageChannel() : messageChannel);
+        const msgChannel: MessageChannel = (ObjectUtils.isNou(messageChannel) ? new MessageChannel() : messageChannel);
         msgChannel.port1.addEventListener('message', this.receiveMessage);
         msgChannel.port2.addEventListener('message', this.receiveMessage);
-        if (!isNullOrUndefined(serviceWorker)) {
+        if (ObjectUtils.isNotNou(serviceWorker)) {
             serviceWorker.postMessage(data, [msgChannel.port1, msgChannel.port2]);
         } else {
             this.getLogger().warn(

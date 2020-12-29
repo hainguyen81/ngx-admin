@@ -28,10 +28,11 @@ import {IEvent} from '../abstract.component';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {DefaultEditor} from 'ng2-smart-table';
 import {Cell} from 'ng2-smart-table/lib/data-set/cell';
-import {isArray, isNullOrUndefined, isObject} from 'util';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
 import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
+import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * Abstract cell editor as form {FormControl}
@@ -284,7 +285,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      * @return the present {Cell} instance
      */
     get cell(): Cell {
-        if (isNullOrUndefined(this._cell) && this.parentCell) {
+        if (ObjectUtils.isNou(this._cell) && this.parentCell) {
             this._cell = this.parentCell.cell;
         }
         return this._cell;
@@ -361,7 +362,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      * @return the current {Column#getConfig} instance
      */
     get cellColumnConfig(): any {
-        return (isNullOrUndefined(this.cellColumn)
+        return (ObjectUtils.isNou(this.cellColumn)
             ? {} : (this.cellColumn.getConfig() || this.cellColumn['config'] || {}));
     }
 
@@ -373,7 +374,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
         const _config: any = this.cellColumnConfig;
         const value: any = (_config || {})[propertyKey];
-        return (isNullOrUndefined(value) ? defaultValue : value);
+        return (ObjectUtils.isNou(value) ? defaultValue : value);
     }
 
     /**
@@ -383,7 +384,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      */
     protected setConfigValue(propertyKey: string, configValue?: any | null): void {
         const _config: any = this.cellColumnConfig;
-        if (!isNullOrUndefined(_config)) {
+        if (ObjectUtils.isNotNou(_config)) {
             _config[propertyKey] = configValue;
         }
     }
@@ -395,7 +396,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     get disabled(): boolean {
         if (this.viewMode) return true;
         const disabledConfig: any = this.getConfigValue('disabled', false);
-        if (isNullOrUndefined(disabledConfig)) return false;
+        if (ObjectUtils.isNou(disabledConfig)) return false;
         if (typeof disabledConfig === 'function') {
             return (disabledConfig as Function).apply(this,
                 [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
@@ -410,7 +411,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     get required(): boolean {
         if (this.viewMode) return true;
         const requiredConfig: any = this.getConfigValue('required', false);
-        if (isNullOrUndefined(requiredConfig)) return false;
+        if (ObjectUtils.isNou(requiredConfig)) return false;
         if (typeof requiredConfig === 'function') {
             return (requiredConfig as Function).apply(this,
                 [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
@@ -425,7 +426,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     get readonly(): boolean {
         if (this.viewMode) return true;
         const readonlyConfig: any = this.getConfigValue('readonly', false);
-        if (isNullOrUndefined(readonlyConfig)) return false;
+        if (ObjectUtils.isNou(readonlyConfig)) return false;
         if (typeof readonlyConfig === 'function') {
             return (readonlyConfig as Function).apply(this,
                 [this.cell, this.cellRow, this.cellRowData, this.cellColumnConfig]) as boolean;
@@ -476,7 +477,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
 
     ngOnInit(): void {
-        if (this.cell && isNullOrUndefined(this.cell['componentRef'])) {
+        if (this.cell && ObjectUtils.isNou(this.cell['componentRef'])) {
             this.cell['componentRef'] = this;
         }
     }
@@ -551,13 +552,13 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      * @private
      */
     private __parseValidatorFunctions(validators: any): ValidatorFn[] {
-        if (isNullOrUndefined(validators)) {
+        if (ObjectUtils.isNou(validators)) {
             return [];
 
-        } else if (isArray(validators) && Array.from(validators as ValidatorFn[]).length) {
+        } else if (ArrayUtils.isArray(validators) && Array.from(validators as ValidatorFn[]).length) {
             return [].concat(Array.from(validators as ValidatorFn[]));
 
-        } else if (isObject(validators)) {
+        } else if (ObjectUtils.isObject(validators)) {
             if (validators.hasOwnProperty('validators')) {
                 return [].concat(this.__parseValidatorFunctions(validators['validators']));
 
@@ -572,7 +573,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
                 return validatorFn;
             }
 
-        } else if (typeof validators === 'function' && !isNullOrUndefined(<ValidatorFn>validators)) {
+        } else if (typeof validators === 'function' && ObjectUtils.isNotNou(<ValidatorFn>validators)) {
             return [validators];
         }
         return [];
@@ -584,13 +585,13 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      * @private
      */
     private __parseAsyncValidatorFunctions(validators: any): AsyncValidatorFn[] {
-        if (isNullOrUndefined(validators)) {
+        if (ObjectUtils.isNou(validators)) {
             return [];
 
-        } else if (isArray(validators) && Array.from(validators as AsyncValidatorFn[]).length) {
+        } else if (ArrayUtils.isArray(validators) && Array.from(validators as AsyncValidatorFn[]).length) {
             return [].concat(Array.from(validators as AsyncValidatorFn[]));
 
-        } else if (isObject(validators)) {
+        } else if (ObjectUtils.isObject(validators)) {
             if (validators.hasOwnProperty('asyncValidators')) {
                 return [].concat(this.__parseAsyncValidatorFunctions(validators['asyncValidators']));
 
@@ -605,7 +606,7 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
                 return validatorFn;
             }
 
-        } else if (typeof validators === 'function' && !isNullOrUndefined(<ValidatorFn>validators)) {
+        } else if (typeof validators === 'function' && ObjectUtils.isNotNou(<ValidatorFn>validators)) {
             return [validators];
         }
         return [];

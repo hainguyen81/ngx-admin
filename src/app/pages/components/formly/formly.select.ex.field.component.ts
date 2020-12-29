@@ -16,9 +16,10 @@ import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
 import {IEvent} from '../abstract.component';
-import {isArray, isNullOrUndefined} from 'util';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable} from 'rxjs';
+import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -149,7 +150,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
             this.ngxSelectExComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectExComponent, component => {
                     component && component.finishedLoading.subscribe(
-                        value => this.__applySelectedItems(component, this.value));
+                        (value: any) => this.__applySelectedItems(component, this.value));
                     this.checkOverrideFormFieldClass(component);
                 });
         }
@@ -159,7 +160,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
             this.field.className = [(this.field.className || ''),
                 'form-field form-select-ex'].join(' ').trim();
             if (this.field.templateOptions
-                && isArray(this.field.templateOptions.options)) {
+                && ArrayUtils.isArray(this.field.templateOptions.options)) {
                 this.items = this.field.templateOptions.options as any[];
 
             } else if (this.field.templateOptions
@@ -228,7 +229,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
         selectComponent
         && selectComponent.setSelectedItems(
             !selectComponent || !this.items.length
-                ? [] : isArray(value) ? Array.from(value) : value ? [value] : []);
+                ? [] : ArrayUtils.isArray(value) ? Array.from(value) : value ? [value] : []);
     }
 
     protected onSelect($event: IEvent): void {
@@ -245,23 +246,23 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
         // detect option
         const options: any[] = [];
         const parsedValues: any[] = [];
-        if (isArray(value)) {
+        if (ArrayUtils.isArray(value)) {
             Array.from(value).forEach(val => {
                 const selOpt: TSelectOption = <TSelectOption>val;
-                if (!isNullOrUndefined(selOpt)
+                if (ObjectUtils.isNotNou(selOpt)
                     || val instanceof NgxSelectOption || val instanceof NgxSelectOptGroup) {
                     options.push(val);
 
-                } else if (!isNullOrUndefined(val)) {
+                } else if (ObjectUtils.isNotNou(val)) {
                     parsedValues.push(val);
                 }
             });
 
-        } else if (!isNullOrUndefined(<TSelectOption>value)
+        } else if (ObjectUtils.isNotNou(<TSelectOption>value)
             || value instanceof NgxSelectOption || value instanceof NgxSelectOptGroup) {
             options.push(value);
 
-        } else if (!isNullOrUndefined(value)) {
+        } else if (ObjectUtils.isNotNou(value)) {
             parsedValues.push(value);
         }
 
@@ -275,14 +276,14 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     }
     private __parseOption(opt: NgxSelectOption): any[] {
         const property: string = this.getConfigValue('optionValueField');
-        return (opt && opt.value ? [opt.value[property] || ''] : []);
+        return (opt && opt.value ? [ObjectUtils.requireValue(opt.value, property) || ''] : []);
     }
     private __parseOptionGroup(optGroup: NgxSelectOptGroup): any[] {
         let parsedValues: any[] = [];
-        if (!isNullOrUndefined(optGroup) && (optGroup.options || []).length) {
+        if (ObjectUtils.isNotNou(optGroup) && (optGroup.options || []).length) {
             optGroup.options.forEach(opt => {
                 const parsedValue: any = this.__parseOption(opt);
-                if (isArray(parsedValue) && Array.from(parsedValue).length) {
+                if (ArrayUtils.isArray(parsedValue) && Array.from(parsedValue).length) {
                     parsedValues = parsedValues.concat(Array.from(parsedValue));
                 }
             });
@@ -297,7 +298,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
         } else if (selOpt instanceof NgxSelectOptGroup) {
             parsedValues = parsedValues.concat(this.__parseOptionGroup(<NgxSelectOptGroup>selOpt));
 
-        } else if (!isNullOrUndefined(<TSelectOption>selOpt)) {
+        } else if (ObjectUtils.isNotNou(<TSelectOption>selOpt)) {
             switch ((<TSelectOption>selOpt).type) {
                 case 'optgroup':
                     parsedValues = parsedValues.concat(this.__parseOptionGroup(<NgxSelectOptGroup>selOpt));
@@ -306,7 +307,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
                     parsedValues = parsedValues.concat(this.__parseOption(<NgxSelectOption>selOpt));
                     break;
                 default:
-                    !isNullOrUndefined(selOpt) && parsedValues.push(selOpt);
+                    ObjectUtils.isNotNou(selOpt) && parsedValues.push(selOpt);
             }
         }
         return (parsedValues.length ? parsedValues : []);

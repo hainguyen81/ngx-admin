@@ -19,7 +19,6 @@ import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/common/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {IEvent} from '../../../../abstract.component';
-import {isNullOrUndefined, isNumber} from 'util';
 import {MatInput} from '@angular/material/input';
 import {
     WarehouseStorageFormlySelectFieldComponent,
@@ -33,6 +32,8 @@ import {
 } from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/common/promise.utils';
+import ObjectUtils from '../../../../../../utils/common/object.utils';
+import NumberUtils from '../../../../../../utils/common/number.utils';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -172,9 +173,9 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
             (0 <= dataIndex && dataIndex < storages.length ? storages[dataIndex] : undefined);
         const selStorage: IWarehouse = $event.data as IWarehouse;
         storage.storage = selStorage;
-        storage.storage_id = (isNullOrUndefined(selStorage) ? undefined : selStorage.id);
-        storage.storage_code = (isNullOrUndefined(selStorage) ? undefined : selStorage.code);
-        storage.storage_name = (isNullOrUndefined(selStorage) ? undefined : selStorage.name);
+        storage.storage_id = (ObjectUtils.isNou(selStorage) ? undefined : selStorage.id);
+        storage.storage_code = (ObjectUtils.isNou(selStorage) ? undefined : selStorage.code);
+        storage.storage_name = (ObjectUtils.isNou(selStorage) ? undefined : selStorage.name);
         this.fireCellChanged({ data: storage });
     }
 
@@ -202,14 +203,14 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
-            component.onLoad.subscribe(e => {
+            component.onLoad.subscribe((e: any) => {
                 const storages: IWarehouseInventoryDetailStorage[] =
                     this.cellValue as IWarehouseInventoryDetailStorage[];
                 const storage: IWarehouseInventoryDetailStorage = storages[dataIndex];
-                if (!isNullOrUndefined(storage)) {
+                if (ObjectUtils.isNotNou(storage)) {
                     component.setSelectedValue(storage.storage_code);
                     inputComponent.value =
-                        (isNumber(storage.quantity) ? storage.quantity.toString() : undefined);
+                        (NumberUtils.isNumber(storage.quantity) ? storage.quantity.toString() : undefined);
                 }
             });
         }
@@ -227,7 +228,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         // detect for master items
         this._warehouseStorages = [];
         (storages || []).forEach(storage => {
-            storage['text'] = [storage.name, ' (', storage.code, ')'].join('');
+            ObjectUtils.any(storage)['text'] = [storage.name, ' (', storage.code, ')'].join('');
             this._warehouseStorages.push(storage);
         });
 
@@ -249,7 +250,7 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
             const storage: IWarehouse = (storages || []).find(b => {
                 return (b.code === detailStorage.storage_code);
             });
-            if (!isNullOrUndefined(storage)) {
+            if (ObjectUtils.isNotNou(storage)) {
                 detailStorage.storage = storage;
                 detailStorage.viewStorage = [detailStorage.storage_name,
                     ' (', detailStorage.storage_code, ')'].join('');

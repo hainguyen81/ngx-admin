@@ -12,16 +12,15 @@ import {NGXLogger} from 'ngx-logger';
 import {IPageHeaderConfig, PageHeaderService} from './services/common/header.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
-import {isArray} from 'util';
 import {Meta, Title} from '@angular/platform-browser';
 import HtmlUtils from './utils/common/html.utils';
 import * as moment from 'moment';
 import AppUtils from './utils/app/app.utils';
+import ArrayUtils from './utils/common/array.utils';
 
 @Component({
     selector: 'ngx-app',
     template: `<router-outlet></router-outlet>`,
-    providers: AppConfig.Providers.All,
 })
 export class AppComponent implements OnInit {
 
@@ -113,7 +112,7 @@ export class AppComponent implements OnInit {
                             if (headerConfig) {
                                 let routeTitles: string[];
                                 routeTitles = [AppConfig.PageConfig.title];
-                                if (isArray(headerConfig.title)) {
+                                if (ArrayUtils.isArray(headerConfig.title)) {
                                     routeTitles = routeTitles.concat(Array.from(headerConfig.title));
                                 } else if ((headerConfig.title || '').length) {
                                     routeTitles.push(headerConfig.title as string);

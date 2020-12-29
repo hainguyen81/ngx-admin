@@ -35,7 +35,7 @@ import {
 } from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {HtmlCellComponent} from '../../../smart-table/html.cell.component';
 import moment, {Moment} from 'moment';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* warehouse batch no table settings */
 export const WarehouseBatchNoTableSettings = {
@@ -72,7 +72,7 @@ export const WarehouseBatchNoTableSettings = {
                         let format: string = (config || {})['format'] || '';
                         format = (cellCtrl && format.length ? cellCtrl.translate(format) || '' : '');
                         // none expired
-                        if (isNullOrUndefined(cellCtrl) || !(expDateValue || '').length || !format.length) {
+                        if (ObjectUtils.isNou(cellCtrl) || !(expDateValue || '').length || !format.length) {
                             return batch.code;
                         }
 
@@ -132,7 +132,7 @@ export const WarehouseBatchNoTableSettings = {
             editor: {
                 type: 'custom',
                 component: SelectTranslateCellComponent,
-                config: {list: []},
+                config: {list: <any[]>[]},
             },
         },
         remark: {

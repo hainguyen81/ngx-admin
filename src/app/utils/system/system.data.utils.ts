@@ -279,7 +279,7 @@ export default class SystemDataUtils {
             datasource: D, translateService?: TranslateService | null): Promise<T[]> {
         datasource
         || throwError('DataSource is required to invoke!');
-        return this.invokeModelsByFilterAsDefaultSelectOptions(
+        return SystemDataUtils.invokeModelsByFilterAsDefaultSelectOptions(
             datasource, [], false, translateService);
     }
     /**
@@ -296,7 +296,7 @@ export default class SystemDataUtils {
         || throwError('DataSource is required to invoke!');
         keysMapper
         || throwError('DataMapper is required!');
-        return this.invokeModelsByFilterAsSelectOptions(
+        return SystemDataUtils.invokeModelsByFilterAsSelectOptions(
             datasource, [], false, translateService, keysMapper);
     }
     /**
@@ -311,7 +311,7 @@ export default class SystemDataUtils {
         Promise<{ [key: string]: string | string[] | T; }[]> {
         datasource
         || throwError('DataSource is required to invoke!');
-        return this.invokeModelsByFilterAsTableSelectOptions(
+        return SystemDataUtils.invokeModelsByFilterAsTableSelectOptions(
             datasource, [], false, translateService);
     }
     /**
@@ -330,7 +330,7 @@ export default class SystemDataUtils {
         || throwError('DataSource is required to invoke!');
         keysMapper
         || throwError('DataMapper is required!');
-        return this.invokeModelsByFilterAsOptions(
+        return SystemDataUtils.invokeModelsByFilterAsOptions(
             datasource, [], false, translateService, keysMapper);
     }
 
@@ -341,7 +341,7 @@ export default class SystemDataUtils {
     public static invokeAllCountries(countryDatasource: CountryDatasource): Promise<ICountry[]> {
         countryDatasource
         || throwError('CountryDatasource is required to invoke!');
-        return this.invokeAllModelsAsDefaultSelectOptions(countryDatasource);
+        return SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(countryDatasource);
     }
 
     /**
@@ -412,9 +412,10 @@ export default class SystemDataUtils {
                     values, null, false, {
                         'value': model => model.id,
                         'label': model => {
-                            let labelOption: string = model['username'];
-                            if ((model['firstName'] || '').length || (model['lastName'] || '')) {
-                                labelOption = [(model['firstName'] || ''), (model['lastName'] || '')].join(' ').trim();
+                            const m: any = <any>model;
+                            let labelOption: string = m['username'];
+                            if ((m['firstName'] || '').length || (m['lastName'] || '')) {
+                                labelOption = [(m['firstName'] || ''), (m['lastName'] || '')].join(' ').trim();
                             }
                             return labelOption;
                         },

@@ -6,9 +6,9 @@ import {
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
-import {isNullOrUndefined} from 'util';
 import * as SecureLS from 'secure-ls';
 import JsonUtils from '../../utils/common/json.utils';
+import ObjectUtils from '../../utils/common/object.utils';
 
 /**
  * Secure configuration
@@ -54,7 +54,7 @@ export const TOKEN_STORAGE_SERIALIZER: InjectionToken<StorageSerializer>
 /**
  * Local storage service
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class NgxLocalStorageService extends LocalStorageService {
 
     protected get logger(): NGXLogger {
@@ -81,7 +81,7 @@ export class NgxLocalStorageService extends LocalStorageService {
 /**
  * Local storage secure service
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class NgxLocalStorageEncryptionService {
 
     readonly _internalSecuredStorage: SecureLS;
@@ -150,28 +150,28 @@ export class NgxLocalStorageEncryptionService {
         const data: any = this.internalSecuredStorage.get(this._transformKey(key), isAllKeysData);
         // this.logger.warn('Get data from local storage', key, this._transformKey(key), data,
         //     this.serializer.deserialize(data));
-        return (isNullOrUndefined(data) ? data : this.serializer.deserialize(data));
+        return (ObjectUtils.isNou(data) ? data : this.serializer.deserialize(data));
     }
 
     getDataFromLocalStorage(key: string): string | null {
         const data = this.internalSecuredStorage.getDataFromLocalStorage(this._transformKey(key));
-        return (isNullOrUndefined(data) ? data : this.serializer.deserialize(data));
+        return (ObjectUtils.isNou(data) ? data : this.serializer.deserialize(data));
     }
 
     set(key: string, data: any): void {
         // this.logger.warn('Set data to local storage', key, this._transformKey(key), data,
         //     this.serializer.serialize(data));
-        ((isNullOrUndefined(data) && this.storageConfig.allowNull)
-            || !isNullOrUndefined(data))
+        ((ObjectUtils.isNou(data) && this.storageConfig.allowNull)
+            || ObjectUtils.isNotNou(data))
         && this.internalSecuredStorage.set(this._transformKey(key),
-            isNullOrUndefined(data) ? data : this.serializer.serialize(data));
+            ObjectUtils.isNou(data) ? data : this.serializer.serialize(data));
     }
 
     setDataToLocalStorage(key: string, data: string): void {
-        ((isNullOrUndefined(data) && this.storageConfig.allowNull)
-            || !isNullOrUndefined(data))
+        ((ObjectUtils.isNou(data) && this.storageConfig.allowNull)
+            || ObjectUtils.isNotNou(data))
         && this.internalSecuredStorage.set(this._transformKey(key),
-            isNullOrUndefined(data) ? data : this.serializer.serialize(data));
+            ObjectUtils.isNou(data) ? data : this.serializer.serialize(data));
     }
 
     remove(key: string): void {

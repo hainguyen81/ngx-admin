@@ -5,7 +5,7 @@ import {IProvince} from '../../../../@core/data/system/province';
 import {NGXLogger} from 'ngx-logger';
 import {ICountry} from '../../../../@core/data/system/country';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class ProvinceDatasource extends BaseDataSource<IProvince, ProvinceHttpService, ProvinceDbService> {
 
     constructor(@Inject(ProvinceHttpService) httpService: ProvinceHttpService,

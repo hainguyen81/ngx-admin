@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 
 export type WorkerAction = 'start' | 'stop' | 'pause' | 'resume';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WorkerService {
     private properties: WorkerProperties = {
         baseLocation: location.origin,
@@ -25,7 +25,7 @@ export class WorkerService {
 
     findWorker = (taskId: string) => {
         return this.workers.get(taskId);
-    }
+    };
 
     pauseTask(taskId: string) {
         this.notify(taskId, 'pause', taskId);

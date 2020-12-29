@@ -8,7 +8,7 @@ import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class CountryDbService extends BaseDbService<ICountry> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -18,7 +18,7 @@ export class CountryDbService extends BaseDbService<ICountry> {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class CountryHttpService extends BaseHttpService<ICountry> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

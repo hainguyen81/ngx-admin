@@ -13,9 +13,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {INgxDatePickerConfig} from '../datepicker/abstract.datepicker.component';
 import {IDatePickerConfig} from 'ng2-date-picker';
-import {isNullOrUndefined} from 'util';
 import moment, {Moment} from 'moment';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Smart table date-picker cell component base on {DefaultEditor}
@@ -34,7 +34,7 @@ export class DatePickerCellComponent extends AbstractCellEditor {
     get cellColumnConfig(): any {
         const __config: INgxDatePickerConfig = super.cellColumnConfig as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
-        if (!isNullOrUndefined(__dtConfig) && (__dtConfig.format || '').length) {
+        if (ObjectUtils.isNotNou(__dtConfig) && (__dtConfig.format || '').length) {
             __dtConfig.format = this.translate(__dtConfig.format);
         }
         return __config;
@@ -47,7 +47,7 @@ export class DatePickerCellComponent extends AbstractCellEditor {
     get dateTimePattern(): string {
         const __config: INgxDatePickerConfig = this.cellColumnConfig as INgxDatePickerConfig;
         const __dtConfig: IDatePickerConfig = (__config ? __config.config : undefined);
-        return isNullOrUndefined(__dtConfig) ? '' : __dtConfig.format;
+        return ObjectUtils.isNou(__dtConfig) ? '' : __dtConfig.format;
     }
 
     get valueParser(): (value: any) => any {

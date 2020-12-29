@@ -8,7 +8,7 @@ import {IUser} from '../../data/system/user';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class MockUserService implements IMockService {
 
     constructor(@Inject(UserDbService) private dbService: UserDbService,

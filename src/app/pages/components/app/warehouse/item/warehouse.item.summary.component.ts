@@ -21,6 +21,7 @@ import {AppConfig} from '../../../../../config/app.config';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
@@ -173,7 +174,8 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
         }
 
         let files: File[];
-        files = (e && e.event && e.event.target && e.event.target['files'] ? e.event.target['files'] : []);
+        files = (e && e.event && e.event.target && ObjectUtils.any(e.event.target)['files']
+            ? ObjectUtils.any(e.event.target)['files'] : []);
         if ((files || []).length) {
             let invalidFiles: string[];
             invalidFiles = [];

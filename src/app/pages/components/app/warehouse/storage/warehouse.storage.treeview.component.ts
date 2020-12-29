@@ -29,8 +29,8 @@ import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
-import {isNullOrUndefined} from 'util';
 import {IdGenerators} from '../../../../../config/generator.config';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 export const WarehouseCategoryTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
@@ -45,7 +45,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
 /**
  * Multi language for treeview field
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
@@ -184,7 +184,7 @@ export class WarehouseStorageTreeviewComponent
      * @return new tree-view item
      */
     protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): TreeviewItem {
-        const parentWarehouse: IWarehouse = (isNullOrUndefined(parent) ? null : parent.value as IWarehouse);
+        const parentWarehouse: IWarehouse = (ObjectUtils.isNou(parent) ? null : parent.value as IWarehouse);
         let newItem: TreeviewItem;
         newItem = super.newItem(parent, treeItem);
         if (newItem) {
@@ -192,11 +192,11 @@ export class WarehouseStorageTreeviewComponent
                 undefined, undefined, undefined, undefined);
             newWarehouse.id = IdGenerators.oid.generate();
             newWarehouse.parent = parentWarehouse;
-            newWarehouse.parentId = (isNullOrUndefined(parentWarehouse) ? null : parentWarehouse.id);
-            newWarehouse.pathCodes = [(isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.pathCodes),
-                (isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.code)].join('/');
-            newWarehouse.pathIds = [(isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.pathIds),
-                (isNullOrUndefined(parentWarehouse) ? '' : parentWarehouse.id)].join('/');
+            newWarehouse.parentId = (ObjectUtils.isNou(parentWarehouse) ? null : parentWarehouse.id);
+            newWarehouse.pathCodes = [(ObjectUtils.isNou(parentWarehouse) ? '' : parentWarehouse.pathCodes),
+                (ObjectUtils.isNou(parentWarehouse) ? '' : parentWarehouse.code)].join('/');
+            newWarehouse.pathIds = [(ObjectUtils.isNou(parentWarehouse) ? '' : parentWarehouse.pathIds),
+                (ObjectUtils.isNou(parentWarehouse) ? '' : parentWarehouse.id)].join('/');
             newItem.text = this.translate('warehouse.storage.new');
             newItem.value = newWarehouse;
         }

@@ -25,7 +25,6 @@ import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse
 import {
     WarehouseInventoryDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
-import {isNullOrUndefined} from 'util';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {
     WarehouseStorageFormlySelectFieldComponent,
@@ -34,6 +33,7 @@ import {
     VendorCustomerFormlySelectFieldComponent,
 } from '../../module.components/common/vendor.customer.select.field.component';
 import {ICustomer} from '../../../../../@core/data/system/customer';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* default warehouse in/out main formly config */
 export const WarehouseInventoryMainFormConfig: FormlyConfig = new FormlyConfig();
@@ -301,7 +301,7 @@ export class WarehouseInventoryMainFormlyComponent
     private __makeFormBeauty(): void {
         // make the remark beauty
         const renderer: Renderer2 = this.getRenderer();
-        if (!isNullOrUndefined(renderer) && !isNullOrUndefined(this.getElementRef())) {
+        if (ObjectUtils.isNotNou(renderer) && ObjectUtils.isNotNou(this.getElementRef())) {
             const formElement: Element = this.getElementRef().nativeElement;
             const leftColumn: Element = this.getFirstElementBySelector('.left-col', formElement);
             const midColumn: Element = this.getFirstElementBySelector('.mid-col', formElement);

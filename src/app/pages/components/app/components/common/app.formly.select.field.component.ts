@@ -15,7 +15,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {SelectFormFieldComponent} from '../../../formly/formly.select.field.component';
 import {IEvent} from '../../../abstract.component';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /**
  * Custom formly field for selecting parent
@@ -69,7 +69,7 @@ export class AppFormlySelectFieldComponent<T extends IModel>
     ngAfterViewInit() {
         super.ngAfterViewInit();
 
-        if (!isNullOrUndefined(super.selectComponent)) {
+        if (ObjectUtils.isNotNou(super.selectComponent)) {
             super.selectComponent.change.subscribe(($event: IEvent) => {
                 this.onSelect.emit($event);
             });

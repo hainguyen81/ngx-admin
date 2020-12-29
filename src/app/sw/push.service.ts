@@ -12,7 +12,7 @@ export const SW_VAPID_PUBLIC_KEY = new InjectionToken<string>('Service Worker VA
  * Abstract service for pushing notification
  * @param <T> entity type
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export abstract class AbstractPushService<T extends IModel> extends BaseHttpService<T> {
 
     protected getSwPush(): SwPush {

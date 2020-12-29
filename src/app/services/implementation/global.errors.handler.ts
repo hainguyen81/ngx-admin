@@ -5,7 +5,7 @@ import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export default class GlobalErrorsHandler implements ErrorHandler {
 
     /**

@@ -1,5 +1,5 @@
 import {environment} from '../../../environments/environment';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from './object.utils';
 
 /**
  * The HTML focusable elements selector
@@ -195,7 +195,7 @@ export default class HtmlUtils {
      * @return { top: number, left: number, width: number, height: number }
      */
     public static offset(element: Element): { top: number, left: number, width: number, height: number } {
-        if (isNullOrUndefined(element)) return { top: -1, left: -1, width: -1, height: -1 };
+        if (ObjectUtils.isNou(element)) return { top: -1, left: -1, width: -1, height: -1 };
         const rect: ClientRect | DOMRect = element.getBoundingClientRect(),
             scrollLeft: number = (window.pageXOffset || document.documentElement.scrollLeft),
             scrollTop: number = (window.pageYOffset || document.documentElement.scrollTop);
@@ -212,7 +212,7 @@ export default class HtmlUtils {
      * @return the default configuration browser language
      */
     public static detectBrowserLanguage(): string {
-        const language: string = (isNullOrUndefined(navigator) ? '' : navigator.language || '');
+        const language: string = (ObjectUtils.isNou(navigator) ? '' : navigator.language || '');
         return (!language.length || language.indexOf('-') < 0
             ? language || '' : language.substring(0, language.indexOf('-')));
     }
@@ -237,6 +237,6 @@ export default class HtmlUtils {
      * @return all configuration browser languages
      */
     public static detectBrowserConfigurationLanguages(): string[] {
-        return (isNullOrUndefined(navigator) ? [] : Array.from(navigator.languages || []));
+        return (ObjectUtils.isNou(navigator) ? [] : Array.from(navigator.languages || []));
     }
 }

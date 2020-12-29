@@ -1,9 +1,9 @@
 import ObjectUtils from './object.utils';
 import {Type} from '@angular/core';
 import {throwError} from 'rxjs';
-import {isArray} from 'util';
 import {TreeviewItem} from 'ngx-treeview';
 import {IModel} from '../../@core/data/base';
+import ArrayUtils from './array.utils';
 
 export default class HierarchyUtils {
 
@@ -44,12 +44,12 @@ export default class HierarchyUtils {
             // check for building children via temporary variable
             // because some type require children property must be not empty such as TreeviewItem type
             let childrenOfParent: N[];
-            childrenOfParent = (!parentBuilt[childrenBuiltPropertyName]
-                || !isArray(parentBuilt[childrenBuiltPropertyName])
-                ? [] : Array.from(parentBuilt[childrenBuiltPropertyName]));
+            childrenOfParent = (!ObjectUtils.any(parentBuilt)[childrenBuiltPropertyName]
+                || !ArrayUtils.isArray(ObjectUtils.any(parentBuilt)[childrenBuiltPropertyName])
+                ? [] : Array.from(ObjectUtils.any(parentBuilt)[childrenBuiltPropertyName]));
             childrenOfParent.push(item);
             if (childrenOfParent && childrenOfParent.length) {
-                parentBuilt[childrenBuiltPropertyName] = childrenOfParent;
+                ObjectUtils.any(parentBuilt)[childrenBuiltPropertyName] = childrenOfParent;
             }
         }
         return item;
@@ -77,14 +77,14 @@ export default class HierarchyUtils {
             'Could not build hierarchy that not specify the built type or `entityMapper` method!');
 
         let parentId: any;
-        parentId = (parent ? parent[entityIdPropertyName] : undefined);
+        parentId = (parent ? ObjectUtils.any(parent)[entityIdPropertyName] : undefined);
         let items: N[];
         items = [];
         parentBuilt && items.push(parentBuilt);
         (entities || []).forEach((entity: M) => {
             let builtItem: N;
-            if ((entity[entityParentIdPropertyName] || '') === (parentId || '')
-                && (entity[entityIdPropertyName] || '') !== (parentId || '')) {
+            if ((ObjectUtils.any(entity)[entityParentIdPropertyName] || '') === (parentId || '')
+                && (ObjectUtils.any(entity)[entityIdPropertyName] || '') !== (parentId || '')) {
                 builtItem = HierarchyUtils.buildFlatHierarchyItem(
                     entity, builtType, parentBuilt, childrenBuiltPropertyName, entityMapper);
                 !parentBuilt && items.push(builtItem);
@@ -132,18 +132,19 @@ export default class HierarchyUtils {
 
         if (parent) {
             if ((parentBuiltPropertyName || '').length) {
-                item[parentBuiltPropertyName] = parent;
+                ObjectUtils.any(item)[parentBuiltPropertyName] = parent;
             }
 
             if ((childrenBuiltPropertyName || '').length) {
                 // check for building children via temporary variable
                 // because some type require children property must be not empty such as TreeviewItem type
                 let childrenOfParent: N[];
-                childrenOfParent = (!parent[childrenBuiltPropertyName] || !isArray(parent[childrenBuiltPropertyName])
-                    ? [] : Array.from(parent[childrenBuiltPropertyName]));
+                childrenOfParent = (!ObjectUtils.any(parent)[childrenBuiltPropertyName]
+                    || !ArrayUtils.isArray(ObjectUtils.any(parent)[childrenBuiltPropertyName])
+                    ? [] : Array.from(ObjectUtils.any(parent)[childrenBuiltPropertyName]));
                 childrenOfParent.push(item);
                 if (childrenOfParent && childrenOfParent.length) {
-                    parent[childrenBuiltPropertyName] = childrenOfParent;
+                    ObjectUtils.any(parent)[childrenBuiltPropertyName] = childrenOfParent;
                 }
             }
         }
@@ -178,10 +179,11 @@ export default class HierarchyUtils {
                     entity, builtType, parent,
                     parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper);
                 items.push(builtItem);
-                if ((childrenEntityPropertyName || '').length && isArray(entity[childrenEntityPropertyName])
-                    && Array.from(entity[childrenEntityPropertyName]).length) {
+                if ((childrenEntityPropertyName || '').length
+                    && ArrayUtils.isArray(ObjectUtils.any(entity)[childrenEntityPropertyName])
+                    && Array.from(ObjectUtils.any(entity)[childrenEntityPropertyName]).length) {
                     this.buildHierarchyTree(
-                        Array.from(entity[childrenEntityPropertyName]),
+                        Array.from(ObjectUtils.any(entity)[childrenEntityPropertyName]),
                         builtType, builtItem,
                         childrenEntityPropertyName,
                         parentBuiltPropertyName, childrenBuiltPropertyName, entityMapper);
@@ -207,12 +209,12 @@ export default class HierarchyUtils {
                     checked: false,
                     collapsed: true,
                     disabled: false,
-                    text: model[modelTextProperty] || '-',
+                    text: ObjectUtils.any(model)[modelTextProperty] || '-',
                     value: model,
                 });
 
             } else if (model) {
-                item.text = model[modelTextProperty] || '';
+                item.text = ObjectUtils.any(model)[modelTextProperty] || '';
                 item.value = model;
             }
             return item;

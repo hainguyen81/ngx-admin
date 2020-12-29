@@ -10,6 +10,8 @@
         "strict": false,
         "noImplicitThis": false,
         "noEmit": false,
+        "noImplicitAny": false,
+        "noErrorTruncation": true,
         "declaration": false,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
@@ -33,6 +35,10 @@
         // TODO to fix [error TS2349: Cannot invoke an expression whose type lacks a call signature.
         // TODO         Type 'typeof moment' has no compatible call signatures.]
         "allowSyntheticDefaultImports": true,
-        "alwaysStrict": true
+        "alwaysStrict": true,
+        "strictNullChecks": false
+    },
+    "angularCompilerOptions": {
+        "enableIvy": false
     }
 }

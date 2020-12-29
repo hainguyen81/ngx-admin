@@ -13,18 +13,16 @@ import {FormlyFormBuilder} from '@ngx-formly/core';
 import {NgxFormlyFormBuilderRuntime} from './app/runtime/formly.form.builder.runtime';
 import {ComponentLifeCycleRuntime} from './app/runtime/component.lifecycle.runtime';
 import {mixins} from './app/runtime/runtime';
-import {AppConfig} from './app/config/app.config';
 
 if (environment.production) {
     enableProdMode();
 }
 
 // TODO should mixins prototypes before bootstrap application module
-// window.console.warn(['Browser locale', navigator.language, navigator.languages]);
 mixins(ModalDialogComponent, [ComponentLifeCycleRuntime]);
 mixins(FormlyFormBuilder, [NgxFormlyFormBuilderRuntime]);
 
-platformBrowserDynamic(AppConfig.Providers.All).bootstrapModule(AppModule).then(
+platformBrowserDynamic().bootstrapModule(AppModule).then(
     module => window.console.info(['======= MAIN BOOTSTRAP APPLICATION SUCCESSFUL =======', module]),
         reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]))
     .catch(reason => window.console.error(['======= MAIN BOOTSTRAP APPLICATION ERROR =======', reason]));

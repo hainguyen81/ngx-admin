@@ -23,7 +23,6 @@ import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
-import {isNullOrUndefined} from 'util';
 import {
     ACTION_DELETE,
     ACTION_DELETE_DATABASE, ACTION_IMPORT,
@@ -33,6 +32,7 @@ import {
 } from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import ObjectUtils from '../../../../utils/common/object.utils';
 
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {
@@ -270,7 +270,7 @@ export class AppSplitPaneComponent<
         if (!this.rightSideComponent) {
             this.rightSideComponent = super.setAreaComponent(1, this.rightRightType);
         }
-        return !isNullOrUndefined(this.rightSideComponent);
+        return ObjectUtils.isNotNou(this.rightSideComponent);
     }
 
     // -------------------------------------------------
@@ -321,7 +321,7 @@ export class AppSplitPaneComponent<
      * Apply toolbar actions settings while flipping
      */
     protected doToolbarActionsSettings() {
-        if (isNullOrUndefined(this.getToolbarComponent())) return;
+        if (ObjectUtils.isNou(this.getToolbarComponent())) return;
 
         this.getToolbarComponent().showActions = true;
         const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();

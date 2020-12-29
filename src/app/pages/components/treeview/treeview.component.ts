@@ -19,7 +19,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
@@ -42,7 +42,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource> 
      */
     public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
         const currentSelection: TreeviewSelection = this.getTreeviewSelection();
-        if (isNullOrUndefined(currentSelection)) return;
+        if (ObjectUtils.isNou(currentSelection)) return;
         // un-check previous items
         (currentSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
         // collect new item checked

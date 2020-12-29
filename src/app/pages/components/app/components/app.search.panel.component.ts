@@ -26,7 +26,7 @@ import {
     ACTION_SEARCH,
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../../utils/common/object.utils';
 
 export const APP_SEARCH_PANE_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractToolbarComponent<any>>>
     = new InjectionToken<Type<AbstractToolbarComponent<any>>>('The toolbar component type injection token of the search-pane');
@@ -192,7 +192,7 @@ export class AppSearchPanelComponent<T extends IModel, D extends DataSource,
      * Apply toolbar actions settings while flipping
      */
     protected doToolbarActionsSettingsOnStartup() {
-        if (isNullOrUndefined(this.toolbar)) return;
+        if (ObjectUtils.isNou(this.toolbar)) return;
 
         const actions: IToolbarActionsConfig[] = this.toolbar.getActions();
         (actions || []).forEach(action => {

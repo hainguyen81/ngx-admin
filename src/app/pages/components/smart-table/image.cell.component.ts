@@ -9,11 +9,12 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {isArray, isNullOrUndefined} from 'util';
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * Smart table image cell component base on {DefaultEditor}
@@ -93,10 +94,10 @@ export class ImageCellComponent extends AbstractCellEditor
         // observe images
         this.observeConfigProperty(ImageCellComponent.IMAGES_PREPARE)
             .subscribe(images => {
-                if (isArray(images)) {
+                if (ArrayUtils.isArray(images)) {
                     this.images = Array.from(images);
 
-                } else if (!isNullOrUndefined(images) && typeof images === 'string') {
+                } else if (ObjectUtils.isNotNou(images) && typeof images === 'string') {
                     this.images = [images];
                 }
             });

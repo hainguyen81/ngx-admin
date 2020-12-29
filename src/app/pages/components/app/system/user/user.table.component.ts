@@ -97,7 +97,7 @@ export const UserTableSettings = {
             editor: {
                 type: 'custom',
                 component: SelectTranslateCellComponent,
-                config: {list: []},
+                config: {list: <any[]>[]},
             },
         },
         enterprise: {

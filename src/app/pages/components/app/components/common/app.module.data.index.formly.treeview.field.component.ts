@@ -16,11 +16,11 @@ import {IDbService, IHttpService} from '../../../../../services/common/interface
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, throwError} from 'rxjs';
-import {isNullOrUndefined} from 'util';
 import {
     AppModuleDataFormlyTreeviewFieldComponent,
 } from './app.module.data.formly.treeview.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /**
  * Custom formly field for selecting tree
@@ -107,7 +107,7 @@ export class AppModuleDataIndexFormlyTreeviewFieldComponent<
 
     protected loadData(): Observable<M[] | M> | Promise<M[] | M> | M[] | M {
         const useFilter: boolean = this.useDataFilter;
-        const needToFilter: boolean = ((this.dataIndexName || '').length && !isNullOrUndefined(this.dataIndexKey));
+        const needToFilter: boolean = ((this.dataIndexName || '').length && ObjectUtils.isNotNou(this.dataIndexKey));
         if (useFilter && !needToFilter) {
             return [];
 

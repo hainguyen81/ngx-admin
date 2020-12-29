@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {IWarehouseBatchNo} from '../../../../@core/data/warehouse/warehouse.batch.no';
 import {WarehouseBatchNoDbService, WarehouseBatchNoHttpService} from './warehouse.batchno.service';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseBatchNoDatasource
     extends BaseDataSource<IWarehouseBatchNo, WarehouseBatchNoHttpService, WarehouseBatchNoDbService> {
 

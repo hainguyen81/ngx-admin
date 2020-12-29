@@ -3,6 +3,7 @@ import JsonUtils from '../utils/common/json.utils';
 import {IUser} from '../@core/data/system/user';
 import {Constants as CommonConstants} from '../@core/data/constants/common.constants';
 import STATUS = CommonConstants.COMMON.STATUS;
+import ObjectUtils from '../utils/common/object.utils';
 
 export class NbxAuthOAuth2Token extends NbAuthOAuth2Token {
 
@@ -16,6 +17,6 @@ export class NbxAuthOAuth2Token extends NbAuthOAuth2Token {
             return false;
         }
         const user: IUser = super.getPayload() as IUser;
-        return (user && user.status === Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED));
+        return (user && user.status === Object.keys(STATUS).find(key => ObjectUtils.requireValue(STATUS, key) === STATUS.ACTIVATED));
     }
 }

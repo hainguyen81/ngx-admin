@@ -36,7 +36,7 @@ export function indexFactory() {
     // The animal table was added with version 2 but none of the existing tables or data needed
     // to be modified so a migrator for that version is not included.
     return {
-        1: (db, transaction) => {
+        1: (db: IDBDatabase, transaction: IDBTransaction) => {
             // customer
             const customerStore = transaction.objectStore(DB_STORE.customer);
             customerStore.createIndex(

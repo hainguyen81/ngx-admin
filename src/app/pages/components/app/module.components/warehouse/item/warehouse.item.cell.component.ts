@@ -6,7 +6,7 @@ import {
     ElementRef,
     forwardRef,
     Inject,
-    OnDestroy, OnInit,
+    OnDestroy,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -21,13 +21,12 @@ import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.field.component';
 import {IEvent} from '../../../../abstract.component';
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
-import {isArray, isNullOrUndefined} from 'util';
 import {
     WarehouseItemDbService,
 } from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/common/promise.utils';
-import {NgOption} from '@ng-select/ng-select';
+import ObjectUtils from '../../../../../../utils/common/object.utils';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -69,11 +68,11 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     }
 
     get images(): string[] {
-        return (!isNullOrUndefined(this.warehouseItem) ? this.warehouseItem.image : undefined);
+        return (ObjectUtils.isNotNou(this.warehouseItem) ? this.warehouseItem.image : undefined);
     }
 
     get viewValue(): string {
-        return (!isNullOrUndefined(this.warehouseItem)
+        return (ObjectUtils.isNotNou(this.warehouseItem)
             ? [this.warehouseItem.name, ' (', this.warehouseItem.code, ')'].join('') : '');
     }
 
@@ -117,7 +116,7 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
             this._selectComponent = ComponentUtils.queryComponent(
                 this.querySelectComponent, component => {
                     if (component) {
-                        component.onLoad.subscribe(e => {
+                        component.onLoad.subscribe((e: any) => {
                             component.value = this.cellValue;
                         });
                         component.onBlur.subscribe(($event: IEvent) => {
@@ -149,8 +148,8 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
     // -------------------------------------------------
 
     private _observeCellValue(value: any): void {
-        if ((isNullOrUndefined(this._warehouseItem) || ((value || '') !== (this._warehouseItem.code || '')))
-            && !isNullOrUndefined(value) && (value || '').length
+        if ((ObjectUtils.isNou(this._warehouseItem) || ((value || '') !== (this._warehouseItem.code || '')))
+            && ObjectUtils.isNotNou(value) && (value || '').length
             && this.viewMode) {
             this.warehouseItemDbService.getAllByIndex('code', IDBKeyRange.only(value))
                 .then(items => {

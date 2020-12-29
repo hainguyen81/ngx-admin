@@ -19,7 +19,6 @@ import {NGXLogger} from 'ngx-logger';
 import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
 import {Grid} from 'ng2-smart-table/lib/grid';
 import {Row} from 'ng2-smart-table/lib/data-set/row';
-import {isArray, isNullOrUndefined, isNumber} from 'util';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
@@ -31,6 +30,9 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
 import {AbstractCellEditorFormControlComponent} from './abstract.cell.editor.form.control.component';
+import ObjectUtils from "../../../utils/common/object.utils";
+import ArrayUtils from '../../../utils/common/array.utils';
+import NumberUtils from '../../../utils/common/number.utils';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -164,7 +166,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     }
 
     protected get gridComponent(): Grid {
-        return (!isNullOrUndefined(this.tableComponent)
+        return (ObjectUtils.isNotNou(this.tableComponent)
             ? this.tableComponent.grid : undefined);
     }
 
@@ -310,7 +312,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return true for being in EDIT mode; else false
      */
     public isRowInEditMode(row: Row): boolean {
-        return (!isNullOrUndefined(row) && row.isInEditing);
+        return (ObjectUtils.isNotNou(row) && row.isInEditing);
     }
 
     /**
@@ -333,7 +335,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     public getRowDataByIndex(rowIdx: number): any {
         const row: Row = this.getRowByIndex(rowIdx);
-        return (!isNullOrUndefined(row) ? row.getData() : undefined);
+        return (ObjectUtils.isNotNou(row) ? row.getData() : undefined);
     }
 
     /**
@@ -385,7 +387,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         target = (target && target.tagName.toLowerCase() === 'tr'
             ? target : target ? target.closest('tr') : undefined);
         if (target && target.tagName.toLowerCase() === 'tr'
-            && isNumber(target['rowIndex'])) {
+            && NumberUtils.isNumber(target['rowIndex'])) {
             rowIdx = target['rowIndex'] as number;
             rowIdx -= 1;
         }
@@ -433,7 +435,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return Row or undefined
      */
     public getRowElement(row: Row): HTMLTableRowElement {
-        if (isNullOrUndefined(row)) {
+        if (ObjectUtils.isNou(row)) {
             return;
         }
 
@@ -484,12 +486,12 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             ? target : targetCell ? targetCell.closest('tr')
                 : target ? target.closest('tr') : undefined);
         if (targetRow && targetRow.tagName.toLowerCase() === 'tr'
-            && isNumber(targetRow['rowIndex'])) {
+            && NumberUtils.isNumber(targetRow['rowIndex'])) {
             rowIndex = targetRow['rowIndex'] as number;
             rowIndex -= 1;
         }
         if (targetCell && targetCell.tagName.toLowerCase() === 'td'
-            && isNumber(targetCell['cellIndex'])) {
+            && NumberUtils.isNumber(targetCell['cellIndex'])) {
             cellIndex = targetCell['cellIndex'] as number;
         }
         return (rowIndex >= 0 && cellIndex >= 0 ? this.getCellByIndex(rowIndex, cellIndex) : undefined);
@@ -1476,7 +1478,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                         }
                         column['title'] = this.translate(column['title:key' || '']);
                         if (column['editor'] && column['editor']['config']
-                            && isArray(column['editor']['config']['list'])) {
+                            && ArrayUtils.isArray(column['editor']['config']['list'])) {
                             Array.from(column['editor']['config']['list']).forEach(item => {
                                 if (!item.hasOwnProperty('title:key')) {
                                     item['title:key'] = column['title'];
@@ -1495,24 +1497,25 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     private __detectForTableFooter(): void {
         const settings: any = this.config;
-        const footerSettings: any = (!isNullOrUndefined(settings)
+        const footerSettings: any = (ObjectUtils.isNotNou(settings)
             && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
-        const rowsNumber: number = (!isNullOrUndefined(footerSettings)
-            && footerSettings.hasOwnProperty('rows') && isNumber(footerSettings['rows'])
-            ? parseInt(footerSettings['rows'], 10) : 0);
+        const footerRow: string = <string>(ObjectUtils.isNotNou(footerSettings)
+            && footerSettings.hasOwnProperty('rows') && NumberUtils.isNumber(footerSettings['rows'])
+            ? footerSettings['rows'] : '0');
+        const rowsNumber: number = parseInt(footerRow, 10);
         if (rowsNumber > 0) {
             const innerTable: HTMLTableElement = this.getFirstElementBySelector(
                 AbstractSmartTableComponent.SMART_TABLE_SELETOR,
                 this.getElementRef().nativeElement) as HTMLTableElement;
             // check to delete footer and create new while changing table settings
-            if (!isNullOrUndefined(innerTable)) {
+            if (ObjectUtils.isNotNou(innerTable)) {
                 innerTable.deleteTFoot();
             }
 
             // create new settings
             const innerFooter: HTMLTableSectionElement =
-                (!isNullOrUndefined(innerTable)  ? innerTable.createTFoot() : undefined);
-            if (!isNullOrUndefined(innerFooter)) {
+                (ObjectUtils.isNotNou(innerTable)  ? innerTable.createTFoot() : undefined);
+            if (ObjectUtils.isNotNou(innerFooter)) {
                 this._tableFooterRows = [];
                 for (let i: number = 0; i < rowsNumber; i++) {
                     this._tableFooterRows.push(innerFooter.insertRow(i));
@@ -1529,7 +1532,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return true for valid; else false
      */
     validateRow(row: Row): boolean {
-        if (isNullOrUndefined(row)) {
+        if (ObjectUtils.isNou(row)) {
             return true;
         }
 
@@ -1539,7 +1542,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             if (row.isInEditing && cell.isEditable()) {
                 const componentRef: AbstractCellEditorFormControlComponent =
                     <AbstractCellEditorFormControlComponent>cell['componentRef'];
-                cellValid = (!isNullOrUndefined(componentRef) && componentRef.validate(!componentRef.viewMode));
+                cellValid = (ObjectUtils.isNotNou(componentRef) && componentRef.validate(!componentRef.viewMode));
 
             } else {
                 const validateFn: any = this.getConfigValue('validate');

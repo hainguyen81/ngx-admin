@@ -8,7 +8,7 @@ import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {IWarehouseBatchNo} from '../../../../@core/data/warehouse/warehouse.batch.no';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseBatchNoDbService extends BaseDbService<IWarehouseBatchNo> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -18,7 +18,7 @@ export class WarehouseBatchNoDbService extends BaseDbService<IWarehouseBatchNo> 
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseBatchNoHttpService extends BaseHttpService<IWarehouseBatchNo> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

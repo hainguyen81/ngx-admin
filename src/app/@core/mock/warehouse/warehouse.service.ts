@@ -8,7 +8,7 @@ import {warehouseGenerate} from './mock.storage';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class MockWarehouseStorageService implements IMockService {
 
     constructor(@Inject(WarehouseDbService) private dbService: WarehouseDbService,

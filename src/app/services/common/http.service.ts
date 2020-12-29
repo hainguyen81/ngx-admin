@@ -6,12 +6,12 @@ import {ServiceResponse} from './response.service';
 import {IDbService, IHttpService} from './interface.service';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../../config/log.config';
-import {isArray} from 'util';
 import {Cacheable} from 'ngx-cacheable';
 import {environment} from '../../../environments/environment';
 import JsonUtils from '../../utils/common/json.utils';
 import {IModel} from '../../@core/data/base';
 import {BaseDbService} from './database.service';
+import ArrayUtils from '../../utils/common/array.utils';
 
 /**
  * Abstract HTTP service
@@ -334,9 +334,9 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
             return (observer ? observer.pipe(map((value: T[] | T) => {
                 let tokens: T[];
                 tokens = [];
-                if (!isArray(value) && value) {
+                if (!ArrayUtils.isArray(value) && value) {
                     tokens.push(value as T);
-                } else if (isArray(value)) {
+                } else if (ArrayUtils.isArray(value)) {
                     tokens = tokens.concat(value as T[]);
                 }
                 if (tokens && tokens.length) {

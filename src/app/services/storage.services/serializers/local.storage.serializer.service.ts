@@ -1,15 +1,15 @@
 import {Inject, Injectable} from '@angular/core';
 import {CryptoEncUtf8Service} from '../../../config/crypto.config';
-import {isNullOrUndefined} from 'util';
 import {StorageSerializer} from 'ngx-localstorage';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import EncryptionUtils from '../../../utils/common/encryption.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Local storage serializer/deserializer service
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class DefaultLocalStorageSerializerService implements StorageSerializer {
 
     protected get logger(): NGXLogger {
@@ -32,7 +32,7 @@ export class DefaultLocalStorageSerializerService implements StorageSerializer {
 /**
  * Local storage serializer/deserializer service
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class LocalStorageSerializerService extends DefaultLocalStorageSerializerService {
 
     private _crypto(): any {
@@ -46,7 +46,7 @@ export class LocalStorageSerializerService extends DefaultLocalStorageSerializer
     serialize(value: any): string {
         try {
             const _cryptoInst: any = this._crypto();
-            return (isNullOrUndefined(_cryptoInst)
+            return (ObjectUtils.isNou(_cryptoInst)
             || typeof _cryptoInst['stringify'] !== 'function' ? null
                 : _cryptoInst['stringify']['apply'](this, [value]));
         } catch (e) {
@@ -58,7 +58,7 @@ export class LocalStorageSerializerService extends DefaultLocalStorageSerializer
     deserialize(storedValue: string): any {
         try {
             const _cryptoInst: any = this._crypto();
-            return (isNullOrUndefined(_cryptoInst)
+            return (ObjectUtils.isNou(_cryptoInst)
             || typeof _cryptoInst['parse'] !== 'function' ? null
                 : _cryptoInst['parse']['apply'](this, [storedValue]));
         } catch (e) {

@@ -8,7 +8,7 @@ import {ConnectionService} from 'ng-connection-service';
 import PromiseUtils from '../../utils/common/promise.utils';
 import {IModel} from '../../@core/data/base';
 import {IdGenerators} from '../../config/generator.config';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../utils/common/object.utils';
 
 /**
  * The delegate Promise function type for delete/update delegate function of IndexDb service
@@ -77,7 +77,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
                     reject(errors);
                 });
         } else resolve(0);
-    }
+    };
 
     delete(entity: T): Promise<number> {
         const _this: AbstractDbService<T> = this;
@@ -127,10 +127,11 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
     }
 
     deletePernament(entity: T): Promise<number> {
-        entity[this.getEnityKey()] || throwError(
+        const entityAny: any = ObjectUtils.as<any>(entity);
+        entityAny[this.getEnityKey()] || throwError(
             'Not found entity primary key from property {' + this.getEnityKey() + '}');
         return new Promise((resolve, reject) => {
-            this.getDbService().delete(this.getDbStore(), entity[this.getEnityKey()])
+            this.getDbService().delete(this.getDbStore(), entityAny[this.getEnityKey()])
                 .then((affected) => resolve(affected), (errors) => {
                     this.getLogger().error(errors);
                     reject(errors);
@@ -316,14 +317,14 @@ export abstract class BaseDbService<T extends IModel> extends AbstractBaseDbServ
             args[0].deletedAt = (new Date()).getTime();
             this.updateExecutor.apply(this, [resolve, reject, ...args]);
         } else resolve(0);
-    }
+    };
 
     saveEntities(entities: T[]): Promise<number> {
         const insertedEntities: T[] = [];
         const updatedEntities: T[] = [];
         (entities || []).forEach(entity => {
             entity.id = (entity.id || IdGenerators.oid.generate());
-            if (isNullOrUndefined(entity['uid'])) {
+            if (ObjectUtils.isNou(ObjectUtils.as<any>(entity)['uid'])) {
                 entity.createdAt = (new Date()).getTime();
                 insertedEntities.push(entity);
             } else {

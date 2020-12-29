@@ -70,7 +70,7 @@ export class ImageGalleryFormFieldComponent extends AbstractFieldType
 
     ngOnInit(): void {
         if (this.field) {
-            this.formControl && this.formControl.patchValue(value => {
+            this.formControl && this.formControl.patchValue((value: any) => {
                 this.value = (Array.isArray(value) ? value as string[] : value ? [value] : []);
             });
             if (!this.formControl) {

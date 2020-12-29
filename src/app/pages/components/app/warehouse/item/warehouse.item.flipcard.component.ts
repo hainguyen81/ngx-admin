@@ -123,7 +123,7 @@ export class WarehouseItemFlipcardComponent
     protected onNewData($event: IEvent): void {
         this.selectedModel = new WarehouseItem(IdGenerators.oid.generate(), null, null);
         this.selectedModel.status = Object.keys(CommonConstants.COMMON.STATUS)
-            .find(key => CommonConstants.COMMON.STATUS[key] === CommonConstants.COMMON.STATUS.ACTIVATED);
+            .find(key => ObjectUtils.any(CommonConstants.COMMON.STATUS)[key] === CommonConstants.COMMON.STATUS.ACTIVATED);
         this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
     }
 

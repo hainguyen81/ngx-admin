@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {IWarehouseAdjust} from '../../../../@core/data/warehouse/warehouse.adjust';
 import {WarehouseAdjustDbService, WarehouseAdjustHttpService} from './warehouse.adjust.service';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class WarehouseAdjustDatasource
     extends BaseDataSource<IWarehouseAdjust, WarehouseAdjustHttpService, WarehouseAdjustDbService> {
 

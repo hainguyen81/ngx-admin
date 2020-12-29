@@ -4,7 +4,7 @@ import {throwError} from 'rxjs';
 import {Meta, MetaDefinition, Title} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {isArray} from 'util';
+import ArrayUtils from '../../utils/common/array.utils';
 
 /* page header configuration */
 export interface IPageHeaderConfig {
@@ -31,7 +31,7 @@ export interface IPageHeaderService {
 }
 
 /* page header service */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class PageHeaderService implements IPageHeaderService {
 
     // -------------------------------------------------
@@ -138,7 +138,7 @@ export class PageHeaderService implements IPageHeaderService {
             const finalTitle: string[] = [];
             const title: string | string[] = this.getConfig().title;
             if (translate) {
-                if (isArray(title)) {
+                if (ArrayUtils.isArray(title)) {
                     Array.from(title).forEach(t => {
                         finalTitle.push(translate.instant(t));
                     });

@@ -28,8 +28,8 @@ import {
     ACTION_SAVE,
     IToolbarActionsConfig,
 } from '../../../../config/toolbar.actions.conf';
-import {isNullOrUndefined} from 'util';
 import {throwError} from 'rxjs';
+import ObjectUtils from '../../../../utils/common/object.utils';
 
 export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
     = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
@@ -299,7 +299,7 @@ export class AppTabsetComponent<
      * Apply toolbar actions settings while flipping
      */
     protected doToolbarActionsSettings() {
-        if (isNullOrUndefined(this.getToolbarComponent())) return;
+        if (ObjectUtils.isNou(this.getToolbarComponent())) return;
 
         this.getToolbarComponent().showActions = true;
         const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();

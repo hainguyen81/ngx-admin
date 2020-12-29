@@ -9,8 +9,9 @@ import {ConnectionService} from 'ng-connection-service';
 import {IUser} from '../../../../@core/data/system/user';
 import {Constants as CommonConstants} from '../../../../@core/data/constants/common.constants';
 import STATUS = CommonConstants.COMMON.STATUS;
+import ObjectUtils from '../../../../utils/common/object.utils';
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class UserDbService extends BaseDbService<IUser> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -30,7 +31,7 @@ export class UserDbService extends BaseDbService<IUser> {
 
                 // if new user (invalid user identity)
             } else {
-                this.getDbService().deleteRecord(this.getDbStore(), args[0]['uid'])
+                this.getDbService().deleteRecord(this.getDbStore(), ObjectUtils.as<any>(args[0])['uid'])
                     .then(() => resolve(1), (errors) => {
                         this.getLogger().error('Could not delete data', errors);
                         reject(errors);
@@ -40,7 +41,7 @@ export class UserDbService extends BaseDbService<IUser> {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class UserHttpService extends BaseHttpService<IUser> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

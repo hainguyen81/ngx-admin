@@ -15,9 +15,9 @@ import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
 import {IEvent} from './abstract.component';
-import {isNullOrUndefined} from 'util';
 import HtmlUtils from '../../utils/common/html.utils';
 import {ControlValueAccessor} from '@angular/forms';
+import ObjectUtils from '../../utils/common/object.utils';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
     extends FieldType<F> implements OnDestroy, AfterViewInit, ControlValueAccessor {
@@ -121,7 +121,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         if (this._field) {
             this._field.templateOptions = (this._field.templateOptions || {});
             if (!(<Object>this._field.templateOptions).hasOwnProperty('config')
-                || isNullOrUndefined(this._field.templateOptions['config'])
+                || ObjectUtils.isNou(this._field.templateOptions['config'])
                 || this._field.templateOptions['config'] !== this._config) {
                 this._field.templateOptions['config'] = this._config;
             }
@@ -134,7 +134,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     get valueFormatter(): (value: any) => any {
         let formatter: (value: any) => any = this._valueFormatter;
-        if (isNullOrUndefined(formatter) || typeof formatter !== 'function') {
+        if (ObjectUtils.isNou(formatter) || typeof formatter !== 'function') {
             formatter = this.getConfigValue('valueFormatter');
         }
         return formatter;
@@ -154,7 +154,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     get valueParser(): (value: any) => any {
         let parser: (value: any) => any = this._valueParser;
-        if (isNullOrUndefined(parser) || typeof parser !== 'function') {
+        if (ObjectUtils.isNou(parser) || typeof parser !== 'function') {
             parser = this.getConfigValue('valueParser');
         }
         return parser;
@@ -176,7 +176,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     protected getConfigValue(propertyKey: string, defaultValue?: any | null): any {
         const _config: any = this.config;
         const value: any = (_config || {})[propertyKey];
-        return (isNullOrUndefined(value) ? defaultValue : value);
+        return (ObjectUtils.isNou(value) ? defaultValue : value);
     }
 
     /**
@@ -186,7 +186,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     protected setConfigValue(propertyKey: string, configValue?: any | null): void {
         const _config: any = this.config;
-        if (!isNullOrUndefined(_config)) {
+        if (ObjectUtils.isNotNou(_config)) {
             _config[propertyKey] = configValue;
         }
     }
@@ -209,7 +209,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
             this._field.templateOptions = (this._field.templateOptions || {});
             this._field.templateOptions['componentRef'] = this;
             if ((<Object>this._field.templateOptions).hasOwnProperty('config')
-                && (isNullOrUndefined(this._config) || this._field.templateOptions['config'] !== this.config)) {
+                && (ObjectUtils.isNou(this._config) || this._field.templateOptions['config'] !== this.config)) {
                 this.config = this._field.templateOptions['config'];
             }
             if (this._field.formControl) {
@@ -303,7 +303,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     set value(_value: any) {
         const parsedValue: any = this.parseValue(_value);
-        if (!isNullOrUndefined(this._field) && !isNullOrUndefined(this.formControl) && super.value !== parsedValue) {
+        if (ObjectUtils.isNotNou(this._field) && ObjectUtils.isNotNou(this.formControl) && super.value !== parsedValue) {
             super.value = parsedValue;
 
         } else if (this.__internalValue !== parsedValue) {
@@ -448,7 +448,7 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
      */
     protected formatValue(value: any): any {
         const formatter: (value: any) => any = this.valueFormatter;
-        return (isNullOrUndefined(formatter) || typeof formatter !== 'function'
+        return (ObjectUtils.isNou(formatter) || typeof formatter !== 'function'
             ? value : formatter.apply(this, [value]));
     }
 
@@ -460,12 +460,12 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         let retValue: any;
         retValue = value;
         const parser: (value: any) => any = this.valueParser;
-        if ((isNullOrUndefined(parser) || typeof parser !== 'function') && this.field) {
+        if ((ObjectUtils.isNou(parser) || typeof parser !== 'function') && this.field) {
             for (const _parser of (this.field.parsers || [])) {
                 retValue = _parser.apply(this, [retValue]);
             }
 
-        } else if (!isNullOrUndefined(parser) && typeof parser === 'function') {
+        } else if (ObjectUtils.isNotNou(parser) && typeof parser === 'function') {
             retValue = parser.apply(this, [retValue]);
         }
         return retValue;

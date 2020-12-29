@@ -26,7 +26,7 @@ import {
     WarehouseInventoryDetailDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import {isNullOrUndefined} from 'util';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -88,7 +88,7 @@ export class WarehouseInventoryDetailPanelComponent
     set dataModel(_dataModel: IWarehouseInventory) {
         this._dataModel = _dataModel;
         this.mainForm && this.mainForm.setModel(this._dataModel);
-        if (!isNullOrUndefined(this.detailTable)) {
+        if (ObjectUtils.isNotNou(this.detailTable)) {
             this.detailTable.model = this._dataModel;
         }
     }
@@ -98,7 +98,7 @@ export class WarehouseInventoryDetailPanelComponent
      * @return the {IWarehouseInventoryDetail} data array
      */
     get oldDataModelDetail(): IWarehouseInventoryDetail[] {
-        if (isNullOrUndefined(this.detailTable)) {
+        if (ObjectUtils.isNou(this.detailTable)) {
             return [];
         }
         return this.detailTable.details || [];
@@ -110,7 +110,7 @@ export class WarehouseInventoryDetailPanelComponent
      */
     get dataModelDetail(): IWarehouseInventoryDetail[] {
         const detailData: IWarehouseInventoryDetail[] = [];
-        if (isNullOrUndefined(this.detailTable)) {
+        if (ObjectUtils.isNou(this.detailTable)) {
             return detailData;
         }
         (this.detailTable.rows || []).forEach(row => {

@@ -24,10 +24,11 @@ import {
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
 import {throwError} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {isArray, isNullOrUndefined} from 'util';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import ObjectUtils from '../../../../../utils/common/object.utils';
+import ArrayUtils from '../../../../../utils/common/array.utils';
 
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {
@@ -51,7 +52,9 @@ export const GeneralSettingsTableSettings = {
             editable: false,
             editor: {
                 type: 'list',
-                config: {list: []},
+                config: {
+                    list: <any[]>[]
+                },
             },
         },
         code: {
@@ -180,7 +183,7 @@ export class GeneralSettingsSmartTableComponent
 
         const settings: any = this.config;
         settings['columns']['module_code']['valuePrepareFunction'] =
-            value => this.translateModuleColumn(settings, value);
+            (value?: string | null) => this.translateModuleColumn(settings, value);
         settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);
         SystemDataUtils.invokeAllModelsAsTableSelectOptions(
             this.moduleDatasource, this.getTranslateService()).then(
@@ -197,7 +200,7 @@ export class GeneralSettingsSmartTableComponent
     private translateModuleColumn(settings: any, value?: string | null): string {
         const options: { value: string, label: string, title: string }[] =
             settings['columns']['module_code']['editor']['config']['list'];
-        if (!isNullOrUndefined(options) && isArray(options)) {
+        if (ObjectUtils.isNotNou(options) && ArrayUtils.isArray(options)) {
             for (const option of options) {
                 if (option.value === value) {
                     return option.label;

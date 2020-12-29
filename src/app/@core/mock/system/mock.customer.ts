@@ -16,7 +16,7 @@ export const MockCustomerTemplate: ICustomer = {
     email: 'customer1@hsg.com',
     tel: '0916191819',
     address: 'Tan Binh',
-    status: Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED),
+    status: Object.keys(STATUS).find(key => ObjectUtils.requireValue(STATUS, key) === STATUS.ACTIVATED),
 };
 
 export function customersGenerate(): ICustomer[] {
@@ -30,9 +30,9 @@ export function customersGenerate(): ICustomer[] {
         mockCustomer.name = 'Customer '.concat((i + 1).toString());
         mockCustomer.email = 'customer'.concat((i + 1).toString(), '@hsg.com');
         mockCustomer.type = Object.keys(CUSTOMER_TYPE)
-            .find(key => CUSTOMER_TYPE[key] === CUSTOMER_TYPE.CUSTOMER);
+            .find(key => ObjectUtils.requireValue(CUSTOMER_TYPE, key) === CUSTOMER_TYPE.CUSTOMER);
         mockCustomer.level = Object.keys(CUSTOMER_LEVEL)
-            .find(key => CUSTOMER_LEVEL[key] === CUSTOMER_LEVEL.NEW);
+            .find(key => ObjectUtils.requireValue(CUSTOMER_LEVEL, key) === CUSTOMER_LEVEL.NEW);
         mockCustomers.push(mockCustomer);
     }
     return mockCustomers;

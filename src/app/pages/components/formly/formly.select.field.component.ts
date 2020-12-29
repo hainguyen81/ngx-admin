@@ -14,11 +14,12 @@ import {
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/common/component.utils';
-import {isArray, isNullOrUndefined} from 'util';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable} from 'rxjs';
 import {NgxSelectComponent} from '../select/select.component';
 import {NgOption} from '@ng-select/ng-select';
+import ObjectUtils from '../../../utils/common/object.utils';
+import ArrayUtils from '../../../utils/common/array.utils';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -99,7 +100,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
 
     get valueFormatter(): (value: any) => any {
         return value => {
-            if (isNullOrUndefined(this.selectComponent)) {
+            if (ObjectUtils.isNou(this.selectComponent)) {
                 return value;
             }
             return this.selectComponent.findItems(value);
@@ -108,21 +109,21 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
 
     get valueParser(): (value: any) => any {
         return value => {
-            if (isNullOrUndefined(this.selectComponent)) {
+            if (ObjectUtils.isNou(this.selectComponent)) {
                 return value;
             }
 
             // check if multiple selection
-            const values: any[] = (isArray(value) ? Array.from(value)
-                : !isNullOrUndefined(value) ? Array.of(value) : []);
+            const values: any[] = (ArrayUtils.isArray(value) ? Array.from(value)
+                : ObjectUtils.isNotNou(value) ? Array.of(value) : []);
             const parsedValues: any[] = [];
-            const rawValues: any[] = (isArray(value)
-                ? Array.from(value) : !isNullOrUndefined(value) ? [value] : []);
+            const rawValues: any[] = (ArrayUtils.isArray(value)
+                ? Array.from(value) : ObjectUtils.isNotNou(value) ? [value] : []);
             const mutiple: boolean = this.getConfigValue('multiple', false);
             rawValues.forEach(rawValue => {
                 const parsedValue: any = this.selectComponent.getBindValue(rawValue);
                 parsedValue && parsedValues.push(parsedValue);
-                isNullOrUndefined(parsedValue) && parsedValues.push(rawValue);
+                ObjectUtils.isNou(parsedValue) && parsedValues.push(rawValue);
             });
             return (mutiple ? parsedValues : parsedValues.length ? parsedValues[0] : value);
         };
@@ -174,7 +175,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             // query component
             this.ngxSelectComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectComponent, component => {
-                    if (!isNullOrUndefined(component)) {
+                    if (ObjectUtils.isNotNou(component)) {
                         component.open.subscribe(e => {
                             if (this.field) this.field.focus = true;
                         });
@@ -203,7 +204,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
             this.field.className = [(this.field.className || ''),
                 'form-field form-ngx-select'].join(' ').trim();
             if (this.field.templateOptions
-                && isArray(this.field.templateOptions.options)) {
+                && ArrayUtils.isArray(this.field.templateOptions.options)) {
                 this.items = this.field.templateOptions.options as any[];
 
             } else if (this.field.templateOptions
@@ -255,7 +256,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
     }
 
     public findItems(values: any[]): NgOption[] {
-        if (isNullOrUndefined(this.selectComponent)) {
+        if (ObjectUtils.isNou(this.selectComponent)) {
             return [];
         }
         return this.selectComponent.findItems(values);
@@ -266,9 +267,9 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      * @param _value to apply
      */
     public setSelectedValue(_value: any) {
-        if (!isNullOrUndefined(this.selectComponent)) {
+        if (ObjectUtils.isNotNou(this.selectComponent)) {
             this.selectComponent.selectedValues =
-                (isArray(_value) ? _value : !isNullOrUndefined(_value) ? [_value] : undefined);
+                (ArrayUtils.isArray(_value) ? _value : ObjectUtils.isNotNou(_value) ? [_value] : undefined);
         }
     }
 
@@ -277,7 +278,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
      * @param values to disable
      */
     public setDisabledValues(values: any[]): void {
-        if (isNullOrUndefined(this.selectComponent) || !(this.items || []).length) return;
+        if (ObjectUtils.isNou(this.selectComponent) || !(this.items || []).length) return;
         this.selectComponent.setDisabledItemsByValues(values);
     }
 }

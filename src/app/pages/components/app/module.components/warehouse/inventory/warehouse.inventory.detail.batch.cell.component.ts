@@ -19,7 +19,6 @@ import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/common/component.utils';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {IEvent} from '../../../../abstract.component';
-import {isNullOrUndefined, isNumber} from 'util';
 import {
     WarehouseBatchNoFormlySelectFieldComponent,
 } from '../batchno/warehouse.batch.select.field.component';
@@ -33,6 +32,8 @@ import {MatInput} from '@angular/material/input';
 import {
     WarehouseBatchNoDatasource,
 } from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import ObjectUtils from '../../../../../../utils/common/object.utils';
+import NumberUtils from '../../../../../../utils/common/number.utils';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -174,9 +175,9 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             (0 <= dataIndex && dataIndex < batches.length ? batches[dataIndex] : undefined);
         const selBatch: IWarehouseBatchNo = $event.data as IWarehouseBatchNo;
         batch.batch = selBatch;
-        batch.batch_id = (isNullOrUndefined(selBatch) ? undefined : selBatch.id);
-        batch.batch_code = (isNullOrUndefined(selBatch) ? undefined : selBatch.code);
-        batch.batch_name = (isNullOrUndefined(selBatch) ? undefined : selBatch.name);
+        batch.batch_id = (ObjectUtils.isNou(selBatch) ? undefined : selBatch.id);
+        batch.batch_code = (ObjectUtils.isNou(selBatch) ? undefined : selBatch.code);
+        batch.batch_name = (ObjectUtils.isNou(selBatch) ? undefined : selBatch.name);
         this.fireCellChanged({ data: batch });
     }
 
@@ -204,14 +205,14 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
-            component.onLoad.subscribe(e => {
+            component.onLoad.subscribe((e: any) => {
                 const batches: IWarehouseInventoryDetailBatch[] =
                     this.cellValue as IWarehouseInventoryDetailBatch[];
                 const batch: IWarehouseInventoryDetailBatch = batches[dataIndex];
-                if (!isNullOrUndefined(batch)) {
+                if (ObjectUtils.isNotNou(batch)) {
                     component.setSelectedValue(batch.batch_code);
                     inputComponent.value =
-                        (isNumber(batch.quantity) ? batch.quantity.toString() : undefined);
+                        (NumberUtils.isNumber(batch.quantity) ? batch.quantity.toString() : undefined);
                 }
             });
         }
@@ -229,7 +230,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         // detect for master items
         this._warehouseBatches = [];
         (batches || []).forEach(batch => {
-            batch['text'] = [batch.exp_date, ' - ', batch.name, ' (', batch.code, ')'].join('');
+            ObjectUtils.any(batch)['text'] = [batch.exp_date, ' - ', batch.name, ' (', batch.code, ')'].join('');
             this._warehouseBatches.push(batch);
         });
 
@@ -251,7 +252,7 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
             const batch: IWarehouseBatchNo = (batches || []).find(b => {
                 return (b.code === detailBatch.batch_code);
             });
-            if (!isNullOrUndefined(batch)) {
+            if (ObjectUtils.isNotNou(batch)) {
                 detailBatch.batch = batch;
                 detailBatch.viewBatch = [detailBatch.batch_name, ' (', detailBatch.batch_code, ')'].join('');
                 this._warehouseDetailBatches.push(detailBatch);

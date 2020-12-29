@@ -1,7 +1,9 @@
 import './prototypes.import';
 import {
     APP_BOOTSTRAP_LISTENER,
-    APP_INITIALIZER, ApplicationRef, ComponentFactoryResolver,
+    APP_INITIALIZER,
+    ApplicationRef,
+    ComponentFactoryResolver,
     ComponentRef,
     ErrorHandler,
     InjectionToken,
@@ -17,7 +19,7 @@ import {
 } from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
-import {NB_AUTH_INTERCEPTOR_HEADER, NB_AUTH_STRATEGIES, NbAuthService} from '@nebular/auth';
+import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EmptyService} from '../services/common/empty.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
@@ -163,7 +165,9 @@ import {
     WarehouseBatchNoDatasource,
 } from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {InjectionService} from '../services/common/injection.service';
-import {WarehouseManagementDbService, WarehouseManagementHttpService} from '../services/implementation/warehouse/warehouse.management/warehouse.management.service';
+import {
+    WarehouseManagementDbService,
+    WarehouseManagementHttpService} from '../services/implementation/warehouse/warehouse.management/warehouse.management.service';
 import {WarehouseManagementDatasource} from '../services/implementation/warehouse/warehouse.management/warehouse.management.datasource';
 import {WorkerProviders} from './worker.providers';
 import {

@@ -8,7 +8,7 @@ import {ConnectionService} from 'ng-connection-service';
 /**
  * Example empty IndexDb service
  */
-@Injectable()
+@Injectable({ providedIn: 'any' })
 export class EmptyService extends BaseDbService<any> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -23,13 +23,13 @@ export class EmptyService extends BaseDbService<any> {
                       reject: (reason?: any) => void, ...args: any[]) => {
         super.getLogger().debug('Call delete entity....');
         resolve(0);
-    }
+    };
 
     updateExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,
                       reject: (reason?: any) => void, ...args: any[]) => {
         super.getLogger().debug('Call insert entity....');
         resolve(0);
-    }
+    };
 
     update(entity: any): Promise<number> {
         return new Promise((resolve) => {

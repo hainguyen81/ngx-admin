@@ -30,12 +30,12 @@ export function generalSystemSettingsStatusGenerate(): IGeneralSettings[] {
     // -------------------------------------------------
     // STATUS
     // -------------------------------------------------
-    Object.keys(STATUS).forEach(k => {
+    Object.entries(STATUS).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.STATUS.code;
         systemSetting.name = k;
-        systemSetting.value = STATUS[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
@@ -54,12 +54,12 @@ export function generalSystemSettingsCustomerGenerate(): IGeneralSettings[] {
     // -------------------------------------------------
     // CUSTOMER_LEVEL
     // -------------------------------------------------
-    Object.keys(CUSTOMER_LEVEL).forEach(k => {
+    Object.entries(CUSTOMER_LEVEL).forEach(([k , v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.CUSTOMER_LEVEL.code;
         systemSetting.name = k;
-        systemSetting.value = CUSTOMER_LEVEL[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
@@ -70,12 +70,12 @@ export function generalSystemSettingsCustomerGenerate(): IGeneralSettings[] {
     // -------------------------------------------------
     // CUSTOMER_LEVEL
     // -------------------------------------------------
-    Object.keys(CUSTOMER_TYPE).forEach(k => {
+    Object.entries(CUSTOMER_TYPE).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.CUSTOMER_TYPE.code;
         systemSetting.name = k;
-        systemSetting.value = CUSTOMER_TYPE[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
@@ -93,12 +93,12 @@ export function generalSystemSettingsOrganizationGenerate(): IGeneralSettings[] 
     // -------------------------------------------------
     // ORGANIZATION_TYPE
     // -------------------------------------------------
-    Object.keys(ORGANIZATION_TYPE).forEach(k => {
+    Object.entries(ORGANIZATION_TYPE).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.ORGANIZATION_TYPE.code;
         systemSetting.name = k;
-        systemSetting.value = ORGANIZATION_TYPE[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
@@ -117,12 +117,12 @@ export function generalSystemSettingsCurrencyGenerate(): IGeneralSettings[] {
     // -------------------------------------------------
     // CURRENCY
     // -------------------------------------------------
-    Object.keys(CURRENCY).forEach(k => {
+    Object.entries(CURRENCY).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.CURRENCY.code;
         systemSetting.name = k;
-        systemSetting.value = CURRENCY[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleSystem.id;
         systemSetting.module_code = MockModuleSystem.code;
         systemSetting.module = MockModuleSystem;
@@ -141,12 +141,12 @@ export function generalWarehouseSettingsSettingsTypeGenerate(): IGeneralSettings
     // -------------------------------------------------
     // WAREHOUSE_SETTINGS_TYPE
     // -------------------------------------------------
-    Object.keys(WAREHOUSE_SETTINGS_TYPE).forEach(k => {
+    Object.entries(WAREHOUSE_SETTINGS_TYPE).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_SETTINGS_TYPE.code;
         systemSetting.name = k;
-        systemSetting.value = WAREHOUSE_SETTINGS_TYPE[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleWarehouse.id;
         systemSetting.module_code = MockModuleWarehouse.code;
         systemSetting.module = MockModuleWarehouse;
@@ -165,12 +165,12 @@ export function generalWarehouseSettingsCategoryGenerate(): IGeneralSettings[] {
     // -------------------------------------------------
     // CATEGORY_TYPE
     // -------------------------------------------------
-    Object.keys(CATEGORY_TYPE).forEach(k => {
+    Object.entries(CATEGORY_TYPE).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_CATEGORY_TYPE.code;
         systemSetting.name = k;
-        systemSetting.value = CATEGORY_TYPE[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleWarehouse.id;
         systemSetting.module_code = MockModuleWarehouse.code;
         systemSetting.module = MockModuleWarehouse;
@@ -189,12 +189,12 @@ export function generalWarehouseSettingsStorageGenerate(): IGeneralSettings[] {
     // -------------------------------------------------
     // STORAGE_TYPE
     // -------------------------------------------------
-    Object.keys(STORAGE_TYPE).forEach(k => {
+    Object.entries(STORAGE_TYPE).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_STORAGE_TYPE.code;
         systemSetting.name = k;
-        systemSetting.value = STORAGE_TYPE[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleWarehouse.id;
         systemSetting.module_code = MockModuleWarehouse.code;
         systemSetting.module = MockModuleWarehouse;
@@ -213,12 +213,12 @@ export function generalWarehouseSettingsInventoryGenerate(): IGeneralSettings[] 
     // -------------------------------------------------
     // WAREHOUSE_SETTINGS_TYPE
     // -------------------------------------------------
-    Object.keys(WAREHOUSE_INVENTORY_TYPE).forEach(k => {
+    Object.entries(WAREHOUSE_INVENTORY_TYPE).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_INVENTORY_TYPE.code;
         systemSetting.name = k;
-        systemSetting.value = WAREHOUSE_INVENTORY_TYPE[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleWarehouse.id;
         systemSetting.module_code = MockModuleWarehouse.code;
         systemSetting.module = MockModuleWarehouse;
@@ -229,12 +229,12 @@ export function generalWarehouseSettingsInventoryGenerate(): IGeneralSettings[] 
     // -------------------------------------------------
     // WAREHOUSE_INVENTORY_STATUS
     // -------------------------------------------------
-    Object.keys(WAREHOUSE_INVENTORY_STATUS).forEach(k => {
+    Object.entries(WAREHOUSE_INVENTORY_STATUS).forEach(([k, v]) => {
         systemSetting = new GeneralSettings(null, null, null, null);
         systemSetting.id = IdGenerators.oid.generate();
         systemSetting.code = BUILTIN_CODES.WAREHOUSE_INVENTORY_STATUS.code;
         systemSetting.name = k;
-        systemSetting.value = WAREHOUSE_INVENTORY_STATUS[k];
+        systemSetting.value = v;
         systemSetting.module_id = MockModuleWarehouse.id;
         systemSetting.module_code = MockModuleWarehouse.code;
         systemSetting.module = MockModuleWarehouse;

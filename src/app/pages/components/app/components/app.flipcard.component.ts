@@ -22,7 +22,6 @@ import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
 import {throwError} from 'rxjs';
-import {isNullOrUndefined} from 'util';
 import {
     ACTION_BACK,
     ACTION_DELETE,
@@ -35,6 +34,7 @@ import {
 } from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import ObjectUtils from '../../../../utils/common/object.utils';
 
 export const APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the flip-pane');
@@ -340,7 +340,7 @@ export class AppFlipcardComponent<D extends DataSource,
      * Apply toolbar actions settings while flipping
      */
     protected doToolbarActionsSettingsOnFlipped() {
-        if (isNullOrUndefined(this.toolbarComponent)) return;
+        if (ObjectUtils.isNou(this.toolbarComponent)) return;
 
         this.toolbarComponent.showActions = true;
         const actions: IToolbarActionsConfig[] = this.toolbarComponent.getActions();

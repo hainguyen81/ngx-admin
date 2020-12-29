@@ -18,8 +18,7 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {BaseDataSource} from '../../../../../services/common/datasource.service';
 import {Observable, throwError} from 'rxjs';
-import {isNullOrUndefined} from 'util';
-import {INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /**
  * Custom module data formly field for selecting special
@@ -105,16 +104,16 @@ export class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
     protected loadData(): Observable<M[] | M> | Promise<M[] | M> | M[] | M {
         const optionBuilder: { [key: string]: (model: M) => string | string[] | M } | null = this.optionBuilder;
         const useFilter: boolean = this.useDataFilter;
-        const needToFilter: boolean = ((this.dataIndexName || '').length && !isNullOrUndefined(this.dataIndexKey));
+        const needToFilter: boolean = ((this.dataIndexName || '').length && ObjectUtils.isNotNou(this.dataIndexKey));
         if (useFilter && !needToFilter) {
-            if (isNullOrUndefined(this.noneOption)) {
+            if (ObjectUtils.isNou(this.noneOption)) {
                 return undefined;
             } else {
                 return [this.noneOption];
             }
 
         } else if (!useFilter && !needToFilter) {
-            if (!isNullOrUndefined(optionBuilder)) {
+            if (ObjectUtils.isNotNou(optionBuilder)) {
                 return SystemDataUtils.invokeAllModelsAsSelectOptions(
                     this.dataSource, this.translateService, optionBuilder);
 
@@ -124,7 +123,7 @@ export class AppModuleDataIndexSettingsFormlySelectExFieldComponent<
             }
 
         } else if (useFilter && needToFilter) {
-            if (!isNullOrUndefined(optionBuilder)) {
+            if (ObjectUtils.isNotNou(optionBuilder)) {
                 return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
                     this.dataSource,
                     this.dataIndexName, this.dataIndexKey,

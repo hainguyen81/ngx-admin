@@ -21,7 +21,6 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl} from '@angular/forms';
 import moment, {Moment} from 'moment';
-import {isNullOrUndefined} from 'util';
 import {
     AppFormlyDatePickerFieldComponent,
 } from '../../components/common/app.formly.datepicker.field.component';
@@ -30,6 +29,7 @@ import WarehouseInventorySearch, {
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
 import {LocalDataSource} from 'ng2-smart-table';
 import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* default warehouse in/out search formly config */
 export const WarehouseInventorySearchFormConfig: FormlyConfig = new FormlyConfig();
@@ -67,11 +67,11 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
                 validators: {
                     'must_less_equals_to_date': {
                         expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = ObjectUtils.any(formControl)['componentRef'];
                             const model: IWarehouseInventorySearch = formControl.root.value;
 
                             // if data is invalid; then always be valid
-                            if (isNullOrUndefined(fieldComponent)
+                            if (ObjectUtils.isNou(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
                                 || !(model.to || '').length) {
                                 return true;
@@ -79,7 +79,7 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
 
                             const from_date: Moment = fieldComponent.value;
                             const to_value: Moment = moment(model.to, fieldComponent.dateTimePattern);
-                            const valid: boolean = (isNullOrUndefined(from_date)
+                            const valid: boolean = (ObjectUtils.isNou(from_date)
                                 || from_date.isSameOrBefore(to_value, 'd'));
                             if (valid && field.form && field.form.controls
                                 && field.form.controls.hasOwnProperty('to')
@@ -112,11 +112,11 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
                 validators: {
                     'must_greater_equals_from_date': {
                         expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = ObjectUtils.any(formControl)['componentRef'];
                             const model: IWarehouseInventorySearch = formControl.root.value;
 
                             // if data is invalid; then always be valid
-                            if (isNullOrUndefined(fieldComponent)
+                            if (ObjectUtils.isNou(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
                                 || !(model.from || '').length) {
                                 return true;
@@ -124,7 +124,7 @@ export const WarehouseInventorySearchFormFieldsConfig: FormlyFieldConfig[] = [
 
                             const to_date: Moment = fieldComponent.value;
                             const from_value: Moment = moment(model.from, fieldComponent.dateTimePattern);
-                            const valid: boolean = (isNullOrUndefined(to_date)
+                            const valid: boolean = (ObjectUtils.isNou(to_date)
                                 || to_date.isSameOrAfter(from_value, 'd'));
                             if (valid && field.form && field.form.controls
                                 && field.form.controls.hasOwnProperty('from')

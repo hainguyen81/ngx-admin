@@ -13,8 +13,10 @@ export const MockCategoryTemplate: IWarehouseCategory = {
     id: 'id',
     code: 'Code',
     name: 'Name',
-    type: Object.keys(CATEGORY_TYPE).find(key => CATEGORY_TYPE[key] === CATEGORY_TYPE.CATEGORY),
-    status: Object.keys(STATUS).find(key => STATUS[key] === STATUS.ACTIVATED),
+    type: Object.keys(CATEGORY_TYPE).find(
+        key => ObjectUtils.requireValue(CATEGORY_TYPE, key) === CATEGORY_TYPE.CATEGORY),
+    status: Object.keys(STATUS).find(
+        key => ObjectUtils.requireValue(STATUS, key) === STATUS.ACTIVATED),
 };
 
 export function categoryGenerate(): IWarehouseCategory[] {

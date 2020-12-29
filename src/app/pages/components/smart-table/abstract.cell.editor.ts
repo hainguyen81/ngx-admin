@@ -14,11 +14,11 @@ import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, of} from 'rxjs';
 import {IEvent} from '../abstract.component';
 import {Column} from 'ng2-smart-table/lib/data-set/column';
-import {isNullOrUndefined} from 'util';
 import PromiseUtils from '../../../utils/common/promise.utils';
 import {isPromise} from 'rxjs/internal-compatibility';
 import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
 import {BaseCellEditorFormControlComponent} from './base.cell.editor.form.control.component';
+import ObjectUtils from '../../../utils/common/object.utils';
 
 /**
  * Customization smart table cell editor/render component
@@ -43,7 +43,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      */
     get valueFormatter(): (value: any) => any {
         let formatter: (value: any) => any = this._valueFormatter;
-        if (isNullOrUndefined(formatter) || typeof formatter !== 'function') {
+        if (ObjectUtils.isNou(formatter) || typeof formatter !== 'function') {
             formatter = this.getConfigValue('valueFormatter');
         }
         return formatter;
@@ -63,7 +63,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      */
     get valueParser(): (value: any) => any {
         let parser: (value: any) => any = this._valueParser;
-        if (isNullOrUndefined(parser) || typeof parser !== 'function') {
+        if (ObjectUtils.isNou(parser) || typeof parser !== 'function') {
             parser = this.getConfigValue('valueParser');
         }
         return parser;
@@ -143,7 +143,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
      */
     protected formatValue(value: any): any {
         const formatter: (value: any) => any = this.valueFormatter;
-        return (isNullOrUndefined(formatter) || typeof formatter !== 'function'
+        return (ObjectUtils.isNou(formatter) || typeof formatter !== 'function'
             ? value : formatter.apply(this, [value]));
     }
 
@@ -155,11 +155,11 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
         let retValue: any = value;
         const __valPrepareFunc: (value: any) => any = this.getConfigValue('valuePrepareFunction');
         const parser: (value: any) => any = this.valueParser;
-        if ((isNullOrUndefined(parser) || typeof parser !== 'function')
-            && !isNullOrUndefined(__valPrepareFunc) && typeof __valPrepareFunc === 'function') {
+        if ((ObjectUtils.isNou(parser) || typeof parser !== 'function')
+            && ObjectUtils.isNotNou(__valPrepareFunc) && typeof __valPrepareFunc === 'function') {
             retValue = __valPrepareFunc.apply(this, [retValue]);
 
-        } else if (!isNullOrUndefined(parser) && typeof parser === 'function') {
+        } else if (ObjectUtils.isNotNou(parser) && typeof parser === 'function') {
             retValue = parser.apply(this, [retValue]);
         }
         return retValue;
@@ -235,7 +235,7 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
                 row: this.cellRow,
             } };
         const cellChangedListener: ((e: IEvent) => void) = this.cellChangedListener();
-        if (!isNullOrUndefined(cellChangedListener)) {
+        if (ObjectUtils.isNotNou(cellChangedListener)) {
             cellChangedListener.apply(this, [firedEvent]);
         }
         this.cellChanged.emit(firedEvent);

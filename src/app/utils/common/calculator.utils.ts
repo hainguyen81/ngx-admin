@@ -1,3 +1,5 @@
+import NumberUtils from './number.utils';
+
 export default class CalculatorUtils {
 
     /**
@@ -6,14 +8,14 @@ export default class CalculatorUtils {
      * @param val2 to calculate
      * @return the sum of the specified values
      */
-    public static plus(val1, val2): number {
-        if (isNaN(val1) && isNaN(val2)) {
+    public static plus(val1: any, val2: any): number {
+        if (!NumberUtils.isNumber(val1) && !NumberUtils.isNumber(val2)) {
             return undefined;
 
-        } else if (isNaN(val1) && !isNaN(val2)) {
+        } else if (!NumberUtils.isNumber(val1) && NumberUtils.isNumber(val2)) {
             return parseFloat(val2);
 
-        } else if (!isNaN(val1) && isNaN(val2)) {
+        } else if (NumberUtils.isNumber(val1) && !NumberUtils.isNumber(val2)) {
             return parseFloat(val1);
         }
         return parseFloat(val1) + parseFloat(val2);
@@ -35,13 +37,13 @@ export default class CalculatorUtils {
      * @return the multiplied value of the specified values
      */
     public static multiply(val1, val2): number {
-        if (isNaN(val1) && isNaN(val2)) {
+        if (!NumberUtils.isNumber(val1) && !NumberUtils.isNumber(val2)) {
             return undefined;
 
-        } else if (isNaN(val1) && !isNaN(val2)) {
+        } else if (!NumberUtils.isNumber(val1) && NumberUtils.isNumber(val2)) {
             return parseFloat(val2);
 
-        } else if (!isNaN(val1) && isNaN(val2)) {
+        } else if (NumberUtils.isNumber(val1) && !NumberUtils.isNumber(val2)) {
             return parseFloat(val1);
         }
         return parseFloat(val1) * parseFloat(val2);
@@ -52,7 +54,7 @@ export default class CalculatorUtils {
      * @param values to calculate
      * @return the multiplied value of the specified values
      */
-    public static multiplyMulti(...values): number {
+    public static multiplyMulti(...values: any[]): number {
         return (values || []).reduce(this.multiply);
     }
 }

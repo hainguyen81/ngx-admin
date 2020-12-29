@@ -28,10 +28,10 @@ import {
     GeneralSettingsDatasource,
 } from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import moment, {Moment} from 'moment';
-import {isNullOrUndefined} from 'util';
 import {
     AppFormlyDatePickerFieldComponent,
 } from '../../components/common/app.formly.datepicker.field.component';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* default warehouse batch no formly config */
 export const WarehouseBatchNoFormConfig: FormlyConfig = new FormlyConfig();
@@ -96,11 +96,11 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                 validators: {
                     'must_less_equals_exp_date': {
                         expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = ObjectUtils.any(formControl)['componentRef'];
                             const model: IWarehouseBatchNo = formControl.root.value;
 
                             // if data is invalid; then always be valid
-                            if (isNullOrUndefined(fieldComponent)
+                            if (ObjectUtils.isNou(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
                                 || !(fieldComponent.value || '').length
                                 || !(model.exp_date || '').length) {
@@ -109,7 +109,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
 
                             const mfg_date: Moment = moment(fieldComponent.value, fieldComponent.dateTimePattern);
                             const exp_value: Moment = moment(model.exp_date, fieldComponent.dateTimePattern);
-                            const valid: boolean = (isNullOrUndefined(mfg_date)
+                            const valid: boolean = (ObjectUtils.isNou(mfg_date)
                                 || mfg_date.isSameOrBefore(exp_value, 'd'));
                             if (valid && field.form && field.form.controls
                                 && field.form.controls.hasOwnProperty('exp_date')
@@ -149,11 +149,11 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
                 validators: {
                     'must_greater_equals_mfg_date': {
                         expression: (formControl: AbstractControl, field: FormlyFieldConfig) => {
-                            const fieldComponent: AppFormlyDatePickerFieldComponent = formControl['componentRef'];
+                            const fieldComponent: AppFormlyDatePickerFieldComponent = ObjectUtils.any(formControl)['componentRef'];
                             const model: IWarehouseBatchNo = formControl.root.value;
 
                             // if data is invalid; then always be valid
-                            if (isNullOrUndefined(fieldComponent)
+                            if (ObjectUtils.isNou(fieldComponent)
                                 || !(fieldComponent.dateTimePattern || '').length
                                 || !(fieldComponent.value || '').length
                                 || !(model.mfg_date || '').length) {
@@ -162,7 +162,7 @@ export const WarehouseBatchNoFormFieldsConfig: FormlyFieldConfig[] = [
 
                             const exp_date: Moment = moment(fieldComponent.value, fieldComponent.dateTimePattern);
                             const mfg_value: Moment = moment(model.mfg_date, fieldComponent.dateTimePattern);
-                            const valid: boolean = (isNullOrUndefined(exp_date)
+                            const valid: boolean = (ObjectUtils.isNou(exp_date)
                                 || exp_date.isSameOrAfter(mfg_value, 'd'));
                             if (valid && field.form && field.form.controls
                                 && field.form.controls.hasOwnProperty('mfg_date')
