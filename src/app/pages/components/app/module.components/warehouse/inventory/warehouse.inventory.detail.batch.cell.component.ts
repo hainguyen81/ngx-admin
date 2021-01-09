@@ -17,7 +17,7 @@ import {NGXLogger} from 'ngx-logger';
 import {Constants} from '../../../../../../@core/data/constants/common.constants';
 import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/common/component.utils';
-import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
 import {IEvent} from '../../../../abstract.component';
 import {
     WarehouseBatchNoFormlySelectFieldComponent,

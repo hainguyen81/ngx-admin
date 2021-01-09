@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {Inject, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 /* angular material modules */
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -20,6 +20,10 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
+import {NbIconLibraries} from '@nebular/theme';
+import {NGXLogger} from 'ngx-logger';
+import {throwIfAlreadyLoaded} from './@core/core.module';
+import {AppConfig} from './config/app.config';
 
 @NgModule({
     imports: [
@@ -71,4 +75,29 @@ import {MatDialogModule} from '@angular/material/dialog';
     ],
 })
 export class AppMaterialModule {
+
+    private readonly moduleInjector: Injector;
+
+    constructor(@Optional() @SkipSelf() parentModule: AppMaterialModule,
+                injector: Injector,
+                iconLibraries: NbIconLibraries,
+                @Inject(NGXLogger) logger: NGXLogger) {
+        // @ts-ignore
+        throwIfAlreadyLoaded(parentModule, 'AppMaterialModule');
+        this.moduleInjector = Injector.create({providers: AppConfig.Providers.All, parent: injector, name: 'AppMaterialModuleInjector'});
+    }
+
+    static forRoot(): ModuleWithProviders<AppMaterialModule> {
+        return {
+            ngModule: AppMaterialModule,
+            providers: AppConfig.Providers.All,
+        };
+    }
+
+    static forChild(): ModuleWithProviders<AppMaterialModule> {
+        return {
+            ngModule: AppMaterialModule,
+            providers: AppConfig.Providers.All,
+        };
+    }
 }

@@ -28,7 +28,7 @@ import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
 import {Cell, DefaultEditor} from 'ng2-smart-table';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
 import {
     WarehouseBatchNoDatasource,

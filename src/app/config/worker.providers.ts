@@ -30,8 +30,8 @@ export const ServiceWorkerRegistrationOptions: SwRegistrationOptions = {
 /**
  * Register service workers with angular application
  */
-export function registerServiceWorkers(): ModuleWithProviders<{}>[] {
-    const serviceWorkers: ModuleWithProviders<{}>[] = [];
+export function registerServiceWorkers(): ModuleWithProviders<ServiceWorkerModule>[] {
+    const serviceWorkers: ModuleWithProviders<ServiceWorkerModule>[] = [];
     Object.keys(ServiceWorkerScripts).forEach(serviceWorkerKey => {
         const serviceWorker: { script: string, controller: ServiceWorker } = ServiceWorkerScripts[serviceWorkerKey];
         serviceWorkers.push(ServiceWorkerModule.register(serviceWorker.script, ServiceWorkerRegistrationOptions));
@@ -39,7 +39,7 @@ export function registerServiceWorkers(): ModuleWithProviders<{}>[] {
     return serviceWorkers;
 }
 
-export const WarehouseServiceWorkers: ModuleWithProviders<{}>[] = [].concat(registerServiceWorkers());
+export const WarehouseServiceWorkers: ModuleWithProviders<ServiceWorkerModule>[] = [].concat(registerServiceWorkers());
 
-export const ServiceWorkerProviders: ModuleWithProviders<{}>[] = []
+export const ServiceWorkerProviders: ModuleWithProviders<ServiceWorkerModule>[] = []
     .concat(WarehouseServiceWorkers);

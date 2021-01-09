@@ -12,8 +12,8 @@ import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Cell} from 'ng2-smart-table';
-import {Column} from 'ng2-smart-table/lib/data-set/column';
-import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {Column} from 'ng2-smart-table/lib/lib/data-set/column';
+import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
 
 /**
  * Smart table checkbox cell component base on {DefaultEditor}

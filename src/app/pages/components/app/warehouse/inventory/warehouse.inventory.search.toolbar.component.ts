@@ -21,7 +21,7 @@ import {
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {IToolbarActionsConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {LocalDataSource} from 'ng2-smart-table';
 
 /* default warehouse inventory search toolbar actions config */

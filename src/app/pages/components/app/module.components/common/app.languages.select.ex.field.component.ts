@@ -12,7 +12,7 @@ import {
     AppModuleDataFormlySelectExFieldComponent,
 } from '../../components/common/app.module.data.formly.select.ex.field.component';
 import BaseModel, {IModel} from '../../../../../@core/data/base';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';

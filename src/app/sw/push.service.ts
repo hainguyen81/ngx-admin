@@ -38,5 +38,5 @@ export abstract class AbstractPushService<T extends IModel> extends BaseHttpServ
             .catch(err => this.getLogger().error('Could not subscribe to notifications', err));
     }
 
-    abstract pushSubscription(subscription: PushSubscription);
+    abstract pushSubscription(subscription: PushSubscription): void;
 }

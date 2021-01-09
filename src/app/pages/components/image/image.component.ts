@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {Lightbox} from 'ngx-lightbox';
 import {AbstractImageGalleryComponent} from './abstract.image.component';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';

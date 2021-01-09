@@ -18,7 +18,7 @@ import {BaseNgxTreeviewComponent} from '../../treeview/base.treeview.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {IModel} from '../../../../@core/data/base';
 import HierarchyUtils from '../../../../utils/common/hierarchy.utils';
 import {ActivatedRoute, Router} from '@angular/router';

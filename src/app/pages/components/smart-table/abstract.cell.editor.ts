@@ -13,10 +13,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, of} from 'rxjs';
 import {IEvent} from '../abstract.component';
-import {Column} from 'ng2-smart-table/lib/data-set/column';
+import {Column} from 'ng2-smart-table/lib/lib/data-set/column';
 import PromiseUtils from '../../../utils/common/promise.utils';
 import {isPromise} from 'rxjs/internal-compatibility';
-import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
 import {BaseCellEditorFormControlComponent} from './base.cell.editor.form.control.component';
 import ObjectUtils from '../../../utils/common/object.utils';
 

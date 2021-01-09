@@ -20,7 +20,7 @@ import {BaseFlipcardComponent} from '../../flipcard/base.flipcard.component';
 import {Lightbox} from 'ngx-lightbox';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {
     ACTION_BACK,

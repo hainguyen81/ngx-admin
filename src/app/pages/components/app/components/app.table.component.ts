@@ -15,8 +15,8 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {TranslateService} from '@ngx-translate/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {IModel} from '../../../../@core/data/base';
 import {
     CONTEXT_MENU_DELETE,

@@ -17,7 +17,7 @@ import {
 } from './app.formly.treeview.dropdown.field.component';
 import {BaseDataSource} from '../../../../../services/common/datasource.service';
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';

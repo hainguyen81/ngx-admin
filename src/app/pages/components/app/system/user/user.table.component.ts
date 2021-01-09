@@ -30,7 +30,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Cell, DefaultEditor} from 'ng2-smart-table';
 import {IUser} from '../../../../../@core/data/system/user';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 
 /* users table settings */
 export const UserTableSettings = {

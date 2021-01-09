@@ -19,12 +19,12 @@ import {IModel} from '../../../../@core/data/base';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {AppSmartTableComponent} from './app.table.component';
 import {AppFlipcardComponent} from './app.flipcard.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {AppToolbarComponent} from './app.toolbar.component';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {ActivatedRoute, Router} from '@angular/router';
 
 export const APP_TABLE_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>

@@ -18,7 +18,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {AppFormlyComponent} from './app.formly.component';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {throwError} from 'rxjs';
 import {AppSplitPaneComponent} from './app.splitpane.component';
 import {ActivatedRoute, Router} from '@angular/router';

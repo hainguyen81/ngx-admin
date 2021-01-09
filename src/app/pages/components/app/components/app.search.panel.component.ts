@@ -8,7 +8,7 @@ import {
     Renderer2, Type,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {AppPanelComponent} from './app.panel.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ContextMenuService} from 'ngx-contextmenu';

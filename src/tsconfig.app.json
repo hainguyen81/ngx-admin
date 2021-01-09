@@ -20,8 +20,15 @@
 		"polyfills.ts"
 	],
 	"include": [
-		"../src/*.ts",
-		"../src/**/*.d.ts",
-		"../node_modules/@nebular/**/*.ts"
+        "../src/*.ts",
+        "../src/**/*.ts",
+        "../node_modules/@nebular/**/*.d.ts",
+        "../node_modules/@nebular/**/*.ts",
+        "../node_modules/@nebular/**/*.d.js",
+        "../node_modules/@nebular/**/*.js",
+        "../node_modules/ng2-smart-table/**/*.d.ts",
+        "../node_modules/ng2-smart-table/**/*.ts",
+        "../node_modules/ng2-smart-table/**/*.d.js",
+        "../node_modules/ng2-smart-table/**/*.js"
 	]
 }

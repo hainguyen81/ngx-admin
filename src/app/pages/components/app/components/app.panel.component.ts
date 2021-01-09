@@ -10,7 +10,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {IModel} from '../../../../@core/data/base';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {AbstractComponent} from '../../abstract.component';
 import {BasePanelComponent} from '../../panel/base.panel.component';
 import {ContextMenuService} from 'ngx-contextmenu';

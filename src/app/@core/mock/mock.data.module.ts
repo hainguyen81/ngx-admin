@@ -120,8 +120,8 @@ export class MockDataModule {
         this.initialization();
     }
 
-    static forRoot(): ModuleWithProviders {
-        return <ModuleWithProviders>{
+    static forRoot(): ModuleWithProviders<MockDataModule> {
+        return <ModuleWithProviders<MockDataModule>>{
             ngModule: MockDataModule,
             providers: MOCK_PROVIDERS,
         };

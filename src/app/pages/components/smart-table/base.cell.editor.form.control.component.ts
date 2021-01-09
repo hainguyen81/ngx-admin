@@ -15,7 +15,7 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 

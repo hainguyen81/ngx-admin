@@ -8,7 +8,6 @@ import {AppMaterialModule} from '../app.material.module';
 // @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
-import {DeviceDetectorModule} from 'ngx-device-detector';
 import {ToastContainerModule, ToastrModule} from 'ngx-toastr';
 import {AlertPopupModule, ConfirmPopupModule, PromptPopupModule} from 'ngx-material-popup';
 import {ModalDialogModule} from 'ngx-modal-dialog';
@@ -33,9 +32,6 @@ import {WarehouseModule} from './components/app/warehouse/warehouse.module';
         ConfirmPopupModule,
         PromptPopupModule,
         ModalDialogModule.forRoot(),
-
-        /* Device Detector */
-        DeviceDetectorModule,
 
         /* Pipes */
         NgPipesModule,

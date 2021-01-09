@@ -1,5 +1,5 @@
 import {AbstractFormlyComponent} from './abstract.formly.component';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {
     ChangeDetectorRef,
     Component,

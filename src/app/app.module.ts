@@ -13,7 +13,7 @@ import {
     ModuleWithProviders,
     NgModule,
     NO_ERRORS_SCHEMA,
-    Optional,
+    Optional, Provider,
     SkipSelf,
 } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
@@ -62,8 +62,6 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {TreeviewModule} from 'ngx-treeview';
 /* Angular material modules */
 import {AppMaterialModule} from './app.material.module';
-/* Device Detector */
-import {DeviceDetectorModule} from 'ngx-device-detector';
 /* Pipes */
 // @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
@@ -87,24 +85,22 @@ import {BarecodeScannerLivestreamModule} from 'ngx-barcode-scanner';
 /* Mock data while application initialization */
 import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
-import {ServiceWorkerProviders} from './config/worker.providers';
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
-import {ServicesInjectionModule} from './services.injection.module';
+import {ServiceWorkerProviders} from './config/worker.providers';
 
 @NgModule({
     imports: [
         ServiceWorkerProviders,
-        ServicesInjectionModule.forRoot(),
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        AppRoutingModule,
+        AppRoutingModule.forRoot(),
 
         /* local storage */
         NgxLocalStorageModule.forRoot(),
 
         /* Angular material modules */
-        AppMaterialModule,
+        AppMaterialModule.forRoot(),
 
         /* Popup, Dialogs */
         AlertPopupModule,
@@ -114,9 +110,6 @@ import {ServicesInjectionModule} from './services.injection.module';
 
         /* Core Module for layout */
         CoreModule.forRoot(),
-
-        /* Device Detector */
-        DeviceDetectorModule.forRoot(),
 
         /* Pipes */
         NgPipesModule,
@@ -208,7 +201,7 @@ import {ServicesInjectionModule} from './services.injection.module';
         BarecodeScannerLivestreamModule,
 
         /* Mock data module */
-        MockDataModule,
+        MockDataModule.forRoot(),
     ],
     declarations: [AppComponent],
     providers: AppConfig.Providers.All,
@@ -239,14 +232,14 @@ export class AppModule {
         registerBrowserServiceWorkers();
     }
 
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<AppModule> {
         return {
             ngModule: AppModule,
             providers: AppConfig.Providers.All,
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<AppModule> {
         return {
             ngModule: AppModule,
             providers: AppConfig.Providers.All,

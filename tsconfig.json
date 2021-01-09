@@ -14,8 +14,10 @@
         "noErrorTruncation": true,
         "declaration": false,
         "moduleResolution": "node",
+        "jsx": "react",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "suppressImplicitAnyIndexErrors": true,
         "pretty": true,
         "target": "es2015",
         "typeRoots": [
@@ -30,15 +32,58 @@
                 "name": "tslint-language-service"
             }
         ],
+        "paths": {
+            "*": [
+                "*",
+                "./src/*",
+                "./node_modules/*"
+            ],
+            "~/*": [
+                "*",
+                "./src/*",
+                "./node_modules/*"
+            ],
+            "@/*": [
+                "*",
+                "./src/*",
+                "./node_modules/*"
+            ],
+            "@node_modules/*": [
+                "./node_modules/*"
+            ],
+            "@app/*": [
+                "./src/*"
+            ]
+        },
+        "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         // TODO true for importing moment
         // TODO to fix [error TS2349: Cannot invoke an expression whose type lacks a call signature.
         // TODO         Type 'typeof moment' has no compatible call signatures.]
         "allowSyntheticDefaultImports": true,
         "alwaysStrict": true,
-        "strictNullChecks": false
+        "strictNullChecks": false,
+        "strictPropertyInitialization": false
     },
     "angularCompilerOptions": {
-        "enableIvy": false
-    }
+        "enableIvy": false,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "annotateForClosureCompiler": false,
+        "strictMetadataEmit": true,
+        "enableResourceInlining": true,
+        "fullTemplateTypeCheck": true,
+        "preserveWhitespaces": true,
+        "strictInjectionParameters": true
+    },
+    "files": [
+        "*.d.ts",
+        "*.ts",
+        "*.d.js",
+        "*.js"
+    ],
+    "exclude": [
+        "bin",
+        "node_modules"
+    ]
 }

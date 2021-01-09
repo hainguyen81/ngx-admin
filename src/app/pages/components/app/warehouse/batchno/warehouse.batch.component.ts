@@ -14,7 +14,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
+import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {
     ACTION_BACK,

@@ -8,7 +8,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {IWarehouseInventorySearch} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
-import {DataSource} from 'ng2-smart-table/lib/data-source/data-source';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {WarehouseInventorySearchFormlyComponent} from './warehouse.inventory.search.formly.component';
 import {WarehouseInventorySearchToolbarComponent} from './warehouse.inventory.search.toolbar.component';

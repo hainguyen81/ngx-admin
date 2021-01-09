@@ -25,12 +25,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import {IEvent} from '../abstract.component';
-import {CellComponent} from 'ng2-smart-table/components/cell/cell.component';
+import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
 import {DefaultEditor} from 'ng2-smart-table';
-import {Cell} from 'ng2-smart-table/lib/data-set/cell';
-import {Column} from 'ng2-smart-table/lib/data-set/column';
-import {Row} from 'ng2-smart-table/lib/data-set/row';
-import {Ng2SmartTableComponent} from 'ng2-smart-table/ng2-smart-table.component';
+import {Cell} from 'ng2-smart-table/lib/lib/data-set/cell';
+import {Column} from 'ng2-smart-table/lib/lib/data-set/column';
+import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
+import {Ng2SmartTableComponent} from 'ng2-smart-table/lib/ng2-smart-table.component';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 
