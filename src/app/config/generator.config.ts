@@ -1,4 +1,4 @@
-export const uuid_dist = 'uuid/dist/';
+export const uuid_dist = 'uuid/';
 export const IdGenerators = {
     uuid: {
         v1: require(uuid_dist + 'v1'),
