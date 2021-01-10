@@ -590,6 +590,9 @@
         "import/named": "error"
     },
     "settings": {
+        "import/parsers": {
+            "@typescript-eslint/parser": [".d.ts", ".ts", ".tsx"]
+        },
         "import/resolver": {
             "typescript": {
                 "alwaysTryTypes": true
