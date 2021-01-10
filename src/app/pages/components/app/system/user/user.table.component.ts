@@ -27,10 +27,9 @@ import {throwError} from 'rxjs';
 import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Cell, DefaultEditor} from 'ng2-smart-table';
+import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {IUser} from '../../../../../@core/data/system/user';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 
 /* users table settings */
 export const UserTableSettings = {

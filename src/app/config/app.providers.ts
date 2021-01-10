@@ -38,8 +38,7 @@ import {ModuleDatasource, ModuleHttpService, ModuleService} from '../services/im
 import {UserDbService, UserHttpService} from '../services/implementation/system/user/user.service';
 import {UserDataSource} from '../services/implementation/system/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
-import {LocalDataSource} from 'ng2-smart-table';
+import {DataSource, LocalDataSource} from '@app/types/index';
 import {ConnectionService} from 'ng-connection-service';
 import {CustomerDbService, CustomerHttpService} from '../services/implementation/system/customer/customer.service';
 import {CustomerDatasource} from '../services/implementation/system/customer/customer.datasource';

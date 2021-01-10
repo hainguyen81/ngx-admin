@@ -19,7 +19,7 @@ import {IModel} from '../../../../@core/data/base';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from '@app/types/index';
 import {AppSmartTableComponent} from './app.table.component';
 import {AppFormlyComponent} from './app.formly.component';
 import {AppToolbarComponent} from './app.toolbar.component';

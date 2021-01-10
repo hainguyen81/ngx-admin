@@ -9,10 +9,9 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import BaseModel, {IModel} from '../../../../../@core/data/base';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource, LocalDataSource} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {LocalDataSource} from 'ng2-smart-table';
 import {Observable, of} from 'rxjs';
 import {AppConfig} from '../../../../../config/app.config';
 import {IdGenerators} from '../../../../../config/generator.config';

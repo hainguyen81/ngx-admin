@@ -8,7 +8,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {IWarehouseInventorySearch} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource, LocalDataSource} from '@app/types/index';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {WarehouseInventorySearchFormlyComponent} from './warehouse.inventory.search.formly.component';
 import {WarehouseInventorySearchToolbarComponent} from './warehouse.inventory.search.toolbar.component';
@@ -20,7 +20,6 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LocalDataSource} from 'ng2-smart-table';
 import {AppSearchPanelComponent} from '../../components/app.search.panel.component';
 import {ACTION_SEARCH} from '../../../../../config/toolbar.actions.conf';
 

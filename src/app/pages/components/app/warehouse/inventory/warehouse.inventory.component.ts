@@ -39,7 +39,7 @@ import {
 } from './warehouse.inventory.panel.component';
 import {AppFlipcardComponent} from '../../components/app.flipcard.component';
 import WarehouseInventory, {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
+import {Row} from '@app/types/index';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {throwError} from 'rxjs';
 import {IdGenerators} from '../../../../../config/generator.config';

@@ -14,7 +14,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from '@app/types/index';
 import {COMMON} from '../../../../config/common.config';
 import {
     ACTION_BACK,

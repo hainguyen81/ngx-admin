@@ -14,7 +14,7 @@ import {NGXLogger} from 'ngx-logger';
 import {INgxDatePickerConfig} from '../datepicker/abstract.datepicker.component';
 import {IDatePickerConfig} from 'ng2-date-picker';
 import moment, {Moment} from 'moment';
-import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
+import {CellComponent} from '@app/types/index';
 import ObjectUtils from '../../../utils/common/object.utils';
 
 /**

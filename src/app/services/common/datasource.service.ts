@@ -1,12 +1,9 @@
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from '@app/types/index';
 import {IDbService, IHttpService} from './interface.service';
 import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../config/log.config';
-import {LocalPager} from 'ng2-smart-table/lib/lib/data-source/local/local.pager';
-import {LocalFilter} from 'ng2-smart-table/lib/lib/data-source/local/local.filter';
-import {LocalSorter} from 'ng2-smart-table/lib/lib/data-source/local/local.sorter';
 
 /**
  * Abstract data source for table service
@@ -173,8 +170,19 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
     protected sort(data: Array<T>): Array<T> {
         if (this.sortCfg) {
             this.sortCfg.forEach((fieldConf) => {
-                data = LocalSorter.sort(data,
-                    fieldConf['field'], fieldConf['direction'], fieldConf['compare']);
+                // data = LocalSorter.sort(data,
+                //     fieldConf['field'], fieldConf['direction'], fieldConf['compare']);
+
+                const direction: number = (fieldConf['direction'] === 'asc') ? 1 : -1;
+                const compareDelegateFnc: Function = typeof fieldConf['compare'] === 'function'
+                    ? <Function>fieldConf['compare'] : (d1: any, d2: any) => {
+                    const df1: any = (d1[fieldConf['field']] || d1);
+                    const df2: any = (d2[fieldConf['field']] || d2);
+                    return (df1 < df2 ? -1 * direction : df1 > df2 ? direction : 0);
+                };
+                data = data.sort((d1: any, d2: any) => {
+                    return compareDelegateFnc.apply(this, [d1, d2]);
+                });
             });
         }
         return data;
@@ -186,8 +194,13 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
             if (this.filterCfg.andOperator) {
                 this.filterCfg.filters.forEach((fieldConf: any) => {
                     if ((fieldConf['search'] || '').length) {
-                        data = LocalFilter.filter(data,
-                            fieldConf['field'], fieldConf['search'], fieldConf['filter']);
+                        const filterDelegateFnc: Function = typeof fieldConf['filter'] === 'function'
+                            ? fieldConf['filter'] : (value: any) => {
+                                const strValue: any = (value[fieldConf['field']] || value || '');
+                                const strSearch: any = (fieldConf['search'] || '');
+                                return strValue.toString().toLowerCase().includes(strSearch.toString().toLowerCase());
+                            };
+                        return data.filter((value: any) => filterDelegateFnc.apply(this, [value]));
                     }
                 });
 
@@ -195,8 +208,13 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
                 let mergedData: any = [];
                 this.filterCfg.filters.forEach((fieldConf: any) => {
                     if ((fieldConf['search'] || '').length) {
-                        mergedData = mergedData.concat(LocalFilter.filter(
-                            data, fieldConf['field'], fieldConf['search'], fieldConf['filter']));
+                        const filterDelegateFnc: Function = typeof fieldConf['filter'] === 'function'
+                            ? fieldConf['filter'] : (value: any) => {
+                                const strValue: any = (value[fieldConf['field']] || value || '');
+                                const strSearch: any = (fieldConf['search'] || '');
+                                return strValue.toString().toLowerCase().includes(strSearch.toString().toLowerCase());
+                            };
+                        mergedData = mergedData.concat(data.filter((value: any) => filterDelegateFnc.apply(this, [value])));
                     }
                 });
                 // remove non unique items
@@ -210,7 +228,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
 
     protected paginate(data: Array<T>): Array<T> {
         if (this.pagingCfg && this.pagingCfg['page'] && this.pagingCfg['perPage']) {
-            data = LocalPager.paginate(data, this.pagingCfg['page'], this.pagingCfg['perPage']);
+            data = data.slice(this.pagingCfg['perPage'] * (this.pagingCfg['page'] - 1), this.pagingCfg['perPage'] * this.pagingCfg['page']);
         }
         return data;
     }

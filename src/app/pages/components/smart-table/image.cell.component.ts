@@ -12,7 +12,7 @@ import {
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
+import {CellComponent} from '@app/types/index';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 

@@ -21,12 +21,11 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource, LocalDataSource} from '@app/types/index';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, throwError} from 'rxjs';
-import {LocalDataSource} from 'ng2-smart-table';
 import HtmlUtils from '../../utils/common/html.utils';
 import KeyboardUtils from '../../utils/common/keyboard.utils';
 import ComponentUtils from '../../utils/common/component.utils';

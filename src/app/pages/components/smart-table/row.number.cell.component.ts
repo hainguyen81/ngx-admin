@@ -10,7 +10,7 @@ import {
 import {NumberCellComponent} from './number.cell.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
+import {CellComponent} from '@app/types/index';
 
 /**
  * Smart table row number cell component base on {DefaultEditor}

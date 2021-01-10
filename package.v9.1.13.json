@@ -173,7 +173,6 @@
         "rimraf": "^3.0.2",
         "rxjs-tslint": "^0.1.8",
         "stylelint": "^13.8.0",
-        "ts-node": "^9.1.1",
         "tslint-language-service": "^0.9.9",
         "webpack": "^4.44.2",
         "webpack-cli": "^4.3.0",

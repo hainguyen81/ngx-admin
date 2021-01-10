@@ -11,14 +11,10 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
-import {Cell} from 'ng2-smart-table';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {Cell, DataSource, Ng2SmartTableComponent, Row} from '@app/types/index';
 import {MouseEventGuard} from '../customization/mouse.event.guard';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
-import {Ng2SmartTableComponent} from 'ng2-smart-table/lib/ng2-smart-table.component';
-import {Grid} from 'ng2-smart-table/lib/lib/grid';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
@@ -28,9 +24,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Column} from 'ng2-smart-table/lib/lib/data-set/column';
 import {AbstractCellEditorFormControlComponent} from './abstract.cell.editor.form.control.component';
-import ObjectUtils from "../../../utils/common/object.utils";
+import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 import NumberUtils from '../../../utils/common/number.utils';
 
@@ -165,7 +160,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         return this.smartTableComponent;
     }
 
-    protected get gridComponent(): Grid {
+    // protected get gridComponent(): Grid {
+    //     return (ObjectUtils.isNotNou(this.tableComponent)
+    //         ? this.tableComponent.grid : undefined);
+    // }
+    protected get gridComponent(): any {
         return (ObjectUtils.isNotNou(this.tableComponent)
             ? this.tableComponent.grid : undefined);
     }
@@ -225,7 +224,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * Get the columns
      * @return columns array
      */
-    get columns(): Array<Column> {
+    // get columns(): Array<Column> {
+    //     return (this.gridComponent ? this.gridComponent.getColumns() : []);
+    // }
+    get columns(): Array<any> {
         return (this.gridComponent ? this.gridComponent.getColumns() : []);
     }
 

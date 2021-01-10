@@ -14,7 +14,7 @@ import {
     NbThemeModule,
 } from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
-import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {Ng2SmartTableModule} from '@app/types/index';
 import {ComponentsModule} from '../../components.module';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';

@@ -1,5 +1,5 @@
 import {DatePickerComponent, IDatePickerConfig} from 'ng2-date-picker';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
     AfterContentChecked,

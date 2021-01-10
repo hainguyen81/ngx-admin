@@ -9,7 +9,7 @@ import {
     NbSelectModule,
     NbThemeModule,
 } from '@nebular/theme';
-import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';

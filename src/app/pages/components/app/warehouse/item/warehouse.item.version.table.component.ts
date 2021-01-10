@@ -28,11 +28,9 @@ import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {BarcodeCellComponent} from '../../../smart-table/barcode.cell.component';
 import {IEvent} from '../../../abstract.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {of, Subject, throwError} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
-import {Cell, DefaultEditor, LocalDataSource} from 'ng2-smart-table';
+import {DataSource, Row, Cell, DefaultEditor, LocalDataSource} from '@app/types/index';
 import {
     WarehouseItemVersionDatasource,
 } from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';

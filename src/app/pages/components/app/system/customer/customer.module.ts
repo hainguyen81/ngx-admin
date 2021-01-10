@@ -8,7 +8,7 @@ import {
     NbInputModule, NbLayoutModule,
     NbSelectModule, NbThemeModule,
 } from '@nebular/theme';
-import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
 import {LoggerModule, NGXLogger} from 'ngx-logger';

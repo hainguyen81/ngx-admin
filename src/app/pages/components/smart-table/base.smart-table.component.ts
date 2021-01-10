@@ -11,9 +11,8 @@ import {
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {F2, S} from '@angular/cdk/keycodes';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource, Row} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';

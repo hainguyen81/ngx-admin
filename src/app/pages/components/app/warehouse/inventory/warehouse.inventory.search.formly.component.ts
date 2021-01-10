@@ -27,8 +27,7 @@ import {
 import WarehouseInventorySearch, {
     IWarehouseInventorySearch,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
-import {LocalDataSource} from 'ng2-smart-table';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource, LocalDataSource} from '@app/types/index';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* default warehouse in/out search formly config */

@@ -31,8 +31,7 @@ import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
-import {Cell, DefaultEditor} from 'ng2-smart-table';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
+import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
 
 /* warehouse settings table settings */

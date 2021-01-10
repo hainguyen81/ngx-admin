@@ -11,9 +11,7 @@ import {
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {Cell} from 'ng2-smart-table';
-import {Column} from 'ng2-smart-table/lib/lib/data-set/column';
-import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
+import {Cell, CellComponent} from '@app/types/index';
 
 /**
  * Smart table checkbox cell component base on {DefaultEditor}
@@ -35,7 +33,8 @@ export class HtmlCellComponent extends AbstractCellEditor {
         let htmlValue: string = '';
         const cell: Cell = this.cell;
         const config: any = this.cellColumnConfig;
-        const column: Column = this.cellColumn;
+        // const column: Column = this.cellColumn;
+        const column: any = this.cellColumn;
         if (column && Object.keys(column).length
             && column.hasOwnProperty(HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION)) {
             if (typeof column[HtmlCellComponent.HTML_VALUE_PREPARE_FUNCTION] === 'function') {

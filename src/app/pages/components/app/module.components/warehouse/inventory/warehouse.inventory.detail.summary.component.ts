@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import {AbstractComponent} from '../../../../abstract.component';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource, Ng2SmartTableComponent} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -20,7 +20,6 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Ng2SmartTableComponent} from 'ng2-smart-table/lib/ng2-smart-table.component';
 
 /**
  * Smart table warehouse summary component

@@ -31,8 +31,7 @@ import {
     SelectTranslateCellComponent,
 } from '../../../smart-table/select.translate.cell.component';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
-import {Cell, DefaultEditor} from 'ng2-smart-table';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
+import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {ICustomer} from '../../../../../@core/data/system/customer';
 
 /* customers table settings */

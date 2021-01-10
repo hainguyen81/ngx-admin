@@ -16,7 +16,7 @@ import {
 } from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
 import {WarehouseStorageTreeviewComponent} from './warehouse.storage.treeview.component';
-import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {Ng2SmartTableModule} from '@app/types/index';
 import {WarehouseStorageFormlyComponent} from './warehouse.storage.formly.component';
 import {ComponentsModule} from '../../../components.module';
 import {WarehouseStorageToolbarComponent} from './warehouse.storage.toolbar.component';

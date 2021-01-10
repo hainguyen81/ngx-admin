@@ -21,16 +21,11 @@ import {
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
+import {CellComponent, Ng2SmartTableComponent, Row, DefaultEditor, Cell} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import {IEvent} from '../abstract.component';
-import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
-import {DefaultEditor} from 'ng2-smart-table';
-import {Cell} from 'ng2-smart-table/lib/lib/data-set/cell';
-import {Column} from 'ng2-smart-table/lib/lib/data-set/column';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
-import {Ng2SmartTableComponent} from 'ng2-smart-table/lib/ng2-smart-table.component';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 
@@ -156,7 +151,10 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
      * Get the current {Column} instance
      * @return the current {Column} instance
      */
-    get cellColumn(): Column {
+    // get cellColumn(): Column {
+    //     return (this.cell ? this.cell.getColumn() : undefined);
+    // }
+    get cellColumn(): any {
         return (this.cell ? this.cell.getColumn() : undefined);
     }
 

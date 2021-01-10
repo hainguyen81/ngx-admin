@@ -49,17 +49,15 @@ import {
 import {
     AppMultilinguageLabelComponent,
 } from '../../module.components/common/app.multilinguage.label.component';
-import {Cell, LocalDataSource} from 'ng2-smart-table';
 import {BehaviorSubject, throwError} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource, Cell, LocalDataSource, Row} from '@app/types/index';
 import {
     IWarehouseInventoryDetailBatch,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
 import CalculatorUtils from '../../../../../utils/common/calculator.utils';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
 import {
     IWarehouseInventoryDetailStorage,
 } from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';

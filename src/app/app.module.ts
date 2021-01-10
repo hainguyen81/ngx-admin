@@ -45,7 +45,7 @@ import {AppConfig} from './config/app.config';
 import {NbAuthModule} from '@nebular/auth';
 import {NbxOAuth2AuthStrategy} from './auth/auth.oauth2.strategy';
 /* Logger */
-import {LoggerModule, NGXLogger} from 'ngx-logger';
+import {LoggerModule} from 'ngx-logger';
 /* Database */
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 /* i18n */
@@ -94,7 +94,7 @@ import {ServiceWorkerProviders} from './config/worker.providers';
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        AppRoutingModule.forRoot(),
+        AppRoutingModule,
 
         /* local storage */
         NgxLocalStorageModule.forRoot(),
@@ -217,8 +217,7 @@ export class AppModule {
 
     constructor(@Optional() @SkipSelf() parentModule: AppModule,
                 injector: Injector,
-                iconLibraries: NbIconLibraries,
-                @Inject(NGXLogger) logger: NGXLogger) {
+                iconLibraries: NbIconLibraries) {
         // @ts-ignore
         throwIfAlreadyLoaded(parentModule, 'AppModule');
         this.moduleInjector = Injector.create({ providers: AppConfig.Providers.All, parent: injector, name: 'AppModuleInjector' });
@@ -230,19 +229,5 @@ export class AppModule {
 
         // register application service workers
         registerBrowserServiceWorkers();
-    }
-
-    static forRoot(): ModuleWithProviders<AppModule> {
-        return {
-            ngModule: AppModule,
-            providers: AppConfig.Providers.All,
-        };
-    }
-
-    static forChild(): ModuleWithProviders<AppModule> {
-        return {
-            ngModule: AppModule,
-            providers: AppConfig.Providers.All,
-        };
     }
 }

@@ -13,7 +13,7 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';

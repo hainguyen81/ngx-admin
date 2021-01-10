@@ -10,7 +10,7 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from '@app/types/index';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {BaseDataSource} from '../../../../../services/common/datasource.service';

@@ -11,7 +11,7 @@ import {IModel} from '../../@core/data/base';
 import {ProvinceDatasource} from '../../services/implementation/system/province/province.datasource';
 import {IProvince} from '../../@core/data/system/province';
 import {TreeviewItem} from 'ngx-treeview';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {DataSource} from '@app/types/index';
 import {ICity} from '../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
 import {IDbService, IHttpService} from '../../services/common/interface.service';

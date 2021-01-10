@@ -4,13 +4,45 @@
 		"outDir": "../out-tsc/app",
 		"baseUrl": "./",
 		"paths": {
+            "*": [
+                "./*",
+                "../src/*",
+                "../node_modules/*"
+            ],
+            "~/*": [
+                "./*",
+                "../src/*",
+                "../node_modules/*"
+            ],
+            "@/*": [
+                "./*",
+                "../src/*",
+                "../node_modules/*"
+            ],
+            "@app/*": [
+                "../src/app/*"
+            ],
+            "@app/types/*": [
+                "../src/app/@types/*"
+            ],
 			"@angular/*": [
 				"../node_modules/@angular/*"
 			],
 			"@nebular/*": [
 				"../node_modules/@nebular/*"
-			]
+			],
+            "ng2-smart-table/*": [
+                "../node_modules/ng2-smart-table/*"
+            ],
+            "core-js/es/*": [
+                "../core-js/es6/*"
+            ]
 		},
+        "types": [
+            "node",
+            "../src/app/@types",
+            "../node_modules/ng2-smart-table"
+        ],
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
 		"alwaysStrict": true
@@ -18,17 +50,18 @@
 	"files": [
 		"main.ts",
 		"polyfills.ts"
-	],
+    ],
 	"include": [
-        "../src/*.ts",
-        "../src/**/*.ts",
+        "../src/typings.d.ts",
         "../node_modules/@nebular/**/*.d.ts",
         "../node_modules/@nebular/**/*.ts",
         "../node_modules/@nebular/**/*.d.js",
         "../node_modules/@nebular/**/*.js",
-        "../node_modules/ng2-smart-table/**/*.d.ts",
-        "../node_modules/ng2-smart-table/**/*.ts",
-        "../node_modules/ng2-smart-table/**/*.d.js",
-        "../node_modules/ng2-smart-table/**/*.js"
-	]
+        "../src/*.d.ts",
+        "../src/**/*.d.ts",
+        "../src/*.d.js",
+        "../src/**/*.d.js",
+        "../src/*.ts",
+        "../src/**/*.ts"
+    ]
 }

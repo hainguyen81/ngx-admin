@@ -15,7 +15,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
-import {Row} from 'ng2-smart-table/lib/lib/data-set/row';
+import {Row} from '@app/types/index';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import User, {IUser} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';

@@ -1,4 +1,3 @@
-import {Cell} from 'ng2-smart-table';
 import {
     ChangeDetectorRef,
     ComponentFactoryResolver,
@@ -13,10 +12,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, of} from 'rxjs';
 import {IEvent} from '../abstract.component';
-import {Column} from 'ng2-smart-table/lib/lib/data-set/column';
+import {Cell, CellComponent} from '@app/types/index';
 import PromiseUtils from '../../../utils/common/promise.utils';
 import {isPromise} from 'rxjs/internal-compatibility';
-import {CellComponent} from 'ng2-smart-table/lib/components/cell/cell.component';
 import {BaseCellEditorFormControlComponent} from './base.cell.editor.form.control.component';
 import ObjectUtils from '../../../utils/common/object.utils';
 
@@ -175,7 +173,8 @@ export abstract class AbstractCellEditor extends BaseCellEditorFormControlCompon
                                     observeValueIfInvalidProperty?: boolean | true): Observable<any> {
         const cell: Cell = this.cell;
         const config: any = this.cellColumnConfig;
-        const column: Column = this.cellColumn;
+        // const column: Column = this.cellColumn;
+        const column: any = this.cellColumn;
         const _observeValueIfInvalidProperty = (observeValueIfInvalidProperty || true);
         if (column && Object.keys(column).length && column.hasOwnProperty(property)) {
             if (typeof column[property] === 'function') {
