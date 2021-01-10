@@ -36,6 +36,9 @@
             ],
             "core-js/es/*": [
                 "../core-js/es6/*"
+            ],
+            "uuid/*": [
+                "../uuid/dist/*"
             ]
 		},
         "types": [
