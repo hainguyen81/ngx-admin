@@ -4,8 +4,9 @@ import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
+import AppUtils from '../../utils/app/app.utils';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export default class GlobalErrorsHandler implements ErrorHandler {
 
     /**
@@ -21,7 +22,11 @@ export default class GlobalErrorsHandler implements ErrorHandler {
      * @return the {ToastrService} instance
      */
     protected getToasterService(): ToastrService {
-        return this.toasterService;
+        // TODO Could not inject this ToastrService as normally from constructor. Because of [ERROR Cannot instantiate cyclic dependency! ApplicationRef]
+        // see https://github.com/scttcper/ngx-toastr/issues/179#issuecomment-325724269
+        const toastrService: ToastrService = AppUtils.getService(ToastrService);
+        toastrService || throwError('Could not inject ToastrService');
+        return toastrService;
     }
 
     /**
@@ -43,15 +48,12 @@ export default class GlobalErrorsHandler implements ErrorHandler {
     /**
      * Create a new instance of {GlobalErrorsHandler} class
      * @param translateService {TranslateService}
-     * @param toasterService {ToastrService}
      * @param logger {NGXLogger}
      */
     constructor(@Inject(TranslateService) private translateService: TranslateService,
-                @Inject(ToastrService) private toasterService: ToastrService,
                 @Inject(NGXLogger) private logger: NGXLogger,
                 private injector: Injector) {
         translateService || throwError('Could not inject TranslateService');
-        toasterService || throwError('Could not inject ToastrService');
         logger || throwError('Could not inject NGXLogger');
         injector || throwError('Could not inject Injector');
     }

@@ -22,7 +22,6 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {LoggerModule} from 'ngx-logger';
-import {AppMaterialModule} from '../../../../../app.material.module';
 import {AppConfig} from '../../../../../config/app.config';
 import {WarehouseBatchNoSmartTableComponent} from './warehouse.batch.table.component';
 import {WarehouseBatchNoFormlyComponent} from './warehouse.batch.formly.component';
@@ -31,6 +30,7 @@ import {WarehouseBatchNoToolbarComponent} from './warehouse.batch.toolbar.compon
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {WarehouseProviders} from '../../../../../config/app.providers';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

@@ -87,6 +87,7 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
 import {ServiceWorkerProviders} from './config/worker.providers';
+import { InjectionConfig } from './config/injection.config';
 
 @NgModule({
     imports: [
@@ -100,7 +101,7 @@ import {ServiceWorkerProviders} from './config/worker.providers';
         NgxLocalStorageModule.forRoot(),
 
         /* Angular material modules */
-        AppMaterialModule.forRoot(),
+        AppMaterialModule,
 
         /* Popup, Dialogs */
         AlertPopupModule,
@@ -221,7 +222,8 @@ export class AppModule {
         // @ts-ignore
         throwIfAlreadyLoaded(parentModule, 'AppModule');
         this.moduleInjector = Injector.create({ providers: AppConfig.Providers.All, parent: injector, name: 'AppModuleInjector' });
-        AppConfig.Injector = this.moduleInjector;
+        InjectionConfig.Injector = this.moduleInjector;
+        AppConfig.Injection = InjectionConfig;
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('fas', {packClass: 'fas', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});

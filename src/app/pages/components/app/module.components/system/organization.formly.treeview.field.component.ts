@@ -25,7 +25,7 @@ import OrganizationUtils from '../../../../../utils/system/organization.utils';
 /**
  * Multi language for treeview field
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class OrganizationTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,

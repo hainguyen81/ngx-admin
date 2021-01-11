@@ -32,7 +32,6 @@ import {
 } from '../services/interceptors/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
-import {ToastrService} from 'ngx-toastr';
 import {COMMON} from './common.config';
 import {ModuleDatasource, ModuleHttpService, ModuleService} from '../services/implementation/module.service';
 import {UserDbService, UserHttpService} from '../services/implementation/system/user/user.service';
@@ -236,7 +235,7 @@ export const CommonProviders: StaticProvider[] = [
     {provide: Meta, useClass: Meta, deps: [DOCUMENT]},
     {
         provide: ErrorHandler, useClass: GlobalErrorsHandler,
-        deps: [TranslateService, ToastrService, NGXLogger, Injector],
+        deps: [TranslateService, NGXLogger, Injector],
     },
 
     // local storage
@@ -258,6 +257,7 @@ export const CommonProviders: StaticProvider[] = [
         deps: [ApplicationRef, ComponentFactoryResolver, Injector],
     },
 
+    // device detector service
     {
         provide: DeviceDetectorService, useClass: DeviceDetectorService,
         deps: [],
@@ -652,7 +652,7 @@ export const MenuProviders: StaticProvider[] = [
     },
     {
         provide: PagesGuard, useClass: PagesGuard,
-        deps: [ModuleService, Router, ToastrService, TranslateService, NGXLogger],
+        deps: [ModuleService, Router, TranslateService, NGXLogger],
     },
 ];
 

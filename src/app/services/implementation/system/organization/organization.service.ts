@@ -9,7 +9,7 @@ import {ConnectionService} from 'ng-connection-service';
 import {IOrganization} from '../../../../@core/data/system/organization';
 import ObjectUtils from '../../../../utils/common/object.utils';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class OrganizationDbService extends BaseDbService<IOrganization> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -31,7 +31,7 @@ export class OrganizationDbService extends BaseDbService<IOrganization> {
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class OrganizationHttpService extends BaseHttpService<IOrganization> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

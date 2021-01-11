@@ -50,6 +50,7 @@ import {AppConfig} from './config/app.config';
         MatDialogModule,
     ],
     exports: [
+        CommonModule,
         MatButtonModule,
         MatToolbarModule,
         MatIconModule,
@@ -57,11 +58,12 @@ import {AppConfig} from './config/app.config';
         MatBadgeModule,
         MatListModule,
         MatGridListModule,
-        MatInputModule,
         MatFormFieldModule,
+        MatInputModule,
         MatSelectModule,
         MatRadioModule,
         MatDatepickerModule,
+        MatNativeDateModule,
         MatChipsModule,
         MatTooltipModule,
         MatTableModule,
@@ -74,30 +76,4 @@ import {AppConfig} from './config/app.config';
         MatDatepickerModule,
     ],
 })
-export class AppMaterialModule {
-
-    private readonly moduleInjector: Injector;
-
-    constructor(@Optional() @SkipSelf() parentModule: AppMaterialModule,
-                injector: Injector,
-                iconLibraries: NbIconLibraries,
-                @Inject(NGXLogger) logger: NGXLogger) {
-        // @ts-ignore
-        throwIfAlreadyLoaded(parentModule, 'AppMaterialModule');
-        this.moduleInjector = Injector.create({providers: AppConfig.Providers.All, parent: injector, name: 'AppMaterialModuleInjector'});
-    }
-
-    static forRoot(): ModuleWithProviders<AppMaterialModule> {
-        return {
-            ngModule: AppMaterialModule,
-            providers: AppConfig.Providers.All,
-        };
-    }
-
-    static forChild(): ModuleWithProviders<AppMaterialModule> {
-        return {
-            ngModule: AppMaterialModule,
-            providers: AppConfig.Providers.All,
-        };
-    }
-}
+export class AppMaterialModule {}

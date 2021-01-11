@@ -4,7 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {IWarehouseManagement} from '../../../../@core/data/warehouse/warehouse.management';
 import {WarehouseManagementDbService, WarehouseManagementHttpService} from './warehouse.management.service';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WarehouseManagementDatasource
     extends BaseDataSource<IWarehouseManagement, WarehouseManagementHttpService, WarehouseManagementDbService> {
 

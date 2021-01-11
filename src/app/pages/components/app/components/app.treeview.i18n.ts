@@ -7,7 +7,7 @@ export const TOKEN_APP_TREEVIEW_SHOW_ALL = new InjectionToken<boolean>('True for
 /**
  * Multi language for treeview field
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class AppTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,

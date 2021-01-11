@@ -5,7 +5,7 @@
                matInput
                class="cell-editor-serial-number text-left mr-sm-1"
                type="text"
-               [(ngModel)]="serial">
+               [(ngModel)]="newCellValue[index]">
         <div class="cell-editor-serial-remover mr-sm-1">
             <nb-icon [pack]="'fas'"
                      [icon]="'minus'"
@@ -23,7 +23,7 @@
     </div>
 </div>
 <div class="cell-viewer d-table" *ngIf="viewMode">
-    <div class="serial-row d-table-row" *ngFor="let serial of cellValue">
-        <div class="batch-cell d-table-cell text-left w-100" [innerHTML]="serial"></div>
+    <div class="serial-row d-table-row" *ngFor="let serial of cellValue; let index = index;">
+        <div class="batch-cell d-table-cell text-left w-100" [innerHTML]="cellValue[index]"></div>
     </div>
 </div>

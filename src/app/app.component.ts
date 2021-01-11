@@ -17,6 +17,7 @@ import HtmlUtils from './utils/common/html.utils';
 import * as moment from 'moment';
 import AppUtils from './utils/app/app.utils';
 import ArrayUtils from './utils/common/array.utils';
+import { InjectionConfig } from './config/injection.config';
 
 @Component({
     selector: 'ngx-app',
@@ -56,8 +57,8 @@ export class AppComponent implements OnInit {
             pageHeaderService.metaService = _metaService;
         }
 
-        AppConfig.appRef = this.applicationRef;
-        AppConfig.viewRef = this.viewContainerRef;
+        InjectionConfig.appRef = this.applicationRef;
+        InjectionConfig.viewRef = this.viewContainerRef;
     }
 
     ngOnInit(): void {

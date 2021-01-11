@@ -1,7 +1,7 @@
 <div class="cell-viewer w-100 d-flex text-center image-cell" [title]="cellValue" *ngIf="viewMode">
     <ngx-image-gallery #imageGallery
                        [showAlbum]="true"
-                       [onlyPrimary]="true"
+                       [showOnlyPrimary]="true"
                        [allowModified]="false"
                        [images]="images"
     ></ngx-image-gallery>
@@ -15,7 +15,7 @@
 <div class="cell-editor w-100 d-table image-cell" *ngIf="!viewMode">
     <ngx-image-gallery #imageGallery
                        [showAlbum]="true"
-                       [onlyPrimary]="true"
+                       [showOnlyPrimary]="true"
                        [allowModified]="!disabled && !readonly"
                        [images]="images"
                        [formControl]="control"

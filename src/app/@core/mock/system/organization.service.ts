@@ -8,7 +8,7 @@ import {organizationGenerate} from './mock.organization';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class MockOrganizationService implements IMockService {
 
     constructor(@Inject(OrganizationDbService) private dbService: OrganizationDbService,

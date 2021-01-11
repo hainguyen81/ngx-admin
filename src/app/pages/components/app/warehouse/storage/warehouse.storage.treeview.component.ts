@@ -45,7 +45,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
 /**
  * Multi language for treeview field
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,

@@ -23,7 +23,6 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {AppMaterialModule} from '../../../../../app.material.module';
 import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
 import {WarehouseCategorySplitPaneComponent} from './warehouse.category.component';
 import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
@@ -33,6 +32,7 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

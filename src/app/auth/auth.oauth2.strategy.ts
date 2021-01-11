@@ -20,7 +20,7 @@ import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import ArrayUtils from '../utils/common/array.utils';
 import ObjectUtils from '../utils/common/object.utils';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
     static setup(options?: NbxPasswordAuthStrategyOptions): [NbAuthStrategyClass, NbxPasswordAuthStrategyOptions] {
         return [NbxOAuth2AuthStrategy, AUTH_STRATEGY_OPTIONS];

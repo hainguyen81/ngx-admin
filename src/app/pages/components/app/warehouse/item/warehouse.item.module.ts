@@ -22,7 +22,6 @@ import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component'
 import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AppMaterialModule} from '../../../../../app.material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
 import {TreeviewModule} from 'ngx-treeview';
@@ -45,6 +44,7 @@ import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

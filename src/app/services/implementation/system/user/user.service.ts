@@ -11,7 +11,7 @@ import {Constants as CommonConstants} from '../../../../@core/data/constants/com
 import STATUS = CommonConstants.COMMON.STATUS;
 import ObjectUtils from '../../../../utils/common/object.utils';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class UserDbService extends BaseDbService<IUser> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -41,7 +41,7 @@ export class UserDbService extends BaseDbService<IUser> {
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class UserHttpService extends BaseHttpService<IUser> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

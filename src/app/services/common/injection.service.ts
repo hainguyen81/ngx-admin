@@ -18,7 +18,7 @@ import ObjectUtils from '../../utils/common/object.utils';
  * @export
  * @class InjectionService
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class InjectionService {
     // -------------------------------------------------
     // DECLARATION

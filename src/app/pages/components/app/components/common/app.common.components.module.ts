@@ -20,7 +20,6 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {LoggerModule} from 'ngx-logger';
-import {AppMaterialModule} from '../../../../../app.material.module';
 import {AppConfig} from '../../../../../config/app.config';
 import {AppCountryFormlySelectExFieldComponent} from './app.country.formly.select.ex.field.component';
 import {NgxSelectModule} from 'ngx-select-ex';
@@ -44,6 +43,7 @@ import {AppFormlySelectFieldComponent} from './app.formly.select.field.component
 import {AppModuleDataFormlySelectFieldComponent} from './app.module.data.formly.select.field.component';
 import {AppModuleDataIndexSettingsFormlySelectFieldComponent} from './app.module.data.index.formly.select.field.component';
 import {AppModuleDataIndexSettingsFormlySelectExFieldComponent} from './app.module.data.index.formly.select.ex.field.component';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

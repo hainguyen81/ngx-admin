@@ -20,7 +20,6 @@ import {CustomerModule} from './customer/customer.module';
 import {GeneralSettingsModule} from './general.settings/generalsettings.module';
 import {ThemeModule} from '../../../../@theme/theme.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AppMaterialModule} from '../../../../app.material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
 import {TreeviewModule} from 'ngx-treeview';
@@ -33,6 +32,7 @@ import {FeaturesComponentsModule} from '../module.components/features.components
 import {ComponentsModule} from '../../components.module';
 import {AppComponentsModule} from '../components/app.components.module';
 import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

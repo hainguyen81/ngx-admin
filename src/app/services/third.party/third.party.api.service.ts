@@ -94,7 +94,7 @@ export class ThirdPartyApiExpiredException extends Error {
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends BaseDbService<T> {
 
     protected constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -159,7 +159,7 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends B
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty> extends BaseHttpService<T> {
 
     protected static THIRD_PARTY_LATEST_ACCESS_TOKEN: string = 'XThirdPartyToken';

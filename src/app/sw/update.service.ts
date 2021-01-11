@@ -12,7 +12,7 @@ import {IModel} from '../@core/data/base';
  * Abstract service for listening application updater
  * @param <T> entity type
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export abstract class AbstractUpdateService<T extends IModel> extends BaseHttpService<T> {
 
     protected getSwUpdate(): SwUpdate {
@@ -29,7 +29,7 @@ export abstract class AbstractUpdateService<T extends IModel> extends BaseHttpSe
                           @Inject(SwUpdate) private swUpdate: SwUpdate,
                           @Inject(BaseDbService) dbService: BaseDbService<T>) {
         super(http, logger, dbService);
-        appRef || throwError('Could not inject application reference');
+        // appRef || throwError('Could not inject application reference');
         swUpdate || throwError('Could not inject socket updater subscription');
         if (!dbService) {
             this.getLogger().warn('Could not found database service for offline mode!');

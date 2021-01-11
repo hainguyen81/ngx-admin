@@ -1,5 +1,7 @@
 import {AppConfig} from '../../config/app.config';
-import {ApplicationRef, Injector, ViewContainerRef} from '@angular/core';
+import {ApplicationRef, InjectFlags, Injector, ViewContainerRef} from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { InjectionConfig } from '../../config/injection.config';
 
 export default class AppUtils {
 
@@ -8,7 +10,15 @@ export default class AppUtils {
      * @return the injectable root {ApplicationRef} instance
      */
     public static getApplicationRef(): ApplicationRef {
-        return AppConfig.appRef;
+        return InjectionConfig.appRef;
+    }
+
+    /**
+     * Get the injectable root {ToastrService} instance
+     * @return the injectable root {ToastrService} instance
+     */
+    public static getToastrService(): ToastrService {
+        return AppUtils.getService(ToastrService);
     }
 
     /**
@@ -17,11 +27,11 @@ export default class AppUtils {
      */
     public static getRootViewRef(): ViewContainerRef {
         const appRef: ApplicationRef = this.getApplicationRef();
-        if (!AppConfig.viewRef && appRef && (appRef.components || []).length
+        if (!InjectionConfig.viewRef && appRef && (appRef.components || []).length
             && appRef.components[0].instance && appRef.components[0].instance.viewContainerRef) {
-            AppConfig.viewRef = appRef.components[0].instance.viewContainerRef;
+            InjectionConfig.viewRef = appRef.components[0].instance.viewContainerRef;
         }
-        return AppConfig.viewRef;
+        return InjectionConfig.viewRef;
     }
 
     /**
@@ -30,7 +40,7 @@ export default class AppUtils {
      * @return the injectable service instance
      */
     public static getService<T>(token: any): T {
-        return this.getInjectService(AppConfig.Injector, token);
+        return this.getInjectService(InjectionConfig.Injector, token);
     }
 
     /**
@@ -40,6 +50,6 @@ export default class AppUtils {
      * @return the injectable service instance
      */
     public static getInjectService<T>(injector: Injector, token: any): T {
-        return (injector ? injector.get(token) : undefined);
+        return (injector ? injector.get(token, undefined, InjectFlags.Optional & InjectFlags.Self & InjectFlags.SkipSelf) : undefined);
     }
 }

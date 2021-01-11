@@ -4,7 +4,6 @@ import {PagesComponent} from './pages.component';
 import {PagesRoutingModule} from './pages-routing.module';
 import {ComponentsModule} from './components/components.module';
 import {NbButtonModule, NbMenuModule, NbThemeModule} from '@nebular/theme';
-import {AppMaterialModule} from '../app.material.module';
 // @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
@@ -14,6 +13,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {SystemModule} from './components/app/system/system.module';
 import {WarehouseModule} from './components/app/warehouse/warehouse.module';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

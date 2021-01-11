@@ -1,25 +1,20 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
     Inject, Input, Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import ComponentUtils from '../../../utils/common/component.utils';
-import {NbCardBackComponent, NbCardFrontComponent, NbRevealCardComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {IAlbum, Lightbox} from 'ngx-lightbox';
+import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 
 /**
@@ -32,7 +27,7 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     // -------------------------------------------------
 
     private isShowAlbum: boolean | true;
-    private isOnlyPrimary: boolean | false;
+    private isShowOnlyPrimary: boolean | false;
     private isAllowModified: boolean | false;
     private _images: string[];
     @Output() onChange: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
@@ -122,16 +117,16 @@ export abstract class AbstractImageGalleryComponent<T extends DataSource> extend
     /**
      * Get a boolean value indicating whether allows showing only primary image in album
      */
-    @Input() get onlyPrimary(): boolean {
-        return this.isOnlyPrimary;
+    @Input() get showOnlyPrimary(): boolean {
+        return this.isShowOnlyPrimary;
     }
 
     /**
      * Set a boolean value indicating whether allows showing only primary image in album
-     * @param isOnlyPrimary to apply
+     * @param isShowOnlyPrimary to apply
      */
-    set onlyPrimary(isOnlyPrimary: boolean) {
-        this.isOnlyPrimary = isOnlyPrimary;
+    set showOnlyPrimary(isShowOnlyPrimary: boolean) {
+        this.isShowOnlyPrimary = isShowOnlyPrimary;
     }
 
     // -------------------------------------------------

@@ -20,7 +20,6 @@ import {WarehouseSettingsSmartTableComponent} from './warehouse.settings.table.c
 import {WarehouseSettingsComponent} from './warehouse.settings.component';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AppMaterialModule} from '../../../../../app.material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {AngularSplitModule} from 'angular-split';
 import {TreeviewModule} from 'ngx-treeview';
@@ -31,6 +30,7 @@ import {AppComponentsModule} from '../../components/app.components.module';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {WarehouseProviders} from '../../../../../config/app.providers';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

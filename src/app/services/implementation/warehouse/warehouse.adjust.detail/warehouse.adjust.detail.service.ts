@@ -8,7 +8,7 @@ import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {IWarehouseAdjustDetail} from '../../../../@core/data/warehouse/warehouse.adjust.detail';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WarehouseAdjustDetailDbService extends BaseDbService<IWarehouseAdjustDetail> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -18,7 +18,7 @@ export class WarehouseAdjustDetailDbService extends BaseDbService<IWarehouseAdju
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WarehouseAdjustDetailHttpService extends BaseHttpService<IWarehouseAdjustDetail> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

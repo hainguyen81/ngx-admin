@@ -26,7 +26,6 @@ import {NgxSelectModule} from 'ngx-select-ex';
 import {AppComponentsModule} from '../components/app.components.module';
 import {ThemeModule} from '../../../../@theme/theme.module';
 import {ComponentsModule} from '../../components.module';
-import {AppMaterialModule} from '../../../../app.material.module';
 import {AppConfig} from '../../../../config/app.config';
 import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
 import {
@@ -159,6 +158,7 @@ import {GeneralWarehouseSettingsFormlySelectExFieldComponent} from './common/gen
 import {GeneralWarehouseSettingsFormlySelectFieldComponent} from './common/general.warehouse.settings.select.field.component';
 import {WarehouseSettingsFormlySelectExFieldComponent} from './warehouse/settings/warehouse.settings.select.ex.field.component';
 import {WarehouseSettingsFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.select.field.component';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

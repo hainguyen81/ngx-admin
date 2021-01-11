@@ -25,7 +25,7 @@ import {Observable} from 'rxjs';
 /**
  * Multi language for treeview field
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,

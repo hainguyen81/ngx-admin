@@ -33,7 +33,7 @@ export interface IThirdPartyApiDataBridgeParam<T extends IModel> {
     apiFulfilled?: ((apiData: T | T[]) => (T | T[]) | PromiseLike<T | T[]>) | undefined | null;
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class ThirdPartyApiBridgeDbService<T extends IModel> extends AbstractBaseDbService<T> {
 
     private static EXCEPTION_PERFORMANCE_REASON: string = 'Not support for getting all data because of performance!';

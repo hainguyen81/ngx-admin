@@ -16,7 +16,6 @@ import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AppMaterialModule} from '../../../../../app.material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {AngularSplitModule} from 'angular-split';
 import {TreeviewModule} from 'ngx-treeview';
@@ -45,6 +44,7 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 import {WarehouseInventoryDetailSmartTableComponent} from './warehouse.inventory.detail.table.component';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

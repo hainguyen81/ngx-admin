@@ -26,7 +26,7 @@ export interface IThirdPartyApiDataParserDefinition<T extends IApiThirdParty> {
 export const TOKEN_THIRD_PARTY_API_DATA_PARSER_DEFINITION: InjectionToken<IThirdPartyApiDataParserDefinition<any>>
     = new InjectionToken<IThirdPartyApiDataParserDefinition<any>>('Third-party API data parsers definition');
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
     extends BaseDataSource<T, ThirdPartyApiHttpService<T>, ThirdPartyApiDbService<T>> {
 

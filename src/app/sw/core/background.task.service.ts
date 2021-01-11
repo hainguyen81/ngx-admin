@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 
 export type WorkerAction = 'start' | 'stop' | 'pause' | 'resume';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WorkerService {
     private properties: WorkerProperties = {
         baseLocation: location.origin,

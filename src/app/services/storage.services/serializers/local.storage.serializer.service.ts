@@ -9,7 +9,7 @@ import ObjectUtils from '../../../utils/common/object.utils';
 /**
  * Local storage serializer/deserializer service
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class DefaultLocalStorageSerializerService implements StorageSerializer {
 
     protected get logger(): NGXLogger {
@@ -32,7 +32,7 @@ export class DefaultLocalStorageSerializerService implements StorageSerializer {
 /**
  * Local storage serializer/deserializer service
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class LocalStorageSerializerService extends DefaultLocalStorageSerializerService {
 
     private _crypto(): any {

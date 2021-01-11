@@ -33,12 +33,12 @@ import {OrganizationSplitPaneComponent} from './organization.component';
 import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {AppMaterialModule} from '../../../../../app.material.module';
 import {OrganizationToolbarComponent} from './organization.toolbar.component';
 import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

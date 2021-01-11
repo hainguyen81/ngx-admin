@@ -8,7 +8,7 @@ import {categoryGenerate} from './mock.category';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class MockWarehouseCategoryService implements IMockService {
 
     constructor(@Inject(WarehouseCategoryDbService) private dbService: WarehouseCategoryDbService,

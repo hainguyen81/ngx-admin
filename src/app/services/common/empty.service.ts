@@ -8,7 +8,7 @@ import {ConnectionService} from 'ng-connection-service';
 /**
  * Example empty IndexDb service
  */
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class EmptyService extends BaseDbService<any> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,

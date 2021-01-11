@@ -8,7 +8,7 @@ import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {IGeneralSettings} from '../../../../@core/data/system/general.settings';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class GeneralSettingsDbService extends BaseDbService<IGeneralSettings> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -18,7 +18,7 @@ export class GeneralSettingsDbService extends BaseDbService<IGeneralSettings> {
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class GeneralSettingsHttpService extends BaseHttpService<IGeneralSettings> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

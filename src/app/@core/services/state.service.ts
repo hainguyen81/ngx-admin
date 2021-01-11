@@ -4,7 +4,7 @@ import {takeWhile} from 'rxjs/operators';
 
 import {NbLayoutDirectionService, NbLayoutDirection} from '@nebular/theme';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class StateService implements OnDestroy {
 
     protected layouts: any = [

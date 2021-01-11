@@ -1,3 +1,4 @@
+import FunctionUtils from '../utils/common/function.utils';
 import ObjectUtils from '../utils/common/object.utils';
 
 export const CONTEXT_MENU_ADD: string = 'MENU_ADD';
@@ -15,7 +16,7 @@ export function __evalContextMenuItem(
     item?: IContextMenu, property?: string, args?: any | null, defaultValue?: any): any {
     const propertyFunc: Function = ObjectUtils.requireTypedValue<Function>(item, property);
     const propertyValue: any = ObjectUtils.requireTypedValue<any>(item, property);
-    return (ObjectUtils.isNotNou(propertyFunc) ? propertyFunc.apply(this, [args]) || defaultValue
+    return (FunctionUtils.isFunction(propertyFunc) ? propertyFunc.apply(this, [args]) || defaultValue
         : ObjectUtils.isNotNou(propertyValue) ? propertyValue || defaultValue : defaultValue);
 }
 export interface IContextMenu {

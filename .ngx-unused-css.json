@@ -2,7 +2,29 @@
     "path": "src/app",
     "globalStyles": "src/app/@theme/styles/styles.scss",
     "ignore": [
-        ".mat-",
-        "ng-star"
+        "default", "cosmic", "dark", "corporate", "pace", ".pace", ".pace-", "material",
+        ".mat-", "mat-", ".ngx-", "ngx-", ".dp-", "dp-",
+        ".status-", "status-", ".ng-", "ng-", ".ng2-", "ng2-",
+        ".custom-", "custom-", ".form-", "form-",
+        "ng-star", "modal", "footer", "header", "input", "label",
+        "div", "span", "html", "body", "table", "thead", "tr", "td", "th",
+        "tbody", "tfooter", ".rotate", "rotate",
+        "card-", ".card-",
+        "menu", ".menu",
+        "select", ".select", "selected", ".selected", "active", ".active", "activated", ".activated",
+        "slide", ".slide",
+        "button", "btn-", ".btn-",
+        "b-", ".b-",
+        "d-", ".d-",
+        "float-", ".float-",
+        "w-", ".w-",
+        "h-", ".h-",
+        "p-", "px-", "py-", "pt-", "pb-", "pl-", "pr-",
+        ".p-", ".px-", ".py-", ".pt-", ".pb-", ".pl-", ".pr-",
+        "m-", "mx-", "my-", "mt-", "mb-", "ml-", "mr-",
+        ".m-", ".mx-", ".my-", ".mt-", ".mb-", ".ml-", ".mr-",
+        "x-", "y-", "xc-", "yr-",
+        ".x-", ".y-", ".xc-", ".yr-",
+        "transform"
     ]
 }

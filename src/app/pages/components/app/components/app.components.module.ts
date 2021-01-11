@@ -21,7 +21,6 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ThemeModule} from '../../../../@theme/theme.module';
 import {LoggerModule} from 'ngx-logger';
-import {AppMaterialModule} from '../../../../app.material.module';
 import {AppConfig} from '../../../../config/app.config';
 import {AppCommonComponentsModule} from './common/app.common.components.module';
 import {NgxSelectModule} from 'ngx-select-ex';
@@ -43,6 +42,7 @@ import {AppTreeSplitFormComponent} from './app.treeview.splitpane.form.component
 import {AppTabsetComponent} from './app.tabset.component';
 import {AppPanelComponent} from './app.panel.component';
 import {AppSearchPanelComponent} from './app.search.panel.component';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

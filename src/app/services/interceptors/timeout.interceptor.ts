@@ -7,7 +7,7 @@ import {timeout as opTimeout} from 'rxjs/operators';
 
 export const HTTP_REQUEST_TIMEOUT = new InjectionToken<number>('The default request timeout to apply');
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class TimeoutInterceptor extends AbstractHttpInterceptor {
 
     public get timeout() {

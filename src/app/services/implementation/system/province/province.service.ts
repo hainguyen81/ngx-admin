@@ -17,7 +17,7 @@ import {
 import ArrayUtils from '../../../../utils/common/array.utils';
 import ObjectUtils from '../../../../utils/common/object.utils';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class ProvinceDbService extends BaseDbService<IProvince> {
 
     private static EXCEPTION_PERFORMANCE_REASON: string = 'Not support for getting all provinces because of performance!';
@@ -100,7 +100,7 @@ export class ProvinceDbService extends BaseDbService<IProvince> {
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class ProvinceHttpService extends BaseHttpService<IProvince> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

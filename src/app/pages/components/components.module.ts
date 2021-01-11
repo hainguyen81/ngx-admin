@@ -35,7 +35,6 @@ import {FormlyModule} from '@ngx-formly/core';
 import {NgxFormlyComponent} from './formly/formly.component';
 import {NgxSplitPaneComponent} from './splitpane/splitpane.component';
 import {FormlyMaterialModule} from '@ngx-formly/material';
-import {AppMaterialModule} from '../../app.material.module';
 import {ThemeModule} from '../../@theme/theme.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ToastrModule} from 'ngx-toastr';
@@ -87,6 +86,7 @@ import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdow
 import {BaseSplitPaneComponent} from './splitpane/base.splitpane.component';
 import {BaseTabsetComponent} from './tab/base.tab.component';
 import {BasePanelComponent} from './panel/base.panel.component';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [

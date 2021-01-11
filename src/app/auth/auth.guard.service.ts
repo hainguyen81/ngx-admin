@@ -3,7 +3,7 @@ import {CanActivate, Router} from '@angular/router';
 import {NbAuthService} from '@nebular/auth';
 import {tap} from 'rxjs/operators';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class AuthGuard implements CanActivate {
 
     private readonly authService: NbAuthService;

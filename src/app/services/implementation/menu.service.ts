@@ -6,7 +6,7 @@ import MenuUtils from '../../utils/system/menu.utils';
 import {ModuleService} from './module.service';
 import {ConnectionService} from 'ng-connection-service';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class MenuService extends ModuleService {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,

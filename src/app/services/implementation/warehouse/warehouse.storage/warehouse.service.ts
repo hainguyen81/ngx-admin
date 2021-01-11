@@ -9,7 +9,7 @@ import {ConnectionService} from 'ng-connection-service';
 import {IWarehouse} from '../../../../@core/data/warehouse/warehouse';
 import ObjectUtils from '../../../../utils/common/object.utils';
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WarehouseDbService extends BaseDbService<IWarehouse> {
 
     constructor(@Inject(NgxIndexedDBService) dbService: NgxIndexedDBService,
@@ -41,7 +41,7 @@ export class WarehouseDbService extends BaseDbService<IWarehouse> {
     }
 }
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class WarehouseHttpService extends BaseHttpService<IWarehouse> {
 
     constructor(@Inject(HttpClient) http: HttpClient,

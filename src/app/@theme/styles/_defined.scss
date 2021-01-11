@@ -1,0 +1,132 @@
+@import './_math';
+
+@mixin transition($param...) {
+    -ms-transition: $param;
+    -o-transition: $param;
+    -moz-transition: $param;
+    -webkit-transition: $param;
+    transition: $param;
+}
+
+@mixin transform($param...) {
+    -ms-transform: $param;
+    -o-transform: $param;
+    -moz-transform: $param;
+    -webkit-transform: $param;
+    transform: $param;
+}
+
+@mixin nb-overrides() {
+    @for $i from 0 through 100 {
+        .w-#{$i} { width : round(percentage($i/100)); }
+    }
+    @for $i from 1 through 10 {
+        @for $j from 1 through 10 {
+            .w-#{$i}-#{$j} { width : percentage($i/$j); }
+        }
+    }
+    @for $i from 0 through 100 {
+        .d-grid.xc-#{$i} { grid-template-columns: repeat($i, percentage(1/$i)); }
+        @for $j from 0 through 10 {
+            .d-grid.xc-#{$j}fr-#{$i} { grid-template-columns: repeat($i, #{$j}fr); }
+        }
+    }
+    @for $i from 0 through 100 {
+        .d-grid.yr-#{$i} { grid-template-rows: repeat($i, percentage(1/$i)); }
+        @for $j from 0 through 10 {
+            .d-grid.yr-#{$j}fr-#{$i} { grid-template-rows: repeat($i, #{$j}fr); }
+        }
+    }
+    @for $i from 0 through 100 {
+        .d-grid.xc-yr-#{$i} {
+            grid-template-columns: repeat($i, percentage(1/$i));
+            grid-template-rows: repeat($i, percentage(1/$i));
+        }
+        @for $j from 0 through 10 {
+            .d-grid.xc-yr-#{$j}fr-#{$i} {
+                grid-template-columns: repeat($i, #{$j}fr);
+                grid-template-rows: repeat($i, #{$j}fr);
+            }
+        }
+    }
+    @for $i from 0 through 100 {
+        .w-#{$i} { width: round(percentage($i/100)) !important; }
+    }
+    @for $i from 1 through 10 {
+        @for $j from 1 through 10 {
+            .w-#{$i}-#{$j} { width: percentage($i/$j) !important; }
+        }
+    }
+    @for $i from 0 through 100 {
+        .p-#{$i} { padding: round(percentage($i/100)); }
+        .pt-#{$i} { padding-top: round(percentage($i/100)); }
+        .pb-#{$i} { padding-bottom: round(percentage($i/100)); }
+        .pl-#{$i} { padding-left: round(percentage($i/100)); }
+        .pr-#{$i} { padding-right: round(percentage($i/100)); }
+        .px-#{$i} {
+            padding-left: round(percentage($i/100));
+            padding-right: round(percentage($i/100));
+        }
+        .py-#{$i} {
+            padding-top: round(percentage($i/100));
+            padding-bottom: round(percentage($i/100));
+        }
+
+        .m-#{$i} { margin: round(percentage($i/100)); }
+        .mt-#{$i} { margin-top: round(percentage($i/100)); }
+        .mb-#{$i} { margin-bottom: round(percentage($i/100)); }
+        .ml-#{$i} { margin-left: round(percentage($i/100)); }
+        .mr-#{$i} { margin-right: round(percentage($i/100)); }
+        .mx-#{$i} {
+            margin-left: round(percentage($i/100));
+            margin-right: round(percentage($i/100));
+        }
+        .my-#{$i} {
+            margin-top: round(percentage($i/100));
+            margin-bottom: round(percentage($i/100));
+        }
+    }
+
+    @for $i from 0 through 360 {
+        .rotate-#{$i} {
+            transform: rotate(#{$i}deg);
+            /* Legacy vendor prefixes that you probably don't need... */
+            /* Safari */
+            -webkit-transform: rotate(#{$i}deg);
+            /* Firefox */
+            -moz-transform: rotate(#{$i}deg);
+            /* IE */
+            -ms-transform: rotate(#{$i}deg);
+            /* Opera */
+            -o-transform: rotate(#{$i}deg);
+            /* Internet Explorer */
+            filter: ieFilter($i);
+        }
+    }
+
+    $displays: inline, block, contents, flex, grid,
+                inline-block, inline-flex, inline-grid,
+                inline-table, list-item, run-in,
+                table, table-caption, table-column-group,
+                table-header-group, table-footer-group,
+                table-row-group, table-cell, table-column, table-row,
+                none, initial, inherit;
+
+    @each $display in $displays {
+        .d-#{$display} {
+            display: #{$display} !important;
+        }
+    }
+
+    [class*='d-table-'] {
+        vertical-align: middle;
+    }
+
+    $floats: none, initial, inherit, unset, left, right;
+
+    @each $float in $floats {
+        .float-#{$float} {
+            float: #{$float} !important;
+        }
+    }
+}

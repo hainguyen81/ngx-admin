@@ -11,7 +11,7 @@
                  (click)="showLightbox(imagePreview.src); preventEvent($event);">
         </div>
     </div>
-    <div [class.d-table-row]="true" *ngIf="!onlyPrimary && (showAlbum || allowModified)" class="images-gallery">
+    <div [class.d-table-row]="true" *ngIf="!showOnlyPrimary && (showAlbum || allowModified)" class="images-gallery">
         <div [class.pt-2]="true"
              [class.d-table-cell]="(image || '').length"
              [class.d-none]="!(image || '').length"

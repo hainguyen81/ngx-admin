@@ -16,7 +16,7 @@ export const NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM =
 export const NBX_AUTH_INTERCEPTOR_COMPANY_HEADER =
     new InjectionToken<string>('Custom Interceptor Company Header Parameter');
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class NbxAuthInterceptor extends AbstractHttpInterceptor {
 
     constructor(_injector: Injector,

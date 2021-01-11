@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 export const HTTP_REQUEST_HEADERS = new InjectionToken<HttpHeaders | { [header: string]: string | string[]; }>(
     'The default request header to apply such as CORS');
 
-@Injectable({ providedIn: 'any' })
+@Injectable()
 export class RequestHeadersInterceptor extends AbstractHttpInterceptor {
 
     public get headers() {
