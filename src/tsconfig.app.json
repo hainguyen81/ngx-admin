@@ -22,6 +22,9 @@
             "@app/*": [
                 "../src/app/*"
             ],
+            "@app/components/*": [
+                "../src/app/pages/components/*"
+            ],
             "@app/types/*": [
                 "../src/app/@types/*"
             ],

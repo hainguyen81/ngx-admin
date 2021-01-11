@@ -53,7 +53,7 @@ export const GeneralSettingsTableSettings = {
             editor: {
                 type: 'list',
                 config: {
-                    list: <any[]>[]
+                    list: <any[]>[],
                 },
             },
         },

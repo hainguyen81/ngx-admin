@@ -1296,8 +1296,7 @@ export abstract class AbstractComponent
         !viewContainerRef && throwError('Not found view container to create component!');
         !componentType && throwError('Not found component type to create!');
 
-        let compServ: IComponentService<any>;
-        compServ = new BaseComponentService(
+        const compServ: IComponentService<any> = new BaseComponentService(
             this.getFactoryResolver(), viewContainerRef, this.getLogger(), componentType);
         return ComponentUtils.createComponent(
             (compServ as AbstractComponentService<any>), viewContainerRef, true);

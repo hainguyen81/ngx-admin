@@ -52,7 +52,7 @@ export default class ComponentUtils {
         viewContainerRef?: ViewContainerRef,
         clearView?: boolean | false): ComponentRef<T> {
         componentService && viewContainerRef && componentService.setViewContainerRef(viewContainerRef);
-        clearView && viewContainerRef.clear();
+        clearView && viewContainerRef && viewContainerRef.clear();
         return (componentService ? componentService.resolve() : undefined);
     }
 
@@ -67,8 +67,7 @@ export default class ComponentUtils {
         componentService: AbstractComponentService<T>,
         viewContainerRef?: ViewContainerRef,
         clearView?: boolean | false): T {
-        let componentRef: ComponentRef<T>;
-        componentRef = this.createComponentRef(componentService, viewContainerRef, clearView);
+        const componentRef: ComponentRef<T> = this.createComponentRef(componentService, viewContainerRef, clearView);
         return (componentRef ? componentRef.instance : undefined);
     }
 }
