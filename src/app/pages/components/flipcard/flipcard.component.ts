@@ -4,7 +4,6 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ComponentRef,
     ElementRef,
     Inject,
     QueryList,
@@ -23,9 +22,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import { AbstractComponent } from '../abstract.component';
-import ObjectUtils from '../../../utils/common/object.utils';
-import { throwError } from 'rxjs';
+import {NbCardBackComponent, NbCardFrontComponent, NbFlipCardComponent} from '@nebular/theme';
 
 /**
  * Flip-card base on {NbFlipCardComponent}
@@ -36,14 +33,24 @@ import { throwError } from 'rxjs';
     templateUrl: './flipcard.component.html',
     styleUrls: ['./flipcard.component.scss'],
 })
-export class NgxFlipCardComponent<
-    H extends AbstractComponent, F extends AbstractComponent, B extends AbstractComponent>
-    extends AbstractFlipcardComponent<DataSource, H, F, B>
+export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
     implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
+
+    @ViewChildren(NbFlipCardComponent)
+    private readonly queryFlipcardComponent: QueryList<NbFlipCardComponent>;
+    private _flipcardComponent: NbFlipCardComponent;
+
+    @ViewChildren(NbCardFrontComponent)
+    private readonly queryFlipcardFrontComponent: QueryList<NbCardFrontComponent>;
+    private _flipcardFrontComponent: NbCardFrontComponent;
+
+    @ViewChildren(NbCardBackComponent)
+    private readonly queryFlipcardBackComponent: QueryList<NbCardBackComponent>;
+    private _flipcardBackComponent: NbCardBackComponent;
 
     @ViewChildren('cardFrontComponent', {read: ViewContainerRef})
     private readonly queryCardFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
@@ -68,6 +75,30 @@ export class NgxFlipCardComponent<
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {NbFlipCardComponent} instance
+     * @return the {NbFlipCardComponent} instance
+     */
+    protected get flipcardComponent(): NbFlipCardComponent {
+        return this._flipcardComponent;
+    }
+
+    /**
+     * Get the {NbCardFrontComponent} instance
+     * @return the {NbCardFrontComponent} instance
+     */
+    protected get flipcardFrontComponent(): NbCardFrontComponent {
+        return this._flipcardFrontComponent;
+    }
+
+    /**
+     * Get the {NbCardBackComponent} instance
+     * @return the {NbCardBackComponent} instance
+     */
+    protected get flipcardBackComponent(): NbCardBackComponent {
+        return this._flipcardBackComponent;
+    }
 
     /**
      * Get a boolean value indicating whether showing panel header
@@ -159,7 +190,6 @@ export class NgxFlipCardComponent<
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
-            undefined, undefined, undefined,
             false, false);
     }
 
@@ -170,6 +200,15 @@ export class NgxFlipCardComponent<
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        if (!this._flipcardComponent) {
+            this._flipcardComponent = ComponentUtils.queryComponent(this.queryFlipcardComponent);
+        }
+        if (!this._flipcardFrontComponent) {
+            this._flipcardFrontComponent = ComponentUtils.queryComponent(this.queryFlipcardFrontComponent);
+        }
+        if (!this._flipcardBackComponent) {
+            this._flipcardBackComponent = ComponentUtils.queryComponent(this.queryFlipcardBackComponent);
+        }
         if (!this._headerViewContainerRef) {
             this._headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
         }
@@ -190,48 +229,5 @@ export class NgxFlipCardComponent<
             this._backComponentHolderViewContainerRef =
                 ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
         }
-
-        console.log([
-            'queryHeaderViewContainerRef', this.queryHeaderViewContainerRef,
-            '_headerViewContainerRef', this._headerViewContainerRef,
-            'queryCardFrontComponentHolderViewContainerRef', this.queryCardFrontComponentHolderViewContainerRef,
-            '_cardFrontComponentHolderViewContainerRef', this._cardFrontComponentHolderViewContainerRef,
-            'queryCardBackComponentHolderViewContainerRef', this.queryCardBackComponentHolderViewContainerRef,
-            '_cardBackComponentHolderViewContainerRef', this._cardBackComponentHolderViewContainerRef,
-            'queryFrontComponentHolderViewContainerRef', this.queryFrontComponentHolderViewContainerRef,
-            '_frontComponentHolderViewContainerRef', this._frontComponentHolderViewContainerRef,
-            'queryBackComponentHolderViewContainerRef', this.queryBackComponentHolderViewContainerRef,
-            '_backComponentHolderViewContainerRef', this._backComponentHolderViewContainerRef
-        ]);
-    }
-
-    /**
-     * Raise when the flip header component has been created
-     * @param componentRef the flip header component reference
-     */
-    protected onHeaderComponentCreated(componentRef: ComponentRef<H>): void {
-        console.log(['onHeaderComponentCreated', componentRef]);
-        (componentRef && componentRef.instance) || throwError('Could not inject dynamic header component!');
-        this._flipHeaderComponent = componentRef.instance;
-    }
-
-    /**
-     * Raise when the flip front component has been created
-     * @param componentRef the flip front component reference
-     */
-    protected onFrontComponentCreated(componentRef: ComponentRef<F>): void {
-        console.log(['onFrontComponentCreated', componentRef]);
-        (componentRef && componentRef.instance) || throwError('Could not inject dynamic front component!');
-        this._flipFrontComponent = componentRef.instance;
-    }
-
-    /**
-     * Raise when the flip back component has been created
-     * @param componentRef the flip header component reference
-     */
-    protected onBackComponentCreated(componentRef: ComponentRef<B>): void {
-        console.log(['onBackComponentCreated', componentRef]);
-        (componentRef && componentRef.instance) || throwError('Could not inject dynamic back component!');
-        this._flipBackComponent = componentRef.instance;
     }
 }

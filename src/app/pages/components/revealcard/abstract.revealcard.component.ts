@@ -1,20 +1,16 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../abstract.component';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
     Inject, Input,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {NbCardBackComponent, NbCardFrontComponent, NbRevealCardComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
@@ -25,32 +21,33 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Abstract RevealCard component base on {NbRevealCardComponent}
  */
-export abstract class AbstractRevealcardComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+export abstract class AbstractRevealcardComponent<T extends DataSource> extends AbstractComponent {
 
     protected static REVEALCARD_ELEMENT_SELECTOR: string = 'nb-reveal-card';
     protected static REVEALCARD_FRONT_ELEMENT_SELECTOR: string = 'nb-card-front';
     protected static REVEALCARD_BACK_ELEMENT_SELECTOR: string = 'nb-card-back';
 
     // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    @ViewChildren(NbRevealCardComponent)
-    private readonly queryRevealcardComponent: QueryList<NbRevealCardComponent>;
-    private revealcardComponent: NbRevealCardComponent;
-
-    @ViewChildren(NbCardFrontComponent)
-    private readonly queryRevealcardFrontComponent: QueryList<NbCardFrontComponent>;
-    private revealcardFrontComponent: NbCardFrontComponent;
-
-    @ViewChildren(NbCardBackComponent)
-    private readonly queryRevealcardBackComponent: QueryList<NbCardBackComponent>;
-    private revealcardBackComponent: NbCardBackComponent;
-
-    // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {NbRevealCardComponent} instance
+     * @return the {NbRevealCardComponent} instance
+     */
+    protected abstract get revealcardComponent(): NbRevealCardComponent;
+
+    /**
+     * Get the {NbCardFrontComponent} instance
+     * @return the {NbCardFrontComponent} instance
+     */
+    protected abstract get revealcardFrontComponent(): NbCardFrontComponent;
+
+    /**
+     * Get the {NbCardBackComponent} instance
+     * @return the {NbCardBackComponent} instance
+     */
+    protected abstract get revealcardBackComponent(): NbCardBackComponent;
 
     @Input() get revealed(): boolean {
         return this._revealed;
@@ -66,30 +63,6 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
 
     set showToggleButton(_showToggleButton: boolean) {
         this._showToggleButton = _showToggleButton;
-    }
-
-    /**
-     * Get the {NbRevealCardComponent} instance
-     * @return the {NbRevealCardComponent} instance
-     */
-    protected getRevealcardComponent(): NbRevealCardComponent {
-        return this.revealcardComponent;
-    }
-
-    /**
-     * Get the {NbCardFrontComponent} instance
-     * @return the {NbCardFrontComponent} instance
-     */
-    protected getRevealcardFrontComponent(): NbCardFrontComponent {
-        return this.revealcardFrontComponent;
-    }
-
-    /**
-     * Get the {NbCardBackComponent} instance
-     * @return the {NbCardBackComponent} instance
-     */
-    protected getRevealcardBackComponent(): NbCardBackComponent {
-        return this.revealcardBackComponent;
     }
 
     // -------------------------------------------------
@@ -138,23 +111,5 @@ export abstract class AbstractRevealcardComponent<T extends DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.revealcardComponent) {
-            this.revealcardComponent = ComponentUtils.queryComponent(this.queryRevealcardComponent);
-        }
-        if (!this.revealcardFrontComponent) {
-            this.revealcardFrontComponent = ComponentUtils.queryComponent(this.queryRevealcardFrontComponent);
-        }
-        if (!this.revealcardBackComponent) {
-            this.revealcardBackComponent = ComponentUtils.queryComponent(this.queryRevealcardBackComponent);
-        }
     }
 }

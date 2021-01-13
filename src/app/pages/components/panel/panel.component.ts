@@ -21,6 +21,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ComponentUtils from '../../../utils/common/component.utils';
+import {NbCardBodyComponent, NbCardComponent, NbCardFooterComponent, NbCardHeaderComponent} from '@nebular/theme';
 
 /**
  * Reveal-card base on {NbCardComponent}
@@ -37,6 +38,22 @@ export class NgxPanelComponent
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
+
+    @ViewChildren(NbCardComponent)
+    private readonly queryCardComponent: QueryList<NbCardComponent>;
+    private _cardComponent: NbCardComponent;
+
+    @ViewChildren(NbCardHeaderComponent)
+    private readonly queryCardHeaderComponent: QueryList<NbCardHeaderComponent>;
+    private _cardHeaderComponent: NbCardHeaderComponent;
+
+    @ViewChildren(NbCardBodyComponent)
+    private readonly queryCardBodyComponent: QueryList<NbCardBodyComponent>;
+    private _cardBodyComponent: NbCardBodyComponent;
+
+    @ViewChildren(NbCardFooterComponent)
+    private readonly queryCardFooterComponent: QueryList<NbCardFooterComponent>;
+    private _cardFooterComponent: NbCardFooterComponent;
 
     @ViewChildren('cardHeaderHolder', {read: ViewContainerRef})
     private readonly queryCardHeaderHolderViewContainerRef: QueryList<ViewContainerRef>;
@@ -58,6 +75,38 @@ export class NgxPanelComponent
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {NbCardComponent} instance
+     * @return the {NbCardComponent} instance
+     */
+    protected get cardComponent(): NbCardComponent {
+        return this._cardComponent;
+    }
+
+    /**
+     * Get the {NbCardHeaderComponent} instance
+     * @return the {NbCardHeaderComponent} instance
+     */
+    protected get cardHeaderComponent(): NbCardHeaderComponent {
+        return this._cardHeaderComponent;
+    }
+
+    /**
+     * Get the {NbCardBodyComponent} instance
+     * @return the {NbCardBodyComponent} instance
+     */
+    protected get cardBodyComponent(): NbCardBodyComponent {
+        return this._cardBodyComponent;
+    }
+
+    /**
+     * Get the {NbCardFooterComponent} instance
+     * @return the {NbCardFooterComponent} instance
+     */
+    protected get cardFooterComponent(): NbCardFooterComponent {
+        return this._cardFooterComponent;
+    }
 
     /**
      * Get the {ViewContainerRef} instance of the front component

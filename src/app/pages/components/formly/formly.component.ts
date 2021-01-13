@@ -1,12 +1,13 @@
 import {AbstractFormlyComponent} from './abstract.formly.component';
 import {DataSource} from '@app/types/index';
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
-    Renderer2,
+    Inject, QueryList,
+    Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -17,6 +18,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FormlyForm} from '@ngx-formly/core';
+import ComponentUtils from 'app/utils/common/component.utils';
 
 /**
  * Form component base on {FormlyModule}
@@ -26,17 +29,30 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './formly.component.html',
     styleUrls: ['./formly.component.scss'],
 })
-export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource> {
+export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
+
+    @ViewChildren(FormlyForm)
+    private readonly queryFormlyForm: QueryList<FormlyForm>;
+    private __formlyForm: FormlyForm;
 
     private model: any = undefined;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {FormlyForm} instance
+     * @return the {FormlyForm} instance
+     */
+    protected get formlyForm(): FormlyForm {
+        return this.__formlyForm;
+    }
 
     /**
      * Get the form data model
@@ -97,5 +113,17 @@ export class NgxFormlyComponent extends AbstractFormlyComponent<any, DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this.__formlyForm) {
+            this.__formlyForm = ComponentUtils.queryComponent(this.queryFormlyForm);
+        }
     }
 }

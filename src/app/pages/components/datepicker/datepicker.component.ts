@@ -1,10 +1,11 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
-    Renderer2,
+    Inject, QueryList,
+    Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';
@@ -17,6 +18,8 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DatePickerComponent} from 'ng2-date-picker';
+import ComponentUtils from 'app/utils/common/component.utils';
 
 /**
  * Date-picker component base on {DatePickerComponent}
@@ -26,7 +29,28 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './datepicker.component.html',
     styleUrls: ['./datepicker.component.scss'],
 })
-export class NgxDatePickerComponent extends AbstractDatePickerComponent<DataSource> {
+export class NgxDatePickerComponent extends AbstractDatePickerComponent<DataSource>
+    implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @ViewChildren(DatePickerComponent)
+    private readonly queryDatePickerComponent: QueryList<DatePickerComponent>;
+    private _datePickerComponent: DatePickerComponent;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {DatePickerComponent} instance
+     * @return the {DatePickerComponent} instance
+     */
+    protected get datePickerComponent(): DatePickerComponent {
+        return this._datePickerComponent;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -70,5 +94,17 @@ export class NgxDatePickerComponent extends AbstractDatePickerComponent<DataSour
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this._datePickerComponent) {
+            this._datePickerComponent = ComponentUtils.queryComponent(this.queryDatePickerComponent);
+        }
     }
 }

@@ -22,6 +22,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NbCardBackComponent, NbCardFrontComponent, NbRevealCardComponent} from '@nebular/theme';
 
 /**
  * Reveal-card base on {NbRevealCardComponent}
@@ -38,6 +39,18 @@ export class NgxRevealCardComponent extends AbstractRevealcardComponent<DataSour
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
+
+    @ViewChildren(NbRevealCardComponent)
+    private readonly queryRevealcardComponent: QueryList<NbRevealCardComponent>;
+    private __revealcardComponent: NbRevealCardComponent;
+
+    @ViewChildren(NbCardFrontComponent)
+    private readonly queryRevealcardFrontComponent: QueryList<NbCardFrontComponent>;
+    private __revealcardFrontComponent: NbCardFrontComponent;
+
+    @ViewChildren(NbCardBackComponent)
+    private readonly queryRevealcardBackComponent: QueryList<NbCardBackComponent>;
+    private __revealcardBackComponent: NbCardBackComponent;
 
     @ViewChildren('cardFrontComponent', {read: ViewContainerRef})
     private readonly queryCardFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
@@ -58,6 +71,30 @@ export class NgxRevealCardComponent extends AbstractRevealcardComponent<DataSour
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {NbRevealCardComponent} instance
+     * @return the {NbRevealCardComponent} instance
+     */
+    protected get revealcardComponent(): NbRevealCardComponent {
+        return this.__revealcardComponent;
+    }
+
+    /**
+     * Get the {NbCardFrontComponent} instance
+     * @return the {NbCardFrontComponent} instance
+     */
+    protected get revealcardFrontComponent(): NbCardFrontComponent {
+        return this.__revealcardFrontComponent;
+    }
+
+    /**
+     * Get the {NbCardBackComponent} instance
+     * @return the {NbCardBackComponent} instance
+     */
+    protected get revealcardBackComponent(): NbCardBackComponent {
+        return this.__revealcardBackComponent;
+    }
 
     /**
      * Get the {ViewContainerRef} instance of the front component
@@ -143,6 +180,15 @@ export class NgxRevealCardComponent extends AbstractRevealcardComponent<DataSour
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        if (!this.__revealcardComponent) {
+            this.__revealcardComponent = ComponentUtils.queryComponent(this.queryRevealcardComponent);
+        }
+        if (!this.__revealcardFrontComponent) {
+            this.__revealcardFrontComponent = ComponentUtils.queryComponent(this.queryRevealcardFrontComponent);
+        }
+        if (!this.__revealcardBackComponent) {
+            this.__revealcardBackComponent = ComponentUtils.queryComponent(this.queryRevealcardBackComponent);
+        }
         if (!this.cardFrontComponentHolderViewContainerRef) {
             this.cardFrontComponentHolderViewContainerRef =
                 ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);

@@ -3,15 +3,12 @@ import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
     AfterContentChecked,
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
     Inject,
     Input, Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -22,7 +19,6 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {Moment} from 'moment';
 import ObjectUtils from '../../../utils/common/object.utils';
 
@@ -84,17 +80,13 @@ export interface INgxDatePickerConfig {
  * Abstract tree-view component base on {DatePickerComponent}
  */
 export abstract class AbstractDatePickerComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit, AfterContentChecked {
+    extends AbstractComponent implements AfterContentChecked {
 
     protected static DATEPICKER_SELECTOR: string = 'dp-date-picker';
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
-
-    @ViewChildren(DatePickerComponent)
-    private readonly queryDatePickerComponent: QueryList<DatePickerComponent>;
-    private _datePickerComponent: DatePickerComponent;
 
     private _model: any;
 
@@ -108,6 +100,12 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     // GETTERS/SETTERS
     // -------------------------------------------------
 
+    /**
+     * Get the {DatePickerComponent} instance
+     * @return the {DatePickerComponent} instance
+     */
+    protected abstract get datePickerComponent(): DatePickerComponent;
+
     @Input('config') get config(): any {
         return super.config;
     }
@@ -119,25 +117,17 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
         if (ObjectUtils.isNotNou(__dtConfig) && (__dtConfig.format || '').length) {
             __dtConfig.format = this.translate(__dtConfig.format);
         }
-        if (this._datePickerComponent) {
-            this._datePickerComponent.config = this.getConfigValue('config');
-            this._datePickerComponent.displayDate = this.displayDate;
-            this._datePickerComponent.disabled = this.isDisabled;
-            this._datePickerComponent.maxDate = this.maxDate;
-            this._datePickerComponent.maxTime = this.maxTime;
-            this._datePickerComponent.minDate = this.minDate;
-            this._datePickerComponent.minTime = this.minTime;
-            this._datePickerComponent.placeholder = this.translate(this.placeholder || '');
-            this._datePickerComponent.theme = this.theme;
+        if (this.datePickerComponent) {
+            this.datePickerComponent.config = this.getConfigValue('config');
+            this.datePickerComponent.displayDate = this.displayDate;
+            this.datePickerComponent.disabled = this.isDisabled;
+            this.datePickerComponent.maxDate = this.maxDate;
+            this.datePickerComponent.maxTime = this.maxTime;
+            this.datePickerComponent.minDate = this.minDate;
+            this.datePickerComponent.minTime = this.minTime;
+            this.datePickerComponent.placeholder = this.translate(this.placeholder || '');
+            this.datePickerComponent.theme = this.theme;
         }
-    }
-
-    /**
-     * Get the {DatePickerComponent} instance
-     * @return the {DatePickerComponent} instance
-     */
-    protected get datePickerComponent(): DatePickerComponent {
-        return this._datePickerComponent;
     }
 
     /**
@@ -309,14 +299,6 @@ export abstract class AbstractDatePickerComponent<T extends DataSource>
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this._datePickerComponent) {
-            this._datePickerComponent = ComponentUtils.queryComponent(this.queryDatePickerComponent);
-        }
-    }
 
     ngAfterContentChecked() {
         super.ngAfterContentChecked();

@@ -1,6 +1,5 @@
 import {
     AfterContentChecked,
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
@@ -8,9 +7,7 @@ import {
     Inject,
     Input,
     Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';
@@ -20,7 +17,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractComponent, IEvent,
 } from '../abstract.component';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -534,7 +530,7 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
  * Abstract select component base on {NgSelectComponent}
  */
 export abstract class AbstractSelectComponent<T extends DataSource>
-    extends AbstractComponent implements AfterContentChecked, AfterViewInit {
+    extends AbstractComponent implements AfterContentChecked {
 
     protected static NG_SELECT_PARENT_COMPONENT_REF_PROPERTY = '__parentComponentRef';
     protected static NG_SELECT_CONTAINER_SELECTOR = '.ng-select-container';
@@ -542,10 +538,6 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
-
-    @ViewChildren(NgSelectComponent)
-    private readonly queryNgSelectComponent: QueryList<NgSelectComponent>;
-    private ngSelectComponent: NgSelectComponent;
 
     /**
      * Fired when item is added while [multiple]='true'. Outputs added item.
@@ -645,6 +637,12 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     // -------------------------------------------------
 
     /**
+     * Get the {NgSelectComponent} component
+     * @return the {NgSelectComponent} component
+     */
+    protected abstract get selectComponent(): NgSelectComponent;
+
+    /**
      * Get the component identity
      * @return the component identity
      */
@@ -658,14 +656,6 @@ export abstract class AbstractSelectComponent<T extends DataSource>
      */
     set id(_id: string) {
         this._id = _id;
-    }
-
-    /**
-     * Get the {NgSelectComponent} component
-     * @return the {NgSelectComponent} component
-     */
-    protected get selectComponent(): NgSelectComponent {
-        return this.ngSelectComponent;
     }
 
     /**
@@ -808,56 +798,6 @@ export abstract class AbstractSelectComponent<T extends DataSource>
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.ngSelectComponent) {
-            const _this: AbstractSelectComponent<T> = this;
-            this.ngSelectComponent = ComponentUtils.queryComponent(
-                this.queryNgSelectComponent, component => {
-                    if (ObjectUtils.isNotNou(component)) {
-                        component[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] = _this;
-                        component.addEvent.subscribe(addedItem => {
-                            this.onAdd({ data: addedItem });
-                        });
-                        component.blurEvent.subscribe($event => {
-                            this.onBlur({ event: $event });
-                        });
-                        component.changeEvent.subscribe(model => {
-                            this.onChange({ data: model });
-                        });
-                        component.closeEvent.subscribe($event => {
-                            this.onClose({ event: $event });
-                        });
-                        component.clearEvent.subscribe($event => {
-                            this.onClear({ event: $event });
-                        });
-                        component.focusEvent.subscribe($event => {
-                            this.onFocus({ event: $event });
-                        });
-                        component.searchEvent.subscribe(data => {
-                            this.onSearch({ data: data });
-                        });
-                        component.searchEvent.subscribe(data => {
-                            this.onSearch({ data: data });
-                        });
-                        component.openEvent.subscribe($event => {
-                            this.onOpen({ event: $event });
-                        });
-                        component.removeEvent.subscribe(removedItem => {
-                            this.onRemove({ data: removedItem });
-                        });
-                        component.scroll.subscribe(data => {
-                            this.onScroll({ data: data });
-                        });
-                        component.scrollToEnd.subscribe($event => {
-                            this.onScrollToEnd({ event: $event });
-                        });
-                    }
-                });
-        }
-    }
 
     ngAfterContentChecked(): void {
         super.ngAfterContentChecked();

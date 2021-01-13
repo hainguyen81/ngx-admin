@@ -4,8 +4,8 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
-    Renderer2,
+    Inject, QueryList,
+    Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';
@@ -21,7 +21,9 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NgSelectConfig} from '@ng-select/ng-select';
+import {NgSelectComponent, NgSelectConfig} from '@ng-select/ng-select';
+import ComponentUtils from 'app/utils/common/component.utils';
+import ObjectUtils from 'app/utils/common/object.utils';
 
 /**
  * Select component base on {NgSelectComponent}
@@ -37,6 +39,26 @@ import {NgSelectConfig} from '@ng-select/ng-select';
 })
 export class NgxSelectComponent extends AbstractSelectComponent<DataSource>
     implements AfterViewInit {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    @ViewChildren(NgSelectComponent)
+    private readonly queryNgSelectComponent: QueryList<NgSelectComponent>;
+    private ngSelectComponent: NgSelectComponent;
+
+    // -------------------------------------------------
+    // GETTERS/SETTERS
+    // -------------------------------------------------
+
+    /**
+     * Get the {NgSelectComponent} component
+     * @return the {NgSelectComponent} component
+     */
+    protected get selectComponent(): NgSelectComponent {
+        return this.ngSelectComponent;
+    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -81,5 +103,59 @@ export class NgxSelectComponent extends AbstractSelectComponent<DataSource>
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
             DefaultNgxSelectOptions);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this.ngSelectComponent) {
+            const _this: NgxSelectComponent = this;
+            this.ngSelectComponent = ComponentUtils.queryComponent(
+                this.queryNgSelectComponent, component => {
+                    if (ObjectUtils.isNotNou(component)) {
+                        component[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] = _this;
+                        component.addEvent.subscribe(addedItem => {
+                            this.onAdd({ data: addedItem });
+                        });
+                        component.blurEvent.subscribe($event => {
+                            this.onBlur({ event: $event });
+                        });
+                        component.changeEvent.subscribe(model => {
+                            this.onChange({ data: model });
+                        });
+                        component.closeEvent.subscribe($event => {
+                            this.onClose({ event: $event });
+                        });
+                        component.clearEvent.subscribe($event => {
+                            this.onClear({ event: $event });
+                        });
+                        component.focusEvent.subscribe($event => {
+                            this.onFocus({ event: $event });
+                        });
+                        component.searchEvent.subscribe(data => {
+                            this.onSearch({ data: data });
+                        });
+                        component.searchEvent.subscribe(data => {
+                            this.onSearch({ data: data });
+                        });
+                        component.openEvent.subscribe($event => {
+                            this.onOpen({ event: $event });
+                        });
+                        component.removeEvent.subscribe(removedItem => {
+                            this.onRemove({ data: removedItem });
+                        });
+                        component.scroll.subscribe(data => {
+                            this.onScroll({ data: data });
+                        });
+                        component.scrollToEnd.subscribe($event => {
+                            this.onScrollToEnd({ event: $event });
+                        });
+                    }
+                });
+        }
     }
 }

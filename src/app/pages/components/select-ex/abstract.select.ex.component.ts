@@ -4,9 +4,7 @@ import {
     ComponentFactoryResolver,
     ElementRef, EventEmitter,
     Inject, Input, Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';
@@ -16,7 +14,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractComponent, IEvent,
 } from '../abstract.component';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -246,10 +243,6 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren(NgxSelectComponent)
-    private readonly queryNgxSelectComponent: QueryList<NgxSelectComponent>;
-    private ngxSelectExComponent: NgxSelectComponent;
-
     /**
      * Raise after items already were loaded to show
      */
@@ -279,9 +272,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      * Get the {NgxSelectComponent} component
      * @return the {NgxSelectComponent} component
      */
-    protected get selectComponent(): NgxSelectComponent {
-        return this.ngxSelectExComponent;
-    }
+    protected abstract get selectComponent(): NgxSelectComponent;
 
     /**
      * Get the option items array to show
@@ -384,22 +375,6 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.ngxSelectExComponent) {
-            this.ngxSelectExComponent = ComponentUtils.queryComponent(
-                this.queryNgxSelectComponent, component => {
-                    component && component.focus.subscribe(
-                        $event => this.onSelectFocus({ event: $event }));
-                    component && component.blur.subscribe(
-                        $event => this.onSelectBlur({ event: $event }));
-                    component && component.subjOptions.subscribe(
-                        value => this.finishedLoading.emit(value));
-                });
-        }
-    }
 
     /**
      * Raise by {NgxSelectComponent#focus} event.

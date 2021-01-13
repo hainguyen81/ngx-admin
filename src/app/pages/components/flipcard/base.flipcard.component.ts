@@ -19,7 +19,6 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import { AbstractComponent } from '../abstract.component';
 
 /**
  * Base flip-card base on {NbFlipCardComponent}
@@ -30,10 +29,7 @@ import { AbstractComponent } from '../abstract.component';
     templateUrl: './flipcard.component.html',
     styleUrls: ['./flipcard.component.scss'],
 })
-export class BaseFlipcardComponent<
-    T extends DataSource,
-    H extends AbstractComponent, F extends AbstractComponent, B extends AbstractComponent>
-    extends NgxFlipCardComponent<H, F, B> {
+export class BaseFlipcardComponent<T extends DataSource> extends NgxFlipCardComponent {
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -80,7 +76,7 @@ export class BaseFlipcardComponent<
     }
 
     /**
-     * @deprecated Create the front component dynamically
+     * Create the front component dynamically
      * @param componentType front component type
      * @return created component
      */
@@ -90,22 +86,22 @@ export class BaseFlipcardComponent<
     }
 
     /**
-     * @deprecated Create the front component dynamically
+     * Create the front component dynamically
      * @param componentType front component type
      * @return created component
      */
     protected setFrontComponent(componentType: Type<any>): any {
-        const viewContainerRef: ViewContainerRef = this.cardFrontComponentViewContainerRef || this.frontComponentViewContainerRef;
-        return super.createComponentAt(viewContainerRef, componentType);
+        const viewContainerRef: ViewContainerRef = this.frontComponentViewContainerRef || this.cardFrontComponentViewContainerRef;
+        return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 
     /**
-     * @deprecated Create the back component dynamically
+     * Create the back component dynamically
      * @param componentType back component type
      * @return created component
      */
     protected setBackComponent(componentType: Type<any>): any {
-        const viewContainerRef: ViewContainerRef = this.cardBackComponentViewContainerRef || this.backComponentViewContainerRef;
-        return super.createComponentAt(viewContainerRef, componentType);
+        const viewContainerRef: ViewContainerRef = this.backComponentViewContainerRef || this.cardBackComponentViewContainerRef;
+        return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 }

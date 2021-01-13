@@ -1,15 +1,12 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
-    QueryList,
     Renderer2,
     Type,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -17,12 +14,10 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ConfigOption, FormlyConfig, FormlyFieldConfig, FormlyForm, FormlyFormOptions} from '@ngx-formly/core';
 import {FormGroup} from '@angular/forms';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {FormlyTemplateOptions} from '@ngx-formly/core/lib/components/formly.field.config';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
@@ -33,15 +28,11 @@ import ArrayUtils from '../../../utils/common/array.utils';
  * Abstract formly component base on {FormlyModule}
  */
 export abstract class AbstractFormlyComponent<T, D extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+    extends AbstractComponent {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
-
-    @ViewChildren(FormlyForm)
-    private readonly queryFormlyForm: QueryList<FormlyForm>;
-    private formlyForm: FormlyForm;
 
     /* whole form group */
     private formGroup: FormGroup = new FormGroup({});
@@ -49,6 +40,12 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {FormlyForm} instance
+     * @return the {FormlyForm} instance
+     */
+    protected abstract get formlyForm(): FormlyForm;
 
     /**
      * Get form model
@@ -114,14 +111,6 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
         this.options = options;
     }
 
-    /**
-     * Get the {FormlyForm} instance
-     * @return the {FormlyForm} instance
-     */
-    protected getFormlyForm(): FormlyForm {
-        return this.formlyForm;
-    }
-
     set config(_config: any) {
         super.config = this.translateFormConfig(_config);
     }
@@ -182,14 +171,6 @@ export abstract class AbstractFormlyComponent<T, D extends DataSource>
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.formlyForm) {
-            this.formlyForm = ComponentUtils.queryComponent(this.queryFormlyForm);
-        }
-    }
 
     /**
      * Perform submit action

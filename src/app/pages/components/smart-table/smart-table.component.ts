@@ -155,10 +155,6 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
         if (!this._searchViewContainerRef) {
             this._searchViewContainerRef = ComponentUtils.queryComponent(this.querySearchViewContainerRef);
         }
-        console.log([
-            'querySmartTableComponent', this.querySmartTableComponent,
-            'smartTableComponent', this.smartTableComponent,
-        ]);
     }
 
     // -------------------------------------------------

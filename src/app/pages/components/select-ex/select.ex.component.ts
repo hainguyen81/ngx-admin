@@ -7,10 +7,10 @@ import {
     EventEmitter,
     Inject,
     Input,
-    Output,
+    Output, QueryList,
     Renderer2,
     RendererStyleFlags2,
-    ViewChild,
+    ViewChild, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';
@@ -28,6 +28,7 @@ import {throwError} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../utils/common/object.utils';
+import ComponentUtils from 'app/utils/common/component.utils';
 
 /**
  * Select component base on {NgxSelectComponent}
@@ -48,6 +49,10 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     // DECLARATION
     // -------------------------------------------------
 
+    @ViewChildren(NgxSelectComponent)
+    private readonly queryNgxSelectComponent: QueryList<NgxSelectComponent>;
+    private ngxSelectExComponent: NgxSelectComponent;
+
     /**
      * Fire while selecting option item
      */
@@ -61,6 +66,14 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {NgxSelectComponent} component
+     * @return the {NgxSelectComponent} component
+     */
+    protected get selectComponent(): NgxSelectComponent {
+        return this.ngxSelectExComponent;
+    }
 
     /**
      * Get a boolean value indicating this component whether using `appendToBody`
@@ -164,6 +177,17 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        if (!this.ngxSelectExComponent) {
+            this.ngxSelectExComponent = ComponentUtils.queryComponent(
+                this.queryNgxSelectComponent, component => {
+                    component && component.focus.subscribe(
+                        $event => this.onSelectFocus({ event: $event }));
+                    component && component.blur.subscribe(
+                        $event => this.onSelectBlur({ event: $event }));
+                    component && component.subjOptions.subscribe(
+                        value => this.finishedLoading.emit(value));
+                });
+        }
         if (!this.__originalEnsureVisibleElement
             && this.selectComponent && typeof this.selectComponent['ensureVisibleElement'] === 'function') {
             const _this: NgxSelectExComponent = this;

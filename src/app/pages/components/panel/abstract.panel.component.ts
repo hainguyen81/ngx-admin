@@ -1,20 +1,16 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../abstract.component';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {
     NbCardBodyComponent,
     NbCardComponent,
@@ -29,32 +25,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Abstract card component base on {NbCardComponent}
  */
-export abstract class AbstractPanelComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+export abstract class AbstractPanelComponent<T extends DataSource> extends AbstractComponent {
 
     protected static CARD_ELEMENT_SELECTOR: string = 'nb-card';
     protected static CARD_BODY_ELEMENT_SELECTOR: string = 'nb-card-body';
     protected static CARD_FOOTER_ELEMENT_SELECTOR: string = 'nb-card-footer';
-
-    // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    @ViewChildren(NbCardComponent)
-    private readonly queryCardComponent: QueryList<NbCardComponent>;
-    private _cardComponent: NbCardComponent;
-
-    @ViewChildren(NbCardHeaderComponent)
-    private readonly queryCardHeaderComponent: QueryList<NbCardHeaderComponent>;
-    private _cardHeaderComponent: NbCardHeaderComponent;
-
-    @ViewChildren(NbCardBodyComponent)
-    private readonly queryCardBodyComponent: QueryList<NbCardBodyComponent>;
-    private _cardBodyComponent: NbCardBodyComponent;
-
-    @ViewChildren(NbCardFooterComponent)
-    private readonly queryCardFooterComponent: QueryList<NbCardFooterComponent>;
-    private _cardFooterComponent: NbCardFooterComponent;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -64,33 +39,25 @@ export abstract class AbstractPanelComponent<T extends DataSource>
      * Get the {NbCardComponent} instance
      * @return the {NbCardComponent} instance
      */
-    protected get cardComponent(): NbCardComponent {
-        return this._cardComponent;
-    }
+    protected abstract get cardComponent(): NbCardComponent;
 
     /**
      * Get the {NbCardHeaderComponent} instance
      * @return the {NbCardHeaderComponent} instance
      */
-    protected get cardHeaderComponent(): NbCardHeaderComponent {
-        return this._cardHeaderComponent;
-    }
+    protected abstract get cardHeaderComponent(): NbCardHeaderComponent;
 
     /**
      * Get the {NbCardBodyComponent} instance
      * @return the {NbCardBodyComponent} instance
      */
-    protected get cardBodyComponent(): NbCardBodyComponent {
-        return this._cardBodyComponent;
-    }
+    protected abstract get cardBodyComponent(): NbCardBodyComponent;
 
     /**
      * Get the {NbCardFooterComponent} instance
      * @return the {NbCardFooterComponent} instance
      */
-    protected get cardFooterComponent(): NbCardFooterComponent {
-        return this._cardFooterComponent;
-    }
+    protected abstract get cardFooterComponent(): NbCardFooterComponent;
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -134,26 +101,5 @@ export abstract class AbstractPanelComponent<T extends DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this._cardComponent) {
-            this._cardComponent = ComponentUtils.queryComponent(this.queryCardComponent);
-        }
-        if (!this._cardHeaderComponent) {
-            this._cardHeaderComponent = ComponentUtils.queryComponent(this.queryCardHeaderComponent);
-        }
-        if (!this._cardBodyComponent) {
-            this._cardBodyComponent = ComponentUtils.queryComponent(this.queryCardBodyComponent);
-        }
-        if (!this._cardFooterComponent) {
-            this._cardFooterComponent = ComponentUtils.queryComponent(this.queryCardFooterComponent);
-        }
     }
 }
