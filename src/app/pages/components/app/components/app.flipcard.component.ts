@@ -7,7 +7,6 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ComponentRef,
     ElementRef,
     Inject, InjectionToken,
     OnInit,
@@ -36,7 +35,6 @@ import {
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';
-import TimerUtils from '../../../../utils/common/timer.utils';
 
 export const APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the flip-pane');
@@ -55,26 +53,15 @@ export class AppFlipcardComponent<D extends DataSource,
     TB extends AppToolbarComponent<D>,
     F extends AbstractComponent,
     B extends AbstractComponent>
-    extends BaseFlipcardComponent<D, TB, F, B>
+    extends BaseFlipcardComponent<D>
     implements AfterViewInit, OnInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
-    protected readonly DEPRECATED: boolean = false;
-
-    /**
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipHeaderComponent}
-     */
     private _toolbarComponent: TB;
-    /**
-     * @deprecated Instead of using {#flipFrontComponentType}, {#flipFrontComponent}
-     */
     private _frontComponent: F;
-    /**
-     * @deprecated Instead of using {#flipBackComponentType}, {#flipBackComponent}
-     */
     private _backComponent: B;
 
     // -------------------------------------------------
@@ -119,7 +106,6 @@ export class AppFlipcardComponent<D extends DataSource,
 
     /**
      * Get a boolean value indicating whether creating back-component at start-up
-     * @deprecated Instead of using {#flipBackComponentType}, {#flipBackComponent}
      * @return true (default) for creating; else false
      */
     protected get fulfillComponentsAtStartup(): boolean {
@@ -128,31 +114,25 @@ export class AppFlipcardComponent<D extends DataSource,
 
     /**
      * Get the toolbar {AppToolbarComponent} instance
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipHeaderComponent}
      * @return the toolbar {AppToolbarComponent} instance
      */
     protected get toolbarComponent(): TB {
-        this.DEPRECATED && throwError('This method already was deprecated! Instead of using {#flipHeaderComponent}!');
         return this._toolbarComponent;
     }
 
     /**
      * Get the front-flip {AbstractComponent} instance
-     * @deprecated Instead of using {#flipFrontComponentType}, {#flipFrontComponent}
      * @return the front-flip {AbstractComponent} instance
      */
     protected get frontComponent(): F {
-        this.DEPRECATED && throwError('This method already was deprecated! Instead of using {#flipFrontComponent}!');
         return this._frontComponent;
     }
 
     /**
      * Get the back-flip {AbstractComponent} instance
-     * @deprecated Instead of using {#flipBackComponentType}, {#flipBackComponent}
      * @return the back-flip {AbstractComponent} instance
      */
     protected get backComponent(): B {
-        this.DEPRECATED && throwError('This method already was deprecated! Instead of using {#flipBackComponent}!');
         return this._backComponent;
     }
 
@@ -231,73 +211,11 @@ export class AppFlipcardComponent<D extends DataSource,
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        /**
-         * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
-         */
-        if (!this.DEPRECATED) {
-            // Create flip components
-            this.createFlipComponents();
+        // Create flip components
+        this.createFlipComponents();
 
-            // toolbar actions settings on start-up
-            this.doToolbarActionsSettingsOnFlipped();
-
-        } else {
-            this.flipHeaderComponentType = this.toolbarComponentType;
-            this.flipFrontComponentType = this.frontComponentType;
-            this.flipBackComponentType = this.backComponentType;
-        }
-    }
-
-    /**
-     * Raise when the flip header component has been created
-     * @param componentRef the flip header component reference
-     */
-    onHeaderComponentCreated(componentRef: ComponentRef<TB>) {
-        super.onHeaderComponentCreated(componentRef);
-        /**
-         * @deprecated Instead of using {#flipHeaderComponentType}, {#flipHeaderComponent}
-         */
-        if (!this._toolbarComponent || this.DEPRECATED) {
-            this._toolbarComponent = super.flipHeaderComponent;
-        }
-
-        if (this._toolbarComponent && this.DEPRECATED) {
-            // register event listeners
-            const _this: AppFlipcardComponent<D, TB, F, B> = this;
-            this._toolbarComponent
-            && this._toolbarComponent.actionListener().subscribe($event => _this.onClickAction($event));
-
-            // toolbar actions settings on start-up
-            this.doToolbarActionsSettingsOnFlipped();
-        }
-    }
-
-    /**
-     * Raise when the flip front component has been created
-     * @param componentRef the flip front component reference
-     */
-    onFrontComponentCreated(componentRef: ComponentRef<F>) {
-        super.onFrontComponentCreated(componentRef);
-        /**
-         * @deprecated Instead of using {#flipFrontComponentType}, {#flipFrontComponent}
-         */
-        if (!this._frontComponent || this.DEPRECATED) {
-            this._frontComponent = super.flipFrontComponent;
-        }
-    }
-
-    /**
-     * Raise when the flip front component has been created
-     * @param componentRef the flip front component reference
-     */
-    onBackComponentCreated(componentRef: ComponentRef<B>) {
-        super.onBackComponentCreated(componentRef);
-        /**
-         * @deprecated Instead of using {#flipBackComponentType}, {#flipBackComponent}
-         */
-        if (!this._backComponent || this.DEPRECATED) {
-            this._backComponent = super.flipBackComponent;
-        }
+        // toolbar actions settings on start-up
+        this.doToolbarActionsSettingsOnFlipped();
     }
 
     /**
@@ -369,30 +287,25 @@ export class AppFlipcardComponent<D extends DataSource,
 
     /**
      * Create flip view components
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     private createFlipComponents(): void {
         // create table component
         const _this: AppFlipcardComponent<D, TB, F, B> = this;
-        // TODO 
+        // TODO
         this._toolbarComponent = super.setToolbarComponent(this.toolbarComponentType);
         this._toolbarComponent
         && this._toolbarComponent.actionListener()
             .subscribe($event => _this.onClickAction($event));
         this._frontComponent = super.setFrontComponent(this.frontComponentType);
-        console.log(['_frontComponent', this._frontComponent]);
         this.fulfillComponentsAtStartup && this.ensureBackComponent();
     }
 
     /**
      * Ensure back-component whether has been created
-     * @deprecated Instead of using {#flipBackComponentType}, {#flipBackComponent}
      */
     protected ensureBackComponent(): void {
-        if (!this._backComponent && !this.DEPRECATED) {
+        if (!this._backComponent) {
             this._backComponent = super.setBackComponent(this.backComponentType);
-        } else if (!this._backComponent) {
-            throwError('This method already was deprecated! Instead of using {#flipBackComponent}!');
         }
     }
 

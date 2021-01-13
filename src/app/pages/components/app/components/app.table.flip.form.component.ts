@@ -108,20 +108,18 @@ export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
 
     /**
      * Detect data whether has been changed
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     protected get isDataChanged(): boolean {
-        const component: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
+        const component: B = this.backComponent;
         return (component && component.getFormGroup() && component.getFormGroup().dirty);
     }
 
     /**
      * Perform saving data
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     protected doSave(): void {
-        const backComponent: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
-        const toolbarComponent: TB = (this.DEPRECATED ? this.flipHeaderComponent : this.toolbarComponent);
+        const backComponent: B = this.backComponent;
+        const toolbarComponent: TB = this.toolbarComponent;
         if (!backComponent || !backComponent.submit()) {
             if (toolbarComponent) {
                 this.showError(toolbarComponent.getToolbarHeader().title, 'common.form.invalid_data');
@@ -146,10 +144,9 @@ export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
 
     /**
      * Perform resetting data
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     protected doReset(): void {
-        const backComponent: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
+        const backComponent: B = this.backComponent;
         const cloned: T = DeepCloner(this.selectedModel);
         delete cloned['parent'], cloned['children'];
         backComponent && backComponent.setModel(cloned);
@@ -157,11 +154,10 @@ export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
 
     /**
      * Perform deleting data
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     protected doDelete(): void {
-        const backComponent: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
-        const toolbarComponent: TB = (this.DEPRECATED ? this.flipHeaderComponent : this.toolbarComponent);
+        const backComponent: B = this.backComponent;
+        const toolbarComponent: TB = this.toolbarComponent;
         this.getConfirmPopup().show({
             cancelButton: this.translate('common.toast.confirm.delete.cancel'),
             color: 'warn',

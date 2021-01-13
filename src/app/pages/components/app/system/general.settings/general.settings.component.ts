@@ -122,11 +122,10 @@ export class GeneralSettingsComponent
 
     /**
      * Raise when adding new data
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      * @param $event event data
      */
     protected onNewData($event: IEvent): void {
-        const backComponent: GeneralSettingsFormlyComponent = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
+        const backComponent: GeneralSettingsFormlyComponent = this.backComponent;
         const newInst: IGeneralSettings = new GeneralSettings(null, null, null, null);
         newInst.builtin = false;
         backComponent && backComponent.setModel(newInst);
@@ -134,11 +133,10 @@ export class GeneralSettingsComponent
 
     /**
      * Raise when editting data
-     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      * @param $event event data
      */
     protected onEditData($event: IEvent): void {
-        const backComponent: GeneralSettingsFormlyComponent = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
+        const backComponent: GeneralSettingsFormlyComponent = this.backComponent;
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
         (row && row.getData()) || throwError('Invalid data to edit');
         const setting: IGeneralSettings = row.getData() as IGeneralSettings;

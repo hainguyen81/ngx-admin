@@ -146,21 +146,8 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        /**
-         * @deprecated Instead of using {#flipFrontComponentType}, {#flipFrontComponent}
-         */
-        // listener
-        (this.frontComponent && !this.DEPRECATED)
-        && this.registerFrontComponentListeners();
-    }
-
-    /**
-     * Raise when the flip front component has been created
-     * @param componentRef the flip front component reference
-     */
-    onFrontComponentCreated(componentRef: ComponentRef<F>) {
-        super.onFrontComponentCreated(componentRef);
-        this.DEPRECATED && this.registerFrontComponentListeners();
+        // register front component event listeners
+        this.registerFrontComponentListeners();
     }
 
     /**
@@ -193,27 +180,26 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
 
     /**
      * Register event listeners for front component
-     * @deprecated Instead of using {#flipFrontComponentType}, {#flipFrontComponent}
      */
     private registerFrontComponentListeners(): void {
-        const component: F = (this.DEPRECATED ? this.flipFrontComponent : this.frontComponent);
+        const component: F = this.frontComponent;
         const tableFrontComponent: AppSmartTableComponent<D> = <AppSmartTableComponent<D>>component;
         if (ObjectUtils.isNotNou(tableFrontComponent)) {
             tableFrontComponent.setNewItemListener($event => {
                 this._selectedModel = null;
-                !this.DEPRECATED && this.ensureBackComponent();
+                this.ensureBackComponent();
                 this.onNewData($event);
                 this.flipped = true;
             });
             tableFrontComponent.setEditItemListener($event => {
                 this._selectedModel = ($event && $event.data && $event.data['row'] instanceof Row ? ($event.data['row'] as Row).getData() as T : undefined);
-                !this.DEPRECATED && this.ensureBackComponent();
+                this.ensureBackComponent();
                 this.onEditData($event);
                 this.flipped = true;
             });
             tableFrontComponent.setDeleteItemListener($event => {
                 this._selectedModel = ($event && $event.data && $event.data['row'] instanceof Row ? ($event.data['row'] as Row).getData() as T : undefined);
-                !this.DEPRECATED && this.ensureBackComponent();
+                this.ensureBackComponent();
                 this.onDeleteData($event);
                 this.flipped = false;
             });

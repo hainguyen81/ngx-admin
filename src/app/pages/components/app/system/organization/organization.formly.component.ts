@@ -443,8 +443,12 @@ export class OrganizationFormlyComponent
      * Observe manager field
      */
     private observeManagerField(): Promise<any> {
-        return SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource).then(
-            users => this.formlyForm && this.formlyForm.fields[1].fieldGroup[1].templateOptions.options = users);
+        return SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource)
+            .then(users => {
+                if (this.formlyForm) {
+                    this.formlyForm.fields[1].fieldGroup[1].templateOptions.options = users;
+                }
+            });
     }
 
     /**
