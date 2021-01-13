@@ -93,7 +93,7 @@ export class BaseSplitPaneComponent<T extends DataSource> extends NgxSplitPaneCo
      * @return created component
      */
     protected setAreaComponent(areaIndex: number, componentType: Type<any>): any {
-        (!areaIndex || this.getNumberOfAreas() <= areaIndex || areaIndex < 0)
+        (!areaIndex || this.numberOfAreas <= areaIndex || areaIndex < 0)
         && throwError('Could not create area component at the invalid index area (' + areaIndex + ')');
         let viewContainerRef: ViewContainerRef;
         viewContainerRef = this.getSplitAreaHolderViewContainerComponents()[areaIndex];

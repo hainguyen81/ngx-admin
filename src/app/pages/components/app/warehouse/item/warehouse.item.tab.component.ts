@@ -405,7 +405,7 @@ export class WarehouseItemTabsetComponent
      */
     public submit(): boolean {
         if (!this.getOverviewTab().submit()) {
-            this.getTabsetComponent().selectTab(this.getTabsComponent()[0]);
+            this.tabsetComponent.selectTab(this.tabsComponent[0]);
             this.showError('warehouse.title', 'common.form.invalid_data');
             return false;
         }
