@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -53,7 +54,7 @@ export const GeneralSettingsTableSettings = {
             editor: {
                 type: 'list',
                 config: {
-                    list: <any[]>[],
+                    list: <any[]>[]
                 },
             },
         },
@@ -96,14 +97,14 @@ export const GeneralSettingsTableSettings = {
 export const GeneralSettingsContextMenu: IContextMenu[] = [].concat(COMMON.baseMenu);
 
 @Component({
-    moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
+    // moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
     selector: 'ngx-smart-table-system-general-settings',
     templateUrl: '../../../smart-table/smart-table.component.html',
     styleUrls: ['../../../smart-table/smart-table.component.scss'],
 })
 export class GeneralSettingsSmartTableComponent
     extends AppSmartTableComponent<GeneralSettingsDatasource>
-    implements OnInit {
+    implements OnInit, AfterViewInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS

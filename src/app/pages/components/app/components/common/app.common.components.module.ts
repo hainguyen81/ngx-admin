@@ -43,7 +43,6 @@ import {AppFormlySelectFieldComponent} from './app.formly.select.field.component
 import {AppModuleDataFormlySelectFieldComponent} from './app.module.data.formly.select.field.component';
 import {AppModuleDataIndexSettingsFormlySelectFieldComponent} from './app.module.data.index.formly.select.field.component';
 import {AppModuleDataIndexSettingsFormlySelectExFieldComponent} from './app.module.data.index.formly.select.ex.field.component';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -59,9 +58,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

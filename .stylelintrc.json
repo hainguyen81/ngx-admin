@@ -6,7 +6,7 @@
     "function-calc-no-unspaced-operator": true,
     "function-comma-space-after": "always-single-line",
     "function-comma-space-before": "never",
-    "function-name-case": null,
+    "function-name-case": "lower",
     "function-url-quotes": "always",
     "function-whitespace-after": "always",
 
@@ -15,23 +15,23 @@
     "length-zero-no-unit": true,
 
     "string-no-newline": true,
-    "string-quotes": [],
+    "string-quotes": "single",
 
     "unit-case": "lower",
     "unit-no-unknown": true,
-    "unit-whitelist": ["px", "%", "deg", "ms", "em", "vh", "vw", "s", "rem", "rad", "fr"],
+    "unit-whitelist": ["px", "%", "deg", "ms", "em", "vh", "vw", "s", "rem"],
 
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
 
-    "shorthand-property-no-redundant-values": false,
+    "shorthand-property-no-redundant-values": true,
 
     "property-case": "lower",
 
     "declaration-block-no-duplicate-properties": [ true, {
       "ignore": ["consecutive-duplicates-with-different-values"]
     }],
-    "declaration-block-trailing-semicolon": null,
+    "declaration-block-trailing-semicolon": "always",
     "declaration-block-single-line-max-declarations": 1,
     "declaration-block-semicolon-space-before": "never",
     "declaration-block-semicolon-space-after": "always-single-line",
@@ -66,7 +66,9 @@
     }],
     "selector-type-case": "lower",
     "selector-max-id": 0,
+
     "no-missing-end-of-source-newline": true,
+
     "max-line-length": 120
   }
 }

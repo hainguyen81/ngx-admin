@@ -44,7 +44,6 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 import {WarehouseInventoryDetailSmartTableComponent} from './warehouse.inventory.detail.table.component';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -60,9 +59,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

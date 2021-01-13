@@ -158,7 +158,6 @@ import {GeneralWarehouseSettingsFormlySelectExFieldComponent} from './common/gen
 import {GeneralWarehouseSettingsFormlySelectFieldComponent} from './common/general.warehouse.settings.select.field.component';
 import {WarehouseSettingsFormlySelectExFieldComponent} from './warehouse/settings/warehouse.settings.select.ex.field.component';
 import {WarehouseSettingsFormlySelectFieldComponent} from './warehouse/settings/warehouse.settings.select.field.component';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -175,9 +174,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbDatepickerModule,
         Ng2SmartTableModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

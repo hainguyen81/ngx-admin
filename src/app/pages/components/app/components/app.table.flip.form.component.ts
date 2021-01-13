@@ -106,18 +106,25 @@ export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
     // FUNCTIONS
     // -------------------------------------------------
 
+    /**
+     * Detect data whether has been changed
+     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
+     */
     protected get isDataChanged(): boolean {
-        return this.backComponent.getFormGroup().dirty;
+        const component: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
+        return (component && component.getFormGroup() && component.getFormGroup().dirty);
     }
 
     /**
      * Perform saving data
+     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     protected doSave(): void {
-        if (!this.backComponent.submit()) {
-            if (this.toolbarComponent) {
-                this.showError(this.toolbarComponent.getToolbarHeader().title,
-                    'common.form.invalid_data');
+        const backComponent: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
+        const toolbarComponent: TB = (this.DEPRECATED ? this.flipHeaderComponent : this.toolbarComponent);
+        if (!backComponent || !backComponent.submit()) {
+            if (toolbarComponent) {
+                this.showError(toolbarComponent.getToolbarHeader().title, 'common.form.invalid_data');
             } else {
                 this.showError('app', 'common.form.invalid_data');
             }
@@ -125,7 +132,7 @@ export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
         }
 
         // update model if necessary
-        const model: T = this.backComponent.getModel();
+        const model: T = backComponent.getModel();
         if (!(model.id || '').length) {
             model.id = IdGenerators.oid.generate();
         }
@@ -139,31 +146,34 @@ export class AppTableFlipFormComponent<T extends IModel, D extends DataSource,
 
     /**
      * Perform resetting data
+     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     protected doReset(): void {
+        const backComponent: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
         const cloned: T = DeepCloner(this.selectedModel);
         delete cloned['parent'], cloned['children'];
-        this.backComponent.setModel(cloned);
+        backComponent && backComponent.setModel(cloned);
     }
 
     /**
      * Perform deleting data
+     * @deprecated Instead of using {#flipHeaderComponentType}, {#flipFrontComponentType}, {#flipBackComponentType}
      */
     protected doDelete(): void {
+        const backComponent: B = (this.DEPRECATED ? this.flipBackComponent : this.backComponent);
+        const toolbarComponent: TB = (this.DEPRECATED ? this.flipHeaderComponent : this.toolbarComponent);
         this.getConfirmPopup().show({
             cancelButton: this.translate('common.toast.confirm.delete.cancel'),
             color: 'warn',
             content: this.translate('common.toast.confirm.delete.message'),
             okButton: this.translate('common.toast.confirm.delete.ok'),
-            title: (!this.toolbarComponent ? this.translate('app')
-                : this.translate(this.toolbarComponent.getToolbarHeader().title)),
+            title: (!toolbarComponent ? this.translate('app') : this.translate(toolbarComponent.getToolbarHeader().title)),
         }).toPromise().then(value => {
-            value && this.getDataSource().remove(this.backComponent.getModel())
-                .then(() => {
-                    this.showDeleteDataSuccess();
-                    this.doBack();
-                })
-                .catch(() => this.showSaveDataError());
+            value && this.getDataSource().remove(backComponent.getModel()).then(() => {
+                this.showDeleteDataSuccess();
+                this.doBack();
+            })
+            .catch(() => this.showSaveDataError());
         });
     }
 }

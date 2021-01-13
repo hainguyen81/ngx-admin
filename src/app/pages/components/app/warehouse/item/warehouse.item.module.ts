@@ -44,7 +44,6 @@ import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -61,9 +60,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbSearchModule,
         NbTabsetModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

@@ -38,7 +38,6 @@ import {FeaturesComponentsModule} from '../module.components/features.components
 import {ComponentsModule} from '../../components.module';
 import {AppComponentsModule} from '../components/app.components.module';
 import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -55,9 +54,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbSearchModule,
         NbTabsetModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

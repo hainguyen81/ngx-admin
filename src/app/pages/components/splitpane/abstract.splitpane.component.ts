@@ -1,14 +1,11 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -16,7 +13,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
 import {throwError} from 'rxjs';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -35,34 +31,33 @@ export interface ISplitAreaConfig {
 /**
  * Abstract SplitPane component base on {AngularSplitModule}
  */
-export abstract class AbstractSplitpaneComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+export abstract class AbstractSplitpaneComponent<T extends DataSource> extends AbstractComponent {
 
     protected static SPLIT_ELEMENT_SELECTOR: string = 'as-split';
     protected static SPLIT_AREA_ELEMENT_SELECTOR: string = 'as-split-area';
     protected static SPLIT_GUTTER_ELEMENT_SELECTOR: string = '.as-split-gutter';
 
     // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    @ViewChildren(SplitComponent)
-    private readonly querySplitComponent: QueryList<SplitComponent>;
-    private splitComponent: SplitComponent;
-
-    @ViewChildren(SplitAreaDirective)
-    private readonly querySplitAreaDirectiveComponents: QueryList<SplitAreaDirective>;
-    private splitAreas: SplitAreaDirective[];
-
-    // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {SplitComponent} instance
+     * @return the {SplitComponent} instance
+     */
+    protected abstract get splitComponent(): SplitComponent;
+
+    /**
+     * Get the {SplitAreaDirective} instances array
+     * @return the {SplitAreaDirective} instances array
+     */
+    protected abstract get splitAreaComponents(): SplitAreaDirective[];
 
     /**
      * Get a boolean value indicating this component whether is splitted by horizontal direction
      * @return true for horizontal direction; else false
      */
-    public isHorizontal(): boolean {
+    public get isHorizontal(): boolean {
         return this.horizontal;
     }
 
@@ -70,16 +65,16 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      * Get the number of split-area
      * @return the number of split-area
      */
-    public getNumberOfAreas(): number {
-        return this.numberOfAreas;
+    public get numberOfAreas(): number {
+        return this.numOfAreas;
     }
 
     /**
      * Set the number of split-area
-     * @param numberOfAreas the number of split-area
+     * @param numOfAreas the number of split-area
      */
-    protected setNumberOfAreas(numberOfAreas: number): void {
-        this.numberOfAreas = numberOfAreas;
+    protected setNumberOfAreas(numOfAreas: number): void {
+        this.numOfAreas = numOfAreas;
     }
 
     /**
@@ -88,25 +83,9 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      */
     public setHorizontal(horizontal?: boolean): void {
         this.horizontal = horizontal || false;
-        if (this.getSplitComponent()) {
-            this.getSplitComponent().direction = (this.horizontal ? 'horizontal' : 'vertical');
+        if (this.splitComponent) {
+            this.splitComponent.direction = (this.horizontal ? 'horizontal' : 'vertical');
         }
-    }
-
-    /**
-     * Get the {SplitComponent} instance
-     * @return the {SplitComponent} instance
-     */
-    protected getSplitComponent(): SplitComponent {
-        return this.splitComponent;
-    }
-
-    /**
-     * Get the {SplitAreaDirective} instances array
-     * @return the {SplitAreaDirective} instances array
-     */
-    protected getSplitAreaComponents(): SplitAreaDirective[] {
-        return this.splitAreas;
     }
 
     // -------------------------------------------------
@@ -148,30 +127,14 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private numberOfAreas?: number | 1,
+                          private numOfAreas?: number | 1,
                           private horizontal?: boolean | false) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        (numberOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.splitComponent) {
-            this.splitComponent = ComponentUtils.queryComponent(this.querySplitComponent);
-        }
-        if ((!this.splitAreas || !this.splitAreas.length)) {
-            this.splitAreas = ComponentUtils.queryComponents(this.querySplitAreaDirectiveComponents);
-        }
-        this.setHorizontal(this.horizontal);
+        (numOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
     }
 
     // -------------------------------------------------
@@ -215,8 +178,8 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource>
      */
     protected configAreaByIndex(areaIndex: number, config: ISplitAreaConfig): void {
         let area: SplitAreaDirective;
-        area = (0 <= areaIndex && areaIndex < this.getSplitAreaComponents().length
-                ? this.getSplitAreaComponents()[areaIndex] : null);
+        area = (0 <= areaIndex && areaIndex < this.splitAreaComponents.length
+                ? this.splitAreaComponents[areaIndex] : null);
         this.configArea(area, config);
     }
 }

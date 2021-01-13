@@ -1,10 +1,11 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject,
-    Renderer2,
+    Inject, QueryList,
+    Renderer2, ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';
@@ -17,6 +18,9 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatToolbar} from '@angular/material/toolbar';
+import {NbButtonComponent} from '@nebular/theme';
+import ComponentUtils from 'app/utils/common/component.utils';
 
 /**
  * Toolbar component base on {MatToolbar}
@@ -26,17 +30,41 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
 })
-export class NgxToolbarComponent extends AbstractToolbarComponent<DataSource> {
+export class NgxToolbarComponent extends AbstractToolbarComponent<DataSource>
+    implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
+
+    @ViewChildren(MatToolbar)
+    private readonly queryToolbarComponent: QueryList<MatToolbar>;
+    private __toolbarComponent: MatToolbar;
+    @ViewChildren(NbButtonComponent)
+    private readonly queryToolbarActionsComponent: QueryList<NbButtonComponent>;
+    private __toolbarActionComponents: NbButtonComponent[];
 
     private _showActions: boolean = true;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {MatToolbar} component
+     * @return the {MatToolbar} component
+     */
+    protected get toolbarComponent(): MatToolbar {
+        return this.__toolbarComponent;
+    }
+
+    /**
+     * Get the toolbar action components array
+     * @return the toolbar action components array
+     */
+    protected get toolbarActionComponents(): NbButtonComponent[] {
+        return this.__toolbarActionComponents;
+    }
 
     /**
      * Set a boolean value indicating the actions should be shown
@@ -96,5 +124,20 @@ export class NgxToolbarComponent extends AbstractToolbarComponent<DataSource> {
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+    }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
+    ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (!this.__toolbarComponent) {
+            this.__toolbarComponent = ComponentUtils.queryComponent(this.queryToolbarComponent);
+        }
+        if (!this.__toolbarActionComponents || !this.__toolbarActionComponents.length) {
+            this.__toolbarActionComponents = ComponentUtils.queryComponents(this.queryToolbarActionsComponent);
+        }
     }
 }

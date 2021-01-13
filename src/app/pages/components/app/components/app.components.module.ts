@@ -42,7 +42,6 @@ import {AppTreeSplitFormComponent} from './app.treeview.splitpane.form.component
 import {AppTabsetComponent} from './app.tabset.component';
 import {AppPanelComponent} from './app.panel.component';
 import {AppSearchPanelComponent} from './app.search.panel.component';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -58,9 +57,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

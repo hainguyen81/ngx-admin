@@ -1,14 +1,11 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
     EventEmitter,
     Inject,
     Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';
@@ -16,7 +13,6 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {MatToolbar} from '@angular/material/toolbar';
 import {NbButtonComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
@@ -29,8 +25,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Abstract toolbar component base on {MatToolbar}
  */
-export abstract class AbstractToolbarComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+export abstract class AbstractToolbarComponent<T extends DataSource> extends AbstractComponent {
 
     protected static TOOLBAR_ELEMENT_SELECTOR: string = 'mat-toolbar';
     protected static TOOLBAR_ACTION_ITEM_ELEMENT_SELECTOR: string = 'nbButton';
@@ -38,13 +33,6 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
-
-    @ViewChildren(MatToolbar)
-    private readonly queryToolbarComponent: QueryList<MatToolbar>;
-    private toolbarComponent: MatToolbar;
-    @ViewChildren(NbButtonComponent)
-    private readonly queryToolbarActionsComponent: QueryList<NbButtonComponent>;
-    private toolbarActionComponents: NbButtonComponent[];
 
     private toolbarHeader?: IToolbarHeaderConfig | null;
     @Output() private actionClick = new EventEmitter<IEvent>();
@@ -105,17 +93,13 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
      * Get the {MatToolbar} component
      * @return the {MatToolbar} component
      */
-    protected getToolbarComponent(): MatToolbar {
-        return this.toolbarComponent;
-    }
+    protected abstract get toolbarComponent(): MatToolbar;
 
     /**
      * Get the toolbar action components array
      * @return the toolbar action components array
      */
-    protected getToolbarActionComponents(): NbButtonComponent[] {
-        return this.toolbarActionComponents || [];
-    }
+    protected abstract get toolbarActionComponents(): NbButtonComponent[];
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -165,17 +149,6 @@ export abstract class AbstractToolbarComponent<T extends DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-    }
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.toolbarComponent) {
-            this.toolbarComponent = ComponentUtils.queryComponent(this.queryToolbarComponent);
-        }
-        if (!this.toolbarActionComponents || !this.toolbarActionComponents.length) {
-            this.toolbarActionComponents = ComponentUtils.queryComponents(this.queryToolbarActionsComponent);
-        }
     }
 
     // -------------------------------------------------

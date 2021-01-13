@@ -6,9 +6,7 @@ import {
     EventEmitter,
     Inject,
     Output,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {Cell, DataSource, Ng2SmartTableComponent, Row} from '@app/types/index';
@@ -18,7 +16,6 @@ import {NGXLogger} from 'ngx-logger';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -28,6 +25,7 @@ import {AbstractCellEditorFormControlComponent} from './abstract.cell.editor.for
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 import NumberUtils from '../../../utils/common/number.utils';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -97,10 +95,6 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     // DECLARATION
     // -------------------------------------------------
 
-    @ViewChildren(Ng2SmartTableComponent)
-    private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
-    private smartTableComponent: Ng2SmartTableComponent;
-
     private _tableHeader: string;
     private _edittingRows: Array<Row> = [];
     private _allowMultiEdit: boolean = false;
@@ -120,6 +114,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @return {HTMLTableRowElement}
      */
     protected get tableFooterRows(): HTMLTableRowElement[] {
+        this._tableFooterRows = (this._tableFooterRows || []);
         return this._tableFooterRows;
     }
 
@@ -156,9 +151,11 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         this._tableHeader = header;
     }
 
-    protected get tableComponent(): Ng2SmartTableComponent {
-        return this.smartTableComponent;
-    }
+    /**
+     * Get the internal smart table component
+     * @return the internal smart table component
+     */
+    protected abstract get tableComponent(): Ng2SmartTableComponent;
 
     // protected get gridComponent(): Grid {
     //     return (ObjectUtils.isNotNou(this.tableComponent)
@@ -289,20 +286,6 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-    }
-
-    // -------------------------------------------------
-    // EVENTS
-    // -------------------------------------------------
-
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.smartTableComponent) {
-            this.smartTableComponent = ComponentUtils.queryComponent(
-                this.querySmartTableComponent,
-                    component => component && this.__detectForTableFooter());
-        }
     }
 
     // -------------------------------------------------
@@ -615,17 +598,14 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     onDataSourceChanged(value: IEvent) {
         // apply table tabIndex to focus and handle keyboard event
-        let timer: number;
-        timer = window.setTimeout(() => {
-            let tableEls: NodeListOf<HTMLElement>;
-            tableEls = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_SELETOR);
+        TimerUtils.timeout(() => {
+            const tableEls: NodeListOf<HTMLElement> = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_SELETOR);
             if (tableEls && tableEls.length) {
                 tableEls.item(0).tabIndex = 1;
                 this.getRenderer().setAttribute(tableEls.item(0), 'tabIndex', '1');
                 tableEls.item(0).focus({preventScroll: true});
             }
-            clearTimeout(timer);
-        }, 100);
+        }, 100, this);
     }
 
     /**
@@ -1490,40 +1470,6 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                         }
                     }
                 });
-            }
-        }
-    }
-
-    /**
-     * Detect settings for table footer
-     */
-    private __detectForTableFooter(): void {
-        const settings: any = this.config;
-        const footerSettings: any = (ObjectUtils.isNotNou(settings)
-            && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
-        const footerRow: string = <string>(ObjectUtils.isNotNou(footerSettings)
-            && footerSettings.hasOwnProperty('rows') && NumberUtils.isNumber(footerSettings['rows'])
-            ? footerSettings['rows'] : '0');
-        const rowsNumber: number = parseInt(footerRow, 10);
-        if (rowsNumber > 0) {
-            const innerTable: HTMLTableElement = this.getFirstElementBySelector(
-                AbstractSmartTableComponent.SMART_TABLE_SELETOR,
-                this.getElementRef().nativeElement) as HTMLTableElement;
-            // check to delete footer and create new while changing table settings
-            if (ObjectUtils.isNotNou(innerTable)) {
-                innerTable.deleteTFoot();
-            }
-
-            // create new settings
-            const innerFooter: HTMLTableSectionElement =
-                (ObjectUtils.isNotNou(innerTable)  ? innerTable.createTFoot() : undefined);
-            if (ObjectUtils.isNotNou(innerFooter)) {
-                this._tableFooterRows = [];
-                for (let i: number = 0; i < rowsNumber; i++) {
-                    this._tableFooterRows.push(innerFooter.insertRow(i));
-                }
-                this._tableFooterRows.length
-                && this.footerCreation.emit({ data: this._tableFooterRows });
             }
         }
     }

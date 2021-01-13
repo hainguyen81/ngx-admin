@@ -6,7 +6,13 @@
     <nb-card-header *ngIf="isShowHeader"
                     [class.flipped]="flipped"
                     class="ngx-flipcard-pane-header">
+        <!-- TODO Deprecated Header component holder -->
         <ng-template #headerHolder></ng-template>
+        <!-- Front component holder -->
+        <!--ndc-dynamic #headerComponentDynamic
+        [ndcDynamicComponent]="flipHeaderComponentType"
+        (ndcDynamicCreated)="onHeaderComponentCreated($event)"
+        ></ndc-dynamic-->
     </nb-card-header>
 
     <nb-card-body [class.m-0]="!isShowHeader"
@@ -36,13 +42,23 @@
                       (focusout)="onFocusOut({ event: $event, data: flipCard })"
                       (blur)="onBlur({ event: $event, data: flipCard })"
         >
-            <nb-card-front #cardFrontComponent [class.d-none]="flipped" [class.d-flex]="!flipped" *ngIf="!flipped">
-                <!-- Front component holder -->
+            <nb-card-front #cardFrontComponent [class.d-none]="flipped" [class.d-flex]="!flipped">
+                <!-- TODO Deprecated Front component holder -->
                 <ng-template #frontComponent></ng-template>
+                <!-- Front component holder -->
+                <!--ndc-dynamic #frontComponentDynamic
+                [ndcDynamicComponent]="flipFrontComponentType"
+                (ndcDynamicCreated)="onFrontComponentCreated($event)"
+                ></ndc-dynamic-->
             </nb-card-front>
-            <nb-card-back #cardBackComponent [class.d-none]="!flipped" [class.d-flex]="flipped" *ngIf="flipped">
-                <!-- Back component holder -->
+            <nb-card-back #cardBackComponent [class.d-none]="!flipped" [class.d-flex]="flipped">
+                <!-- TODO Deprecated Back component holder -->
                 <ng-template #backComponent></ng-template>
+                <!-- Back component holder -->
+                <!--ndc-dynamic #backComponentDynamic
+                [ndcDynamicComponent]="flipBackComponentType"
+                (ndcDynamicCreated)="onBackComponentCreated($event)"
+                ></ndc-dynamic-->
             </nb-card-back>
         </nb-flip-card>
         <context-menu #flipCardContextMenuComponent

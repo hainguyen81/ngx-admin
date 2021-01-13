@@ -1,4 +1,4 @@
-import {Inject, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 /* angular material modules */
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -20,10 +20,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
-import {NbIconLibraries} from '@nebular/theme';
-import {NGXLogger} from 'ngx-logger';
-import {throwIfAlreadyLoaded} from './@core/core.module';
-import {AppConfig} from './config/app.config';
+import {DynamicModule} from 'ng-dynamic-component';
 
 @NgModule({
     imports: [
@@ -48,9 +45,10 @@ import {AppConfig} from './config/app.config';
         MatCardModule,
         MatToolbarModule,
         MatDialogModule,
+        // dynamic components
+        DynamicModule,
     ],
     exports: [
-        CommonModule,
         MatButtonModule,
         MatToolbarModule,
         MatIconModule,
@@ -58,12 +56,11 @@ import {AppConfig} from './config/app.config';
         MatBadgeModule,
         MatListModule,
         MatGridListModule,
-        MatFormFieldModule,
         MatInputModule,
+        MatFormFieldModule,
         MatSelectModule,
         MatRadioModule,
         MatDatepickerModule,
-        MatNativeDateModule,
         MatChipsModule,
         MatTooltipModule,
         MatTableModule,
@@ -71,9 +68,13 @@ import {AppConfig} from './config/app.config';
         MatCardModule,
         MatToolbarModule,
         MatDialogModule,
+        // dynamic components
+        DynamicModule,
     ],
     providers: [
         MatDatepickerModule,
+        // dynamic components
+        DynamicModule,
     ],
 })
 export class AppMaterialModule {}

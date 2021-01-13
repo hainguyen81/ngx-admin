@@ -21,6 +21,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {AbstractTabComponent} from './abstract.tab.component';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NbTabComponent, NbTabsetComponent} from '@nebular/theme';
 
 /**
  * SplitPane component base on {NbTabsetModule}
@@ -45,9 +46,37 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
     private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
     private headerViewContainerRef: ViewContainerRef;
 
+    @ViewChildren(NbTabsetComponent)
+    private readonly queryTabsetComponent: QueryList<NbTabsetComponent>;
+    private __tabsetComponent: NbTabsetComponent;
+
+    @ViewChildren(NbTabComponent)
+    private readonly queryTabsComponent: QueryList<NbTabComponent>;
+    private __tabsComponent: NbTabComponent[];
+
+    @ViewChildren('tabComponent', {read: ViewContainerRef})
+    private readonly queryTabComponentViewContainerRefs: QueryList<ViewContainerRef>;
+    private __tabComponentViewContainerRefs: ViewContainerRef[];
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {NbTabsetComponent} instance
+     * @return the {NbTabsetComponent} instance
+     */
+    protected get tabsetComponent(): NbTabsetComponent {
+        return this.__tabsetComponent;
+    }
+
+    /**
+     * Get the {NbTabComponent} instances array
+     * @return the {NbTabComponent} instances array
+     */
+    protected get tabsComponent(): NbTabComponent[] {
+        return this.__tabsComponent;
+    }
 
     /**
      * Get a boolean value indicating whether showing panel header
@@ -131,6 +160,18 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
         if (!this.tabContentHolderViewContainerRefs || !this.tabContentHolderViewContainerRefs.length) {
             this.tabContentHolderViewContainerRefs =
                 ComponentUtils.queryComponents(this.queryTabContentHolderViewContainerRefs);
+        }
+        if (!this.__tabsetComponent) {
+            this.__tabsetComponent = ComponentUtils.queryComponent(this.queryTabsetComponent);
+        }
+        if (!this.__tabComponentViewContainerRefs || !this.__tabComponentViewContainerRefs.length) {
+            this.__tabComponentViewContainerRefs = ComponentUtils.queryComponents(this.queryTabComponentViewContainerRefs);
+        }
+        if (!this.__tabsComponent || !this.__tabsComponent.length) {
+            this.__tabsComponent = ComponentUtils.queryComponents(this.queryTabsComponent);
+            if ((!this.__tabsComponent || !this.__tabsComponent.length) && this.__tabsetComponent) {
+                this.__tabsComponent = ComponentUtils.queryComponents(this.__tabsetComponent.tabs);
+            }
         }
     }
 }

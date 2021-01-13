@@ -1,21 +1,17 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
     InjectionToken,
-    QueryList,
     Renderer2,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import ComponentUtils from '../../../utils/common/component.utils';
 import {NbTabComponent, NbTabsetComponent} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
 import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
@@ -94,27 +90,10 @@ export const TAB_CONFIG_TOKEN: InjectionToken<ITabConfig[]> =
 /**
  * Abstract FlipCard component base on {NbTabsetComponent} and {NbTabComponent}
  */
-export abstract class AbstractTabComponent<T extends DataSource>
-    extends AbstractComponent implements AfterViewInit {
+export abstract class AbstractTabComponent<T extends DataSource> extends AbstractComponent {
 
     protected static TABSET_ELEMENT_SELECTOR: string = 'nb-tabset';
     protected static TAB_ELEMENTS_SELECTOR: string = 'nb-tab';
-
-    // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    @ViewChildren(NbTabsetComponent)
-    private readonly queryTabsetComponent: QueryList<NbTabsetComponent>;
-    private tabsetComponent: NbTabsetComponent;
-
-    @ViewChildren(NbTabComponent)
-    private readonly queryTabsComponent: QueryList<NbTabComponent>;
-    private tabsComponent: NbTabComponent[];
-
-    @ViewChildren('tabComponent', {read: ViewContainerRef})
-    private readonly queryTabComponentViewContainerRefs: QueryList<ViewContainerRef>;
-    private tabComponentViewContainerRefs: ViewContainerRef[];
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -124,17 +103,13 @@ export abstract class AbstractTabComponent<T extends DataSource>
      * Get the {NbTabsetComponent} instance
      * @return the {NbTabsetComponent} instance
      */
-    protected getTabsetComponent(): NbTabsetComponent {
-        return this.tabsetComponent;
-    }
+    protected abstract get tabsetComponent(): NbTabsetComponent;
 
     /**
      * Get the {NbTabComponent} instances array
      * @return the {NbTabComponent} instances array
      */
-    protected getTabsComponent(): NbTabComponent[] {
-        return this.tabsComponent;
-    }
+    protected abstract get tabsComponent(): NbTabComponent[];
 
     /**
      * Get the number of nb-tab
@@ -166,8 +141,8 @@ export abstract class AbstractTabComponent<T extends DataSource>
      */
     public setFullWidthValue(fullWidthValue?: boolean | false): void {
         this.fullWidthValue = fullWidthValue || false;
-        if (this.getTabsetComponent()) {
-            this.getTabsetComponent().fullWidthValue = this.fullWidthValue;
+        if (this.tabsetComponent) {
+            this.tabsetComponent.fullWidthValue = this.fullWidthValue;
         }
     }
 
@@ -185,8 +160,8 @@ export abstract class AbstractTabComponent<T extends DataSource>
      */
     public setFullWidth(fullWidth?: boolean | false): void {
         this.fullWidth = fullWidth || false;
-        if (this.getTabsetComponent()) {
-            this.getTabsetComponent().fullWidth = this.fullWidth;
+        if (this.tabsetComponent) {
+            this.tabsetComponent.fullWidth = this.fullWidth;
         }
     }
 
@@ -204,8 +179,8 @@ export abstract class AbstractTabComponent<T extends DataSource>
      */
     public setRouteParam(routeParam?: string | null): void {
         this.routeParam = routeParam || null;
-        if (this.getTabsetComponent()) {
-            this.getTabsetComponent().routeParam = this.routeParam;
+        if (this.tabsetComponent) {
+            this.tabsetComponent.routeParam = this.routeParam;
         }
     }
 
@@ -265,24 +240,6 @@ export abstract class AbstractTabComponent<T extends DataSource>
     // EVENTS
     // -------------------------------------------------
 
-    ngAfterViewInit(): void {
-        super.ngAfterViewInit();
-
-        if (!this.tabsetComponent) {
-            this.tabsetComponent = ComponentUtils.queryComponent(this.queryTabsetComponent);
-        }
-        if (!this.tabComponentViewContainerRefs || !this.tabComponentViewContainerRefs.length) {
-            this.tabComponentViewContainerRefs = ComponentUtils.queryComponents(
-                this.queryTabComponentViewContainerRefs);
-        }
-        if (!this.tabsComponent || !this.tabsComponent.length) {
-            this.tabsComponent = ComponentUtils.queryComponents(this.queryTabsComponent);
-            if ((!this.tabsComponent || !this.tabsComponent.length) && this.tabsetComponent) {
-                this.tabsComponent = ComponentUtils.queryComponents(this.tabsetComponent.tabs);
-            }
-        }
-    }
-
     /**
      * Triggered `languageChange` event
      * @param event {IEvent} that contains {$event} as LangChangeEvent
@@ -333,7 +290,7 @@ export abstract class AbstractTabComponent<T extends DataSource>
      */
     protected configTabByIndex(tabIndex: number, config: ITabConfig): void {
         let tab: NbTabComponent;
-        tab = (0 <= tabIndex && tabIndex < this.getNumberOfTabs() ? this.getTabsComponent()[tabIndex] : null);
+        tab = (0 <= tabIndex && tabIndex < this.getNumberOfTabs() ? this.tabsComponent[tabIndex] : null);
         this.configTab(tab, config);
     }
 

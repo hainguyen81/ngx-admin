@@ -30,7 +30,6 @@ import {AppComponentsModule} from '../../components/app.components.module';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {WarehouseProviders} from '../../../../../config/app.providers';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -46,9 +45,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

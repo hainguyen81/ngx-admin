@@ -86,7 +86,6 @@ import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdow
 import {BaseSplitPaneComponent} from './splitpane/base.splitpane.component';
 import {BaseTabsetComponent} from './tab/base.tab.component';
 import {BasePanelComponent} from './panel/base.panel.component';
-import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -105,9 +104,6 @@ import {AppMaterialModule} from 'app/app.material.module';
         NbDatepickerModule,
         NbTooltipModule,
         FormsModule,
-
-        /* Angular material modules */
-        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,

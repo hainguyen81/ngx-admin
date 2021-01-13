@@ -4,6 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ComponentRef,
     ElementRef,
     Inject,
     QueryList,
@@ -22,6 +23,9 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import { AbstractComponent } from '../abstract.component';
+import ObjectUtils from '../../../utils/common/object.utils';
+import { throwError } from 'rxjs';
 
 /**
  * Flip-card base on {NbFlipCardComponent}
@@ -32,7 +36,9 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './flipcard.component.html',
     styleUrls: ['./flipcard.component.scss'],
 })
-export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
+export class NgxFlipCardComponent<
+    H extends AbstractComponent, F extends AbstractComponent, B extends AbstractComponent>
+    extends AbstractFlipcardComponent<DataSource, H, F, B>
     implements AfterViewInit {
 
     // -------------------------------------------------
@@ -153,6 +159,7 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
+            undefined, undefined, undefined,
             false, false);
     }
 
@@ -183,5 +190,48 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
             this._backComponentHolderViewContainerRef =
                 ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
         }
+
+        console.log([
+            'queryHeaderViewContainerRef', this.queryHeaderViewContainerRef,
+            '_headerViewContainerRef', this._headerViewContainerRef,
+            'queryCardFrontComponentHolderViewContainerRef', this.queryCardFrontComponentHolderViewContainerRef,
+            '_cardFrontComponentHolderViewContainerRef', this._cardFrontComponentHolderViewContainerRef,
+            'queryCardBackComponentHolderViewContainerRef', this.queryCardBackComponentHolderViewContainerRef,
+            '_cardBackComponentHolderViewContainerRef', this._cardBackComponentHolderViewContainerRef,
+            'queryFrontComponentHolderViewContainerRef', this.queryFrontComponentHolderViewContainerRef,
+            '_frontComponentHolderViewContainerRef', this._frontComponentHolderViewContainerRef,
+            'queryBackComponentHolderViewContainerRef', this.queryBackComponentHolderViewContainerRef,
+            '_backComponentHolderViewContainerRef', this._backComponentHolderViewContainerRef
+        ]);
+    }
+
+    /**
+     * Raise when the flip header component has been created
+     * @param componentRef the flip header component reference
+     */
+    protected onHeaderComponentCreated(componentRef: ComponentRef<H>): void {
+        console.log(['onHeaderComponentCreated', componentRef]);
+        (componentRef && componentRef.instance) || throwError('Could not inject dynamic header component!');
+        this._flipHeaderComponent = componentRef.instance;
+    }
+
+    /**
+     * Raise when the flip front component has been created
+     * @param componentRef the flip front component reference
+     */
+    protected onFrontComponentCreated(componentRef: ComponentRef<F>): void {
+        console.log(['onFrontComponentCreated', componentRef]);
+        (componentRef && componentRef.instance) || throwError('Could not inject dynamic front component!');
+        this._flipFrontComponent = componentRef.instance;
+    }
+
+    /**
+     * Raise when the flip back component has been created
+     * @param componentRef the flip header component reference
+     */
+    protected onBackComponentCreated(componentRef: ComponentRef<B>): void {
+        console.log(['onBackComponentCreated', componentRef]);
+        (componentRef && componentRef.instance) || throwError('Could not inject dynamic back component!');
+        this._flipBackComponent = componentRef.instance;
     }
 }

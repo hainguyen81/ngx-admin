@@ -97,9 +97,6 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
         const componentRef: ComponentRef<T> = componentFactory.create(this.getViewContainerRef().injector);
         componentRef.hostView.detectChanges();
         this.getViewContainerRef().insert(componentRef.hostView);
-        console.log(['Resolve dynamic component', this.getViewContainerRef(),
-            this.getViewContainerRef().element, this.getViewContainerRef().element.nativeElement,
-            componentRef.hostView]);
         return componentRef;
     }
 }

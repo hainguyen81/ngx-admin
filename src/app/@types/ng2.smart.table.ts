@@ -8,6 +8,8 @@ export {
     DefaultEditor,
     LocalDataSource,
     Ng2SmartTableComponent,
+    ɵbn as Ng2SmartTableTheadComponent,
+    ɵbc as Ng2SmartTableTbodyComponent,
     Cell,
     ɵbq as DataSource,
     ɵbp as DataSet,

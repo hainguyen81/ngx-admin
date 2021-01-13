@@ -21,6 +21,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SplitAreaDirective, SplitComponent} from 'angular-split';
 
 /**
  * SplitPane component base on {AngularSplitModule}
@@ -37,6 +38,14 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
     // DECLARATION
     // -------------------------------------------------
 
+    @ViewChildren(SplitComponent)
+    private readonly querySplitComponent: QueryList<SplitComponent>;
+    private __splitComponent: SplitComponent;
+
+    @ViewChildren(SplitAreaDirective)
+    private readonly querySplitAreaDirectiveComponents: QueryList<SplitAreaDirective>;
+    private __splitAreas: SplitAreaDirective[];
+
     @ViewChildren('splitAreaHolder', {read: ViewContainerRef})
     private readonly querySplitAreaHolderViewContainerRefs: QueryList<ViewContainerRef>;
     private splitAreaHolderViewContainerRefs: ViewContainerRef[];
@@ -48,6 +57,22 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the {SplitComponent} instance
+     * @return the {SplitComponent} instance
+     */
+    protected get splitComponent(): SplitComponent {
+        return this.__splitComponent;
+    }
+
+    /**
+     * Get the {SplitAreaDirective} instances array
+     * @return the {SplitAreaDirective} instances array
+     */
+    protected get splitAreaComponents(): SplitAreaDirective[] {
+        return this.__splitAreas;
+    }
 
     /**
      * Get a boolean value indicating whether showing panel header
@@ -132,5 +157,12 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
             this.splitAreaHolderViewContainerRefs = ComponentUtils.queryComponents(
                 this.querySplitAreaHolderViewContainerRefs);
         }
+        if (!this.__splitComponent) {
+            this.__splitComponent = ComponentUtils.queryComponent(this.querySplitComponent);
+        }
+        if ((!this.__splitAreas || !this.__splitAreas.length)) {
+            this.__splitAreas = ComponentUtils.queryComponents(this.querySplitAreaDirectiveComponents);
+        }
+        this.setHorizontal(this.isHorizontal);
     }
 }

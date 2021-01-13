@@ -21,6 +21,9 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ComponentUtils from '../../../utils/common/component.utils';
+import {Ng2SmartTableComponent} from 'app/@types/index';
+import ObjectUtils from 'app/utils/common/object.utils';
+import NumberUtils from 'app/utils/common/number.utils';
 
 /**
  * Smart table base on {Ng2SmartTableComponent}
@@ -41,9 +44,21 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
     private readonly querySearchViewContainerRef: QueryList<ViewContainerRef>;
     private _searchViewContainerRef: ViewContainerRef;
 
+    @ViewChildren(Ng2SmartTableComponent)
+    private readonly querySmartTableComponent: QueryList<Ng2SmartTableComponent>;
+    private smartTableComponent: Ng2SmartTableComponent;
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
+
+    /**
+     * Get the internal smart table component
+     * @return the internal smart table component
+     */
+    protected get tableComponent(): Ng2SmartTableComponent {
+        return this.smartTableComponent;
+    }
 
     /**
      * Get a boolean value indicating whether showing panel header
@@ -121,6 +136,10 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
             router, activatedRoute);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     doSearch(keyword: any): void {
         this.getLogger().debug('doSearch', keyword);
     }
@@ -128,8 +147,55 @@ export class SmartTableComponent extends AbstractSmartTableComponent<DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
+        if (!this.smartTableComponent) {
+            this.smartTableComponent = ComponentUtils.queryComponent(
+                this.querySmartTableComponent,
+                component => component && this.__detectForTableFooter());
+        }
         if (!this._searchViewContainerRef) {
             this._searchViewContainerRef = ComponentUtils.queryComponent(this.querySearchViewContainerRef);
+        }
+        console.log([
+            'querySmartTableComponent', this.querySmartTableComponent,
+            'smartTableComponent', this.smartTableComponent,
+        ]);
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Detect settings for table footer
+     */
+    private __detectForTableFooter(): void {
+        const settings: any = this.config;
+        const footerSettings: any = (ObjectUtils.isNotNou(settings)
+        && settings.hasOwnProperty('footer') ? settings['footer'] : undefined);
+        const footerRow: string = <string>(ObjectUtils.isNotNou(footerSettings)
+        && footerSettings.hasOwnProperty('rows') && NumberUtils.isNumber(footerSettings['rows'])
+            ? footerSettings['rows'] : '0');
+        const rowsNumber: number = parseInt(footerRow, 10);
+        if (rowsNumber > 0) {
+            const innerTable: HTMLTableElement = this.getFirstElementBySelector(
+                AbstractSmartTableComponent.SMART_TABLE_SELETOR,
+                this.getElementRef().nativeElement) as HTMLTableElement;
+            // check to delete footer and create new while changing table settings
+            if (ObjectUtils.isNotNou(innerTable)) {
+                innerTable.deleteTFoot();
+            }
+
+            // create new settings
+            const innerFooter: HTMLTableSectionElement =
+                (ObjectUtils.isNotNou(innerTable)  ? innerTable.createTFoot() : undefined);
+            if (ObjectUtils.isNotNou(innerFooter)) {
+                this.tableFooterRows.clear();
+                for (let i: number = 0; i < rowsNumber; i++) {
+                    this.tableFooterRows.push(innerFooter.insertRow(i));
+                }
+                this.tableFooterRows.length
+                && this.footerCreation.emit({ data: this.tableFooterRows });
+            }
         }
     }
 }
