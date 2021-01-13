@@ -444,7 +444,7 @@ export class OrganizationFormlyComponent
      */
     private observeManagerField(): Promise<any> {
         return SystemDataUtils.invokeAllUsersAsSelectOptions(this.userDataSource).then(
-            users => this.getFormlyForm().fields[1].fieldGroup[1].templateOptions.options = users);
+            users => this.formlyForm && this.formlyForm.fields[1].fieldGroup[1].templateOptions.options = users);
     }
 
     /**

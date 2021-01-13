@@ -84,7 +84,8 @@ export class AppFormlyComponent<T extends IModel, D extends DataSource>
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
-        this.getFormlyForm().modelChange.subscribe(() => this.onModelChanged());
+
+        this.formlyForm && this.formlyForm.modelChange.subscribe(() => this.onModelChanged());
     }
 
     /**
