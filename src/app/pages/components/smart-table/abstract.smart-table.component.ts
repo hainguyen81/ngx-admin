@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Output,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Output, Renderer2, ViewContainerRef,} from '@angular/core';
 import {Cell, DataSource, Ng2SmartTableComponent, Row} from '@app/types/index';
 import {MouseEventGuard} from '../customization/mouse.event.guard';
 import {ContextMenuService} from 'ngx-contextmenu';

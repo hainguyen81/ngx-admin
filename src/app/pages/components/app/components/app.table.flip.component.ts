@@ -7,7 +7,6 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ComponentRef,
     ElementRef,
     Inject,
     InjectionToken,
@@ -22,11 +21,11 @@ import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource, Row} from '@app/types/index';
 import {AppSmartTableComponent} from './app.table.component';
-import {AppFlipcardComponent} from './app.flipcard.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';
+import {AppFlipComponent} from './app.flip.component';
 
 export const APP_TABLE_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>(
@@ -39,12 +38,12 @@ export const APP_TABLE_FLIP_BACKWARD_COMPONENT_TYPE_TOKEN: InjectionToken<Type<A
         'The backward component type injection token of the flip-pane between table and another component');
 
 @Component({
-    selector: 'ngx-flip-card-app-table',
+    selector: 'ngx-flip-app-table',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../flipcard/flipcard.component.html',
+    templateUrl: '../../flip/flip.component.html',
     styleUrls: [
-        '../../flipcard/flipcard.component.scss',
-        './app.flipcard.component.scss',
+        '../../flip/flip.component.scss',
+        './app.flip.component.scss',
         './app.table.flip.component.scss',
     ],
 })
@@ -52,7 +51,7 @@ export class AppTableFlipComponent<T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     F extends AppSmartTableComponent<D>,
     B extends AbstractComponent>
-    extends AppFlipcardComponent<D, TB, F, B> implements AfterViewInit {
+    extends AppFlipComponent<D, TB, F, B> implements AfterViewInit {
 
     // -------------------------------------------------
     // DECLARATION

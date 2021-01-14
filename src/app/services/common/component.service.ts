@@ -1,15 +1,8 @@
-import {
-    ComponentFactory,
-    ComponentFactoryResolver,
-    ComponentRef,
-    Inject,
-    Injectable,
-    Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {ComponentFactory, ComponentFactoryResolver, ComponentRef, Inject, Injectable, Type, ViewContainerRef,} from '@angular/core';
 import {IComponentService} from './interface.service';
 import {throwError} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
+import {InjectionConfig} from '../../config/injection.config';
 
 /**
  * Abstract component service support for rendering/loading component dynamically, etc.
@@ -91,12 +84,15 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
     /**
      * Resolve (create) and add component to {ViewContainerRef}
      */
-    public resolve(): ComponentRef<T> {
+    public resolve(clearView?: boolean | false): ComponentRef<T> {
+        const viewContainerRef = this.getViewContainerRef();
         const componentFactory: ComponentFactory<T> =
             this.getFactoryResolver().resolveComponentFactory(this.getComponentType());
-        const componentRef: ComponentRef<T> = componentFactory.create(this.getViewContainerRef().injector);
+        const componentRef: ComponentRef<T> = componentFactory.create(InjectionConfig.Injector);
+        clearView && viewContainerRef.clear();
         componentRef.hostView.detectChanges();
-        this.getViewContainerRef().insert(componentRef.hostView);
+        viewContainerRef.insert(componentRef.hostView);
+        console.log(['Dynamic component location', componentRef.location, componentRef.instance, viewContainerRef.element, viewContainerRef.length])
         return componentRef;
     }
 }

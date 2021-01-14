@@ -448,4 +448,12 @@
     .ngx-contextmenu:hover {
         outline: none;
     }
+    /** button */
+    button, [nbbutton], button span, [nbbutton] span {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        vertical-align: center;
+    }
 }

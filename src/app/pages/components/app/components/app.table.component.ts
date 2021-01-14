@@ -1,12 +1,5 @@
 import {COMMON} from '../../../../config/common.config';
-import {
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {BaseSmartTableComponent} from '../../smart-table/base.smart-table.component';
@@ -17,11 +10,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource, Row} from '@app/types/index';
 import {IModel} from '../../../../@core/data/base';
-import {
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
-    IContextMenu,
-} from '../../../../config/context.menu.conf';
+import {CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT, IContextMenu,} from '../../../../config/context.menu.conf';
 import {IEvent} from '../../abstract.component';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -118,9 +107,13 @@ export class AppSmartTableComponent<D extends DataSource> extends BaseSmartTable
         super.setContextMenu(AppCommonContextMenu);
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     doSearch(keyword: any): void {
-        this.getDataSource().setFilter([], false);
-        this.getDataSource().refresh();
+        // this.getDataSource().setFilter([], false);
+        // this.getDataSource().refresh();
     }
 
     // -------------------------------------------------

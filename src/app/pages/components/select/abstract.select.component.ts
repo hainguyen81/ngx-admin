@@ -1,22 +1,9 @@
-import {
-    AfterContentChecked,
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    Output,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterContentChecked, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    AbstractComponent, IEvent,
-} from '../abstract.component';
+import {AbstractComponent, IEvent,} from '../abstract.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';

@@ -6,16 +6,7 @@
 import {CoreModule, throwIfAlreadyLoaded} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-    CUSTOM_ELEMENTS_SCHEMA,
-    Inject,
-    Injector,
-    ModuleWithProviders,
-    NgModule,
-    NO_ERRORS_SCHEMA,
-    Optional, Provider,
-    SkipSelf,
-} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule, NO_ERRORS_SCHEMA, Optional, SkipSelf,} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
@@ -87,7 +78,7 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 /* service worker */
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
 import {ServiceWorkerProviders} from './config/worker.providers';
-import { InjectionConfig } from './config/injection.config';
+import {InjectionConfig} from './config/injection.config';
 
 @NgModule({
     imports: [

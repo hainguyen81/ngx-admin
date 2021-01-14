@@ -1,18 +1,6 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, QueryList,
-    Renderer2, ViewChildren,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
-import {
-    AbstractSelectComponent,
-    DefaultNgxSelectOptions,
-} from './abstract.select.component';
+import {AbstractSelectComponent, DefaultNgxSelectOptions,} from './abstract.select.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';

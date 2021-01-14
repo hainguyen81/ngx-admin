@@ -1,8 +1,4 @@
-import {
-    ISecureEncryptionConfig,
-    LocalStorageConfiguration,
-    SecuredLocalStorageEncryptionConfig,
-} from '../services/storage.services/local.storage.services';
+import {ISecureEncryptionConfig, LocalStorageConfiguration, SecuredLocalStorageEncryptionConfig,} from '../services/storage.services/local.storage.services';
 import {NgxLocalstorageConfiguration} from 'ngx-localstorage';
 
 export const StorageConfig: {

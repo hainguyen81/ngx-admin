@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Input,
-    OnDestroy,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, OnDestroy, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';

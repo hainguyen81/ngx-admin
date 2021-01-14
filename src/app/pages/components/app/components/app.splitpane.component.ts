@@ -1,18 +1,7 @@
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    InjectionToken,
-    Renderer2,
-    Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
 import {BaseSplitPaneComponent} from '../../splitpane/base.splitpane.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {IModel} from '../../../../@core/data/base';
@@ -23,13 +12,7 @@ import {DataSource} from '@app/types/index';
 import {throwError} from 'rxjs';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
-import {
-    ACTION_DELETE,
-    ACTION_DELETE_DATABASE, ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-    IToolbarActionsConfig,
-} from '../../../../config/toolbar.actions.conf';
+import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig,} from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';

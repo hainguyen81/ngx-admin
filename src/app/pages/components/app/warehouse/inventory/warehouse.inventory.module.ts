@@ -1,13 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
-import {
-    NbButtonModule,
-    NbCardModule,
-    NbCheckboxModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbInputModule, NbLayoutModule,
-    NbSelectModule, NbThemeModule,
-} from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule,} from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
@@ -23,12 +15,8 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
-import {
-    WarehouseInventorySearchFormlyComponent,
-} from './warehouse.inventory.search.formly.component';
-import {
-    WarehouseInventorySearchToolbarComponent,
-} from './warehouse.inventory.search.toolbar.component';
+import {WarehouseInventorySearchFormlyComponent,} from './warehouse.inventory.search.formly.component';
+import {WarehouseInventorySearchToolbarComponent,} from './warehouse.inventory.search.toolbar.component';
 import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.panel.component';
 import {WarehouseInventoryToolbarComponent} from './warehouse.inventory.toolbar.component';
 import {WarehouseInventorySmartTableComponent} from './warehouse.inventory.table.component';

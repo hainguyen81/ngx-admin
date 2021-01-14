@@ -1,14 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    forwardRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, forwardRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import {CellComponent} from '@app/types/index';

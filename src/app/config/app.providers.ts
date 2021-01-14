@@ -12,11 +12,7 @@ import {
     StaticProvider,
 } from '@angular/core';
 import {APP_BASE_HREF, DatePipe, DOCUMENT} from '@angular/common';
-import {
-    HTTP_INTERCEPTORS,
-    HttpClient,
-    HttpHandler,
-} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpHandler,} from '@angular/common/http';
 import {NGXLogger, NGXLoggerHttpService, NGXMapperService} from 'ngx-logger';
 import {AuthGuard} from '../auth/auth.guard.service';
 import {NB_AUTH_INTERCEPTOR_HEADER, NbAuthService} from '@nebular/auth';
@@ -25,11 +21,7 @@ import {EmptyService} from '../services/common/empty.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from '../auth/auth.oauth2.service';
 import {NbxOAuth2AuthStrategy} from '../auth/auth.oauth2.strategy';
-import {
-    NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM,
-    NBX_AUTH_INTERCEPTOR_COMPANY_HEADER,
-    NbxAuthInterceptor,
-} from '../services/interceptors/auth.interceptor';
+import {NBX_AUTH_INTERCEPTOR_ACCESS_TOKEN_PARAM, NBX_AUTH_INTERCEPTOR_COMPANY_HEADER, NbxAuthInterceptor,} from '../services/interceptors/auth.interceptor';
 import {SW_VAPID_PUBLIC_KEY} from '../sw/push.service';
 import {MenuService} from '../services/implementation/menu.service';
 import {COMMON} from './common.config';
@@ -44,73 +36,32 @@ import {CustomerDatasource} from '../services/implementation/system/customer/cus
 import {TranslateLoader, TranslateService} from '@ngx-translate/core';
 import {throwError} from 'rxjs';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {
-    OrganizationDbService,
-    OrganizationHttpService,
-} from '../services/implementation/system/organization/organization.service';
+import {OrganizationDbService, OrganizationHttpService,} from '../services/implementation/system/organization/organization.service';
 import {OrganizationDataSource} from '../services/implementation/system/organization/organization.datasource';
 import {PageHeaderService} from '../services/common/header.service';
 import {PagesGuard} from '../pages/pages.guard.service';
 import GlobalErrorsHandler from '../services/implementation/global.errors.handler';
-import {
-    WarehouseDbService,
-    WarehouseHttpService,
-} from '../services/implementation/warehouse/warehouse.storage/warehouse.service';
+import {WarehouseDbService, WarehouseHttpService,} from '../services/implementation/warehouse/warehouse.storage/warehouse.service';
 import {WarehouseDatasource} from '../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
-import {
-    WarehouseOrderDbService,
-    WarehouseOrderHttpService,
-} from '../services/implementation/warehouse/warehouse.order/warehouse.order.service';
-import {
-    WarehouseOrderDatasource,
-} from '../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
-import {
-    WarehouseOrderDetailDbService,
-    WarehouseOrderDetailHttpService,
-} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service';
-import {
-    WarehouseOrderDetailDatasource,
-} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource';
-import {
-    WarehouseItemDbService,
-    WarehouseItemHttpService,
-} from '../services/implementation/warehouse/warehouse.item/warehouse.item.service';
+import {WarehouseOrderDbService, WarehouseOrderHttpService,} from '../services/implementation/warehouse/warehouse.order/warehouse.order.service';
+import {WarehouseOrderDatasource,} from '../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
+import {WarehouseOrderDetailDbService, WarehouseOrderDetailHttpService,} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.service';
+import {WarehouseOrderDetailDatasource,} from '../services/implementation/warehouse/warehouse.order.detail/warehouse.order.detail.datasource';
+import {WarehouseItemDbService, WarehouseItemHttpService,} from '../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {WarehouseItemDatasource} from '../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {
-    WarehouseInventoryDbService,
-    WarehouseInventoryHttpService,
-} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
-import {
-    WarehouseInventoryDatasource,
-} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {WarehouseInventoryDbService, WarehouseInventoryHttpService,} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.service';
+import {WarehouseInventoryDatasource,} from '../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {
     WarehouseInventoryDetailDbService,
     WarehouseInventoryDetailHttpService,
 } from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.service';
-import {
-    WarehouseInventoryDetailDatasource,
-} from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
-import {
-    WarehouseCategoryDbService,
-    WarehouseCategoryHttpService,
-} from '../services/implementation/warehouse/warehouse.category/warehouse.category.service';
-import {
-    WarehouseCategoryDatasource,
-} from '../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {
-    WarehouseAdjustDbService,
-    WarehouseAdjustHttpService,
-} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service';
-import {
-    WarehouseAdjustDatasource,
-} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
-import {
-    WarehouseAdjustDetailDbService,
-    WarehouseAdjustDetailHttpService,
-} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service';
-import {
-    WarehouseAdjustDetailDatasource,
-} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
+import {WarehouseInventoryDetailDatasource,} from '../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {WarehouseCategoryDbService, WarehouseCategoryHttpService,} from '../services/implementation/warehouse/warehouse.category/warehouse.category.service';
+import {WarehouseCategoryDatasource,} from '../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {WarehouseAdjustDbService, WarehouseAdjustHttpService,} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.service';
+import {WarehouseAdjustDatasource,} from '../services/implementation/warehouse/warehouse.adjust/warehouse.adjust.datasource';
+import {WarehouseAdjustDetailDbService, WarehouseAdjustDetailHttpService,} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.service';
+import {WarehouseAdjustDetailDatasource,} from '../services/implementation/warehouse/warehouse.adjust.detail/warehouse.adjust.detail.datasource';
 import {CountryDbService, CountryHttpService} from '../services/implementation/system/country/country.service';
 import {CountryDatasource} from '../services/implementation/system/country/country.datasource';
 import {CityDbService, CityHttpService} from '../services/implementation/system/city/city.service';
@@ -123,55 +74,28 @@ import {UniversalApiDatasource} from '../services/third.party/universal/universa
 import {HTTP_REQUEST_TIMEOUT, TimeoutInterceptor} from '../services/interceptors/timeout.interceptor';
 import {HTTP_REQUEST_HEADERS, RequestHeadersInterceptor} from '../services/interceptors/headers.interceptor';
 import {UniversalApiBridgeDbService} from '../services/third.party/universal/universal.api.bridge.service';
+import {DefaultLocalStorageSerializerService,} from '../services/storage.services/serializers/local.storage.serializer.service';
 import {
-    DefaultLocalStorageSerializerService,
-} from '../services/storage.services/serializers/local.storage.serializer.service';
-import {
-    NgxLocalStorageService,
     NgxLocalStorageEncryptionService,
+    NgxLocalStorageService,
     TOKEN_SECURE_ENCRYPTION_CONFIG,
     TOKEN_STORAGE_CONFIG,
     TOKEN_STORAGE_SERIALIZER,
 } from '../services/storage.services/local.storage.services';
-import {
-    WarehouseSettingsDbService,
-    WarehouseSettingsHttpService,
-} from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.service';
-import {
-    WarehouseSettingsDatasource,
-} from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {
-    GeneralSettingsDbService,
-    GeneralSettingsHttpService,
-} from '../services/implementation/system/general.settings/general.settings.service';
-import {
-    GeneralSettingsDatasource,
-} from '../services/implementation/system/general.settings/general.settings.datasource';
+import {WarehouseSettingsDbService, WarehouseSettingsHttpService,} from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.service';
+import {WarehouseSettingsDatasource,} from '../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {GeneralSettingsDbService, GeneralSettingsHttpService,} from '../services/implementation/system/general.settings/general.settings.service';
+import {GeneralSettingsDatasource,} from '../services/implementation/system/general.settings/general.settings.datasource';
 import HtmlUtils from '../utils/common/html.utils';
-import {
-    WarehouseItemVersionDbService,
-    WarehouseItemVersionHttpService,
-} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.service';
-import {
-    WarehouseItemVersionDatasource,
-} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
-import {
-    WarehouseBatchNoDbService,
-    WarehouseBatchNoHttpService,
-} from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
-import {
-    WarehouseBatchNoDatasource,
-} from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {WarehouseItemVersionDbService, WarehouseItemVersionHttpService,} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.service';
+import {WarehouseItemVersionDatasource,} from '../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
+import {WarehouseBatchNoDbService, WarehouseBatchNoHttpService,} from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.service';
+import {WarehouseBatchNoDatasource,} from '../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {InjectionService} from '../services/common/injection.service';
-import {
-    WarehouseManagementDbService,
-    WarehouseManagementHttpService} from '../services/implementation/warehouse/warehouse.management/warehouse.management.service';
+import {WarehouseManagementDbService, WarehouseManagementHttpService} from '../services/implementation/warehouse/warehouse.management/warehouse.management.service';
 import {WarehouseManagementDatasource} from '../services/implementation/warehouse/warehouse.management/warehouse.management.datasource';
 import {WorkerProviders} from './worker.providers';
-import {
-    createDefaultSecureStorageConfig,
-    createDefaultStorageConfig,
-} from './storage.config';
+import {createDefaultSecureStorageConfig, createDefaultStorageConfig,} from './storage.config';
 import {DeviceDetectorService} from 'ngx-device-detector';
 
 export const BASE_HREF: InjectionToken<string> =

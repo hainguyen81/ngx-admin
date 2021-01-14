@@ -1,19 +1,8 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {IModule} from '../../../../../@core/data/system/module';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../select/abstract.select.component';
 import {AppModuleDataIndexSettingsFormlySelectFieldComponent} from './app.module.data.index.formly.select.field.component';

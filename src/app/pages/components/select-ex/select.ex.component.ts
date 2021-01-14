@@ -7,10 +7,12 @@ import {
     EventEmitter,
     Inject,
     Input,
-    Output, QueryList,
+    Output,
+    QueryList,
     Renderer2,
     RendererStyleFlags2,
-    ViewChild, ViewChildren,
+    ViewChild,
+    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';

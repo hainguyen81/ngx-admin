@@ -1,25 +1,12 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
 import {throwError} from 'rxjs';
 import {IModule} from '../../../../../@core/data/system/module';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../select/abstract.select.component';
-import {
-    AppModuleSettingsFormlySelectFieldComponent,
-} from '../../components/common/app.module.settings.formly.select.field.component';
+import {AppModuleSettingsFormlySelectFieldComponent,} from '../../components/common/app.module.settings.formly.select.field.component';
 
 export const AppGeneralSettingsNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {

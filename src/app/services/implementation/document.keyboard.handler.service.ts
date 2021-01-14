@@ -1,11 +1,7 @@
 import {SubscribeHandler} from '../common/event.handler.service';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {
-    BaseElementKeydownHandlerService,
-    BaseElementKeypressHandlerService,
-    BaseElementKeyupHandlerService,
-} from './base.keyboard.handler';
+import {BaseElementKeydownHandlerService, BaseElementKeypressHandlerService, BaseElementKeyupHandlerService,} from './base.keyboard.handler';
 
 /**
  * `Document` `keypress` event handler service

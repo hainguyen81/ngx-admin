@@ -3,12 +3,8 @@ import SystemDataUtils from '../system/system.data.utils';
 import {IGeneralSettings} from '../../@core/data/system/general.settings';
 import {IModel} from '../../@core/data/base';
 import {Type} from '@angular/core';
-import {
-    AppFormlySelectExFieldComponent,
-} from '../../pages/components/app/components/common/app.formly.select.ex.field.component';
-import {
-    GeneralSettingsDatasource,
-} from '../../services/implementation/system/general.settings/general.settings.datasource';
+import {AppFormlySelectExFieldComponent,} from '../../pages/components/app/components/common/app.formly.select.ex.field.component';
+import {GeneralSettingsDatasource,} from '../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 import {Constants as CommonConstants} from '../../@core/data/constants/common.constants';
 import {IDbService, IHttpService} from '../../services/common/interface.service';

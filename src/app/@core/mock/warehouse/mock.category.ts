@@ -2,8 +2,8 @@ import ObjectUtils from '../../../utils/common/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import {IWarehouseCategory} from '../../data/warehouse/warehouse.category';
 import {Constants as WarehouseConstants} from '../../data/constants/warehouse.category.constants';
-import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import {Constants as CommonConstants} from '../../data/constants/common.constants';
+import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
 import STATUS = CommonConstants.COMMON.STATUS;
 
 export const MAXIMUM_MOCK_CATEGORY_CHILDS: number = 10;

@@ -26,41 +26,23 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
-import {
-    WarehouseItemCellComponent,
-} from '../../module.components/warehouse/item/warehouse.item.cell.component';
-import {
-    WarehouseInventoryDetailDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
-import {
-    WarehouseInventoryDetailBatchNoCellComponent,
-} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
-import {
-    WarehouseInventoryDetailSerialCellComponent,
-} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
-import {
-    WarehouseInventoryDetailStorageCellComponent,
-} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
+import {WarehouseItemCellComponent,} from '../../module.components/warehouse/item/warehouse.item.cell.component';
+import {WarehouseInventoryDetailDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {WarehouseInventoryDetailBatchNoCellComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
+import {WarehouseInventoryDetailSerialCellComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
+import {WarehouseInventoryDetailStorageCellComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
 import {IEvent} from '../../../abstract.component';
 import {InjectionService} from '../../../../../services/common/injection.service';
-import {
-    WarehouseInventoryDetailSummaryComponent,
-} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.summary.component';
-import {
-    AppMultilinguageLabelComponent,
-} from '../../module.components/common/app.multilinguage.label.component';
+import {WarehouseInventoryDetailSummaryComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.summary.component';
+import {AppMultilinguageLabelComponent,} from '../../module.components/common/app.multilinguage.label.component';
 import {BehaviorSubject, throwError} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
-import {DataSource, Cell, LocalDataSource, Row} from '@app/types/index';
-import {
-    IWarehouseInventoryDetailBatch,
-} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
+import {Cell, DataSource, LocalDataSource, Row} from '@app/types/index';
+import {IWarehouseInventoryDetailBatch,} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
 import CalculatorUtils from '../../../../../utils/common/calculator.utils';
-import {
-    IWarehouseInventoryDetailStorage,
-} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
+import {IWarehouseInventoryDetailStorage,} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 

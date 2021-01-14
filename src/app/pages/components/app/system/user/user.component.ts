@@ -1,12 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2, ViewContainerRef,
-} from '@angular/core';
-import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -22,25 +14,20 @@ import {UserDataSource} from '../../../../../services/implementation/system/user
 import {UserSmartTableComponent} from './user.table.component';
 import {UserToolbarComponent} from './user.toolbar.component';
 import {UserFormlyComponent} from './user.formly.component';
-import {
-    ACTION_BACK,
-    ACTION_DELETE,
-    ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import ArrayUtils from '../../../../../utils/common/array.utils';
+import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
 
 @Component({
     moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_USER,
-    selector: 'ngx-flip-card-app-system-user',
+    selector: 'ngx-flip-app-system-user',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../../flipcard/flipcard.component.html',
+    templateUrl: '../../../flip/flip.component.html',
     styleUrls: [
-        '../../../flipcard/flipcard.component.scss',
-        '../../components/app.flipcard.component.scss',
+        '../../../flip/flip.component.scss',
+        '../../components/app.flip.component.scss',
     ],
 })
 export class UserComponent

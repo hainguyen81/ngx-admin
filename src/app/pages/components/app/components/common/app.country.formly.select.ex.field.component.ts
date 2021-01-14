@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
 import {CountryDatasource} from '../../../../../services/implementation/system/country/country.datasource';
@@ -16,9 +6,7 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import Country, {ICountry} from '../../../../../@core/data/system/country';
 import {NGXLogger} from 'ngx-logger';
-import {
-    AppModuleDataFormlySelectExFieldComponent,
-} from './app.module.data.formly.select.ex.field.component';
+import {AppModuleDataFormlySelectExFieldComponent,} from './app.module.data.formly.select.ex.field.component';
 
 export const AppCountriesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**

@@ -1,13 +1,5 @@
 import {BaseTabsetComponent} from '../../tab/base.tab.component';
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, InjectionToken,
-    Renderer2, Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
@@ -21,13 +13,7 @@ import {IModel} from '../../../../@core/data/base';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ITabConfig, TAB_CONFIG_TOKEN} from '../../tab/abstract.tab.component';
-import {
-    ACTION_DELETE,
-    ACTION_DELETE_DATABASE, ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-    IToolbarActionsConfig,
-} from '../../../../config/toolbar.actions.conf';
+import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig,} from '../../../../config/toolbar.actions.conf';
 import {throwError} from 'rxjs';
 import ObjectUtils from '../../../../utils/common/object.utils';
 

@@ -1,11 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import City, {ICity} from '../../../../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, of} from 'rxjs';
@@ -14,9 +7,7 @@ import {CityDatasource} from '../../../../../services/implementation/system/city
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
 import {IProvince} from '../../../../../@core/data/system/province';
-import {
-    AppModuleDataFormlySelectExFieldComponent,
-} from './app.module.data.formly.select.ex.field.component';
+import {AppModuleDataFormlySelectExFieldComponent,} from './app.module.data.formly.select.ex.field.component';
 
 export const AppCitiesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**

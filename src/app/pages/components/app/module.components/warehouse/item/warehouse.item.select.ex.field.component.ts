@@ -1,24 +1,11 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {
-    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
-} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
+import {AppModuleDataIndexSettingsFormlySelectExFieldComponent,} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants, Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
-import {
-    WarehouseItemDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {WarehouseItemDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {$enum} from 'ts-enum-util';
 import STATUS = Constants.COMMON.STATUS;
 

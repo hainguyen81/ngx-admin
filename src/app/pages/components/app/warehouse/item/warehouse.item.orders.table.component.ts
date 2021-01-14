@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,9 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    WarehouseOrderDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
+import {WarehouseOrderDatasource,} from '../../../../../services/implementation/warehouse/warehouse.order/warehouse.order.datasource';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Constants as OrderConstants} from '../../../../../@core/data/constants/warehouse.order.constants';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';

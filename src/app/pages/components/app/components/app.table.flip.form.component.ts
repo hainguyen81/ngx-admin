@@ -36,12 +36,12 @@ export const APP_TABLE_FLIP_FORM_FORM_COMPONENT_TYPE_TOKEN: InjectionToken<Type<
     = new InjectionToken<Type<AppFormlyComponent<any, any>>>('The table component type injection token of the flip-pane between table and form');
 
 @Component({
-    selector: 'ngx-flip-card-app-table-form',
+    selector: 'ngx-flip-app-table-form',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../flipcard/flipcard.component.html',
+    templateUrl: '../../flip/flip.component.html',
     styleUrls: [
-        '../../flipcard/flipcard.component.scss',
-        './app.flipcard.component.scss',
+        '../../flip/flip.component.scss',
+        './app.flip.component.scss',
         './app.table.flip.component.scss',
     ],
 })

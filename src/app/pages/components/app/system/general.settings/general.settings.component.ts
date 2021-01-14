@@ -1,16 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
-import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -21,32 +9,24 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from '@app/types/index';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {GeneralSettingsSmartTableComponent} from './general.settings.table.component';
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {throwError} from 'rxjs';
-import {
-    ACTION_BACK,
-    ACTION_DELETE,
-    ACTION_DELETE_DATABASE,
-    ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
-    selector: 'ngx-flip-card-app-system-general-settings',
+    selector: 'ngx-flip-app-system-general-settings',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../../flipcard/flipcard.component.html',
+    templateUrl: '../../../flip/flip.component.html',
     styleUrls: [
-        '../../../flipcard/flipcard.component.scss',
-        '../../components/app.flipcard.component.scss',
+        '../../../flip/flip.component.scss',
+        '../../components/app.flip.component.scss',
     ],
 })
 export class GeneralSettingsComponent
@@ -55,7 +35,7 @@ export class GeneralSettingsComponent
         GeneralSettingsToolbarComponent,
         GeneralSettingsSmartTableComponent,
         GeneralSettingsFormlyComponent>
-    implements OnInit, AfterViewInit {
+    implements OnInit {
 
     // -------------------------------------------------
     // GETTERS/SETTERS

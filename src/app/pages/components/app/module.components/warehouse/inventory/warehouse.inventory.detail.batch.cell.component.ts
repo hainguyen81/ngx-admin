@@ -19,21 +19,15 @@ import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/common/component.utils';
 import {CellComponent} from '@app/types/index';
 import {IEvent} from '../../../../abstract.component';
-import {
-    WarehouseBatchNoFormlySelectFieldComponent,
-} from '../batchno/warehouse.batch.select.field.component';
+import {WarehouseBatchNoFormlySelectFieldComponent,} from '../batchno/warehouse.batch.select.field.component';
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
 import {$enum} from 'ts-enum-util';
-import STATUS = Constants.COMMON.STATUS;
-import {
-    IWarehouseInventoryDetailBatch,
-} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
+import {IWarehouseInventoryDetailBatch,} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
 import {MatInput} from '@angular/material/input';
-import {
-    WarehouseBatchNoDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {WarehouseBatchNoDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import ObjectUtils from '../../../../../../utils/common/object.utils';
 import NumberUtils from '../../../../../../utils/common/number.utils';
+import STATUS = Constants.COMMON.STATUS;
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}

@@ -2,13 +2,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {TreeviewItem} from 'ngx-treeview';
-import {
-    AfterViewInit,
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, InjectionToken, Renderer2, Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AppTreeviewComponent} from './app.treeview.component';

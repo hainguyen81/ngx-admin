@@ -26,6 +26,7 @@ import {NbCardBackComponent, NbCardFrontComponent, NbFlipCardComponent} from '@n
 
 /**
  * Flip-card base on {NbFlipCardComponent}
+ * @deprecated Currently NbFlipCardComponent component has problem with dynamic component. Insted of using flip-component
  */
 @Component({
     selector: 'ngx-flip-card',
@@ -213,21 +214,16 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
             this._headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
         }
         if (!this._cardFrontComponentHolderViewContainerRef) {
-            this._cardFrontComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);
+            this._cardFrontComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);
         }
         if (!this._cardBackComponentHolderViewContainerRef) {
-            this._cardBackComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef);
+            this._cardBackComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef);
         }
-
         if (!this._frontComponentHolderViewContainerRef) {
-            this._frontComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef);
+            this._frontComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef);
         }
         if (!this._backComponentHolderViewContainerRef) {
-            this._backComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
+            this._backComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
         }
     }
 }

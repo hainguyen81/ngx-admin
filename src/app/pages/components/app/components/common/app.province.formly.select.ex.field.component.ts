@@ -1,11 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, of} from 'rxjs';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
@@ -14,9 +7,7 @@ import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
 import Province, {IProvince} from '../../../../../@core/data/system/province';
 import {ProvinceDatasource} from '../../../../../services/implementation/system/province/province.datasource';
-import {
-    AppModuleDataFormlySelectExFieldComponent,
-} from './app.module.data.formly.select.ex.field.component';
+import {AppModuleDataFormlySelectExFieldComponent,} from './app.module.data.formly.select.ex.field.component';
 
 export const AppProvincesSelectOptions: INgxSelectExOptions = Object.assign({}, DefaultNgxSelectExOptions, {
     /**

@@ -21,9 +21,7 @@ import {CellComponent} from '@app/types/index';
 import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.field.component';
 import {IEvent} from '../../../../abstract.component';
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
-import {
-    WarehouseItemDbService,
-} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
+import {WarehouseItemDbService,} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/common/promise.utils';
 import ObjectUtils from '../../../../../../utils/common/object.utils';

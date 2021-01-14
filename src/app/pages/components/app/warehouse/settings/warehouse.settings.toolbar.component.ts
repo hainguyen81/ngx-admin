@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,13 +6,8 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    AppToolbarComponent,
-    AppToolbarImportActionsConfig,
-} from '../../components/app.toolbar.component';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {AppToolbarComponent, AppToolbarImportActionsConfig,} from '../../components/app.toolbar.component';
+import {WarehouseSettingsDatasource,} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {IToolbarActionsConfig, IToolbarHeaderConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';

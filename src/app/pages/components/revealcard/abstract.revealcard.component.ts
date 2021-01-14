@@ -1,13 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../abstract.component';
-import {
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, Input,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';

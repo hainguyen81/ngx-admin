@@ -1,15 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
-import {
-    NbButtonModule,
-    NbCardModule,
-    NbCheckboxModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbInputModule,
-    NbLayoutModule,
-    NbSelectModule,
-    NbThemeModule,
-} from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule,} from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
@@ -17,13 +7,8 @@ import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {AppConfig} from '../../../../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
 import {OrganizationTreeviewComponent} from './organization.treeview.component';
-import {
-    OrganizationDataSource,
-} from '../../../../../services/implementation/system/organization/organization.datasource';
-import {
-    OrganizationDbService,
-    OrganizationHttpService,
-} from '../../../../../services/implementation/system/organization/organization.service';
+import {OrganizationDataSource,} from '../../../../../services/implementation/system/organization/organization.datasource';
+import {OrganizationDbService, OrganizationHttpService,} from '../../../../../services/implementation/system/organization/organization.service';
 import {TreeviewModule} from 'ngx-treeview';
 import {OrganizationFormlyComponent} from './organization.formly.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';

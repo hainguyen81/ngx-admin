@@ -1,13 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -20,18 +11,10 @@ import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {EmailValidators} from 'ngx-validators';
 import {ICustomer} from '../../../../../@core/data/system/customer';
-import {
-    CustomerDatasource,
-} from '../../../../../services/implementation/system/customer/customer.datasource';
-import {
-    AppCountryFormlySelectExFieldComponent,
-} from '../../components/common/app.country.formly.select.ex.field.component';
-import {
-    AppProvinceFormlySelectExFieldComponent,
-} from '../../components/common/app.province.formly.select.ex.field.component';
-import {
-    AppCityFormlySelectExFieldComponent,
-} from '../../components/common/app.city.formly.select.ex.field.component';
+import {CustomerDatasource,} from '../../../../../services/implementation/system/customer/customer.datasource';
+import {AppCountryFormlySelectExFieldComponent,} from '../../components/common/app.country.formly.select.ex.field.component';
+import {AppProvinceFormlySelectExFieldComponent,} from '../../components/common/app.province.formly.select.ex.field.component';
+import {AppCityFormlySelectExFieldComponent,} from '../../components/common/app.city.formly.select.ex.field.component';
 import {CustomValidators} from 'ngx-custom-validators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';

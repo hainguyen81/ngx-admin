@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -15,9 +7,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {
-    WarehouseItemDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
@@ -31,9 +21,7 @@ import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {throwError} from 'rxjs';
 
 /* warehouse item table settings */

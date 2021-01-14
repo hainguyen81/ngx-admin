@@ -37,11 +37,11 @@
                       (focusout)="onFocusOut({ event: $event, data: flipCard })"
                       (blur)="onBlur({ event: $event, data: flipCard })"
         >
-            <nb-card-front #cardFrontComponent [class.d-none]="flipped" [class.d-flex]="!flipped">
+            <nb-card-front #cardFrontComponent>
                 <!-- Front component holder -->
                 <ng-template #frontComponent></ng-template>
             </nb-card-front>
-            <nb-card-back #cardBackComponent [class.d-none]="!flipped" [class.d-flex]="flipped">
+            <nb-card-back #cardBackComponent>
                 <!-- Back component holder -->
                 <ng-template #backComponent></ng-template>
             </nb-card-back>

@@ -1,17 +1,5 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
-import {
-    WarehouseItemDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -24,15 +12,9 @@ import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppTableFlipComponent} from '../../components/app.table.flip.component';
+import {AppTableFlipcardComponent} from '../../components/app.table.flipcard.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {
-    ACTION_BACK,
-    ACTION_DELETE,
-    ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {IEvent} from '../../../abstract.component';
 import {IdGenerators} from '../../../../../config/generator.config';
 import ObjectUtils from '../../../../../utils/common/object.utils';
@@ -50,7 +32,7 @@ import ObjectUtils from '../../../../../utils/common/object.utils';
     ],
 })
 export class WarehouseItemFlipcardComponent
-    extends AppTableFlipComponent<
+    extends AppTableFlipcardComponent<
         IWarehouseItem, WarehouseItemDatasource,
         WarehouseItemToolbarComponent,
         WarehouseItemSmartTableComponent,

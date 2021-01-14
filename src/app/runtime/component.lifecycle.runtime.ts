@@ -1,13 +1,4 @@
-import {
-    AfterContentChecked,
-    AfterContentInit,
-    AfterViewChecked,
-    AfterViewInit,
-    DoCheck,
-    OnChanges,
-    OnDestroy,
-    OnInit, SimpleChanges,
-} from '@angular/core';
+import {AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges,} from '@angular/core';
 
 /**
  * Define component life-cycle interfaces

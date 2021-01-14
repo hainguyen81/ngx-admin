@@ -1,0 +1,21 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+    ::ng-deep nb-card {
+        transform: translate3d(0, 0, 0);
+    }
+
+    ::ng-deep nb-flip .front-container { display: flex; }
+    ::ng-deep nb-flip .back-container { display: none; }
+
+    ::ng-deep nb-flip.flipped .front-container { display: none; }
+    ::ng-deep nb-flip.flipped .back-container { display: flex; }
+
+    ::ng-deep nb-flip .front-container {
+        flex: 0.5;
+        > *:not(.d-flex) { flex: 1; }
+    }
+    ::ng-deep nb-flip .back-container {
+        > *:not(.d-flex) { flex: 1; }
+    }
+}

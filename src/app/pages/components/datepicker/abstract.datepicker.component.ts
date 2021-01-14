@@ -1,16 +1,7 @@
 import {DatePickerComponent, IDatePickerConfig} from 'ng2-date-picker';
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {
-    AfterContentChecked,
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef, EventEmitter,
-    Inject,
-    Input, Output,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterContentChecked, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';

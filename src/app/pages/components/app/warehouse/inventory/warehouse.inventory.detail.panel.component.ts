@@ -1,13 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {AppPanelComponent} from '../../components/app.panel.component';
 import {AbstractComponent} from '../../../abstract.component';
@@ -22,9 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {WarehouseInventoryMainFormlyComponent} from './warehouse.inventory.main.formly.component';
 import {WarehouseInventoryDetailSmartTableComponent} from './warehouse.inventory.detail.table.component';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
-import {
-    WarehouseInventoryDetailDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {WarehouseInventoryDetailDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 

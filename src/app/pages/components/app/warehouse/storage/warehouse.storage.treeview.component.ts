@@ -1,22 +1,9 @@
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
-import {
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, Injectable,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, Renderer2, ViewContainerRef,} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import Warehouse, {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {ToastrService} from 'ngx-toastr';
-import {
-    TreeItem,
-    TreeviewI18n,
-    TreeviewI18nDefault,
-    TreeviewItem,
-    TreeviewSelection,
-} from 'ngx-treeview';
+import {TreeItem, TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection,} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';

@@ -1,20 +1,9 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {IModel} from '../../../../../@core/data/base';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from '../app.treeview.i18n';
 import {TreeviewI18n} from 'ngx-treeview';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    AppFormlyTreeviewDropdownFieldComponent,
-} from './app.formly.treeview.dropdown.field.component';
+import {AppFormlyTreeviewDropdownFieldComponent,} from './app.formly.treeview.dropdown.field.component';
 import {BaseDataSource} from '../../../../../services/common/datasource.service';
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {DataSource} from '@app/types/index';

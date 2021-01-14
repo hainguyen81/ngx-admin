@@ -4,7 +4,8 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, OnInit,
+    Inject,
+    OnInit,
     Renderer2,
     RendererStyleFlags2,
     ViewContainerRef,
@@ -22,16 +23,10 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataSource} from '@app/types/index';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import {
-    WarehouseInventoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {WarehouseInventoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
-import {
-    WarehouseStorageFormlySelectFieldComponent,
-} from '../../module.components/warehouse/storage/warehouse.storage.select.field.component';
-import {
-    VendorCustomerFormlySelectFieldComponent,
-} from '../../module.components/common/vendor.customer.select.field.component';
+import {WarehouseStorageFormlySelectFieldComponent,} from '../../module.components/warehouse/storage/warehouse.storage.select.field.component';
+import {VendorCustomerFormlySelectFieldComponent,} from '../../module.components/common/vendor.customer.select.field.component';
 import {ICustomer} from '../../../../../@core/data/system/customer';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 

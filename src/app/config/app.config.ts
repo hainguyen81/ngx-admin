@@ -6,10 +6,7 @@ import {COMMON} from './common.config';
 import {environment} from '../../environments/environment';
 import {i18n} from './i18n.config';
 import {IdGenerators} from './generator.config';
-import {
-    createDefaultSecureStorageConfig,
-    createDefaultStorageConfig,
-} from './storage.config';
+import {createDefaultSecureStorageConfig, createDefaultStorageConfig,} from './storage.config';
 import {CryptoService} from './crypto.config';
 import {ServiceWorkerScripts} from './worker.providers';
 

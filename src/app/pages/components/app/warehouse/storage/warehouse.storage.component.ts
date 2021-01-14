@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -18,18 +9,11 @@ import {Lightbox} from 'ngx-lightbox';
 import {WarehouseStorageToolbarComponent} from './warehouse.storage.toolbar.component';
 import {WarehouseStorageTreeviewComponent} from './warehouse.storage.treeview.component';
 import {WarehouseStorageFormlyComponent} from './warehouse.storage.formly.component';
-import {
-    WarehouseDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
+import {WarehouseDatasource,} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {AppTreeSplitFormComponent} from '../../components/app.treeview.splitpane.form.component';
-import {
-    ACTION_DELETE,
-    ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
 /**

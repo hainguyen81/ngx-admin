@@ -1,33 +1,17 @@
-import {
-    DefaultNgxSelectExOptions,
-    INgxSelectExOptions,
-} from '../../../select-ex/abstract.select.ex.component';
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {DefaultNgxSelectExOptions, INgxSelectExOptions,} from '../../../select-ex/abstract.select.ex.component';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {Constants as CustomerConstants} from '../../../../../@core/data/constants/customer.constants';
 import Customer, {ICustomer} from '../../../../../@core/data/system/customer';
-import {
-    CustomerDatasource,
-} from '../../../../../services/implementation/system/customer/customer.datasource';
+import {CustomerDatasource,} from '../../../../../services/implementation/system/customer/customer.datasource';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {$enum} from 'ts-enum-util';
-import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
-import {
-    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
-} from '../../components/common/app.module.data.index.formly.select.ex.field.component';
+import {AppModuleDataIndexSettingsFormlySelectExFieldComponent,} from '../../components/common/app.module.data.index.formly.select.ex.field.component';
 import ObjectUtils from '../../../../../utils/common/object.utils';
+import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
 
 export const VendorCustomerSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectExOptions, {

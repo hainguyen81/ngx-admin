@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken, Injector} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpRequest} from '@angular/common/http';
 import {AbstractHttpInterceptor} from './abstract.http.interceptor';
 import {NGXLogger} from 'ngx-logger';
 import {Observable} from 'rxjs';

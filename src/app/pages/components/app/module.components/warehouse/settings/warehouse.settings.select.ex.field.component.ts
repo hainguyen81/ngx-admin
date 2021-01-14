@@ -1,27 +1,14 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {IWarehouseSetting} from '../../../../../../@core/data/warehouse/warehouse.setting';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
-import {
-    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
-} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
+import {WarehouseSettingsDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {AppModuleDataIndexSettingsFormlySelectExFieldComponent,} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
 import {$enum} from 'ts-enum-util';
 import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
-import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
+import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 
 export const WarehouseSettingsSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectExOptions, {

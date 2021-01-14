@@ -21,6 +21,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {DynamicModule} from 'ng-dynamic-component';
+import {FlipModule} from 'ngx-flip';
 
 @NgModule({
     imports: [
@@ -45,8 +46,10 @@ import {DynamicModule} from 'ng-dynamic-component';
         MatCardModule,
         MatToolbarModule,
         MatDialogModule,
-        // dynamic components
+        /* Dynamic component */
         DynamicModule,
+        /* Flip */
+        FlipModule,
     ],
     exports: [
         MatButtonModule,
@@ -68,13 +71,35 @@ import {DynamicModule} from 'ng-dynamic-component';
         MatCardModule,
         MatToolbarModule,
         MatDialogModule,
-        // dynamic components
+        /* Dynamic component */
         DynamicModule,
+        /* Flip */
+        FlipModule,
     ],
     providers: [
+        MatButtonModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatBadgeModule,
+        MatListModule,
+        MatGridListModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatRadioModule,
         MatDatepickerModule,
-        // dynamic components
+        MatChipsModule,
+        MatTooltipModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatDialogModule,
+        /* Dynamic component */
         DynamicModule,
+        /* Flip */
+        FlipModule,
     ],
 })
 export class AppMaterialModule {}

@@ -1,19 +1,9 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, Input,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Input, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abstract.select.component';
-import {
-    AppModuleDataIndexSettingsFormlySelectFieldComponent,
-} from '../../../components/common/app.module.data.index.formly.select.field.component';
+import {AppModuleDataIndexSettingsFormlySelectFieldComponent,} from '../../../components/common/app.module.data.index.formly.select.field.component';
 import {IWarehouse} from '../../../../../../@core/data/warehouse/warehouse';
 import {WarehouseDatasource} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {Observable} from 'rxjs';

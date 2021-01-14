@@ -1,16 +1,8 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {IModel} from '../../../../../@core/data/base';
 import {SelectExFormFieldComponent} from '../../../formly/formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 
 /**
  * Custom formly field for selecting parent

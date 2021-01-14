@@ -1,14 +1,9 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NbAuthModule} from '@nebular/auth';
-import {NbSecurityModule, NbRoleProvider} from '@nebular/security';
+import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
 import {of as observableOf} from 'rxjs';
-import {
-    AnalyticsService,
-    LayoutService,
-    SeoService,
-    StateService,
-} from './services';
+import {AnalyticsService, LayoutService, SeoService, StateService,} from './services';
 
 export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
     if (parentModule) {

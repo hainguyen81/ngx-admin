@@ -5,8 +5,12 @@ import {
     NbCheckboxModule,
     NbContextMenuModule,
     NbIconModule,
-    NbInputModule, NbLayoutModule, NbSearchModule,
-    NbSelectModule, NbTabsetModule, NbThemeModule,
+    NbInputModule,
+    NbLayoutModule,
+    NbSearchModule,
+    NbSelectModule,
+    NbTabsetModule,
+    NbThemeModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';

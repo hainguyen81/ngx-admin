@@ -1,13 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {DataSource, LocalDataSource} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';

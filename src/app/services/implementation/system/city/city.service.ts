@@ -10,10 +10,7 @@ import {ConnectionService} from 'ng-connection-service';
 import {throwError} from 'rxjs';
 import {THIRD_PARTY_API} from '../../../../config/third.party.api';
 import {IProvince} from '../../../../@core/data/system/province';
-import {
-    IThirdPartyApiDataBridgeParam,
-    ThirdPartyApiBridgeDbService,
-} from '../../../third.party/third.party.api.bridge.service';
+import {IThirdPartyApiDataBridgeParam, ThirdPartyApiBridgeDbService,} from '../../../third.party/third.party.api.bridge.service';
 import ArrayUtils from '../../../../utils/common/array.utils';
 import ObjectUtils from '../../../../utils/common/object.utils';
 

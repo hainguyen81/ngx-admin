@@ -8,7 +8,8 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, InjectionToken,
+    Inject,
+    InjectionToken,
     OnInit,
     Renderer2,
     Type,
@@ -36,13 +37,17 @@ import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';
 
-export const APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+export const APP_FLIPCARD_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the flip-pane');
-export const APP_FLIP_FRONT_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
+export const APP_FLIPCARD_FRONT_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
     = new InjectionToken<Type<AbstractComponent>>('The front component type injection token of the flip-pane');
-export const APP_FLIP_BACK_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
+export const APP_FLIPCARD_BACK_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractComponent>>
     = new InjectionToken<Type<AbstractComponent>>('The front component type injection token of the flip-pane');
 
+/**
+ * Application flip-card component base on {NbFlipCardComponent}
+ * @deprecated Currently NbFlipCardComponent component has problem with dynamic component. Insted of using flip-component
+ */
 @Component({
     selector: 'ngx-flip-card-app',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -185,9 +190,9 @@ export class AppFlipcardComponent<D extends DataSource,
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN) private toolbarComponentType?: Type<TB> | null,
-                @Inject(APP_FLIP_FRONT_COMPONENT_TYPE_TOKEN) private frontComponentType?: Type<F> | null,
-                @Inject(APP_FLIP_BACK_COMPONENT_TYPE_TOKEN) private backComponentType?: Type<B> | null) {
+                @Inject(APP_FLIPCARD_TOOLBAR_COMPONENT_TYPE_TOKEN) private toolbarComponentType?: Type<TB> | null,
+                @Inject(APP_FLIPCARD_FRONT_COMPONENT_TYPE_TOKEN) private frontComponentType?: Type<F> | null,
+                @Inject(APP_FLIPCARD_BACK_COMPONENT_TYPE_TOKEN) private backComponentType?: Type<B> | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -291,11 +296,9 @@ export class AppFlipcardComponent<D extends DataSource,
     private createFlipComponents(): void {
         // create table component
         const _this: AppFlipcardComponent<D, TB, F, B> = this;
-        // TODO
         this._toolbarComponent = super.setToolbarComponent(this.toolbarComponentType);
         this._toolbarComponent
-        && this._toolbarComponent.actionListener()
-            .subscribe($event => _this.onClickAction($event));
+        && this._toolbarComponent.actionListener().subscribe(($event: IEvent) => _this.onClickAction($event));
         this._frontComponent = super.setFrontComponent(this.frontComponentType);
         this.fulfillComponentsAtStartup && this.ensureBackComponent();
     }

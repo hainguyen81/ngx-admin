@@ -1,24 +1,12 @@
 import {TreeviewI18n, TreeviewI18nDefault, TreeviewSelection} from 'ngx-treeview';
 import {IOrganization} from '../../../../../@core/data/system/organization';
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Injectable,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
-import {
-    AppModuleDataIndexFormlyTreeviewFieldComponent,
-} from '../../components/common/app.module.data.index.formly.treeview.field.component';
+import {AppModuleDataIndexFormlyTreeviewFieldComponent,} from '../../components/common/app.module.data.index.formly.treeview.field.component';
 import {Observable} from 'rxjs';
 import OrganizationUtils from '../../../../../utils/system/organization.utils';
 

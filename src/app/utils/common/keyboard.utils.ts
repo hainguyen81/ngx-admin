@@ -1,19 +1,4 @@
-import {
-    CONTEXT_MENU,
-    DELETE,
-    DOWN_ARROW,
-    END,
-    ENTER,
-    ESCAPE,
-    F10,
-    HOME,
-    INSERT,
-    LEFT_ARROW,
-    PAGE_DOWN,
-    PAGE_UP,
-    RIGHT_ARROW,
-    UP_ARROW,
-} from '@angular/cdk/keycodes';
+import {CONTEXT_MENU, DELETE, DOWN_ARROW, END, ENTER, ESCAPE, F10, HOME, INSERT, LEFT_ARROW, PAGE_DOWN, PAGE_UP, RIGHT_ARROW, UP_ARROW,} from '@angular/cdk/keycodes';
 
 /**
  * Keyboard utilities

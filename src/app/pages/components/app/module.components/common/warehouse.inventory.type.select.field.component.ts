@@ -1,23 +1,10 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
+import {GeneralWarehouseSettingsFormlySelectFieldComponent,} from './general.warehouse.settings.select.field.component';
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
-import {
-    GeneralWarehouseSettingsFormlySelectFieldComponent,
-} from './general.warehouse.settings.select.field.component';
 
 /**
  * Custom module formly field for selecting general warehouse inventory type settings

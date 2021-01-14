@@ -5,8 +5,11 @@ import {
     Component,
     ComponentFactoryResolver,
     ElementRef,
-    Inject, QueryList,
-    Renderer2, RendererStyleFlags2, ViewChildren,
+    Inject,
+    QueryList,
+    Renderer2,
+    RendererStyleFlags2,
+    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import {DataSource} from '@app/types/index';

@@ -3,11 +3,7 @@ import {Inject, Injectable, InjectionToken, Injector} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpRequest} from '@angular/common/http';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {
-    RC_AUTH_ACCESS_TOKEN_PARAM,
-    RC_AUTH_AUTHORIZATION_HEADER,
-    RC_COMPANY_HEADER, RC_THIRD_PARTY_CUSTOM_TYPE,
-} from '../../config/request.config';
+import {RC_AUTH_ACCESS_TOKEN_PARAM, RC_AUTH_AUTHORIZATION_HEADER, RC_COMPANY_HEADER, RC_THIRD_PARTY_CUSTOM_TYPE,} from '../../config/request.config';
 import {NGXLogger} from 'ngx-logger';
 import {AbstractHttpInterceptor} from './abstract.http.interceptor';
 

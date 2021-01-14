@@ -1,8 +1,4 @@
-import {
-    CUSTOM_ELEMENTS_SCHEMA,
-    NgModule,
-    NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA,} from '@angular/core';
 import {SmartTableComponent} from './smart-table/smart-table.component';
 import {
     NbButtonModule,
@@ -86,6 +82,7 @@ import {BaseNgxDropdownTreeviewComponent} from './treeview/base.treeview.dropdow
 import {BaseSplitPaneComponent} from './splitpane/base.splitpane.component';
 import {BaseTabsetComponent} from './tab/base.tab.component';
 import {BasePanelComponent} from './panel/base.panel.component';
+import {FlipModule} from 'ngx-flip';
 
 @NgModule({
     imports: [
@@ -116,6 +113,9 @@ import {BasePanelComponent} from './panel/base.panel.component';
 
         /* Lightbox */
         LightboxModule,
+
+        /* Flip */
+        FlipModule,
 
         /* Table */
         Ng2SmartTableModule,

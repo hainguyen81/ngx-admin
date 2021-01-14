@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, OnDestroy, OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -15,9 +7,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {
-    WarehouseItemDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
@@ -30,10 +20,8 @@ import {IEvent} from '../../../abstract.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {of, Subject, throwError} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
-import {DataSource, Row, Cell, DefaultEditor, LocalDataSource} from '@app/types/index';
-import {
-    WarehouseItemVersionDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
+import {Cell, DataSource, DefaultEditor, LocalDataSource, Row} from '@app/types/index';
+import {WarehouseItemVersionDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 import {IdGenerators} from '../../../../../config/generator.config';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 

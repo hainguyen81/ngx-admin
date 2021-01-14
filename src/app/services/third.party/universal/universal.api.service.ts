@@ -6,17 +6,10 @@ import JsonUtils from '../../../utils/common/json.utils';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {ConnectionService} from 'ng-connection-service';
 import {IApiThirdParty, UniversalApiThirdParty} from '../../../@core/data/system/api.third.party';
-import {
-    IThirdPartyApiConfig,
-    ThirdPartyApiDbService,
-    ThirdPartyApiHttpService,
-} from '../third.party.api.service';
+import {IThirdPartyApiConfig, ThirdPartyApiDbService, ThirdPartyApiHttpService,} from '../third.party.api.service';
 import {IModel} from '../../../@core/data/base';
 import {THIRD_PARTY_API} from '../../../config/third.party.api';
-import {
-    RC_AUTH_AUTHORIZATION_BEARER_TYPE,
-    RC_AUTH_AUTHORIZATION_HEADER, RC_THIRD_PARTY_CUSTOM_TYPE,
-} from '../../../config/request.config';
+import {RC_AUTH_AUTHORIZATION_BEARER_TYPE, RC_AUTH_AUTHORIZATION_HEADER,} from '../../../config/request.config';
 import {IdGenerators} from '../../../config/generator.config';
 import {NgxLocalStorageEncryptionService} from '../../storage.services/local.storage.services';
 

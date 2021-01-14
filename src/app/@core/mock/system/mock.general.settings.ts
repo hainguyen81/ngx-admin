@@ -2,24 +2,24 @@ import {IdGenerators} from '../../../config/generator.config';
 import GeneralSettings, {IGeneralSettings} from '../../data/system/general.settings';
 import {MockModuleSystem, MockModuleWarehouse} from './mock.module';
 import {Constants as CommonConstants} from '../../data/constants/common.constants';
+import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
+import {Constants as OrganizationConstants} from '../../data/constants/organization.constants';
+import {Constants as WarehouseConstants} from '../../data/constants/warehouse.category.constants';
+import {Constants as WarehouseSettingsConstants} from '../../data/constants/warehouse.settings.constants';
+import {Constants as WarehouseInventoryConstants} from '../../data/constants/warehouse.inventory.constants';
+import {Constants as WarehouseStorageConstants} from '../../data/constants/warehouse.storage.constants';
 import BUILTIN_CODES = CommonConstants.COMMON.BUILTIN_CODES;
 import STATUS = CommonConstants.COMMON.STATUS;
 import CURRENCY = CommonConstants.COMMON.CURRENCY;
-import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
 import CUSTOMER_LEVEL = CustomerConstants.CustomerConstants.CUSTOMER_LEVEL;
 import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
-import {Constants as OrganizationConstants} from '../../data/constants/organization.constants';
 import ORGANIZATION_TYPE = OrganizationConstants.OrganizationConstants.ORGANIZATION_TYPE;
-import {Constants as WarehouseConstants} from '../../data/constants/warehouse.category.constants';
 import CATEGORY_TYPE = WarehouseConstants.WarehouseConstants.WarehouseCategoryConstants.CATEGORY_TYPE;
-import {Constants as WarehouseSettingsConstants} from '../../data/constants/warehouse.settings.constants';
 import WAREHOUSE_SETTINGS_TYPE = WarehouseSettingsConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
-import {Constants as WarehouseInventoryConstants} from '../../data/constants/warehouse.inventory.constants';
 import WAREHOUSE_INVENTORY_TYPE = WarehouseInventoryConstants.WarehouseConstants
     .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_TYPE;
 import WAREHOUSE_INVENTORY_STATUS = WarehouseInventoryConstants.WarehouseConstants
     .WarehouseInventoryConstants.WAREHOUSE_INVENTORY_STATUS;
-import {Constants as WarehouseStorageConstants} from '../../data/constants/warehouse.storage.constants';
 import STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE;
 
 export function generalSystemSettingsStatusGenerate(): IGeneralSettings[] {

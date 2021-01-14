@@ -1,12 +1,4 @@
-import {
-    BackgroundTask,
-    BackgroundTaskJob,
-    BackgroundTaskMessage,
-    BackgroundTaskProgress,
-    BackgroundTaskStatus,
-    JobManager,
-    JobQueue,
-} from './background.task.model';
+import {BackgroundTask, BackgroundTaskJob, BackgroundTaskMessage, BackgroundTaskProgress, BackgroundTaskStatus, JobManager, JobQueue,} from './background.task.model';
 
 export interface WorkerConfig {
     properties: WorkerProperties;

@@ -1,5 +1,6 @@
 import {ComponentRef, QueryList, ViewContainerRef} from '@angular/core';
 import {AbstractComponentService} from '../../services/common/component.service';
+import ObjectUtils from './object.utils';
 
 /**
  * Component utilities
@@ -15,7 +16,8 @@ export default class ComponentUtils {
         let components: T[];
         components = [];
         if (queryList) {
-            queryList.forEach(component => {
+            queryList.filter(component => ObjectUtils.isNotNou(component))
+            .forEach(component => {
                 components.push(component);
                 callback && callback.apply(this, [component]);
             });
@@ -32,7 +34,8 @@ export default class ComponentUtils {
         let component: T;
         component = undefined;
         if (queryList) {
-            queryList.map(comp => {
+            queryList.filter(component => ObjectUtils.isNotNou(component))
+            .map(comp => {
                 component = comp;
                 callback && callback.apply(this, [component]);
             });
@@ -52,8 +55,7 @@ export default class ComponentUtils {
         viewContainerRef?: ViewContainerRef,
         clearView?: boolean | false): ComponentRef<T> {
         componentService && viewContainerRef && componentService.setViewContainerRef(viewContainerRef);
-        clearView && viewContainerRef.clear();
-        return (componentService ? componentService.resolve() : undefined);
+        return (componentService ? componentService.resolve(clearView) : undefined);
     }
 
     /**
@@ -67,8 +69,7 @@ export default class ComponentUtils {
         componentService: AbstractComponentService<T>,
         viewContainerRef?: ViewContainerRef,
         clearView?: boolean | false): T {
-        let componentRef: ComponentRef<T>;
-        componentRef = this.createComponentRef(componentService, viewContainerRef, clearView);
+        const componentRef: ComponentRef<T> = this.createComponentRef(componentService, viewContainerRef, clearView);
         return (componentRef ? componentRef.instance : undefined);
     }
 }

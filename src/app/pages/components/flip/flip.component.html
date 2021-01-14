@@ -1,0 +1,65 @@
+<nb-card [class.m-0]="!isShowHeader"
+         [class.p-0]="!isShowHeader"
+         [class.flipped]="flipped"
+         class="ngx-flip-pane"
+>
+    <nb-card-header *ngIf="isShowHeader"
+                    [class.flipped]="flipped"
+                    class="ngx-flip-pane-header">
+        <!-- Header component holder -->
+        <ng-template #headerHolder></ng-template>
+    </nb-card-header>
+
+    <nb-card-body [class.m-0]="!isShowHeader"
+                  [class.p-0]="!isShowHeader"
+                  [class.flipped]="flipped"
+                  class="ngx-flip-pane-body">
+        <ngx-flip   #flip
+                    [class.ngx-flip-pane]="true"
+                    [flip]="flipped"
+                    [contextMenu]="flipContextMenuComponent"
+                    (contextmenu)="onContextMenu({ event: $event, data: flip })"
+                    (keydown)="onKeyDown({ event: $event, data: flip })"
+                    (keypress)="onKeyPress({ event: $event, data: flip })"
+                    (keyup)="onKeyUp({ event: $event, data: flip })"
+                    (click)="onClick({ event: $event, data: flip })"
+                    (dblclick)="onDoubleClick( { event: $event, data: flip })"
+                    (mousedown)="onMouseDown({ event: $event, data: flip })"
+                    (mouseenter)="onMouseEnter({ event: $event, data: flip })"
+                    (mouseleave)="onMouseLeave({ event: $event, data: flip })"
+                    (mousemove)="onMouseMove({ event: $event, data: flip })"
+                    (mouseout)="onMouseOut({ event: $event, data: flip })"
+                    (mouseover)="onMouseOver({ event: $event, data: flip })"
+                    (mouseup)="onMouseUp({ event: $event, data: flip })"
+                    (mousewheel)="onMouseWheel({ event: $event, data: flip })"
+                    (focus)="onFocus({ event: $event, data: flip })"
+                    (focusin)="onFocusIn({ event: $event, data: flip })"
+                    (focusout)="onFocusOut({ event: $event, data: flip })"
+                    (blur)="onBlur({ event: $event, data: flip })"
+        >
+            <ng-container #cardFrontComponent front [class.front-container]="true">
+                <!-- Front component holder -->
+                <ng-template #frontComponent></ng-template>
+            </ng-container>
+            <ng-container #cardBackComponent back [class.back-container]="true">
+                <!-- Back component holder -->
+                <ng-template #backComponent></ng-template>
+            </ng-container>
+        </ngx-flip>
+        <context-menu #flipContextMenuComponent
+                      [disabled]="!(getContextMenu() || []).length"
+                      (close)="onContextMenuClose()">
+            <ng-template
+                contextMenuItem
+                *ngFor="let item of getContextMenu()"
+                [visible]="evalContextMenuItem(item, 'visible', false)"
+                [enabled]="evalContextMenuItem(item, 'enabled', false)"
+                [divider]="evalContextMenuItem(item, 'divider', false)"
+                (execute)="onMenuEvent({ event: $event.event, data: { item: $event.item, menu: item } })"
+            >
+                <span><nb-icon [icon]="evalContextMenuItem(item, 'icon')" pack="fa"></nb-icon>
+                {{evalContextMenuItem(item, 'title', '') | translate}}</span>
+            </ng-template>
+        </context-menu>
+    </nb-card-body>
+</nb-card>

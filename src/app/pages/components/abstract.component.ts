@@ -31,22 +31,9 @@ import KeyboardUtils from '../../utils/common/keyboard.utils';
 import ComponentUtils from '../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
-import {
-    IModalDialog,
-    IModalDialogOptions,
-    ModalDialogComponent,
-    ModalDialogService,
-} from 'ngx-modal-dialog';
-import {
-    BaseElementKeydownHandlerService,
-    BaseElementKeypressHandlerService,
-    BaseElementKeyupHandlerService,
-} from '../../services/implementation/base.keyboard.handler';
-import {
-    AbstractKeydownEventHandlerService,
-    AbstractKeypressEventHandlerService,
-    AbstractKeyupEventHandlerService,
-} from '../../services/common/event.handler.service';
+import {IModalDialog, IModalDialogOptions, ModalDialogComponent, ModalDialogService,} from 'ngx-modal-dialog';
+import {BaseElementKeydownHandlerService, BaseElementKeypressHandlerService, BaseElementKeyupHandlerService,} from '../../services/implementation/base.keyboard.handler';
+import {AbstractKeydownEventHandlerService, AbstractKeypressEventHandlerService, AbstractKeyupEventHandlerService,} from '../../services/common/event.handler.service';
 import {IComponentService} from '../../services/common/interface.service';
 import {AbstractComponentService, BaseComponentService} from '../../services/common/component.service';
 import {Lightbox} from 'ngx-lightbox';

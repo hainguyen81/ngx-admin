@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -21,16 +13,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl, Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/common/validation.utils';
 import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
-import {
-    WarehouseBatchNoDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {WarehouseBatchNoDatasource,} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import moment, {Moment} from 'moment';
-import {
-    AppFormlyDatePickerFieldComponent,
-} from '../../components/common/app.formly.datepicker.field.component';
+import {AppFormlyDatePickerFieldComponent,} from '../../components/common/app.formly.datepicker.field.component';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* default warehouse batch no formly config */

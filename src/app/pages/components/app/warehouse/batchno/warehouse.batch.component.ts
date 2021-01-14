@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy, ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2, ViewContainerRef,
-} from '@angular/core';
-import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -16,30 +9,23 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from '@app/types/index';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import {
-    ACTION_BACK,
-    ACTION_DELETE,
-    ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import WarehouseBatchNo, {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
-import {
-    WarehouseBatchNoDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {WarehouseBatchNoDatasource,} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {WarehouseBatchNoToolbarComponent} from './warehouse.batch.toolbar.component';
 import {WarehouseBatchNoSmartTableComponent} from './warehouse.batch.table.component';
 import {WarehouseBatchNoFormlyComponent} from './warehouse.batch.formly.component';
+import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_BATCH,
-    selector: 'ngx-flip-card-app-warehouse-batch-no',
+    selector: 'ngx-flip-app-warehouse-batch-no',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../../flipcard/flipcard.component.html',
+    templateUrl: '../../../flip/flip.component.html',
     styleUrls: [
-        '../../../flipcard/flipcard.component.scss',
-        '../../components/app.flipcard.component.scss',
+        '../../../flip/flip.component.scss',
+        '../../components/app.flip.component.scss',
     ],
 })
 export class WarehouseBatchNoComponent

@@ -17,7 +17,7 @@ import HtmlUtils from './utils/common/html.utils';
 import * as moment from 'moment';
 import AppUtils from './utils/app/app.utils';
 import ArrayUtils from './utils/common/array.utils';
-import { InjectionConfig } from './config/injection.config';
+import {InjectionConfig} from './config/injection.config';
 
 @Component({
     selector: 'ngx-app',

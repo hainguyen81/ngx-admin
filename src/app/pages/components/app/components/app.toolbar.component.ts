@@ -1,11 +1,4 @@
-import {
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,13 +9,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {DataSource} from '@app/types/index';
 import {COMMON} from '../../../../config/common.config';
-import {
-    ACTION_BACK,
-    ACTION_DELETE_DATABASE,
-    ACTION_IMPORT,
-    ACTION_SERVICE_WORKER,
-    IToolbarActionsConfig,
-} from '../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_SERVICE_WORKER, IToolbarActionsConfig,} from '../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
 /* default warehouse item toolbar actions config */

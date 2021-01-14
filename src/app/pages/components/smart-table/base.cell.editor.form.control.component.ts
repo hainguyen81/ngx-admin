@@ -1,20 +1,6 @@
-import {
-    AbstractControlOptions,
-    AsyncValidatorFn,
-    ValidatorFn,
-} from '@angular/forms';
-import {
-    AbstractCellEditorFormControlComponent,
-} from './abstract.cell.editor.form.control.component';
-import {
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    forwardRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AbstractControlOptions, AsyncValidatorFn, ValidatorFn,} from '@angular/forms';
+import {AbstractCellEditorFormControlComponent,} from './abstract.cell.editor.form.control.component';
+import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, forwardRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {CellComponent} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';

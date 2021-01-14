@@ -1,11 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {Lightbox} from 'ngx-lightbox';
 import {AbstractImageGalleryComponent} from './abstract.image.component';
 import {DataSource} from '@app/types/index';
@@ -18,8 +11,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {IEvent} from '../abstract.component';
 import {AppConfig} from '../../../config/app.config';
 import {Util} from 'leaflet';
-import isArray = Util.isArray;
 import {ActivatedRoute, Router} from '@angular/router';
+import isArray = Util.isArray;
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 

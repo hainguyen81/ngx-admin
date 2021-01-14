@@ -1,8 +1,6 @@
 import WarehouseUtils from './warehouse.utils';
 import {IWarehouseCategory} from '../../@core/data/warehouse/warehouse.category';
-import {
-    WarehouseCategoryDatasource,
-} from '../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {WarehouseCategoryDatasource,} from '../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {throwError} from 'rxjs';
 
 export default class WarehouseDataUtils {

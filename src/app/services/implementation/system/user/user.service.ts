@@ -8,8 +8,8 @@ import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {IUser} from '../../../../@core/data/system/user';
 import {Constants as CommonConstants} from '../../../../@core/data/constants/common.constants';
-import STATUS = CommonConstants.COMMON.STATUS;
 import ObjectUtils from '../../../../utils/common/object.utils';
+import STATUS = CommonConstants.COMMON.STATUS;
 
 @Injectable()
 export class UserDbService extends BaseDbService<IUser> {

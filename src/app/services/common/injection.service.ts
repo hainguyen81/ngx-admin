@@ -1,13 +1,4 @@
-import {
-    ApplicationRef,
-    ChangeDetectorRef,
-    ComponentFactory,
-    ComponentFactoryResolver,
-    ComponentRef,
-    EmbeddedViewRef,
-    Injectable,
-    Injector, Type,
-} from '@angular/core';
+import {ApplicationRef, ChangeDetectorRef, ComponentFactory, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Type,} from '@angular/core';
 import ObjectUtils from '../../utils/common/object.utils';
 
 /**

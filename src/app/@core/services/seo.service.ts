@@ -1,4 +1,4 @@
-import {Injectable, Inject, PLATFORM_ID, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 import {NB_DOCUMENT} from '@nebular/theme';

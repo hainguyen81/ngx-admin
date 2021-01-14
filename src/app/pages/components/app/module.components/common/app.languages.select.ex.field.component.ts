@@ -1,16 +1,5 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
-import {
-    AppModuleDataFormlySelectExFieldComponent,
-} from '../../components/common/app.module.data.formly.select.ex.field.component';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AppModuleDataFormlySelectExFieldComponent,} from '../../components/common/app.module.data.formly.select.ex.field.component';
 import BaseModel, {IModel} from '../../../../../@core/data/base';
 import {DataSource, LocalDataSource} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';

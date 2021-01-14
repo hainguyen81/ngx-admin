@@ -1,19 +1,9 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
 import {DataSource} from '@app/types/index';
-import {
-    AppModuleDataFormlySelectExFieldComponent,
-} from './app.module.data.formly.select.ex.field.component';
+import {AppModuleDataFormlySelectExFieldComponent,} from './app.module.data.formly.select.ex.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {BaseDataSource} from '../../../../../services/common/datasource.service';

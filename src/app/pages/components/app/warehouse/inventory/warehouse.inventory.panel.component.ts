@@ -1,19 +1,7 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
-import {
-    WarehouseInventoryDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {WarehouseInventoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {AppPanelComponent} from '../../components/app.panel.component';
 import {WarehouseInventorySearchComponent} from './warehouse.inventory.search.panel.component';
 import {WarehouseInventorySmartTableComponent} from './warehouse.inventory.table.component';

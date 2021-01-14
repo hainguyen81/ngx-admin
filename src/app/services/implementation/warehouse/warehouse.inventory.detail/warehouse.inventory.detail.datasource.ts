@@ -2,10 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {BaseDataSource} from '../../../common/datasource.service';
 import {NGXLogger} from 'ngx-logger';
 import {IWarehouseInventoryDetail} from '../../../../@core/data/warehouse/warehouse.inventory.detail';
-import {
-    WarehouseInventoryDetailDbService,
-    WarehouseInventoryDetailHttpService,
-} from './warehouse.inventory.detail.service';
+import {WarehouseInventoryDetailDbService, WarehouseInventoryDetailHttpService,} from './warehouse.inventory.detail.service';
 
 @Injectable()
 export class WarehouseInventoryDetailDatasource

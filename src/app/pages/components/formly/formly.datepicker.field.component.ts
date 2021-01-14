@@ -1,22 +1,10 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    QueryList,
-    Renderer2,
-    ViewChildren,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {INgxDatePickerConfig} from '../datepicker/abstract.datepicker.component';
 import {IDatePickerConfig} from 'ng2-date-picker';
-import {Moment} from 'moment';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 import {NgxDatePickerComponent} from '../datepicker/datepicker.component';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {IEvent} from '../abstract.component';

@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, InjectionToken,
-    Renderer2, Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {AppPanelComponent} from './app.panel.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
@@ -22,10 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IModel} from '../../../../@core/data/base';
 import {AbstractFormlyComponent} from '../../formly/abstract.formly.component';
 import {AbstractToolbarComponent} from '../../toolbar/abstract.toolbar.component';
-import {
-    ACTION_SEARCH,
-    IToolbarActionsConfig,
-} from '../../../../config/toolbar.actions.conf';
+import {ACTION_SEARCH, IToolbarActionsConfig,} from '../../../../config/toolbar.actions.conf';
 import ObjectUtils from '../../../../utils/common/object.utils';
 
 export const APP_SEARCH_PANE_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractToolbarComponent<any>>>

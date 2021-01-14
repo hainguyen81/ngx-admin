@@ -1,24 +1,11 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {
-    AppModuleDataIndexSettingsFormlySelectExFieldComponent,
-} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
+import {AppModuleDataIndexSettingsFormlySelectExFieldComponent,} from '../../../components/common/app.module.data.index.formly.select.ex.field.component';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../../select-ex/abstract.select.ex.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
-import {
-    WarehouseBatchNoDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {WarehouseBatchNoDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 
 export const WarehouseSettingsBatchSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectExOptions, {

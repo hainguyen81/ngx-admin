@@ -1,13 +1,7 @@
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {
-    AfterViewInit,
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject, Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {BaseFormlyComponent} from '../../formly/base.formly.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import BaseModel, {IModel} from '../../../../@core/data/base';

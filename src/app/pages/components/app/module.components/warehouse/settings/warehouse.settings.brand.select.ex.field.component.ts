@@ -1,24 +1,11 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {WarehouseSettingsDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {Constants as WHConstants} from '../../../../../../@core/data/constants/warehouse.settings.constants';
-import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
-import {
-    WarehouseSettingsFormlySelectExFieldComponent,
-} from './warehouse.settings.select.ex.field.component';
+import {WarehouseSettingsFormlySelectExFieldComponent,} from './warehouse.settings.select.ex.field.component';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
+import WAREHOUSE_SETTINGS_TYPE = WHConstants.WarehouseSettingsConstants.WAREHOUSE_SETTINGS_TYPE;
 
 /**
  * Custom module formly field for selecting general warehouse settings brand settings

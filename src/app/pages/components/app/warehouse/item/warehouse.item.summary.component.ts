@@ -1,15 +1,6 @@
 import {AbstractComponent, IEvent} from '../../../abstract.component';
-import {
-    WarehouseItemDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {
-    ChangeDetectorRef, Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';

@@ -1,19 +1,5 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    OnDestroy, OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
-import {
-    NbMediaBreakpointsService,
-    NbMenuItem,
-    NbMenuService,
-    NbSidebarService,
-    NbThemeService,
-} from '@nebular/theme';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService,} from '@nebular/theme';
 import {filter, map, takeUntil} from 'rxjs/operators';
 import {Subject, throwError} from 'rxjs';
 /* Authentication */

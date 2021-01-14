@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, InjectionToken,
-    Renderer2,
-    Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
 import {IModel} from '../../../../@core/data/base';
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../../abstract.component';

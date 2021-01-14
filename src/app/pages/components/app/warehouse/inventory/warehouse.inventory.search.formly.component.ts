@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -21,12 +12,8 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl} from '@angular/forms';
 import moment, {Moment} from 'moment';
-import {
-    AppFormlyDatePickerFieldComponent,
-} from '../../components/common/app.formly.datepicker.field.component';
-import WarehouseInventorySearch, {
-    IWarehouseInventorySearch,
-} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
+import {AppFormlyDatePickerFieldComponent,} from '../../components/common/app.formly.datepicker.field.component';
+import WarehouseInventorySearch, {IWarehouseInventorySearch,} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.search';
 import {DataSource, LocalDataSource} from '@app/types/index';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 

@@ -3,32 +3,16 @@ import {NgModule} from '@angular/core';
 import {PagesComponent} from './pages.component';
 import {NotFoundComponent} from './components/not-found.component';
 import {UserComponent} from './components/app/system/user/user.component';
-import {
-    OrganizationSplitPaneComponent,
-} from './components/app/system/organization/organization.component';
+import {OrganizationSplitPaneComponent,} from './components/app/system/organization/organization.component';
 import {PagesGuard} from './pages.guard.service';
-import {
-    WarehouseItemFlipcardComponent,
-} from './components/app/warehouse/item/warehouse.item.flipcard.component';
-import {
-    WarehouseCategorySplitPaneComponent,
-} from './components/app/warehouse/category/warehouse.category.component';
-import {
-    WarehouseStorageSplitPaneComponent,
-} from './components/app/warehouse/storage/warehouse.storage.component';
-import {
-    WarehouseSettingsComponent,
-} from './components/app/warehouse/settings/warehouse.settings.component';
-import {
-    GeneralSettingsComponent,
-} from './components/app/system/general.settings/general.settings.component';
+import {WarehouseItemFlipcardComponent,} from './components/app/warehouse/item/warehouse.item.flipcard.component';
+import {WarehouseCategorySplitPaneComponent,} from './components/app/warehouse/category/warehouse.category.component';
+import {WarehouseStorageSplitPaneComponent,} from './components/app/warehouse/storage/warehouse.storage.component';
+import {WarehouseSettingsComponent,} from './components/app/warehouse/settings/warehouse.settings.component';
+import {GeneralSettingsComponent,} from './components/app/system/general.settings/general.settings.component';
 import {CustomerComponent} from './components/app/system/customer/customer.component';
-import {
-    WarehouseBatchNoComponent,
-} from './components/app/warehouse/batchno/warehouse.batch.component';
-import {
-    WarehouseInventoryComponent,
-} from './components/app/warehouse/inventory/warehouse.inventory.component';
+import {WarehouseBatchNoComponent,} from './components/app/warehouse/batchno/warehouse.batch.component';
+import {WarehouseInventoryComponent,} from './components/app/warehouse/inventory/warehouse.inventory.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ECommerceComponent } from './e-commerce/e-commerce.component';
 // import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';

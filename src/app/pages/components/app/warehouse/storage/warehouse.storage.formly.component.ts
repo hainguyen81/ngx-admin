@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -18,24 +10,16 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {WarehouseDatasource} from '../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
-import {
-    AppCountryFormlySelectExFieldComponent,
-} from '../../components/common/app.country.formly.select.ex.field.component';
-import {
-    AppProvinceFormlySelectExFieldComponent,
-} from '../../components/common/app.province.formly.select.ex.field.component';
-import {
-    AppCityFormlySelectExFieldComponent,
-} from '../../components/common/app.city.formly.select.ex.field.component';
+import {AppCountryFormlySelectExFieldComponent,} from '../../components/common/app.country.formly.select.ex.field.component';
+import {AppProvinceFormlySelectExFieldComponent,} from '../../components/common/app.province.formly.select.ex.field.component';
+import {AppCityFormlySelectExFieldComponent,} from '../../components/common/app.city.formly.select.ex.field.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/common/validation.utils';
 import {$enum} from 'ts-enum-util';
 import {Constants as WarehouseStorageConstants} from '../../../../../@core/data/constants/warehouse.storage.constants';
-import {
-    AppModuleDataIndexSettingsFormlySelectFieldComponent,
-} from '../../components/common/app.module.data.index.formly.select.field.component';
+import {AppModuleDataIndexSettingsFormlySelectFieldComponent,} from '../../components/common/app.module.data.index.formly.select.field.component';
 
 /* default warehouse storage formly config */
 export const WarehouseStorageFormConfig: FormlyConfig = new FormlyConfig();

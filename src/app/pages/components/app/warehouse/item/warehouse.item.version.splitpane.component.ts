@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';

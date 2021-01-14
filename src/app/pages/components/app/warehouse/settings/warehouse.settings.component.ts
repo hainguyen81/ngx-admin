@@ -1,15 +1,6 @@
-import {
-    ChangeDetectionStrategy, ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2, ViewContainerRef,
-} from '@angular/core';
-import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import WarehouseSettings, {IWarehouseSetting} from '../../../../../@core/data/warehouse/warehouse.setting';
-import {
-    WarehouseSettingsDatasource,
-} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {WarehouseSettingsDatasource,} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {WarehouseSettingsSmartTableComponent} from './warehouse.settings.table.component';
 import {WarehouseSettingsFormlyComponent} from './warehouse.settings.formly.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -23,23 +14,18 @@ import {IEvent} from '../../../abstract.component';
 import {Row} from '@app/types/index';
 import {WarehouseSettingsToolbarComponent} from './warehouse.settings.toolbar.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import {
-    ACTION_BACK,
-    ACTION_DELETE,
-    ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_GENERAL,
-    selector: 'ngx-flip-card-app-warehouse-settings',
+    selector: 'ngx-flip-app-warehouse-settings',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../../flipcard/flipcard.component.html',
+    templateUrl: '../../../flip/flip.component.html',
     styleUrls: [
-        '../../../flipcard/flipcard.component.scss',
-        '../../components/app.flipcard.component.scss',
+        '../../../flip/flip.component.scss',
+        '../../components/app.flip.component.scss',
     ],
 })
 export class WarehouseSettingsComponent

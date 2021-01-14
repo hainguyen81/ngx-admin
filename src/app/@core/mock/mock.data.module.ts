@@ -1,13 +1,4 @@
-import {
-    Inject,
-    InjectionToken,
-    Injector,
-    ModuleWithProviders,
-    NgModule,
-    Optional,
-    SkipSelf,
-    Type,
-} from '@angular/core';
+import {Inject, InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type,} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MockUserService} from './system/users.service';
 import {UserDbService} from '../../services/implementation/system/user/user.service';

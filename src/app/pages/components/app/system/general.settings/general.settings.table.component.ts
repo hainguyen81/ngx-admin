@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -19,13 +10,9 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
 import {throwError} from 'rxjs';
-import SystemDataUtils from '../../../../../utils/system/system.data.utils';
-import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../../utils/common/object.utils';
@@ -172,26 +159,26 @@ export class GeneralSettingsSmartTableComponent
     // -------------------------------------------------
 
     doSearch(keyword: any): void {
-        this.getDataSource().setFilter([
-            {field: 'code', search: keyword},
-            {field: 'name', search: keyword},
-            {field: 'value', search: keyword},
-        ], false);
+        // this.getDataSource().setFilter([
+        //     {field: 'code', search: keyword},
+        //     {field: 'name', search: keyword},
+        //     {field: 'value', search: keyword},
+        // ], false);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
 
-        const settings: any = this.config;
-        settings['columns']['module_code']['valuePrepareFunction'] =
-            (value?: string | null) => this.translateModuleColumn(settings, value);
-        settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);
-        SystemDataUtils.invokeAllModelsAsTableSelectOptions(
-            this.moduleDatasource, this.getTranslateService()).then(
-            options => {
-                settings['columns']['module_code']['editor']['config']['list'] = options;
-                this.getDataSource().refresh();
-            });
+        // const settings: any = this.config;
+        // settings['columns']['module_code']['valuePrepareFunction'] =
+        //     (value?: string | null) => this.translateModuleColumn(settings, value);
+        // settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);
+        // SystemDataUtils.invokeAllModelsAsTableSelectOptions(
+        //     this.moduleDatasource, this.getTranslateService()).then(
+        //     options => {
+        //         settings['columns']['module_code']['editor']['config']['list'] = options;
+        //         this.getDataSource().refresh();
+        //     });
     }
 
     // -------------------------------------------------

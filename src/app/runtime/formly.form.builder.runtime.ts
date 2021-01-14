@@ -1,12 +1,5 @@
 import {ConfigOption, FORMLY_CONFIG, FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
-import {
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Injector,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Injector, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ValidationMessageOption} from '@ngx-formly/core/lib/services/formly.config';
 import ObjectUtils from '../utils/common/object.utils';

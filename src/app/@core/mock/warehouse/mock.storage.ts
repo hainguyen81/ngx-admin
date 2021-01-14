@@ -2,8 +2,8 @@ import ObjectUtils from '../../../utils/common/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import {IWarehouse} from '../../data/warehouse/warehouse';
 import {Constants as WarehouseStorageConstants} from '../../data/constants/warehouse.storage.constants';
-import STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE;
 import {$enum} from 'ts-enum-util';
+import STORAGE_TYPE = WarehouseStorageConstants.WarehouseStorageConstants.STORAGE_TYPE;
 
 export const MAXIMUM_MOCK_WAREHOUSE: number = 10;
 

@@ -1,29 +1,11 @@
-import {
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    Output,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    AbstractComponent,
-    IEvent,
-} from '../abstract.component';
+import {AbstractComponent, IEvent,} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {
-    DropdownTreeviewComponent,
-    TreeItem,
-    TreeviewComponent,
-    TreeviewItem,
-} from 'ngx-treeview';
+import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem,} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/common/html.utils';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import ObjectUtils from '../../../utils/common/object.utils';
@@ -33,11 +15,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {TreeviewSelection} from 'ngx-treeview/src/treeview-item';
-import {
-    CONTEXT_MENU_ADD,
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
-} from '../../../config/context.menu.conf';
+import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT,} from '../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '../../../utils/common/array.utils';
 

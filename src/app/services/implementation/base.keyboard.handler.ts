@@ -1,9 +1,4 @@
-import {
-    AbstractKeydownEventHandlerService,
-    AbstractKeypressEventHandlerService,
-    AbstractKeyupEventHandlerService,
-    SubscribeHandler,
-} from '../common/event.handler.service';
+import {AbstractKeydownEventHandlerService, AbstractKeypressEventHandlerService, AbstractKeyupEventHandlerService, SubscribeHandler,} from '../common/event.handler.service';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {FromEventTarget} from 'rxjs/internal/observable/fromEvent';

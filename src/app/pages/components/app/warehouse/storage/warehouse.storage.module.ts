@@ -5,15 +5,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core'
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContextMenuModule} from 'ngx-contextmenu';
-import {
-    NbButtonModule,
-    NbCardModule,
-    NbCheckboxModule,
-    NbContextMenuModule, NbIconModule, NbInputModule,
-    NbLayoutModule,
-    NbSelectModule,
-    NbThemeModule,
-} from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule,} from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
 import {WarehouseStorageTreeviewComponent} from './warehouse.storage.treeview.component';
 import {Ng2SmartTableModule} from '@app/types/index';

@@ -1,28 +1,14 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef, EventEmitter,
-    Inject, Input, Output,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    AbstractComponent, IEvent,
-} from '../abstract.component';
+import {AbstractComponent, IEvent,} from '../abstract.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {
-    INgxSelectOptions,
-    NgxSelectComponent, NgxSelectOptGroup,
-    NgxSelectOption, TSelectOption,
-} from 'ngx-select-ex';
+import {INgxSelectOptions, NgxSelectComponent, NgxSelectOptGroup, NgxSelectOption, TSelectOption,} from 'ngx-select-ex';
 import {BehaviorSubject} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';

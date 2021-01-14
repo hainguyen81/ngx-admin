@@ -1,8 +1,4 @@
-import {
-    LocalStorageService,
-    NgxLocalstorageConfiguration,
-    StorageSerializer,
-} from 'ngx-localstorage';
+import {LocalStorageService, NgxLocalstorageConfiguration, StorageSerializer,} from 'ngx-localstorage';
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';

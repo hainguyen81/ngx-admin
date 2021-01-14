@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy, ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef,
-    Inject,
-    Renderer2, ViewContainerRef,
-} from '@angular/core';
-import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -17,29 +10,22 @@ import {IEvent} from '../../../abstract.component';
 import {Row} from '@app/types/index';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import Customer, {ICustomer} from '../../../../../@core/data/system/customer';
-import {
-    CustomerDatasource,
-} from '../../../../../services/implementation/system/customer/customer.datasource';
+import {CustomerDatasource,} from '../../../../../services/implementation/system/customer/customer.datasource';
 import {CustomerSmartTableComponent} from './customer.table.component';
 import {CustomerToolbarComponent} from './customer.toolbar.component';
 import {CustomerFormlyComponent} from './customer.formly.component';
-import {
-    ACTION_BACK,
-    ACTION_DELETE,
-    ACTION_IMPORT,
-    ACTION_RESET,
-    ACTION_SAVE,
-} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
 
 @Component({
     moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_CUSTOMER,
-    selector: 'ngx-flip-card-app-system-customer',
+    selector: 'ngx-flip-app-system-customer',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../flipcard/flipcard.component.html',
     styleUrls: [
-        '../../../flipcard/flipcard.component.scss',
-        '../../components/app.flipcard.component.scss',
+        '../../../flip/flip.component.scss',
+        '../../components/app.flip.component.scss',
     ],
 })
 export class CustomerComponent

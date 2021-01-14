@@ -1,21 +1,14 @@
+import {MatGridListModule} from '@angular/material/grid-list';
 import {CommonModule} from '@angular/common';
 import {TreeviewModule} from 'ngx-treeview';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContextMenuModule} from 'ngx-contextmenu';
-import {
-    NbButtonModule,
-    NbCardModule,
-    NbCheckboxModule,
-    NbContextMenuModule, NbIconModule, NbInputModule,
-    NbLayoutModule,
-    NbSelectModule,
-    NbThemeModule,
-} from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule,} from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
 import {Ng2SmartTableModule} from '@app/types/index';
-import {FormlyModule} from '@ngx-formly/core';
+import {ConfigOption, FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {ThemeModule} from '../../../../../@theme/theme.module';
@@ -43,6 +36,89 @@ import {AppFormlySelectFieldComponent} from './app.formly.select.field.component
 import {AppModuleDataFormlySelectFieldComponent} from './app.module.data.formly.select.field.component';
 import {AppModuleDataIndexSettingsFormlySelectFieldComponent} from './app.module.data.index.formly.select.field.component';
 import {AppModuleDataIndexSettingsFormlySelectExFieldComponent} from './app.module.data.index.formly.select.ex.field.component';
+import {CustomFormsModule} from 'ngx-custom-validators';
+import {ValidatorsModule} from 'ngx-validators';
+import {FlipModule} from 'ngx-flip';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatListModule} from '@angular/material/list';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+
+const FormlyFormOptions: ConfigOption = {
+    types: [
+        {
+            name: 'select-ex-module',
+            component: AppModuleFormlySelectExFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ngx-module',
+            component: AppModuleFormlySelectFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ex-general-settings',
+            component: AppModuleSettingsFormlySelectExFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ngx-general-settings',
+            component: AppModuleSettingsFormlySelectFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ex-country',
+            component: AppCountryFormlySelectExFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ngx-country',
+            component: AppCountryFormlySelectFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ex-province',
+            component: AppProvinceFormlySelectExFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ngx-province',
+            component: AppProvinceFormlySelectFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ex-city',
+            component: AppCityFormlySelectExFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'select-ngx-city',
+            component: AppCityFormlySelectFieldComponent,
+            wrappers: ['form-field'],
+        },
+        {
+            name: 'app-date-picker',
+            component: AppFormlyDatePickerFieldComponent,
+            wrappers: ['form-field'],
+        },
+    ],
+};
 
 @NgModule({
     imports: [
@@ -58,6 +134,32 @@ import {AppModuleDataIndexSettingsFormlySelectExFieldComponent} from './app.modu
         NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
+
+        MatButtonModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatBadgeModule,
+        MatListModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatChipsModule,
+        MatTooltipModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatCardModule,
+        MatDialogModule,
+
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -83,65 +185,8 @@ import {AppModuleDataIndexSettingsFormlySelectExFieldComponent} from './app.modu
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot({
-            types: [
-                {
-                    name: 'select-ex-module',
-                    component: AppModuleFormlySelectExFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ngx-module',
-                    component: AppModuleFormlySelectFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ex-general-settings',
-                    component: AppModuleSettingsFormlySelectExFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ngx-general-settings',
-                    component: AppModuleSettingsFormlySelectFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ex-country',
-                    component: AppCountryFormlySelectExFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ngx-country',
-                    component: AppCountryFormlySelectFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ex-province',
-                    component: AppProvinceFormlySelectExFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ngx-province',
-                    component: AppProvinceFormlySelectFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ex-city',
-                    component: AppCityFormlySelectExFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ngx-city',
-                    component: AppCityFormlySelectFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'app-date-picker',
-                    component: AppFormlyDatePickerFieldComponent,
-                    wrappers: ['form-field'],
-                },
-            ],
-        }),
+        FormlyModule.forRoot(FormlyFormOptions),
+        FormlyModule.forChild(FormlyFormOptions),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -152,9 +197,14 @@ import {AppModuleDataIndexSettingsFormlySelectExFieldComponent} from './app.modu
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
 
         /* Application components module */
         ComponentsModule,
+
+        /*Validators*/
+        CustomFormsModule,
+        ValidatorsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

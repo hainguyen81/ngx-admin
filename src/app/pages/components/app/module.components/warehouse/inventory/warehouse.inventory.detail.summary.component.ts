@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject, Input,
-    OnInit,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Input, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
 import {AbstractComponent} from '../../../../abstract.component';
 import {DataSource, Ng2SmartTableComponent} from '@app/types/index';

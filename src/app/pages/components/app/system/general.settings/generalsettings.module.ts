@@ -1,13 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
-import {
-    NbButtonModule,
-    NbCardModule,
-    NbCheckboxModule,
-    NbContextMenuModule,
-    NbIconModule,
-    NbInputModule, NbLayoutModule,
-    NbSelectModule, NbThemeModule,
-} from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule,} from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {CommonModule} from '@angular/common';
@@ -19,7 +11,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {AngularSplitModule} from 'angular-split';
 import {TreeviewModule} from 'ngx-treeview';
-import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {ComponentsModule} from '../../../components.module';
 import {AppComponentsModule} from '../../components/app.components.module';
@@ -27,13 +18,8 @@ import {GeneralSettingsSmartTableComponent} from './general.settings.table.compo
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
 import {GeneralSettingsComponent} from './general.settings.component';
-import {
-    GeneralSettingsDatasource,
-} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {
-    GeneralSettingsDbService,
-    GeneralSettingsHttpService,
-} from '../../../../../services/implementation/system/general.settings/general.settings.service';
+import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDbService, GeneralSettingsHttpService,} from '../../../../../services/implementation/system/general.settings/general.settings.service';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 
@@ -73,7 +59,6 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule

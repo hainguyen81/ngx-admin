@@ -3,16 +3,8 @@ import {ToastrService} from 'ngx-toastr';
 import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {IEvent} from '../../abstract.component';
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver, ElementRef, EventEmitter,
-    Inject,
-    Output, Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
-import {TOKEN_APP_TREEVIEW_SHOW_ALL, AppTreeviewI18n} from './app.treeview.i18n';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from './app.treeview.i18n';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {BaseNgxTreeviewComponent} from '../../treeview/base.treeview.component';
 import {ContextMenuService} from 'ngx-contextmenu';

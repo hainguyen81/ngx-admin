@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {IModel} from '../../../../../@core/data/base';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from '../app.treeview.i18n';
 import {TreeviewI18n} from 'ngx-treeview';
@@ -16,9 +8,7 @@ import {IDbService, IHttpService} from '../../../../../services/common/interface
 import {DataSource} from '@app/types/index';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, throwError} from 'rxjs';
-import {
-    AppModuleDataFormlyTreeviewFieldComponent,
-} from './app.module.data.formly.treeview.field.component';
+import {AppModuleDataFormlyTreeviewFieldComponent,} from './app.module.data.formly.treeview.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 

@@ -1,13 +1,5 @@
 import {SmartTableComponent} from './smart-table.component';
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2, Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {F2, S} from '@angular/cdk/keycodes';
@@ -19,11 +11,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
-import {
-    CONTEXT_MENU_ADD,
-    CONTEXT_MENU_DELETE,
-    CONTEXT_MENU_EDIT,
-} from '../../../config/context.menu.conf';
+import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT,} from '../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
 /**
@@ -79,6 +67,10 @@ export class BaseSmartTableComponent<T extends DataSource> extends SmartTableCom
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
     }
+
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
 
     /**
      * Perform keydown action (not navigate and context menu key

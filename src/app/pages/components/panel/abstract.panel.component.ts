@@ -1,21 +1,10 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../abstract.component';
-import {
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    NbCardBodyComponent,
-    NbCardComponent,
-    NbCardFooterComponent, NbCardHeaderComponent,
-} from '@nebular/theme';
+import {NbCardBodyComponent, NbCardComponent, NbCardFooterComponent, NbCardHeaderComponent,} from '@nebular/theme';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';

@@ -1,8 +1,15 @@
 import {
-    AfterViewInit, ChangeDetectorRef,
-    Component, ComponentFactoryResolver, ElementRef, Inject, Input,
-    QueryList, Renderer2,
-    ViewChildren, ViewContainerRef,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    Input,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewContainerRef,
 } from '@angular/core';
 import {TreeviewItem} from 'ngx-treeview';
 import ComponentUtils from '../../../utils/common/component.utils';

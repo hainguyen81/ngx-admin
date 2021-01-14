@@ -1,25 +1,13 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {Constants as CommonConstants} from '../../../../../../@core/data/constants/common.constants';
-import STATUS = CommonConstants.COMMON.STATUS;
 import {$enum} from 'ts-enum-util';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../../select/abstract.select.component';
-import {
-    AppModuleDataIndexSettingsFormlySelectFieldComponent,
-} from '../../../components/common/app.module.data.index.formly.select.field.component';
+import {AppModuleDataIndexSettingsFormlySelectFieldComponent,} from '../../../components/common/app.module.data.index.formly.select.field.component';
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
-import {
-    WarehouseBatchNoDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {WarehouseBatchNoDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import STATUS = CommonConstants.COMMON.STATUS;
 
 export const WarehouseBatchNoNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {

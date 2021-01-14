@@ -4,15 +4,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core'
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContextMenuModule} from 'ngx-contextmenu';
-import {
-    NbButtonModule,
-    NbCardModule,
-    NbCheckboxModule,
-    NbContextMenuModule, NbIconModule, NbInputModule,
-    NbLayoutModule,
-    NbSelectModule,
-    NbThemeModule,
-} from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule,} from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ComponentsModule} from '../../components.module';
@@ -34,14 +26,17 @@ import {AppSmartTableComponent} from './app.table.component';
 import {AppFormlyComponent} from './app.formly.component';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AppFlipcardComponent} from './app.flipcard.component';
-import {AppTableFlipComponent} from './app.table.flip.component';
-import {AppTableFlipFormComponent} from './app.table.flip.form.component';
+import {AppTableFlipcardComponent} from './app.table.flipcard.component';
+import {AppTableFlipcardFormComponent} from './app.table.flipcard.form.component';
 import {AppTreeviewComponent} from './app.treeview.component';
 import {AppSplitPaneComponent} from './app.splitpane.component';
 import {AppTreeSplitFormComponent} from './app.treeview.splitpane.form.component';
 import {AppTabsetComponent} from './app.tabset.component';
 import {AppPanelComponent} from './app.panel.component';
 import {AppSearchPanelComponent} from './app.search.panel.component';
+import {AppFlipComponent} from './app.flip.component';
+import {AppTableFlipComponent} from './app.table.flip.component';
+import {AppTableFlipFormComponent} from './app.table.flip.form.component';
 
 @NgModule({
     imports: [
@@ -129,9 +124,12 @@ import {AppSearchPanelComponent} from './app.search.panel.component';
         AppSmartTableComponent,
         AppFormlyComponent,
         AppToolbarComponent,
-        AppFlipcardComponent,
+        AppFlipComponent,
         AppTableFlipComponent,
         AppTableFlipFormComponent,
+        AppFlipcardComponent,
+        AppTableFlipcardComponent,
+        AppTableFlipcardFormComponent,
         AppTreeviewComponent,
         AppSplitPaneComponent,
         AppTreeSplitFormComponent,
@@ -143,9 +141,12 @@ import {AppSearchPanelComponent} from './app.search.panel.component';
         AppSmartTableComponent,
         AppFormlyComponent,
         AppToolbarComponent,
-        AppFlipcardComponent,
+        AppFlipComponent,
         AppTableFlipComponent,
         AppTableFlipFormComponent,
+        AppFlipcardComponent,
+        AppTableFlipcardComponent,
+        AppTableFlipcardFormComponent,
         AppTreeviewComponent,
         AppSplitPaneComponent,
         AppTreeSplitFormComponent,
@@ -157,9 +158,12 @@ import {AppSearchPanelComponent} from './app.search.panel.component';
         AppSmartTableComponent,
         AppFormlyComponent,
         AppToolbarComponent,
-        AppFlipcardComponent,
+        AppFlipComponent,
         AppTableFlipComponent,
         AppTableFlipFormComponent,
+        AppFlipcardComponent,
+        AppTableFlipcardComponent,
+        AppTableFlipcardFormComponent,
         AppTreeviewComponent,
         AppSplitPaneComponent,
         AppTreeSplitFormComponent,

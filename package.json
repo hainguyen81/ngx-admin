@@ -107,6 +107,7 @@
         "ngx-device-detector": "^2.0.4",
         "ngx-doc-viewer": "^1.4.0",
         "ngx-echarts": "^5.2.2",
+        "ngx-flip": "^9.0.0",
         "ngx-indexed-db": "5.0.2",
         "ngx-lightbox": "^2.2.2",
         "ngx-localstorage": "^3.2.1",

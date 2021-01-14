@@ -1,13 +1,4 @@
-import {
-    AbstractControl,
-    AbstractControlOptions,
-    AsyncValidatorFn,
-    ControlValueAccessor,
-    FormControl,
-    FormGroup,
-    ValidatorFn,
-    Validators,
-} from '@angular/forms';
+import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, ControlValueAccessor, FormControl, FormGroup, ValidatorFn, Validators,} from '@angular/forms';
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -16,12 +7,13 @@ import {
     EventEmitter,
     forwardRef,
     Inject,
-    Input, OnInit,
+    Input,
+    OnInit,
     Output,
     Renderer2,
     ViewContainerRef,
 } from '@angular/core';
-import {CellComponent, Ng2SmartTableComponent, Row, DefaultEditor, Cell} from '@app/types/index';
+import {Cell, CellComponent, DefaultEditor, Ng2SmartTableComponent, Row} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {throwError} from 'rxjs';

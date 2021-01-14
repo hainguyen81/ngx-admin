@@ -1,13 +1,4 @@
-import {
-    ChangeDetectorRef,
-    ComponentFactoryResolver,
-    ElementRef, EventEmitter,
-    forwardRef,
-    Inject,
-    Output,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, forwardRef, Inject, Output, Renderer2, ViewContainerRef,} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {isObservable, Observable, of} from 'rxjs';

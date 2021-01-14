@@ -1,13 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Input,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Input, Renderer2, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../../../abstract.component';
 import {ContextMenuService} from 'ngx-contextmenu';

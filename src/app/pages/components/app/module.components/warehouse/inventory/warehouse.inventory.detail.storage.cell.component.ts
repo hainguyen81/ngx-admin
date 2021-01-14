@@ -5,7 +5,8 @@ import {
     ComponentFactoryResolver,
     ElementRef,
     forwardRef,
-    Inject, OnDestroy,
+    Inject,
+    OnDestroy,
     OnInit,
     QueryList,
     Renderer2,
@@ -20,16 +21,10 @@ import ComponentUtils from '../../../../../../utils/common/component.utils';
 import {CellComponent} from '@app/types/index';
 import {IEvent} from '../../../../abstract.component';
 import {MatInput} from '@angular/material/input';
-import {
-    WarehouseStorageFormlySelectFieldComponent,
-} from '../storage/warehouse.storage.select.field.component';
+import {WarehouseStorageFormlySelectFieldComponent,} from '../storage/warehouse.storage.select.field.component';
 import {IWarehouse} from '../../../../../../@core/data/warehouse/warehouse';
-import {
-    IWarehouseInventoryDetailStorage,
-} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
-import {
-    WarehouseDatasource,
-} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
+import {IWarehouseInventoryDetailStorage,} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
+import {WarehouseDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
 import {BehaviorSubject} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/common/promise.utils';
 import ObjectUtils from '../../../../../../utils/common/object.utils';

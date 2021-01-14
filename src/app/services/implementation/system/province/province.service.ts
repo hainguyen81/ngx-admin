@@ -10,10 +10,7 @@ import {ConnectionService} from 'ng-connection-service';
 import {throwError} from 'rxjs';
 import {ICountry} from '../../../../@core/data/system/country';
 import {THIRD_PARTY_API} from '../../../../config/third.party.api';
-import {
-    IThirdPartyApiDataBridgeParam,
-    ThirdPartyApiBridgeDbService,
-} from '../../../third.party/third.party.api.bridge.service';
+import {IThirdPartyApiDataBridgeParam, ThirdPartyApiBridgeDbService,} from '../../../third.party/third.party.api.bridge.service';
 import ArrayUtils from '../../../../utils/common/array.utils';
 import ObjectUtils from '../../../../utils/common/object.utils';
 

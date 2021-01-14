@@ -1,7 +1,6 @@
-import {AppConfig} from '../../config/app.config';
 import {ApplicationRef, InjectFlags, Injector, ViewContainerRef} from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { InjectionConfig } from '../../config/injection.config';
+import {ToastrService} from 'ngx-toastr';
+import {InjectionConfig} from '../../config/injection.config';
 
 export default class AppUtils {
 

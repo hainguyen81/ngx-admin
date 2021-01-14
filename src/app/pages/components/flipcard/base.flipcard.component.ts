@@ -1,14 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    Inject,
-    Renderer2,
-    Type,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef,} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {NgxFlipCardComponent} from './flipcard.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -22,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 /**
  * Base flip-card base on {NbFlipCardComponent}
+ * @deprecated Currently NbFlipCardComponent component has problem with dynamic component. Insted of using flip-component
  */
 @Component({
     selector: 'ngx-flip-card',
@@ -75,6 +66,10 @@ export class BaseFlipcardComponent<T extends DataSource> extends NgxFlipCardComp
             router, activatedRoute);
     }
 
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
     /**
      * Create the front component dynamically
      * @param componentType front component type
@@ -82,6 +77,7 @@ export class BaseFlipcardComponent<T extends DataSource> extends NgxFlipCardComp
      */
     protected setToolbarComponent(componentType: Type<any>): any {
         const viewContainerRef: ViewContainerRef = this.headerViewContainerComponent;
+        console.log('setToolbarComponent::viewContainerRef', viewContainerRef);
         return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 
@@ -91,7 +87,8 @@ export class BaseFlipcardComponent<T extends DataSource> extends NgxFlipCardComp
      * @return created component
      */
     protected setFrontComponent(componentType: Type<any>): any {
-        const viewContainerRef: ViewContainerRef = this.frontComponentViewContainerRef || this.cardFrontComponentViewContainerRef;
+        const viewContainerRef: ViewContainerRef = this.cardFrontComponentViewContainerRef || this.frontComponentViewContainerRef;
+        console.log('setFrontComponent::viewContainerRef', viewContainerRef);
         return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 
@@ -101,7 +98,8 @@ export class BaseFlipcardComponent<T extends DataSource> extends NgxFlipCardComp
      * @return created component
      */
     protected setBackComponent(componentType: Type<any>): any {
-        const viewContainerRef: ViewContainerRef = this.backComponentViewContainerRef || this.cardBackComponentViewContainerRef;
+        const viewContainerRef: ViewContainerRef = this.cardBackComponentViewContainerRef || this.backComponentViewContainerRef;
+        console.log('setBackComponent::viewContainerRef', viewContainerRef);
         return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 }

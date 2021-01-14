@@ -2,9 +2,9 @@ import ObjectUtils from '../../../utils/common/object.utils';
 import {IdGenerators} from '../../../config/generator.config';
 import {Constants as CustomerConstants} from '../../data/constants/customer.constants';
 import {ICustomer} from '../../data/system/customer';
+import {Constants as CommonConstants} from '../../data/constants/common.constants';
 import CUSTOMER_TYPE = CustomerConstants.CustomerConstants.CUSTOMER_TYPE;
 import CUSTOMER_LEVEL = CustomerConstants.CustomerConstants.CUSTOMER_LEVEL;
-import {Constants as CommonConstants} from '../../data/constants/common.constants';
 import STATUS = CommonConstants.COMMON.STATUS;
 
 export const MAXIMUM_MOCK_CUSTOMERS: number = 100;
