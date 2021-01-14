@@ -4,10 +4,10 @@
   ],
   "rules": {
     "trailing-comma": [
-      true,
+      false,
       {
-        "multiline": "always",
-        "singleline": "never"
+        "multiline": "ignore",
+        "singleline": "ignore"
       }
     ],
     "arrow-return-shorthand": true,

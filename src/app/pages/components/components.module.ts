@@ -83,6 +83,8 @@ import {BaseSplitPaneComponent} from './splitpane/base.splitpane.component';
 import {BaseTabsetComponent} from './tab/base.tab.component';
 import {BasePanelComponent} from './panel/base.panel.component';
 import {FlipModule} from 'ngx-flip';
+import {NgxFlipComponent} from 'app/pages/components/flip/flip.component';
+import {BaseFlipComponent} from 'app/pages/components/flip/base.flip.component';
 
 @NgModule({
     imports: [
@@ -255,6 +257,8 @@ import {FlipModule} from 'ngx-flip';
         ImageCellComponent,
         NgxSplitPaneComponent,
         BaseSplitPaneComponent,
+        NgxFlipComponent,
+        BaseFlipComponent,
         NgxFlipCardComponent,
         BaseFlipcardComponent,
         NgxRevealCardComponent,
@@ -299,6 +303,8 @@ import {FlipModule} from 'ngx-flip';
         ImageCellComponent,
         NgxSplitPaneComponent,
         BaseSplitPaneComponent,
+        NgxFlipComponent,
+        BaseFlipComponent,
         NgxFlipCardComponent,
         BaseFlipcardComponent,
         NgxRevealCardComponent,

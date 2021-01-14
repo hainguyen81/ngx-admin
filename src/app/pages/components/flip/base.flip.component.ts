@@ -8,7 +8,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NgxFlipComponent} from './flipcard.component';
+import {NgxFlipComponent} from './flip.component';
 
 /**
  * Base flip base on {FlipComponent}
