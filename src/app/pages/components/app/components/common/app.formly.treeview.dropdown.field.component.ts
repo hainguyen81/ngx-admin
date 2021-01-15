@@ -1,10 +1,12 @@
 import {DropdownTreeviewFormFieldComponent} from '../../../formly/formly.treeview.dropdown.field.component';
 import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
 import {IModel} from '../../../../../@core/data/base';
 import {NGXLogger} from 'ngx-logger';
+import FunctionUtils from 'app/utils/common/function.utils';
+import ObjectUtils from 'app/utils/common/object.utils';
 
 /**
  * Custom formly field for selecting special
@@ -68,8 +70,10 @@ export class AppFormlyTreeviewDropdownFieldComponent<T extends IModel>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.getTreeviewComponent()
-        && this.getTreeviewComponent().setEnabledItemImage(this.isEnabledItemImage);
+        FunctionUtils.invoke(
+            ObjectUtils.isNotNou((this.treeviewComponent)),
+            () => this.treeviewComponent.isEnabledItemImage = this.isEnabledItemImage,
+            undefined, this);
     }
 
     // -------------------------------------------------

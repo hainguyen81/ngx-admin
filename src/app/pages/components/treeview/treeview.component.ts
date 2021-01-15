@@ -82,7 +82,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
      * @param reset specify whether reset the current selected items
      */
     public setSelectedTreeviewItems(items?: TreeviewItem[] | [], reset?: boolean): void {
-        const currentSelection: TreeviewSelection = this.getTreeviewSelection();
+        const currentSelection: TreeviewSelection = this.treeviewSelection;
         if (ObjectUtils.isNou(currentSelection)) return;
         // un-check previous items
         (currentSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
@@ -202,18 +202,17 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         this.getLogger().debug('onClickItemLabel', $event, item);
         if (item) {
             this.revertCheck(item);
-            if (this.isEnabledItemCheck() && onCheckedChange) {
+            if (this.isEnabledItemCheck && onCheckedChange) {
                 onCheckedChange.apply(this, [item.checked]);
             }
-            if (!this.isEnabledItemCheck() || !onCheckedChange) {
+            if (!this.isEnabledItemCheck || !onCheckedChange) {
                 // un-check previous items
-                (this.getTreeviewSelection().checkedItems || [])
-                    .forEach(it => this.internalCheck(it, false));
+                (this.treeviewSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
                 // collect new item checked
                 let builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
                 builtSelection = this.collectSelection();
-                this.getTreeviewSelection().checkedItems = builtSelection.checkedItems;
-                this.getTreeviewSelection().uncheckedItems = builtSelection.uncheckedItems;
+                this.treeviewSelection.checkedItems = builtSelection.checkedItems;
+                this.treeviewSelection.uncheckedItems = builtSelection.uncheckedItems;
                 this.treeviewComponent && this.treeviewComponent.selectedChange.emit([item]);
                 this.dropdownTreeviewComponent
                 && this.dropdownTreeviewComponent.treeviewComponent
@@ -254,7 +253,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
                 this.toggleElementClass(itemEl as HTMLElement, 'selected', true);
 
                 // if not multiple selection; then closing dropdown if necessary
-                if (!this.isEnabledItemCheck()) {
+                if (!this.isEnabledItemCheck) {
                     this.dropdownTreeviewComponent
                     && this.dropdownTreeviewComponent.dropdownDirective
                     && this.dropdownTreeviewComponent.dropdownDirective.close();
@@ -296,7 +295,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         if (!this.isDropDown() || ObjectUtils.isNou(dropdownTreeviewComponent)
             || ObjectUtils.isNou(dropdownTreeviewComponent.dropdownDirective)
             || ObjectUtils.isNou(dropdownTreeviewComponent.dropdownDirective.toggleElement)
-            || !this.isAppendToBody()) {
+            || !this.isAppendToBody) {
             dropdownTreeviewComponent && dropdownTreeviewComponent.dropdownDirective
             && this.__originalDropdownOpen.apply(dropdownTreeviewComponent.dropdownDirective);
             return;
@@ -320,7 +319,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
      * Override this method of {TreeviewComponent}
      */
     private generateSelection() {
-        if (this.isEnabledItemCheck() && typeof this.__originalGenerateSelection === 'function') {
+        if (this.isEnabledItemCheck && typeof this.__originalGenerateSelection === 'function') {
             if (this.treeviewComponent) {
                 this.__originalGenerateSelection.apply(this.treeviewComponent);
             }
@@ -351,7 +350,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
             : dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] instanceof Element
                 ? dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] as Element
                 : HtmlUtils.nextSibling(dropdownTreeviewComponent.dropdownDirective.toggleElement, '[ngxDropdownMenu].dropdown-menu'));
-        if (ObjectUtils.isNotNou(menuEl) && this.isAppendToBody()) {
+        if (ObjectUtils.isNotNou(menuEl) && this.isAppendToBody) {
             const offset: { top: number, left: number, width: number, height: number } =
                 super.offset(dropdownTreeviewComponent.dropdownDirective.toggleElement);
             this.getRenderer().setStyle(

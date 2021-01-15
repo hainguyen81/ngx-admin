@@ -1,7 +1,7 @@
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef} from '@angular/core';
 import {BaseSplitPaneComponent} from '../../splitpane/base.splitpane.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {IModel} from '../../../../@core/data/base';
@@ -12,7 +12,7 @@ import {DataSource} from '@app/types/index';
 import {throwError} from 'rxjs';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
-import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig,} from '../../../../config/toolbar.actions.conf';
+import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';
@@ -65,9 +65,9 @@ export class AppSplitPaneComponent<
     // DECLARATION
     // -------------------------------------------------
 
-    private toolbarComponent: TB;
-    private leftSideComponent: L;
-    protected rightSideComponent: R;
+    private __toolbarComponent: TB;
+    private __leftSideComponent: L;
+    protected __rightSideComponent: R;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -99,16 +99,24 @@ export class AppSplitPaneComponent<
      * Get the {AppToolbarComponent} instance
      * @return the {AppToolbarComponent} instance
      */
-    protected getToolbarComponent(): TB {
-        return this.toolbarComponent;
+    protected get toolbarComponent(): TB {
+        return this.__toolbarComponent;
     }
 
     /**
      * Get the left side {AbstractComponent} instance
      * @return the left side {AbstractComponent} instance
      */
-    protected getLeftSideComponent(): L {
-        return this.leftSideComponent;
+    protected get leftSideComponent(): L {
+        return this.__leftSideComponent;
+    }
+
+    /**
+     * Get the right side {AbstractComponent} instance
+     * @return the right side {AbstractComponent} instance
+     */
+    protected get rightSideComponent(): R {
+        return this.__rightSideComponent;
     }
 
     // -------------------------------------------------
@@ -229,9 +237,9 @@ export class AppSplitPaneComponent<
 
         // create toolbar component
         if (this.toolBarType) {
-            this.toolbarComponent = super.setToolbarComponent(this.toolBarType);
-            this.toolbarComponent.showActions = true;
-            this.toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e));
+            this.__toolbarComponent = super.setToolbarComponent(this.toolBarType);
+            this.__toolbarComponent.showActions = true;
+            this.__toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e));
             this.doToolbarActionsSettings();
             // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
             // TODO after updating toolbar action settings
@@ -239,9 +247,9 @@ export class AppSplitPaneComponent<
         }
 
         // create left side component
-        this.leftSideComponent = super.setAreaComponent(0, this.leftSideType);
+        this.__leftSideComponent = super.setAreaComponent(0, this.leftSideType);
         if (this.shouldAttachRightSideOnStartup()) {
-            this.rightSideComponent = super.setAreaComponent(1, this.rightRightType);
+            this.__rightSideComponent = super.setAreaComponent(1, this.rightRightType);
         }
     }
 
@@ -250,10 +258,10 @@ export class AppSplitPaneComponent<
      * @return true if valid; else false
      */
     protected createRightSideComponent(): boolean {
-        if (!this.rightSideComponent) {
-            this.rightSideComponent = super.setAreaComponent(1, this.rightRightType);
+        if (!this.__rightSideComponent) {
+            this.__rightSideComponent = super.setAreaComponent(1, this.rightRightType);
         }
-        return ObjectUtils.isNotNou(this.rightSideComponent);
+        return ObjectUtils.isNotNou(this.__rightSideComponent);
     }
 
     // -------------------------------------------------
@@ -304,10 +312,10 @@ export class AppSplitPaneComponent<
      * Apply toolbar actions settings while flipping
      */
     protected doToolbarActionsSettings() {
-        if (ObjectUtils.isNou(this.getToolbarComponent())) return;
+        if (ObjectUtils.isNou(this.toolbarComponent)) return;
 
-        this.getToolbarComponent().showActions = true;
-        const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
+        this.toolbarComponent.showActions = true;
+        const actions: IToolbarActionsConfig[] = this.toolbarComponent.getActions();
         (actions || []).forEach(action => {
             switch (action.id) {
                 // special actions, then default not visible

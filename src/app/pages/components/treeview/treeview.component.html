@@ -29,7 +29,7 @@
 <ngx-dropdown-treeview
     #dropdownTreeviewComponent
     *ngIf="isDropDown()"
-    [buttonClass]="getButtonClass()"
+    [buttonClass]="buttonClass"
     [config]="config"
     [items]="items"
     [itemTemplate]="itemTemplate"
@@ -91,7 +91,7 @@
                  (click)="onCollapseExpand()"></nb-icon>
         <div class="form-check" [attr.aria-disabled]="item.disabled">
             <input type="checkbox" class="form-check-input"
-                   *ngIf="isEnabledItemCheck()"
+                   *ngIf="isEnabledItemCheck"
                    [(ngModel)]="item.checked"
                    (ngModelChange)="onCheckedChange()"
                    [disabled]="item.disabled"
@@ -99,7 +99,7 @@
                    (click)="onClickItem({ event: $event, data: item });"
                    [id]="'item-'.concat(generateTreeviewItemKey(item) || '')"
                    [attr.aria-disabled]="item.disabled" />
-            <img #itemImage *ngIf="isEnabledItemImage()"
+            <img #itemImage *ngIf="isEnabledItemImage"
                  [src]="(getItemImages(item) || []).length ? getItemImages(item)[0] : null"
                  class="item-image"
                  (error)="itemImage.style.visibility = 'hidden'"
@@ -122,7 +122,7 @@
                  (click)="onCollapseExpand()"></nb-icon>
         <div class="form-check" [attr.aria-disabled]="item.disabled">
             <input type="checkbox" class="form-check-input"
-                   *ngIf="isEnabledItemCheck()"
+                   *ngIf="isEnabledItemCheck"
                    [(ngModel)]="item.checked"
                    (ngModelChange)="onCheckedChange()"
                    [disabled]="item.disabled"

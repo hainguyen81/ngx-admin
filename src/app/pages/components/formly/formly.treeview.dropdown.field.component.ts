@@ -51,7 +51,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Get the {NgxDropdownTreeviewComponent} instance
      * @return the {NgxDropdownTreeviewComponent} instance
      */
-    protected getTreeviewComponent(): NgxDropdownTreeviewComponent {
+    protected get treeviewComponent(): NgxDropdownTreeviewComponent {
         return this.ngxTreeviewComponent;
     }
 
@@ -75,7 +75,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * Set the {TreeviewItem} data array
      * @param data to apply
      */
-    public setTreeviewData(data?: any[] | Observable<any[]>): void {
+    public set treeviewData(data: any[] | Observable<any[]>) {
         this.buildTemplateOptionsToTree(data);
     }
 
@@ -127,7 +127,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
             // query component
             this.ngxTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryNgxTreeviewComponent, component => {
-                    component && component.getSelectedChangeEvent()
+                    component && component.selectedChangeEvent
                         .subscribe((e: IEvent) => this.onSelectedValue(e));
                 });
         }
@@ -145,7 +145,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
 
     protected onValueChanges(value: any): void {
         super.onValueChanges(value);
-        this.getTreeviewComponent() && this.setSelectedValue(value, false);
+        this.treeviewComponent && this.setSelectedValue(value, false);
     }
 
     // -------------------------------------------------
@@ -180,8 +180,8 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
                 });
                 this.items = items;
 
-            } else if (ObjectUtils.isNotNou(this.getTreeviewComponent())) {
-                items = this.getTreeviewComponent().mappingDataSourceToTreeviewItems(options);
+            } else if (ObjectUtils.isNotNou(this.treeviewComponent)) {
+                items = this.treeviewComponent.mappingDataSourceToTreeviewItems(options);
                 if (ObjectUtils.isNotNou(items)) {
                     this.items = items;
                 }
@@ -225,7 +225,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @return the affected {TreeviewItem}
      */
     public setSelectedValue(value: any, updateValue?: boolean | false): TreeviewItem {
-        const treeViewComponent: NgxDropdownTreeviewComponent = this.getTreeviewComponent();
+        const treeViewComponent: NgxDropdownTreeviewComponent = this.treeviewComponent;
         if (!treeViewComponent) {
             return;
         }
@@ -249,7 +249,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param updateValue true for updating
      */
     public setTreeviewSelectedItem(item?: TreeviewItem, updateValue?: boolean | false): void {
-        const treeViewComponent: NgxDropdownTreeviewComponent = this.getTreeviewComponent();
+        const treeViewComponent: NgxDropdownTreeviewComponent = this.treeviewComponent;
         if (!treeViewComponent) {
             return;
         }
@@ -290,7 +290,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param disabledItems disabled items to check
      */
     private disableItemsRecursively(item?: TreeviewItem | null, disabledItems?: TreeviewItem[] | []): void {
-        const treeViewComponent: NgxDropdownTreeviewComponent = this.getTreeviewComponent();
+        const treeViewComponent: NgxDropdownTreeviewComponent = this.treeviewComponent;
         if (!treeViewComponent || !item) return;
         const disabled: boolean = ((disabledItems || []).indexOf(item) >= 0);
         treeViewComponent.internalProperty(item, 'internalDisabled', disabled);

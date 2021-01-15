@@ -35,4 +35,48 @@ export default class FunctionUtils {
         (trueValue !== true && FunctionUtils.isFunction(delegateFalse)) && throwError('Invalid function to invoke while condition is FALSE!');
         return (trueValue === true ? (delegateTrue.apply(caller || this, args) || defaultValue) : (delegateFalse.apply(caller || this, args) || defaultValue));
     }
+
+    /**
+     * Convert the specified object to Function
+     * @param obj to convert
+     * @return Function instance or null/undefined
+     */
+    public static asFunction(obj?: any): Function | null | undefined {
+        return FunctionUtils.isFunction(obj) ? <Function>obj : undefined;
+    }
+
+    /**
+     * Convert the specified property value of the specified object to Function
+     * @param obj to convert
+     * @param property to check
+     * @return Function instance or null/undefined
+     */
+    public static propertyAsFunction(obj?: any, property?: string | null | undefined): Function | null | undefined {
+        return FunctionUtils.asFunction(ObjectUtils.get(obj, property));
+    }
+
+    /**
+     * Invoke the specified object as function if it's a function and return value if necessry
+     * @param obj to invoke
+     * @param caller the caller function instance or thisArg
+     * @param args function arguments
+     * @return the function returned value or null/undefined (as void)
+     */
+    public static invokeAsFunction(obj?: any, caller?: any, ...args: any[]): any {
+        const objFunc: Function = FunctionUtils.asFunction(obj);
+        return objFunc ? objFunc.apply(caller || this, args) : undefined;
+    }
+
+    /**
+     * Invoke the specified object as function if it's a function and return value if necessry
+     * @param obj to invoke
+     * @param property to parse function
+     * @param caller the caller function instance or thisArg
+     * @param args function arguments
+     * @return the function returned value or null/undefined (as void)
+     */
+    public static invokePropertyAsFunction(obj?: any, property?: string | null | undefined, caller?: any, ...args: any[]): any {
+        const objPropFunc: Function = FunctionUtils.propertyAsFunction(obj, property);
+        return objPropFunc ? objPropFunc.apply(caller || this, args) : undefined;
+    }
 }

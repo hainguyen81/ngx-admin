@@ -1,9 +1,9 @@
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, Renderer2, ViewContainerRef} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import Warehouse, {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {ToastrService} from 'ngx-toastr';
-import {TreeItem, TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection,} from 'ngx-treeview';
+import {TreeItem, TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
@@ -108,7 +108,7 @@ export class WarehouseStorageTreeviewComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    isEnabledItemImage(): boolean {
+    public get isEnabledItemImage(): boolean {
         return true;
     }
 
@@ -156,8 +156,7 @@ export class WarehouseStorageTreeviewComponent
             router, activatedRoute);
         super.config = WarehouseCategoryTreeviewConfig;
         super.setContextMenu(WarehouseCategoryContextMenu);
-        super.setItemImageParser(
-            item => (item && (<IWarehouse>item.value) ? (<IWarehouse>item.value).image || [] : []));
+        super.itemImageParser = item => (item && (<IWarehouse>item.value) ? (<IWarehouse>item.value).image || [] : []);
     }
 
     // -------------------------------------------------

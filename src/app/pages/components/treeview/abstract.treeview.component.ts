@@ -3,9 +3,9 @@ import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent, IEvent,} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem,} from 'ngx-treeview';
+import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/common/html.utils';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import ObjectUtils from '../../../utils/common/object.utils';
@@ -15,7 +15,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {TreeviewSelection} from 'ngx-treeview/src/treeview-item';
-import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT,} from '../../../config/context.menu.conf';
+import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT} from '../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '../../../utils/common/array.utils';
 
@@ -114,7 +114,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get a boolean value indicating this component whether uses checkbox for tree-view item
      * @return true for using checkbox; else false
      */
-    public isEnabledItemCheck(): boolean {
+    public get isEnabledItemCheck(): boolean {
         return this.getConfigValue('enabledItemCheck', false);
     }
 
@@ -122,7 +122,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set a boolean value indicating this component whether uses checkbox for tree-view item
      * @param enabledItemCheck true for using checkbox; else false
      */
-    public setEnabledItemCheck(enabledItemCheck?: boolean | false): void {
+    public set isEnabledItemCheck(enabledItemCheck: boolean) {
         this.setConfigValue('enabledItemCheck', enabledItemCheck);
     }
 
@@ -130,7 +130,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get a boolean value indicating this dropdown tree whether appending to body document
      * @return true for appending to body; else false
      */
-    public isAppendToBody(): boolean {
+    public get isAppendToBody(): boolean {
         return this.getConfigValue('appendToBody', false);
     }
 
@@ -138,7 +138,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set a boolean value indicating this dropdown tree whether appending to body document
      * @param appendToBody true for appending to body; else false
      */
-    public setAppendToBody(appendToBody?: boolean | false): void {
+    public set isAppendToBody(appendToBody: boolean) {
         this.setConfigValue('appendToBody', appendToBody);
     }
 
@@ -146,7 +146,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get a boolean value indicating this component whether uses image for tree-view item
      * @return true for using checkbox; else false
      */
-    public isEnabledItemImage(): boolean {
+    public get isEnabledItemImage(): boolean {
         return this.getConfigValue('enabledItemImage', false);
     }
 
@@ -154,7 +154,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set a boolean value indicating this component whether uses image for tree-view item
      * @param enabledItemImage true for using image; else false
      */
-    public setEnabledItemImage(enabledItemImage?: boolean | false): void {
+    public set isEnabledItemImage(enabledItemImage: boolean) {
         this.setConfigValue('enabledItemImage', enabledItemImage);
     }
 
@@ -162,7 +162,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the parser delegate to parse item image
      * @return the parser delegate to parse item image
      */
-    public getItemImageParser(): (item?: TreeviewItem) => string[] | string | null {
+    public get itemImageParser(): (item?: TreeviewItem) => string[] | string | null {
         return this.getConfigValue('itemImageParser') as (item?: TreeviewItem) => string[] | string | null;
     }
 
@@ -170,7 +170,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set a boolean value indicating this component whether uses image for tree-view item
      * @param itemImageParser function to get images from {TreeviewItem}
      */
-    public setItemImageParser(itemImageParser?: (item?: TreeviewItem) => string[] | string | null): void {
+    public set itemImageParser(itemImageParser: (item?: TreeviewItem) => string[] | string) {
         this.setConfigValue('itemImageParser', itemImageParser);
     }
 
@@ -180,7 +180,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * @return the specified {TreeviewItem} image
      */
     public getItemImages(item?: TreeviewItem): string[] | string | null {
-        const imageParser: any = this.getItemImageParser();
+        const imageParser: any = this.itemImageParser;
         return (ObjectUtils.isNou(imageParser) || typeof imageParser !== 'function'
             ? null : imageParser.apply(this, [item]));
     }
@@ -189,7 +189,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the item builder factory to build {TreeviewItem} while data source has been refreshed
      * @return the item builder factory to build {TreeviewItem}
      */
-    public getItemBuilder(): (data: any) => TreeviewItem | null {
+    public get itemBuilder(): (data: any) => TreeviewItem | null {
         return this.getConfigValue('itemBuilder') as (data: any) => TreeviewItem | null;
     }
 
@@ -197,7 +197,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set the item builder factory to build {TreeviewItem} while data source has been refreshed
      * @param itemBuilder to apply
      */
-    public setItemBuilder(itemBuilder: (data: any) => TreeviewItem): void {
+    public set itemBuilder(itemBuilder: ((data: any) => TreeviewItem) | null) {
         this.setConfigValue('itemBuilder', itemBuilder);
     }
 
@@ -205,7 +205,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the items builder factory to build {TreeviewItem} while data source has been refreshed
      * @return the item builder factory to build {TreeviewItem}
      */
-    public getTreeBuilder(): (data: any[]) => TreeviewItem[] | null {
+    public get treeBuilder(): (data: any[]) => TreeviewItem[] | null {
         return this.getConfigValue('treeBuilder') as (data: any[]) => TreeviewItem[] | null;
     }
 
@@ -213,7 +213,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set the items builder factory to build {TreeviewItem} while data source has been refreshed
      * @param treeBuilder to apply
      */
-    public setTreeBuilder(treeBuilder: (data: any[]) => TreeviewItem[] | null): void {
+    public set treeBuilder(treeBuilder: ((data: any[]) => TreeviewItem[]) | null) {
         this.setConfigValue('treeBuilder', treeBuilder);
     }
 
@@ -229,7 +229,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set a boolean value indicating this component whether is drop-down tree-view component
      * @param dropdown true for drop-down; else false
      */
-    protected setDropDown(dropdown?: boolean | false) {
+    protected setDropDown(dropdown?: boolean | false): void {
         this.setConfigValue('dropdown', dropdown);
     }
 
@@ -237,7 +237,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the drop-down button class in drop-down tree-view mode
      * return the drop-down button class
      */
-    public getButtonClass(): string {
+    public get buttonClass(): string {
         return this.getConfigValue('buttonClass');
     }
 
@@ -245,7 +245,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set the drop-down button class in drop-down tree-view mode
      * @param buttonClass to apply
      */
-    public setButtonClass(buttonClass?: string) {
+    public set buttonClass(buttonClass: string) {
         this.setConfigValue('buttonClass', buttonClass);
     }
 
@@ -253,7 +253,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the {EventEmitter} instance for listening the selected item changes
      * @return the {EventEmitter} instance or default
      */
-    public getSelectedChangeEvent(): EventEmitter<IEvent> {
+    public get selectedChangeEvent(): EventEmitter<IEvent> {
         return this.selectedChange;
     }
 
@@ -261,7 +261,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set the {EventEmitter} instance for listening the selected item changes
      * @param selectedChange to apply
      */
-    public setSelectedChangeEvent(selectedChange?: EventEmitter<IEvent> | null) {
+    public set selectedChangeEvent(selectedChange: EventEmitter<IEvent> | null) {
         if (selectedChange) {
             this.selectedChange = selectedChange;
         }
@@ -271,7 +271,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the {EventEmitter} instance for listening the filter changes
      * @return the {EventEmitter} instance
      */
-    public getFilterChangeEvent(): EventEmitter<IEvent> {
+    public get filterChangeEvent(): EventEmitter<IEvent> | null {
         return this.filterChange;
     }
 
@@ -279,7 +279,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set the {EventEmitter} instance for listening the filter changes
      * @param filterChange to apply
      */
-    public setFilterChangeEvent(filterChange?: EventEmitter<IEvent> | null) {
+    public set filterChangeEvent(filterChange: EventEmitter<IEvent> | null) {
         if (filterChange) {
             this.filterChange = filterChange;
         }
@@ -289,7 +289,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the {EventEmitter} instance for listening the clicked item
      * @return the {EventEmitter} instance
      */
-    public getClickItemEvent(): EventEmitter<IEvent> {
+    public get clickItemEvent(): EventEmitter<IEvent> | null {
         return this.clickItem;
     }
 
@@ -297,7 +297,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Set the {EventEmitter} instance for listening the clicked item
      * @param clickItem to apply
      */
-    public setClickItemEvent(clickItem?: EventEmitter<IEvent> | null) {
+    public set clickItemEvent(clickItem: EventEmitter<IEvent> | null) {
         if (clickItem) {
             this.clickItem = clickItem;
         }
@@ -319,7 +319,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the {TreeviewSelection} instance
      * @return {TreeviewSelection}
      */
-    public getTreeviewSelection(): TreeviewSelection {
+    public get treeviewSelection(): TreeviewSelection {
         if (this.isDropDown() && this.dropdownTreeviewComponent) {
             return (!this.dropdownTreeviewComponent.treeviewComponent ? null
                 : this.dropdownTreeviewComponent.treeviewComponent.selection);
@@ -332,23 +332,23 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * Get the checked {TreeviewItem} array
      * @return the checked {TreeviewItem} array
      */
-    public getCheckedTreeviewItems(): TreeviewItem[] {
-        return (!this.getTreeviewSelection() ? [] : this.getTreeviewSelection().checkedItems);
+    public get checkedTreeviewItems(): TreeviewItem[] {
+        return (!this.treeviewSelection ? [] : this.treeviewSelection.checkedItems);
     }
 
     /**
      * Get the un-checked {TreeviewItem} array
      * @return the un-checked {TreeviewItem} array
      */
-    public getUncheckedTreeviewItems(): TreeviewItem[] {
-        return (!this.getTreeviewSelection() ? [] : this.getTreeviewSelection().uncheckedItems);
+    public get uncheckedTreeviewItems(): TreeviewItem[] {
+        return (!this.treeviewSelection ? [] : this.treeviewSelection.uncheckedItems);
     }
 
     /**
      * Get the selected {TreeviewItem} array
      * @return the selected {TreeviewItem} array
      */
-    public getSelectedTreeviewItems(): TreeviewItem[] {
+    public get selectedTreeviewItems(): TreeviewItem[] {
         let selectedItems: TreeviewItem[];
         selectedItems = [];
         // search current selected items by `selected` class
@@ -457,7 +457,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
     onClickItem(event: IEvent) {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickItem', event);
-        this.getClickItemEvent().emit(event);
+        this.clickItemEvent && this.clickItemEvent.emit(event);
     }
 
     /**
@@ -467,7 +467,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
     onSelectedChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onSelectedChange', event);
-        this.getSelectedChangeEvent().emit(event);
+        this.selectedChangeEvent && this.selectedChangeEvent.emit(event);
     }
 
     /**
@@ -477,7 +477,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
     onFilterChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onFilterChange', event);
-        this.getFilterChangeEvent().emit(event);
+        this.filterChangeEvent && this.filterChangeEvent.emit(event);
     }
 
     /**
@@ -489,8 +489,8 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
         const elements: any[] = (event && event.data
             && event.data.hasOwnProperty('elements') && ArrayUtils.isArray(event.data['elements'])
             ? Array.from(event.data['elements']) : [event.data['elements']]);
-        const treeBuilder: (data: any[]) => TreeviewItem[] = this.getTreeBuilder();
-        const itemBuilder: (data: any) => TreeviewItem = this.getItemBuilder();
+        const treeBuilder: (data: any[]) => TreeviewItem[] = this.treeBuilder;
+        const itemBuilder: (data: any) => TreeviewItem = this.itemBuilder;
         if (ObjectUtils.isNotNou(itemBuilder) && typeof itemBuilder === 'function') {
             const items: TreeviewItem[] = [];
             (elements || []).forEach(element => {

@@ -2,7 +2,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {TreeviewItem} from 'ngx-treeview';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef} from '@angular/core';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AppTreeviewComponent} from './app.treeview.component';
@@ -74,16 +74,16 @@ export class AppTreeSplitFormComponent<
      * Get the {AppTreeviewComponent} instance
      * @return the {AppTreeviewComponent} instance
      */
-    protected getTreeviewComponent(): TR {
-        return this.getLeftSideComponent() as TR;
+    protected get treeviewComponent(): TR {
+        return this.leftSideComponent;
     }
 
     /**
      * Get the {AppFormlyComponent} instance
      * @return the {AppFormlyComponent} instance
      */
-    protected getFormlyComponent(): F {
-        return this.rightSideComponent as F;
+    protected get formlyComponent(): F {
+        return this.rightSideComponent;
     }
 
     // -------------------------------------------------
@@ -160,7 +160,7 @@ export class AppTreeSplitFormComponent<
      */
     private configPaneComponents() {
         // handle click tree-view item to show form
-        this.getTreeviewComponent().setClickItemListener(
+        this.treeviewComponent.setClickItemListener(
             (e, it) => this.doApplyFormModel(it));
     }
 
@@ -195,9 +195,9 @@ export class AppTreeSplitFormComponent<
      * Perform saving data
      */
     protected doSave(): void {
-        if (!this.getFormlyComponent().submit()) {
-            if (this.getToolbarComponent()) {
-                this.showError(this.getToolbarComponent().getToolbarHeader().title,
+        if (!this.formlyComponent.submit()) {
+            if (this.toolbarComponent) {
+                this.showError(this.toolbarComponent.getToolbarHeader().title,
                     'common.form.invalid_data');
             } else {
                 this.showError('app', 'common.form.invalid_data');
@@ -219,7 +219,7 @@ export class AppTreeSplitFormComponent<
      * @return the model of the form component for saving/deleting
      */
     protected requireFormModel(isSave?: boolean | true): T {
-        return this.getFormlyComponent().getModel();
+        return this.formlyComponent ? this.formlyComponent.getModel() : undefined;
     }
 
     /**
@@ -228,7 +228,7 @@ export class AppTreeSplitFormComponent<
     protected doReset(): void {
         const cloned: T = DeepCloner(this.selectedModel);
         delete cloned['parent'], cloned['children'];
-        this.getFormlyComponent().setModel(cloned);
+        this.formlyComponent && this.formlyComponent.setModel(cloned);
     }
 
     /**

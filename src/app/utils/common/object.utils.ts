@@ -204,6 +204,24 @@ export default class ObjectUtils {
     }
 
     /**
+     * Get a boolean value indicating the specified object/value whether is null/undefined
+     * @param obj to check
+     * @return true for null/undefined; else false
+     */
+    public static isObjectEmpty(obj: any): boolean {
+        return ObjectUtils.isEmpty(obj) || (typeof obj === 'object' && Object.keys(obj).length <= 0);
+    }
+
+    /**
+     * Get a boolean value indicating the specified object/value whether is null/undefined
+     * @param obj to check
+     * @return true for null/undefined; else false
+     */
+    public static isObjectNotEmpty(obj: any): boolean {
+        return !ObjectUtils.isObjectEmpty(obj);
+    }
+
+    /**
      * Require the property value of the specified object by key
      * @param obj to parse
      * @param k property key
