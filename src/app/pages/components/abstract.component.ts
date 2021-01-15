@@ -101,6 +101,14 @@ export abstract class AbstractComponent
     // -------------------------------------------------
 
     /**
+     * Get a boolean value indicating whether should subscribe the data-source changed event
+     * TODO Children classes could override this getter for subscribing the data-source changed event
+     */
+    protected get subscribeDataSourceChanged(): boolean {
+        return true;
+    }
+
+    /**
      * Get the `onTouch` callback from {ControlValueAccessor}
      * @return the `onTouch` callback
      */
@@ -490,12 +498,14 @@ export abstract class AbstractComponent
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
 
         FunctionUtils.invoke(
-            ObjectUtils.isNou(this._onDataSourceChanged) && ObjectUtils.isNotNou(this.getDataSource()),
+            this.subscribeDataSourceChanged
+            && ObjectUtils.isNou(this._onDataSourceChanged) && ObjectUtils.isNotNou(this.getDataSource()),
             () => this._onDataSourceChanged = this.getDataSource()
                 .onChanged().subscribe(value => this.onDataSourceChanged({data: value})),
             undefined, this);
         FunctionUtils.invoke(
-            ObjectUtils.isNou(this._onTranslateLanguageChanged) && ObjectUtils.isNotNou(this.getTranslateService()),
+            this.subscribeDataSourceChanged
+            && ObjectUtils.isNou(this._onTranslateLanguageChanged) && ObjectUtils.isNotNou(this.getTranslateService()),
             () => this._onTranslateLanguageChanged = this.getTranslateService()
                 .onLangChange.subscribe((value: any) => this.onLangChange({event: value})),
             undefined, this);
@@ -557,11 +567,11 @@ export abstract class AbstractComponent
         // this.getChangeDetectorRef().detach();
 
         FunctionUtils.invoke(
-            ObjectUtils.isNotNou(this._onDataSourceChanged),
+            this.subscribeDataSourceChanged && ObjectUtils.isNotNou(this._onDataSourceChanged),
             () => this._onDataSourceChanged.unsubscribe(),
             undefined, this);
         FunctionUtils.invoke(
-            ObjectUtils.isNotNou(this._onTranslateLanguageChanged),
+            this.subscribeDataSourceChanged && ObjectUtils.isNotNou(this._onTranslateLanguageChanged),
             () => this._onTranslateLanguageChanged.unsubscribe(),
             undefined, this);
     }
