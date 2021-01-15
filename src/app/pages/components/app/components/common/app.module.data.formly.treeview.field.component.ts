@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {IModel} from '../../../../../@core/data/base';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from '../app.treeview.i18n';
 import {TreeviewI18n} from 'ngx-treeview';
 import {TranslateService} from '@ngx-translate/core';
-import {AppFormlyTreeviewDropdownFieldComponent,} from './app.formly.treeview.dropdown.field.component';
+import {AppFormlyTreeviewDropdownFieldComponent} from './app.formly.treeview.dropdown.field.component';
 import {BaseDataSource} from '../../../../../services/common/datasource.service';
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {DataSource} from '@app/types/index';
@@ -12,6 +12,7 @@ import {isObservable, Observable, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 /**
  * Custom formly field for selecting tree
@@ -101,11 +102,10 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
         this.field && this.field.form
         && this.field.form.valueChanges.subscribe(subscriber => {
             if (this.shouldDisableValue) {
-                const timer: number = window.setTimeout(() => {
+                TimerUtils.timeout(() => {
                     const disabledItemValue: any = this.disableValue;
                     ObjectUtils.isNotNou(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
-                    window.clearTimeout(timer);
-                }, 100);
+                }, 100, this);
             }
         });
     }

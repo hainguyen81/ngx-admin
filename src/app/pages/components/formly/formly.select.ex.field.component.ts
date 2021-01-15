@@ -11,7 +11,7 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
-import {NgxSelectOptGroup, NgxSelectOption, TSelectOption,} from 'ngx-select-ex';
+import {NgxSelectOptGroup, NgxSelectOption, TSelectOption} from 'ngx-select-ex';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/common/component.utils';
@@ -21,6 +21,7 @@ import {NGXLogger} from 'ngx-logger';
 import {isObservable} from 'rxjs';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -175,10 +176,7 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
 
     protected onValueChanges(value: any): void {
         super.onValueChanges(value);
-        const timer: number = window.setTimeout(() => {
-            this.__applySelectedItems(this.selectExComponent, this.value);
-            window.clearTimeout(timer);
-        }, 200);
+        TimerUtils.timeout(() => this.__applySelectedItems(this.selectExComponent, this.value), 200, this);
     }
 
     protected onStatusChanges(value: any): void {

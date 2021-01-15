@@ -1,4 +1,5 @@
 import ObjectUtils from '../../utils/common/object.utils';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 export type BackgroundTaskStatus = 'STARTED' | 'RUNNING' | 'PAUSED' | 'STOPPED' | 'TERMINATED';
 
@@ -67,10 +68,7 @@ export class JobManager {
 
         // simple timeout call back in this example.
         const timeoutInMs = this.pendingJobs.get(job.id).timeout || 1000;
-        const timeoutInstance: number = window.setTimeout(() => {
-            onJobOver(job, !this.pendingJobs.get(job.id).canceled);
-            window.clearTimeout(timeoutInstance);
-        }, timeoutInMs);
+        TimerUtils.timeout(() => onJobOver(job, !this.pendingJobs.get(job.id).canceled), timeoutInMs, this);
     }
 }
 

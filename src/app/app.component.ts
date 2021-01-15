@@ -18,6 +18,7 @@ import * as moment from 'moment';
 import AppUtils from './utils/app/app.utils';
 import ArrayUtils from './utils/common/array.utils';
 import {InjectionConfig} from './config/injection.config';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 @Component({
     selector: 'ngx-app',
@@ -129,15 +130,13 @@ export class AppComponent implements OnInit {
             ).subscribe((headerConfig: IPageHeaderConfig) => {
                 // wait for translation service configuration
                 if (headerConfig) {
-                    let timer: number;
-                    timer = window.setTimeout(() => {
+                    TimerUtils.timeout(() => {
                         try {
                             this.pageHeaderService.setConfig(headerConfig);
                         } catch (e) {
                             this.logger.error('Error on AppComponent::detectForPageHeaderConfig', e);
                         }
-                        window.clearTimeout(timer);
-                    }, 300);
+                    }, 300, this);
                 }
             });
         } catch (e) {

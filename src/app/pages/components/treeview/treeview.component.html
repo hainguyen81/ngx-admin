@@ -129,7 +129,7 @@
                    [indeterminate]="item.indeterminate"
                    [id]="'item-'.concat(generateTreeviewItemKey(item) || '')"
                    [attr.aria-disabled]="item.disabled" />
-            <img #itemImage *ngIf="isEnabledItemImage()"
+            <img #itemImage *ngIf="isEnabledItemImage"
                  [src]="(getItemImages(item) || []).length ? getItemImages(item)[0] : null"
                  class="item-image"
                  (error)="itemImage.style.visibility = 'hidden'"

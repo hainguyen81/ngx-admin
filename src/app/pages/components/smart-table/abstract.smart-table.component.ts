@@ -973,8 +973,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
         this.gridComponent.edit(row);
 
         // wait for showing editor
-        let timer: number;
-        timer = window.setTimeout(() => {
+        TimerUtils.timeout(() => {
             let cellEditor: HTMLElement;
             if (!cell || !cell.isEditable()) {
                 for (let i = 0; i < row.cells.length; i++) {
@@ -995,8 +994,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
                 cellEditor.focus({preventScroll: false});
                 (typeof cellEditor['select'] === 'function') && cellEditor['select'].apply(cellEditor);
             }
-            clearTimeout(timer);
-        }, 300);
+        }, 300, this);
     }
 
     /**
@@ -1152,12 +1150,10 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             this.tableComponent.createConfirm || new EventEmitter<any>());
 
         // wait for editing this row
-        let timer: number;
-        timer = window.setTimeout(() => {
+        TimerUtils.timeout(() => {
             newRow.isInEditing = false;
             this.editRow(newRow);
-            clearTimeout(timer);
-        }, 100);
+        }, 100, this);
     }
 
     /**

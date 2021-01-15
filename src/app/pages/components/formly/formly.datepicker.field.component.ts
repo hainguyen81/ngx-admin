@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
@@ -9,6 +9,7 @@ import {NgxDatePickerComponent} from '../datepicker/datepicker.component';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {IEvent} from '../abstract.component';
 import ObjectUtils from '../../../utils/common/object.utils';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 /**
  * Formly date-picker field component base on {FieldType}
@@ -151,12 +152,11 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
     protected onValueChanges(value: any): void {
         super.onValueChanges(value);
         if (this.datePickerComponent) {
-            const timer: number = window.setTimeout(() => {
+            TimerUtils.timeout(() => {
                 this.datePickerComponent.displayDate = this.value;
                 this.datePickerComponent.model = this.viewValue;
                 this.datePickerComponent.selected = (this.viewValue ? [this.viewValue] : []);
-                window.clearTimeout(timer);
-            }, 200);
+            }, 200, this);
         }
     }
 

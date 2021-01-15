@@ -3,7 +3,8 @@ import {
     AfterContentInit,
     AfterViewChecked,
     AfterViewInit,
-    ChangeDetectorRef, Component,
+    ChangeDetectorRef,
+    Component,
     ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
@@ -31,9 +32,9 @@ import KeyboardUtils from '../../utils/common/keyboard.utils';
 import ComponentUtils from '../../utils/common/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup, ConfirmPopupConfig} from 'ngx-material-popup';
-import {IModalDialog, IModalDialogOptions, ModalDialogComponent, ModalDialogService,} from 'ngx-modal-dialog';
-import {BaseElementKeydownHandlerService, BaseElementKeypressHandlerService, BaseElementKeyupHandlerService,} from '../../services/implementation/base.keyboard.handler';
-import {AbstractKeydownEventHandlerService, AbstractKeypressEventHandlerService, AbstractKeyupEventHandlerService,} from '../../services/common/event.handler.service';
+import {IModalDialog, IModalDialogOptions, ModalDialogComponent, ModalDialogService} from 'ngx-modal-dialog';
+import {BaseElementKeydownHandlerService, BaseElementKeypressHandlerService, BaseElementKeyupHandlerService} from '../../services/implementation/base.keyboard.handler';
+import {AbstractKeydownEventHandlerService, AbstractKeypressEventHandlerService, AbstractKeyupEventHandlerService} from '../../services/common/event.handler.service';
 import {IComponentService} from '../../services/common/interface.service';
 import {AbstractComponentService, BaseComponentService} from '../../services/common/component.service';
 import {Lightbox} from 'ngx-lightbox';
@@ -48,6 +49,7 @@ import {ControlValueAccessor} from '@angular/forms';
 import ObjectUtils from '../../utils/common/object.utils';
 import FunctionUtils from '../../utils/common/function.utils';
 import {dbConfig} from 'app/config/db.config';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -1056,15 +1058,13 @@ export abstract class AbstractComponent
         });
         // wait for showing context menu and focus on it
         if (eventTarget) {
-            let timer: number;
-            timer = window.setTimeout(() => {
+            TimerUtils.timeout(() => {
                 let ctxMnuEls: NodeListOf<HTMLElement>;
                 ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
                 if (ctxMnuEls && ctxMnuEls.length) {
                     ctxMnuEls[0].focus({preventScroll: true});
                 }
-                clearTimeout(timer);
-            }, 300);
+            }, 300, this);
             return true;
         }
         return false;
@@ -1443,15 +1443,14 @@ export abstract class AbstractComponent
             _this.getService(NgxLocalStorageEncryptionService);
         indexDbService || throwError('Could not inject NgxIndexedDBService instance');
         localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
-        const timer: number = window.setTimeout(
-            () => {
-                _this.freeze();
-                _this.__deleteDatabase(timer);
-                _this.melt();
-            }, 200);
+        TimerUtils.timeout(() => {
+            _this.freeze();
+            _this.__deleteDatabase();
+            _this.melt();
+        }, 200, this);
     }
 
-    private __deleteDatabase(timer: number): void {
+    private __deleteDatabase(): void {
         const _this: AbstractComponent = this;
         const logger: NGXLogger = this.getLogger();
         const indexDbDelRequest: IDBOpenDBRequest = window.indexedDB.deleteDatabase(dbConfig.name);
@@ -1462,23 +1461,19 @@ export abstract class AbstractComponent
         indexDbDelRequest.onblocked = function (event) {
             logger && logger.warn('Could not delete database because database has been blocked!', event);
             !logger && window.console.warn(['Could not delete database because database has been blocked!', event]);
-            window.clearTimeout(timer);
         };
         indexDbDelRequest.onupgradeneeded = function (event) {
             logger && logger.warn('Database needs to upgrade!', event);
             !logger && window.console.warn(['Database needs to upgrade!', event]);
-            window.clearTimeout(timer);
         };
         indexDbDelRequest.onerror = function (event) {
             logger && logger.error('Could not delete database!', event);
             !logger && window.console.error(['Could not delete database!', event]);
-            window.clearTimeout(timer);
         };
         indexDbDelRequest.onsuccess = function (event) {
             localStorage.clear();
             window.location.assign(_this.baseHref);
             window.location.reload();
-            window.clearTimeout(timer);
         };
     }
 

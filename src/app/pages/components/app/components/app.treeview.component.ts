@@ -3,7 +3,7 @@ import {ToastrService} from 'ngx-toastr';
 import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {IEvent} from '../../abstract.component';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Output, Renderer2, ViewContainerRef} from '@angular/core';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from './app.treeview.i18n';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {BaseNgxTreeviewComponent} from '../../treeview/base.treeview.component';
@@ -14,6 +14,7 @@ import {DataSource} from '@app/types/index';
 import {IModel} from '../../../../@core/data/base';
 import HierarchyUtils from '../../../../utils/common/hierarchy.utils';
 import {ActivatedRoute, Router} from '@angular/router';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 /**
  * Base tree-view component base on {TreeviewComponent}
@@ -121,11 +122,7 @@ export class AppTreeviewComponent<T extends IModel, D extends DataSource>
     onDataSourceChanged(event: IEvent) {
         super.onDataSourceChanged(event);
         this.dataSourceChanged.emit(event);
-        let timer: number;
-        timer = window.setTimeout(() => {
-            this.focus();
-            window.clearTimeout(timer);
-        }, 300);
+        TimerUtils.timeout(() => this.focus(), 300, this);
     }
 
     // -------------------------------------------------

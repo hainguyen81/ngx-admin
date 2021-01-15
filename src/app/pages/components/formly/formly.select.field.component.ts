@@ -20,6 +20,7 @@ import {NgxSelectComponent} from '../select/select.component';
 import {NgOption} from '@ng-select/ng-select';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
+import TimerUtils from 'app/utils/common/timer.utils';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -189,10 +190,9 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                             this.value = (e || {})['data'];
                         });
                         component.load.subscribe(e => {
-                            const timer: number = window.setTimeout(() => {
+                            TimerUtils.timeout(() => {
                                 this.setSelectedValue(this.value);
-                                window.clearTimeout(timer);
-                            }, 200);
+                            }, 200, this);
                         });
                     }
                     this.checkOverrideFormFieldClass();
@@ -223,10 +223,7 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
 
     protected onValueChanges(value: any): void {
         super.onValueChanges(value);
-        const timer: number = window.setTimeout(() => {
-            this.setSelectedValue(this.value);
-            window.clearTimeout(timer);
-        }, 200);
+        TimerUtils.timeout(() => this.setSelectedValue(this.value), 200, this);
     }
 
     // -------------------------------------------------
