@@ -12,27 +12,27 @@ import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppTableFlipcardComponent} from '../../components/app.table.flipcard.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
 import {IEvent} from '../../../abstract.component';
 import {IdGenerators} from '../../../../../config/generator.config';
 import ObjectUtils from '../../../../../utils/common/object.utils';
+import {AppTableFlipComponent} from 'app/pages/components/app/components/app.table.flip.component';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-flip-card-app-table-warehouse-item',
+    selector: 'ngx-flip-app-table-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../../flipcard/flipcard.component.html',
+    templateUrl: '../../../flip/flip.component.html',
     styleUrls: [
-        '../../../flipcard/flipcard.component.scss',
-        '../../components/app.flipcard.component.scss',
+        '../../../flip/flip.component.scss',
+        '../../components/app.flip.component.scss',
         '../../components/app.table.flip.component.scss',
         './warehouse.item.flipcard.component.scss',
     ],
 })
 export class WarehouseItemFlipcardComponent
-    extends AppTableFlipcardComponent<
+    extends AppTableFlipComponent<
         IWarehouseItem, WarehouseItemDatasource,
         WarehouseItemToolbarComponent,
         WarehouseItemSmartTableComponent,

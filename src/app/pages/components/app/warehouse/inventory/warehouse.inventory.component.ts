@@ -13,7 +13,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {WarehouseInventoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
 import {WarehouseInventoryToolbarComponent,} from './warehouse.inventory.toolbar.component';
 import {WarehouseInventoryPanelComponent,} from './warehouse.inventory.panel.component';
-import {AppFlipcardComponent} from '../../components/app.flipcard.component';
 import WarehouseInventory, {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {Row} from '@app/types/index';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
@@ -25,20 +24,21 @@ import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/war
 import {AppConfig} from '../../../../../config/app.config';
 import {ServiceWorkerKeys} from '../../../../../config/worker.providers';
 import ArrayUtils from '../../../../../utils/common/array.utils';
+import {AppFlipComponent} from 'app/pages/components/app/components/app.flip.component';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
-    selector: 'ngx-flip-card-app-warehouse-inventory',
+    selector: 'ngx-flip-app-warehouse-inventory',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../../flipcard/flipcard.component.html',
+    templateUrl: '../../../flip/flip.component.html',
     styleUrls: [
-        '../../../flipcard/flipcard.component.scss',
-        '../../components/app.flipcard.component.scss',
+        '../../../flip/flip.component.scss',
+        '../../components/app.flip.component.scss',
         './warehouse.inventory.component.scss',
     ],
 })
 export class WarehouseInventoryComponent
-    extends AppFlipcardComponent<
+    extends AppFlipComponent<
         WarehouseInventoryDatasource,
         WarehouseInventoryToolbarComponent,
         WarehouseInventoryPanelComponent,

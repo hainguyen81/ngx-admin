@@ -16,7 +16,7 @@
         "fieldset", "legend", "progress", "details", "summary", "template",
         "col", ".col-", "row", ".row", "dropdown", ".dropdown",
         "select", ".select", "selected", ".selected", "active", ".active", "activated", ".activated",
-        "slide", ".slide", "button", "btn-", ".btn-",
+        "slide", ".slide", "button", "nbbutton", "btn-", ".btn-",
         "b-", ".b-", "d-", ".d-", "v-", ".v-",
         "float-", ".float-", "w-", ".w-", "h-", ".h-",
         "p-", "px-", "py-", "pt-", "pb-", "pl-", "pr-",

@@ -449,7 +449,12 @@
         outline: none;
     }
     /** button */
-    button, [nbbutton], button span, [nbbutton] span {
+    .btn-group.ngx-toolbar-actions, .ngx-toolbar-actions,
+    .btn-group.ngx-toolbar-actions button, .btn-group.ngx-toolbar-actions button span, .btn-group.ngx-toolbar-actions [nbbutton] span,
+    .btn-group.ngx-toolbar-actions [nbbutton], .btn-group.ngx-toolbar-actions [nbButton],
+    .ngx-toolbar-actions button, .ngx-toolbar-actions button span, .ngx-toolbar-actions [nbbutton] span,
+    .ngx-toolbar-actions [nbbutton], .ngx-toolbar-actions [nbButton],
+    button, [nbbutton], [nbButton], button span, [nbbutton] span {
         display: flex;
         align-content: center;
         align-items: center;
