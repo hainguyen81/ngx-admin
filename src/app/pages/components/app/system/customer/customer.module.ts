@@ -88,6 +88,9 @@ import {AppConfig} from 'app/config/app.config';
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
 
+        /* Material */
+        AppMaterialModule,
+
         /* Application components module */
         ComponentsModule,
         AppCommonComponentsModule,

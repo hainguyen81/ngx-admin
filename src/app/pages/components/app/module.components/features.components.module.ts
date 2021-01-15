@@ -82,6 +82,7 @@ import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {FormlyConfig} from 'app/config/formly.config';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -142,6 +143,9 @@ import {FormlyConfig} from 'app/config/formly.config';
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
+
+        /* Material */
+        AppMaterialModule,
 
         /* Application components module */
         ComponentsModule,

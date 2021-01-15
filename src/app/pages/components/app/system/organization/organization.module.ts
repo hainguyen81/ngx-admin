@@ -88,6 +88,9 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
 
+        /* Material */
+        AppMaterialModule,
+
         /* Application components module */
         ComponentsModule,
         AppCommonComponentsModule,

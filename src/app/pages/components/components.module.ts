@@ -87,6 +87,7 @@ import {NgxFlipComponent} from 'app/pages/components/flip/flip.component';
 import {BaseFlipComponent} from 'app/pages/components/flip/base.flip.component';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FormlyConfig} from 'app/config/formly.config';
+import {AppMaterialModule} from 'app/app.material.module';
 
 @NgModule({
     imports: [
@@ -170,6 +171,9 @@ import {FormlyConfig} from 'app/config/formly.config';
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
+
+        /* Material */
+        AppMaterialModule,
 
         /*Validators*/
         CustomFormsModule,

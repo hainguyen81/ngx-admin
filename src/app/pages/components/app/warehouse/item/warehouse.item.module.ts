@@ -112,6 +112,9 @@ import {FormlyConfig} from 'app/config/formly.config';
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
 
+        /* Material */
+        AppMaterialModule,
+
         /* Application components module */
         ComponentsModule,
         AppCommonComponentsModule,

@@ -177,6 +177,24 @@ export default class ObjectUtils {
     }
 
     /**
+     * Get a boolean value indicating the specified object/value whether is null/undefined
+     * @param obj to check
+     * @return true for null/undefined; else false
+     */
+    public static isEmpty(obj: any): boolean {
+        return ObjectUtils.isNou(obj) || String(obj).length <= 0;
+    }
+
+    /**
+     * Get a boolean value indicating the specified object/value whether is not null/undefined
+     * @param obj to check
+     * @return true for null/undefined; else false
+     */
+    public static isNotEmpty(obj: any): boolean {
+        return !ObjectUtils.isEmpty(obj);
+    }
+
+    /**
      * Get a boolean value indicating the specified object whether is an object and not null/undefined
      * @param obj to check
      * @return true for non null/undefined object; else false
@@ -224,5 +242,46 @@ export default class ObjectUtils {
      */
     public static any(obj: any): any {
         return <any>obj;
+    }
+
+    /**
+     * Set value for the specified object property
+     * @param obj to set property value
+     * @param property to apply
+     * @param value to apply
+     */
+    public static set(obj?: any, property?: string | null | undefined, value?: any): void {
+        const anyObj: any = ObjectUtils.as(obj);
+        if (ObjectUtils.isNou(anyObj) || ObjectUtils.isEmpty(property) || typeof anyObj !== 'object') {
+            return;
+        }
+        anyObj[property || ''] = value;
+    }
+
+    /**
+     * Get value for the specified object property
+     * @param obj to get property value
+     * @param property to check
+     * @return the property value or null/undefined
+     */
+    public static get(obj?: any, property?: string | null | undefined): any {
+        const anyObj: any = ObjectUtils.as(obj);
+        if (ObjectUtils.isNou(anyObj) || ObjectUtils.isEmpty(property) || typeof anyObj !== 'object') {
+            return undefined;
+        }
+        return anyObj[property || ''];
+    }
+
+    /**
+     * Delete the specified object property
+     * @param obj to delete property
+     * @param property to delete
+     */
+    public static delete(obj?: any, property?: string | null | undefined): void {
+        const anyObj: any = ObjectUtils.as(obj);
+        if (ObjectUtils.isNou(anyObj) || ObjectUtils.isEmpty(property) || typeof anyObj !== 'object') {
+            return undefined;
+        }
+        delete anyObj[property || ''];
     }
 }
