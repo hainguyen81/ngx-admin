@@ -57,18 +57,22 @@ export function makeAutoUnsubscribeDecorator(obs$?: any[]): Function {
             obs$ = (obs$ || []);
             const overrideNgDestroy = function () {
                 const _this: any = this;
+                const obsProp$: string[] = [];
                 for (const propertyKey of Object.keys(_this)) {
                     const property: any = ObjectUtils.get(_this, propertyKey);
                     const propertyAny: any = ObjectUtils.any(property);
                     const propertyUnsubFunc: Function = ObjectUtils.requireTypedValue<Function>(propertyAny, 'unsubscribe');
                     if (FunctionUtils.isFunction(propertyUnsubFunc) && !obs$.includes(propertyAny)) {
                         obs$.push(propertyAny);
+                        obsProp$.push(propertyKey);
                     }
                 }
                 for (const ob$ of obs$) {
                     PromiseUtils.unsubscribe(ob$);
                 }
-                originalNgDestroy.apply();
+                (_this as any).destroyed$ && (_this as any).destroyed$.next();
+                originalNgDestroy.apply(_this);
+                obsProp$.forEach(propertyKey => ObjectUtils.delete(_this, propertyKey));
             };
             unsubTarget.prototype.ngOnDestroy = overrideNgDestroy;
             unsubTarget = Object.getPrototypeOf(unsubTarget.prototype).constructor;

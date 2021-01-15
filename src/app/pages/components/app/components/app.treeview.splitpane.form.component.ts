@@ -186,8 +186,7 @@ export class AppTreeSplitFormComponent<
         if (this.selectedModelItem !== item) {
             this.selectedModelItem = item;
             if (item && item.value) {
-                let model: T;
-                model = item.value as T;
+                const model: T = item.value as T;
                 model || throwError('Could not apply undefined model to formly component!');
 
                 this.selectedModel = DeepCloner(model);

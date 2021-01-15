@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -8,8 +8,8 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {WarehouseCategoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import WarehouseCategory, {IWarehouseCategory,} from '../../../../../@core/data/warehouse/warehouse.category';
+import {WarehouseCategoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import WarehouseCategory, {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
 import WarehouseUtils from '../../../../../utils/warehouse/warehouse.utils';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../components/app.treeview.i18n';
@@ -17,7 +17,7 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxTreeviewConfig} from '../../../treeview/abstract.treeview.component';
-import {WarehouseCategoryTreeviewI18n,} from '../../module.components/warehouse/category/warehouse.category.formly.treeview.field.component';
+import {WarehouseCategoryTreeviewI18n} from '../../module.components/warehouse/category/warehouse.category.formly.treeview.field.component';
 
 export const WarehouseCategoryTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create({
     decoupleChildFromParent: false,
@@ -36,6 +36,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_CATEGORY,
     selector: 'ngx-tree-view-app-warehouse-category',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: ['../../../treeview/treeview.component.scss'],
     providers: [

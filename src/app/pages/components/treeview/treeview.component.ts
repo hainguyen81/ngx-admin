@@ -1,6 +1,7 @@
 import {
     AfterContentChecked,
     AfterViewInit,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -34,6 +35,7 @@ import {throwError} from 'rxjs';
  */
 @Component({
     selector: 'ngx-tree-view',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './treeview.component.html',
     styleUrls: ['./treeview.component.scss'],
 })
@@ -235,15 +237,12 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         // TODO Waiting for implementing from children component
         this.getLogger().debug('onClickItem', event);
         if (event && event.event && event.event.target instanceof Element) {
-            let targetEl: Element;
-            targetEl = event.event.target as Element;
-            let itemEl: Element;
-            itemEl = (targetEl.tagName === AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR ? targetEl
+            const targetEl: Element = event.event.target as Element;
+            const itemEl: Element = (targetEl.tagName === AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR ? targetEl
                 : this.getClosestElementBySelector(AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, targetEl));
             if (itemEl && !itemEl.classList.contains('selected')) {
                 // clear another selected items
-                let prevSelectedItemEls: NodeListOf<HTMLElement>;
-                prevSelectedItemEls = this.getElementsBySelector(
+                const prevSelectedItemEls: NodeListOf<HTMLElement> = this.getElementsBySelector(
                     [AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
                 if (prevSelectedItemEls && prevSelectedItemEls.length) {
                     prevSelectedItemEls.forEach(selItemEl => this.toggleElementClass(selItemEl, 'selected', false));

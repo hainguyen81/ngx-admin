@@ -1,6 +1,6 @@
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../../config/log.config';
 import {IDbService} from './interface.service';
@@ -24,6 +24,8 @@ export type PromiseExecutor<T, K> = (resolve: (value?: T | PromiseLike<T>) => vo
  * @param <T> entity type
  */
 export abstract class AbstractDbService<T> implements IDbService<T> {
+
+    private _onConnectionMonitor: Subscription;
 
     protected getDbService(): NgxIndexedDBService {
         return this.dbService;
@@ -56,7 +58,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
         (dbStore || '').length || throwError('Database store name must be not empty!');
         (entityKey || '').length || throwError('Database entity key property must be not empty!');
         logger.updateConfig(LogConfig);
-        connectionService.monitor().subscribe((connected) => {
+        this._onConnectionMonitor = connectionService.monitor().subscribe((connected) => {
             if (connected) {
                 this.synchronize();
             } else {

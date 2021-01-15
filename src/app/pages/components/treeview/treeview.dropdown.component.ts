@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {BaseNgxDropdownTreeviewComponent} from './base.treeview.dropdown.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -15,6 +15,7 @@ import {ActivatedRoute, Router} from '@angular/router';
  */
 @Component({
     selector: 'ngx-tree-view-dropdown',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './treeview.component.html',
     styleUrls: ['./treeview.component.scss'],
 })

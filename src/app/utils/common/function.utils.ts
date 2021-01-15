@@ -33,7 +33,9 @@ export default class FunctionUtils {
                 && ((typeof ifTrueOrNotNou === 'boolean' && ifTrueOrNotNou === true) || ObjectUtils.isObject(ifTrueOrNotNou)));
         (trueValue === true && FunctionUtils.isFunction(delegateTrue)) && throwError('Invalid function to invoke while condition is TRUE!');
         (trueValue !== true && FunctionUtils.isFunction(delegateFalse)) && throwError('Invalid function to invoke while condition is FALSE!');
-        return (trueValue === true ? (delegateTrue.apply(caller || this, args) || defaultValue) : (delegateFalse.apply(caller || this, args) || defaultValue));
+        return (trueValue === true && FunctionUtils.isFunction(delegateTrue)
+            ? (delegateTrue.apply(caller || this, args) || defaultValue)
+            : FunctionUtils.isFunction(delegateFalse) ? (delegateFalse.apply(caller || this, args) || defaultValue) : defaultValue);
     }
 
     /**

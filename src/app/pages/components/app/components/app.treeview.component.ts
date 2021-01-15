@@ -3,7 +3,19 @@ import {ToastrService} from 'ngx-toastr';
 import {TreeviewI18n, TreeviewItem} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {IEvent} from '../../abstract.component';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Output, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Output,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from './app.treeview.i18n';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {BaseNgxTreeviewComponent} from '../../treeview/base.treeview.component';
@@ -21,6 +33,7 @@ import TimerUtils from 'app/utils/common/timer.utils';
  */
 @Component({
     selector: 'ngx-tree-view-app',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../treeview/treeview.component.html',
     styleUrls: ['../../treeview/treeview.component.scss'],
     providers: [

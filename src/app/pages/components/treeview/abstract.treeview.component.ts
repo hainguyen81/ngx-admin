@@ -1,4 +1,16 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    Output,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -69,7 +81,7 @@ export const DefaultTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create
 /**
  * Abstract tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
  */
-@Component({})
+@Component({ changeDetection: ChangeDetectionStrategy.OnPush })
 export abstract class AbstractTreeviewComponent<T extends DataSource> extends AbstractComponent {
 
     protected static TREEVIEW_ELEMENT_SELECTOR: string = 'ngx-treeview';

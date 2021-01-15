@@ -3,6 +3,7 @@ import {
     AfterContentInit,
     AfterViewChecked,
     AfterViewInit,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactory,
@@ -26,7 +27,7 @@ import {DataSource, LocalDataSource} from '@app/types/index';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {Observable, throwError} from 'rxjs';
+import {Observable, Subscription, throwError} from 'rxjs';
 import HtmlUtils from '../../utils/common/html.utils';
 import KeyboardUtils from '../../utils/common/keyboard.utils';
 import ComponentUtils from '../../utils/common/component.utils';
@@ -61,7 +62,7 @@ export interface IEvent {
  * Abstract component
  */
 @AutoUnsubscribe()
-@Component({})
+@Component({ changeDetection: ChangeDetectionStrategy.OnPush })
 export abstract class AbstractComponent
     implements OnChanges, OnInit, DoCheck,
         AfterContentInit, AfterContentChecked,
@@ -89,6 +90,8 @@ export abstract class AbstractComponent
     private _config: any;
     private _onTouchCallback: any[];
     private _onChangeCallback: any[];
+    private _onDataSourceChanged: Subscription;
+    private _onTranslateLanguageChanged: Subscription;
 
     // unique hack for {ModalDialogService}
     private __originalOpenDialog: Function;
@@ -485,10 +488,17 @@ export abstract class AbstractComponent
         // this.getLogger().debug('ngOnInit',
         //     'queryViewContainerRef', this.queryViewContainerRef,
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
-        this.getDataSource() && this.getDataSource()
-            .onChanged().subscribe(value => this.onDataSourceChanged({data: value}));
-        this.getTranslateService() && this.getTranslateService()
-            .onLangChange.subscribe((value: any) => this.onLangChange({event: value}));
+
+        FunctionUtils.invoke(
+            ObjectUtils.isNou(this._onDataSourceChanged) && ObjectUtils.isNotNou(this.getDataSource()),
+            () => this._onDataSourceChanged = this.getDataSource()
+                .onChanged().subscribe(value => this.onDataSourceChanged({data: value})),
+            undefined, this);
+        FunctionUtils.invoke(
+            ObjectUtils.isNou(this._onTranslateLanguageChanged) && ObjectUtils.isNotNou(this.getTranslateService()),
+            () => this._onTranslateLanguageChanged = this.getTranslateService()
+                .onLangChange.subscribe((value: any) => this.onLangChange({event: value})),
+            undefined, this);
     }
 
     ngDoCheck(): void {
@@ -545,6 +555,15 @@ export abstract class AbstractComponent
         //     'queryViewContainerRef', this.queryViewContainerRef,
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
         // this.getChangeDetectorRef().detach();
+
+        FunctionUtils.invoke(
+            ObjectUtils.isNotNou(this._onDataSourceChanged),
+            () => this._onDataSourceChanged.unsubscribe(),
+            undefined, this);
+        FunctionUtils.invoke(
+            ObjectUtils.isNotNou(this._onTranslateLanguageChanged),
+            () => this._onTranslateLanguageChanged.unsubscribe(),
+            undefined, this);
     }
 
     /**
@@ -556,10 +575,8 @@ export abstract class AbstractComponent
         // this.getLogger().debug('onKeyDown', event, '[', this.constructor.name, ']');
 
         // check whether navigating on context menu
-        let isOnContextMenu: boolean;
-        let targetEl: HTMLElement;
-        targetEl = (event && event.event as Event ? (<Event>event.event).target as HTMLElement : null);
-        isOnContextMenu = this.hasClosestElement(AbstractComponent.CONTEXT_MENU_SELECTOR, targetEl);
+        const targetEl: HTMLElement = (event && event.event as Event ? (<Event>event.event).target as HTMLElement : null);
+        const isOnContextMenu: boolean = this.hasClosestElement(AbstractComponent.CONTEXT_MENU_SELECTOR, targetEl);
         // if action key on context-menu, not handle it
         if (isOnContextMenu) {
             return;
@@ -706,7 +723,7 @@ export abstract class AbstractComponent
      */
     onDataSourceChanged(value: IEvent) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onDataSourceChanged', value, '[', this.constructor.name, ']');
+        this.getLogger().debug('onDataSourceChanged', value, this, '[', this.constructor.name, ']');
     }
 
     /**

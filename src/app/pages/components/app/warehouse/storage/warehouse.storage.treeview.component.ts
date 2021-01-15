@@ -1,5 +1,5 @@
 import {AppTreeviewComponent} from '../../components/app.treeview.component';
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, Renderer2, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, Renderer2, ViewContainerRef} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import Warehouse, {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {ToastrService} from 'ngx-toastr';
@@ -85,6 +85,7 @@ export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
 @Component({
     moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_SETTINGS_STORAGE,
     selector: 'ngx-tree-view-app-warehouse-storage',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../treeview/treeview.component.html',
     styleUrls: [
         '../../../treeview/treeview.component.scss',
