@@ -67,7 +67,7 @@ export class AppSplitPaneComponent<
 
     private __toolbarComponent: TB;
     private __leftSideComponent: L;
-    protected __rightSideComponent: R;
+    private __rightSideComponent: R;
 
     // -------------------------------------------------
     // GETTERS/SETTERS

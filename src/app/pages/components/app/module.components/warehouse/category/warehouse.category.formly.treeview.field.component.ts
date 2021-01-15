@@ -1,14 +1,16 @@
 import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IWarehouseCategory} from '../../../../../../@core/data/warehouse/warehouse.category';
 import {TOKEN_APP_TREEVIEW_SHOW_ALL} from '../../../components/app.treeview.i18n';
 import {NGXLogger} from 'ngx-logger';
 import {Constants} from '../../../../../../@core/data/constants/common.constants';
-import {WarehouseCategoryDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {AppModuleDataIndexFormlyTreeviewFieldComponent,} from '../../../components/common/app.module.data.index.formly.treeview.field.component';
+import {WarehouseCategoryDatasource} from '../../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {AppModuleDataIndexFormlyTreeviewFieldComponent} from '../../../components/common/app.module.data.index.formly.treeview.field.component';
 import WarehouseUtils from '../../../../../../utils/warehouse/warehouse.utils';
 import {Observable} from 'rxjs';
+import FunctionUtils from 'app/utils/common/function.utils';
+import ObjectUtils from 'app/utils/common/object.utils';
 
 /**
  * Multi language for treeview field
@@ -150,12 +152,12 @@ export class WarehouseCategoryFormlyTreeviewFieldComponent
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this.getTreeviewComponent()
-        && this.getTreeviewComponent().setItemImageParser((item?: TreeviewItem) => {
-            let category: IWarehouseCategory;
-            category = (item && item.value ? <IWarehouseCategory>item.value : null);
-            return (category ? category.image : null);
-        });
+        FunctionUtils.invoke(
+            ObjectUtils.isNotNou(this.treeviewComponent),
+            () => this.treeviewComponent.itemImageParser = (item?: TreeviewItem) => {
+                const category: IWarehouseCategory = (item && item.value ? <IWarehouseCategory>item.value : null);
+                return (category ? category.image : null);
+            }, undefined, this);
     }
 
     protected loadData(): Observable<IWarehouseCategory[] | IWarehouseCategory>

@@ -1,5 +1,5 @@
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -83,8 +83,8 @@ export class WarehouseItemSplitPaneComponent
      * @return true for changed; else
      */
     public hasChanged(): boolean {
-        return this.getSummaryComponent().hasChanged()
-            || this.getTabsetComponent().hasChanged();
+        return (this.summaryComponent && this.summaryComponent.hasChanged())
+            || (this.tabsetComponent && this.tabsetComponent.hasChanged());
     }
 
     /**
@@ -100,7 +100,7 @@ export class WarehouseItemSplitPaneComponent
      * @return the versions of the data model
      */
     public getDataModelVersions(): IWarehouseItem[] {
-        return this.getTabsetComponent().getDataModelVersions();
+        return this.tabsetComponent ? this.tabsetComponent.getDataModelVersions() : [];
     }
 
     /**
@@ -109,28 +109,24 @@ export class WarehouseItemSplitPaneComponent
      */
     public setDataModel(dataModel: IWarehouseItem): void {
         this.dataModel = dataModel;
-        if (this.getSummaryComponent()) {
-            this.getSummaryComponent().setDataModel(dataModel);
-        }
-        if (this.getTabsetComponent()) {
-            this.getTabsetComponent().setDataModel(dataModel);
-        }
+        this.summaryComponent && this.summaryComponent.setDataModel(dataModel);
+        this.tabsetComponent && this.tabsetComponent.setDataModel(dataModel);
     }
 
     /**
      * Get the {WarehouseItemTabsetComponent} instance
      * @return the {WarehouseItemTabsetComponent} instance
      */
-    protected getTabsetComponent(): WarehouseItemTabsetComponent {
-        return this.getLeftSideComponent() as WarehouseItemTabsetComponent;
+    protected get tabsetComponent(): WarehouseItemTabsetComponent {
+        return this.leftSideComponent;
     }
 
     /**
      * Get the {WarehouseItemSummaryComponent} instance
      * @return the {WarehouseItemSummaryComponent} instance
      */
-    protected getSummaryComponent(): WarehouseItemSummaryComponent {
-        return this.rightSideComponent as WarehouseItemSummaryComponent;
+    protected get summaryComponent(): WarehouseItemSummaryComponent {
+        return this.rightSideComponent;
     }
 
     // -------------------------------------------------
@@ -211,6 +207,6 @@ export class WarehouseItemSplitPaneComponent
      * @return false for error; else true
      */
     public submit(): boolean {
-        return this.getTabsetComponent().submit();
+        return this.tabsetComponent && this.tabsetComponent.submit();
     }
 }

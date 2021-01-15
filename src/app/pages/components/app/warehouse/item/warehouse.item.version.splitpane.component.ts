@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
@@ -80,8 +80,8 @@ export class WarehouseItemVersionSplitPaneComponent
     protected set dataModel(_dataModel: IWarehouseItem) {
         this._dataModel = _dataModel;
         this._modifiedDataModel = ObjectUtils.deepCopy(_dataModel);
-        this.getLeftSideComponent().setModel(this._modifiedDataModel);
-        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this._modifiedDataModel);
+        this.leftSideComponent && this.leftSideComponent.setModel(this._modifiedDataModel);
+        this.rightSideComponent && this.rightSideComponent.setDataModel(this._modifiedDataModel);
     }
 
     // -------------------------------------------------
@@ -177,7 +177,7 @@ export class WarehouseItemVersionSplitPaneComponent
         throwError('Not support for saving model from internal component!');
     }
     private performSave(): boolean {
-        if (!this.getLeftSideComponent().submit()) {
+        if (!this.leftSideComponent || !this.leftSideComponent.submit()) {
             this.showError('warehouse.title', 'common.form.invalid_data');
             return false;
         }
@@ -193,8 +193,8 @@ export class WarehouseItemVersionSplitPaneComponent
     }
     private performReset(): boolean {
         this._modifiedDataModel = Object.assign(this._modifiedDataModel, this._dataModel);
-        this.getLeftSideComponent().setModel(this._modifiedDataModel);
-        (<WarehouseItemSummaryComponent>this.rightSideComponent).setDataModel(this._modifiedDataModel);
+        this.leftSideComponent && this.leftSideComponent.setModel(this._modifiedDataModel);
+        this.rightSideComponent && this.rightSideComponent.setDataModel(this._modifiedDataModel);
         return false;
     }
 
