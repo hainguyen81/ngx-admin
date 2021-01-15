@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -110,8 +110,7 @@ export class OrganizationTreeviewComponent
      * @return new tree-view item
      */
     protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): TreeviewItem {
-        let newItem: TreeviewItem;
-        newItem = super.newItem(parent, treeItem);
+        const newItem: TreeviewItem = super.newItem(parent, treeItem);
         if (newItem) {
             newItem.text = this.translate('system.organization.new');
             newItem.value = new Organization(

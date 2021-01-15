@@ -65,7 +65,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
      * @return the {TreeviewComponent} component
      */
     protected get treeviewComponent(): TreeviewComponent {
-        return this.treeviewComponent;
+        return this.__treeviewComponent;
     }
 
     /**
@@ -73,7 +73,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
      * @return the {DropdownTreeviewComponent} component
      */
     protected get dropdownTreeviewComponent(): DropdownTreeviewComponent {
-        return this.dropdownTreeviewComponent;
+        return this.__dropdownTreeviewComponent;
     }
 
     /**

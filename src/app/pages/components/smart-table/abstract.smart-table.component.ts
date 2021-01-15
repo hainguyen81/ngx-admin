@@ -580,7 +580,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
     }
 
     // -------------------------------------------------
-    // EVENT
+    // EVENTS
     // -------------------------------------------------
 
     /**
@@ -588,6 +588,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      * @param value {IEvent} that contains {$data} as changed value
      */
     onDataSourceChanged(value: IEvent) {
+        super.onDataSourceChanged(value);
         // apply table tabIndex to focus and handle keyboard event
         TimerUtils.timeout(() => {
             const tableEls: NodeListOf<HTMLElement> = this.getElementsBySelector(AbstractSmartTableComponent.SMART_TABLE_SELETOR);

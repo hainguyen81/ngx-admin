@@ -1,7 +1,19 @@
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Renderer2,
+    Type,
+    ViewContainerRef,
+} from '@angular/core';
 import {BaseSplitPaneComponent} from '../../splitpane/base.splitpane.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {IModel} from '../../../../@core/data/base';
@@ -47,6 +59,7 @@ export const APP_SPLIT_SIDE_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractCo
  */
 @Component({
     selector: 'ngx-split-pane-app',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../splitpane/splitpane.component.html',
     styleUrls: [
         '../../splitpane/splitpane.component.scss',
@@ -248,6 +261,7 @@ export class AppSplitPaneComponent<
 
         // create left side component
         this.__leftSideComponent = super.setAreaComponent(0, this.leftSideType);
+        this.__leftSideComponent && this.__leftSideComponent.getDataSource().refresh();
         if (this.shouldAttachRightSideOnStartup()) {
             this.__rightSideComponent = super.setAreaComponent(1, this.rightRightType);
         }

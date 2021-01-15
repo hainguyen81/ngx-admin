@@ -12,9 +12,8 @@ export default class ComponentUtils {
      * @param callback callback function to call when querying component
      * @return the components list
      */
-    public static queryComponents<T>(queryList: QueryList<T>, callback?: (component: T) => void): T[] {
-        let components: T[];
-        components = [];
+    public static queryComponents<T>(queryList: QueryList<T>, callback?: (component: T) => void): T[] | null | undefined {
+        const components: T[] = [];
         if (queryList) {
             queryList.filter(component => ObjectUtils.isNotNou(component))
             .forEach(component => {
@@ -30,11 +29,10 @@ export default class ComponentUtils {
      * @param callback callback function to call when querying component
      * @return the first occurred component or undefined
      */
-    public static queryComponent<T>(queryList: QueryList<T>, callback?: (component: T) => void): T {
+    public static queryComponent<T>(queryList: QueryList<T>, callback?: (component: T) => void): T | null | undefined {
         let component: T;
-        component = undefined;
         if (queryList) {
-            queryList.filter(component => ObjectUtils.isNotNou(component))
+            queryList.filter(comp => ObjectUtils.isNotNou(comp))
             .map(comp => {
                 component = comp;
                 callback && callback.apply(this, [component]);
@@ -53,7 +51,7 @@ export default class ComponentUtils {
     public static createComponentRef<T>(
         componentService: AbstractComponentService<T>,
         viewContainerRef?: ViewContainerRef,
-        clearView?: boolean | false): ComponentRef<T> {
+        clearView?: boolean | false): ComponentRef<T> | null | undefined {
         componentService && viewContainerRef && componentService.setViewContainerRef(viewContainerRef);
         return (componentService ? componentService.resolve(clearView) : undefined);
     }
@@ -68,7 +66,7 @@ export default class ComponentUtils {
     public static createComponent<T>(
         componentService: AbstractComponentService<T>,
         viewContainerRef?: ViewContainerRef,
-        clearView?: boolean | false): T {
+        clearView?: boolean | false): T | null | undefined {
         const componentRef: ComponentRef<T> = this.createComponentRef(componentService, viewContainerRef, clearView);
         return (componentRef ? componentRef.instance : undefined);
     }

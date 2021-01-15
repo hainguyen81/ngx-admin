@@ -188,6 +188,7 @@ export class AppTreeviewComponent<T extends IModel, D extends DataSource>
      * @param data to map
      */
     mappingDataSourceToTreeviewItems(data: any): TreeviewItem[] {
+        this.getLogger().debug('mappingDataSourceToTreeviewItems', data);
         return HierarchyUtils.buildModelTreeview(data as T[], 'name');
     }
 }

@@ -2,7 +2,19 @@ import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {TreeviewItem} from 'ngx-treeview';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Renderer2,
+    Type,
+    ViewContainerRef,
+} from '@angular/core';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AppTreeviewComponent} from './app.treeview.component';
@@ -29,6 +41,7 @@ export const APP_TREE_SPLIT_FORM_FORM_COMPONENT_TYPE_TOKEN: InjectionToken<Type<
  */
 @Component({
     selector: 'ngx-split-pane-app-tree-form',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../splitpane/splitpane.component.html',
     styleUrls: [
         '../../splitpane/splitpane.component.scss',
@@ -146,9 +159,6 @@ export class AppTreeSplitFormComponent<
 
         // Configure left/right component panes
         this.configPaneComponents();
-
-        // refresh data source at start-up
-        super.getDataSource().refresh();
     }
 
     // -------------------------------------------------

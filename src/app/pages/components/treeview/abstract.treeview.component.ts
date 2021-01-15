@@ -18,6 +18,7 @@ import {TreeviewSelection} from 'ngx-treeview/src/treeview-item';
 import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT} from '../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '../../../utils/common/array.utils';
+import FunctionUtils from 'app/utils/common/function.utils';
 
 /**
  * The extended {TreeviewConfig}
@@ -96,10 +97,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * @return the tree-view items array
      */
     @Input('items') get items(): TreeviewItem[] {
-        if (ObjectUtils.isNou(this._items)) {
-            this._items = [];
-        }
-        return this._items;
+        return this._items || [];
     }
 
     /**
@@ -485,25 +483,26 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * @param event {IEvent} that contains {$event} as changed values
      */
     onDataSourceChanged(event: IEvent) {
-        this.getLogger().debug('DataSource has been changed', event);
+        super.onDataSourceChanged(event);
         const elements: any[] = (event && event.data
             && event.data.hasOwnProperty('elements') && ArrayUtils.isArray(event.data['elements'])
             ? Array.from(event.data['elements']) : [event.data['elements']]);
         const treeBuilder: (data: any[]) => TreeviewItem[] = this.treeBuilder;
         const itemBuilder: (data: any) => TreeviewItem = this.itemBuilder;
-        if (ObjectUtils.isNotNou(itemBuilder) && typeof itemBuilder === 'function') {
+        this.getLogger().debug('treeBuilder', treeBuilder, 'itemBuilder', itemBuilder);
+        if (FunctionUtils.isFunction(itemBuilder)) {
             const items: TreeviewItem[] = [];
             (elements || []).forEach(element => {
                 const item: TreeviewItem = itemBuilder.apply(this, [element]);
                 item && items.push(item);
             });
-            this._items = items;
+            this.items = items;
 
-        } else if (ObjectUtils.isNotNou(treeBuilder) && typeof treeBuilder === 'function') {
-            this._items = treeBuilder.apply(this, [elements || []]);
+        } else if (FunctionUtils.isFunction(treeBuilder)) {
+            this.items = treeBuilder.apply(this, [elements || []]);
 
         } else {
-            this._items = this.mappingDataSourceToTreeviewItems(elements);
+            this.items = this.mappingDataSourceToTreeviewItems(elements);
         }
     }
 
@@ -514,34 +513,27 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
     onNavigateKeyDown(event: IEvent): void {
         super.onNavigateKeyDown(event);
 
-        let kbEvent: KeyboardEvent;
-        kbEvent = event.event as KeyboardEvent;
+        const kbEvent: KeyboardEvent = event.event as KeyboardEvent;
 
         // check whether navigating on context menu
-        let targetEl: HTMLElement;
-        targetEl = (event && event.event as Event ? (<Event>event.event).target as HTMLElement : null);
+        const targetEl: HTMLElement = (event && event.event as Event ? (<Event>event.event).target as HTMLElement : null);
         if (this.hasClosestElement(AbstractTreeviewComponent.TREEVIEW_SEARCH_ELEMENT_SELECTOR, targetEl)) {
             return;
         }
 
         // detect the latest hovered item element
-        let treeviewItemEls: NodeListOf<HTMLElement>;
-        treeviewItemEls = this.getElementsBySelector(
+        const treeviewItemEls: NodeListOf<HTMLElement> = this.getElementsBySelector(
             AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
-        let hoveredItemEls: NodeListOf<HTMLElement>;
-        hoveredItemEls = this.getElementsBySelector(
+        const hoveredItemEls: NodeListOf<HTMLElement> = this.getElementsBySelector(
             [AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
         if (!hoveredItemEls || !hoveredItemEls.length) {
             this.toggleTreeviewItemElement(treeviewItemEls.item(0));
 
         } else {
-            let hoveredItemEl: HTMLElement;
-            hoveredItemEl = hoveredItemEls.item(hoveredItemEls.length - 1);
-            let nextSibling: Element;
-            nextSibling = HtmlUtils.next(hoveredItemEl,
+            const hoveredItemEl: HTMLElement = hoveredItemEls.item(hoveredItemEls.length - 1);
+            const nextSibling: Element = HtmlUtils.next(hoveredItemEl,
                 AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
-            let prevSibling: Element;
-            prevSibling = HtmlUtils.previous(hoveredItemEl,
+            const prevSibling: Element = HtmlUtils.previous(hoveredItemEl,
                 AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
 
             // toggle hover class

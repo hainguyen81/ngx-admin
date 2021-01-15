@@ -467,8 +467,6 @@ export abstract class AbstractComponent
         factoryResolver || throwError('Could not inject ComponentFactoryResolver');
         router || throwError('Could not inject Router');
         dataSource = dataSource || new LocalDataSource();
-        dataSource.onChanged().subscribe(value => this.onDataSourceChanged({data: value}));
-        translateService.onLangChange.subscribe((value: any) => this.onLangChange({event: value}));
     }
 
     // -------------------------------------------------
@@ -487,6 +485,10 @@ export abstract class AbstractComponent
         // this.getLogger().debug('ngOnInit',
         //     'queryViewContainerRef', this.queryViewContainerRef,
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
+        this.getDataSource() && this.getDataSource()
+            .onChanged().subscribe(value => this.onDataSourceChanged({data: value}));
+        this.getTranslateService() && this.getTranslateService()
+            .onLangChange.subscribe((value: any) => this.onLangChange({event: value}));
     }
 
     ngDoCheck(): void {
@@ -704,7 +706,7 @@ export abstract class AbstractComponent
      */
     onDataSourceChanged(value: IEvent) {
         // TODO Waiting for implementing from children component
-        // this.getLogger().debug('onDataSourceChanged', value, '[', this.constructor.name, ']');
+        this.getLogger().debug('onDataSourceChanged', value, '[', this.constructor.name, ']');
     }
 
     /**

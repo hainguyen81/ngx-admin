@@ -1,4 +1,16 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {AbstractSplitpaneComponent} from './abstract.splitpane.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -17,6 +29,7 @@ import {SplitAreaDirective, SplitComponent} from 'angular-split';
  */
 @Component({
     selector: 'ngx-split-pane',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './splitpane.component.html',
     styleUrls: ['./splitpane.component.scss'],
 })
@@ -143,8 +156,7 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
             this.headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
         }
         if (!this.splitAreaHolderViewContainerRefs || !this.splitAreaHolderViewContainerRefs.length) {
-            this.splitAreaHolderViewContainerRefs = ComponentUtils.queryComponents(
-                this.querySplitAreaHolderViewContainerRefs);
+            this.splitAreaHolderViewContainerRefs = ComponentUtils.queryComponents(this.querySplitAreaHolderViewContainerRefs);
         }
         if (!this.__splitComponent) {
             this.__splitComponent = ComponentUtils.queryComponent(this.querySplitComponent);

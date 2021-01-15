@@ -11,6 +11,6 @@ export default class TimerUtils {
 		const timer: number = window.setTimeout(() => {
 			invoke.apply(caller || this, args);
 			window.clearTimeout(timer);
-		}, timeout || 0)
+		}, timeout || 0);
 	}
 }

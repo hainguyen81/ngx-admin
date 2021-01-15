@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {NgxSplitPaneComponent} from './splitpane.component';
 import {ContextMenuService} from 'ngx-contextmenu';
@@ -16,6 +16,7 @@ import {ActivatedRoute, Router} from '@angular/router';
  */
 @Component({
     selector: 'ngx-split-pane',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './splitpane.component.html',
     styleUrls: ['./splitpane.component.scss'],
 })
