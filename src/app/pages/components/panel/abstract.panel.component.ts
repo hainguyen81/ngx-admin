@@ -1,6 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,6 +14,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Abstract card component base on {NbCardComponent}
  */
+@Component({})
 export abstract class AbstractPanelComponent<T extends DataSource> extends AbstractComponent {
 
     protected static CARD_ELEMENT_SELECTOR: string = 'nb-card';

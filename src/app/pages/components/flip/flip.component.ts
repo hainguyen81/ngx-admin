@@ -4,8 +4,8 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef,
-    Inject,
+    ElementRef, EventEmitter,
+    Inject, Input, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -25,6 +25,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FlipComponent} from 'ngx-flip';
 import FunctionUtils from '../../../utils/common/function.utils';
 import ObjectUtils from '../../../utils/common/object.utils';
+import {IEvent} from 'app/pages/components/abstract.component';
 
 /**
  * Flip base on {FlipComponent}
@@ -46,7 +47,7 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
     private readonly queryFlipComponent: QueryList<FlipComponent>;
     private _flipComponent: FlipComponent;
 
-    @ViewChildren('ng-container[front]', {read: ViewContainerRef})
+    @ViewChildren('frontContainer', {read: ViewContainerRef})
     private readonly queryFrontContainerViewContainerRef: QueryList<ViewContainerRef>;
     private _frontContainerViewContainerRef: ViewContainerRef;
 
@@ -54,7 +55,7 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
     private readonly queryFrontComponentHolderViewContainerRef: QueryList<ViewContainerRef>;
     private _frontComponentHolderViewContainerRef: ViewContainerRef;
 
-    @ViewChildren('ng-container[back]', {read: ViewContainerRef})
+    @ViewChildren('backContainer', {read: ViewContainerRef})
     private readonly queryBackContainerViewContainerRef: QueryList<ViewContainerRef>;
     private _backContainerViewContainerRef: ViewContainerRef;
 
@@ -65,6 +66,10 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
     @ViewChildren('headerHolder', {read: ViewContainerRef})
     private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
     private _headerViewContainerRef: ViewContainerRef;
+
+    // raise when flipping
+    private _flipped: boolean = false;
+    @Output() protected onFlipped: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -127,12 +132,20 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
     }
 
     /**
+     * Get a boolean value indicating this component whether is flipped
+     * @return true for flipped; else false
+     */
+    @Input() get flipped(): boolean {
+        return this._flipped || false;
+    }
+
+    /**
      * Set a boolean value indicating this component whether is flipped
      * @param flipped true for flipped; else false
      */
     set flipped(_flipped: boolean) {
-        if (this.flipped !== (_flipped || false)) {
-            super.flipped = _flipped || false;
+        if (this._flipped !== (_flipped || false)) {
+            this._flipped = _flipped || false;
             this.onFlipped.emit({
                 data: {
                     'front': this.frontComponentHolderViewContainerRef || this.frontContainerViewContainerRef,
@@ -164,6 +177,7 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
+     * @param _flipped specify the component whether had been flipped
      */
     constructor(@Inject(DataSource) dataSource: DataSource,
                 @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -184,8 +198,7 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
-            router, activatedRoute,
-            false);
+            router, activatedRoute);
     }
 
     // -------------------------------------------------
@@ -219,6 +232,5 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
             ObjectUtils.isNou(this._backComponentHolderViewContainerRef),
             () => ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef), undefined,
             this._backComponentHolderViewContainerRef, this);
-        console.log(['Flip', this]);
     }
 }

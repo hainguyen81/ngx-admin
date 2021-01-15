@@ -9,6 +9,7 @@ import {IdGenerators} from './generator.config';
 import {createDefaultSecureStorageConfig, createDefaultStorageConfig,} from './storage.config';
 import {CryptoService} from './crypto.config';
 import {ServiceWorkerScripts} from './worker.providers';
+import {FormlyComponentsConfig, FormlyConfig} from 'app/config/formly.config';
 
 const MainConfig = {
     PageConfig: {
@@ -33,6 +34,7 @@ const MainConfig = {
         secureConfig: {},
     },
     ServiceWorkers: ServiceWorkerScripts,
+    FormyConfig: FormlyConfig,
 };
 MainConfig.API = Object.assign({}, API);
 MainConfig.Storage.storageConfig = Object.assign({}, createDefaultStorageConfig());

@@ -37,6 +37,9 @@ import {AppSearchPanelComponent} from './app.search.panel.component';
 import {AppFlipComponent} from './app.flip.component';
 import {AppTableFlipComponent} from './app.table.flip.component';
 import {AppTableFlipFormComponent} from './app.table.flip.form.component';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FlipModule} from 'ngx-flip';
+import {FormlyConfig} from 'app/config/formly.config';
 
 @NgModule({
     imports: [
@@ -52,6 +55,12 @@ import {AppTableFlipFormComponent} from './app.table.flip.form.component';
         NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
+
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -86,15 +95,8 @@ import {AppTableFlipFormComponent} from './app.table.flip.form.component';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot({
-            validationMessages: [{
-                name: 'required',
-                message: 'common.form.required',
-            }, {
-                name: 'pattern_code',
-                message: 'common.form.pattern_code',
-            }],
-        }),
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -113,8 +115,6 @@ import {AppTableFlipFormComponent} from './app.table.flip.form.component';
 
         /* Application components module */
         ComponentsModule,
-
-        /* Application common components module */
         AppCommonComponentsModule,
 
         /* Logger */

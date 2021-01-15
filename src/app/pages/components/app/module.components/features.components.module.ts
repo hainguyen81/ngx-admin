@@ -81,191 +81,7 @@ import {WarehouseSettingsFormlySelectFieldComponent} from './warehouse/settings/
 import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
-
-const FormlyModuleOptions: ConfigOption = {
-    types: [
-        {
-            name: 'system-language',
-            component: AppLanguagesFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-system-language',
-            component: AppLanguagesFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'vendor-customer',
-            component: VendorCustomerFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-vendor-customer',
-            component: VendorCustomerFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'system-status',
-            component: SystemStatusFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-system-status',
-            component: SystemStatusFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'system-currency',
-            component: SystemCurrencyFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-system-currency',
-            component: SystemCurrencyFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'system-customer-level',
-            component: SystemCustomerLevelFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-system-customer-level',
-            component: SystemCustomerLevelFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'system-customer-type',
-            component: SystemCustomerTypeFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-system-customer-type',
-            component: SystemCustomerTypeFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'system-organization-type',
-            component: SystemOrganizationTypeFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-system-organization-type',
-            component: SystemOrganizationTypeFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-inventory-status',
-            component: WarehouseInventoryStatusFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-inventory-status',
-            component: WarehouseInventoryStatusFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-inventory-type',
-            component: WarehouseInventoryTypeFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-inventory-type',
-            component: WarehouseInventoryTypeFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-storage-type',
-            component: WarehouseStorageTypeFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-storage-type',
-            component: WarehouseStorageTypeFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-settings-type',
-            component: WarehouseSettingsTypeFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-settings-type',
-            component: WarehouseSettingsTypeFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-settings-brand',
-            component: WarehouseSettingsBrandFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-settings-brand',
-            component: WarehouseSettingsBrandFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-settings-item',
-            component: WarehouseSettingsItemFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-settings-item',
-            component: WarehouseSettingsItemFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-category-type',
-            component: WarehouseCategoryTypeFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-category-type',
-            component: WarehouseCategoryTypeFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'organization-treeview',
-            component: OrganizationFormlyTreeviewFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-category-treeview',
-            component: WarehouseCategoryFormlyTreeviewFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-settings-batch',
-            component: WarehouseSettingsBatchFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-settings-batch',
-            component: WarehouseSettingsBatchFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'warehouse-item',
-            component: WarehouseItemFormlySelectExFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-item',
-            component: WarehouseItemFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-batch',
-            component: WarehouseBatchNoFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-        {
-            name: 'ngx-warehouse-storage',
-            component: WarehouseStorageFormlySelectFieldComponent,
-            wrappers: ['form-field'],
-        },
-    ],
-};
+import {FormlyConfig} from 'app/config/formly.config';
 
 @NgModule({
     imports: [
@@ -313,8 +129,8 @@ const FormlyModuleOptions: ConfigOption = {
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(FormlyModuleOptions),
-        FormlyModule.forChild(FormlyModuleOptions),
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -329,8 +145,8 @@ const FormlyModuleOptions: ConfigOption = {
 
         /* Application components module */
         ComponentsModule,
-        AppComponentsModule,
         AppCommonComponentsModule,
+        AppComponentsModule,
 
         /* Logger */
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),

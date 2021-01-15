@@ -48,34 +48,40 @@ import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FlipModule} from 'ngx-flip';
+import {AppMaterialModule} from 'app/app.material.module';
+import {FormlyConfig} from 'app/config/formly.config';
 
 @NgModule({
     imports: [
         CommonModule,
         ThemeModule,
         NbThemeModule,
-        NbLayoutModule,
+        NbIconModule,
+        NbCardModule,
         NbInputModule,
         NbCheckboxModule,
         NbSelectModule,
-        NbIconModule,
         NbButtonModule,
-        NbCardModule,
-        NbSearchModule,
-        NbTabsetModule,
+        NbLayoutModule,
+        Ng2SmartTableModule,
         FormsModule,
+
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
 
         /* i18n */
         TranslateModule,
-
-        /* Toaster */
-        ToastrModule,
-
-        /* Table */
-        Ng2SmartTableModule,
 
         /* Context Menu */
         NbContextMenuModule,
@@ -84,18 +90,16 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
             useBootstrap4: true,
         }),
 
-        /* Tree-view */
-        TreeviewModule.forRoot(),
-
         /* SplitPane */
         AngularSplitModule.forRoot(),
 
-        /* Selection Dropdown */
-        SelectDropDownModule,
+        /* Tree-view */
+        TreeviewModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -110,8 +114,8 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 
         /* Application components module */
         ComponentsModule,
-        AppComponentsModule,
         AppCommonComponentsModule,
+        AppComponentsModule,
         FeaturesComponentsModule,
 
         /* Logger */

@@ -92,7 +92,6 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
         clearView && viewContainerRef.clear();
         componentRef.hostView.detectChanges();
         viewContainerRef.insert(componentRef.hostView);
-        console.log(['Dynamic component location', componentRef.location, componentRef.instance, viewContainerRef.element, viewContainerRef.length])
         return componentRef;
     }
 }

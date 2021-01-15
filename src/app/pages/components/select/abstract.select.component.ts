@@ -1,4 +1,16 @@
-import {AfterContentChecked, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {
+    AfterContentChecked,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    Output,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -516,6 +528,7 @@ export const DefaultNgxSelectOptions: INgxSelectOptions = {
 /**
  * Abstract select component base on {NgSelectComponent}
  */
+@Component({})
 export abstract class AbstractSelectComponent<T extends DataSource>
     extends AbstractComponent implements AfterContentChecked {
 

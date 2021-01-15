@@ -32,6 +32,11 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 import {WarehouseInventoryDetailSmartTableComponent} from './warehouse.inventory.detail.table.component';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
 import {WarehouseProviders} from '../../../../../config/app.providers';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FlipModule} from 'ngx-flip';
+import {AppMaterialModule} from 'app/app.material.module';
+import {FormlyConfig} from 'app/config/formly.config';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
 @NgModule({
     imports: [
@@ -48,6 +53,15 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
         Ng2SmartTableModule,
         FormsModule,
 
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
+
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
 
@@ -61,27 +75,16 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
             useBootstrap4: true,
         }),
 
-        /* Tree-view */
-        TreeviewModule.forRoot(),
-
         /* SplitPane */
         AngularSplitModule.forRoot(),
 
-        /* Selection Dropdown */
-        SelectDropDownModule,
-
-        /* Select-ex */
-        NgxSelectModule,
-
-        /* @ng-select/ng-select */
-        NgSelectModule,
-
-        /* Modal dialog */
-        ModalDialogModule.forRoot(),
+        /* Tree-view */
+        TreeviewModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -92,11 +95,12 @@ import {WarehouseProviders} from '../../../../../config/app.providers';
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
 
         /* Application components module */
         ComponentsModule,
-        AppComponentsModule,
         AppCommonComponentsModule,
+        AppComponentsModule,
         FeaturesComponentsModule,
 
         /* Logger */

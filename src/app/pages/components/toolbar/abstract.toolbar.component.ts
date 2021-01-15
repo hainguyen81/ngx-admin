@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Output, Renderer2, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -16,6 +16,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Abstract toolbar component base on {MatToolbar}
  */
+@Component({})
 export abstract class AbstractToolbarComponent<T extends DataSource> extends AbstractComponent {
 
     protected static TOOLBAR_ELEMENT_SELECTOR: string = 'mat-toolbar';

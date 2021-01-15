@@ -1,6 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -19,6 +19,7 @@ import ArrayUtils from '../../../utils/common/array.utils';
 /**
  * Abstract formly component base on {FormlyModule}
  */
+@Component({})
 export abstract class AbstractFormlyComponent<T, D extends DataSource>
     extends AbstractComponent {
 

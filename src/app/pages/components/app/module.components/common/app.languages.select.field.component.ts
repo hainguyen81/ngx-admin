@@ -8,6 +8,7 @@ import {AppConfig} from '../../../../../config/app.config';
 import {IdGenerators} from '../../../../../config/generator.config';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../select/abstract.select.component';
 import {AppModuleDataFormlySelectFieldComponent} from '../../components/common/app.module.data.formly.select.field.component';
+import {i18n} from 'app/config/i18n.config';
 
 export const AppLanguagesNgxSelectOptions: INgxSelectOptions =
     Object.assign({}, DefaultNgxSelectOptions, {
@@ -83,7 +84,7 @@ export class AppLanguagesFormlySelectFieldComponent
     protected loadData(): Observable<IModel[] | IModel>
         | Promise<IModel[] | IModel> | IModel[] | IModel {
         const languages: { value: string, label: string, code: string, id: string }[] = [];
-        (AppConfig.i18n.languages || []).forEach(language => {
+        (i18n.languages || []).forEach(language => {
             languages.push({
                 value: language,
                 label: this.translate(['common.languages.', language].join('')),

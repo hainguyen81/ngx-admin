@@ -22,6 +22,12 @@ import {GeneralSettingsDatasource,} from '../../../../../services/implementation
 import {GeneralSettingsDbService, GeneralSettingsHttpService,} from '../../../../../services/implementation/system/general.settings/general.settings.service';
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
+import {FormlyModule} from '@ngx-formly/core';
+import {AppMaterialModule} from 'app/app.material.module';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FlipModule} from 'ngx-flip';
+import {FormlyConfig} from 'app/config/formly.config';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 
 @NgModule({
     imports: [
@@ -37,6 +43,15 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
         NbLayoutModule,
         Ng2SmartTableModule,
         FormsModule,
+
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -59,6 +74,8 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 
         /* Formly for form builder */
         ReactiveFormsModule,
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -69,11 +86,12 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
          */
         /*FormlyBootstrapModule,*/
         FormlyMaterialModule,
+        FormlyMatDatepickerModule,
 
         /* Application components module */
         ComponentsModule,
-        AppComponentsModule,
         AppCommonComponentsModule,
+        AppComponentsModule,
         FeaturesComponentsModule,
 
         /* Logger */

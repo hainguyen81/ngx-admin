@@ -3,7 +3,7 @@ import {
     AfterContentInit,
     AfterViewChecked,
     AfterViewInit,
-    ChangeDetectorRef,
+    ChangeDetectorRef, Component,
     ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
@@ -42,12 +42,12 @@ import {AutoUnsubscribe} from './customization/extend.component';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import AppUtils from '../../utils/app/app.utils';
 import {NgxLocalStorageEncryptionService} from '../../services/storage.services/local.storage.services';
-import {AppConfig} from '../../config/app.config';
 import {__evalContextMenuItem, IContextMenu} from '../../config/context.menu.conf';
 import {ActivatedRoute, Data, ParamMap, Params, Router} from '@angular/router';
 import {ControlValueAccessor} from '@angular/forms';
 import ObjectUtils from '../../utils/common/object.utils';
 import FunctionUtils from '../../utils/common/function.utils';
+import {dbConfig} from 'app/config/db.config';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -59,6 +59,7 @@ export interface IEvent {
  * Abstract component
  */
 @AutoUnsubscribe()
+@Component({})
 export abstract class AbstractComponent
     implements OnChanges, OnInit, DoCheck,
         AfterContentInit, AfterContentChecked,
@@ -1453,7 +1454,7 @@ export abstract class AbstractComponent
     private __deleteDatabase(timer: number): void {
         const _this: AbstractComponent = this;
         const logger: NGXLogger = this.getLogger();
-        const indexDbDelRequest: IDBOpenDBRequest = window.indexedDB.deleteDatabase(AppConfig.Db.name);
+        const indexDbDelRequest: IDBOpenDBRequest = window.indexedDB.deleteDatabase(dbConfig.name);
         const indexDbRequestCloseFunc: Function = ObjectUtils.requireTypedValue<Function>(indexDbDelRequest, 'close');
         if (FunctionUtils.isFunction(indexDbRequestCloseFunc)) {
             indexDbRequestCloseFunc.call(indexDbDelRequest);

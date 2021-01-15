@@ -1,6 +1,18 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    Output,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,18 +26,12 @@ import {FlipComponent} from 'ngx-flip';
 /**
  * Abstract Flip component base on {FlipComponent}
  */
+@Component({ changeDetection: ChangeDetectionStrategy.OnPush })
 export abstract class AbstractFlipComponent<T extends DataSource> extends AbstractComponent {
 
     protected static FLIP_ELEMENT_SELECTOR: string = 'ngx-flip';
     protected static FLIP_FRONT_ELEMENT_SELECTOR: string = 'ngx-flip [front]';
     protected static FLIP_BACK_ELEMENT_SELECTOR: string = 'ngx-flip [back]';
-
-    // -------------------------------------------------
-    // DECLARATION
-    // -------------------------------------------------
-
-    // raise when flipping
-    @Output() protected onFlipped: EventEmitter<IEvent> = new EventEmitter<IEvent>(true);
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -36,21 +42,6 @@ export abstract class AbstractFlipComponent<T extends DataSource> extends Abstra
      * @return the {FlipComponent} instance
      */
     protected abstract get flipComponent(): FlipComponent;
-
-    /**
-     * Get a boolean value indicating this component whether is flipped
-     * @return true for flipped; else false
-     */
-    @Input() get flipped(): boolean {
-        return this._flipped;
-    }
-    /**
-     * Set a boolean value indicating this component whether is flipped
-     * @param flipped true for flipped; else false
-     */
-    set flipped(_flipped: boolean) {
-        this._flipped = _flipped || false;
-    }
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -73,7 +64,6 @@ export abstract class AbstractFlipComponent<T extends DataSource> extends Abstra
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param _flipped specify the component whether had been flipped
      */
     protected constructor(@Inject(DataSource) dataSource: T,
                           @Inject(ContextMenuService) contextMenuService: ContextMenuService,
@@ -89,8 +79,7 @@ export abstract class AbstractFlipComponent<T extends DataSource> extends Abstra
                           @Inject(ConfirmPopup) confirmPopup?: ConfirmPopup,
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
-                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private _flipped?: boolean | false) {
+                          @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

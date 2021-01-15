@@ -1,6 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Abstract Image Gallery component base on {Lighbox}
  */
+@Component({})
 export abstract class AbstractImageGalleryComponent<T extends DataSource> extends AbstractComponent {
 
     // -------------------------------------------------

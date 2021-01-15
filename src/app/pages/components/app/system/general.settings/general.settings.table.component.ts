@@ -17,6 +17,7 @@ import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
+import SystemDataUtils from 'app/utils/system/system.data.utils';
 
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {
@@ -159,26 +160,26 @@ export class GeneralSettingsSmartTableComponent
     // -------------------------------------------------
 
     doSearch(keyword: any): void {
-        // this.getDataSource().setFilter([
-        //     {field: 'code', search: keyword},
-        //     {field: 'name', search: keyword},
-        //     {field: 'value', search: keyword},
-        // ], false);
+        this.getDataSource().setFilter([
+            {field: 'code', search: keyword},
+            {field: 'name', search: keyword},
+            {field: 'value', search: keyword},
+        ], false);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
 
-        // const settings: any = this.config;
-        // settings['columns']['module_code']['valuePrepareFunction'] =
-        //     (value?: string | null) => this.translateModuleColumn(settings, value);
-        // settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);
-        // SystemDataUtils.invokeAllModelsAsTableSelectOptions(
-        //     this.moduleDatasource, this.getTranslateService()).then(
-        //     options => {
-        //         settings['columns']['module_code']['editor']['config']['list'] = options;
-        //         this.getDataSource().refresh();
-        //     });
+        const settings: any = this.config;
+        settings['columns']['module_code']['valuePrepareFunction'] =
+            (value?: string | null) => this.translateModuleColumn(settings, value);
+        settings['columns']['value']['valuePrepareFunction'] = value => this.translate(value);
+        SystemDataUtils.invokeAllModelsAsTableSelectOptions(
+            this.moduleDatasource, this.getTranslateService()).then(
+            options => {
+                settings['columns']['module_code']['editor']['config']['list'] = options;
+                this.getDataSource().refresh();
+            });
     }
 
     // -------------------------------------------------

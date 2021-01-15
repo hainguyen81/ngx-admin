@@ -1,6 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -24,6 +24,7 @@ export interface ISplitAreaConfig {
 /**
  * Abstract SplitPane component base on {AngularSplitModule}
  */
+@Component({})
 export abstract class AbstractSplitpaneComponent<T extends DataSource> extends AbstractComponent {
 
     protected static SPLIT_ELEMENT_SELECTOR: string = 'as-split';

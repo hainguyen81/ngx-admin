@@ -1,6 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -82,6 +82,7 @@ export const TAB_CONFIG_TOKEN: InjectionToken<ITabConfig[]> =
 /**
  * Abstract FlipCard component base on {NbTabsetComponent} and {NbTabComponent}
  */
+@Component({})
 export abstract class AbstractTabComponent<T extends DataSource> extends AbstractComponent {
 
     protected static TABSET_ELEMENT_SELECTOR: string = 'nb-tabset';

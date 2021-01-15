@@ -85,6 +85,8 @@ import {BasePanelComponent} from './panel/base.panel.component';
 import {FlipModule} from 'ngx-flip';
 import {NgxFlipComponent} from 'app/pages/components/flip/flip.component';
 import {BaseFlipComponent} from 'app/pages/components/flip/base.flip.component';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FormlyConfig} from 'app/config/formly.config';
 
 @NgModule({
     imports: [
@@ -103,6 +105,12 @@ import {BaseFlipComponent} from 'app/pages/components/flip/base.flip.component';
         NbDatepickerModule,
         NbTooltipModule,
         FormsModule,
+
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -149,45 +157,8 @@ import {BaseFlipComponent} from 'app/pages/components/flip/base.flip.component';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot({
-            types: [
-                {
-                    name: 'images-gallery',
-                    component: ImageGalleryFormFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'files-gallery',
-                    component: FileGalleryFormFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'treeview-dropdown',
-                    component: DropdownTreeviewFormFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ex',
-                    component: SelectExFormFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'select-ngx',
-                    component: SelectFormFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'password',
-                    component: PasswordFormFieldComponent,
-                    wrappers: ['form-field'],
-                },
-                {
-                    name: 'date-picker',
-                    component: DatePickerFormFieldComponent,
-                    wrappers: ['form-field'],
-                },
-            ],
-        }),
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule

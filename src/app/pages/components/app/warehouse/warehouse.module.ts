@@ -42,34 +42,40 @@ import {FeaturesComponentsModule} from '../module.components/features.components
 import {ComponentsModule} from '../../components.module';
 import {AppComponentsModule} from '../components/app.components.module';
 import {AppCommonComponentsModule} from '../components/common/app.common.components.module';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FlipModule} from 'ngx-flip';
+import {AppMaterialModule} from 'app/app.material.module';
+import {FormlyConfig} from 'app/config/formly.config';
 
 @NgModule({
     imports: [
         CommonModule,
         ThemeModule,
         NbThemeModule,
-        NbLayoutModule,
+        NbIconModule,
+        NbCardModule,
         NbInputModule,
         NbCheckboxModule,
         NbSelectModule,
-        NbIconModule,
         NbButtonModule,
-        NbCardModule,
-        NbSearchModule,
-        NbTabsetModule,
+        NbLayoutModule,
+        Ng2SmartTableModule,
         FormsModule,
+
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
+
+        /* Angular material modules */
+        AppMaterialModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
 
         /* i18n */
         TranslateModule,
-
-        /* Toaster */
-        ToastrModule,
-
-        /* Table */
-        Ng2SmartTableModule,
 
         /* Context Menu */
         NbContextMenuModule,
@@ -78,27 +84,16 @@ import {AppCommonComponentsModule} from '../components/common/app.common.compone
             useBootstrap4: true,
         }),
 
-        /* Tree-view */
-        TreeviewModule.forRoot(),
-
         /* SplitPane */
         AngularSplitModule.forRoot(),
 
-        /* Selection Dropdown */
-        SelectDropDownModule,
-
-        /* Select-ex */
-        NgxSelectModule,
-
-        /* @ng-select/ng-select */
-        NgSelectModule,
-
-        /* Modal dialog */
-        ModalDialogModule.forRoot(),
+        /* Tree-view */
+        TreeviewModule.forRoot(),
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule
@@ -111,14 +106,14 @@ import {AppCommonComponentsModule} from '../components/common/app.common.compone
         FormlyMaterialModule,
         FormlyMatDatepickerModule,
 
-        /* Logger */
-        LoggerModule.forRoot(AppConfig.COMMON.logConfig),
-
         /* Application components module */
         ComponentsModule,
-        AppComponentsModule,
         AppCommonComponentsModule,
+        AppComponentsModule,
         FeaturesComponentsModule,
+
+        /* Logger */
+        LoggerModule.forRoot(AppConfig.COMMON.logConfig),
 
         /* Modules */
         WarehouseItemModule,

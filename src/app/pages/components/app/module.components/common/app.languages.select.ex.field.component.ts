@@ -6,8 +6,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 import {Observable, of} from 'rxjs';
-import {AppConfig} from '../../../../../config/app.config';
 import {IdGenerators} from '../../../../../config/generator.config';
+import {i18n} from 'app/config/i18n.config';
 
 export const AppLanguagesSelectOptions: INgxSelectExOptions =
     Object.assign({}, DefaultNgxSelectExOptions, {
@@ -83,7 +83,7 @@ export class AppLanguagesFormlySelectExFieldComponent
     protected loadData(): Observable<IModel[] | IModel>
         | Promise<IModel[] | IModel> | IModel[] | IModel {
         const languages: { value: string, label: string, code: string, id: string }[] = [];
-        (AppConfig.i18n.languages || []).forEach(language => {
+        (i18n.languages || []).forEach(language => {
             languages.push({
                 value: language,
                 label: this.translate(['common.languages.', language].join('')),

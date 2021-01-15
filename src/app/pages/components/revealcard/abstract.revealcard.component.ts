@@ -1,6 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Input, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,6 +14,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 /**
  * Abstract RevealCard component base on {NbRevealCardComponent}
  */
+@Component({ changeDetection: ChangeDetectionStrategy.OnPush })
 export abstract class AbstractRevealcardComponent<T extends DataSource> extends AbstractComponent {
 
     protected static REVEALCARD_ELEMENT_SELECTOR: string = 'nb-reveal-card';

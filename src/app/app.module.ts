@@ -79,6 +79,9 @@ import {MockDataModule} from './@core/mock/mock.data.module';
 import {registerBrowserServiceWorkers} from './sw/core/service.workers.registration';
 import {ServiceWorkerProviders} from './config/worker.providers';
 import {InjectionConfig} from './config/injection.config';
+import {DynamicModule} from 'ng-dynamic-component';
+import {FlipModule} from 'ngx-flip';
+import {FormlyConfig} from 'app/config/formly.config';
 
 @NgModule({
     imports: [
@@ -87,6 +90,12 @@ import {InjectionConfig} from './config/injection.config';
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
+
+        /* Dynamic component */
+        DynamicModule,
+
+        /* Flip */
+        FlipModule,
 
         /* local storage */
         NgxLocalStorageModule.forRoot(),
@@ -172,7 +181,8 @@ import {InjectionConfig} from './config/injection.config';
 
         /* Formly for form builder */
         ReactiveFormsModule,
-        FormlyModule.forRoot(),
+        FormlyModule.forRoot(FormlyConfig),
+        FormlyModule.forChild(FormlyConfig),
         /**
          * - Bootstrap:    FormlyBootstrapModule
          * - Material2:    FormlyMaterialModule

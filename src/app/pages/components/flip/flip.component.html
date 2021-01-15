@@ -12,10 +12,12 @@
 
     <nb-card-body [class.m-0]="!isShowHeader"
                   [class.p-0]="!isShowHeader"
+                  [class.ngx-flip-pane-body]="true"
                   [class.flipped]="flipped"
-                  class="ngx-flip-pane-body">
+    >
         <ngx-flip   #flip
                     [class.ngx-flip-pane]="true"
+                    [class.flipped]="flipped"
                     [flip]="flipped"
                     [contextMenu]="flipContextMenuComponent"
                     (contextmenu)="onContextMenu({ event: $event, data: flip })"
@@ -37,14 +39,24 @@
                     (focusout)="onFocusOut({ event: $event, data: flip })"
                     (blur)="onBlur({ event: $event, data: flip })"
         >
-            <ng-container #cardFrontComponent front [class.front-container]="true">
-                <!-- Front component holder -->
-                <ng-template #frontComponent></ng-template>
-            </ng-container>
-            <ng-container #cardBackComponent back [class.back-container]="true">
-                <!-- Back component holder -->
-                <ng-template #backComponent></ng-template>
-            </ng-container>
+            <div front [class.front-container]="true"
+                 [class.flex-grow-1]="true" [class.flex-column]="true"
+                 [class.d-none]="flipped" [class.d-flex]="!flipped"
+            >
+                <ng-container #frontContainer>
+                    <!-- Front component holder -->
+                    <ng-template #frontComponent></ng-template>
+                </ng-container>
+            </div>
+            <div back [class.back-container]="true"
+                 [class.flex-grow-1]="true" [class.flex-column]="true"
+                 [class.d-none]="!flipped" [class.d-flex]="flipped"
+            >
+                <ng-container #backContainer>
+                    <!-- Back component holder -->
+                    <ng-template #backComponent></ng-template>
+                </ng-container>
+            </div>
         </ngx-flip>
         <context-menu #flipContextMenuComponent
                       [disabled]="!(getContextMenu() || []).length"

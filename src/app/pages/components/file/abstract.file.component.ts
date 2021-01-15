@@ -1,6 +1,18 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ChangeDetectorRef, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    Output,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -14,6 +26,7 @@ import ObjectUtils from '../../../utils/common/object.utils';
 /**
  * Abstract Files Gallery component
  */
+@Component({})
 export abstract class AbstractFileGalleryComponent<T extends DataSource> extends AbstractComponent {
 
     // -------------------------------------------------
