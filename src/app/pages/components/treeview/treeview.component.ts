@@ -31,6 +31,7 @@ import HtmlUtils from 'app/utils/common/html.utils';
 import {Subscription, throwError} from 'rxjs';
 import FunctionUtils from 'app/utils/common/function.utils';
 import PromiseUtils from 'app/utils/common/promise.utils';
+import ArrayUtils from 'app/utils/common/array.utils';
 
 /**
  * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
@@ -125,7 +126,8 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         currentSelection.uncheckedItems = builtSelection.uncheckedItems;
         // TODO rebuild the dropdown button selected value
         FunctionUtils.invoke(
-            this.isDropDown() && ObjectUtils.isNotNou(this.dropdownTreeviewComponent),
+            this.isDropDown() && ObjectUtils.isNotNou(this.dropdownTreeviewComponent)
+            && ArrayUtils.isNotEmptyArray(currentSelection.checkedItems),
             () => this.dropdownTreeviewComponent.buttonLabel = this.dropdownTreeviewComponent.i18n.getText(currentSelection),
             undefined, this.dropdownTreeviewComponent);
     }

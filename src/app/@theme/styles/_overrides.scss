@@ -163,7 +163,19 @@
     .mat-form-field.mat-form-field-disabled ngx-tree-view-dropdown ngx-dropdown-treeview .btn.dropdown-toggle {
         pointer-events: none;
     }
+    ngx-tree-view-dropdown ngx-dropdown-treeview .btn.dropdown-toggle {
+        justify-content: left;
+        height: 30px;
+    }
+    ngx-tree-view-dropdown ngx-dropdown-treeview .btn.dropdown-toggle::after {
+        margin-top: 0;
+    }
     ngx-treeview .dropdown-divider { display: none }
+    .custom-form-field.form-dropdown-treeview {
+        mat-form-field .mat-form-field-infix {
+            padding-bottom: 0;
+        }
+    }
 
     /* ngx-select-ex */
     ngx-select {
