@@ -3,12 +3,12 @@ import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractComponent, IEvent,} from '../abstract.component';
+import {AbstractComponent, IEvent} from '../abstract.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {INgxSelectOptions, NgxSelectComponent, NgxSelectOptGroup, NgxSelectOption, TSelectOption,} from 'ngx-select-ex';
+import {INgxSelectOptions, NgxSelectComponent, NgxSelectOptGroup, NgxSelectOption, TSelectOption} from 'ngx-select-ex';
 import {BehaviorSubject} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -394,7 +394,7 @@ export abstract class AbstractSelectExComponent<T extends DataSource>
      */
     protected onSearchCallback($event: IEvent): boolean {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onSearchCallback', $event);
+        // this.getLogger().debug('onSearchCallback', $event);
         const keyword: string = (!$event || !$event.data || !$event.data['search'] ? ''
             : (<Object>$event.data['search']).toString().toLowerCase());
         const optionText: string = (!$event || !$event.data || !($event.data['item'] instanceof NgxSelectOption)
