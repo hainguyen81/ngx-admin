@@ -1,23 +1,10 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    Output,
-    Renderer2,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {TreeviewConfig} from 'ngx-treeview/src/treeview-config';
-import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewItem} from 'ngx-treeview';
+import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewConfig, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import HtmlUtils from '../../../utils/common/html.utils';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import ObjectUtils from '../../../utils/common/object.utils';
@@ -26,7 +13,6 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
-import {TreeviewSelection} from 'ngx-treeview/src/treeview-item';
 import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT} from '../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '../../../utils/common/array.utils';
@@ -81,7 +67,7 @@ export const DefaultTreeviewConfig: NgxTreeviewConfig = NgxTreeviewConfig.create
 /**
  * Abstract tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
  */
-@Component({ changeDetection: ChangeDetectionStrategy.OnPush })
+@Component({})
 export abstract class AbstractTreeviewComponent<T extends DataSource> extends AbstractComponent {
 
     protected static TREEVIEW_ELEMENT_SELECTOR: string = 'ngx-treeview';
@@ -334,8 +320,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
             return (!this.dropdownTreeviewComponent.treeviewComponent ? null
                 : this.dropdownTreeviewComponent.treeviewComponent.selection);
         }
-        return (this.isDropDown() || !this.treeviewComponent ? null
-            : this.treeviewComponent.selection);
+        return (!this.isDropDown() && this.treeviewComponent ?  this.treeviewComponent.selection : null);
     }
 
     /**
@@ -476,7 +461,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      */
     onSelectedChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onSelectedChange', event);
+        // this.getLogger().debug('onSelectedChange', event);
         this.selectedChangeEvent && this.selectedChangeEvent.emit(event);
     }
 
@@ -486,7 +471,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      */
     onFilterChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onFilterChange', event);
+        // this.getLogger().debug('onFilterChange', event);
         this.filterChangeEvent && this.filterChangeEvent.emit(event);
     }
 
@@ -508,14 +493,15 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
                 const item: TreeviewItem = itemBuilder.apply(this, [element]);
                 item && items.push(item);
             });
-            this.items = items;
+            this._items = items;
 
         } else if (FunctionUtils.isFunction(treeBuilder)) {
-            this.items = treeBuilder.apply(this, [elements || []]);
+            this._items = treeBuilder.apply(this, [elements || []]);
 
         } else {
-            this.items = this.mappingDataSourceToTreeviewItems(elements);
+            this._items = this.mappingDataSourceToTreeviewItems(elements);
         }
+        this.getChangeDetectorRef().detectChanges();
     }
 
     /**

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -22,7 +22,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_ORGANIZATION,
     selector: 'ngx-split-pane-app-system-organization',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: [
         '../../../splitpane/splitpane.component.scss',

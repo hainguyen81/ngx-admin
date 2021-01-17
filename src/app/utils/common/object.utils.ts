@@ -16,12 +16,11 @@ export default class ObjectUtils {
      * @param observer to observe
      * @return the observed value or undefined
      */
-    public static from<T>(observer: Observable<T>): T {
+    public static from<T>(observer: Observable<T>): T | null | undefined {
         if (!observer) {
             return undefined;
         }
         let retVal: T;
-        retVal = undefined;
         observer.subscribe((value: T) => retVal = value);
         return retVal;
     }
@@ -32,7 +31,7 @@ export default class ObjectUtils {
      * @param type the destination converted type
      * @return the converted value or undefined
      */
-    public static cast<T, K>(value: T, type: Type<K>): K {
+    public static cast<T, K>(value: T, type: Type<K>): K | null | undefined {
         try {
             return (value instanceof type ? value as K : undefined);
         } catch (e) {
@@ -45,7 +44,7 @@ export default class ObjectUtils {
      * @param type to create
      * @return new instance
      */
-    public static createInstanceByType<T>(type: Type<T>): T {
+    public static createInstanceByType<T>(type: Type<T>): T | null | undefined {
         return new type();
     }
 
@@ -54,7 +53,7 @@ export default class ObjectUtils {
      * @param type to create
      * @return new instance
      */
-    public static createInstance<T>(type: NoParamConstructor<T>): T {
+    public static createInstance<T>(type: NoParamConstructor<T>): T | null | undefined {
         return new type();
     }
 
@@ -64,7 +63,7 @@ export default class ObjectUtils {
      * @param args arguments of the new constructor type
      * @return new instance
      */
-    public static createInstanceWithArguments<T>(type: Constructor<T>, ...args: any[]): T {
+    public static createInstanceWithArguments<T>(type: Constructor<T>, ...args: any[]): T | null | undefined {
         return new type(args);
     }
 
@@ -91,7 +90,7 @@ export default class ObjectUtils {
      * @see Source project, ts-deepcopy https://github.com/ykdr2017/ts-deepcopy
      * @see Code pen https://codepen.io/erikvullings/pen/ejyBYg
      */
-    public static deepCopy<T>(target: T): T {
+    public static deepCopy<T>(target: T): T | null | undefined {
         if (target === null) {
             return target;
         }
@@ -120,7 +119,7 @@ export default class ObjectUtils {
      * @param args to detect
      * @return the first occurred value or undefined
      */
-    public static ifDefined(...args: any): any {
+    public static ifDefined(...args: any): any | null | undefined {
         for (const arg of args) {
             if (arg) {
                 return arg;
@@ -145,7 +144,7 @@ export default class ObjectUtils {
      * @param enumType to parse
      * @return all keys of the specified enum type
      */
-    public static enumKeys<E extends Enum<E>>(enumType: Type<E>): string[] {
+    public static enumKeys<E extends Enum<E>>(enumType: Type<E>): string[] | null | undefined {
         return Object.keys(enumType).filter(k => typeof ObjectUtils.requireValue(enumType, k) === 'number');
     }
     /**
@@ -153,7 +152,7 @@ export default class ObjectUtils {
      * @param enumType to parse
      * @return all values of the specified enum type
      */
-    public static enumValues<E extends Enum<E>>(enumType: Type<E>): number[] {
+    public static enumValues<E extends Enum<E>>(enumType: Type<E>): number[] | null | undefined {
         const keys = Object.keys(enumType).filter(k => typeof ObjectUtils.requireValue(enumType, k) === 'number');
         return keys.map(k => ObjectUtils.requireTypedValue<number>(enumType, k));
     }
@@ -228,7 +227,7 @@ export default class ObjectUtils {
      * @param defVal default value if not found
      * @return the property value or default value
      */
-    public static requireValue(obj: any, k: string, defVal?: any): any {
+    public static requireValue(obj: any, k: string, defVal?: any): any | null | undefined {
         return (typeof obj === 'object' && ObjectUtils.isNotNou(obj)
         && (k || '').length && obj.hasOwnProperty(k) ? obj[k] : defVal);
     }
@@ -240,7 +239,7 @@ export default class ObjectUtils {
      * @param defVal default value if not found
      * @return the property value or default value
      */
-    public static requireTypedValue<T>(obj: any, k: string, defVal?: T): T {
+    public static requireTypedValue<T>(obj: any, k: string, defVal?: T): T | null | undefined {
         return <T>ObjectUtils.requireValue(obj, k, defVal);
     }
 
@@ -249,7 +248,7 @@ export default class ObjectUtils {
      * @param obj to cast
      * @return the casted object or null/undefined
      */
-    public static as<T>(obj: any): T {
+    public static as<T>(obj: any): T | null | undefined {
         return <T>obj;
     }
 
@@ -258,7 +257,7 @@ export default class ObjectUtils {
      * @param obj to cast
      * @return the casted 'any' object or null/undefined
      */
-    public static any(obj: any): any {
+    public static any(obj: any): any | null | undefined {
         return <any>obj;
     }
 
@@ -282,12 +281,22 @@ export default class ObjectUtils {
      * @param property to check
      * @return the property value or null/undefined
      */
-    public static get(obj?: any, property?: string | null | undefined): any {
+    public static get(obj?: any, property?: string | null | undefined): any | null | undefined {
         const anyObj: any = ObjectUtils.as(obj);
         if (ObjectUtils.isNou(anyObj) || ObjectUtils.isEmpty(property) || typeof anyObj !== 'object') {
             return undefined;
         }
         return anyObj[property || ''];
+    }
+
+    /**
+     * Get value for the specified object property
+     * @param obj to get property value
+     * @param property to check
+     * @return the property value or null/undefined
+     */
+    public static getAs<T>(obj?: any, property?: string | null | undefined): T | null | undefined {
+        return ObjectUtils.as<T>(ObjectUtils.get(obj, property));
     }
 
     /**

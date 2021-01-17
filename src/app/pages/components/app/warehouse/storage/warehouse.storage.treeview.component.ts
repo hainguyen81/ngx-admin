@@ -3,7 +3,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryR
 import {NGXLogger} from 'ngx-logger';
 import Warehouse, {IWarehouse} from '../../../../../@core/data/warehouse/warehouse';
 import {ToastrService} from 'ngx-toastr';
-import {TreeItem, TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
+import {DefaultTreeviewI18n, TreeItem, TreeviewI18n, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
@@ -33,7 +33,7 @@ export const WarehouseCategoryContextMenu: IContextMenu[] = [].concat(COMMON.bas
  * Multi language for treeview field
  */
 @Injectable()
-export class WarehouseStorageTreeviewI18n extends TreeviewI18nDefault {
+export class WarehouseStorageTreeviewI18n extends DefaultTreeviewI18n {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
                 @Inject(TOKEN_APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {

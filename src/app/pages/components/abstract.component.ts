@@ -51,6 +51,7 @@ import ObjectUtils from '../../utils/common/object.utils';
 import FunctionUtils from '../../utils/common/function.utils';
 import {dbConfig} from 'app/config/db.config';
 import TimerUtils from 'app/utils/common/timer.utils';
+import PromiseUtils from 'app/utils/common/promise.utils';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -504,8 +505,7 @@ export abstract class AbstractComponent
                 .onChanged().subscribe(value => this.onDataSourceChanged({data: value})),
             undefined, this);
         FunctionUtils.invoke(
-            this.subscribeDataSourceChanged
-            && ObjectUtils.isNou(this._onTranslateLanguageChanged) && ObjectUtils.isNotNou(this.getTranslateService()),
+            ObjectUtils.isNou(this._onTranslateLanguageChanged) && ObjectUtils.isNotNou(this.getTranslateService()),
             () => this._onTranslateLanguageChanged = this.getTranslateService()
                 .onLangChange.subscribe((value: any) => this.onLangChange({event: value})),
             undefined, this);
@@ -566,14 +566,8 @@ export abstract class AbstractComponent
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
         // this.getChangeDetectorRef().detach();
 
-        FunctionUtils.invoke(
-            this.subscribeDataSourceChanged && ObjectUtils.isNotNou(this._onDataSourceChanged),
-            () => this._onDataSourceChanged.unsubscribe(),
-            undefined, this);
-        FunctionUtils.invoke(
-            this.subscribeDataSourceChanged && ObjectUtils.isNotNou(this._onTranslateLanguageChanged),
-            () => this._onTranslateLanguageChanged.unsubscribe(),
-            undefined, this);
+        this.subscribeDataSourceChanged && PromiseUtils.unsubscribe(this._onDataSourceChanged);
+        PromiseUtils.unsubscribe(this._onTranslateLanguageChanged);
     }
 
     /**

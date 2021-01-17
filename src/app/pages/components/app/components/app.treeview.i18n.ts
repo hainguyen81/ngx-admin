@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
-import {TreeviewI18nDefault, TreeviewSelection} from 'ngx-treeview';
+import {DefaultTreeviewI18n, TreeviewSelection} from 'ngx-treeview';
 import {TranslateService} from '@ngx-translate/core';
 
 export const TOKEN_APP_TREEVIEW_SHOW_ALL = new InjectionToken<boolean>('True for show \'All\'; else False');
@@ -8,7 +8,7 @@ export const TOKEN_APP_TREEVIEW_SHOW_ALL = new InjectionToken<boolean>('True for
  * Multi language for treeview field
  */
 @Injectable()
-export class AppTreeviewI18n extends TreeviewI18nDefault {
+export class AppTreeviewI18n extends DefaultTreeviewI18n {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
                 @Inject(TOKEN_APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {

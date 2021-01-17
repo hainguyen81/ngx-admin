@@ -1,4 +1,4 @@
-import {TreeviewI18n, TreeviewI18nDefault, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
+import {DefaultTreeviewI18n, TreeviewI18n, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
 import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Injectable, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IWarehouseCategory} from '../../../../../../@core/data/warehouse/warehouse.category';
@@ -16,7 +16,7 @@ import ObjectUtils from 'app/utils/common/object.utils';
  * Multi language for treeview field
  */
 @Injectable()
-export class WarehouseCategoryTreeviewI18n extends TreeviewI18nDefault {
+export class WarehouseCategoryTreeviewI18n extends DefaultTreeviewI18n {
 
     constructor(@Inject(TranslateService) private translateService: TranslateService,
                 @Inject(TOKEN_APP_TREEVIEW_SHOW_ALL) private showAll?: boolean | true) {

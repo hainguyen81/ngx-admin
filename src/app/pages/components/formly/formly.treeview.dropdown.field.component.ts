@@ -203,8 +203,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @param e event data
      */
     protected onSelectedValue(e: IEvent): void {
-        let item: any;
-        item = (e && e.data && ArrayUtils.isArray(e.data) && Array.from(e.data).length ? e.data[0] : null);
+        const item: any = (e && e.data && ArrayUtils.isArray(e.data) && Array.from(e.data).length ? e.data[0] : null);
         if (!item || item instanceof TreeviewItem) {
             this.setTreeviewSelectedItem(item as TreeviewItem, false);
 
@@ -231,8 +230,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         }
 
         // apply selected value
-        let selectedValue: TreeviewItem;
-        selectedValue = this.formatValue(value);
+        const selectedValue: TreeviewItem = this.formatValue(value);
         if (selectedValue) {
             treeViewComponent.internalProperty(
                 selectedValue, 'internalChecked', true);
@@ -294,9 +292,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         if (!treeViewComponent || !item) return;
         const disabled: boolean = ((disabledItems || []).indexOf(item) >= 0);
         treeViewComponent.internalProperty(item, 'internalDisabled', disabled);
-        if (disabled) {
-            treeViewComponent.internalProperty(item, 'internalChecked', false);
-        }
+        disabled && treeViewComponent.internalProperty(item, 'internalChecked', false);
         (item.children || []).forEach(it => this.disableItemsRecursively(it, disabledItems));
     }
 
@@ -307,8 +303,7 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
      * @return {TreeviewItem} or null
      */
     protected filterValueTreeItem(value: any, key?: string | null): TreeviewItem {
-        let itemValue: TreeviewItem;
-        itemValue = null;
+        let itemValue: TreeviewItem = null;
         const items: TreeviewItem[] = this.items;
         for (const it of items) {
             itemValue = this.filterValueTreeItemRecursively(value, key, it);
@@ -316,12 +311,9 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType implem
         }
         return itemValue;
     }
-    private filterValueTreeItemRecursively(
-        value: any, key?: string | null, item?: TreeviewItem | null): TreeviewItem {
-        let foundItem: TreeviewItem;
-        foundItem = null;
-        let found: boolean;
-        found = (item === value || (item && item.value === value));
+    private filterValueTreeItemRecursively(value: any, key?: string | null, item?: TreeviewItem | null): TreeviewItem {
+        let foundItem: TreeviewItem = null;
+        let found: boolean = (item === value || (item && item.value === value));
         if (!found && (key || '').length) {
             found = (item && item.value && value
                 && (item.value[key] === value

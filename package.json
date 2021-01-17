@@ -119,7 +119,7 @@
         "ngx-select-ex": "^6.0.1",
         "ngx-toastr": "12.0.1",
         "ngx-translate-messageformat-compiler": "^4.8.0",
-        "ngx-treeview": "6.0.2",
+        "ngx-treeview": "10.0.2",
         "ngx-validators": "^5.2.1",
         "node-sass": "4.14.0",
         "normalize.css": "^8.0.1",

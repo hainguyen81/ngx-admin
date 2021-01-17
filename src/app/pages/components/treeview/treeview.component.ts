@@ -1,12 +1,12 @@
 import {
     AfterContentChecked,
     AfterViewInit,
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ElementRef,
     Inject,
+    OnDestroy,
     QueryList,
     Renderer2,
     RendererStyleFlags2,
@@ -17,7 +17,7 @@ import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {DropdownTreeviewComponent, TreeviewComponent, TreeviewItem, TreeviewSelection} from 'ngx-treeview';
+import {DropdownDirective, DropdownTreeviewComponent, TreeviewComponent, TreeviewItem, TreeviewSelection, ɵb as DropdownMenuDirective} from 'ngx-treeview';
 import {AbstractTreeviewComponent} from './abstract.treeview.component';
 import {IEvent} from '../abstract.component';
 import {ToastrService} from 'ngx-toastr';
@@ -28,19 +28,23 @@ import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ComponentUtils from 'app/utils/common/component.utils';
 import HtmlUtils from 'app/utils/common/html.utils';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
+import FunctionUtils from 'app/utils/common/function.utils';
+import PromiseUtils from 'app/utils/common/promise.utils';
 
 /**
  * Tree-view component base on {TreeviewComponent} and {DropdownTreeviewComponent}
  */
 @Component({
     selector: 'ngx-tree-view',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './treeview.component.html',
     styleUrls: ['./treeview.component.scss'],
 })
 export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
-    implements AfterViewInit, AfterContentChecked {
+    implements AfterViewInit, AfterContentChecked, OnDestroy {
+
+    protected static PROPERTY_DROPDOWN_MENU_ELEMENT = 'dropdownMenu';
+    private static PROPERTY_GENERATE_SELECTION = 'generateSelection';
 
     // -------------------------------------------------
     // DECLARATION
@@ -54,9 +58,20 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
     private readonly queryDropdownTreeviewComponent: QueryList<DropdownTreeviewComponent>;
     private __dropdownTreeviewComponent: DropdownTreeviewComponent;
 
+    @ViewChildren(DropdownDirective)
+    private readonly queryDropdownTreeviewDirectiveComponent: QueryList<DropdownDirective>;
+    private __dropdownTreeviewDirectiveComponent: DropdownDirective;
+
+    @ViewChildren(DropdownMenuDirective)
+    private readonly queryDropdownTreeviewMenuDirectiveComponent: QueryList<DropdownMenuDirective>;
+    private __dropdownTreeviewMenuDirectiveComponent: DropdownMenuDirective;
+
     /** backup pointer to generate selection function of treeview component */
     private __originalGenerateSelection: () => void;
     private __originalDropdownOpen: () => void;
+
+    private __selectedChangedSubscription: Subscription;
+    private __filterChangedSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -79,6 +94,22 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
     }
 
     /**
+     * Get the {DropdownDirective} component
+     * @return the {DropdownDirective} component
+     */
+    protected get dropdownTreeviewDirectiveComponent(): DropdownDirective {
+        return this.__dropdownTreeviewDirectiveComponent;
+    }
+
+    /**
+     * Get the {DropdownMenuDirective} component
+     * @return the {DropdownMenuDirective} component
+     */
+    protected get dropdownTreeviewMenuDirectiveComponent(): DropdownMenuDirective {
+        return this.__dropdownTreeviewMenuDirectiveComponent;
+    }
+
+    /**
      * Set the selected {TreeviewItem} array
      * @param items to select
      * @param reset specify whether reset the current selected items
@@ -89,8 +120,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         // un-check previous items
         (currentSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
         // collect new item checked
-        let builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
-        builtSelection = this.collectSelection(items);
+        const builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] } = this.collectSelection(items);
         currentSelection.checkedItems = builtSelection.checkedItems;
         currentSelection.uncheckedItems = builtSelection.uncheckedItems;
     }
@@ -151,33 +181,51 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         if (!this.__treeviewComponent) {
             this.__treeviewComponent = ComponentUtils.queryComponent(
                 this.queryTreeviewComponent, (component) => {
-                    if (component) {
-                        // unique hack (cheat) for single item selection
-                        _this.__originalGenerateSelection = component['generateSelection'];
-                        component['generateSelection'] = () => _this.generateSelection();
-                        component.selectedChange.subscribe(
-                            value => this.onSelectedChange({data: value}));
-                        component.filterChange.subscribe(
-                            value => this.onFilterChange({data: value}));
-                    }
+                    // unique hack (cheat) for single item selection
+                    _this.__originalGenerateSelection = ObjectUtils.get(component, NgxTreeviewComponent.PROPERTY_GENERATE_SELECTION);
+                    ObjectUtils.set(component, NgxTreeviewComponent.PROPERTY_GENERATE_SELECTION, () => _this.generateSelection());
+                    FunctionUtils.invoke(
+                        ObjectUtils.isNou(this.__selectedChangedSubscription),
+                        () => this.__selectedChangedSubscription = component.selectedChange.subscribe(
+                            value => this.onSelectedChange({data: value})),
+                        undefined, this);
+                    FunctionUtils.invoke(
+                        ObjectUtils.isNou(this.__filterChangedSubscription),
+                        () => this.__filterChangedSubscription = component.filterChange.subscribe(
+                            value => this.onFilterChange({data: value})),
+                        undefined, this);
                 });
         }
 
         if (!this.__dropdownTreeviewComponent) {
             this.__dropdownTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryDropdownTreeviewComponent, (component) => {
-                    if (component) {
-                        // unique hack (cheat) for appending to body
-                        _this.__originalDropdownOpen = component.dropdownDirective.open;
-                        component.dropdownDirective.open = () => _this.detectDropdownForAppendToBody(component);
-                        // unique hack (cheat) for single item selection
-                        _this.__originalGenerateSelection = component.treeviewComponent['generateSelection'];
-                        component.treeviewComponent['generateSelection'] = () => _this.generateSelection();
-                        component.selectedChange.subscribe(
-                            value => this.onSelectedChange({data: value}));
-                        component.filterChange.subscribe(
-                            value => this.onFilterChange({data: value}));
-                    }
+                    // unique hack (cheat) for single item selection
+                    _this.__originalGenerateSelection = ObjectUtils.get(component.treeviewComponent, NgxTreeviewComponent.PROPERTY_GENERATE_SELECTION);
+                    ObjectUtils.set(component.treeviewComponent, NgxTreeviewComponent.PROPERTY_GENERATE_SELECTION, () => _this.generateSelection());
+                    FunctionUtils.invoke(
+                        ObjectUtils.isNou(this.__selectedChangedSubscription),
+                        () => this.__selectedChangedSubscription = component.selectedChange.subscribe(
+                            value => this.onSelectedChange({data: value})),
+                        undefined, this);
+                    FunctionUtils.invoke(
+                        ObjectUtils.isNou(this.__filterChangedSubscription),
+                        () => this.__filterChangedSubscription = component.filterChange.subscribe(
+                            value => this.onFilterChange({data: value})),
+                        undefined, this);
+                });
+        }
+
+        if (!this.__dropdownTreeviewMenuDirectiveComponent) {
+            this.__dropdownTreeviewMenuDirectiveComponent = ComponentUtils.queryComponent(this.queryDropdownTreeviewMenuDirectiveComponent);
+        }
+        if (!this.__dropdownTreeviewDirectiveComponent) {
+            this.__dropdownTreeviewDirectiveComponent = ComponentUtils.queryComponent(
+                this.queryDropdownTreeviewDirectiveComponent, (component) => {
+                    // unique hack (cheat) for appending to body
+                    _this.__originalDropdownOpen = component.open;
+                    component.open = () => _this.detectDropdownForAppendToBody(
+                        this.dropdownTreeviewComponent, component, this.dropdownTreeviewMenuDirectiveComponent);
                 });
         }
     }
@@ -186,9 +234,18 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         super.ngAfterContentChecked();
 
         // re-calculate dropdown position
-        if (this.isDropDown() && this.dropdownTreeviewComponent) {
-            this.calculateDropdownPosition(this.dropdownTreeviewComponent);
+        if (this.isDropDown() && this.dropdownTreeviewComponent
+            && this.dropdownTreeviewDirectiveComponent && this.dropdownTreeviewMenuDirectiveComponent) {
+            this.calculateDropdownPosition(this.dropdownTreeviewComponent,
+                this.dropdownTreeviewDirectiveComponent, this.dropdownTreeviewMenuDirectiveComponent);
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+
+        PromiseUtils.unsubscribe(this.__selectedChangedSubscription);
+        PromiseUtils.unsubscribe(this.__filterChangedSubscription);
     }
 
     /**
@@ -211,8 +268,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
                 // un-check previous items
                 (this.treeviewSelection.checkedItems || []).forEach(it => this.internalCheck(it, false));
                 // collect new item checked
-                let builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] };
-                builtSelection = this.collectSelection();
+                const builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] } = this.collectSelection();
                 this.treeviewSelection.checkedItems = builtSelection.checkedItems;
                 this.treeviewSelection.uncheckedItems = builtSelection.uncheckedItems;
                 this.treeviewComponent && this.treeviewComponent.selectedChange.emit([item]);
@@ -221,9 +277,8 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
                 && this.dropdownTreeviewComponent.treeviewComponent.selectedChange.emit([item]);
 
                 // if not multiple selection; then closing dropdown if necessary
-                this.dropdownTreeviewComponent
-                && this.dropdownTreeviewComponent.dropdownDirective
-                && this.dropdownTreeviewComponent.dropdownDirective.close();
+                this.dropdownTreeviewDirectiveComponent
+                && this.dropdownTreeviewDirectiveComponent.close();
             }
             this.onClickItem.apply(this, [{event: $event, data: item}]);
         }
@@ -253,9 +308,8 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
 
                 // if not multiple selection; then closing dropdown if necessary
                 if (!this.isEnabledItemCheck) {
-                    this.dropdownTreeviewComponent
-                    && this.dropdownTreeviewComponent.dropdownDirective
-                    && this.dropdownTreeviewComponent.dropdownDirective.close();
+                    this.dropdownTreeviewDirectiveComponent
+                    && this.dropdownTreeviewDirectiveComponent.close();
                 }
             }
         }
@@ -287,38 +341,61 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
     }
 
     /**
+     * Get the drop-down menu element of the specified drop-down treeview
+     * @param dropdownTreeviewComponent {DropdownTreeviewComponent}
+     * @param dropdownTreeviewDirectiveComponent {DropdownDirective}
+     * @param dropdownTreeviewMenuDirectiveComponent {DropdownMenuDirective}
+     */
+    private detectDropdownTreeviewMenuElement(dropdownTreeviewComponent: DropdownTreeviewComponent,
+                                              dropdownTreeviewDirectiveComponent: DropdownDirective,
+                                              dropdownTreeviewMenuDirectiveComponent: DropdownMenuDirective): Element {
+        return (ObjectUtils.getAs<Element>(dropdownTreeviewDirectiveComponent, NgxTreeviewComponent.PROPERTY_DROPDOWN_MENU_ELEMENT)
+            ? ObjectUtils.getAs<Element>(dropdownTreeviewDirectiveComponent, NgxTreeviewComponent.PROPERTY_DROPDOWN_MENU_ELEMENT)
+            : ObjectUtils.as<Element>(dropdownTreeviewMenuDirectiveComponent)
+                ? ObjectUtils.as<Element>(dropdownTreeviewMenuDirectiveComponent)
+                : dropdownTreeviewMenuDirectiveComponent && dropdownTreeviewMenuDirectiveComponent.dropdown
+                    ? HtmlUtils.nextSibling(dropdownTreeviewMenuDirectiveComponent.dropdown.toggleElement, '[ngxDropdownMenu].dropdown-menu')
+                    : HtmlUtils.nextSibling(dropdownTreeviewDirectiveComponent.toggleElement, '[ngxDropdownMenu].dropdown-menu'));
+    }
+
+    /**
      * Detect and ensure dropdown tree while using {appendToBody} configuration
      * @param dropdownTreeviewComponent {DropdownTreeviewComponent}
+     * @param dropdownTreeviewDirectiveComponent {DropdownDirective}
+     * @param dropdownTreeviewMenuDirectiveComponent {DropdownMenuDirective}
      */
-    private detectDropdownForAppendToBody(dropdownTreeviewComponent: DropdownTreeviewComponent): void {
-        if (!this.isDropDown() || ObjectUtils.isNou(dropdownTreeviewComponent)
-            || ObjectUtils.isNou(dropdownTreeviewComponent.dropdownDirective)
-            || ObjectUtils.isNou(dropdownTreeviewComponent.dropdownDirective.toggleElement)
-            || !this.isAppendToBody) {
-            dropdownTreeviewComponent && dropdownTreeviewComponent.dropdownDirective
-            && this.__originalDropdownOpen.apply(dropdownTreeviewComponent.dropdownDirective);
+    private detectDropdownForAppendToBody(
+        dropdownTreeviewComponent: DropdownTreeviewComponent,
+        dropdownTreeviewDirectiveComponent: DropdownDirective,
+        dropdownTreeviewMenuDirectiveComponent: DropdownMenuDirective): void {
+        const dropdownMenuEl: Element = this.detectDropdownTreeviewMenuElement(
+            dropdownTreeviewComponent, dropdownTreeviewDirectiveComponent, dropdownTreeviewMenuDirectiveComponent);
+        if (!this.isDropDown() || !this.isAppendToBody || ObjectUtils.isNou(dropdownMenuEl)) {
+            FunctionUtils.invoke(ObjectUtils.isNotNou(dropdownTreeviewComponent),
+                this.__originalDropdownOpen, undefined, dropdownTreeviewComponent);
             return;
         }
 
-        const dropdownMenuEl: Element = (dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] instanceof Element
-            ? dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] as Element
-            : HtmlUtils.nextSibling(dropdownTreeviewComponent.dropdownDirective.toggleElement, '[ngxDropdownMenu].dropdown-menu'));
-        if (ObjectUtils.isNotNou(dropdownMenuEl)) {
-            dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] = dropdownMenuEl;
-            this.getRenderer().removeClass(dropdownMenuEl, 'ngx-treeview');
-            this.getRenderer().addClass(dropdownMenuEl, 'ngx-treeview');
-            this.getRenderer().appendChild(document.body, dropdownMenuEl);
-            this.calculateDropdownPosition(dropdownTreeviewComponent, dropdownMenuEl);
-        }
+        FunctionUtils.invoke(
+            ObjectUtils.isNotNou(dropdownTreeviewDirectiveComponent),
+            () => ObjectUtils.set(dropdownTreeviewDirectiveComponent,
+                NgxTreeviewComponent.PROPERTY_DROPDOWN_MENU_ELEMENT, dropdownMenuEl),
+            undefined, this);
+        this.getRenderer().removeClass(dropdownMenuEl, 'ngx-treeview');
+        this.getRenderer().addClass(dropdownMenuEl, 'ngx-treeview');
+        this.getRenderer().appendChild(document.body, dropdownMenuEl);
+        this.calculateDropdownPosition(dropdownTreeviewComponent,
+            dropdownTreeviewDirectiveComponent, dropdownTreeviewMenuDirectiveComponent, dropdownMenuEl);
 
-        this.__originalDropdownOpen.apply(dropdownTreeviewComponent.dropdownDirective);
+        FunctionUtils.invoke(ObjectUtils.isNotNou(dropdownTreeviewComponent),
+            this.__originalDropdownOpen, undefined, dropdownTreeviewComponent);
     }
 
     /**
      * Override this method of {TreeviewComponent}
      */
     private generateSelection() {
-        if (this.isEnabledItemCheck && typeof this.__originalGenerateSelection === 'function') {
+        if (this.isEnabledItemCheck && FunctionUtils.isFunction(this.__originalGenerateSelection)) {
             if (this.treeviewComponent) {
                 this.__originalGenerateSelection.apply(this.treeviewComponent);
             }
@@ -341,17 +418,20 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
     /**
      * Calculate the offset position of the dropdown tree
      * @param dropdownTreeviewComponent {DropdownTreeviewComponent}
+     * @param dropdownTreeviewDirectiveComponent {DropdownDirective}
+     * @param dropdownTreeviewMenuDirectiveComponent {DropdownMenuDirective}
      * @param dropdownMenuEl dropdown menu element
      */
     private calculateDropdownPosition(
-        dropdownTreeviewComponent: DropdownTreeviewComponent, dropdownMenuEl?: Element | null) {
-        const menuEl: Element = (ObjectUtils.isNotNou(dropdownMenuEl) ? dropdownMenuEl
-            : dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] instanceof Element
-                ? dropdownTreeviewComponent.dropdownDirective['dropdownMenu'] as Element
-                : HtmlUtils.nextSibling(dropdownTreeviewComponent.dropdownDirective.toggleElement, '[ngxDropdownMenu].dropdown-menu'));
-        if (ObjectUtils.isNotNou(menuEl) && this.isAppendToBody) {
+        dropdownTreeviewComponent: DropdownTreeviewComponent,
+        dropdownTreeviewDirectiveComponent: DropdownDirective,
+        dropdownTreeviewMenuDirectiveComponent: DropdownMenuDirective,
+        dropdownMenuEl?: Element | null) {
+        const menuEl: Element = this.detectDropdownTreeviewMenuElement(
+            dropdownTreeviewComponent, dropdownTreeviewDirectiveComponent, dropdownTreeviewMenuDirectiveComponent);
+        if (ObjectUtils.isNotNou(menuEl) && this.isAppendToBody && ObjectUtils.isNotNou(dropdownTreeviewDirectiveComponent)) {
             const offset: { top: number, left: number, width: number, height: number } =
-                super.offset(dropdownTreeviewComponent.dropdownDirective.toggleElement);
+                super.offset(dropdownTreeviewDirectiveComponent.toggleElement);
             this.getRenderer().setStyle(
                 menuEl,
                 'top', (offset.top + offset.height + 5) + 'px',
