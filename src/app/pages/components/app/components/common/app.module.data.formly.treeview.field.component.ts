@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {IModel} from '../../../../../@core/data/base';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from '../app.treeview.i18n';
 import {TreeviewI18n} from 'ngx-treeview';
@@ -8,11 +8,13 @@ import {BaseDataSource} from '../../../../../services/common/datasource.service'
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {DataSource} from '@app/types/index';
 import {NGXLogger} from 'ngx-logger';
-import {isObservable, Observable, throwError} from 'rxjs';
+import {isObservable, Observable, Subscription, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
 import TimerUtils from 'app/utils/common/timer.utils';
+import FunctionUtils from 'app/utils/common/function.utils';
+import PromiseUtils from 'app/utils/common/promise.utils';
 
 /**
  * Custom formly field for selecting tree
@@ -35,7 +37,13 @@ import TimerUtils from 'app/utils/common/timer.utils';
 export class AppModuleDataFormlyTreeviewFieldComponent<
     M extends IModel, D extends BaseDataSource<M, IHttpService<M>, IDbService<M>>>
     extends AppFormlyTreeviewDropdownFieldComponent<M>
-    implements OnInit {
+    implements OnInit, OnDestroy {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private __formValueChangesSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -99,15 +107,21 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
         // load data
         this.refresh();
 
-        this.field && this.field.form
-        && this.field.form.valueChanges.subscribe(subscriber => {
-            if (this.shouldDisableValue) {
-                TimerUtils.timeout(() => {
-                    const disabledItemValue: any = this.disableValue;
-                    ObjectUtils.isNotNou(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
-                }, 100, this);
-            }
-        });
+        FunctionUtils.invoke(
+            ObjectUtils.isNotNou(this.field) && ObjectUtils.isNotNou(this.field.form),
+            () => this.__formValueChangesSubscription = this.field.form.valueChanges.subscribe(subscriber => {
+                if (this.shouldDisableValue) {
+                    TimerUtils.timeout(() => {
+                        const disabledItemValue: any = this.disableValue;
+                        ObjectUtils.isNotNou(disabledItemValue) && this.disableItemsByValue(disabledItemValue);
+                    }, 100, this);
+                }
+            }), undefined, this);
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__formValueChangesSubscription);
     }
 
     // -------------------------------------------------
@@ -130,7 +144,7 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
             // observe data
         } else if (ObjectUtils.isNotNou(_loadData) && isObservable(_loadData)) {
             (<Observable<M | M[]>>_loadData).subscribe(
-                data => this.loadDataInternal(data));
+                data => this.loadDataInternal(data)).unsubscribe();
 
         } else if (ObjectUtils.isNotNou(_loadData)) {
             this.loadDataInternal(<M | M[]>_loadData);

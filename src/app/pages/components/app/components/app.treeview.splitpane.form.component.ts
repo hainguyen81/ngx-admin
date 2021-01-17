@@ -224,6 +224,7 @@ export class AppTreeSplitFormComponent<
     protected doReset(): void {
         const cloned: T = DeepCloner(this.selectedModel);
         delete cloned['parent'], cloned['children'];
+        // this.getLogger().debug('[', this.constructor.name, '] - doReset', cloned, this.formlyComponent);
         this.formlyComponent && this.formlyComponent.setModel(cloned);
     }
 

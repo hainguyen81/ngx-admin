@@ -111,8 +111,7 @@ export class AppTreeviewComponent<T extends IModel, D extends DataSource>
      */
     onClickItem(event: IEvent) {
         super.onClickItem(event);
-        this.clickItemDelegate
-        && this.clickItemDelegate.apply(this, [event.event, event.data]);
+        this.clickItemDelegate && this.clickItemDelegate.apply(this, [event.event, event.data]);
     }
 
     /**
@@ -168,8 +167,7 @@ export class AppTreeviewComponent<T extends IModel, D extends DataSource>
      * Focus on tree-view
      */
     public focus(): void {
-        let treeviewEls: NodeListOf<HTMLElement>;
-        treeviewEls = this.getElementsBySelector(
+        let treeviewEls: NodeListOf<HTMLElement> = this.getElementsBySelector(
             AppTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR);
         if (treeviewEls && treeviewEls.length) {
             this.toggleTreeviewItemElement(treeviewEls.item(0));
@@ -188,7 +186,6 @@ export class AppTreeviewComponent<T extends IModel, D extends DataSource>
      * @param data to map
      */
     mappingDataSourceToTreeviewItems(data: any): TreeviewItem[] {
-        this.getLogger().debug('mappingDataSourceToTreeviewItems', data);
         return HierarchyUtils.buildModelTreeview(data as T[], 'name');
     }
 }

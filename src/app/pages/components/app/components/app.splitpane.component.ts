@@ -10,6 +10,7 @@ import {
     ElementRef,
     Inject,
     InjectionToken,
+    OnDestroy,
     Renderer2,
     Type,
     ViewContainerRef,
@@ -21,13 +22,15 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from '@app/types/index';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
 import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../../config/toolbar.actions.conf';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';
+import FunctionUtils from 'app/utils/common/function.utils';
+import PromiseUtils from 'app/utils/common/promise.utils';
 
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {
@@ -72,11 +75,13 @@ export class AppSplitPaneComponent<
     L extends AbstractComponent,
     R extends AbstractComponent>
     extends BaseSplitPaneComponent<D>
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
+
+    private __toolbarActionSubscription: Subscription;
 
     private __toolbarComponent: TB;
     private __leftSideComponent: L;
@@ -198,6 +203,11 @@ export class AppSplitPaneComponent<
         this.createPaneComponents();
     }
 
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__toolbarActionSubscription);
+    }
+
     /**
      * Raise when toolbar action item has been clicked
      * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
@@ -206,8 +216,7 @@ export class AppSplitPaneComponent<
         if (!event || !event.data || !(event.data as IToolbarActionsConfig)) {
             return;
         }
-        let action: IToolbarActionsConfig;
-        action = event.data as IToolbarActionsConfig;
+        const action: IToolbarActionsConfig = event.data as IToolbarActionsConfig;
         switch (action.id) {
             case ACTION_SAVE:
                 this.doSave();
@@ -252,7 +261,11 @@ export class AppSplitPaneComponent<
         if (this.toolBarType) {
             this.__toolbarComponent = super.setToolbarComponent(this.toolBarType);
             this.__toolbarComponent.showActions = true;
-            this.__toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e));
+            FunctionUtils.invoke(
+                ObjectUtils.isNou(this.__toolbarActionSubscription),
+                () => this.__toolbarActionSubscription = this.__toolbarComponent.actionListener()
+                    .subscribe((e: IEvent) => _this.onClickAction(e)),
+                undefined, this);
             this.doToolbarActionsSettings();
             // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
             // TODO after updating toolbar action settings

@@ -171,8 +171,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource> extends A
      * @param config to apply
      */
     protected configAreaByIndex(areaIndex: number, config: ISplitAreaConfig): void {
-        let area: SplitAreaDirective;
-        area = (0 <= areaIndex && areaIndex < this.splitAreaComponents.length
+        const area: SplitAreaDirective = (0 <= areaIndex && areaIndex < this.splitAreaComponents.length
                 ? this.splitAreaComponents[areaIndex] : null);
         this.configArea(area, config);
     }

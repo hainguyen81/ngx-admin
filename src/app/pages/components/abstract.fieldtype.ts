@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, OnDestroy, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, OnDestroy, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {of, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
@@ -377,11 +377,11 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
     }
 
     protected onValueChanges(value: any): void {
-        this.logger.debug('onValueChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
+        // this.logger.debug('onValueChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     protected onStatusChanges(value: any): void {
-        this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
+        // this.logger.debug('onStatusChanges', value, '[', Reflect.getPrototypeOf(this).constructor.name, ']');
     }
 
     registerOnChange(fn: any): void {

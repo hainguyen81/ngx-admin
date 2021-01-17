@@ -3,7 +3,7 @@
 @include nb-install-component() {
     ::ng-deep .form-dropdown-treeview-select ngx-tree-view-dropdown ngx-dropdown-treeview {
         .btn:focus,.btn.focus { box-shadow: none; }
-        .btn.dropdown-toggle { padding: 0; white-space: pre-wrap; }
+        .btn.dropdown-toggle { padding: 0; }
         .dropdown-menu { width: 100%; }
     }
     ::ng-deep .form-dropdown-treeview-select.form-dropdown-treeview-select-disabled,

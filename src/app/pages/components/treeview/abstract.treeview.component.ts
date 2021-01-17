@@ -451,7 +451,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      */
     onClickItem(event: IEvent) {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onClickItem', event);
+        // this.getLogger().debug('onClickItem', event);
         this.clickItemEvent && this.clickItemEvent.emit(event);
     }
 
@@ -461,7 +461,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      */
     onSelectedChange(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        // this.getLogger().debug('onSelectedChange', event);
+        // this.getLogger().debug('[', this.constructor.name, '] - onSelectedChange', event, this.selectedChangeEvent);
         this.selectedChangeEvent && this.selectedChangeEvent.emit(event);
     }
 
@@ -486,7 +486,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
             ? Array.from(event.data['elements']) : [event.data['elements']]);
         const treeBuilder: (data: any[]) => TreeviewItem[] = this.treeBuilder;
         const itemBuilder: (data: any) => TreeviewItem = this.itemBuilder;
-        this.getLogger().debug('treeBuilder', treeBuilder, 'itemBuilder', itemBuilder);
+        // this.getLogger().debug('treeBuilder', treeBuilder, 'itemBuilder', itemBuilder);
         if (FunctionUtils.isFunction(itemBuilder)) {
             const items: TreeviewItem[] = [];
             (elements || []).forEach(element => {
@@ -634,8 +634,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * @return new tree-view item
      */
     protected newItem(parent?: TreeviewItem, treeItem?: TreeItem): TreeviewItem {
-        let newItem: TreeviewItem;
-        newItem = new TreeviewItem(treeItem || {
+        const newItem: TreeviewItem = new TreeviewItem(treeItem || {
             checked: false,
             collapsed: true,
             disabled: false,
@@ -667,8 +666,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
             return undefined;
         }
 
-        let itIdx: number;
-        itIdx = this.items.indexOf(treeviewItem);
+        const itIdx: number = this.items.indexOf(treeviewItem);
         if (itIdx < 0) {
             const deletedItems: TreeviewItem[] = [];
             for (const it of this.items) {
@@ -678,8 +676,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
             }
 
         } else {
-            let delItems: TreeviewItem[];
-            delItems = this.items.splice(itIdx, 1);
+            const delItems: TreeviewItem[] = this.items.splice(itIdx, 1);
             return (delItems && delItems.length > 0 ? delItems[0] : undefined);
         }
     }
@@ -696,8 +693,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
             return false;
         }
 
-        let itIdx: number;
-        itIdx = parent.children.indexOf(delItem);
+        const itIdx: number = parent.children.indexOf(delItem);
         if (itIdx < 0) {
             for (const it of parent.children) {
                 if (it.children && this.doDeleteItem(it, delItem, deletedItems)) {
@@ -752,8 +748,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * @return true for toggled; else false
      */
     protected toggleExpandCollapseTreeviewItemElement(treeviewItemEl: HTMLElement): boolean {
-        let item: TreeviewItem;
-        item = (treeviewItemEl ? this.getTreeviewItemByElement(treeviewItemEl) : undefined);
+        const item: TreeviewItem = (treeviewItemEl ? this.getTreeviewItemByElement(treeviewItemEl) : undefined);
         if (item && item.children && item.children.length) {
             item.collapsed = !item.collapsed;
             return true;
@@ -771,8 +766,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
         }
 
         // remove previous selected elements
-        let hoveredItemEls: NodeListOf<HTMLElement>;
-        hoveredItemEls = this.getElementsBySelector(
+        const hoveredItemEls: NodeListOf<HTMLElement> = this.getElementsBySelector(
             [AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR, '.selected'].join(''));
         hoveredItemEls && hoveredItemEls.length
         && hoveredItemEls.forEach(el => this.toggleElementClass(el, 'selected', false));
@@ -798,8 +792,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
     public getTreeviewItemByElement(treeviewItemEl: HTMLElement): TreeviewItem {
         treeviewItemEl || throwError('Could not get tree-view item of undefined element');
 
-        let itemRowEl: HTMLElement;
-        itemRowEl = this.getFirstElementBySelector(
+        const itemRowEl: HTMLElement = this.getFirstElementBySelector(
             AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR, treeviewItemEl);
         if (itemRowEl && (itemRowEl.id || '').length) {
             return this.findTreeviewItemByKey(itemRowEl.id);
@@ -813,17 +806,14 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * @return {HTMLElement}
      */
     public getTreeviewElementByItem(treeviewItem: TreeviewItem): HTMLElement {
-        let itemKey: string;
-        itemKey = this.generateTreeviewItemKey(treeviewItem);
+        const itemKey: string = this.generateTreeviewItemKey(treeviewItem);
         if (!treeviewItem || !treeviewItem.value || !(itemKey || '').length) {
             return undefined;
         }
 
-        let treeviewItemElSelector: string;
-        treeviewItemElSelector = '[id=\''.concat(itemKey).concat('\']')
+        const treeviewItemElSelector: string = '[id=\''.concat(itemKey).concat('\']')
             .concat(AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR);
-        let treeviewItemEl: HTMLElement;
-        treeviewItemEl = this.getFirstElementBySelector(treeviewItemElSelector);
+        const treeviewItemEl: HTMLElement = this.getFirstElementBySelector(treeviewItemElSelector);
         return this.getClosestElementBySelector(
             AbstractTreeviewComponent.TREEVIEW_ITEM_ELEMENT_SELECTOR,
             treeviewItemEl) as HTMLElement;

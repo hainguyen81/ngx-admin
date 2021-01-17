@@ -123,6 +123,11 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
         const builtSelection: { checkedItems: TreeviewItem[], uncheckedItems: TreeviewItem[] } = this.collectSelection(items);
         currentSelection.checkedItems = builtSelection.checkedItems;
         currentSelection.uncheckedItems = builtSelection.uncheckedItems;
+        // TODO rebuild the dropdown button selected value
+        FunctionUtils.invoke(
+            this.isDropDown() && ObjectUtils.isNotNou(this.dropdownTreeviewComponent),
+            () => this.dropdownTreeviewComponent.buttonLabel = this.dropdownTreeviewComponent.i18n.getText(currentSelection),
+            undefined, this.dropdownTreeviewComponent);
     }
 
     // -------------------------------------------------
@@ -243,7 +248,6 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
-
         PromiseUtils.unsubscribe(this.__selectedChangedSubscription);
         PromiseUtils.unsubscribe(this.__filterChangedSubscription);
     }
@@ -258,7 +262,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
                      item: TreeviewItem,
                      onCheckedChange: (checked: boolean) => void): void {
         // TODO Waiting for implementing from children component
-        this.getLogger().debug('onClickItemLabel', $event, item);
+        // this.getLogger().debug('onClickItemLabel', $event, item);
         if (item) {
             this.revertCheck(item);
             if (this.isEnabledItemCheck && onCheckedChange) {
