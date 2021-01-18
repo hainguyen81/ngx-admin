@@ -16,7 +16,6 @@ import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 import NumberUtils from '../../../utils/common/number.utils';
 import TimerUtils from 'app/utils/common/timer.utils';
-import FunctionUtils from '../../../utils/common/function.utils';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -1419,10 +1418,9 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             ? event.target : !event || !event.target ? rowEl
                 : this.getClosestElementBySelector(
                     AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, event.target as Element));
-        FunctionUtils.invokeTrue(
-            ObjectUtils.isNotNou(target),
-            () => this.showHideContextMenu(event, target, (row ? row.getData() : undefined)),
-            this);
+        if (ObjectUtils.isNotNou(target)) {
+            return this.showHideContextMenu(event, target, (row ? row.getData() : undefined));
+        }
         this.closeContextMenu();
         return true;
     }

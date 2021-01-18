@@ -1073,6 +1073,7 @@ export abstract class AbstractComponent
         FunctionUtils.invokeTrue(
             ObjectUtils.isNotNou(eventTarget),
             () => {
+                this.getLogger().debug('showHideContextMenu', data, this.getContextMenuComponent(), mouseEvent || kbEvent, eventTarget);
                 this.getContextMenuService().show.next({
                     // Optional - if unspecified, all context menu components will open
                     contextMenu: this.getContextMenuComponent(),
