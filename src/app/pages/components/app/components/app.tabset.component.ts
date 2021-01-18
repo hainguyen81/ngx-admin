@@ -88,8 +88,7 @@ export class AppTabsetComponent<
      * @return all {ITabConfig}
      */
     protected getTabConfig(tabIndex: number): ITabConfig {
-        return ((this.tabConfigs || []).length
-        && 0 <= tabIndex && tabIndex < this.tabConfigs.length
+        return ((this.tabConfigs || []).length && 0 <= tabIndex && tabIndex < this.tabConfigs.length
             ? this.tabConfigs[tabIndex] : undefined);
     }
 
@@ -99,9 +98,8 @@ export class AppTabsetComponent<
      * @param tabComponentType to cast
      */
     protected getTabComponent<C extends AbstractComponent>(tabIndex: number, tabComponentType: Type<C>): C {
-        return ((this.tabComponents || []).length
-        && 0 <= tabIndex && tabIndex < this.tabComponents.length
-        && (this.tabComponents[tabIndex] instanceof tabComponentType)
+        return ((this.tabComponents || []).length && 0 <= tabIndex && tabIndex < this.tabComponents.length
+            && (this.tabComponents[tabIndex] instanceof tabComponentType)
             ? <C>this.tabComponents[tabIndex] : undefined);
     }
 
@@ -112,9 +110,7 @@ export class AppTabsetComponent<
      */
     protected getTabComponentById<C extends AbstractComponent>(tabId: string, tabComponentType: Type<C>): C {
         if (!(tabId || '').length) return undefined;
-        const tabConfig: ITabConfig[] = (this.tabConfigs || []).filter(cfg => {
-            return (cfg && cfg.tabId === tabId);
-        });
+        const tabConfig: ITabConfig[] = (this.tabConfigs || []).filter(cfg => (cfg && cfg.tabId === tabId));
         return ((tabConfig || []).length && tabConfig[0]['componentRef'] instanceof tabComponentType
             ? <C>tabConfig[0]['componentRef'] : undefined);
     }
@@ -202,8 +198,7 @@ export class AppTabsetComponent<
         if (!event || !event.data || !(event.data as IToolbarActionsConfig)) {
             return;
         }
-        let action: IToolbarActionsConfig;
-        action = event.data as IToolbarActionsConfig;
+        const action: IToolbarActionsConfig = event.data as IToolbarActionsConfig;
         switch (action.id) {
             case ACTION_SAVE:
                 this.doSave();

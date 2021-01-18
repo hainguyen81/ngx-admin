@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -74,8 +74,7 @@ export class BaseTabsetComponent<T extends DataSource> extends NgxTabsetComponen
     protected setTabComponent(tabIndex: number, componentType: Type<any>): any {
         (!tabIndex || this.getNumberOfTabs() <= tabIndex || tabIndex < 0)
         && throwError('Could not create tab component at the invalid index tab (' + tabIndex + ')');
-        let viewContainerRef: ViewContainerRef;
-        viewContainerRef = this.getTabContentHolderViewContainerComponents()[tabIndex];
+        const viewContainerRef: ViewContainerRef = this.getTabContentHolderViewContainerComponents()[tabIndex];
         return super.createComponentAt(viewContainerRef, componentType);
     }
 
@@ -85,8 +84,7 @@ export class BaseTabsetComponent<T extends DataSource> extends NgxTabsetComponen
      * @return created component
      */
     protected setToolbarComponent(componentType: Type<any>): any {
-        let viewContainerRef: ViewContainerRef;
-        viewContainerRef = this.getHeaderViewContainerComponent();
+        const viewContainerRef: ViewContainerRef = this.getHeaderViewContainerComponent();
         return (viewContainerRef ? super.createComponentAt(viewContainerRef, componentType) : undefined);
     }
 }

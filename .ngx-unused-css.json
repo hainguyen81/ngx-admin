@@ -9,6 +9,7 @@
         "ng-star", "modal", ".modal", "footer", ".footer", "header", ".header", "input", "label",
         "div", "span", "html", "body", "table", "thead", "tr", "td", "th",
         "tbody", "tfooter", ".rotate", "rotate", "text", "textarea",
+        "tab", "tabset", "nb-tabset", "nb-tab", ".tab", ".tab-", ".tab-content",
         "main", "layout", "container", "wrapper", "wrap",
         "nb", ".nb-","card-", ".card-", "fixed", "size", ".size-",
         "menu", ".menu", "has", "as", "not", "treeview", "[type='*']*", "type=",
