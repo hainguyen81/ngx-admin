@@ -52,7 +52,6 @@ import FunctionUtils from '../../utils/common/function.utils';
 import {dbConfig} from '../../config/db.config';
 import TimerUtils from '../../utils/common/timer.utils';
 import PromiseUtils from '../../utils/common/promise.utils';
-import {Overlay} from '@angular/cdk/overlay';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -1071,26 +1070,17 @@ export abstract class AbstractComponent
                 || (<HTMLElement>event.target).contains(<HTMLElement>target))) {
             eventTarget = event.target;
         }
-        this.getLogger().debug('showHideContextMenu', eventTarget, this.getContextMenuService(), this.getContextMenuComponent());
         FunctionUtils.invokeTrue(
             ObjectUtils.isNotNou(eventTarget),
             () => {
-                const contextMenuService: ContextMenuService = this.getContextMenuService();
-                let overlay = contextMenuService.getLastAttachedOverlay();
-                if (ObjectUtils.isNou(overlay)) {
-                    const overlayService: Overlay = AppUtils.getService(Overlay);
-                    ObjectUtils.set(contextMenuService, 'overlay', overlayService);
-                } else {
-                    ObjectUtils.set(contextMenuService, 'overlay', overlay);
-                }
-                this.getLogger().debug('contextMenuService', contextMenuService, ObjectUtils.get(contextMenuService, 'overlay'));
-                contextMenuService.show.next({
+                this.getContextMenuService().show.next({
                     // Optional - if unspecified, all context menu components will open
                     contextMenu: this.getContextMenuComponent(),
                     event: mouseEvent || kbEvent,
                     item: data,
                     anchorElement: eventTarget,
                 });
+                this.getChangeDetectorRef().detectChanges();
             }, this);
         // wait for showing context menu and focus on it
         if (eventTarget) {

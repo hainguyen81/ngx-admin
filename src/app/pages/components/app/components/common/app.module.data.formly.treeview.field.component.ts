@@ -143,10 +143,7 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
 
             // observe data
         } else if (ObjectUtils.isNotNou(_loadData) && isObservable(_loadData)) {
-            const loadSubscription: Subscription = (<Observable<M | M[]>>_loadData).subscribe(data => {
-                this.loadDataInternal(data);
-                PromiseUtils.unsubscribe(loadSubscription);
-            });
+            (<Observable<M | M[]>>_loadData).subscribe(data => this.loadDataInternal(data)).unsubscribe();
 
         } else if (ObjectUtils.isNotNou(_loadData)) {
             this.loadDataInternal(<M | M[]>_loadData);

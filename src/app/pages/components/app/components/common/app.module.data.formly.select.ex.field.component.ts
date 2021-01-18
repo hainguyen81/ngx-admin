@@ -5,11 +5,10 @@ import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
 import {DataSource} from '@app/types/index';
 import {IEvent} from '../../../abstract.component';
-import {isObservable, Observable, Subscription, throwError} from 'rxjs';
+import {isObservable, Observable, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
-import PromiseUtils from '../../../../../utils/common/promise.utils';
 
 /**
  * Custom module data formly field for selecting special
@@ -116,10 +115,7 @@ export class AppModuleDataFormlySelectExFieldComponent<M extends IModel, D exten
 
             // observe data
         } else if (ObjectUtils.isNotNou(_loadData) && isObservable(_loadData)) {
-            const loadSubscription: Subscription = (<Observable<M | M[]>>_loadData).subscribe(data => {
-                this.loadDataInternal(data);
-                PromiseUtils.unsubscribe(loadSubscription);
-            });
+            (<Observable<M | M[]>>_loadData).subscribe(data => this.loadDataInternal(data)).unsubscribe();
 
         } else if (ObjectUtils.isNotNou(_loadData)) {
             this.loadDataInternal(<M | M[]>_loadData);
