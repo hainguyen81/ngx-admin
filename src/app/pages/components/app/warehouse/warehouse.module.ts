@@ -7,9 +7,8 @@ import {
     NbIconModule,
     NbInputModule,
     NbLayoutModule,
-    NbSearchModule,
+    NbOverlayModule,
     NbSelectModule,
-    NbTabsetModule,
     NbThemeModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
@@ -23,9 +22,7 @@ import {AngularSplitModule} from 'angular-split';
 import {ThemeModule} from '../../../../@theme/theme.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {ToastrModule} from 'ngx-toastr';
 import {TreeviewModule} from 'ngx-treeview';
-import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
@@ -35,9 +32,6 @@ import {WarehouseStorageModule} from './storage/warehouse.storage.module';
 import {WarehouseSettingsModule} from './settings/warehouse.settings.module';
 import {WarehouseBatchNoModule} from './batchno/warehouse.batch.module';
 import {WarehouseInventoryModule} from './inventory/warehouse.inventory.module';
-import {NgxSelectModule} from 'ngx-select-ex';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {ModalDialogModule} from 'ngx-modal-dialog';
 import {FeaturesComponentsModule} from '../module.components/features.components.module';
 import {ComponentsModule} from '../../components.module';
 import {AppComponentsModule} from '../components/app.components.module';
@@ -46,6 +40,7 @@ import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
 import {AppMaterialModule} from 'app/app.material.module';
 import {FormlyConfig} from 'app/config/formly.config';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
     imports: [
@@ -78,7 +73,9 @@ import {FormlyConfig} from 'app/config/formly.config';
         TranslateModule,
 
         /* Context Menu */
+        NbOverlayModule,
         NbContextMenuModule,
+        OverlayModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,

@@ -1,4 +1,16 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    OnDestroy,
+    Renderer2,
+    Type,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {AppPanelComponent} from './app.panel.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
@@ -13,8 +25,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IModel} from '../../../../@core/data/base';
 import {AbstractFormlyComponent} from '../../formly/abstract.formly.component';
 import {AbstractToolbarComponent} from '../../toolbar/abstract.toolbar.component';
-import {ACTION_SEARCH, IToolbarActionsConfig,} from '../../../../config/toolbar.actions.conf';
+import {ACTION_SEARCH, IToolbarActionsConfig} from '../../../../config/toolbar.actions.conf';
 import ObjectUtils from '../../../../utils/common/object.utils';
+import {Subscription} from 'rxjs';
+import FunctionUtils from '../../../../utils/common/function.utils';
+import PromiseUtils from '../../../../utils/common/promise.utils';
 
 export const APP_SEARCH_PANE_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AbstractToolbarComponent<any>>>
     = new InjectionToken<Type<AbstractToolbarComponent<any>>>('The toolbar component type injection token of the search-pane');
@@ -33,7 +48,13 @@ export class AppSearchPanelComponent<T extends IModel, D extends DataSource,
     SF extends AbstractFormlyComponent<T, D>,
     STB extends AbstractToolbarComponent<D>>
     extends AppPanelComponent<T, D, AbstractComponent, SF, STB>
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private __toolbarSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -121,6 +142,11 @@ export class AppSearchPanelComponent<T extends IModel, D extends DataSource,
         this.detectChanges();
     }
 
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__toolbarSubscription);
+    }
+
     /**
      * Raise when toolbar action item has been clicked
      * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
@@ -159,9 +185,10 @@ export class AppSearchPanelComponent<T extends IModel, D extends DataSource,
      */
     private __listenToolbarActions(): void {
         const _this: AppSearchPanelComponent<T, D, SF, STB> = this;
-        this.toolbar
-        && this.toolbar.actionListener()
-            .subscribe($event => _this.onClickAction($event));
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__toolbarSubscription) && ObjectUtils.isNotNou(this.toolbar),
+            () => this.__toolbarSubscription = this.toolbar.actionListener().subscribe($event => _this.onClickAction($event)),
+            this);
         this.doToolbarActionsSettingsOnStartup();
     }
 

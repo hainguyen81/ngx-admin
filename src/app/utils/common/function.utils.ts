@@ -18,6 +18,32 @@ export default class FunctionUtils {
     /**
      * Invoke the specific function by condition
      * @param ifTrueOrNotNou boolean/object/any to check before invoking
+     * @param emitErrorIfInvalidDelegate throw error if condition is matched but no delegate function to invoke
+     * @param delegateTrue function to invoke if condition is <code>TRUE</code>
+     * @param delegateFalse function to invoke if condition is <code>FALSE</code>
+     * @param defaultValue the default returned value if invoking result is null/undefined
+     * @param caller invoker
+     * @param args function arguments
+     * @return the result of invoking
+     */
+    private static internalInvoke(
+        ifTrueOrNotNou?: any | null | undefined, emitErrorIfInvalidDelegate?: boolean | false,
+        delegateTrue?: () => void | null | undefined, delegateFalse?: () => void | null | undefined,
+        defaultValue?: any | null | undefined,
+        caller?: any | null | undefined, ...args: any[] | null | undefined): any {
+        const trueValue: boolean = (ObjectUtils.isNotNou(ifTrueOrNotNou)
+                && ((typeof ifTrueOrNotNou === 'boolean' && ifTrueOrNotNou === true) || ObjectUtils.isObject(ifTrueOrNotNou)));
+        (emitErrorIfInvalidDelegate === true) && (trueValue === true && FunctionUtils.isFunction(delegateTrue)) && throwError('Invalid function to invoke while condition is TRUE!');
+        (emitErrorIfInvalidDelegate === true) && (trueValue !== true && FunctionUtils.isFunction(delegateFalse)) && throwError('Invalid function to invoke while condition is FALSE!');
+        return (trueValue === true && FunctionUtils.isFunction(delegateTrue)
+            ? (delegateTrue.apply(caller || this, args) || defaultValue)
+            : (trueValue !== true && FunctionUtils.isFunction(delegateFalse))
+            ? (delegateFalse.apply(caller || this, args) || defaultValue) : defaultValue);
+    }
+
+    /**
+     * Invoke the specific function by condition
+     * @param ifTrueOrNotNou boolean/object/any to check before invoking
      * @param delegateTrue function to invoke if condition is <code>TRUE</code>
      * @param delegateFalse function to invoke if condition is <code>FALSE</code>
      * @param defaultValue the default returned value if invoking result is null/undefined
@@ -29,13 +55,39 @@ export default class FunctionUtils {
         delegateTrue?: () => void | null | undefined, delegateFalse?: () => void | null | undefined,
         defaultValue?: any | null | undefined,
         caller?: any | null | undefined, ...args: any[] | null | undefined): any {
-        const trueValue: boolean = (ObjectUtils.isNotNou(ifTrueOrNotNou)
-                && ((typeof ifTrueOrNotNou === 'boolean' && ifTrueOrNotNou === true) || ObjectUtils.isObject(ifTrueOrNotNou)));
-        (trueValue === true && FunctionUtils.isFunction(delegateTrue)) && throwError('Invalid function to invoke while condition is TRUE!');
-        (trueValue !== true && FunctionUtils.isFunction(delegateFalse)) && throwError('Invalid function to invoke while condition is FALSE!');
-        return (trueValue === true && FunctionUtils.isFunction(delegateTrue)
-            ? (delegateTrue.apply(caller || this, args) || defaultValue)
-            : FunctionUtils.isFunction(delegateFalse) ? (delegateFalse.apply(caller || this, args) || defaultValue) : defaultValue);
+        return this.internalInvoke(ifTrueOrNotNou, true, delegateTrue, delegateFalse, defaultValue, caller, args);
+    }
+
+    /**
+     * Invoke the specific function by condition
+     * @param ifTrueOrNotNou boolean/object/any to check before invoking
+     * @param delegateTrue function to invoke if condition is <code>TRUE</code>
+     * @param delegateFalse function to invoke if condition is <code>FALSE</code>
+     * @param defaultValue the default returned value if invoking result is null/undefined
+     * @param caller invoker
+     * @param args function arguments
+     * @return the result of invoking
+     */
+    public static invokeFalse(ifTrueOrNotNou?: any | null | undefined,
+        delegateFalse?: () => void | null | undefined,
+        caller?: any | null | undefined, defaultValue?: any | null | undefined, ...args: any[] | null | undefined): any {
+        return this.internalInvoke(ifTrueOrNotNou, false, undefined, delegateFalse, defaultValue, caller, args);
+    }
+
+    /**
+     * Invoke the specific function by condition
+     * @param ifTrueOrNotNou boolean/object/any to check before invoking
+     * @param delegateTrue function to invoke if condition is <code>TRUE</code>
+     * @param delegateFalse function to invoke if condition is <code>FALSE</code>
+     * @param defaultValue the default returned value if invoking result is null/undefined
+     * @param caller invoker
+     * @param args function arguments
+     * @return the result of invoking
+     */
+    public static invokeTrue(ifTrueOrNotNou?: any | null | undefined,
+        delegateTrue?: () => void | null | undefined,
+        caller?: any | null | undefined, defaultValue?: any | null | undefined, ...args: any[] | null | undefined): any {
+        return this.internalInvoke(ifTrueOrNotNou, false, delegateTrue, undefined, defaultValue, caller, args);
     }
 
     /**

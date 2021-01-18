@@ -6,6 +6,7 @@ import {
     ElementRef,
     Inject,
     Input,
+    OnDestroy,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -18,10 +19,12 @@ import ComponentUtils from '../../../utils/common/component.utils';
 import {NgxSelectExComponent} from '../select-ex/select.ex.component';
 import {IEvent} from '../abstract.component';
 import {NGXLogger} from 'ngx-logger';
-import {isObservable} from 'rxjs';
+import {isObservable, Subscription} from 'rxjs';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 import TimerUtils from 'app/utils/common/timer.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -31,7 +34,7 @@ import TimerUtils from 'app/utils/common/timer.utils';
     templateUrl: './formly.select.ex.field.component.html',
     styleUrls: ['./formly.select.ex.field.component.scss'],
 })
-export class SelectExFormFieldComponent extends AbstractFieldType implements AfterViewInit {
+export class SelectExFormFieldComponent extends AbstractFieldType implements AfterViewInit, OnDestroy {
 
     private static DEFAULT_CLASS_FORM_FIELD: string = 'form-field-select-ex';
     private static IMAGE_CLASS_FORM_FIELD: string = 'form-field-select-ex-image';
@@ -54,6 +57,8 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
     @ViewChildren(NgxSelectExComponent)
     private readonly queryNgxSelectExComponent: QueryList<NgxSelectExComponent>;
     private ngxSelectExComponent: NgxSelectExComponent;
+
+    private __finishLoadingSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -149,10 +154,13 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
         // query select-ex component
         if (!this.ngxSelectExComponent) {
             // query component
+            const _this: SelectExFormFieldComponent = this;
             this.ngxSelectExComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectExComponent, component => {
-                    component && component.finishedLoading.subscribe(
-                        (value: any) => this.__applySelectedItems(component, this.value));
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__finishLoadingSubscription),
+                        () => this.__finishLoadingSubscription = component.finishedLoading.subscribe((value: any) => this.__applySelectedItems(component, this.value)),
+                        _this);
                     this.checkOverrideFormFieldClass(component);
                 });
         }
@@ -165,13 +173,18 @@ export class SelectExFormFieldComponent extends AbstractFieldType implements Aft
                 && ArrayUtils.isArray(this.field.templateOptions.options)) {
                 this.items = this.field.templateOptions.options as any[];
 
-            } else if (this.field.templateOptions
-                && isObservable(this.field.templateOptions.options)) {
-                this.field.templateOptions.options.subscribe((items: any[]) => {
+            } else if (this.field.templateOptions && isObservable(this.field.templateOptions.options)) {
+                const optionsSubscription: Subscription = this.field.templateOptions.options.subscribe((items: any[]) => {
                     this.items = this.field.templateOptions.options as any[];
+                    PromiseUtils.unsubscribe(optionsSubscription);
                 });
             }
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__finishLoadingSubscription);
     }
 
     protected onValueChanges(value: any): void {

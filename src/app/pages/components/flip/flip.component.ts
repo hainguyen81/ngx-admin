@@ -4,8 +4,11 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
-    ElementRef, EventEmitter,
-    Inject, Input, Output,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -208,29 +211,29 @@ export class NgxFlipComponent extends AbstractFlipComponent<DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        this._flipComponent = FunctionUtils.invoke(
+        this._flipComponent = FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this._flipComponent),
-            () => ComponentUtils.queryComponent(this.queryFlipComponent), undefined,
-            this._flipComponent, this);
-        this._headerViewContainerRef = FunctionUtils.invoke(
+            () => ComponentUtils.queryComponent(this.queryFlipComponent),
+            this, this._flipComponent);
+        this._headerViewContainerRef = FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this._headerViewContainerRef),
-            () => ComponentUtils.queryComponent(this.queryHeaderViewContainerRef), undefined,
-            this._headerViewContainerRef, this);
-        this._frontContainerViewContainerRef = FunctionUtils.invoke(
+            () => ComponentUtils.queryComponent(this.queryHeaderViewContainerRef),
+            this, this._headerViewContainerRef);
+        this._frontContainerViewContainerRef = FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this._frontContainerViewContainerRef),
-            () => ComponentUtils.queryComponent(this.queryFrontContainerViewContainerRef), undefined,
-            this._frontContainerViewContainerRef, this);
-        this._frontComponentHolderViewContainerRef = FunctionUtils.invoke(
+            () => ComponentUtils.queryComponent(this.queryFrontContainerViewContainerRef),
+            this, this._frontContainerViewContainerRef);
+        this._frontComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this._frontComponentHolderViewContainerRef),
-            () => ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef), undefined,
-            this._frontComponentHolderViewContainerRef, this);
-        this._backContainerViewContainerRef = FunctionUtils.invoke(
+            () => ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef),
+            this, this._frontComponentHolderViewContainerRef);
+        this._backContainerViewContainerRef = FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this._backContainerViewContainerRef),
-            () => ComponentUtils.queryComponent(this.queryBackContainerViewContainerRef), undefined,
-            this._backContainerViewContainerRef, this);
-        this._backComponentHolderViewContainerRef = FunctionUtils.invoke(
+            () => ComponentUtils.queryComponent(this.queryBackContainerViewContainerRef),
+            this, this._backContainerViewContainerRef);
+        this._backComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this._backComponentHolderViewContainerRef),
-            () => ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef), undefined,
-            this._backComponentHolderViewContainerRef, this);
+            () => ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef),
+            this, this._backComponentHolderViewContainerRef);
     }
 }

@@ -6,6 +6,7 @@ import {
     ElementRef,
     forwardRef,
     Inject,
+    OnDestroy,
     OnInit,
     QueryList,
     Renderer2,
@@ -19,14 +20,17 @@ import {AbstractCellEditor} from '../../../../smart-table/abstract.cell.editor';
 import ComponentUtils from '../../../../../../utils/common/component.utils';
 import {CellComponent} from '@app/types/index';
 import {IEvent} from '../../../../abstract.component';
-import {WarehouseBatchNoFormlySelectFieldComponent,} from '../batchno/warehouse.batch.select.field.component';
+import {WarehouseBatchNoFormlySelectFieldComponent} from '../batchno/warehouse.batch.select.field.component';
 import {IWarehouseBatchNo} from '../../../../../../@core/data/warehouse/warehouse.batch.no';
 import {$enum} from 'ts-enum-util';
-import {IWarehouseInventoryDetailBatch,} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
+import {IWarehouseInventoryDetailBatch} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
 import {MatInput} from '@angular/material/input';
-import {WarehouseBatchNoDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {WarehouseBatchNoDatasource} from '../../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import ObjectUtils from '../../../../../../utils/common/object.utils';
 import NumberUtils from '../../../../../../utils/common/number.utils';
+import {Subscription} from 'rxjs';
+import FunctionUtils from '../../../../../../utils/common/function.utils';
+import PromiseUtils from '../../../../../../utils/common/promise.utils';
 import STATUS = Constants.COMMON.STATUS;
 
 /**
@@ -39,7 +43,7 @@ import STATUS = Constants.COMMON.STATUS;
     styleUrls: ['./warehouse.inventory.detail.batch.cell.component.scss'],
 })
 export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEditor
-    implements OnInit, AfterViewInit {
+    implements OnInit, AfterViewInit, OnDestroy {
 
     private static DB_BATCH_NO_STATUS_INDEX = 'status';
     private static DB_BATCH_NO_STATUS_KEYRANGE = IDBKeyRange.only($enum(STATUS).getKeyOrThrow(STATUS.ACTIVATED));
@@ -57,6 +61,8 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
 
     private _warehouseDetailBatches: IWarehouseInventoryDetailBatch[] = [];
     private _warehouseBatches: IWarehouseBatchNo[];
+
+    private __loadSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -162,6 +168,11 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         }
     }
 
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__loadSubscription);
+    }
+
     onSelect($event: IEvent, dataIndex: number): void {
         const batches: IWarehouseInventoryDetailBatch[] =
             this.newCellValue as IWarehouseInventoryDetailBatch[];
@@ -199,16 +210,18 @@ export class WarehouseInventoryDetailBatchNoCellComponent extends AbstractCellEd
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
-            component.onLoad.subscribe((e: any) => {
-                const batches: IWarehouseInventoryDetailBatch[] =
-                    this.cellValue as IWarehouseInventoryDetailBatch[];
-                const batch: IWarehouseInventoryDetailBatch = batches[dataIndex];
-                if (ObjectUtils.isNotNou(batch)) {
-                    component.setSelectedValue(batch.batch_code);
-                    inputComponent.value =
-                        (NumberUtils.isNumber(batch.quantity) ? batch.quantity.toString() : undefined);
-                }
-            });
+            FunctionUtils.invokeTrue(
+                ObjectUtils.isNou(this.__loadSubscription),
+                () => this.__loadSubscription = component.onLoad.subscribe((e: any) => {
+                    const batches: IWarehouseInventoryDetailBatch[] =
+                        this.cellValue as IWarehouseInventoryDetailBatch[];
+                    const batch: IWarehouseInventoryDetailBatch = batches[dataIndex];
+                    if (ObjectUtils.isNotNou(batch)) {
+                        component.setSelectedValue(batch.batch_code);
+                        inputComponent.value =
+                            (NumberUtils.isNumber(batch.quantity) ? batch.quantity.toString() : undefined);
+                    }
+                }), this);
         }
     }
 

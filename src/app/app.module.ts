@@ -6,7 +6,7 @@
 import {CoreModule, throwIfAlreadyLoaded} from './@core/core.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule, NO_ERRORS_SCHEMA, Optional, SkipSelf,} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule, NO_ERRORS_SCHEMA, Optional, SkipSelf} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeModule} from './@theme/theme.module';
 import {AppComponent} from './app.component';
@@ -18,12 +18,14 @@ import {
     NbButtonModule,
     NbChatModule,
     NbCheckboxModule,
+    NbContextMenuModule,
     NbDatepickerModule,
     NbDialogModule,
     NbIconLibraries,
     NbIconModule,
     NbInputModule,
     NbMenuModule,
+    NbOverlayModule,
     NbSelectModule,
     NbSidebarModule,
     NbThemeModule,
@@ -82,6 +84,8 @@ import {InjectionConfig} from './config/injection.config';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
 import {FormlyConfig} from 'app/config/formly.config';
+import {ContextMenuModule} from 'ngx-contextmenu';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
     imports: [
@@ -117,6 +121,15 @@ import {FormlyConfig} from 'app/config/formly.config';
 
         /* Lightbox */
         LightboxModule,
+
+        /* Context Menu */
+        NbOverlayModule,
+        NbContextMenuModule,
+        OverlayModule,
+        ContextMenuModule.forRoot({
+            autoFocus: true,
+            useBootstrap4: true,
+        }),
 
         /* Theme */
         ThemeModule.forRoot(),

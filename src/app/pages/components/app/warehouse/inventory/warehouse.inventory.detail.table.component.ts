@@ -26,25 +26,26 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
-import {WarehouseItemCellComponent,} from '../../module.components/warehouse/item/warehouse.item.cell.component';
-import {WarehouseInventoryDetailDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
-import {WarehouseInventoryDetailBatchNoCellComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
-import {WarehouseInventoryDetailSerialCellComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
-import {WarehouseInventoryDetailStorageCellComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
+import {WarehouseItemCellComponent} from '../../module.components/warehouse/item/warehouse.item.cell.component';
+import {WarehouseInventoryDetailDatasource} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {WarehouseInventoryDetailBatchNoCellComponent} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.batch.cell.component';
+import {WarehouseInventoryDetailSerialCellComponent} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.serial.cell.component';
+import {WarehouseInventoryDetailStorageCellComponent} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.storage.cell.component';
 import {IEvent} from '../../../abstract.component';
 import {InjectionService} from '../../../../../services/common/injection.service';
-import {WarehouseInventoryDetailSummaryComponent,} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.summary.component';
-import {AppMultilinguageLabelComponent,} from '../../module.components/common/app.multilinguage.label.component';
-import {BehaviorSubject, throwError} from 'rxjs';
+import {WarehouseInventoryDetailSummaryComponent} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.summary.component';
+import {AppMultilinguageLabelComponent} from '../../module.components/common/app.multilinguage.label.component';
+import {BehaviorSubject, Subscription, throwError} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 import {Cell, DataSource, LocalDataSource, Row} from '@app/types/index';
-import {IWarehouseInventoryDetailBatch,} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
+import {IWarehouseInventoryDetailBatch} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.batch';
 import CalculatorUtils from '../../../../../utils/common/calculator.utils';
-import {IWarehouseInventoryDetailStorage,} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
+import {IWarehouseInventoryDetailStorage} from '../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import ObjectUtils from '../../../../../utils/common/object.utils';
+import FunctionUtils from '../../../../../utils/common/function.utils';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -201,6 +202,9 @@ export class WarehouseInventoryDetailSmartTableComponent
     private _sumQuantityComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
     private _sumPriceComponent: ComponentRef<WarehouseInventoryDetailSummaryComponent>;
 
+    private __behaviorSubscription: Subscription;
+    private __footerSubscription: Subscription;
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
@@ -330,12 +334,17 @@ export class WarehouseInventoryDetailSmartTableComponent
         super.ngOnInit();
 
         this._behaviorSubject = new BehaviorSubject<IWarehouseInventory>(this.model);
-        this._behaviorSubject.subscribe(model => this.__loadInventoryDetail(model));
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__behaviorSubscription),
+            () => this.__behaviorSubscription = this._behaviorSubject.subscribe(model => this.__loadInventoryDetail(model)),
+            this);
     }
 
     ngOnDestroy(): void {
-        PromiseUtils.unsubscribe(this._behaviorSubject);
         super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this._behaviorSubject);
+        PromiseUtils.unsubscribe(this.__behaviorSubscription);
+        PromiseUtils.unsubscribe(this.__footerSubscription);
     }
 
     doSearch(keyword: any): void {
@@ -344,7 +353,10 @@ export class WarehouseInventoryDetailSmartTableComponent
 
     ngAfterViewInit(): void {
         // listen for creating footer components
-        this.footerCreation.subscribe((e: any) => this.__createTableFooter(e));
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__footerSubscription),
+            () => this.__footerSubscription = this.footerCreation.subscribe((e: any) => this.__createTableFooter(e)),
+            this);
 
         super.ngAfterViewInit();
     }

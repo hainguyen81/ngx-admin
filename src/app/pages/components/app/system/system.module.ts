@@ -7,6 +7,7 @@ import {
     NbIconModule,
     NbInputModule,
     NbLayoutModule,
+    NbOverlayModule,
     NbSearchModule,
     NbSelectModule,
     NbTabsetModule,
@@ -40,6 +41,7 @@ import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
 import {FormlyConfig} from 'app/config/formly.config';
 import {AppMaterialModule} from 'app/app.material.module';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
     imports: [
@@ -76,7 +78,9 @@ import {AppMaterialModule} from 'app/app.material.module';
         Ng2SmartTableModule,
 
         /* Context Menu */
+        NbOverlayModule,
         NbContextMenuModule,
+        OverlayModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,

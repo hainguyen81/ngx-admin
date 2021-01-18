@@ -1,6 +1,7 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
-import {AbstractSelectComponent, DefaultNgxSelectOptions,} from './abstract.select.component';
+import {AbstractSelectComponent, DefaultNgxSelectOptions} from './abstract.select.component';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -10,8 +11,10 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgSelectComponent, NgSelectConfig} from '@ng-select/ng-select';
-import ComponentUtils from 'app/utils/common/component.utils';
-import ObjectUtils from 'app/utils/common/object.utils';
+import ComponentUtils from '../../../utils/common/component.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Select component base on {NgSelectComponent}
@@ -35,6 +38,18 @@ export class NgxSelectComponent extends AbstractSelectComponent<DataSource>
     @ViewChildren(NgSelectComponent)
     private readonly queryNgSelectComponent: QueryList<NgSelectComponent>;
     private ngSelectComponent: NgSelectComponent;
+
+    private __addEventSubscription: Subscription;
+    private __blurEventSubscription: Subscription;
+    private __changeEventSubscription: Subscription;
+    private __closeEventSubscription: Subscription;
+    private __clearEventSubscription: Subscription;
+    private __focusEventSubscription: Subscription;
+    private __searchEventSubscription: Subscription;
+    private __openEventSubscription: Subscription;
+    private __removeEventSubscription: Subscription;
+    private __scrollEventSubscription: Subscription;
+    private __scrollToEndEventSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -106,44 +121,67 @@ export class NgxSelectComponent extends AbstractSelectComponent<DataSource>
                 this.queryNgSelectComponent, component => {
                     if (ObjectUtils.isNotNou(component)) {
                         component[AbstractSelectComponent.NG_SELECT_PARENT_COMPONENT_REF_PROPERTY] = _this;
-                        component.addEvent.subscribe(addedItem => {
-                            this.onAdd({ data: addedItem });
-                        });
-                        component.blurEvent.subscribe($event => {
-                            this.onBlur({ event: $event });
-                        });
-                        component.changeEvent.subscribe(model => {
-                            this.onChange({ data: model });
-                        });
-                        component.closeEvent.subscribe($event => {
-                            this.onClose({ event: $event });
-                        });
-                        component.clearEvent.subscribe($event => {
-                            this.onClear({ event: $event });
-                        });
-                        component.focusEvent.subscribe($event => {
-                            this.onFocus({ event: $event });
-                        });
-                        component.searchEvent.subscribe(data => {
-                            this.onSearch({ data: data });
-                        });
-                        component.searchEvent.subscribe(data => {
-                            this.onSearch({ data: data });
-                        });
-                        component.openEvent.subscribe($event => {
-                            this.onOpen({ event: $event });
-                        });
-                        component.removeEvent.subscribe(removedItem => {
-                            this.onRemove({ data: removedItem });
-                        });
-                        component.scroll.subscribe(data => {
-                            this.onScroll({ data: data });
-                        });
-                        component.scrollToEnd.subscribe($event => {
-                            this.onScrollToEnd({ event: $event });
-                        });
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__addEventSubscription),
+                            () => this.__addEventSubscription = component.addEvent.subscribe((addedItem: any) => this.onAdd({ data: addedItem })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__blurEventSubscription),
+                            () => this.__blurEventSubscription = component.blurEvent.subscribe(($event: any) => this.onBlur({ event: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__changeEventSubscription),
+                            () => this.__changeEventSubscription = component.changeEvent.subscribe(($event: any) => this.onChange({ data: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__closeEventSubscription),
+                            () => this.__closeEventSubscription = component.closeEvent.subscribe(($event: any) => this.onClose({ event: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__clearEventSubscription),
+                            () => this.__clearEventSubscription = component.clearEvent.subscribe(($event: any) => this.onClear({ event: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__focusEventSubscription),
+                            () => this.__focusEventSubscription = component.focusEvent.subscribe(($event: any) => this.onFocus({ event: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__searchEventSubscription),
+                            () => this.__searchEventSubscription = component.searchEvent.subscribe(($event: any) => this.onSearch({ data: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__openEventSubscription),
+                            () => this.__openEventSubscription = component.openEvent.subscribe(($event: any) => this.onOpen({ event: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__removeEventSubscription),
+                            () => this.__removeEventSubscription = component.removeEvent.subscribe(($event: any) => this.onRemove({ data: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__scrollEventSubscription),
+                            () => this.__scrollEventSubscription = component.scroll.subscribe(($event: any) => this.onScroll({ data: $event })),
+                            _this);
+                        FunctionUtils.invokeTrue(
+                            ObjectUtils.isNou(_this.__scrollToEndEventSubscription),
+                            () => this.__scrollToEndEventSubscription = component.scrollToEnd.subscribe(($event: any) => this.onScrollToEnd({ event: $event })),
+                            _this);
                     }
                 });
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__addEventSubscription);
+        PromiseUtils.unsubscribe(this.__blurEventSubscription);
+        PromiseUtils.unsubscribe(this.__changeEventSubscription);
+        PromiseUtils.unsubscribe(this.__closeEventSubscription);
+        PromiseUtils.unsubscribe(this.__clearEventSubscription);
+        PromiseUtils.unsubscribe(this.__focusEventSubscription);
+        PromiseUtils.unsubscribe(this.__searchEventSubscription);
+        PromiseUtils.unsubscribe(this.__openEventSubscription);
+        PromiseUtils.unsubscribe(this.__removeEventSubscription);
+        PromiseUtils.unsubscribe(this.__scrollEventSubscription);
+        PromiseUtils.unsubscribe(this.__scrollToEndEventSubscription);
     }
 }

@@ -3,7 +3,10 @@ import {isPlatformBrowser} from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 import {NB_DOCUMENT} from '@nebular/theme';
 import {filter, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
+import FunctionUtils from '../../utils/common/function.utils';
+import ObjectUtils from '../../utils/common/object.utils';
+import PromiseUtils from '../../utils/common/promise.utils';
 
 @Injectable()
 export class SeoService implements OnDestroy {
@@ -12,6 +15,8 @@ export class SeoService implements OnDestroy {
     private readonly dom: Document;
     private readonly isBrowser: boolean;
     private linkCanonical: HTMLLinkElement;
+
+    private __routerEventSubscription: Subscription;
 
     constructor(
         private router: Router,
@@ -29,6 +34,7 @@ export class SeoService implements OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
+        PromiseUtils.unsubscribe(this.__routerEventSubscription);
     }
 
     createCanonicalTag() {
@@ -43,13 +49,13 @@ export class SeoService implements OnDestroy {
             return;
         }
 
-        this.router.events.pipe(
-            filter((event) => event instanceof NavigationEnd),
-            takeUntil(this.destroy$),
-        )
-            .subscribe(() => {
-                this.linkCanonical.setAttribute('href', this.getCanonicalUrl());
-            });
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__routerEventSubscription),
+            () => this.__routerEventSubscription = this.router.events.pipe(
+                filter((event) => event instanceof NavigationEnd),
+                takeUntil(this.destroy$),
+            ).subscribe(() => this.linkCanonical.setAttribute('href', this.getCanonicalUrl())),
+            this);
     }
 
     private getCanonicalUrl(): string {

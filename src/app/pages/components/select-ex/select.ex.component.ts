@@ -26,11 +26,13 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
 import {NgxSelectComponent, NgxSelectOption} from 'ngx-select-ex';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ComponentUtils from 'app/utils/common/component.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Select component base on {NgxSelectComponent}
@@ -64,6 +66,10 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
     private _optionImageParser: (item?: NgxSelectOption) => string[];
     @ViewChild('addNewOption', {static: false}) private addNewOptionElRef: ElementRef;
     private __originalEnsureVisibleElement: Function;
+
+    private __focusSubscription: Subscription;
+    private __blurSubscription: Subscription;
+    private __finishedLoadingSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -180,14 +186,21 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
         super.ngAfterViewInit();
 
         if (!this.ngxSelectExComponent) {
+            const _this: NgxSelectExComponent = this;
             this.ngxSelectExComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectComponent, component => {
-                    component && component.focus.subscribe(
-                        $event => this.onSelectFocus({ event: $event }));
-                    component && component.blur.subscribe(
-                        $event => this.onSelectBlur({ event: $event }));
-                    component && component.subjOptions.subscribe(
-                        value => this.finishedLoading.emit(value));
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__focusSubscription),
+                        () => this.__focusSubscription = component.focus.subscribe(($event: any) => this.onSelectFocus({ event: $event })),
+                        _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__blurSubscription),
+                        () => this.__focusSubscription = component.blur.subscribe(($event: any) => this.onSelectBlur({ event: $event })),
+                        _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__finishedLoadingSubscription),
+                        () => this.__finishedLoadingSubscription = component.subjOptions.subscribe((value: any) => this.finishedLoading.emit(value)),
+                        _this);
                 });
         }
         if (!this.__originalEnsureVisibleElement
@@ -198,6 +211,13 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
                 _this.__overrideEnsureVisibleElement(_this, _this.selectComponent, element);
             };
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__focusSubscription);
+        PromiseUtils.unsubscribe(this.__blurSubscription);
+        PromiseUtils.unsubscribe(this.__finishedLoadingSubscription);
     }
 
     /**

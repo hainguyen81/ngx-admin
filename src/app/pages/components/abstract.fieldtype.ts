@@ -1,16 +1,18 @@
-import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, OnDestroy, Renderer2, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {of, throwError} from 'rxjs';
+import {of, Subscription, throwError} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
 import {IEvent} from './abstract.component';
-import HtmlUtils from '../../utils/common/html.utils';
 import {ControlValueAccessor} from '@angular/forms';
+import FunctionUtils from '../../utils/common/function.utils';
+import HtmlUtils from '../../utils/common/html.utils';
 import ObjectUtils from '../../utils/common/object.utils';
+import PromiseUtils from '../../utils/common/promise.utils';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
-    extends FieldType<F> implements OnDestroy, AfterViewInit, ControlValueAccessor {
+    extends FieldType<F> implements OnInit, OnDestroy, AfterViewInit, ControlValueAccessor {
 
     // -------------------------------------------------
     // DECLARATION
@@ -26,6 +28,11 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
 
     private _valueFormatter: (value: any) => any;
     private _valueParser: (value: any) => any;
+
+    private __translateSubscription: Subscription;
+    private __fieldExpSubscription: Subscription;
+    private __fieldValueChangedSubscription: Subscription;
+    private __fieldStatusChangedSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -334,31 +341,47 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
         _translateService || throwError('Could not inject TranslateService');
         _renderer || throwError('Could not inject Renderer2');
         _logger || throwError('Could not inject NGXLogger');
-        _translateService.onLangChange.subscribe(value => this.onLangChange({event: value}));
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
+    ngOnInit(): void {
+        FunctionUtils.invoke(
+            ObjectUtils.isNou(this.__translateSubscription),
+            () => this.__translateSubscription = this.translateService.onLangChange.subscribe(value => this.onLangChange({event: value})),
+            undefined, this);
+    }
+
     ngAfterViewInit(): void {
         if (this.field) {
             this.field.className = [(this.field.className || ''),
                 'custom-form-field'].join(' ').trim();
-            this.field.expressionProperties
-            && (this.expressionPropertyObserver() || '').length
-            && this.field.expressionProperties.hasOwnProperty(this.expressionPropertyObserver())
-            && of(this.field.expressionProperties[this.expressionPropertyObserver()])
-                .subscribe(value => this.subscribeExpressionProperty(value));
-            this.formControl
-            && this.formControl.valueChanges.subscribe(value => this.onValueChanges(value));
-            this.formControl
-            && this.formControl.statusChanges.subscribe(value => this.onStatusChanges(value));
+            FunctionUtils.invoke(
+                ObjectUtils.isNou(this.__fieldExpSubscription) && ObjectUtils.isNotNou(this.field.expressionProperties)
+                && (this.expressionPropertyObserver() || '').length
+                && this.field.expressionProperties.hasOwnProperty(this.expressionPropertyObserver()),
+                () => this.__fieldExpSubscription = of(this.field.expressionProperties[this.expressionPropertyObserver()])
+                .subscribe(value => this.subscribeExpressionProperty(value)),
+                undefined, this);
+            FunctionUtils.invoke(
+                ObjectUtils.isNou(this.__fieldValueChangedSubscription) && ObjectUtils.isNotNou(this.formControl),
+                () => this.__fieldValueChangedSubscription = this.formControl.valueChanges.subscribe(value => this.onValueChanges(value)),
+                undefined, this);
+            FunctionUtils.invoke(
+                ObjectUtils.isNou(this.__fieldStatusChangedSubscription) && ObjectUtils.isNotNou(this.formControl),
+                () => this.__fieldStatusChangedSubscription = this.formControl.statusChanges.subscribe(value => this.onStatusChanges(value)),
+                undefined, this);
         }
     }
 
     ngOnDestroy(): void {
         // this.changeDetectorRef.detach();
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__translateSubscription);
+        PromiseUtils.unsubscribe(this.__fieldValueChangedSubscription);
+        PromiseUtils.unsubscribe(this.__fieldStatusChangedSubscription);
         if (this.field && this.field.formControl) {
             delete this._field.formControl['componentRef'];
         }

@@ -21,10 +21,11 @@ import {CellComponent} from '@app/types/index';
 import {WarehouseItemFormlySelectFieldComponent} from './warehouse.item.select.field.component';
 import {IEvent} from '../../../../abstract.component';
 import {IWarehouseItem} from '../../../../../../@core/data/warehouse/warehouse.item';
-import {WarehouseItemDbService,} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
-import {BehaviorSubject} from 'rxjs';
+import {WarehouseItemDbService} from '../../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.service';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/common/promise.utils';
 import ObjectUtils from '../../../../../../utils/common/object.utils';
+import FunctionUtils from '../../../../../../utils/common/function.utils';
 
 /**
  * Smart table warehouse item cell component base on {DefaultEditor}
@@ -48,6 +49,11 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
 
     private _warehouseItemBehavior: BehaviorSubject<any>;
     private _warehouseItem: IWarehouseItem;
+
+    private __loadSubscription: Subscription;
+    private __blurSubscription: Subscription;
+    private __selectSubscription: Subscription;
+    private __behaviorSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -111,34 +117,43 @@ export class WarehouseItemCellComponent extends AbstractCellEditor
         super.ngAfterViewInit();
 
         if (!this._selectComponent && !this.viewMode) {
+            const _this: WarehouseItemCellComponent = this;
             this._selectComponent = ComponentUtils.queryComponent(
                 this.querySelectComponent, component => {
-                    if (component) {
-                        component.onLoad.subscribe((e: any) => {
-                            component.value = this.cellValue;
-                        });
-                        component.onBlur.subscribe(($event: IEvent) => {
-                            this.control.markAsTouched({ onlySelf: true });
-                        });
-                        component.onSelect.subscribe(($event: IEvent) => {
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__loadSubscription),
+                        () => this.__loadSubscription = component.onLoad.subscribe((e: any) => component.value = this.cellValue),
+                        _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__blurSubscription),
+                        () => this.__blurSubscription = component.onBlur.subscribe(($event: IEvent) => this.control.markAsTouched({ onlySelf: true })),
+                        _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__selectSubscription),
+                        () => this.__selectSubscription = component.onSelect.subscribe(($event: IEvent) => {
                             this.newCellValue = $event.data;
                             this.fireCellChanged($event);
-                        });
-                        component.refresh();
-                    }
+                        }), _this);
+                    component.refresh();
                 });
         }
 
         if (this.viewMode) {
             this._warehouseItemBehavior = new BehaviorSubject<any>(this.cellValue);
-            this._warehouseItemBehavior.subscribe(value => {
-                this._observeCellValue(value);
-            });
+            FunctionUtils.invokeTrue(
+                ObjectUtils.isNou(this.__behaviorSubscription),
+                () => this.__behaviorSubscription = this._warehouseItemBehavior.subscribe(value => this._observeCellValue(value)),
+                this);
         }
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         PromiseUtils.unsubscribe(this._warehouseItemBehavior);
+        PromiseUtils.unsubscribe(this.__behaviorSubscription);
+        PromiseUtils.unsubscribe(this.__loadSubscription);
+        PromiseUtils.unsubscribe(this.__blurSubscription);
+        PromiseUtils.unsubscribe(this.__selectSubscription);
     }
 
     // -------------------------------------------------

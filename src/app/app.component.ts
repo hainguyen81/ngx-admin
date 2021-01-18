@@ -3,10 +3,10 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import {ApplicationRef, Component, Inject, OnInit, ViewContainerRef} from '@angular/core';
+import {ApplicationRef, Component, Inject, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {Subscription, throwError} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {AnalyticsService, SeoService} from './@core/services';
-import {throwError} from 'rxjs';
 import {AppConfig} from './config/app.config';
 import {NGXLogger} from 'ngx-logger';
 import {IPageHeaderConfig, PageHeaderService} from './services/common/header.service';
@@ -18,13 +18,25 @@ import * as moment from 'moment';
 import AppUtils from './utils/app/app.utils';
 import ArrayUtils from './utils/common/array.utils';
 import {InjectionConfig} from './config/injection.config';
-import TimerUtils from 'app/utils/common/timer.utils';
+import FunctionUtils from './utils/common/function.utils';
+import ObjectUtils from './utils/common/object.utils';
+import PromiseUtils from './utils/common/promise.utils';
 
 @Component({
     selector: 'ngx-app',
     template: `<router-outlet></router-outlet>`,
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private __routerPageHeaderSubscription: Subscription;
+
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
 
     constructor(@Inject(AnalyticsService) private analytics: AnalyticsService,
                 @Inject(SeoService) private seoService: SeoService,
@@ -62,6 +74,10 @@ export class AppComponent implements OnInit {
         InjectionConfig.viewRef = this.viewContainerRef;
     }
 
+    // -------------------------------------------------
+    // EVENTS
+    // -------------------------------------------------
+
     ngOnInit(): void {
         try {
             this.analytics.trackPageViews();
@@ -82,10 +98,12 @@ export class AppComponent implements OnInit {
             this.translateService.addLangs(AppConfig.i18n.languages);
             this.translateService.get('common.search.placeholder')
                 .subscribe(value => this.logger.debug(
-                    'Translated?', 'common.search.placeholder', ' -> ', value));
+                    'Translated?', 'common.search.placeholder', ' -> ', value))
+                .unsubscribe();
             this.translateService.get('app')
                 .subscribe(value => this.logger.debug(
-                    'Translated?', 'app', ' -> ', value));
+                    'Translated?', 'app', ' -> ', value))
+                .unsubscribe();
 
             // apply moment locale for date/time
             moment.locale(AppConfig.i18n.use);
@@ -97,13 +115,25 @@ export class AppComponent implements OnInit {
         }
     }
 
+    ngOnDestroy() {
+        PromiseUtils.unsubscribe(this.__routerPageHeaderSubscription);
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
     /**
      * Detect for applying page header configuration
      */
     private detectForPageHeaderConfig() {
+        if (ObjectUtils.isNotNou(this.__routerPageHeaderSubscription)) {
+            return;
+        }
+
         try {
             // listen router for applying page header configuration
-            this.router.events.pipe(
+            this.__routerPageHeaderSubscription = this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd),
                 map(() => {
                     let headerConfig: IPageHeaderConfig;
@@ -129,15 +159,25 @@ export class AppComponent implements OnInit {
                 }),
             ).subscribe((headerConfig: IPageHeaderConfig) => {
                 // wait for translation service configuration
-                if (headerConfig) {
-                    TimerUtils.timeout(() => {
+                // if (headerConfig) {
+                //     TimerUtils.timeout(() => {
+                //         try {
+                //             this.pageHeaderService.setConfig(headerConfig);
+                //         } catch (e) {
+                //             this.logger.error('Error on AppComponent::detectForPageHeaderConfig', e);
+                //         }
+                //     }, 300, this);
+                // }
+
+                FunctionUtils.invokeTrue(
+                    ObjectUtils.isNotNou(headerConfig),
+                    () => {
                         try {
                             this.pageHeaderService.setConfig(headerConfig);
                         } catch (e) {
                             this.logger.error('Error on AppComponent::detectForPageHeaderConfig', e);
                         }
-                    }, 300, this);
-                }
+                    }, this);
             });
         } catch (e) {
             this.logger.error('Error on AppComponent::detectForPageHeaderConfig', e);

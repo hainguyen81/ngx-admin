@@ -12,7 +12,18 @@ import {AppCommonComponentsModule} from '../../components/common/app.common.comp
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {CommonModule} from '@angular/common';
 import {ThemeModule} from 'app/@theme/theme.module';
-import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule} from '@nebular/theme';
+import {
+    NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbInputModule,
+    NbLayoutModule,
+    NbOverlayModule,
+    NbSelectModule,
+    NbThemeModule,
+} from '@nebular/theme';
 import {Ng2SmartTableModule} from 'app/@types/index';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DynamicModule} from 'ng-dynamic-component';
@@ -28,6 +39,7 @@ import {FormlyConfig} from 'app/config/formly.config';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import {AppConfig} from 'app/config/app.config';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
     imports: [
@@ -60,7 +72,9 @@ import {AppConfig} from 'app/config/app.config';
         TranslateModule,
 
         /* Context Menu */
+        NbOverlayModule,
         NbContextMenuModule,
+        OverlayModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,

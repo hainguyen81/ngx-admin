@@ -1,4 +1,16 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    OnDestroy,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewContainerRef,
+} from '@angular/core';
 import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
@@ -10,6 +22,9 @@ import ComponentUtils from '../../../utils/common/component.utils';
 import {IEvent} from '../abstract.component';
 import ObjectUtils from '../../../utils/common/object.utils';
 import TimerUtils from 'app/utils/common/timer.utils';
+import {Subscription} from 'rxjs';
+import FunctionUtils from '../../../utils/common/function.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Formly date-picker field component base on {FieldType}
@@ -19,7 +34,7 @@ import TimerUtils from 'app/utils/common/timer.utils';
     templateUrl: './formly.datepicker.field.component.html',
     styleUrls: ['./formly.datepicker.field.component.scss'],
 })
-export class DatePickerFormFieldComponent extends AbstractFieldType implements AfterViewInit {
+export class DatePickerFormFieldComponent extends AbstractFieldType implements AfterViewInit, OnDestroy {
 
     private static DEFAULT_CLASS_FORM_FIELD: string = 'form-field-date-picker';
 
@@ -30,6 +45,10 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
     @ViewChildren(NgxDatePickerComponent)
     private readonly queryDatePickerComponent: QueryList<NgxDatePickerComponent>;
     private _datePickerComponent: NgxDatePickerComponent;
+
+    private __openListenerSubscription: Subscription;
+    private __closeListenerSubscription: Subscription;
+    private __selectListenerSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -118,35 +137,46 @@ export class DatePickerFormFieldComponent extends AbstractFieldType implements A
         super.ngAfterViewInit();
 
         if (!this._datePickerComponent) {
+            const _this: DatePickerFormFieldComponent = this;
             this._datePickerComponent = ComponentUtils.queryComponent(
                 this.queryDatePickerComponent, component => {
-                    component
-                    && component.openListener.subscribe((e: any) => {
-                        if (this.field) {
-                            this.field.focus = true;
-                            this.field.formControl
-                            && this.field.formControl.markAsTouched({onlySelf: true});
-                        }
-                        this.stateChanges.next();
-                    });
-                    component
-                    && component.closeListener.subscribe((e: any) => {
-                        if (this.field) this.field.focus = false;
-                        this.stateChanges.next();
-                    });
-                    component
-                    && component.selectListener.subscribe((e: IEvent) => {
-                        if (this.field) {
-                            this.field.focus = true;
-                            this.field.formControl
-                            && this.field.formControl.markAsTouched({onlySelf: true});
-                        }
-                        component.model = e.data['date'];
-                        this.value = component.model;
-                    });
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__openListenerSubscription),
+                        () => this.__openListenerSubscription = component.openListener.subscribe((e: any) => {
+                            if (this.field) {
+                                this.field.focus = true;
+                                this.field.formControl
+                                && this.field.formControl.markAsTouched({onlySelf: true});
+                            }
+                            this.stateChanges.next();
+                        }), _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__closeListenerSubscription),
+                        () => this.__closeListenerSubscription = component.closeListener.subscribe((e: any) => {
+                            if (this.field) this.field.focus = false;
+                            this.stateChanges.next();
+                        }), _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__selectListenerSubscription),
+                        () => this.__selectListenerSubscription = component.selectListener.subscribe((e: IEvent) => {
+                            if (this.field) {
+                                this.field.focus = true;
+                                this.field.formControl
+                                && this.field.formControl.markAsTouched({onlySelf: true});
+                            }
+                            component.model = e.data['date'];
+                            this.value = component.model;
+                        }), _this);
                     this.checkOverrideFormFieldClass();
                 });
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__openListenerSubscription);
+        PromiseUtils.unsubscribe(this.__closeListenerSubscription);
+        PromiseUtils.unsubscribe(this.__selectListenerSubscription);
     }
 
     protected onValueChanges(value: any): void {

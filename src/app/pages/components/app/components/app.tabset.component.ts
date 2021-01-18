@@ -1,5 +1,17 @@
 import {BaseTabsetComponent} from '../../tab/base.tab.component';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, Type, ViewContainerRef,} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    OnDestroy,
+    Renderer2,
+    Type,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
@@ -13,9 +25,11 @@ import {IModel} from '../../../../@core/data/base';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ITabConfig, TAB_CONFIG_TOKEN} from '../../tab/abstract.tab.component';
-import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig,} from '../../../../config/toolbar.actions.conf';
-import {throwError} from 'rxjs';
+import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../../config/toolbar.actions.conf';
+import {Subscription, throwError} from 'rxjs';
 import ObjectUtils from '../../../../utils/common/object.utils';
+import FunctionUtils from '../../../../utils/common/function.utils';
+import PromiseUtils from '../../../../utils/common/promise.utils';
 
 export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
     = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
@@ -32,7 +46,7 @@ export class AppTabsetComponent<
     TB extends AppToolbarComponent<D>,
     TC extends AbstractComponent>
     extends BaseTabsetComponent<D>
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -40,6 +54,8 @@ export class AppTabsetComponent<
 
     private toolbarComponent: TB;
     private tabComponents: AbstractComponent[];
+
+    private __toolbarSubscription: Subscription;
 
     // -------------------------------------------------
     // FUNCTIONS
@@ -173,6 +189,11 @@ export class AppTabsetComponent<
         this.createTabComponents();
     }
 
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__toolbarSubscription);
+    }
+
     /**
      * Raise when toolbar action item has been clicked
      * @param event {IEvent} that contains {$event} as {MouseEvent} and {$data} as {IToolbarActionsConfig}
@@ -223,7 +244,10 @@ export class AppTabsetComponent<
         if (this._toolbarComponentType) {
             this.toolbarComponent = super.setToolbarComponent(this._toolbarComponentType);
             this.toolbarComponent.showActions = true;
-            this.toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e));
+            FunctionUtils.invokeTrue(
+                ObjectUtils.isNou(this.__toolbarSubscription),
+                () => this.__toolbarSubscription = this.toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e)),
+                this);
             this.doToolbarActionsSettings();
             // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
             // TODO after updating toolbar action settings

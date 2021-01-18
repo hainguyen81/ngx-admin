@@ -1,8 +1,12 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, forwardRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, forwardRef, Inject, OnDestroy, Renderer2, ViewContainerRef} from '@angular/core';
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {CellComponent} from '@app/types/index';
+import FunctionUtils from '../../../utils/common/function.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Smart table observe cell component base on {DefaultEditor}
@@ -13,7 +17,7 @@ import {CellComponent} from '@app/types/index';
     styleUrls: ['./observe.cell.component.scss'],
 })
 export class ObserveCellComponent extends AbstractCellEditor
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
 
     private static OBSERVE_CELL_VALUE_PREPARE: string = 'valuePrepare';
 
@@ -22,6 +26,8 @@ export class ObserveCellComponent extends AbstractCellEditor
     // -------------------------------------------------
 
     private _observedValue: any;
+
+    private __valueSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -70,7 +76,15 @@ export class ObserveCellComponent extends AbstractCellEditor
         super.ngAfterViewInit();
 
         // observe images
-        this.observeConfigProperty(ObserveCellComponent.OBSERVE_CELL_VALUE_PREPARE)
-            .subscribe(observedValue => this._observedValue = observedValue);
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__valueSubscription),
+            () => this.__valueSubscription = this.observeConfigProperty(ObserveCellComponent.OBSERVE_CELL_VALUE_PREPARE)
+            .subscribe(observedValue => this._observedValue = observedValue),
+            this);
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__valueSubscription);
     }
 }

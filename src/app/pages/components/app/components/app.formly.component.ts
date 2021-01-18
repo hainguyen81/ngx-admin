@@ -1,7 +1,7 @@
 import {NGXLogger} from 'ngx-logger';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, Renderer2, ViewContainerRef} from '@angular/core';
 import {BaseFormlyComponent} from '../../formly/base.formly.component';
 import {ConfirmPopup} from 'ngx-material-popup';
 import BaseModel, {IModel} from '../../../../@core/data/base';
@@ -10,6 +10,10 @@ import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from '@app/types/index';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import FunctionUtils from '../../../../utils/common/function.utils';
+import ObjectUtils from '../../../../utils/common/object.utils';
+import PromiseUtils from '../../../../utils/common/promise.utils';
 
 /**
  * Form component base on {FormlyModule}
@@ -20,13 +24,15 @@ import {ActivatedRoute, Router} from '@angular/router';
     styleUrls: ['../../formly/formly.component.scss', './app.formly.component.scss'],
 })
 export class AppFormlyComponent<T extends IModel, D extends DataSource>
-    extends BaseFormlyComponent<T, D> implements AfterViewInit {
+    extends BaseFormlyComponent<T, D> implements AfterViewInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
     // -------------------------------------------------
 
     protected noneOption: IModel = new BaseModel(null);
+
+    private __modelChangedSubscription: Subscription;
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -78,8 +84,15 @@ export class AppFormlyComponent<T extends IModel, D extends DataSource>
 
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__modelChangedSubscription) && ObjectUtils.isNotNou(this.formlyForm),
+            () => this.__modelChangedSubscription = this.formlyForm.modelChange.subscribe(() => this.onModelChanged()),
+            this);
+    }
 
-        this.formlyForm && this.formlyForm.modelChange.subscribe(() => this.onModelChanged());
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__modelChangedSubscription);
     }
 
     /**

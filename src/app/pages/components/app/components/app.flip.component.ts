@@ -10,6 +10,7 @@ import {
     ElementRef,
     Inject,
     InjectionToken,
+    OnDestroy,
     OnInit,
     Renderer2,
     Type,
@@ -21,7 +22,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from '@app/types/index';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import {
     ACTION_BACK,
     ACTION_DELETE,
@@ -36,6 +37,8 @@ import {AppToolbarComponent} from './app.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';
 import {BaseFlipComponent} from '../../flip/base.flip.component';
+import FunctionUtils from '../../../../utils/common/function.utils';
+import PromiseUtils from '../../../../utils/common/promise.utils';
 
 export const APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the flip-pane');
@@ -55,7 +58,7 @@ export class AppFlipComponent<D extends DataSource,
     F extends AbstractComponent,
     B extends AbstractComponent>
     extends BaseFlipComponent<D>
-    implements AfterViewInit, OnInit {
+    implements AfterViewInit, OnInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -64,6 +67,9 @@ export class AppFlipComponent<D extends DataSource,
     private _toolbarComponent: TB;
     private _frontComponent: F;
     private _backComponent: B;
+
+    private __flipSubscription: Subscription;
+    private __toolbarSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -206,7 +212,10 @@ export class AppFlipComponent<D extends DataSource,
         super.ngOnInit();
 
         // listener flipping event
-        this.onFlipped.subscribe(() => this.doToolbarActionsSettingsOnFlipped());
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__flipSubscription),
+            () => this.__flipSubscription = this.onFlipped.subscribe(() => this.doToolbarActionsSettingsOnFlipped()),
+            this);
     }
 
     ngAfterViewInit(): void {
@@ -220,6 +229,12 @@ export class AppFlipComponent<D extends DataSource,
 
         // detech changes
         this.getChangeDetectorRef().detectChanges();
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__flipSubscription);
+        PromiseUtils.unsubscribe(this.__toolbarSubscription);
     }
 
     /**
@@ -247,21 +262,21 @@ export class AppFlipComponent<D extends DataSource,
                 break;
             case ACTION_BACK:
                 if (this.isDataChanged) {
-                    let popupConfig: ConfirmPopupConfig;
-                    popupConfig = {
+                    const popupConfig: ConfirmPopupConfig = {
                         title: this.translate('app'),
                         content: this.translate('common.toast.confirm.lose_data.message'),
                         color: 'warn',
                         cancelButton: this.translate('common.toast.confirm.lose_data.cancel'),
                         okButton: this.translate('common.toast.confirm.lose_data.ok'),
                     };
-                    this.getConfirmPopup().show(popupConfig)
-                        .subscribe(value => {
-                            if (value) {
-                                this.doBack();
-                                this.flipped = false;
-                            }
-                        });
+                    const confirmationSubscription: Subscription = this.getConfirmPopup().show(popupConfig)
+                    .subscribe(value => {
+                        if (value) {
+                            this.doBack();
+                            this.flipped = false;
+                        }
+                        PromiseUtils.unsubscribe(confirmationSubscription);
+                    });
 
                 } else {
                     this.doBack();
@@ -296,8 +311,10 @@ export class AppFlipComponent<D extends DataSource,
         // create table component
         const _this: AppFlipComponent<D, TB, F, B> = this;
         this._toolbarComponent = super.setToolbarComponent(this.toolbarComponentType);
-        this._toolbarComponent
-        && this._toolbarComponent.actionListener().subscribe(($event: IEvent) => _this.onClickAction($event));
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__toolbarSubscription) && ObjectUtils.isNotNou(this._toolbarComponent),
+            () => this.__toolbarSubscription = this._toolbarComponent.actionListener().subscribe(($event: IEvent) => _this.onClickAction($event)),
+            this);
         this._frontComponent = super.setFrontComponent(this.frontComponentType);
         this.fulfillComponentsAtStartup && this.ensureBackComponent();
     }

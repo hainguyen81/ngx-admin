@@ -5,7 +5,18 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core'
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContextMenuModule} from 'ngx-contextmenu';
-import {NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule, NbThemeModule,} from '@nebular/theme';
+import {
+    NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbContextMenuModule,
+    NbIconModule,
+    NbInputModule,
+    NbLayoutModule,
+    NbOverlayModule,
+    NbSelectModule,
+    NbThemeModule,
+} from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ComponentsModule} from '../../../components.module';
@@ -27,6 +38,7 @@ import {FlipModule} from 'ngx-flip';
 import {AppMaterialModule} from 'app/app.material.module';
 import {FormlyConfig} from 'app/config/formly.config';
 import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
     imports: [
@@ -59,7 +71,9 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
         TranslateModule,
 
         /* Context Menu */
+        NbOverlayModule,
         NbContextMenuModule,
+        OverlayModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,

@@ -1,4 +1,15 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    OnDestroy,
+    Renderer2,
+    ViewContainerRef,
+} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -14,11 +25,14 @@ import {UserDataSource} from '../../../../../services/implementation/system/user
 import {UserSmartTableComponent} from './user.table.component';
 import {UserToolbarComponent} from './user.toolbar.component';
 import {UserFormlyComponent} from './user.formly.component';
-import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {Observable, throwError} from 'rxjs';
+import {Observable, Subscription, throwError} from 'rxjs';
 import ArrayUtils from '../../../../../utils/common/array.utils';
 import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import FunctionUtils from '../../../../../utils/common/function.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 
 @Component({
     moduleId: Constants.COMMON.MODULE_CODES.SYSTEM_USER,
@@ -36,7 +50,14 @@ export class UserComponent
         UserToolbarComponent,
         UserSmartTableComponent,
         UserFormlyComponent>
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
+
+    // -------------------------------------------------
+    // DECLARATION
+    // -------------------------------------------------
+
+    private __parametersEditSubscription: Subscription;
+    private __parametersBackSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -106,22 +127,30 @@ export class UserComponent
 
         // shortcut for profile
         const parametersMap: Observable<ParamMap> = super.parametersMap;
-        parametersMap && parametersMap.subscribe(value => {
-            if (value && value.has('profile') && value.get('profile')) {
-                const profileId: string = value.get('profile');
-                const userDataSource: UserDataSource = <UserDataSource>this.getDataSource();
-                userDataSource
-                    .setFilter([{ field: 'id', search: profileId}], false)
-                    .getAll().then(user => {
-                        if (!user) {
-                            this.showGlobalError();
-                        } else {
-                            this.onEditUser(ArrayUtils.isArray(user) ? Array.from(user)[0] : user);
-                        }
-                    }, reason => throwError(reason))
-                    .catch(reason => throwError(reason));
-            }
-        });
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__parametersEditSubscription) && ObjectUtils.isNotNou(parametersMap),
+            () => this.__parametersEditSubscription = parametersMap.subscribe(value => {
+                if (value && value.has('profile') && value.get('profile')) {
+                    const profileId: string = value.get('profile');
+                    const userDataSource: UserDataSource = <UserDataSource>this.getDataSource();
+                    userDataSource
+                        .setFilter([{ field: 'id', search: profileId}], false)
+                        .getAll().then(user => {
+                            if (!user) {
+                                this.showGlobalError();
+                            } else {
+                                this.onEditUser(ArrayUtils.isArray(user) ? Array.from(user)[0] : user);
+                            }
+                        }, reason => throwError(reason))
+                        .catch(reason => throwError(reason));
+                }
+            }), this);
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__parametersBackSubscription);
+        PromiseUtils.unsubscribe(this.__parametersEditSubscription);
     }
 
     protected onNewData($event: IEvent): void {
@@ -148,16 +177,18 @@ export class UserComponent
         const _this: UserComponent = this;
         const _superDoBack: () => void = super.doBack;
         const parametersMap: Observable<ParamMap> = super.parametersMap;
-        parametersMap && parametersMap.subscribe(value => {
-            if (value && value.has('profile') && value.get('profile')) {
-                const userDataSource: UserDataSource = <UserDataSource>_this.getDataSource();
-                userDataSource.reset(true);
-                _this.getRouter().navigate(['/dashboard/system/user'], { replaceUrl: true });
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__parametersBackSubscription) && ObjectUtils.isNotNou(parametersMap),
+            () => this.__parametersBackSubscription = parametersMap.subscribe(value => {
+                if (value && value.has('profile') && value.get('profile')) {
+                    const userDataSource: UserDataSource = <UserDataSource>_this.getDataSource();
+                    userDataSource.reset(true);
+                    _this.getRouter().navigate(['/dashboard/system/user'], { replaceUrl: true });
 
-            } else {
-                _superDoBack.call(_this);
-            }
-        });
+                } else {
+                    _superDoBack.call(_this);
+                }
+            }), this);
         !parametersMap && _superDoBack.call(_this);
     }
 }

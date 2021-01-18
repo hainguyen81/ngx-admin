@@ -1,10 +1,13 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, forwardRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, forwardRef, Inject, OnDestroy, Renderer2, ViewContainerRef} from '@angular/core';
 import {AbstractCellEditor} from './abstract.cell.editor';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {CellComponent} from '@app/types/index';
-import ObjectUtils from '../../../utils/common/object.utils';
+import {Subscription} from 'rxjs';
 import ArrayUtils from '../../../utils/common/array.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Smart table image cell component base on {DefaultEditor}
@@ -15,7 +18,7 @@ import ArrayUtils from '../../../utils/common/array.utils';
     styleUrls: ['./image.cell.component.scss'],
 })
 export class ImageCellComponent extends AbstractCellEditor
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
 
     private static DESCRIPTOR_PREPARE: string = 'descriptorPrepare';
     private static IMAGES_PREPARE: string = 'imagesPrepare';
@@ -26,6 +29,9 @@ export class ImageCellComponent extends AbstractCellEditor
 
     private _images: string[] = [];
     private _descriptor: string = '';
+
+    private __imageSubscription: Subscription;
+    private __descriptorSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -82,7 +88,9 @@ export class ImageCellComponent extends AbstractCellEditor
         super.ngAfterViewInit();
 
         // observe images
-        this.observeConfigProperty(ImageCellComponent.IMAGES_PREPARE)
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__imageSubscription),
+            () => this.__imageSubscription = this.observeConfigProperty(ImageCellComponent.IMAGES_PREPARE)
             .subscribe(images => {
                 if (ArrayUtils.isArray(images)) {
                     this.images = Array.from(images);
@@ -90,10 +98,21 @@ export class ImageCellComponent extends AbstractCellEditor
                 } else if (ObjectUtils.isNotNou(images) && typeof images === 'string') {
                     this.images = [images];
                 }
-            });
+            }),
+            this);
+
 
         // observe descriptor
-        this.observeConfigProperty(ImageCellComponent.DESCRIPTOR_PREPARE, false)
-            .subscribe(descriptor => this.descriptor = descriptor || '');
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__descriptorSubscription),
+            () => this.__descriptorSubscription = this.observeConfigProperty(ImageCellComponent.DESCRIPTOR_PREPARE, false)
+            .subscribe(descriptor => this.descriptor = descriptor || ''),
+            this);
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__imageSubscription);
+        PromiseUtils.unsubscribe(this.__descriptorSubscription);
     }
 }

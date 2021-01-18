@@ -6,6 +6,7 @@ import {
     ElementRef,
     Inject,
     Input,
+    OnDestroy,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -15,12 +16,14 @@ import {AbstractFieldType} from '../abstract.fieldtype';
 import {TranslateService} from '@ngx-translate/core';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {NGXLogger} from 'ngx-logger';
-import {isObservable} from 'rxjs';
+import {isObservable, Subscription} from 'rxjs';
 import {NgxSelectComponent} from '../select/select.component';
 import {NgOption} from '@ng-select/ng-select';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 import TimerUtils from 'app/utils/common/timer.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Formly Select-Ex field component base on {FieldType}
@@ -30,7 +33,7 @@ import TimerUtils from 'app/utils/common/timer.utils';
     templateUrl: './formly.select.field.component.html',
     styleUrls: ['./formly.select.field.component.scss'],
 })
-export class SelectFormFieldComponent extends AbstractFieldType implements AfterViewInit {
+export class SelectFormFieldComponent extends AbstractFieldType implements AfterViewInit, OnDestroy {
 
     private static DEFAULT_CLASS_FORM_FIELD: string = 'form-field-ngx-select';
     private static IMAGE_CLASS_FORM_FIELD: string = 'form-field-ngx-select-image';
@@ -54,6 +57,12 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
     @ViewChildren(NgxSelectComponent)
     private readonly queryNgxSelectComponent: QueryList<NgxSelectComponent>;
     private ngxSelectComponent: NgxSelectComponent;
+
+    private __openEventSubscription: Subscription;
+    private __focusEventSubscription: Subscription;
+    private __closeEventSubscription: Subscription;
+    private __changeEventSubscription: Subscription;
+    private __loadEventSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -174,27 +183,29 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
         // query select-ex component
         if (!this.ngxSelectComponent) {
             // query component
+            const _this: SelectFormFieldComponent = this;
             this.ngxSelectComponent = ComponentUtils.queryComponent(
                 this.queryNgxSelectComponent, component => {
-                    if (ObjectUtils.isNotNou(component)) {
-                        component.open.subscribe(e => {
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__openEventSubscription),
+                        () => this.__openEventSubscription = component.open.subscribe((e: any) => {
                             if (this.field) this.field.focus = true;
-                        });
-                        component.focus.subscribe(e => {
-                            if (this.field) this.field.focus = true;
-                        });
-                        component.close.subscribe(e => {
+                        }), _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__closeEventSubscription),
+                        () => this.__closeEventSubscription = component.close.subscribe((e: any) => {
                             if (this.field) this.field.focus = false;
-                        });
-                        component.change.subscribe(e => {
+                        }), _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__changeEventSubscription),
+                        () => this.__changeEventSubscription = component.change.subscribe((e: any) => {
                             this.value = (e || {})['data'];
-                        });
-                        component.load.subscribe(e => {
-                            TimerUtils.timeout(() => {
-                                this.setSelectedValue(this.value);
-                            }, 200, this);
-                        });
-                    }
+                        }), _this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__loadEventSubscription),
+                        () => this.__loadEventSubscription = component.load.subscribe((e: any) => {
+                            TimerUtils.timeout(() => this.setSelectedValue(this.value), 200, this);
+                        }), _this);
                     this.checkOverrideFormFieldClass();
                 });
         }
@@ -207,13 +218,21 @@ export class SelectFormFieldComponent extends AbstractFieldType implements After
                 && ArrayUtils.isArray(this.field.templateOptions.options)) {
                 this.items = this.field.templateOptions.options as any[];
 
-            } else if (this.field.templateOptions
-                && isObservable(this.field.templateOptions.options)) {
-                this.field.templateOptions.options.subscribe((items: any[]) => {
+            } else if (this.field.templateOptions && isObservable(this.field.templateOptions.options)) {
+                const optionsSubscription: Subscription = this.field.templateOptions.options.subscribe((items: any[]) => {
                     this.items = this.field.templateOptions.options as any[];
+                    PromiseUtils.unsubscribe(optionsSubscription);
                 });
             }
         }
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__openEventSubscription);
+        PromiseUtils.unsubscribe(this.__closeEventSubscription);
+        PromiseUtils.unsubscribe(this.__changeEventSubscription);
+        PromiseUtils.unsubscribe(this.__loadEventSubscription);
     }
 
     protected onStatusChanges(value: any): void {

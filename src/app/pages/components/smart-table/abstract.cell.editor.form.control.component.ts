@@ -1,4 +1,4 @@
-import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, ControlValueAccessor, FormControl, FormGroup, ValidatorFn, Validators,} from '@angular/forms';
+import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, ControlValueAccessor, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -8,6 +8,7 @@ import {
     forwardRef,
     Inject,
     Input,
+    OnDestroy,
     OnInit,
     Output,
     Renderer2,
@@ -16,16 +17,18 @@ import {
 import {Cell, CellComponent, DefaultEditor, Ng2SmartTableComponent, Row} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import {IEvent} from '../abstract.component';
-import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
+import ObjectUtils from '../../../utils/common/object.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 /**
  * Abstract cell editor as form {FormControl}
  */
 export abstract class AbstractCellEditorFormControlComponent extends FormControl
-    implements DefaultEditor, AfterViewInit, ControlValueAccessor, OnInit {
+    implements DefaultEditor, AfterViewInit, ControlValueAccessor, OnInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -43,6 +46,8 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
 
     private _onTouch: any[];
     private _onChange: any[];
+
+    private __translateSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -459,7 +464,6 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
         _translateService || throwError('Could not inject TranslateService');
         _renderer || throwError('Could not inject Renderer2');
         _logger || throwError('Could not inject NGXLogger');
-        _translateService.onLangChange.subscribe(value => this.onLangChange({event: value}));
     }
 
     // -------------------------------------------------
@@ -467,9 +471,17 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
     // -------------------------------------------------
 
     ngOnInit(): void {
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__translateSubscription),
+            () => this.__translateSubscription = this.translateService.onLangChange.subscribe((value: any) => this.onLangChange({event: value})),
+            this);
         if (this.cell && ObjectUtils.isNou(this.cell['componentRef'])) {
             this.cell['componentRef'] = this;
         }
+    }
+
+    ngOnDestroy(): void {
+        PromiseUtils.unsubscribe(this.__translateSubscription);
     }
 
     /**

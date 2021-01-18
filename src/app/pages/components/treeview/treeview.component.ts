@@ -192,12 +192,12 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
                     FunctionUtils.invoke(
                         ObjectUtils.isNou(this.__selectedChangedSubscription),
                         () => this.__selectedChangedSubscription = component.selectedChange.subscribe(
-                            value => this.onSelectedChange({data: value})),
+                            (value: any) => this.onSelectedChange({data: value})),
                         undefined, this);
                     FunctionUtils.invoke(
                         ObjectUtils.isNou(this.__filterChangedSubscription),
                         () => this.__filterChangedSubscription = component.filterChange.subscribe(
-                            value => this.onFilterChange({data: value})),
+                            (value: any) => this.onFilterChange({data: value})),
                         undefined, this);
                 });
         }
@@ -211,12 +211,12 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
                     FunctionUtils.invoke(
                         ObjectUtils.isNou(this.__selectedChangedSubscription),
                         () => this.__selectedChangedSubscription = component.selectedChange.subscribe(
-                            value => this.onSelectedChange({data: value})),
+                            (value: any) => this.onSelectedChange({data: value})),
                         undefined, this);
                     FunctionUtils.invoke(
                         ObjectUtils.isNou(this.__filterChangedSubscription),
                         () => this.__filterChangedSubscription = component.filterChange.subscribe(
-                            value => this.onFilterChange({data: value})),
+                            (value: any) => this.onFilterChange({data: value})),
                         undefined, this);
                 });
         }

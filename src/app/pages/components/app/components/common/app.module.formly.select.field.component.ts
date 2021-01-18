@@ -1,12 +1,15 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
 import Module, {IModule} from '../../../../../@core/data/system/module';
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
 import {DefaultNgxSelectOptions, INgxSelectOptions} from '../../../select/abstract.select.component';
 import {AppFormlySelectFieldComponent} from './app.formly.select.field.component';
+import FunctionUtils from '../../../../../utils/common/function.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 
 export const AppModulesNgxSelectOptions: INgxSelectOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
@@ -36,7 +39,13 @@ export const AppModulesNgxSelectOptions: INgxSelectOptions = Object.assign({}, D
 })
 export class AppModuleFormlySelectFieldComponent
     extends AppFormlySelectFieldComponent<IModule>
-    implements OnInit {
+    implements OnInit, OnDestroy {
+
+    // -------------------------------------------------
+    // CONSTRUCTION
+    // -------------------------------------------------
+
+    private __dataSourceChangedSubscription: Subscription;
 
     // -------------------------------------------------
     // CONSTRUCTION
@@ -72,15 +81,22 @@ export class AppModuleFormlySelectFieldComponent
     // -------------------------------------------------
 
     ngOnInit(): void {
-        this.moduleDataSource.onChanged().subscribe(value => {
-            SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(
-                this.moduleDataSource, this.translateService).then(modules => {
-                    let noneModule: IModule;
-                    noneModule = new Module(null, null, null, null);
-                    noneModule['text'] = this.getConfigValue('placeholder');
-                    this.items = [noneModule].concat(modules as IModule[]);
-                });
-        });
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__dataSourceChangedSubscription),
+            () => this.__dataSourceChangedSubscription = this.moduleDataSource.onChanged().subscribe(value => {
+                SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(
+                    this.moduleDataSource, this.translateService).then(modules => {
+                        let noneModule: IModule;
+                        noneModule = new Module(null, null, null, null);
+                        noneModule['text'] = this.getConfigValue('placeholder');
+                        this.items = [noneModule].concat(modules as IModule[]);
+                    });
+            }), this);
         this.moduleDataSource.refresh();
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__dataSourceChangedSubscription);
     }
 }

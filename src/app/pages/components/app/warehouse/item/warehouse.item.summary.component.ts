@@ -1,6 +1,6 @@
 import {AbstractComponent, IEvent} from '../../../abstract.component';
-import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -13,6 +13,9 @@ import {IAlbum, Lightbox} from 'ngx-lightbox';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../../utils/common/object.utils';
+import {Subscription} from 'rxjs';
+import FunctionUtils from '../../../../../utils/common/function.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
@@ -22,7 +25,8 @@ export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageF
     templateUrl: './warehouse.item.summary.component.html',
     styleUrls: ['./warehouse.item.summary.component.scss'],
 })
-export class WarehouseItemSummaryComponent extends AbstractComponent {
+export class WarehouseItemSummaryComponent extends AbstractComponent
+    implements OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -31,6 +35,8 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
     private dataModel: IWarehouseItem;
     private isChanged: boolean | false;
     private isVersion: boolean | false;
+
+    private __translateSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -150,6 +156,11 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
         }
     }
 
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__translateSubscription);
+    }
+
     // -------------------------------------------------
     // FUNCTIONS
     // -------------------------------------------------
@@ -184,10 +195,12 @@ export class WarehouseItemSummaryComponent extends AbstractComponent {
             if (invalidFiles.length) {
                 let notSupFiles: string;
                 notSupFiles = invalidFiles.join('<br/>');
-                this.getTranslateService().get(
-                    'warehouse.item.summary.not_supported_files',
-                    {'files': notSupFiles})
-                    .subscribe(message => this.showWarning('warehouse.item.title', message));
+                FunctionUtils.invokeTrue(
+                    ObjectUtils.isNou(this.__translateSubscription),
+                    () => this.__translateSubscription = this.getTranslateService().get(
+                        'warehouse.item.summary.not_supported_files',
+                        {'files': notSupFiles}).subscribe(message => this.showWarning('warehouse.item.title', message)),
+                    this);
             }
         }
     }

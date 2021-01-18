@@ -1,4 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA,} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {SmartTableComponent} from './smart-table/smart-table.component';
 import {
     NbButtonModule,
@@ -9,6 +9,7 @@ import {
     NbIconModule,
     NbInputModule,
     NbLayoutModule,
+    NbOverlayModule,
     NbSearchModule,
     NbSelectModule,
     NbTabsetModule,
@@ -88,6 +89,7 @@ import {BaseFlipComponent} from 'app/pages/components/flip/base.flip.component';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FormlyConfig} from 'app/config/formly.config';
 import {AppMaterialModule} from 'app/app.material.module';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
     imports: [
@@ -132,7 +134,9 @@ import {AppMaterialModule} from 'app/app.material.module';
         Ng2SmartTableModule,
 
         /* Context Menu */
+        NbOverlayModule,
         NbContextMenuModule,
+        OverlayModule,
         ContextMenuModule.forRoot({
             autoFocus: true,
             useBootstrap4: true,

@@ -130,13 +130,13 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType
         // query tree-view component
         if (!this.ngxTreeviewComponent) {
             // query component
+            const _this: DropdownTreeviewFormFieldComponent = this;
             this.ngxTreeviewComponent = ComponentUtils.queryComponent(
                 this.queryNgxTreeviewComponent, component => {
-                    FunctionUtils.invoke(
-                        ObjectUtils.isNotNou(component),
-                        () => this.__selectedChangedSubscription = component.selectedChangeEvent
-                            .subscribe((e: IEvent) => this.onSelectedValue(e)),
-                        undefined, this);
+                    FunctionUtils.invokeTrue(
+                        ObjectUtils.isNou(_this.__selectedChangedSubscription),
+                        () => this.__selectedChangedSubscription = component.selectedChangeEvent.subscribe((e: IEvent) => this.onSelectedValue(e)),
+                        _this);
                 });
         }
 
@@ -202,10 +202,11 @@ export class DropdownTreeviewFormFieldComponent extends AbstractFieldType
             }
 
         } else if (isObservable(options)) {
-            (<Observable<any[]>>options).subscribe(opts => {
+            const itemsSubscription: Subscription = (<Observable<any[]>>options).subscribe(opts => {
                 const optValues: any[] = (opts && ArrayUtils.isArray(opts) ? Array.from(opts) : opts ? [opts] : []);
                 this.buildTemplateOptionsToTree(optValues);
-            }).unsubscribe();
+                PromiseUtils.unsubscribe(itemsSubscription);
+            });
 
         } else if (ObjectUtils.isNotNou(options) && !ArrayUtils.isArray(options) && !isObservable(options)) {
             this.buildTemplateOptionsToTree([options]);

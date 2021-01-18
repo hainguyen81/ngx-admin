@@ -16,6 +16,7 @@ import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 import NumberUtils from '../../../utils/common/number.utils';
 import TimerUtils from 'app/utils/common/timer.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
 
 /* default smart table settings */
 export const DefaultTableSettings = {
@@ -358,8 +359,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected getRowByEvent(event: Event): Row {
         let rowIdx: number = -1;
-        let target: HTMLElement;
-        target = event.target as HTMLElement;
+        let target: HTMLElement = event.target as HTMLElement;
         target = (target && target.tagName.toLowerCase() === 'tr'
             ? target : target ? target.closest('tr') : undefined);
         if (target && target.tagName.toLowerCase() === 'tr'
@@ -367,6 +367,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
             rowIdx = target['rowIndex'] as number;
             rowIdx -= 1;
         }
+        this.getLogger().debug('getRowByEvent', event, event.target, rowIdx);
         return this.getRowByIndex(rowIdx);
     }
 
@@ -750,8 +751,7 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     onContextMenu(event: IEvent): void {
         // TODO Waiting for implementing from children component
-        let row: Row;
-        row = this.getRowByEvent(event.event as Event);
+        const row: Row = this.getRowByEvent(event.event as Event);
         this.getLogger().debug('onContextMenu', event, row);
         if (this.showHideContextMenuOnRow(row, event.event as Event)) {
             // stop firing event
@@ -1414,16 +1414,15 @@ export abstract class AbstractSmartTableComponent<T extends DataSource>
      */
     protected showHideContextMenuOnRow(row: Row, event?: Event): boolean {
         this.getLogger().debug('showHideContextMenuOnRow', row);
-        let rowEl: HTMLTableRowElement;
-        rowEl = (row ? this.getRowElement(row) : undefined);
-        let target: Node;
-        target = (event && event.target instanceof Node && rowEl && rowEl.contains(event.target as Node)
+        const rowEl: HTMLTableRowElement = (row ? this.getRowElement(row) : undefined);
+        const target: Node = (event && event.target instanceof Node && rowEl && rowEl.contains(event.target as Node)
             ? event.target : !event || !event.target ? rowEl
                 : this.getClosestElementBySelector(
                     AbstractSmartTableComponent.SMART_TABLE_ROW_SELETOR, event.target as Element));
-        if (target) {
-            return this.showHideContextMenu(event, target, (row ? row.getData() : undefined));
-        }
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNotNou(target),
+            () => this.showHideContextMenu(event, target, (row ? row.getData() : undefined)),
+            this);
         this.closeContextMenu();
         return true;
     }

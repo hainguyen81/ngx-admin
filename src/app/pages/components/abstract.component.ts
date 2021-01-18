@@ -49,9 +49,10 @@ import {ActivatedRoute, Data, ParamMap, Params, Router} from '@angular/router';
 import {ControlValueAccessor} from '@angular/forms';
 import ObjectUtils from '../../utils/common/object.utils';
 import FunctionUtils from '../../utils/common/function.utils';
-import {dbConfig} from 'app/config/db.config';
-import TimerUtils from 'app/utils/common/timer.utils';
-import PromiseUtils from 'app/utils/common/promise.utils';
+import {dbConfig} from '../../config/db.config';
+import TimerUtils from '../../utils/common/timer.utils';
+import PromiseUtils from '../../utils/common/promise.utils';
+import {Overlay} from '@angular/cdk/overlay';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -498,17 +499,17 @@ export abstract class AbstractComponent
         //     'queryViewContainerRef', this.queryViewContainerRef,
         //     'queryContextMenuComponent', this.queryContextMenuComponent);
 
-        FunctionUtils.invoke(
+        FunctionUtils.invokeTrue(
             this.subscribeDataSourceChanged
             && ObjectUtils.isNou(this._onDataSourceChanged) && ObjectUtils.isNotNou(this.getDataSource()),
             () => this._onDataSourceChanged = this.getDataSource()
                 .onChanged().subscribe(value => this.onDataSourceChanged({data: value})),
-            undefined, this);
-        FunctionUtils.invoke(
+            this);
+        FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this._onTranslateLanguageChanged) && ObjectUtils.isNotNou(this.getTranslateService()),
             () => this._onTranslateLanguageChanged = this.getTranslateService()
                 .onLangChange.subscribe((value: any) => this.onLangChange({event: value})),
-            undefined, this);
+            this);
     }
 
     ngDoCheck(): void {
@@ -542,6 +543,7 @@ export abstract class AbstractComponent
             this.viewContainerRef = ComponentUtils.queryComponent(this.queryViewContainerRef);
         }
         if (!this.contextMenuComponent) {
+            const _this: AbstractComponent = this;
             this.contextMenuComponent = ComponentUtils.queryComponent(this.queryContextMenuComponent);
         }
 
@@ -1060,34 +1062,44 @@ export abstract class AbstractComponent
      */
     protected showHideContextMenu(event?: Event, target?: Element | EventTarget, data?: any): boolean {
         // this.getLogger().debug('showHideContextMenu', data);
-        let mouseEvent: MouseEvent;
-        mouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
-        let kbEvent: KeyboardEvent;
-        kbEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
-        let eventTarget: Element | EventTarget;
-        eventTarget = (target ? target : event && event.target instanceof Node ? event.target : undefined);
+        const mouseEvent: MouseEvent = (event instanceof MouseEvent ? event as MouseEvent : undefined);
+        const kbEvent: KeyboardEvent = (event instanceof KeyboardEvent ? event as KeyboardEvent : undefined);
+        let eventTarget: Element | EventTarget = (target ? target : event && event.target instanceof Node ? event.target : undefined);
         if ((<HTMLElement>target) && event && (<HTMLElement>event.target)
             && target !== event.target
             && ((<HTMLElement>target).contains(<HTMLElement>event.target)
                 || (<HTMLElement>event.target).contains(<HTMLElement>target))) {
             eventTarget = event.target;
         }
-        eventTarget && this.getContextMenuService().show.next({
-            // Optional - if unspecified, all context menu components will open
-            contextMenu: this.getContextMenuComponent(),
-            event: mouseEvent || kbEvent,
-            item: data,
-            anchorElement: eventTarget,
-        });
+        this.getLogger().debug('showHideContextMenu', eventTarget, this.getContextMenuService(), this.getContextMenuComponent());
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNotNou(eventTarget),
+            () => {
+                const contextMenuService: ContextMenuService = this.getContextMenuService();
+                let overlay = contextMenuService.getLastAttachedOverlay();
+                if (ObjectUtils.isNou(overlay)) {
+                    const overlayService: Overlay = AppUtils.getService(Overlay);
+                    ObjectUtils.set(contextMenuService, 'overlay', overlayService);
+                } else {
+                    ObjectUtils.set(contextMenuService, 'overlay', overlay);
+                }
+                this.getLogger().debug('contextMenuService', contextMenuService, ObjectUtils.get(contextMenuService, 'overlay'));
+                contextMenuService.show.next({
+                    // Optional - if unspecified, all context menu components will open
+                    contextMenu: this.getContextMenuComponent(),
+                    event: mouseEvent || kbEvent,
+                    item: data,
+                    anchorElement: eventTarget,
+                });
+            }, this);
         // wait for showing context menu and focus on it
         if (eventTarget) {
             TimerUtils.timeout(() => {
-                let ctxMnuEls: NodeListOf<HTMLElement>;
-                ctxMnuEls = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
+                const ctxMnuEls: NodeListOf<HTMLElement> = this.getElementsBySelector(AbstractComponent.CONTEXT_MENU_SELECTOR);
                 if (ctxMnuEls && ctxMnuEls.length) {
                     ctxMnuEls[0].focus({preventScroll: true});
                 }
-            }, 300, this);
+            }, 100, this);
             return true;
         }
         return false;
@@ -1436,11 +1448,12 @@ export abstract class AbstractComponent
     protected showActionConfirmation(confirm: ConfirmPopupConfig,
                                      yesAction?: () => void, noAction?: () => void): void {
         const _this: AbstractComponent = this;
-        this.showObserveConfirmation(confirm)
-            .subscribe(value => {
-                value && yesAction && yesAction.call(_this);
-                !value && noAction && noAction.call(_this);
-            });
+        const _confirmationSubscription: Subscription = this.showObserveConfirmation(confirm)
+        .subscribe(value => {
+            value && yesAction && yesAction.call(_this);
+            !value && noAction && noAction.call(_this);
+            PromiseUtils.unsubscribe(_confirmationSubscription);
+        });
     }
 
     /**

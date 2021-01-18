@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
-import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService,} from '@nebular/theme';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
+import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
 import {filter, map, takeUntil} from 'rxjs/operators';
-import {Subject, throwError} from 'rxjs';
+import {Subject, Subscription, throwError} from 'rxjs';
 /* Authentication */
 import {NbAuthOAuth2Token, NbAuthService, NbAuthToken} from '@nebular/auth';
 import {AppConfig} from '../../../config/app.config';
@@ -21,6 +21,8 @@ import {UserDbService} from '../../../services/implementation/system/user/user.s
 import * as moment from 'moment';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
+import FunctionUtils from '../../../utils/common/function.utils';
+import PromiseUtils from '../../../utils/common/promise.utils';
 
 @Component({
     selector: 'ngx-header',
@@ -35,6 +37,11 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
     /* Authentication */
     private token: NbAuthToken;
     private _user: any = {};
+
+    private __tokenChangeSubscription: Subscription;
+    private __mediaQueryChangeSubscription: Subscription;
+    private __themeChangeSubscription: Subscription;
+    private __menuClickSubscription: Subscription;
 
     private _languages: string[] = AppConfig.i18n.languages;
     currentTheme = 'default';
@@ -111,18 +118,23 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
         super.ngOnInit();
 
         /* Authentication */
-        this.authService.onTokenChange()
-            .subscribe((token: NbAuthOAuth2Token) => {
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__tokenChangeSubscription),
+            () => this.__tokenChangeSubscription = this.authService.onTokenChange().subscribe((token: NbAuthOAuth2Token) => {
                 // here we receive a payload from the token and assigns it to our `user` variable
                 this.token = (token && token.isValid() ? token : undefined);
                 this._user = (this.token ? this.token.getPayload() : {});
                 this._currentLang = this._user['lang'] || this._languages[0];
                 this._user['lang'] = this._currentLang;
                 this.token && this.initialize();
-            });
+            }), this);
     }
 
     ngOnDestroy() {
+        PromiseUtils.unsubscribe(this.__tokenChangeSubscription);
+        PromiseUtils.unsubscribe(this.__mediaQueryChangeSubscription);
+        PromiseUtils.unsubscribe(this.__themeChangeSubscription);
+        PromiseUtils.unsubscribe(this.__menuClickSubscription);
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -151,24 +163,29 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
           .subscribe((users: any) => this.user = users.nick);*/
 
         const {xl} = (this.breakpointService ? this.breakpointService.getBreakpointsMap() : undefined);
-        this.themeService.onMediaQueryChange()
-            .pipe(
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__mediaQueryChangeSubscription),
+            () => this.__mediaQueryChangeSubscription = this.themeService.onMediaQueryChange().pipe(
                 map(([, currentBreakpoint]) => (xl && currentBreakpoint.width < xl)),
                 takeUntil(this.destroy$),
-            )
-            .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+            ).subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl),
+            this);
 
-        this.themeService.onThemeChange()
-            .pipe(
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__themeChangeSubscription),
+            () => this.__themeChangeSubscription = this.themeService.onThemeChange().pipe(
                 map(({name}) => name),
                 takeUntil(this.destroy$),
-            )
-            .subscribe(themeName => this.currentTheme = themeName);
+            ).subscribe(themeName => this.currentTheme = themeName),
+            this);
 
-        this.menuService.onItemClick()
-            .pipe(filter(({ tag }) => tag === this.userMenuTag),
-                map(({item}) => item))
-            .subscribe(value => this.onMenuClick(value));
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__menuClickSubscription),
+            () => this.__menuClickSubscription = this.menuService.onItemClick().pipe(
+                filter(({ tag }) => tag === this.userMenuTag),
+                map(({item}) => item)
+            ).subscribe(value => this.onMenuClick(value)),
+            this);
 
         this.userDbService.findEntities('id', IDBKeyRange.only(this._user['id']))
             .then(value => {

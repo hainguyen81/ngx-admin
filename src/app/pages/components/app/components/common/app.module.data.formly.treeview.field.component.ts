@@ -12,9 +12,9 @@ import {isObservable, Observable, Subscription, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
-import TimerUtils from 'app/utils/common/timer.utils';
-import FunctionUtils from 'app/utils/common/function.utils';
-import PromiseUtils from 'app/utils/common/promise.utils';
+import TimerUtils from '../../../../../utils/common/timer.utils';
+import FunctionUtils from '../../../../../utils/common/function.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 
 /**
  * Custom formly field for selecting tree
@@ -143,8 +143,10 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
 
             // observe data
         } else if (ObjectUtils.isNotNou(_loadData) && isObservable(_loadData)) {
-            (<Observable<M | M[]>>_loadData).subscribe(
-                data => this.loadDataInternal(data)).unsubscribe();
+            const loadSubscription: Subscription = (<Observable<M | M[]>>_loadData).subscribe(data => {
+                this.loadDataInternal(data);
+                PromiseUtils.unsubscribe(loadSubscription);
+            });
 
         } else if (ObjectUtils.isNotNou(_loadData)) {
             this.loadDataInternal(<M | M[]>_loadData);

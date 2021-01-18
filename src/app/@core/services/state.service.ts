@@ -1,8 +1,11 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, Observable, of as observableOf} from 'rxjs';
+import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxjs';
 import {takeWhile} from 'rxjs/operators';
 
 import {NbLayoutDirection, NbLayoutDirectionService} from '@nebular/theme';
+import FunctionUtils from '../../utils/common/function.utils';
+import ObjectUtils from '../../utils/common/object.utils';
+import PromiseUtils from '../../utils/common/promise.utils';
 
 @Injectable()
 export class StateService implements OnDestroy {
@@ -43,18 +46,24 @@ export class StateService implements OnDestroy {
     protected layoutState$ = new BehaviorSubject(this.layouts[0]);
     protected sidebarState$ = new BehaviorSubject(this.sidebars[0]);
 
+    private __directionSubscription: Subscription;
+
     alive = true;
 
     constructor(directionService: NbLayoutDirectionService) {
-        directionService.onDirectionChange()
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__directionSubscription),
+            () => this.__directionSubscription = directionService.onDirectionChange()
             .pipe(takeWhile(() => this.alive))
-            .subscribe(direction => this.updateSidebarIcons(direction));
+            .subscribe(direction => this.updateSidebarIcons(direction)),
+            this);
 
         this.updateSidebarIcons(directionService.getDirection());
     }
 
     ngOnDestroy() {
         this.alive = false;
+        PromiseUtils.unsubscribe(this.__directionSubscription);
     }
 
     private updateSidebarIcons(direction: NbLayoutDirection) {

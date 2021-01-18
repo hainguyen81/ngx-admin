@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -7,7 +7,6 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
@@ -18,12 +17,14 @@ import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {BarcodeCellComponent} from '../../../smart-table/barcode.cell.component';
 import {IEvent} from '../../../abstract.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {of, Subject, throwError} from 'rxjs';
+import {of, Subject, Subscription, throwError} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {Cell, DataSource, DefaultEditor, LocalDataSource, Row} from '@app/types/index';
-import {WarehouseItemVersionDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
+import {WarehouseItemVersionDatasource} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
 import {IdGenerators} from '../../../../../config/generator.config';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
+import FunctionUtils from '../../../../../utils/common/function.utils';
+import ObjectUtils from '../../../../../utils/common/object.utils';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -141,6 +142,9 @@ export class WarehouseItemVersionSmartTableComponent
     private dataModelVersion?: IWarehouseItem[] = [];
     private saveSubject: Subject<IWarehouseItem> = new Subject<IWarehouseItem>();
 
+    private __saveSubjectSubscription: Subscription;
+    private __dataSourceChangedSubscription: Subscription;
+
     // -------------------------------------------------
     // GETTERS/SETTERS
     // -------------------------------------------------
@@ -233,22 +237,26 @@ export class WarehouseItemVersionSmartTableComponent
         this.setDeleteItemListener(this.onDeleteVersion);
 
         const _this: WarehouseItemVersionSmartTableComponent = this;
-        this.saveSubject.subscribe(value => {
-            const version: IWarehouseItem = value;
-            if (!(version.id || '').length) {
-                version.id = IdGenerators.oid.generate();
-                version.item_id = _this.getDataModel().id;
-                version.item_code = _this.getDataModel().code;
-                version.is_version = 1;
-                _this.dataModelVersion.unshift(version);
-            }
-            _this.getDataSource().refresh();
-        });
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__saveSubjectSubscription),
+            () => this.__saveSubjectSubscription = this.saveSubject.subscribe(value => {
+                const version: IWarehouseItem = value;
+                if (!(version.id || '').length) {
+                    version.id = IdGenerators.oid.generate();
+                    version.item_id = _this.getDataModel().id;
+                    version.item_code = _this.getDataModel().code;
+                    version.is_version = 1;
+                    _this.dataModelVersion.unshift(version);
+                }
+                _this.getDataSource().refresh();
+            }), this);
     }
 
     ngOnDestroy(): void {
-        PromiseUtils.unsubscribe(this.saveSubject);
         super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.saveSubject);
+        PromiseUtils.unsubscribe(this.__saveSubjectSubscription);
+        PromiseUtils.unsubscribe(this.__dataSourceChangedSubscription);
     }
 
     // -------------------------------------------------
@@ -257,15 +265,17 @@ export class WarehouseItemVersionSmartTableComponent
 
     private loadVersions(model?: IWarehouseItem | null) {
         this.warehouseItemVersionDatasource.setDataModel(model);
-        this.warehouseItemVersionDatasource.onChanged().subscribe(value => {
-            this.dataModelVersion = (value ? value['elements'] || [] : []);
-            of(this.dataModelVersion).subscribe(nextValue => {
-                this.getDataSource().load(nextValue).then(
-                    versions => this.getLogger().debug('Loading item versions successful'),
-                    reason => this.getLogger().error(reason))
-                    .catch(reason => this.getLogger().error(reason));
-            });
-        });
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__dataSourceChangedSubscription),
+            () => this.__dataSourceChangedSubscription = this.warehouseItemVersionDatasource.onChanged().subscribe(value => {
+                this.dataModelVersion = (value ? value['elements'] || [] : []);
+                of(this.dataModelVersion).subscribe(nextValue => {
+                    this.getDataSource().load(nextValue).then(
+                        versions => this.getLogger().debug('Loading item versions successful'),
+                        reason => this.getLogger().error(reason))
+                        .catch(reason => this.getLogger().error(reason));
+                });
+            }), this);
     }
 
     private onNewVersion($event: IEvent) {

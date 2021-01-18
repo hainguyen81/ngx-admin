@@ -1,14 +1,15 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, OnInit, Output, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Inject, OnInit, Output, Renderer2, ViewContainerRef} from '@angular/core';
 import {AppFormlySelectExFieldComponent} from '../common/app.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
 import {DataSource} from '@app/types/index';
 import {IEvent} from '../../../abstract.component';
-import {isObservable, Observable, throwError} from 'rxjs';
+import {isObservable, Observable, Subscription, throwError} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
+import PromiseUtils from '../../../../../utils/common/promise.utils';
 
 /**
  * Custom module data formly field for selecting special
@@ -110,13 +111,15 @@ export class AppModuleDataFormlySelectExFieldComponent<M extends IModel, D exten
         if (ObjectUtils.isNotNou(_loadData) && isPromise(_loadData)) {
             (<Promise<M | M[]>>_loadData).then(
                 data => this.loadDataInternal(data),
-                reason => this.logger.error(reason))
-                .catch(reason => this.logger.error(reason));
+                reason => this.logger.error(reason)
+            ).catch(reason => this.logger.error(reason));
 
             // observe data
         } else if (ObjectUtils.isNotNou(_loadData) && isObservable(_loadData)) {
-            (<Observable<M | M[]>>_loadData).subscribe(
-                data => this.loadDataInternal(data));
+            const loadSubscription: Subscription = (<Observable<M | M[]>>_loadData).subscribe(data => {
+                this.loadDataInternal(data);
+                PromiseUtils.unsubscribe(loadSubscription);
+            });
 
         } else if (ObjectUtils.isNotNou(_loadData)) {
             this.loadDataInternal(<M | M[]>_loadData);

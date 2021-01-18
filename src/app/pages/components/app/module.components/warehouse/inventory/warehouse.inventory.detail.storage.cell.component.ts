@@ -21,14 +21,15 @@ import ComponentUtils from '../../../../../../utils/common/component.utils';
 import {CellComponent} from '@app/types/index';
 import {IEvent} from '../../../../abstract.component';
 import {MatInput} from '@angular/material/input';
-import {WarehouseStorageFormlySelectFieldComponent,} from '../storage/warehouse.storage.select.field.component';
+import {WarehouseStorageFormlySelectFieldComponent} from '../storage/warehouse.storage.select.field.component';
 import {IWarehouse} from '../../../../../../@core/data/warehouse/warehouse';
-import {IWarehouseInventoryDetailStorage,} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
-import {WarehouseDatasource,} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
-import {BehaviorSubject} from 'rxjs';
+import {IWarehouseInventoryDetailStorage} from '../../../../../../@core/data/warehouse/extension/warehouse.inventory.detail.storage';
+import {WarehouseDatasource} from '../../../../../../services/implementation/warehouse/warehouse.storage/warehouse.datasource';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import PromiseUtils from '../../../../../../utils/common/promise.utils';
 import ObjectUtils from '../../../../../../utils/common/object.utils';
 import NumberUtils from '../../../../../../utils/common/number.utils';
+import FunctionUtils from '../../../../../../utils/common/function.utils';
 
 /**
  * Smart table warehouse batch cell component base on {DefaultEditor}
@@ -56,6 +57,9 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
     private _behaviorSubject: BehaviorSubject<IWarehouse>;
     private _warehouseDetailStorages: IWarehouseInventoryDetailStorage[] = [];
     private _warehouseStorages: IWarehouse[];
+
+    private __behaviorSubscription: Subscription;
+    private __loadSubscription: Subscription;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -158,6 +162,8 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
+        PromiseUtils.unsubscribe(this.__loadSubscription);
         PromiseUtils.unsubscribe(this._behaviorSubject);
     }
 
@@ -198,16 +204,17 @@ export class WarehouseInventoryDetailStorageCellComponent extends AbstractCellEd
         for (const component of components) {
             const dataIndex: number = components.indexOf(component);
             const inputComponent: MatInput = inputComponents[dataIndex];
-            component.onLoad.subscribe((e: any) => {
-                const storages: IWarehouseInventoryDetailStorage[] =
-                    this.cellValue as IWarehouseInventoryDetailStorage[];
-                const storage: IWarehouseInventoryDetailStorage = storages[dataIndex];
-                if (ObjectUtils.isNotNou(storage)) {
-                    component.setSelectedValue(storage.storage_code);
-                    inputComponent.value =
-                        (NumberUtils.isNumber(storage.quantity) ? storage.quantity.toString() : undefined);
-                }
-            });
+            FunctionUtils.invokeTrue(
+                ObjectUtils.isNou(this.__loadSubscription),
+                () => this.__loadSubscription = component.onLoad.subscribe((e: any) => {
+                    const storages: IWarehouseInventoryDetailStorage[] =
+                        this.cellValue as IWarehouseInventoryDetailStorage[];
+                    const storage: IWarehouseInventoryDetailStorage = storages[dataIndex];
+                    if (ObjectUtils.isNotNou(storage)) {
+                        component.setSelectedValue(storage.storage_code);
+                        inputComponent.value = (NumberUtils.isNumber(storage.quantity) ? storage.quantity.toString() : undefined);
+                    }
+                }), this);
         }
     }
 
