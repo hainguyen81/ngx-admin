@@ -1,4 +1,16 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, QueryList, Renderer2, ViewChildren, ViewContainerRef,} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Inject,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewContainerRef,
+} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -17,6 +29,7 @@ import {NbTabComponent, NbTabsetComponent} from '@nebular/theme';
  */
 @Component({
     selector: 'ngx-tabset',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './tab.component.html',
     styleUrls: ['./tab.component.scss'],
 })

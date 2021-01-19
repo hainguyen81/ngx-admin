@@ -1,6 +1,6 @@
 import {DataSource} from '@app/types/index';
 import {AbstractComponent, IEvent} from '../abstract.component';
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /* {NbTabComponent} tab configuration */
 export interface ITabConfig {
@@ -82,7 +83,7 @@ export const TAB_CONFIG_TOKEN: InjectionToken<ITabConfig[]> =
 /**
  * Abstract FlipCard component base on {NbTabsetComponent} and {NbTabComponent}
  */
-@Component({})
+@Component({ changeDetection: ChangeDetectionStrategy.OnPush })
 export abstract class AbstractTabComponent<T extends DataSource> extends AbstractComponent {
 
     protected static TABSET_ELEMENT_SELECTOR: string = 'nb-tabset';
@@ -273,7 +274,7 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
         tab.badgeText = config.badgeText;
         tab.badgeStatus = config.badgeStatus;
         tab.badgePosition = config.badgePosition;
-        tab['config'] = config;
+        ObjectUtils.set(tab, 'config', config);
     }
 
     /**
@@ -282,9 +283,7 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      * @param config to apply
      */
     protected configTabByIndex(tabIndex: number, config: ITabConfig): void {
-        let tab: NbTabComponent;
-        tab = (0 <= tabIndex && tabIndex < this.getNumberOfTabs() ? this.tabsComponent[tabIndex] : null);
-        this.configTab(tab, config);
+        this.configTab((0 <= tabIndex && tabIndex < this.getNumberOfTabs() ? this.tabsComponent[tabIndex] : null), config);
     }
 
     /**
@@ -296,8 +295,7 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
             return;
         }
 
-        let tabCfg: ITabConfig;
-        tabCfg = tab['config'];
+        const tabCfg: ITabConfig = ObjectUtils.as<ITabConfig>(ObjectUtils.get(tab, 'config'));
         tab.tabTitle = this.translate(
             tabCfg && (tabCfg.tabTitle || '').length ? tabCfg.tabTitle : tab.tabTitle);
         tab.badgeText = this.translate(

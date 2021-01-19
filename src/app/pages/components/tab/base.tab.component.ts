@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, Type, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -16,6 +16,7 @@ import {ActivatedRoute, Router} from '@angular/router';
  */
 @Component({
     selector: 'ngx-tabset',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './tab.component.html',
     styleUrls: ['./tab.component.scss'],
 })

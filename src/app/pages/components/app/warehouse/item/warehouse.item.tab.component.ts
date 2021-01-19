@@ -1,5 +1,5 @@
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
@@ -215,6 +215,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
 @Component({
     moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-tabset-app-warehouse-item',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../tab/tab.component.html',
     styleUrls: ['../../../tab/tab.component.scss'],
 })

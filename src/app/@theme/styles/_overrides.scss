@@ -56,6 +56,8 @@
     }
     nb-layout-header.fixed ~ .layout-container {
         padding-top: 3.75rem;
+        min-height: calc(100vh - 3.75rem);
+        overflow: hidden;
     }
     nb-layout .layout .layout-container .content {
         .columns nb-layout-column {

@@ -1,6 +1,7 @@
 import {BaseTabsetComponent} from '../../tab/base.tab.component';
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
@@ -38,6 +39,7 @@ export const APP_TAB_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolba
 
 @Component({
     selector: 'ngx-tabset-app',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../tab/tab.component.html',
     styleUrls: ['../../tab/tab.component.scss'],
 })
@@ -244,9 +246,6 @@ export class AppTabsetComponent<
                 () => this.__toolbarSubscription = this.toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e)),
                 this);
             this.doToolbarActionsSettings();
-            // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
-            // TODO after updating toolbar action settings
-            this.detectChanges();
         }
 
         this.tabComponents = [];
@@ -255,9 +254,13 @@ export class AppTabsetComponent<
                 this.setTabComponent(tabIndex, this._tabComponentTypes[tabIndex]);
             this.tabComponents.push(tabComponent);
             const tabConfig: ITabConfig = this.getTabConfig(tabIndex);
-            tabConfig['componentRef'] = tabComponent;
+            ObjectUtils.set(tabConfig, 'componentRef', tabComponent);
             this.configTabByIndex(tabIndex, tabConfig);
         }
+
+        // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
+        // TODO after updating toolbar action settings
+        this.detectChanges();
     }
 
     /**
