@@ -30,7 +30,6 @@
             <nb-tab
                 #tab{{index}}
                 *ngFor="let index of getNumberOfTabs() | ngxArrayOfNumbers"
-                [tabTitle]="index"
                 #tabComponent>
                 <!-- Tab area {{index}} content placeholder -->
                 <div class="tab-content" (resize)="onResized({ data: $event })">

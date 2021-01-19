@@ -10,6 +10,9 @@ import {NgxTabsetComponent} from './tab.component';
 import {throwError} from 'rxjs';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import ArrayUtils from '@app/utils/common/array.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
+import NumberUtils from '@app/utils/common/number.utils';
 
 /**
  * Base horizontal split-pane component base on {NbTabsetModule}
@@ -73,9 +76,11 @@ export class BaseTabsetComponent<T extends DataSource> extends NgxTabsetComponen
      * @return created component
      */
     protected setTabComponent(tabIndex: number, componentType: Type<any>): any {
-        (!tabIndex || this.getNumberOfTabs() <= tabIndex || tabIndex < 0)
-        && throwError('Could not create tab component at the invalid index tab (' + tabIndex + ')');
-        const viewContainerRef: ViewContainerRef = this.getTabContentHolderViewContainerComponents()[tabIndex];
+        const viewContainerRef: ViewContainerRef = ArrayUtils.get<ViewContainerRef>(
+            this.getTabContentHolderViewContainerComponents(), tabIndex);
+        (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(tabIndex)
+            && 0 <= tabIndex && tabIndex < this.getNumberOfTabs())
+        || throwError('Could not create tab component at the invalid index tab (' + tabIndex + ')');
         return super.createComponentAt(viewContainerRef, componentType);
     }
 

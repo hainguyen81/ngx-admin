@@ -23,6 +23,7 @@ import {AbstractTabComponent} from './abstract.tab.component';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NbTabComponent, NbTabsetComponent} from '@nebular/theme';
+import ArrayUtils from '@app/utils/common/array.utils';
 
 /**
  * SplitPane component base on {NbTabsetModule}
@@ -169,9 +170,9 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
         if (!this.__tabComponentViewContainerRefs || !this.__tabComponentViewContainerRefs.length) {
             this.__tabComponentViewContainerRefs = ComponentUtils.queryComponents(this.queryTabComponentViewContainerRefs);
         }
-        if (!this.__tabsComponent || !this.__tabsComponent.length) {
+        if (ArrayUtils.isEmptyArray(this.__tabsComponent)) {
             this.__tabsComponent = ComponentUtils.queryComponents(this.queryTabsComponent);
-            if ((!this.__tabsComponent || !this.__tabsComponent.length) && this.__tabsetComponent) {
+            if (ArrayUtils.isEmptyArray(this.__tabsComponent) && this.__tabsetComponent) {
                 this.__tabsComponent = ComponentUtils.queryComponents(this.__tabsetComponent.tabs);
             }
         }

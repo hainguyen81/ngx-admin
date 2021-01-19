@@ -462,6 +462,13 @@
     .ngx-contextmenu:hover {
         outline: none;
     }
+    .ngx-contextmenu .dropdown-menu.show a,
+    .ngx-contextmenu .dropdown-menu.show a:hover,
+    .ngx-contextmenu .dropdown-menu.show a:focus,
+    .ngx-contextmenu .dropdown-menu.show a:active {
+        text-decoration: none;
+    }
+
     /** button */
     .btn-group.ngx-toolbar-actions, .ngx-toolbar-actions,
     .btn-group.ngx-toolbar-actions button, .btn-group.ngx-toolbar-actions button span, .btn-group.ngx-toolbar-actions [nbbutton] span,

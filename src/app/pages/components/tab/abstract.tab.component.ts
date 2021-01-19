@@ -14,6 +14,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '@app/utils/common/object.utils';
+import ArrayUtils from '@app/utils/common/array.utils';
 
 /* {NbTabComponent} tab configuration */
 export interface ITabConfig {
@@ -283,7 +284,9 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      * @param config to apply
      */
     protected configTabByIndex(tabIndex: number, config: ITabConfig): void {
-        this.configTab((0 <= tabIndex && tabIndex < this.getNumberOfTabs() ? this.tabsComponent[tabIndex] : null), config);
+        const tab: NbTabComponent = (0 <= tabIndex && tabIndex < this.getNumberOfTabs()
+            ? ArrayUtils.get<NbTabComponent>(this.tabsComponent, tabIndex) : null);
+        this.configTab(tab, config);
     }
 
     /**

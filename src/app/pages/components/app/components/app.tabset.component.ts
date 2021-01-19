@@ -9,6 +9,7 @@ import {
     Inject,
     InjectionToken,
     OnDestroy,
+    OnInit,
     Renderer2,
     Type,
     ViewContainerRef,
@@ -31,6 +32,8 @@ import {Subscription, throwError} from 'rxjs';
 import ObjectUtils from '../../../../utils/common/object.utils';
 import FunctionUtils from '../../../../utils/common/function.utils';
 import PromiseUtils from '../../../../utils/common/promise.utils';
+import ArrayUtils from '@app/utils/common/array.utils';
+import TimerUtils from '@app/utils/common/timer.utils';
 
 export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
     = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
@@ -48,7 +51,7 @@ export class AppTabsetComponent<
     TB extends AppToolbarComponent<D>,
     TC extends AbstractComponent>
     extends BaseTabsetComponent<D>
-    implements AfterViewInit, OnDestroy {
+    implements AfterViewInit, OnDestroy, OnInit {
 
     // -------------------------------------------------
     // DECLARATION
@@ -90,8 +93,7 @@ export class AppTabsetComponent<
      * @return all {ITabConfig}
      */
     protected getTabConfig(tabIndex: number): ITabConfig {
-        return ((this.tabConfigs || []).length && 0 <= tabIndex && tabIndex < this.tabConfigs.length
-            ? this.tabConfigs[tabIndex] : undefined);
+        return ArrayUtils.get<ITabConfig>(this.tabConfigs, tabIndex);
     }
 
     /**
@@ -100,9 +102,8 @@ export class AppTabsetComponent<
      * @param tabComponentType to cast
      */
     protected getTabComponent<C extends AbstractComponent>(tabIndex: number, tabComponentType: Type<C>): C {
-        return ((this.tabComponents || []).length && 0 <= tabIndex && tabIndex < this.tabComponents.length
-            && (this.tabComponents[tabIndex] instanceof tabComponentType)
-            ? <C>this.tabComponents[tabIndex] : undefined);
+        const tabComponent: C = ArrayUtils.get<C>(this.tabComponents, tabIndex);
+        return ObjectUtils.isNotNou(tabComponent) && tabComponent instanceof tabComponentType ? tabComponent : undefined;
     }
 
     /**
@@ -112,9 +113,10 @@ export class AppTabsetComponent<
      */
     protected getTabComponentById<C extends AbstractComponent>(tabId: string, tabComponentType: Type<C>): C {
         if (!(tabId || '').length) return undefined;
-        const tabConfig: ITabConfig[] = (this.tabConfigs || []).filter(cfg => (cfg && cfg.tabId === tabId));
-        return ((tabConfig || []).length && tabConfig[0]['componentRef'] instanceof tabComponentType
-            ? <C>tabConfig[0]['componentRef'] : undefined);
+        const tabConfig: ITabConfig = ArrayUtils.first<ITabConfig>(
+            (this.tabConfigs || []).filter(cfg => (cfg && cfg.tabId === tabId)));
+        const tabCompRef: C = ObjectUtils.as<C>(ObjectUtils.get(tabConfig, 'componentRef'));
+        return ObjectUtils.isNotNou(tabCompRef) && tabCompRef instanceof tabComponentType ? tabCompRef : undefined;
     }
 
     /**
@@ -173,18 +175,22 @@ export class AppTabsetComponent<
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        super.setNumberOfTabs((_tabComponentTypes || []).length);
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.setNumberOfTabs(ArrayUtils.lengthOf(this._tabComponentTypes));
+    }
+
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
         // create tab components
-        this.createTabComponents();
+        TimerUtils.timeout(() => this.createTabComponents(), 100, this);
     }
 
     ngOnDestroy(): void {
@@ -248,6 +254,7 @@ export class AppTabsetComponent<
             this.doToolbarActionsSettings();
         }
 
+        this.getLogger().debug(['Tabs container', this.tabsComponent, this.getTabContentHolderViewContainerComponents()]);
         this.tabComponents = [];
         for (let tabIndex: number = 0; tabIndex < (this._tabComponentTypes || []).length; tabIndex++) {
             const tabComponent: AbstractComponent =

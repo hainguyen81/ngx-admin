@@ -1,8 +1,9 @@
-import {ComponentFactory, ComponentFactoryResolver, ComponentRef, Inject, Injectable, Type, ViewContainerRef,} from '@angular/core';
+import {ComponentFactory, ComponentFactoryResolver, ComponentRef, Inject, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {IComponentService} from './interface.service';
 import {throwError} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {InjectionConfig} from '../../config/injection.config';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /**
  * Abstract component service support for rendering/loading component dynamically, etc.
@@ -86,6 +87,10 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
      */
     public resolve(clearView?: boolean | false): ComponentRef<T> {
         const viewContainerRef = this.getViewContainerRef();
+        if (ObjectUtils.isNou(viewContainerRef)) {
+            return undefined;
+        }
+
         const componentFactory: ComponentFactory<T> =
             this.getFactoryResolver().resolveComponentFactory(this.getComponentType());
         const componentRef: ComponentRef<T> = componentFactory.create(InjectionConfig.Injector);
