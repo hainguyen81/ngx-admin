@@ -23,6 +23,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
+import FunctionUtils from '@app/utils/common/function.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /**
  * SplitPane component base on {AngularSplitModule}
@@ -152,18 +154,21 @@ export class NgxSplitPaneComponent extends AbstractSplitpaneComponent<DataSource
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.headerViewContainerRef) {
-            this.headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
-        }
-        if (!this.splitAreaHolderViewContainerRefs || !this.splitAreaHolderViewContainerRefs.length) {
-            this.splitAreaHolderViewContainerRefs = ComponentUtils.queryComponents(this.querySplitAreaHolderViewContainerRefs);
-        }
-        if (!this.__splitComponent) {
-            this.__splitComponent = ComponentUtils.queryComponent(this.querySplitComponent);
-        }
-        if ((!this.__splitAreas || !this.__splitAreas.length)) {
-            this.__splitAreas = ComponentUtils.queryComponents(this.querySplitAreaDirectiveComponents);
-        }
-        this.setHorizontal(this.isHorizontal);
+        this.headerViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.headerViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryHeaderViewContainerRef),
+            this, this.headerViewContainerRef);
+        this.splitAreaHolderViewContainerRefs = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.splitAreaHolderViewContainerRefs),
+            () => ComponentUtils.queryComponents(this.querySplitAreaHolderViewContainerRefs),
+            this, this.splitAreaHolderViewContainerRefs);
+        this.__splitComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__splitComponent),
+            () => ComponentUtils.queryComponent(this.querySplitComponent),
+            this, this.__splitComponent);
+        this.__splitAreas = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__splitAreas),
+            () => ComponentUtils.queryComponents(this.querySplitAreaDirectiveComponents),
+            this, this.__splitAreas);
     }
 }

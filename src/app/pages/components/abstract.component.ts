@@ -1545,6 +1545,15 @@ export abstract class AbstractComponent
     }
 
     /**
+     * When a view uses the OnPush (checkOnce) change detection strategy, explicitly marks the view as changed so that it can be checked again.
+     */
+    public markForCheck(): void {
+        if (!(<any>this.changeDetectorRef).destroyed) {
+            this.changeDetectorRef.markForCheck();
+        }
+    }
+
+    /**
      * Post message to service worker
      * @param serviceWorker {ServiceWorker} controller
      * @param messageChannel {MessageChannel}

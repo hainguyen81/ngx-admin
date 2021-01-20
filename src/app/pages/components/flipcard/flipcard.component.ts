@@ -23,6 +23,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NbCardBackComponent, NbCardFrontComponent, NbFlipCardComponent} from '@nebular/theme';
+import FunctionUtils from '@app/utils/common/function.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /**
  * Flip-card base on {NbFlipCardComponent}
@@ -201,29 +203,37 @@ export class NgxFlipCardComponent extends AbstractFlipcardComponent<DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this._flipcardComponent) {
-            this._flipcardComponent = ComponentUtils.queryComponent(this.queryFlipcardComponent);
-        }
-        if (!this._flipcardFrontComponent) {
-            this._flipcardFrontComponent = ComponentUtils.queryComponent(this.queryFlipcardFrontComponent);
-        }
-        if (!this._flipcardBackComponent) {
-            this._flipcardBackComponent = ComponentUtils.queryComponent(this.queryFlipcardBackComponent);
-        }
-        if (!this._headerViewContainerRef) {
-            this._headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
-        }
-        if (!this._cardFrontComponentHolderViewContainerRef) {
-            this._cardFrontComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);
-        }
-        if (!this._cardBackComponentHolderViewContainerRef) {
-            this._cardBackComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef);
-        }
-        if (!this._frontComponentHolderViewContainerRef) {
-            this._frontComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef);
-        }
-        if (!this._backComponentHolderViewContainerRef) {
-            this._backComponentHolderViewContainerRef = ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
-        }
+        this._flipcardComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._flipcardComponent),
+            () => ComponentUtils.queryComponent(this.queryFlipcardComponent),
+            this, this._flipcardComponent);
+        this._flipcardFrontComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._flipcardFrontComponent),
+            () => ComponentUtils.queryComponent(this.queryFlipcardFrontComponent),
+            this, this._flipcardFrontComponent);
+        this._flipcardBackComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._flipcardBackComponent),
+            () => ComponentUtils.queryComponent(this.queryFlipcardBackComponent),
+            this, this._flipcardBackComponent);
+        this._headerViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._headerViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryHeaderViewContainerRef),
+            this, this._headerViewContainerRef);
+        this._cardFrontComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._cardFrontComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef),
+            this, this._cardFrontComponentHolderViewContainerRef);
+        this._cardBackComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._cardBackComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef),
+            this, this._cardBackComponentHolderViewContainerRef);
+        this._frontComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._frontComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef),
+            this, this._frontComponentHolderViewContainerRef);
+        this._backComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._backComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef),
+            this, this._backComponentHolderViewContainerRef);
     }
 }

@@ -188,8 +188,8 @@ export class AppSplitPaneComponent<
         confirmPopup || throwError('Could not inject ConfirmPopup');
         leftSideType || throwError('The left side component type is required');
         rightRightType || throwError('The right right component type is required');
-        super.setHorizontal(true);
-        super.setNumberOfAreas(2);
+        this.setHorizontal(true);
+        this.setNumberOfAreas(2);
     }
 
     // -------------------------------------------------
@@ -267,17 +267,18 @@ export class AppSplitPaneComponent<
                     .subscribe((e: IEvent) => _this.onClickAction(e)),
                 undefined, this);
             this.doToolbarActionsSettings();
-            // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
-            // TODO after updating toolbar action settings
-            this.detectChanges();
         }
 
         // create left side component
-        this.__leftSideComponent = super.setAreaComponent(0, this.leftSideType);
+        this.__leftSideComponent = this.setAreaComponent(0, this.leftSideType);
         this.__leftSideComponent && this.__leftSideComponent.getDataSource().refresh();
         if (this.shouldAttachRightSideOnStartup()) {
             this.__rightSideComponent = super.setAreaComponent(1, this.rightRightType);
         }
+
+        // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
+        // TODO after updating toolbar action settings
+        this.detectChanges();
     }
 
     /**

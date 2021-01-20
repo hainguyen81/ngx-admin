@@ -23,6 +23,8 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ComponentUtils from '../../../utils/common/component.utils';
 import {NbCardBodyComponent, NbCardComponent, NbCardFooterComponent, NbCardHeaderComponent} from '@nebular/theme';
+import FunctionUtils from '@app/utils/common/function.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /**
  * Reveal-card base on {NbCardComponent}
@@ -184,17 +186,17 @@ export class NgxPanelComponent
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this._cardHeaderHolderViewContainerRef) {
-            this._cardHeaderHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryCardHeaderHolderViewContainerRef);
-        }
-        if (!this._cardBodyHolderViewContainerRef) {
-            this._cardBodyHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryCardBodyHolderViewContainerRef);
-        }
-        if (!this._cardFooterHolderViewContainerRef) {
-            this._cardFooterHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryCardFooterHolderViewContainerRef);
-        }
+        this._cardHeaderHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._cardHeaderHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryCardHeaderHolderViewContainerRef),
+            this, this._cardHeaderHolderViewContainerRef);
+        this._cardBodyHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._cardBodyHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryCardBodyHolderViewContainerRef),
+            this, this._cardBodyHolderViewContainerRef);
+        this._cardFooterHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this._cardFooterHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryCardFooterHolderViewContainerRef),
+            this, this._cardFooterHolderViewContainerRef);
     }
 }

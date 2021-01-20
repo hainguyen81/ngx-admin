@@ -34,6 +34,15 @@ export default class ArrayUtils {
     }
 
     /**
+     * Get a boolean value indicating the specified object whether is not an array and or be an empty array
+     * @param obj to check
+     * @return true for not being an array and or be an empty array; else false
+     */
+    public static isNotArrayOrEmpty(obj: any): boolean {
+        return !ArrayUtils.isArray(obj) || ArrayUtils.isEmptyArray(obj);
+    }
+
+    /**
      * Get a boolean value indicating the specified object whether is an array and non-empty
      * @param obj to check
      * @return true for being an non-empty array; else false
@@ -50,7 +59,7 @@ export default class ArrayUtils {
      */
     public static get<T>(obj: any, index?: number | null | undefined): T {
         return ObjectUtils.as<T>(ArrayUtils.isNotEmptyArray(obj) && NumberUtils.isNumber(index)
-            && 0 < index && index < ArrayUtils.lengthOf(obj)
+            && 0 <= index && index < ArrayUtils.lengthOf(obj)
             ? Array.from(obj)[index] : undefined);
     }
 

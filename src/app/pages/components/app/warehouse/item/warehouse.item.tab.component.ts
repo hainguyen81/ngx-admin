@@ -239,7 +239,8 @@ export class WarehouseItemTabsetComponent
      * @return true for changed; else
      */
     public hasChanged(): boolean {
-        return this.getOverviewTab().getFormGroup().dirty;
+        return this.getOverviewTab() && this.getOverviewTab().getFormGroup()
+            && this.getOverviewTab().getFormGroup().dirty;
     }
 
     /**
@@ -255,7 +256,7 @@ export class WarehouseItemTabsetComponent
      * @return the versions of the data model
      */
     public getDataModelVersions(): IWarehouseItem[] {
-        return this.getVersionTab().getVersions();
+        return this.getVersionTab() ? this.getVersionTab().getVersions() : [];
     }
 
     /**
@@ -398,7 +399,7 @@ export class WarehouseItemTabsetComponent
      * @return false for error; else true
      */
     public submit(): boolean {
-        if (!this.getOverviewTab().submit()) {
+        if (!this.getOverviewTab() || !this.getOverviewTab().submit()) {
             this.tabsetComponent.selectTab(this.tabsComponent[0]);
             this.showError('warehouse.title', 'common.form.invalid_data');
             return false;

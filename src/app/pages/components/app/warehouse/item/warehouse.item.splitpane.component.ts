@@ -1,5 +1,5 @@
 import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -38,6 +38,7 @@ export const WarehouseItemSummaryAreaConfig: ISplitAreaConfig = {
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
     selector: 'ngx-split-pane-app-warehouse-item',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../splitpane/splitpane.component.html',
     styleUrls: [
         '../../../splitpane/splitpane.component.scss',

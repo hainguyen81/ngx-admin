@@ -284,9 +284,7 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      * @param config to apply
      */
     protected configTabByIndex(tabIndex: number, config: ITabConfig): void {
-        const tab: NbTabComponent = (0 <= tabIndex && tabIndex < this.getNumberOfTabs()
-            ? ArrayUtils.get<NbTabComponent>(this.tabsComponent, tabIndex) : null);
-        this.configTab(tab, config);
+        this.configTab(ArrayUtils.get<NbTabComponent>(this.tabsComponent, tabIndex), config);
     }
 
     /**

@@ -11,6 +11,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import ArrayUtils from '@app/utils/common/array.utils';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -128,7 +129,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource> extends A
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        (numOfAreas >= 0) || throwError('The number of split-area must be equals or greater than 0');
+        (numOfAreas > 0) || throwError('The number of split-area must be equals or greater than 0');
     }
 
     // -------------------------------------------------
@@ -171,8 +172,6 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource> extends A
      * @param config to apply
      */
     protected configAreaByIndex(areaIndex: number, config: ISplitAreaConfig): void {
-        const area: SplitAreaDirective = (0 <= areaIndex && areaIndex < this.splitAreaComponents.length
-                ? this.splitAreaComponents[areaIndex] : null);
-        this.configArea(area, config);
+        this.configArea(ArrayUtils.get<SplitAreaDirective>(this.splitAreaComponents, areaIndex), config);
     }
 }

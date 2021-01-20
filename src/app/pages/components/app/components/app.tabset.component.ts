@@ -9,7 +9,6 @@ import {
     Inject,
     InjectionToken,
     OnDestroy,
-    OnInit,
     Renderer2,
     Type,
     ViewContainerRef,
@@ -33,7 +32,6 @@ import ObjectUtils from '../../../../utils/common/object.utils';
 import FunctionUtils from '../../../../utils/common/function.utils';
 import PromiseUtils from '../../../../utils/common/promise.utils';
 import ArrayUtils from '@app/utils/common/array.utils';
-import TimerUtils from '@app/utils/common/timer.utils';
 
 export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
     = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
@@ -51,7 +49,7 @@ export class AppTabsetComponent<
     TB extends AppToolbarComponent<D>,
     TC extends AbstractComponent>
     extends BaseTabsetComponent<D>
-    implements AfterViewInit, OnDestroy, OnInit {
+    implements AfterViewInit, OnDestroy {
 
     // -------------------------------------------------
     // DECLARATION
@@ -175,22 +173,18 @@ export class AppTabsetComponent<
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
+        this.setNumberOfTabs(ArrayUtils.lengthOf(this._tabComponentTypes));
     }
 
     // -------------------------------------------------
     // EVENTS
     // -------------------------------------------------
 
-    ngOnInit(): void {
-        super.ngOnInit();
-        this.setNumberOfTabs(ArrayUtils.lengthOf(this._tabComponentTypes));
-    }
-
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
         // create tab components
-        TimerUtils.timeout(() => this.createTabComponents(), 100, this);
+        this.createTabComponents();
     }
 
     ngOnDestroy(): void {
@@ -243,27 +237,33 @@ export class AppTabsetComponent<
      */
     private createTabComponents(): void {
         const _this: AppTabsetComponent<T, D, TB, TC> = this;
+
         // create toolbar component
         if (this._toolbarComponentType) {
             this.toolbarComponent = super.setToolbarComponent(this._toolbarComponentType);
             this.toolbarComponent.showActions = true;
             FunctionUtils.invokeTrue(
-                ObjectUtils.isNou(this.__toolbarSubscription),
-                () => this.__toolbarSubscription = this.toolbarComponent.actionListener().subscribe((e: IEvent) => _this.onClickAction(e)),
-                this);
+                ObjectUtils.isNou(_this.__toolbarSubscription),
+                () => this.__toolbarSubscription = this.toolbarComponent.actionListener()
+                    .subscribe((e: IEvent) => _this.onClickAction(e)),
+                _this);
             this.doToolbarActionsSettings();
         }
 
-        this.getLogger().debug(['Tabs container', this.tabsComponent, this.getTabContentHolderViewContainerComponents()]);
-        this.tabComponents = [];
-        for (let tabIndex: number = 0; tabIndex < (this._tabComponentTypes || []).length; tabIndex++) {
-            const tabComponent: AbstractComponent =
-                this.setTabComponent(tabIndex, this._tabComponentTypes[tabIndex]);
-            this.tabComponents.push(tabComponent);
-            const tabConfig: ITabConfig = this.getTabConfig(tabIndex);
-            ObjectUtils.set(tabConfig, 'componentRef', tabComponent);
-            this.configTabByIndex(tabIndex, tabConfig);
+        // create tab components
+        if (ArrayUtils.isNotEmptyArray(this.getTabContentHolderViewContainerComponents())) {
+            this.tabComponents = [];
+            for (let tabIndex: number = 0; tabIndex < (this._tabComponentTypes || []).length; tabIndex++) {
+                const tabComponent: AbstractComponent =
+                    this.setTabComponent(tabIndex, this._tabComponentTypes[tabIndex]);
+                this.tabComponents.push(tabComponent);
+                const tabConfig: ITabConfig = this.getTabConfig(tabIndex);
+                ObjectUtils.set(tabConfig, 'componentRef', tabComponent);
+                this.configTabByIndex(tabIndex, tabConfig);
+            }
         }
+
+        super.queryComponents();
 
         // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
         // TODO after updating toolbar action settings

@@ -24,6 +24,8 @@ import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NbTabComponent, NbTabsetComponent} from '@nebular/theme';
 import ArrayUtils from '@app/utils/common/array.utils';
+import FunctionUtils from '@app/utils/common/function.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /**
  * SplitPane component base on {NbTabsetModule}
@@ -157,24 +159,45 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.headerViewContainerRef) {
-            this.headerViewContainerRef = ComponentUtils.queryComponent(this.queryHeaderViewContainerRef);
-        }
-        if (!this.tabContentHolderViewContainerRefs || !this.tabContentHolderViewContainerRefs.length) {
-            this.tabContentHolderViewContainerRefs =
-                ComponentUtils.queryComponents(this.queryTabContentHolderViewContainerRefs);
-        }
-        if (!this.__tabsetComponent) {
-            this.__tabsetComponent = ComponentUtils.queryComponent(this.queryTabsetComponent);
-        }
-        if (!this.__tabComponentViewContainerRefs || !this.__tabComponentViewContainerRefs.length) {
-            this.__tabComponentViewContainerRefs = ComponentUtils.queryComponents(this.queryTabComponentViewContainerRefs);
-        }
-        if (ArrayUtils.isEmptyArray(this.__tabsComponent)) {
-            this.__tabsComponent = ComponentUtils.queryComponents(this.queryTabsComponent);
-            if (ArrayUtils.isEmptyArray(this.__tabsComponent) && this.__tabsetComponent) {
-                this.__tabsComponent = ComponentUtils.queryComponents(this.__tabsetComponent.tabs);
-            }
-        }
+        // query components
+        this.queryComponents();
+    }
+
+    // -------------------------------------------------
+    // FUNCTIONS
+    // -------------------------------------------------
+
+    /**
+     * Query all necessary components via {@ViewChildren}
+     */
+    protected queryComponents(): void {
+        this.headerViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.headerViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryHeaderViewContainerRef),
+            this, this.headerViewContainerRef);
+        this.tabContentHolderViewContainerRefs = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.tabContentHolderViewContainerRefs),
+            () => ComponentUtils.queryComponents(this.queryTabContentHolderViewContainerRefs),
+            this, this.tabContentHolderViewContainerRefs);
+        this.__tabsetComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__tabsetComponent),
+            () => ComponentUtils.queryComponent(this.queryTabsetComponent),
+            this, this.__tabsetComponent);
+        this.__tabComponentViewContainerRefs = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__tabComponentViewContainerRefs),
+            () => ComponentUtils.queryComponents(this.queryTabComponentViewContainerRefs),
+            this, this.__tabComponentViewContainerRefs);
+        this.__tabsComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__tabsComponent),
+            () => ComponentUtils.queryComponents(this.queryTabsComponent),
+            this, this.__tabsComponent);
+        this.__tabsComponent = FunctionUtils.invokeTrue(
+            ArrayUtils.isNotArrayOrEmpty(this.__tabsComponent) && ObjectUtils.isNotNou(this.__tabsetComponent),
+            () => ComponentUtils.queryComponents(this.__tabsetComponent.tabs),
+            this, this.__tabsComponent);
+        console.log(['Query tab components',
+            'NbTabComponent', this.__tabsComponent, 'Query', this.queryTabsComponent,
+            'NbTabsetComponent', this.__tabsetComponent, 'Query', this.queryTabsetComponent,
+            this.__tabComponentViewContainerRefs, this.tabContentHolderViewContainerRefs]);
     }
 }

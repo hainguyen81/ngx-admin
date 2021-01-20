@@ -23,6 +23,8 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NbCardBackComponent, NbCardFrontComponent, NbRevealCardComponent} from '@nebular/theme';
+import FunctionUtils from '@app/utils/common/function.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /**
  * Reveal-card base on {NbRevealCardComponent}
@@ -180,31 +182,33 @@ export class NgxRevealCardComponent extends AbstractRevealcardComponent<DataSour
     ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (!this.__revealcardComponent) {
-            this.__revealcardComponent = ComponentUtils.queryComponent(this.queryRevealcardComponent);
-        }
-        if (!this.__revealcardFrontComponent) {
-            this.__revealcardFrontComponent = ComponentUtils.queryComponent(this.queryRevealcardFrontComponent);
-        }
-        if (!this.__revealcardBackComponent) {
-            this.__revealcardBackComponent = ComponentUtils.queryComponent(this.queryRevealcardBackComponent);
-        }
-        if (!this.cardFrontComponentHolderViewContainerRef) {
-            this.cardFrontComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef);
-        }
-        if (!this.cardBackComponentHolderViewContainerRef) {
-            this.cardBackComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef);
-        }
-
-        if (!this.frontComponentHolderViewContainerRef) {
-            this.frontComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef);
-        }
-        if (!this.backComponentHolderViewContainerRef) {
-            this.backComponentHolderViewContainerRef =
-                ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef);
-        }
+        this.__revealcardComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__revealcardComponent),
+            () => ComponentUtils.queryComponent(this.queryRevealcardComponent),
+            this, this.__revealcardComponent);
+        this.__revealcardFrontComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__revealcardFrontComponent),
+            () => ComponentUtils.queryComponent(this.queryRevealcardFrontComponent),
+            this, this.__revealcardFrontComponent);
+        this.__revealcardBackComponent = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__revealcardBackComponent),
+            () => ComponentUtils.queryComponent(this.queryRevealcardBackComponent),
+            this, this.__revealcardBackComponent);
+        this.cardFrontComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.cardFrontComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryCardFrontComponentHolderViewContainerRef),
+            this, this.cardFrontComponentHolderViewContainerRef);
+        this.cardBackComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.cardBackComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryCardBackComponentHolderViewContainerRef),
+            this, this.cardBackComponentHolderViewContainerRef);
+        this.frontComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.frontComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryFrontComponentHolderViewContainerRef),
+            this, this.frontComponentHolderViewContainerRef);
+        this.backComponentHolderViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.backComponentHolderViewContainerRef),
+            () => ComponentUtils.queryComponent(this.queryBackComponentHolderViewContainerRef),
+            this, this.backComponentHolderViewContainerRef);
     }
 }

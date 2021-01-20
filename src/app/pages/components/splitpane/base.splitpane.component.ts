@@ -10,6 +10,9 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {throwError} from 'rxjs';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
+import ArrayUtils from '@app/utils/common/array.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
+import NumberUtils from '@app/utils/common/number.utils';
 
 /**
  * Base horizontal split-pane component base on {AngularSplitModule}
@@ -86,9 +89,10 @@ export class BaseSplitPaneComponent<T extends DataSource> extends NgxSplitPaneCo
      * @return created component
      */
     protected setAreaComponent(areaIndex: number, componentType: Type<any>): any {
-        (!areaIndex || this.numberOfAreas <= areaIndex || areaIndex < 0)
-        && throwError('Could not create area component at the invalid index area (' + areaIndex + ')');
-        const viewContainerRef: ViewContainerRef = this.getSplitAreaHolderViewContainerComponents()[areaIndex];
+        const viewContainerRef: ViewContainerRef = ArrayUtils.get<ViewContainerRef>(this.getSplitAreaHolderViewContainerComponents(), areaIndex);
+        (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(areaIndex)
+            && 0 <= areaIndex && areaIndex < this.numberOfAreas)
+        || throwError('Could not create area component at the invalid index area (' + areaIndex + ')');
         return super.createComponentAt(viewContainerRef, componentType);
     }
 }

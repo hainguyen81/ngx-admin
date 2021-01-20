@@ -65,7 +65,8 @@
     "exclude": [
         "bin",
         "dist",
-        "node_modules"
+        "node_modules",
+        "out-tsc"
     ],
     "typeAcquisition": {
         "enable": true
