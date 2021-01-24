@@ -78,9 +78,6 @@ export class BaseTabsetComponent<T extends DataSource> extends NgxTabsetComponen
     protected setTabComponent(tabIndex: number, componentType: Type<any>): any {
         const viewContainerRef: ViewContainerRef = ArrayUtils.get<ViewContainerRef>(
             this.tabContentHolderViewContainerComponents, tabIndex);
-        console.log(['Tab component', viewContainerRef, (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(tabIndex)
-            && 0 <= tabIndex && tabIndex < this.numberOfTabs
-            && 0 <= tabIndex && tabIndex < ArrayUtils.lengthOf(this.tabsComponent))]);
         (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(tabIndex)
             && 0 <= tabIndex && tabIndex < this.numberOfTabs
             && 0 <= tabIndex && tabIndex < ArrayUtils.lengthOf(this.tabsComponent))

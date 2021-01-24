@@ -27,15 +27,15 @@
                    (focusout)="onFocusOut({ event: $event, data: tabset })"
                    (blur)="onBlur({ event: $event, data: tabset })"
         >
-            <nb-tab
-                #tab{{index}}
-                *ngFor="let index of numberOfTabs | ngxArrayOfNumbers"
-                #tabComponent>
-                <!-- Tab area {{index}} content placeholder -->
+            <!--nb-tab
+                #tabComponent
+                *ngFor="let index of 6 | ngxArrayOfNumbers"
+                #tab{{index}}>
                 <div class="tab-content" (resize)="onResized({ data: $event })">
                     <ng-template #tabContentHolder></ng-template>
                 </div>
-            </nb-tab>
+            </nb-tab-->
+            <nb-tab tabTitle="DCMMMMMMMMMMMMM">TAB NEBULAR</nb-tab>
         </nb-tabset>
         <context-menu #tabContextMenuComponent
                       [disabled]="!(getContextMenu() || []).length"
