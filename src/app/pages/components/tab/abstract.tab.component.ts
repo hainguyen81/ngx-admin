@@ -165,7 +165,7 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      * @return route parameters
      */
     public get routeParam(): string {
-        return this.routeParam;
+        return this._routeParam;
     }
 
     /**
