@@ -1,12 +1,12 @@
-<nb-card [class.m-0]="!isShowHeader()" [class.p-0]="!isShowHeader()" class="ngx-tabset-pane">
-    <nb-card-header *ngIf="isShowHeader()" class="ngx-tabset-pane-header">
+<nb-card [class.m-0]="!showHeader" [class.p-0]="!showHeader" class="ngx-tabset-pane">
+    <nb-card-header *ngIf="showHeader" class="ngx-tabset-pane-header">
         <ng-template #headerHolder></ng-template>
     </nb-card-header>
 
-    <nb-card-body [class.m-0]="!isShowHeader()" [class.p-0]="!isShowHeader()" class="ngx-tabset-pane-body">
+    <nb-card-body [class.m-0]="!showHeader" [class.p-0]="!showHeader" class="ngx-tabset-pane-body">
         <nb-tabset #tabset
-                   [fullWidth]="isFullWidth()"
-                   [routeParam]="getRouteParam()"
+                   [fullWidth]="fullWidth"
+                   [routeParam]="routeParam"
                    [contextMenu]="tabContextMenuComponent"
                    (contextmenu)="onContextMenu({ event: $event, data: tabset })"
                    (keydown)="onKeyDown({ event: $event, data: tabset })"
@@ -29,7 +29,7 @@
         >
             <nb-tab
                 #tab{{index}}
-                *ngFor="let index of getNumberOfTabs() | ngxArrayOfNumbers"
+                *ngFor="let index of numberOfTabs | ngxArrayOfNumbers"
                 #tabComponent>
                 <!-- Tab area {{index}} content placeholder -->
                 <div class="tab-content" (resize)="onResized({ data: $event })">
