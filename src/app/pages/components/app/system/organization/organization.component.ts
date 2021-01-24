@@ -39,11 +39,11 @@ export class OrganizationSplitPaneComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected visibleSpecialActions(): String[] {
+    protected get visibleSpecialActions(): String[] {
         return [ACTION_IMPORT];
     }
 
-    protected visibleActions(): String[] {
+    protected get visibleActions(): String[] {
         return [ACTION_DELETE, ACTION_RESET, ACTION_SAVE];
     }
 
