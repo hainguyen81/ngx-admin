@@ -1,5 +1,5 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
-import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
+import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -13,7 +13,7 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
 import {IEvent} from '../../../abstract.component';
 import {IdGenerators} from '../../../../../config/generator.config';
 import ObjectUtils from '../../../../../utils/common/object.utils';
@@ -106,15 +106,15 @@ export class WarehouseItemFlipcardComponent
         this.selectedModel = new WarehouseItem(IdGenerators.oid.generate(), null, null);
         this.selectedModel.status = Object.keys(CommonConstants.COMMON.STATUS)
             .find(key => ObjectUtils.any(CommonConstants.COMMON.STATUS)[key] === CommonConstants.COMMON.STATUS.ACTIVATED);
-        this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
+        this.backComponent.dataModel = ObjectUtils.deepCopy(this.selectedModel);
     }
 
     protected onEditData($event: IEvent): void {
-        this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
+        this.backComponent.dataModel = ObjectUtils.deepCopy(this.selectedModel);
     }
 
     protected doReset(): void {
-        this.backComponent.setDataModel(ObjectUtils.deepCopy(this.selectedModel));
+        this.backComponent.dataModel = ObjectUtils.deepCopy(this.selectedModel);
     }
 
     protected doSave(): void {
@@ -122,8 +122,8 @@ export class WarehouseItemFlipcardComponent
             return;
         }
 
-        const versions: IWarehouseItem[] = this.backComponent.getDataModelVersions() || [];
-        this.selectedModel = Object.assign({}, this.backComponent.getDataModel());
+        const versions: IWarehouseItem[] = this.backComponent.dataModelVersions || [];
+        this.selectedModel = Object.assign({}, this.backComponent.dataModel);
         this.selectedModel.is_version = 0;
         this.selectedModel.versions = versions.length;
         versions.forEach(version => {

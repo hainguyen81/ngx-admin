@@ -55,8 +55,8 @@ export class AppTabsetComponent<
     // DECLARATION
     // -------------------------------------------------
 
-    private toolbarComponent: TB;
-    private tabComponents: AbstractComponent[];
+    private __toolbarComponent: TB;
+    private __tabComponents: TC[];
 
     private __toolbarSubscription: Subscription;
 
@@ -67,14 +67,14 @@ export class AppTabsetComponent<
     /**
      * Get the special toolbar action identities that need to be visible
      */
-    protected visibleSpecialActions(): String[] {
+    protected get visibleSpecialActions(): String[] {
         return [];
     }
 
     /**
      * Get the toolbar action identities that need to be visible
      */
-    protected visibleActions(): String[] {
+    protected get visibleActions(): String[] {
         return [];
     }
 
@@ -121,8 +121,16 @@ export class AppTabsetComponent<
      * Get the {AppToolbarComponent} instance
      * @return the {AppToolbarComponent} instance
      */
-    protected getToolbarComponent(): TB {
-        return this.toolbarComponent;
+    protected get toolbarComponent(): TB {
+        return this.__toolbarComponent;
+    }
+
+    /**
+     * Get the {AppToolbarComponent} instance
+     * @return the {AppToolbarComponent} instance
+     */
+    protected get tabComponents(): TC[] {
+        return this.__tabComponents;
     }
 
     // -------------------------------------------------
@@ -173,7 +181,7 @@ export class AppTabsetComponent<
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        this.setNumberOfTabs(ArrayUtils.lengthOf(this._tabComponentTypes));
+        this.numberOfTabs = ArrayUtils.lengthOf(this._tabComponentTypes);
     }
 
     // -------------------------------------------------
@@ -240,8 +248,8 @@ export class AppTabsetComponent<
 
         // create toolbar component
         if (this._toolbarComponentType) {
-            this.toolbarComponent = super.setToolbarComponent(this._toolbarComponentType);
-            this.toolbarComponent.showActions = true;
+            this.__toolbarComponent = super.setToolbarComponent(this._toolbarComponentType);
+            this.__toolbarComponent.showActions = true;
             FunctionUtils.invokeTrue(
                 ObjectUtils.isNou(_this.__toolbarSubscription),
                 () => this.__toolbarSubscription = this.toolbarComponent.actionListener()
@@ -251,19 +259,18 @@ export class AppTabsetComponent<
         }
 
         // create tab components
-        if (ArrayUtils.isNotEmptyArray(this.getTabContentHolderViewContainerComponents())) {
-            this.tabComponents = [];
+        if (ArrayUtils.isNotEmptyArray(this.tabContentHolderViewContainerComponents)) {
+            this.__tabComponents = [];
             for (let tabIndex: number = 0; tabIndex < (this._tabComponentTypes || []).length; tabIndex++) {
-                const tabComponent: AbstractComponent =
-                    this.setTabComponent(tabIndex, this._tabComponentTypes[tabIndex]);
-                this.tabComponents.push(tabComponent);
-                const tabConfig: ITabConfig = this.getTabConfig(tabIndex);
-                ObjectUtils.set(tabConfig, 'componentRef', tabComponent);
-                this.configTabByIndex(tabIndex, tabConfig);
+                const __tabComponent: TC = <TC>this.setTabComponent(tabIndex, this._tabComponentTypes[tabIndex]);
+                if (ObjectUtils.isNotNou(__tabComponent)) {
+                    __tabComponent && this.__tabComponents.push(__tabComponent);
+                    const tabConfig: ITabConfig = this.getTabConfig(tabIndex);
+                    ObjectUtils.set(tabConfig, 'componentRef', __tabComponent);
+                    this.configTabByIndex(tabIndex, tabConfig);
+                }
             }
         }
-
-        super.queryComponents();
 
         // TODO call detect changes to avoid ExpressionChangedAfterItHasBeenCheckedError exception
         // TODO after updating toolbar action settings
@@ -314,20 +321,20 @@ export class AppTabsetComponent<
      * Apply toolbar actions settings while flipping
      */
     protected doToolbarActionsSettings() {
-        if (ObjectUtils.isNou(this.getToolbarComponent())) return;
+        if (ObjectUtils.isNou(this.toolbarComponent)) return;
 
-        this.getToolbarComponent().showActions = true;
-        const actions: IToolbarActionsConfig[] = this.getToolbarComponent().getActions();
+        this.toolbarComponent.showActions = true;
+        const actions: IToolbarActionsConfig[] = this.toolbarComponent.getActions();
         (actions || []).forEach(action => {
             switch (action.id) {
                 // special actions, then default not visible
                 case ACTION_DELETE_DATABASE:
                 case ACTION_IMPORT: {
-                    action.visible = this.visibleSpecialActions().contains(action.id);
+                    action.visible = this.visibleSpecialActions.contains(action.id);
                     break;
                 }
                 default: {
-                    action.visible = this.visibleActions().contains(action.id);
+                    action.visible = this.visibleActions.contains(action.id);
                     break;
                 }
             }

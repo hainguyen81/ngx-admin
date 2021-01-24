@@ -102,14 +102,14 @@ export class AppSplitPaneComponent<
     /**
      * Get the special toolbar action identities that need to be visible
      */
-    protected visibleSpecialActions(): String[] {
+    protected get visibleSpecialActions(): String[] {
         return [];
     }
 
     /**
      * Get the toolbar action identities that need to be visible
      */
-    protected visibleActions(): String[] {
+    protected get visibleActions(): String[] {
         return [];
     }
 
@@ -349,11 +349,11 @@ export class AppSplitPaneComponent<
                 // special actions, then default not visible
                 case ACTION_DELETE_DATABASE:
                 case ACTION_IMPORT: {
-                    action.visible = this.visibleSpecialActions().contains(action.id);
+                    action.visible = this.visibleSpecialActions.contains(action.id);
                     break;
                 }
                 default: {
-                    action.visible = this.visibleActions().contains(action.id);
+                    action.visible = this.visibleActions.contains(action.id);
                     break;
                 }
             }

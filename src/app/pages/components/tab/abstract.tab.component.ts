@@ -110,34 +110,34 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      * Get the number of nb-tab
      * @return the number of nb-tab
      */
-    public getNumberOfTabs(): number {
-        return this.numberOfTabs;
+    public get numberOfTabs(): number {
+        return this._numberOfTabs;
     }
 
     /**
      * Set the number of nb-tab
-     * @param numberOfTabs the number of nb-tab
+     * @param _numberOfTabs the number of nb-tab
      */
-    protected setNumberOfTabs(numberOfTabs: number): void {
-        this.numberOfTabs = numberOfTabs;
+    public set numberOfTabs(_numberOfTabs: number) {
+        this._numberOfTabs = _numberOfTabs;
     }
 
     /**
      * Get a boolean value indicating this component whether takes full width of value
      * @return true/false
      */
-    public isFullWidthValue(): boolean {
-        return this.fullWidthValue;
+    public get fullWidthValue(): boolean {
+        return this._fullWidthValue;
     }
 
     /**
      * Set a boolean value indicating this component whether takes full width of value
-     * @param fullWidthValue take full width of value
+     * @param _fullWidthValue take full width of value
      */
-    public setFullWidthValue(fullWidthValue?: boolean | false): void {
-        this.fullWidthValue = fullWidthValue || false;
+    public set fullWidthValue(_fullWidthValue: boolean) {
+        this._fullWidthValue = _fullWidthValue || false;
         if (this.tabsetComponent) {
-            this.tabsetComponent.fullWidthValue = this.fullWidthValue;
+            this.tabsetComponent.fullWidthValue = this._fullWidthValue;
         }
     }
 
@@ -145,18 +145,18 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      * Get a boolean value indicating this component whether takes full width of a parent
      * @return true/false
      */
-    public isFullWidth(): boolean {
-        return this.fullWidth;
+    public get fullWidth(): boolean {
+        return this._fullWidth;
     }
 
     /**
      * Set a boolean value indicating this component whether takes full width of a parent
-     * @param fullWidth take full width of a parent
+     * @param _fullWidth take full width of a parent
      */
-    public setFullWidth(fullWidth?: boolean | false): void {
-        this.fullWidth = fullWidth || false;
+    public set fullWidth(_fullWidth: boolean) {
+        this._fullWidth = _fullWidth || false;
         if (this.tabsetComponent) {
-            this.tabsetComponent.fullWidth = this.fullWidth;
+            this.tabsetComponent.fullWidth = this._fullWidth;
         }
     }
 
@@ -164,18 +164,18 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      * Get a value indicating this component whether listens to this parameter and selects corresponding tab.
      * @return route parameters
      */
-    public getRouteParam(): string {
+    public get routeParam(): string {
         return this.routeParam;
     }
 
     /**
      * Set a value indicating this component whether listens to this parameter and selects corresponding tab.
-     * @param routeParam if specified - tabset listens to this parameter and selects corresponding tab.
+     * @param _routeParam if specified - tabset listens to this parameter and selects corresponding tab.
      */
-    public setRouteParam(routeParam?: string | null): void {
-        this.routeParam = routeParam || null;
+    public set routeParam(_routeParam: string) {
+        this._routeParam = _routeParam || null;
         if (this.tabsetComponent) {
-            this.tabsetComponent.routeParam = this.routeParam;
+            this.tabsetComponent.routeParam = this._routeParam;
         }
     }
 
@@ -220,10 +220,10 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
                           @Inject(Lightbox) lightbox?: Lightbox,
                           @Inject(Router) router?: Router,
                           @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                          private numberOfTabs?: number | 1,
-                          private fullWidthValue?: boolean | false,
-                          private fullWidth?: boolean | true,
-                          private routeParam?: string | null) {
+                          private _numberOfTabs?: number | 1,
+                          private _fullWidthValue?: boolean | false,
+                          private _fullWidth?: boolean | true,
+                          private _routeParam?: string | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,

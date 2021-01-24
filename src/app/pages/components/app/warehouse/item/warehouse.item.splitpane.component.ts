@@ -16,6 +16,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {throwError} from 'rxjs';
+import FunctionUtils from '@app/utils/common/function.utils';
+import ObjectUtils from '@app/utils/common/object.utils';
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {
@@ -57,7 +59,7 @@ export class WarehouseItemSplitPaneComponent
     // DECLARATION
     // -------------------------------------------------
 
-    private dataModel: IWarehouseItem;
+    private __dataModel: IWarehouseItem;
 
     // -------------------------------------------------
     // GETTERS/SETTERS
@@ -67,7 +69,7 @@ export class WarehouseItemSplitPaneComponent
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    isShowHeader(): boolean {
+    get showHeader(): boolean {
         return false;
     }
 
@@ -83,35 +85,41 @@ export class WarehouseItemSplitPaneComponent
      * Get a boolean value indicating the data model whether has been changed
      * @return true for changed; else
      */
-    public hasChanged(): boolean {
-        return (this.summaryComponent && this.summaryComponent.hasChanged())
-            || (this.tabsetComponent && this.tabsetComponent.hasChanged());
+    public get hasChanged(): boolean {
+        return (this.summaryComponent && this.summaryComponent.hasChanged)
+            || (this.tabsetComponent && this.tabsetComponent.hasChanged);
     }
 
     /**
      * Get the data model
      * @return data model
      */
-    public getDataModel(): IWarehouseItem {
-        return this.dataModel;
+    public get dataModel(): IWarehouseItem {
+        return this.__dataModel;
     }
 
     /**
      * Get the versions of the data model
      * @return the versions of the data model
      */
-    public getDataModelVersions(): IWarehouseItem[] {
-        return this.tabsetComponent ? this.tabsetComponent.getDataModelVersions() : [];
+    public get dataModelVersions(): IWarehouseItem[] {
+        return this.tabsetComponent ? this.tabsetComponent.dataModelVersions : [];
     }
 
     /**
      * Set the data model
-     * @param dataModel to apply
+     * @param __dataModel to apply
      */
-    public setDataModel(dataModel: IWarehouseItem): void {
-        this.dataModel = dataModel;
-        this.summaryComponent && this.summaryComponent.setDataModel(dataModel);
-        this.tabsetComponent && this.tabsetComponent.setDataModel(dataModel);
+    public set dataModel(__dataModel: IWarehouseItem) {
+        this.__dataModel = __dataModel;
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNotNou(this.summaryComponent),
+            () => this.summaryComponent.dataModel = __dataModel,
+            this);
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNotNou(this.tabsetComponent),
+            () => this.tabsetComponent.dataModel = __dataModel,
+            this);
     }
 
     /**

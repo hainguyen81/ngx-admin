@@ -16,6 +16,7 @@ import ObjectUtils from '../../../../../utils/common/object.utils';
 import {Subscription} from 'rxjs';
 import FunctionUtils from '../../../../../utils/common/function.utils';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
+import ArrayUtils from '@app/utils/common/array.utils';
 
 export const SUPPORTED_IMAGE_FILE_EXTENSIONS: string[] = AppConfig.COMMON.imageFileExtensions;
 
@@ -32,7 +33,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent
     // DECLARATION
     // -------------------------------------------------
 
-    private dataModel: IWarehouseItem;
+    private __dataModel: IWarehouseItem;
     private isChanged: boolean | false;
     private isVersion: boolean | false;
 
@@ -62,7 +63,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent
      * Get a boolean value indicating the data model whether has been changed
      * @return true for changed; else
      */
-    public hasChanged(): boolean {
+    get hasChanged(): boolean {
         return this.isChanged;
     }
 
@@ -70,32 +71,32 @@ export class WarehouseItemSummaryComponent extends AbstractComponent
      * Get the data model
      * @return the data model
      */
-    public getDataModel(): IWarehouseItem {
-        return this.dataModel;
+    get dataModel(): IWarehouseItem {
+        return this.__dataModel;
     }
 
     /**
      * Set the data model
-     * @param dataModel to apply
+     * @param __dataModel to apply
      */
-    public setDataModel(dataModel: IWarehouseItem): void {
-        this.dataModel = dataModel;
+    set dataModel(__dataModel: IWarehouseItem) {
+        this.__dataModel = __dataModel;
     }
 
     /**
      * Get the first image data of data model
      * @return the first image data of data model
      */
-    public getDataModelImage(): string {
-        return (this.getDataModelImages().length ? this.getDataModelImages()[0] : null);
+    public get dataModelImage(): string {
+        return ArrayUtils.get<string>(this.dataModelImages, 0);
     }
 
     /**
      * Get the images data of data model
      * @return the images data of data model
      */
-    public getDataModelImages(): string[] {
-        return (this.getDataModel() ? this.getDataModel().image : null) || [];
+    public get dataModelImages(): string[] {
+        return (this.dataModel ? this.dataModel.image : null) || [];
     }
 
     // -------------------------------------------------
@@ -151,8 +152,8 @@ export class WarehouseItemSummaryComponent extends AbstractComponent
      */
     onChange(e: IEvent): void {
         this.isChanged = true;
-        if (this.getDataModel()) {
-            this.getDataModel().image = e.data;
+        if (this.dataModel) {
+            this.dataModel.image = e.data;
         }
     }
 
@@ -170,7 +171,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent
      * @param e event with $event as {Event}
      */
     protected onSelectFile(e: IEvent) {
-        if (!this.getDataModel()) {
+        if (!this.dataModel) {
             this.showError('warehouse.item.title', 'common.toast.unknown');
             return;
         }
@@ -215,10 +216,10 @@ export class WarehouseItemSummaryComponent extends AbstractComponent
             reader = new FileReader();
             reader.readAsDataURL(f); // read file as data url
             reader.onload = (event) => { // called once readAsDataURL is completed
-                if (!(this.getDataModel().image || []).length) {
-                    this.getDataModel().image = [];
+                if (!(this.dataModel.image || []).length) {
+                    this.dataModel.image = [];
                 }
-                this.getDataModel().image.push(reader.result.toString());
+                this.dataModel.image.push(reader.result.toString());
             };
         } catch (e) {
             this.getLogger().error('Could not read file {' + f.name + '}', e);
@@ -230,8 +231,7 @@ export class WarehouseItemSummaryComponent extends AbstractComponent
      * @param currentImage to show
      */
     public showLightbox(currentImage?: string): void {
-        let images: string[];
-        images = this.getDataModelImages();
+        const images: string[] = this.dataModelImages;
         if ((images || []).length) {
             let album: IAlbum[];
             album = [];

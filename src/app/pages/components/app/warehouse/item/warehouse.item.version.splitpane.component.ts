@@ -17,6 +17,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subject, throwError} from 'rxjs';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import ObjectUtils from '../../../../../utils/common/object.utils';
+import FunctionUtils from '@app/utils/common/function.utils';
 
 /* Warehouse item version left area configuration */
 export const WarehouseItemVersionFormAreaConfig: ISplitAreaConfig = {
@@ -73,7 +74,7 @@ export class WarehouseItemVersionSplitPaneComponent
         return true;
     }
 
-    isShowHeader(): boolean {
+    get showHeader(): boolean {
         return false;
     }
 
@@ -81,7 +82,10 @@ export class WarehouseItemVersionSplitPaneComponent
         this._dataModel = _dataModel;
         this._modifiedDataModel = ObjectUtils.deepCopy(_dataModel);
         this.leftSideComponent && this.leftSideComponent.setModel(this._modifiedDataModel);
-        this.rightSideComponent && this.rightSideComponent.setDataModel(this._modifiedDataModel);
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNotNou(this.rightSideComponent),
+            () => this.rightSideComponent.dataModel = this._modifiedDataModel,
+            this);
     }
 
     // -------------------------------------------------
@@ -194,7 +198,10 @@ export class WarehouseItemVersionSplitPaneComponent
     private performReset(): boolean {
         this._modifiedDataModel = Object.assign(this._modifiedDataModel, this._dataModel);
         this.leftSideComponent && this.leftSideComponent.setModel(this._modifiedDataModel);
-        this.rightSideComponent && this.rightSideComponent.setDataModel(this._modifiedDataModel);
+        FunctionUtils.invokeTrue(
+            ObjectUtils.isNotNou(this.rightSideComponent),
+            () => this.rightSideComponent.dataModel = this._modifiedDataModel,
+            this);
         return false;
     }
 

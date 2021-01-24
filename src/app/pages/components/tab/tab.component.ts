@@ -45,11 +45,11 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
 
     @ViewChildren('tabContentHolder', {read: ViewContainerRef})
     private readonly queryTabContentHolderViewContainerRefs: QueryList<ViewContainerRef>;
-    private tabContentHolderViewContainerRefs: ViewContainerRef[];
+    private __tabContentHolderViewContainerRefs: ViewContainerRef[];
 
     @ViewChildren('headerHolder', {read: ViewContainerRef})
     private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
-    private headerViewContainerRef: ViewContainerRef;
+    private __headerViewContainerRef: ViewContainerRef;
 
     @ViewChildren(NbTabsetComponent)
     private readonly queryTabsetComponent: QueryList<NbTabsetComponent>;
@@ -87,7 +87,7 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
      * Get a boolean value indicating whether showing panel header
      * @return true (default) for showing; else false
      */
-    isShowHeader(): boolean {
+    public get showHeader(): boolean {
         return false;
     }
 
@@ -95,16 +95,16 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
      * Get the {ViewContainerRef} instance of header panel
      * @return the {ViewContainerRef} instance of header panel
      */
-    protected getHeaderViewContainerComponent(): ViewContainerRef {
-        return this.headerViewContainerRef;
+    protected get headerViewContainerComponent(): ViewContainerRef {
+        return this.__headerViewContainerRef;
     }
 
     /**
      * Get the {ViewContainerRef} instances array of {NbTabComponent}
      * @return the {ViewContainerRef} instances array of {NbTabComponent}
      */
-    protected getTabContentHolderViewContainerComponents(): ViewContainerRef[] {
-        return this.tabContentHolderViewContainerRefs;
+    protected get tabContentHolderViewContainerComponents(): ViewContainerRef[] {
+        return this.__tabContentHolderViewContainerRefs;
     }
 
     // -------------------------------------------------
@@ -171,14 +171,14 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
      * Query all necessary components via {@ViewChildren}
      */
     protected queryComponents(): void {
-        this.headerViewContainerRef = FunctionUtils.invokeTrue(
-            ObjectUtils.isNou(this.headerViewContainerRef),
+        this.__headerViewContainerRef = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__headerViewContainerRef),
             () => ComponentUtils.queryComponent(this.queryHeaderViewContainerRef),
-            this, this.headerViewContainerRef);
-        this.tabContentHolderViewContainerRefs = FunctionUtils.invokeTrue(
-            ObjectUtils.isNou(this.tabContentHolderViewContainerRefs),
+            this, this.__headerViewContainerRef);
+        this.__tabContentHolderViewContainerRefs = FunctionUtils.invokeTrue(
+            ObjectUtils.isNou(this.__tabContentHolderViewContainerRefs),
             () => ComponentUtils.queryComponents(this.queryTabContentHolderViewContainerRefs),
-            this, this.tabContentHolderViewContainerRefs);
+            this, this.__tabContentHolderViewContainerRefs);
         this.__tabsetComponent = FunctionUtils.invokeTrue(
             ObjectUtils.isNou(this.__tabsetComponent),
             () => ComponentUtils.queryComponent(this.queryTabsetComponent),
@@ -198,6 +198,6 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
         console.log(['Query tab components',
             'NbTabComponent', this.__tabsComponent, 'Query', this.queryTabsComponent,
             'NbTabsetComponent', this.__tabsetComponent, 'Query', this.queryTabsetComponent,
-            this.__tabComponentViewContainerRefs, this.tabContentHolderViewContainerRefs]);
+            this.__tabComponentViewContainerRefs, this.__tabContentHolderViewContainerRefs]);
     }
 }

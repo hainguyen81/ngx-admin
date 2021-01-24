@@ -228,7 +228,7 @@ export class WarehouseItemTabsetComponent
     // DECLARATION
     // -------------------------------------------------
 
-    private dataModel: IWarehouseItem;
+    private __dataModel: IWarehouseItem;
 
     // -------------------------------------------------
     // FUNCTIONS
@@ -238,46 +238,45 @@ export class WarehouseItemTabsetComponent
      * Get a boolean value indicating the data model whether has been changed
      * @return true for changed; else
      */
-    public hasChanged(): boolean {
-        return this.getOverviewTab() && this.getOverviewTab().getFormGroup()
-            && this.getOverviewTab().getFormGroup().dirty;
+    public get hasChanged(): boolean {
+        return this.overviewTab && this.overviewTab.getFormGroup() && this.overviewTab.getFormGroup().dirty;
     }
 
     /**
      * Get the data model
      * @return data model
      */
-    public getDataModel(): IWarehouseItem {
-        return this.dataModel;
+    public get dataModel(): IWarehouseItem {
+        return this.__dataModel;
     }
 
     /**
      * Get the versions of the data model
      * @return the versions of the data model
      */
-    public getDataModelVersions(): IWarehouseItem[] {
-        return this.getVersionTab() ? this.getVersionTab().getVersions() : [];
+    public get dataModelVersions(): IWarehouseItem[] {
+        return this.versionTab ? this.versionTab.getVersions() : [];
     }
 
     /**
      * Set the data model
      * @param dataModel to apply
      */
-    public setDataModel(dataModel: IWarehouseItem): void {
-        this.dataModel = dataModel;
-        this.getOverviewTab() && this.getOverviewTab().setModel(dataModel);
-        this.getVersionTab() && this.getVersionTab().setDataModel(dataModel);
-        this.getPurchaseTab() && this.getPurchaseTab().setModel(dataModel);
-        this.getSaleTab() && this.getSaleTab().setModel(dataModel);
-        this.getInOutTab() && this.getInOutTab().setModel(dataModel);
-        this.getAdjustmentTab() && this.getAdjustmentTab().setModel(dataModel);
+    public set dataModel(__dataModel: IWarehouseItem) {
+        this.__dataModel = __dataModel;
+        this.overviewTab && this.overviewTab.setModel(__dataModel);
+        this.versionTab && this.versionTab.setDataModel(__dataModel);
+        this.purchaseTab && this.purchaseTab.setModel(__dataModel);
+        this.saleTab && this.saleTab.setModel(__dataModel);
+        this.inOutTab && this.inOutTab.setModel(__dataModel);
+        this.adjustmentTab && this.adjustmentTab.setModel(__dataModel);
     }
 
     /**
      * Get the {WarehouseItemOverviewFormlyComponent} instance
      * @return the {WarehouseItemOverviewFormlyComponent} instance
      */
-    protected getOverviewTab(): WarehouseItemOverviewFormlyComponent {
+    protected get overviewTab(): WarehouseItemOverviewFormlyComponent {
         return this.getTabComponent(0, WarehouseItemOverviewFormlyComponent);
     }
 
@@ -285,7 +284,7 @@ export class WarehouseItemTabsetComponent
      * Get the {WarehouseItemVersionSmartTableComponent} instance
      * @return the {WarehouseItemVersionSmartTableComponent} instance
      */
-    protected getVersionTab(): WarehouseItemVersionSmartTableComponent {
+    protected get versionTab(): WarehouseItemVersionSmartTableComponent {
         return this.getTabComponent(1, WarehouseItemVersionSmartTableComponent);
     }
 
@@ -293,7 +292,7 @@ export class WarehouseItemTabsetComponent
      * Get the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
      * @return the {WarehouseItemPurchaseOrdersSmartTableComponent} instance
      */
-    protected getPurchaseTab(): WarehouseItemPurchaseOrdersSmartTableComponent {
+    protected get purchaseTab(): WarehouseItemPurchaseOrdersSmartTableComponent {
         return this.getTabComponent(2, WarehouseItemPurchaseOrdersSmartTableComponent);
     }
 
@@ -301,7 +300,7 @@ export class WarehouseItemTabsetComponent
      * Get the {WarehouseItemSaleOrdersSmartTableComponent} instance
      * @return the {WarehouseItemSaleOrdersSmartTableComponent} instance
      */
-    protected getSaleTab(): WarehouseItemSaleOrdersSmartTableComponent {
+    protected get saleTab(): WarehouseItemSaleOrdersSmartTableComponent {
         return this.getTabComponent(3, WarehouseItemSaleOrdersSmartTableComponent);
     }
 
@@ -309,7 +308,7 @@ export class WarehouseItemTabsetComponent
      * Get the {WarehouseItemInOutSmartTableComponent} instance
      * @return the {WarehouseItemInOutSmartTableComponent} instance
      */
-    protected getInOutTab(): WarehouseItemInOutSmartTableComponent {
+    protected get inOutTab(): WarehouseItemInOutSmartTableComponent {
         return this.getTabComponent(4, WarehouseItemInOutSmartTableComponent);
     }
 
@@ -317,7 +316,7 @@ export class WarehouseItemTabsetComponent
      * Get the {WarehouseItemAdjustmentSmartTableComponent} instance
      * @return the {WarehouseItemAdjustmentSmartTableComponent} instance
      */
-    protected getAdjustmentTab(): WarehouseItemAdjustmentSmartTableComponent {
+    protected get adjustmentTab(): WarehouseItemAdjustmentSmartTableComponent {
         return this.getTabComponent(5, WarehouseItemAdjustmentSmartTableComponent);
     }
 
@@ -399,7 +398,7 @@ export class WarehouseItemTabsetComponent
      * @return false for error; else true
      */
     public submit(): boolean {
-        if (!this.getOverviewTab() || !this.getOverviewTab().submit()) {
+        if (!this.overviewTab || !this.overviewTab.submit()) {
             this.tabsetComponent.selectTab(this.tabsComponent[0]);
             this.showError('warehouse.title', 'common.form.invalid_data');
             return false;

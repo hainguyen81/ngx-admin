@@ -1,9 +1,9 @@
-<nb-card [class.m-0]="!isShowHeader()" [class.p-0]="!isShowHeader()" class="ngx-split-pane">
-    <nb-card-header *ngIf="isShowHeader()">
+<nb-card [class.m-0]="!showHeader" [class.p-0]="!showHeader" class="ngx-split-pane">
+    <nb-card-header *ngIf="showHeader">
         <ng-template #headerHolder></ng-template>
     </nb-card-header>
 
-    <nb-card-body [class.m-0]="!isShowHeader()" [class.p-0]="!isShowHeader()" class="ngx-split-pane-body">
+    <nb-card-body [class.m-0]="!showHeader" [class.p-0]="!showHeader" class="ngx-split-pane-body">
         <as-split
             #asSplit
             [contextMenu]="splitPaneContextMenuComponent"
