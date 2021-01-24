@@ -3,7 +3,7 @@
         <ngx-image-gallery #imageGallery
                            [showAlbum]="true"
                            [allowModified]="true"
-                           [images]="getDataModelImages()"
+                           [images]="dataModelImages"
                            (onChange)="onChange($event)"
         ></ngx-image-gallery>
         <div [class.d-table]="true" [class.pt-4]="true" *ngIf="!forVersion">
@@ -11,27 +11,27 @@
                 <tbody>
                     <tr>
                         <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.stock_on_hand' | translate}}</td>
-                        <td width="25%">{{getDataModel() ? getDataModel().stock_on_hand : ''}}</td>
+                        <td width="25%">{{dataModel ? dataModel.stock_on_hand : ''}}</td>
                     </tr>
                     <tr>
                         <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.committed_stock' | translate}}</td>
-                        <td width="25%">{{getDataModel() ? getDataModel().committed_stock : ''}}</td>
+                        <td width="25%">{{dataModel ? dataModel.committed_stock : ''}}</td>
                     </tr>
                     <tr>
                         <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.available_stock' | translate}}</td>
-                        <td width="25%">{{getDataModel() ? getDataModel().available_stock : ''}}</td>
+                        <td width="25%">{{dataModel ? dataModel.available_stock : ''}}</td>
                     </tr>
                     <tr>
                         <td width="75%" [class.border-bottom]="true">{{'warehouse.item.table.incoming_stock' | translate}}</td>
-                        <td width="25%">{{getDataModel() ? getDataModel().incoming_stock : ''}}</td>
+                        <td width="25%">{{dataModel ? dataModel.incoming_stock : ''}}</td>
                     </tr>
                     <tr>
                         <td width="75%" [class.pt-4]="true">{{'warehouse.item.table.quantity_shipped' | translate}}</td>
-                        <td width="25%" [class.pt-4]="true">{{getDataModel() ? getDataModel().quantity_shipped : ''}}</td>
+                        <td width="25%" [class.pt-4]="true">{{dataModel ? dataModel.quantity_shipped : ''}}</td>
                     </tr>
                     <tr>
                         <td width="75%">{{'warehouse.item.table.quantity_received' | translate}}</td>
-                        <td width="25%">{{getDataModel() ? getDataModel().quantity_received : ''}}</td>
+                        <td width="25%">{{dataModel ? dataModel.quantity_received : ''}}</td>
                     </tr>
                 </tbody>
             </table>
