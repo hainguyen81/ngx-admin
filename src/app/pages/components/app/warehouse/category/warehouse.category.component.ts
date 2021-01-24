@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -6,14 +6,14 @@ import {ToastrService} from 'ngx-toastr';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {Lightbox} from 'ngx-lightbox';
-import {WarehouseCategoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {IWarehouseCategory,} from '../../../../../@core/data/warehouse/warehouse.category';
+import {WarehouseCategoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {IWarehouseCategory} from '../../../../../@core/data/warehouse/warehouse.category';
 import {WarehouseCategoryToolbarComponent} from './warehouse.category.toolbar.component';
 import {WarehouseCategoryTreeviewComponent} from './warehouse.category.treeview.component';
 import {WarehouseCategoryFormlyComponent} from './warehouse.category.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {AppTreeSplitFormComponent} from '../../components/app.treeview.splitpane.form.component';
-import {ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 
 /**
@@ -39,11 +39,11 @@ export class WarehouseCategorySplitPaneComponent
     // GETTERS/SETTERS
     // -------------------------------------------------
 
-    protected visibleSpecialActions(): String[] {
+    protected get visibleSpecialActions(): String[] {
         return [ACTION_IMPORT];
     }
 
-    protected visibleActions(): String[] {
+    protected get visibleActions(): String[] {
         return [ACTION_DELETE, ACTION_RESET, ACTION_SAVE];
     }
 
