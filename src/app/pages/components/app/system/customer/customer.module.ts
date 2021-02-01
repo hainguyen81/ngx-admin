@@ -28,7 +28,7 @@ import {Ng2SmartTableModule} from 'app/@types/index';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
-import {AppMaterialModule} from 'app/app.material.module';
+import {AppLibraryModule} from '@app/app-library.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {TranslateModule} from '@ngx-translate/core';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -63,7 +63,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         FlipModule,
 
         /* Angular material modules */
-        AppMaterialModule,
+        AppLibraryModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -103,7 +103,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         FormlyMatDatepickerModule,
 
         /* Material */
-        AppMaterialModule,
+        AppLibraryModule,
 
         /* Application components module */
         ComponentsModule,

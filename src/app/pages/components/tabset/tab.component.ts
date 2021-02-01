@@ -22,22 +22,21 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {AbstractTabComponent} from './abstract.tab.component';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NbTabComponent, NbTabsetComponent} from '@nebular/theme';
 import ArrayUtils from '@app/utils/common/array.utils';
 import FunctionUtils from '@app/utils/common/function.utils';
 import ObjectUtils from '@app/utils/common/object.utils';
+import {TabComponent, TabsetComponent} from '~/ngx-tabset';
 
 /**
- * Tabset component base on {NbTabsetModule}
- * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
+ * SplitPane component base on {TabsetComponent}
  */
 @Component({
-    selector: 'ngx-tabset',
+    selector: 'ngx-tabset-2',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './tab.component.html',
     styleUrls: ['./tab.component.scss'],
 })
-export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
+export class NgxTabset2Component extends AbstractTabComponent<DataSource>
     implements AfterViewInit {
 
     // -------------------------------------------------
@@ -52,13 +51,13 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
     private readonly queryHeaderViewContainerRef: QueryList<ViewContainerRef>;
     private __headerViewContainerRef: ViewContainerRef;
 
-    @ViewChildren(NbTabsetComponent)
-    private readonly queryTabsetComponent: QueryList<NbTabsetComponent>;
-    private __tabsetComponent: NbTabsetComponent;
+    @ViewChildren(TabsetComponent)
+    private readonly queryTabsetComponent: QueryList<TabsetComponent>;
+    private __tabsetComponent: TabsetComponent;
 
-    @ViewChildren(NbTabComponent)
-    private readonly queryTabsComponent: QueryList<NbTabComponent>;
-    private __tabsComponent: NbTabComponent[];
+    @ViewChildren(TabComponent)
+    private readonly queryTabsComponent: QueryList<TabComponent>;
+    private __tabsComponent: TabComponent[];
 
     @ViewChildren('tabComponent', {read: ViewContainerRef})
     private readonly queryTabComponentViewContainerRefs: QueryList<ViewContainerRef>;
@@ -69,18 +68,18 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
     // -------------------------------------------------
 
     /**
-     * Get the {NbTabsetComponent} instance
-     * @return the {NbTabsetComponent} instance
+     * Get the {TabsetComponent} instance
+     * @return the {TabsetComponent} instance
      */
-    protected get tabsetComponent(): NbTabsetComponent {
+    protected get tabsetComponent(): TabsetComponent {
         return this.__tabsetComponent;
     }
 
     /**
-     * Get the {NbTabComponent} instances array
-     * @return the {NbTabComponent} instances array
+     * Get the {TabComponent} instances array
+     * @return the {TabComponent} instances array
      */
-    protected get tabsComponent(): NbTabComponent[] {
+    protected get tabsComponent(): TabComponent[] {
         return this.__tabsComponent;
     }
 
@@ -150,7 +149,7 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
-            1, true, true);
+            1, true);
     }
 
     // -------------------------------------------------
@@ -196,12 +195,5 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
             ArrayUtils.isNotArrayOrEmpty(this.__tabsComponent) && ObjectUtils.isNotNou(this.__tabsetComponent),
             () => ComponentUtils.queryComponents(this.__tabsetComponent.tabs),
             this, this.__tabsComponent);
-        this.queryTabsetComponent.changes.subscribe((comp) => {
-            console.log(['Query tab components - Subscription', comp]);
-        });
-        console.log(['Query tab components',
-            'NbTabComponent', this.__tabsComponent, 'Query', this.queryTabsComponent,
-            'NbTabsetComponent', this.__tabsetComponent, 'Query', this.queryTabsetComponent,
-            this.__tabComponentViewContainerRefs, this.__tabContentHolderViewContainerRefs]);
     }
 }

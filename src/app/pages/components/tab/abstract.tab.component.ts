@@ -82,7 +82,8 @@ export const TAB_CONFIG_TOKEN: InjectionToken<ITabConfig[]> =
     new InjectionToken<ITabConfig[]>('Tab configuration injection token');
 
 /**
- * Abstract FlipCard component base on {NbTabsetComponent} and {NbTabComponent}
+ * Abstract Tabset component base on {NbTabsetComponent} and {NbTabComponent}
+ * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
  */
 @Component({ changeDetection: ChangeDetectionStrategy.OnPush })
 export abstract class AbstractTabComponent<T extends DataSource> extends AbstractComponent {

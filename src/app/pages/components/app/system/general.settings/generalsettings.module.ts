@@ -34,7 +34,7 @@ import {GeneralSettingsDbService, GeneralSettingsHttpService} from '../../../../
 import {AppCommonComponentsModule} from '../../components/common/app.common.components.module';
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {FormlyModule} from '@ngx-formly/core';
-import {AppMaterialModule} from 'app/app.material.module';
+import {AppLibraryModule} from '@app/app-library.module';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
 import {FormlyConfig} from 'app/config/formly.config';
@@ -63,7 +63,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         FlipModule,
 
         /* Angular material modules */
-        AppMaterialModule,
+        AppLibraryModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -103,7 +103,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         FormlyMatDatepickerModule,
 
         /* Material */
-        AppMaterialModule,
+        AppLibraryModule,
 
         /* Application components module */
         ComponentsModule,

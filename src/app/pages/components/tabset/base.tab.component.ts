@@ -6,7 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {NgxTabsetComponent} from './tab.component';
+import {NgxTabset2Component} from './tab.component';
 import {throwError} from 'rxjs';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -15,16 +15,15 @@ import ObjectUtils from '@app/utils/common/object.utils';
 import NumberUtils from '@app/utils/common/number.utils';
 
 /**
- * Base tabset component base on {NbTabsetModule}
- * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
+ * Base horizontal split-pane component base on {NbTabsetModule}
  */
 @Component({
-    selector: 'ngx-tabset',
+    selector: 'ngx-tabset-2',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './tab.component.html',
     styleUrls: ['./tab.component.scss'],
 })
-export class BaseTabsetComponent<T extends DataSource> extends NgxTabsetComponent {
+export class BaseTabset2Component<T extends DataSource> extends NgxTabset2Component {
 
     // -------------------------------------------------
     // CONSTRUCTION

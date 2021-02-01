@@ -102,4 +102,4 @@ import {FlipModule} from 'ngx-flip';
         FlipModule,
     ],
 })
-export class AppMaterialModule {}
+export class AppLibraryModule {}

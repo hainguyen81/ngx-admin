@@ -54,7 +54,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 /* Treeview */
 import {TreeviewModule} from 'ngx-treeview';
 /* Angular material modules */
-import {AppMaterialModule} from './app.material.module';
+import {AppLibraryModule} from './app-library.module';
 /* Pipes */
 // @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
@@ -86,6 +86,7 @@ import {FlipModule} from 'ngx-flip';
 import {FormlyConfig} from 'app/config/formly.config';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {TabsModule} from '~/ngx-tabset';
 
 @NgModule({
     imports: [
@@ -105,7 +106,10 @@ import {OverlayModule} from '@angular/cdk/overlay';
         NgxLocalStorageModule.forRoot(),
 
         /* Angular material modules */
-        AppMaterialModule,
+        AppLibraryModule,
+
+        /* ngxTabset */
+        TabsModule.forRoot(),
 
         /* Popup, Dialogs */
         AlertPopupModule,

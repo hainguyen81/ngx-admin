@@ -88,8 +88,11 @@ import {NgxFlipComponent} from 'app/pages/components/flip/flip.component';
 import {BaseFlipComponent} from 'app/pages/components/flip/base.flip.component';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FormlyConfig} from 'app/config/formly.config';
-import {AppMaterialModule} from 'app/app.material.module';
+import {AppLibraryModule} from '@app/app-library.module';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {TabsModule} from '~/ngx-tabset';
+import {NgxTabset2Component} from '@app/pages/components/tabset/tab.component';
+import {BaseTabset2Component} from '@app/pages/components/tabset/base.tab.component';
 
 @NgModule({
     imports: [
@@ -177,7 +180,10 @@ import {OverlayModule} from '@angular/cdk/overlay';
         FormlyMatDatepickerModule,
 
         /* Material */
-        AppMaterialModule,
+        AppLibraryModule,
+
+        /* ngxTabset */
+        TabsModule.forRoot(),
 
         /*Validators*/
         CustomFormsModule,
@@ -194,25 +200,46 @@ import {OverlayModule} from '@angular/cdk/overlay';
         LoggerModule.forRoot(AppConfig.COMMON.logConfig),
     ],
     entryComponents: [
+        BaseSmartTableComponent,
+        SmartTableComponent,
+        NgxToolbarComponent,
+        BaseNgxToolbarComponent,
+        NgxTreeviewComponent,
+        BaseNgxTreeviewComponent,
+        BaseNgxDropdownTreeviewComponent,
+        NgxFormlyComponent,
+        BaseFormlyComponent,
         SelectTranslateCellComponent,
+        NumberCellComponent,
+        RowNumberCellComponent,
         CheckboxCellComponent,
         ImageCellComponent,
+        NgxSplitPaneComponent,
+        BaseSplitPaneComponent,
+        NgxFlipComponent,
+        BaseFlipComponent,
+        NgxFlipCardComponent,
+        BaseFlipcardComponent,
+        NgxRevealCardComponent,
+        NgxTabsetComponent,
+        BaseTabsetComponent,
+        NgxTabset2Component,
+        BaseTabset2Component,
+        NotFoundComponent,
         NgxImageGalleryComponent,
         ImageGalleryFormFieldComponent,
-        NgxTreeviewComponent,
         NgxDropdownTreeviewComponent,
         DropdownTreeviewFormFieldComponent,
         NgxSelectExComponent,
         SelectExFormFieldComponent,
         PasswordFormFieldComponent,
-        NumberCellComponent,
-        RowNumberCellComponent,
         BarcodeCellComponent,
         HtmlCellComponent,
         NgxDatePickerComponent,
         DatePickerCellComponent,
         DatePickerFormFieldComponent,
         NgxPanelComponent,
+        BasePanelComponent,
         ObserveCellComponent,
         NgxFileGalleryComponent,
         FileGalleryFormFieldComponent,
@@ -243,6 +270,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
         NgxRevealCardComponent,
         NgxTabsetComponent,
         BaseTabsetComponent,
+        NgxTabset2Component,
+        BaseTabset2Component,
         NotFoundComponent,
         ComponentPlaceholderDirective,
         NgxImageGalleryComponent,
@@ -289,6 +318,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
         NgxRevealCardComponent,
         NgxTabsetComponent,
         BaseTabsetComponent,
+        NgxTabset2Component,
+        BaseTabset2Component,
         NotFoundComponent,
         ComponentPlaceholderDirective,
         NgxImageGalleryComponent,

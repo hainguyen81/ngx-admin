@@ -51,7 +51,7 @@ import {AppTableFlipFormComponent} from './app.table.flip.form.component';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
 import {FormlyConfig} from 'app/config/formly.config';
-import {AppMaterialModule} from 'app/app.material.module';
+import {AppLibraryModule} from '@app/app-library.module';
 import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
@@ -129,7 +129,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         ValidatorsModule,
 
         /* Material */
-        AppMaterialModule,
+        AppLibraryModule,
 
         /* Application components module */
         ComponentsModule,

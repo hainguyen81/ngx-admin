@@ -47,7 +47,7 @@ import {AppCommonComponentsModule} from '../../components/common/app.common.comp
 import {FeaturesComponentsModule} from '../../module.components/features.components.module';
 import {DynamicModule} from 'ng-dynamic-component';
 import {FlipModule} from 'ngx-flip';
-import {AppMaterialModule} from 'app/app.material.module';
+import {AppLibraryModule} from '@app/app-library.module';
 import {FormlyConfig} from 'app/config/formly.config';
 import {OverlayModule} from '@angular/cdk/overlay';
 
@@ -73,7 +73,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         FlipModule,
 
         /* Angular material modules */
-        AppMaterialModule,
+        AppLibraryModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -113,7 +113,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         FormlyMatDatepickerModule,
 
         /* Material */
-        AppMaterialModule,
+        AppLibraryModule,
 
         /* Application components module */
         ComponentsModule,
