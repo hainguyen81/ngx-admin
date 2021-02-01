@@ -195,5 +195,9 @@ export class NgxTabset2Component extends AbstractTabComponent<DataSource>
             ArrayUtils.isNotArrayOrEmpty(this.__tabsComponent) && ObjectUtils.isNotNou(this.__tabsetComponent),
             () => ComponentUtils.queryComponents(this.__tabsetComponent.tabs),
             this, this.__tabsComponent);
+        console.log(['Query tab components',
+            'NbTabComponent', this.__tabsComponent, 'Query', this.queryTabsComponent,
+            'NbTabsetComponent', this.__tabsetComponent, 'Query', this.queryTabsetComponent,
+            this.__tabComponentViewContainerRefs, this.__tabContentHolderViewContainerRefs]);
     }
 }

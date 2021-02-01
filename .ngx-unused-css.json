@@ -11,6 +11,7 @@
         "tbody", "tfooter", ".rotate", "rotate", "text", "textarea",
         "tab", "tabset", "nb-tabset", "nb-tab", ".tab", ".tab-", ".tab-content",
         "main", "layout", "container", "wrapper", "wrap",
+        "nav", "nav-", ".nav", ".nav-",
         "nb", ".nb-","card-", ".card-", "fixed", "size", ".size-",
         "menu", ".menu", "has", "as", "not", "treeview", "[type='*']*", "type=",
         "h", "hr", "pre", "abbr", "b", "code", "kbd", "samp", "sub", "sup", "opt",

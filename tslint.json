@@ -112,6 +112,9 @@
       true,
       "element",
       "ngx",
+      "nbx",
+      "nb",
+      "ng",
       "kebab-case"
     ],
     "ban": [

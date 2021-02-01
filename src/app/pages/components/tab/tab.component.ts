@@ -32,7 +32,7 @@ import ObjectUtils from '@app/utils/common/object.utils';
  * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
  */
 @Component({
-    selector: 'ngx-tabset',
+    selector: 'nbx-tabset',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './tab.component.html',
     styleUrls: ['./tab.component.scss'],
@@ -196,9 +196,6 @@ export class NgxTabsetComponent extends AbstractTabComponent<DataSource>
             ArrayUtils.isNotArrayOrEmpty(this.__tabsComponent) && ObjectUtils.isNotNou(this.__tabsetComponent),
             () => ComponentUtils.queryComponents(this.__tabsetComponent.tabs),
             this, this.__tabsComponent);
-        this.queryTabsetComponent.changes.subscribe((comp) => {
-            console.log(['Query tab components - Subscription', comp]);
-        });
         console.log(['Query tab components',
             'NbTabComponent', this.__tabsComponent, 'Query', this.queryTabsComponent,
             'NbTabsetComponent', this.__tabsetComponent, 'Query', this.queryTabsetComponent,

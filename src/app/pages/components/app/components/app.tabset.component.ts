@@ -42,7 +42,7 @@ export const APP_TAB_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolba
  * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
  */
 @Component({
-    selector: 'ngx-tabset-app',
+    selector: 'nbx-tabset-app',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../tab/tab.component.html',
     styleUrls: ['../../tab/tab.component.scss'],

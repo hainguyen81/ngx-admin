@@ -19,7 +19,7 @@ import NumberUtils from '@app/utils/common/number.utils';
  * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
  */
 @Component({
-    selector: 'ngx-tabset',
+    selector: 'nbx-tabset',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './tab.component.html',
     styleUrls: ['./tab.component.scss'],

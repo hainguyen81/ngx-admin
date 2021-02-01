@@ -87,6 +87,10 @@ import {FormlyConfig} from 'app/config/formly.config';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {TabsModule} from '~/ngx-tabset';
+import {ComponentsModule} from '@app/pages/components/components.module';
+import {AppComponentsModule} from '@app/pages/components/app/components/app.components.module';
+import {SystemModule} from '@app/pages/components/app/system/system.module';
+import {WarehouseModule} from '@app/pages/components/app/warehouse/warehouse.module';
 
 @NgModule({
     imports: [
@@ -218,6 +222,15 @@ import {TabsModule} from '~/ngx-tabset';
         /* Barcode */
         NgxBarcodeModule.forRoot(),
         BarecodeScannerLivestreamModule,
+
+        /* Base components module */
+        ComponentsModule,
+        /* Application components module */
+        AppComponentsModule,
+        /* System module */
+        SystemModule,
+        /* Warehouse module */
+        WarehouseModule,
 
         /* Mock data module */
         MockDataModule.forRoot(),

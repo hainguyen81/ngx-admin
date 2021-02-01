@@ -13,6 +13,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 import {SelectDropDownModule} from 'ngx-select-dropdown';
 import {SystemModule} from './components/app/system/system.module';
 import {WarehouseModule} from './components/app/warehouse/warehouse.module';
+import {AppComponentsModule} from '@app/pages/components/app/components/app.components.module';
 
 @NgModule({
     imports: [
@@ -21,7 +22,6 @@ import {WarehouseModule} from './components/app/warehouse/warehouse.module';
         NbThemeModule,
         NbButtonModule,
         NbMenuModule,
-        ComponentsModule,
 
         /* Popup, Dialogs */
         AlertPopupModule,
@@ -42,9 +42,12 @@ import {WarehouseModule} from './components/app/warehouse/warehouse.module';
         /* Selection Dropdown */
         SelectDropDownModule,
 
+        /* Base components module */
+        ComponentsModule,
+        /* Application components module */
+        AppComponentsModule,
         /* System module */
         SystemModule,
-
         /* Warehouse module */
         WarehouseModule,
     ],

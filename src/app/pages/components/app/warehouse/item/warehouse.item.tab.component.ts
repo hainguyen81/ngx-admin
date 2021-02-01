@@ -217,7 +217,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
  */
 @Component({
     moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-tabset-app-warehouse-item',
+    selector: 'nbx-tabset-app-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: '../../../tab/tab.component.html',
     styleUrls: ['../../../tab/tab.component.scss'],

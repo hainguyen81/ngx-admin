@@ -110,6 +110,9 @@ export abstract class AbstractTabComponent<T extends DataSource> extends Abstrac
      */
     public set disableStyle(_disableStyle: boolean) {
         this._disableStyle = _disableStyle || false;
+        if (this.tabsetComponent) {
+            this.tabsetComponent.disableStyle = this._disableStyle;
+        }
     }
 
     /**
