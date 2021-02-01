@@ -41,6 +41,7 @@ import {FlipModule} from 'ngx-flip';
 import {AppLibraryModule} from '@app/app-library.module';
 import {FormlyConfig} from 'app/config/formly.config';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {TabsModule} from '~/ngx-tabset';
 
 @NgModule({
     imports: [
@@ -62,9 +63,6 @@ import {OverlayModule} from '@angular/cdk/overlay';
 
         /* Flip */
         FlipModule,
-
-        /* Angular material modules */
-        AppLibraryModule,
 
         // Specify AngularResizedEventModule library as an import
         AngularResizedEventModule,
@@ -105,6 +103,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
 
         /* Material */
         AppLibraryModule,
+
+        /* ngxTabset */
+        TabsModule.forRoot(),
 
         /* Application components module */
         ComponentsModule,

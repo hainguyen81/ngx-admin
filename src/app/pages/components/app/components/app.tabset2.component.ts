@@ -1,4 +1,3 @@
-import {BaseTabsetComponent} from '../../tab/base.tab.component';
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -25,33 +24,32 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IModel} from '../../../../@core/data/base';
 import {AppToolbarComponent} from './app.toolbar.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
-import {ITabConfig, TAB_CONFIG_TOKEN} from '../../tab/abstract.tab.component';
+import {ITabConfig} from '../../tab/abstract.tab.component';
 import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../../config/toolbar.actions.conf';
 import {Subscription, throwError} from 'rxjs';
 import ObjectUtils from '../../../../utils/common/object.utils';
 import FunctionUtils from '../../../../utils/common/function.utils';
 import PromiseUtils from '../../../../utils/common/promise.utils';
 import ArrayUtils from '@app/utils/common/array.utils';
+import {BaseTabset2Component} from '@app/pages/components/tabset/base.tab.component';
+import {INgxTabConfig, NGXTAB_CONFIG_TOKEN} from '@app/pages/components/tabset/abstract.tab.component';
 
-export const APP_TAB_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
+export const APP_TABSET_COMPONENT_TYPES_TOKEN: InjectionToken<Type<AbstractComponent>[]>
     = new InjectionToken<Type<AbstractComponent>[]>('Tab component type injection token');
-export const APP_TAB_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
+export const APP_TABSET_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>('Tab toolbar component type injection token');
 
-/**
- * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
- */
 @Component({
-    selector: 'ngx-tabset-app',
+    selector: 'ngx-tabset-2-app',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../tab/tab.component.html',
-    styleUrls: ['../../tab/tab.component.scss'],
+    templateUrl: '../../tabset/tab.component.html',
+    styleUrls: ['../../tabset/tab.component.scss'],
 })
-export class AppTabsetComponent<
+export class AppTabset2Component<
     T extends IModel, D extends DataSource,
     TB extends AppToolbarComponent<D>,
     TC extends AbstractComponent>
-    extends BaseTabsetComponent<D>
+    extends BaseTabset2Component<D>
     implements AfterViewInit, OnDestroy {
 
     // -------------------------------------------------
@@ -82,18 +80,18 @@ export class AppTabsetComponent<
     }
 
     /**
-     * Get all {ITabConfig}
-     * @return all {ITabConfig}
+     * Get all {INgxTabConfig}
+     * @return all {INgxTabConfig}
      */
-    protected get tabConfigs(): ITabConfig[] {
+    protected get tabConfigs(): INgxTabConfig[] {
         return this._tabConfigs || [];
     }
 
     /**
-     * Get all {ITabConfig}
-     * @return all {ITabConfig}
+     * Get all {INgxTabConfig}
+     * @return all {INgxTabConfig}
      */
-    protected getTabConfig(tabIndex: number): ITabConfig {
+    protected getTabConfig(tabIndex: number): INgxTabConfig {
         return ArrayUtils.get<ITabConfig>(this.tabConfigs, tabIndex);
     }
 
@@ -141,7 +139,7 @@ export class AppTabsetComponent<
     // -------------------------------------------------
 
     /**
-     * Create a new instance of {AppTabsetComponent} class
+     * Create a new instance of {AppTabset2Component} class
      * @param dataSource {DataSource}
      * @param contextMenuService {ContextMenuService}
      * @param toasterService {ToastrService}
@@ -157,7 +155,7 @@ export class AppTabsetComponent<
      * @param lightbox {Lightbox}
      * @param router {Router}
      * @param activatedRoute {ActivatedRoute}
-     * @param _tabConfigs {ITabConfig}
+     * @param _tabConfigs {INgxTabConfig}
      * @param _toolbarComponentType toolbar component type
      * @param _tabComponentTypes tab component types
      */
@@ -176,9 +174,9 @@ export class AppTabsetComponent<
                 @Inject(Lightbox) lightbox?: Lightbox,
                 @Inject(Router) router?: Router,
                 @Inject(ActivatedRoute) activatedRoute?: ActivatedRoute,
-                @Inject(TAB_CONFIG_TOKEN) private _tabConfigs?: ITabConfig[] | null,
-                @Inject(APP_TAB_TOOLBAR_COMPONENT_TYPE_TOKEN) private _toolbarComponentType?: Type<TB> | null,
-                @Inject(APP_TAB_COMPONENT_TYPES_TOKEN) private _tabComponentTypes?: Type<TC>[] | null) {
+                @Inject(NGXTAB_CONFIG_TOKEN) private _tabConfigs?: INgxTabConfig[] | null,
+                @Inject(APP_TABSET_TOOLBAR_COMPONENT_TYPE_TOKEN) private _toolbarComponentType?: Type<TB> | null,
+                @Inject(APP_TABSET_COMPONENT_TYPES_TOKEN) private _tabComponentTypes?: Type<TC>[] | null) {
         super(dataSource, contextMenuService, toasterService, logger,
             renderer, translateService, factoryResolver,
             viewContainerRef, changeDetectorRef, elementRef,
@@ -247,7 +245,7 @@ export class AppTabsetComponent<
      * Create tab components
      */
     private createTabComponents(): void {
-        const _this: AppTabsetComponent<T, D, TB, TC> = this;
+        const _this: AppTabset2Component<T, D, TB, TC> = this;
 
         // create toolbar component
         if (this._toolbarComponentType) {

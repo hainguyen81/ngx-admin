@@ -10,46 +10,30 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {WarehouseItemOverviewFormlyComponent} from './warehouse.item.overview.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {ITabConfig} from '../../../tab/abstract.tab.component';
-import {NbIconConfig} from '@nebular/theme/components/icon/icon.component';
 import {WarehouseItemPurchaseOrdersSmartTableComponent} from './warehouse.item.purchase.orders.table.component';
 import {WarehouseItemSaleOrdersSmartTableComponent} from './warehouse.item.sale.orders.table.component';
 import {WarehouseItemInOutSmartTableComponent} from './warehouse.item.in.out.table.component';
 import {WarehouseItemAdjustmentSmartTableComponent} from './warehouse.item.adjustment.table.component';
 import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppTabsetComponent} from '../../components/app.tabset.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {AbstractComponent} from '../../../abstract.component';
 import {throwError} from 'rxjs';
 import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.table.component';
+import {INgxTabConfig} from '@app/pages/components/tabset/abstract.tab.component';
+import {AppTabset2Component} from '@app/pages/components/app/components/app.tabset2.component';
 
-export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
+export const WAREHOUSE_ITEM_TAB_CONFIGS: INgxTabConfig[] = [{
     /**
      * Tab title
      * @type {string}
      */
     tabTitle: 'warehouse.item.overview.title',
     /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_OVERVIEW',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'archive', pack: 'fa' },
-    /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
      */
     disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
     /**
      * Specifies active tab
      * @returns {boolean}
@@ -62,25 +46,10 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      */
     tabTitle: 'warehouse.item.version.title',
     /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_VERSION',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'code-branch', pack: 'fas' },
-    /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
      */
     disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
     /**
      * Specifies active tab
      * @returns {boolean}
@@ -93,25 +62,10 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      */
     tabTitle: 'warehouse.item.orders.purchase.title',
     /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_PURCHASE',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'shopping-cart', pack: 'fa' },
-    /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
      */
     disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
     /**
      * Specifies active tab
      * @returns {boolean}
@@ -124,25 +78,10 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      */
     tabTitle: 'warehouse.item.orders.sale.title',
     /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_SALE',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'credit-card', pack: 'far' },
-    /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
      */
     disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
     /**
      * Specifies active tab
      * @returns {boolean}
@@ -155,25 +94,10 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      */
     tabTitle: 'warehouse.item.in_out.title',
     /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_IN_OUT',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'cubes', pack: 'fa' },
-    /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
      */
     disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
     /**
      * Specifies active tab
      * @returns {boolean}
@@ -186,25 +110,10 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
      */
     tabTitle: 'warehouse.item.adjustment.title',
     /**
-     * Tab id
-     * @type {string}
-     */
-    tabId: 'WAREHOUSE_ITEM_ADJUSTMENT',
-    /**
-     * Tab icon name or icon config object
-     * @type {string | NbIconConfig}
-     */
-    tabIcon: { icon: 'adjust', pack: 'fa' },
-    /**
      * Item is disabled and cannot be opened.
      * @type {boolean}
      */
     disabled: false,
-    /**
-     * Show only icons when width is smaller than `tabs-icon-only-max-width`
-     * @type {boolean}
-     */
-    responsive: true,
     /**
      * Specifies active tab
      * @returns {boolean}
@@ -212,18 +121,15 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
     active: true,
 }];
 
-/**
- * @deprecated Currently NbTabsetComponent component has problem with dynamic component. Insted of using tabset (ngx-tabset-2)
- */
 @Component({
     moduleId: Constants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_ITEM,
-    selector: 'ngx-tabset-app-warehouse-item',
+    selector: 'ngx-tabset-2-app-warehouse-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: '../../../tab/tab.component.html',
-    styleUrls: ['../../../tab/tab.component.scss'],
+    templateUrl: '../../../tabset/tab.component.html',
+    styleUrls: ['../../../tabset/tab.component.scss'],
 })
-export class WarehouseItemTabsetComponent
-    extends AppTabsetComponent<
+export class WarehouseItemTabset2Component
+    extends AppTabset2Component<
         IWarehouseItem, WarehouseItemDatasource,
         WarehouseItemToolbarComponent, AbstractComponent> {
 

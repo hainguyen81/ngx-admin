@@ -6,7 +6,6 @@ import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {WarehouseItemTabsetComponent} from './warehouse.item.tab.component';
 import {WarehouseItemSummaryComponent} from './warehouse.item.summary.component';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import {Lightbox} from 'ngx-lightbox';
@@ -18,6 +17,7 @@ import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component'
 import {throwError} from 'rxjs';
 import FunctionUtils from '@app/utils/common/function.utils';
 import ObjectUtils from '@app/utils/common/object.utils';
+import {WarehouseItemTabset2Component} from '@app/pages/components/app/warehouse/item/warehouse.item.tab2.component';
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {
@@ -51,7 +51,7 @@ export class WarehouseItemSplitPaneComponent
     extends AppSplitPaneComponent<
         IWarehouseItem, WarehouseItemDatasource,
         WarehouseItemToolbarComponent,
-        WarehouseItemTabsetComponent,
+        WarehouseItemTabset2Component,
         WarehouseItemSummaryComponent>
     implements AfterViewInit {
 
@@ -123,10 +123,10 @@ export class WarehouseItemSplitPaneComponent
     }
 
     /**
-     * Get the {WarehouseItemTabsetComponent} instance
-     * @return the {WarehouseItemTabsetComponent} instance
+     * Get the {WarehouseItemTabset2Component} instance
+     * @return the {WarehouseItemTabset2Component} instance
      */
-    protected get tabsetComponent(): WarehouseItemTabsetComponent {
+    protected get tabsetComponent(): WarehouseItemTabset2Component {
         return this.leftSideComponent;
     }
 
@@ -180,7 +180,7 @@ export class WarehouseItemSplitPaneComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
-            null, WarehouseItemTabsetComponent, WarehouseItemSummaryComponent);
+            null, WarehouseItemTabset2Component, WarehouseItemSummaryComponent);
     }
 
     // -------------------------------------------------

@@ -50,6 +50,8 @@ import {FlipModule} from 'ngx-flip';
 import {AppLibraryModule} from '@app/app-library.module';
 import {FormlyConfig} from 'app/config/formly.config';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {TabsModule} from '~/ngx-tabset';
+import {WarehouseItemTabset2Component} from '@app/pages/components/app/warehouse/item/warehouse.item.tab2.component';
 
 @NgModule({
     imports: [
@@ -115,6 +117,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
         /* Material */
         AppLibraryModule,
 
+        /* ngxTabset */
+        TabsModule.forRoot(),
+
         /* Application components module */
         ComponentsModule,
         AppCommonComponentsModule,
@@ -128,6 +133,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         WarehouseItemFlipcardComponent,
         WarehouseItemSmartTableComponent,
         WarehouseItemTabsetComponent,
+        WarehouseItemTabset2Component,
         WarehouseItemSplitPaneComponent,
         WarehouseItemToolbarComponent,
         WarehouseItemSummaryComponent,
@@ -145,6 +151,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         WarehouseItemFlipcardComponent,
         WarehouseItemSmartTableComponent,
         WarehouseItemTabsetComponent,
+        WarehouseItemTabset2Component,
         WarehouseItemSplitPaneComponent,
         WarehouseItemToolbarComponent,
         WarehouseItemSummaryComponent,
@@ -162,6 +169,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         WarehouseItemFlipcardComponent,
         WarehouseItemSmartTableComponent,
         WarehouseItemTabsetComponent,
+        WarehouseItemTabset2Component,
         WarehouseItemSplitPaneComponent,
         WarehouseItemToolbarComponent,
         WarehouseItemSummaryComponent,

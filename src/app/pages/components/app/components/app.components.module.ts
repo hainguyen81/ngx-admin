@@ -53,6 +53,8 @@ import {FlipModule} from 'ngx-flip';
 import {FormlyConfig} from 'app/config/formly.config';
 import {AppLibraryModule} from '@app/app-library.module';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {TabsModule} from '~/ngx-tabset';
+import {AppTabset2Component} from '@app/pages/components/app/components/app.tabset2.component';
 
 @NgModule({
     imports: [
@@ -131,6 +133,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
         /* Material */
         AppLibraryModule,
 
+        /* ngxTabset */
+        TabsModule.forRoot(),
+
         /* Application components module */
         ComponentsModule,
         AppCommonComponentsModule,
@@ -152,6 +157,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         AppSplitPaneComponent,
         AppTreeSplitFormComponent,
         AppTabsetComponent,
+        AppTabset2Component,
         AppPanelComponent,
         AppSearchPanelComponent,
     ],
@@ -169,6 +175,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         AppSplitPaneComponent,
         AppTreeSplitFormComponent,
         AppTabsetComponent,
+        AppTabset2Component,
         AppPanelComponent,
         AppSearchPanelComponent,
     ],
@@ -186,6 +193,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         AppSplitPaneComponent,
         AppTreeSplitFormComponent,
         AppTabsetComponent,
+        AppTabset2Component,
         AppPanelComponent,
         AppSearchPanelComponent,
     ],
