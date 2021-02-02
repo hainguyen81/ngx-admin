@@ -29,7 +29,7 @@
         >
             <ngx-tab
                 #tabComponent
-                *ngFor="let index of 6 | ngxArrayOfNumbers"
+                *ngFor="let index of numberOfTabs | ngxArrayOfNumbers"
                 #tab{{index}}>
                 <div class="tab-content" (resize)="onResized({ data: $event })">
                     <ng-template #tabContentHolder></ng-template>

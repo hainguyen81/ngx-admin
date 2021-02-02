@@ -54,7 +54,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: INgxTabConfig[] = [{
      * Specifies active tab
      * @returns {boolean}
      */
-    active: true,
+    active: false,
 }, {
     /**
      * Tab title
@@ -70,7 +70,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: INgxTabConfig[] = [{
      * Specifies active tab
      * @returns {boolean}
      */
-    active: true,
+    active: false,
 }, {
     /**
      * Tab title
@@ -86,7 +86,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: INgxTabConfig[] = [{
      * Specifies active tab
      * @returns {boolean}
      */
-    active: true,
+    active: false,
 }, {
     /**
      * Tab title
@@ -102,7 +102,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: INgxTabConfig[] = [{
      * Specifies active tab
      * @returns {boolean}
      */
-    active: true,
+    active: false,
 }, {
     /**
      * Tab title
@@ -118,7 +118,7 @@ export const WAREHOUSE_ITEM_TAB_CONFIGS: INgxTabConfig[] = [{
      * Specifies active tab
      * @returns {boolean}
      */
-    active: true,
+    active: false,
 }];
 
 @Component({

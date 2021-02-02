@@ -41,7 +41,7 @@ export interface INgxTabConfig {
      * Please check the above example for full implementation
      * @type {boolean}
      */
-    bypassDOM?: boolean | false;
+    bypassDOM?: boolean | true;
     /**
      * All the additionnal classes you want to add to the tabset header / nav.
      * You can add several classes by giving a string with space-separated classnames
