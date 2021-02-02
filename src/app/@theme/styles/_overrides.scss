@@ -63,15 +63,15 @@
         .columns nb-layout-column {
             /*padding: 1rem 1rem 0.75rem;*/
             padding: 0;
-
-            ngx-flip-pane nb-card, ngx-flip-pane nb-card-body {
-                border: none;
-            }
         }
 
         nb-layout-footer nav {
             padding: 0.5rem;
         }
+    }
+
+    ngx-flip-pane nb-card, ngx-flip-pane nb-card-body {
+        border: none;
     }
 
     nb-sidebar .scrollable {
