@@ -32,6 +32,17 @@
         "cdk-", ".cdk-", "no-", ".no-", "order-", ".order-", "offset-", ".offset-",
         "images", "images-", ".images", ".images-",
         "primary", "primary-", ".primary", ".primary-",
-        "current", "current-", ".current", ".current-"
+        "current", "current-", ".current", ".current-",
+
+        "system", "system-", ".system", ".system-",
+        "customer", "customer-", ".customer", ".customer-",
+        "settings", "settings-", ".settings", ".settings-",
+        "organization", "organization-", ".organization", ".organization-",
+        "user", "user-", ".user", ".user-",
+        "batchno", "batchno-", ".batchno", ".batchno-",
+        "category", "category-", ".category", ".category-",
+        "inventory", "inventory-", ".inventory", ".inventory-",
+        "item", "item-", ".item", ".item-",
+        "storage", "storage-", ".storage", ".storage-"
     ]
 }
