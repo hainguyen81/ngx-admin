@@ -1,5 +1,24 @@
 @import '../../../../../@theme/styles/themes';
 
 @include nb-install-component() {
-
+    ::ng-deep .ngx-split-pane {
+        border: none;
+        .ngx-split-pane-body {
+            .as-split-area {
+                .area-content {
+                    .ngx-tabset-pane {
+                        border: none;
+                        .ngx-tabset-pane-body {
+                            .tabs-container {
+                                padding: 1rem;
+                            }
+                            ul.nav-tabset {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

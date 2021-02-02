@@ -45,6 +45,7 @@ export const WarehouseItemSummaryAreaConfig: ISplitAreaConfig = {
     styleUrls: [
         '../../../splitpane/splitpane.component.scss',
         '../../components/app.splitpane.component.scss',
+        './warehouse.item.splitpane.component.scss'
     ],
 })
 export class WarehouseItemSplitPaneComponent

@@ -1,7 +1,10 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
-    ::ng-deep nb-tabset nb-tab {
-        padding: 1rem;
+    ::ng-deep ngx-tabset {
+        margin-bottom: 0;
+        ngx-tab {
+            padding: 0;
+        }
     }
 }
