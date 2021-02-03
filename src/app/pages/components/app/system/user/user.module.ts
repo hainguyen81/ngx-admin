@@ -10,7 +10,6 @@ import {
     NbLayoutModule,
     NbOverlayModule,
     NbSelectModule,
-    NbThemeModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -45,8 +44,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule.forRoot(),
-        NbThemeModule.forRoot(),
+        ThemeModule,
         NbBadgeModule,
         NbIconModule,
         NbCardModule,

@@ -10,7 +10,6 @@ import {
     NbLayoutModule,
     NbOverlayModule,
     NbSelectModule,
-    NbThemeModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -47,8 +46,7 @@ import {TabsModule} from '~/ngx-tabset';
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule.forRoot(),
-        NbThemeModule.forRoot(),
+        ThemeModule,
         NbBadgeModule,
         NbIconModule,
         NbCardModule,

@@ -12,7 +12,6 @@ import {
     NbSearchModule,
     NbSelectModule,
     NbTabsetModule,
-    NbThemeModule,
 } from '@nebular/theme';
 import {Ng2SmartTableModule} from '@app/types/index';
 import {ContextMenuModule} from 'ngx-contextmenu';
@@ -47,8 +46,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule.forRoot(),
-        NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        ThemeModule,
         NbBadgeModule,
         NbIconModule,
         NbLayoutModule,

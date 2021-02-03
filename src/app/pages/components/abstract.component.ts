@@ -1081,7 +1081,7 @@ export abstract class AbstractComponent
                     item: data,
                     anchorElement: eventTarget,
                 });
-                this.getChangeDetectorRef().detectChanges();
+                // this.getChangeDetectorRef().detectChanges();
             }, this);
         // wait for showing context menu and focus on it
         if (eventTarget) {

@@ -14,7 +14,6 @@ import {
     NbSearchModule,
     NbSelectModule,
     NbTabsetModule,
-    NbThemeModule,
     NbTooltipModule,
 } from '@nebular/theme';
 import {LocalDataSource, Ng2SmartTableModule} from 'ng2-smart-table';
@@ -98,8 +97,7 @@ import {BaseTabset2Component} from '@app/pages/components/tabset/base.tab.compon
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule.forRoot(),
-        NbThemeModule.forRoot(),
+        ThemeModule,
         NbBadgeModule,
         NbIconModule,
         NbLayoutModule,

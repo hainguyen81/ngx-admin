@@ -3,7 +3,7 @@ import {ThemeModule} from '../@theme/theme.module';
 import {PagesComponent} from './pages.component';
 import {PagesRoutingModule} from './pages-routing.module';
 import {ComponentsModule} from './components/components.module';
-import {NbBadgeModule, NbButtonModule, NbIconModule, NbMenuModule, NbThemeModule} from '@nebular/theme';
+import {NbBadgeModule, NbButtonModule, NbIconModule, NbMenuModule} from '@nebular/theme';
 // @ts-ignore
 import {NgPipesModule} from 'ngx-pipes';
 import {LightboxModule} from 'ngx-lightbox';
@@ -18,8 +18,7 @@ import {AppComponentsModule} from '@app/pages/components/app/components/app.comp
 @NgModule({
     imports: [
         PagesRoutingModule,
-        ThemeModule.forRoot(),
-        NbThemeModule.forRoot(),
+        ThemeModule,
         NbBadgeModule,
         NbIconModule,
         NbButtonModule,

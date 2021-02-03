@@ -15,7 +15,6 @@ import {
     NbLayoutModule,
     NbOverlayModule,
     NbSelectModule,
-    NbThemeModule,
 } from '@nebular/theme';
 import {AngularSplitModule} from 'angular-split';
 import {Ng2SmartTableModule} from '@app/types/index';
@@ -60,8 +59,7 @@ import {AppTabset2Component} from '@app/pages/components/app/components/app.tabs
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule.forRoot(),
-        NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        ThemeModule,
         NbBadgeModule,
         NbIconModule,
         NbCardModule,

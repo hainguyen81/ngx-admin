@@ -29,7 +29,6 @@ import {
     NbOverlayModule,
     NbSelectModule,
     NbSidebarModule,
-    NbThemeModule,
     NbToastrModule,
     NbWindowModule,
 } from '@nebular/theme';
@@ -141,8 +140,8 @@ import {WarehouseModule} from '@app/pages/components/app/warehouse/warehouse.mod
         }),
 
         /* Theme */
-        ThemeModule.forRoot(),
-        NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        ThemeModule,
+        // NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
         NbBadgeModule,
         NbIconModule,
         NbInputModule,
