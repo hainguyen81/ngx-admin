@@ -140,8 +140,7 @@ import {WarehouseModule} from '@app/pages/components/app/warehouse/warehouse.mod
         }),
 
         /* Theme */
-        ThemeModule,
-        // NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        ThemeModule.forRoot(),
         NbBadgeModule,
         NbIconModule,
         NbInputModule,

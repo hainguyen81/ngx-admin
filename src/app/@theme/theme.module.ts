@@ -25,6 +25,7 @@ import {CORPORATE_THEME} from './styles/theme.corporate';
 import {DARK_THEME} from './styles/theme.dark';
 import {ArrayOfNumbersPipe} from './pipes/loop.number.pipe';
 import {TranslateModule} from '@ngx-translate/core';
+import {AppConfig} from '@app/config/app.config';
 
 const NB_MODULES = [
     NbLayoutModule,
@@ -39,6 +40,7 @@ const NB_MODULES = [
     NbSelectModule,
     NbIconModule,
     NbEvaIconsModule,
+    NbThemeModule,
 ];
 const SUPPORTED_MODULES = [
     TranslateModule,
@@ -73,7 +75,7 @@ export class ThemeModule {
             providers: [
                 ...NbThemeModule.forRoot(
                     {
-                        name: 'default',
+                        name: AppConfig.COMMON.theme,
                     },
                     [DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME],
                 ).providers,
