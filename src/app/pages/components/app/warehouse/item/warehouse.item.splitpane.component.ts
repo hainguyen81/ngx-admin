@@ -17,7 +17,7 @@ import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component'
 import {throwError} from 'rxjs';
 import FunctionUtils from '@app/utils/common/function.utils';
 import ObjectUtils from '@app/utils/common/object.utils';
-import {WarehouseItemTabset2Component} from '@app/pages/components/app/warehouse/item/warehouse.item.tab2.component';
+import {WarehouseItemTabsetComponent} from '@app/pages/components/app/warehouse/item/warehouse.item.tab.component';
 
 /* Warehouse item left area configuration */
 export const WarehouseItemTabsetAreaConfig: ISplitAreaConfig = {
@@ -52,7 +52,7 @@ export class WarehouseItemSplitPaneComponent
     extends AppSplitPaneComponent<
         IWarehouseItem, WarehouseItemDatasource,
         WarehouseItemToolbarComponent,
-        WarehouseItemTabset2Component,
+        WarehouseItemTabsetComponent,
         WarehouseItemSummaryComponent>
     implements AfterViewInit {
 
@@ -124,10 +124,10 @@ export class WarehouseItemSplitPaneComponent
     }
 
     /**
-     * Get the {WarehouseItemTabset2Component} instance
-     * @return the {WarehouseItemTabset2Component} instance
+     * Get the {WarehouseItemTabsetComponent} instance
+     * @return the {WarehouseItemTabsetComponent} instance
      */
-    protected get tabsetComponent(): WarehouseItemTabset2Component {
+    protected get tabsetComponent(): WarehouseItemTabsetComponent {
         return this.leftSideComponent;
     }
 
@@ -181,7 +181,7 @@ export class WarehouseItemSplitPaneComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute,
-            null, WarehouseItemTabset2Component, WarehouseItemSummaryComponent);
+            null, WarehouseItemTabsetComponent, WarehouseItemSummaryComponent);
     }
 
     // -------------------------------------------------

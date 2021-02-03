@@ -1,6 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {SmartTableComponent} from './smart-table/smart-table.component';
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
@@ -97,8 +98,10 @@ import {BaseTabset2Component} from '@app/pages/components/tabset/base.tab.compon
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule,
-        NbThemeModule,
+        ThemeModule.forRoot(),
+        NbThemeModule.forRoot(),
+        NbBadgeModule,
+        NbIconModule,
         NbLayoutModule,
         NbInputModule,
         NbCheckboxModule,

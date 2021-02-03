@@ -1,5 +1,6 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
@@ -46,8 +47,9 @@ import {TabsModule} from '~/ngx-tabset';
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule,
-        NbThemeModule,
+        ThemeModule.forRoot(),
+        NbThemeModule.forRoot(),
+        NbBadgeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,

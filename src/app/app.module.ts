@@ -15,6 +15,7 @@ import {AppRoutingModule} from './app-routing.module';
 import './config/prototypes.import';
 /* Nebular Theme */
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbChatModule,
     NbCheckboxModule,
@@ -142,6 +143,7 @@ import {WarehouseModule} from '@app/pages/components/app/warehouse/warehouse.mod
         /* Theme */
         ThemeModule.forRoot(),
         NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        NbBadgeModule,
         NbIconModule,
         NbInputModule,
         NbCheckboxModule,

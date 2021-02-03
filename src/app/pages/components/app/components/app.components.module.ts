@@ -5,6 +5,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
@@ -59,8 +60,9 @@ import {AppTabset2Component} from '@app/pages/components/app/components/app.tabs
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule,
-        NbThemeModule,
+        ThemeModule.forRoot(),
+        NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        NbBadgeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,

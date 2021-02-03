@@ -1,5 +1,6 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
@@ -44,8 +45,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule,
-        NbThemeModule,
+        ThemeModule.forRoot(),
+        NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        NbBadgeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,

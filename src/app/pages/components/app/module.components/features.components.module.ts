@@ -5,6 +5,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
@@ -89,8 +90,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule,
-        NbThemeModule,
+        ThemeModule.forRoot(),
+        NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        NbBadgeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,

@@ -1,5 +1,6 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
@@ -56,8 +57,9 @@ import {WarehouseItemTabset2Component} from '@app/pages/components/app/warehouse
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule,
-        NbThemeModule,
+        ThemeModule.forRoot(),
+        NbThemeModule.forRoot(),
+        NbBadgeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,

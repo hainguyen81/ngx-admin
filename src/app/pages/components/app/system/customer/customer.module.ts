@@ -13,6 +13,7 @@ import {FeaturesComponentsModule} from '../../module.components/features.compone
 import {CommonModule} from '@angular/common';
 import {ThemeModule} from 'app/@theme/theme.module';
 import {
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
@@ -44,8 +45,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
 @NgModule({
     imports: [
         CommonModule,
-        ThemeModule,
-        NbThemeModule,
+        ThemeModule.forRoot(),
+        NbThemeModule.forRoot({name: AppConfig.COMMON.theme}),
+        NbBadgeModule,
         NbIconModule,
         NbCardModule,
         NbInputModule,
