@@ -255,10 +255,12 @@ export class AppModule {
         this.moduleInjector = Injector.create({ providers: AppConfig.Providers.All, parent: injector, name: 'AppModuleInjector' });
         InjectionConfig.Injector = this.moduleInjector;
         AppConfig.Injection = InjectionConfig;
+        iconLibraries.registerFontPack('nebular', { iconClassPrefix: 'nb' });
         iconLibraries.registerFontPack('fa', {packClass: 'fa', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('fas', {packClass: 'fas', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('far', {packClass: 'far', iconClassPrefix: 'fa'});
         iconLibraries.registerFontPack('ion', {iconClassPrefix: 'ion'});
+        iconLibraries.setDefaultPack('nebular');
 
         // register application service workers
         registerBrowserServiceWorkers();
