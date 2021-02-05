@@ -27,7 +27,7 @@ import {UserToolbarComponent} from './user.toolbar.component';
 import {UserFormlyComponent} from './user.formly.component';
 import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {Observable, Subscription, throwError} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import ArrayUtils from '../../../../../utils/common/array.utils';
 import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
 import FunctionUtils from '../../../../../utils/common/function.utils';
@@ -141,8 +141,8 @@ export class UserComponent
                             } else {
                                 this.onEditUser(ArrayUtils.isArray(user) ? Array.from(user)[0] : user);
                             }
-                        }, reason => throwError(reason))
-                        .catch(reason => throwError(reason));
+                        }, reason => { throw new Error(reason); })
+                        .catch(reason => { throw new Error(reason); });
                 }
             }), this);
     }

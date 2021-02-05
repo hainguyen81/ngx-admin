@@ -3,11 +3,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
 import {DataSource} from '@app/types/index';
-import {isObservable, Observable, throwError} from 'rxjs';
+import {isObservable, Observable} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import {AppFormlySelectFieldComponent} from './app.formly.select.field.component';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Custom module data formly field for selecting special
@@ -73,7 +74,7 @@ export class AppModuleDataFormlySelectFieldComponent<
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        this._datasource || throwError('Could not inject DataSource instance');
+        AssertUtils.isValueNotNou(this._datasource, 'Could not inject DataSource instance');
     }
 
     // -------------------------------------------------

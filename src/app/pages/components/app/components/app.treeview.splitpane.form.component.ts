@@ -13,9 +13,9 @@ import {AppFormlyComponent} from './app.formly.component';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from '@app/types/index';
-import {throwError} from 'rxjs';
 import {AppSplitPaneComponent} from './app.splitpane.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export const APP_TREE_SPLIT_FORM_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the split-pane between tree-view and form');
@@ -174,7 +174,7 @@ export class AppTreeSplitFormComponent<
             this.selectedModelItem = item;
             if (item && item.value) {
                 const model: T = item.value as T;
-                model || throwError('Could not apply undefined model to formly component!');
+                AssertUtils.isValueNotNou(model, 'Could not apply undefined model to formly component!');
 
                 this.selectedModel = DeepCloner(model);
                 // create formly form component

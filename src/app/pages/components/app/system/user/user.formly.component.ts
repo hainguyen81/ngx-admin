@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,14 +10,14 @@ import {Lightbox} from 'ngx-lightbox';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {EmailValidators} from 'ngx-validators';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {CustomValidators} from 'ngx-custom-validators';
 import {IUser} from '../../../../../@core/data/system/user';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/common/validation.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* default user formly config */
 export const UserFormConfig: FormlyConfig = new FormlyConfig();
@@ -207,7 +207,8 @@ export class UserFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
+        AssertUtils.isValueNotNou(generalSettingsDatasource,
+            'Could not inject GeneralSettingsDatasource instance');
         super.config = UserFormConfig;
         super.fields = UserFormFieldsConfig;
     }

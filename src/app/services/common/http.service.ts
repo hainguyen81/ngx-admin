@@ -1,7 +1,7 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {catchError, map} from 'rxjs/operators';
-import {Observable, ObservableInput, of, throwError} from 'rxjs';
+import {Observable, ObservableInput, of} from 'rxjs';
 import {ServiceResponse} from './response.service';
 import {IDbService, IHttpService} from './interface.service';
 import {Inject} from '@angular/core';
@@ -12,6 +12,7 @@ import JsonUtils from '../../utils/common/json.utils';
 import {IModel} from '../../@core/data/base';
 import {BaseDbService} from './database.service';
 import ArrayUtils from '../../utils/common/array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Abstract HTTP service
@@ -32,8 +33,8 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
     }
 
     protected constructor(private http: HttpClient, private logger: NGXLogger, private dbService: IDbService<K>) {
-        http || throwError('Could not inject HttpClient!');
-        logger || throwError('Could not inject logger!');
+        AssertUtils.isValueNotNou(http, 'Could not inject HttpClient!');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger!');
         logger.updateConfig(LogConfig);
         if (!dbService) {
             this.getLogger().warn('Could not found database service for offline mode!');
@@ -295,13 +296,13 @@ export abstract class AbstractHttpService<T, K> implements IHttpService<T> {
             } else if (options && options.headers) {
                 errorHeaders = new HttpHeaders(<{ [header: string]: string | string[]; }>options.headers);
             }
-            throwError(new HttpErrorResponse({
+            throw new HttpErrorResponse({
                 error: (httpResponse ? httpResponse.body : options ? options.body : null),
                 headers: errorHeaders,
                 status: (httpResponse ? httpResponse.status : 0),
                 statusText: (httpResponse ? httpResponse.statusText : null),
                 url: (httpResponse ? httpResponse.url : url),
-            }));
+            });
         }
     }
 
@@ -397,7 +398,6 @@ export abstract class BaseHttpService<T extends IModel> extends AbstractHttpServ
         errors?: any;
         messages?: any;
     }): Observable<T[] | T> {
-        throwError('Please implement this method if you wanna use offline mode!');
-        return undefined;
+        throw new Error('Please implement this method if you wanna use offline mode!');
     }
 }

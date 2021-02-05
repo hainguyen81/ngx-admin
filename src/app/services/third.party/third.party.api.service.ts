@@ -8,13 +8,14 @@ import {BaseDbService} from '../common/database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import ObjectUtils from '../../utils/common/object.utils';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {RC_THIRD_PARTY_CUSTOM_TYPE} from '../../config/request.config';
 import {Cacheable} from 'ngx-cacheable';
 import {NgxLocalStorageEncryptionService} from '../storage.services/local.storage.services';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * The third-party API authorization configuration interface
@@ -152,8 +153,8 @@ export abstract class ThirdPartyApiDbService<T extends IApiThirdParty> extends B
         const currentDate: Date = new Date();
         (entities || []).forEach((entity: T) => {
             if (entity && (entity.expiredAt !== 0 && new Date(entity.expiredAt) >= currentDate)) {
-                throwError(new ThirdPartyApiExpiredException(
-                    entity.code, new Error('Third party data has been expired!')));
+                throw new ThirdPartyApiExpiredException(
+                    entity.code, new Error('Third party data has been expired!'));
             }
         });
     }
@@ -212,9 +213,10 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty> extends
                           @Inject(TOKEN_THIRD_PARTY_API_CONFIG)
                           private apiConfig: IThirdPartyApiConfig) {
         super(http, logger, dbService);
-        apiConfig || throwError('Could not inject third-party API configuration');
-        ((apiConfig.code || '').length && apiConfig.token)
-        || throwError('Third-party API configuration code must be not undefined');
+        AssertUtils.isValueNotNou(apiConfig, 'Could not inject third-party API configuration');
+        AssertUtils.isTrueValue(
+            (apiConfig.code || '').length > 0 && ObjectUtils.isNotNou(apiConfig.token),
+            'Third-party API configuration code must be not undefined');
     }
 
     parseResponse(serviceResponse?: ServiceResponse): T {
@@ -279,8 +281,9 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty> extends
         if (url !== this.config.token.tokenUrl
             && requiredTokenTimes < ThirdPartyApiHttpService.THIRD_PARTY_REQUIRED_TOKEN_TIMES_MAXIMUM
             && this.isUnauthorizedOrExpired(res)) {
-            !(this.config.token.tokenUrl || '').length
-            || throwError('Please provide third-party authorization configuration to require access token!');
+            AssertUtils.isTrueValue(
+                (this.config.token.tokenUrl || '').length > 0,
+                'Please provide third-party authorization configuration to require access token!');
             // increase the required token times
             this.increaseRequiredTokenTimes();
             return this.handleUnauthorizedExpired(url, method, options);
@@ -359,13 +362,13 @@ export abstract class ThirdPartyApiHttpService<T extends IApiThirdParty> extends
                     _this.config.token.method || 'GET', clonedOptions);
                 const accessToken: any = _this.parseAccessToken(httpResp);
                 if (!accessToken) {
-                    throwError(new HttpErrorResponse({
+                    throw new HttpErrorResponse({
                         url: url,
                         headers: <HttpHeaders>options.headers,
                         status: 401,
                         statusText: 'Unauthorized',
                         error: 'Token has been expired! But could not require/parse new token again!',
-                    }));
+                    });
                 }
                 // save token to local storage for using in future
                 _this.secureStorage.set(this.generateTokenKey(), accessToken);

@@ -2,9 +2,9 @@ import {IApiThirdParty} from '../../../@core/data/system/api.third.party';
 import {Type} from '@angular/core';
 import {IThirdPartyApiDataParser, IThirdPartyApiDataParserDefinition} from '../third.party.api.datasource';
 import {IModel} from '../../../@core/data/base';
-import {throwError} from 'rxjs';
 import JsonUtils from '../../../utils/common/json.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Default third-party API data parser definition
@@ -27,8 +27,8 @@ export abstract class AbstractThirdPartyApiDataParser<T extends IApiThirdParty, 
     }
 
     protected constructor(private _dataPropertyName: string) {
-        (_dataPropertyName || '').length
-        || throwError('Please define the property of the returned third-part API data to parse');
+        AssertUtils.isTrueValue((_dataPropertyName || '').length > 0,
+            'Please define the property of the returned third-part API data to parse');
     }
 
     parse(data: T): K[] {

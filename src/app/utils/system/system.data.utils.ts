@@ -1,4 +1,3 @@
-import {throwError} from 'rxjs';
 import {OrganizationDataSource} from '../../services/implementation/system/organization/organization.datasource';
 import OrganizationUtils from './organization.utils';
 import {IOrganization} from '../../@core/data/system/organization';
@@ -16,6 +15,7 @@ import {ICity} from '../../@core/data/system/city';
 import {TranslateService} from '@ngx-translate/core';
 import {IDbService, IHttpService} from '../../services/common/interface.service';
 import {BaseDataSource} from '../../services/common/datasource.service';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export default class SystemDataUtils {
 
@@ -30,8 +30,7 @@ export default class SystemDataUtils {
         T extends IModel, D extends IDbService<T>>(
             dbService: D, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null): Promise<T[]> {
-        dbService
-        || throwError('DbService is required to invoke!');
+        AssertUtils.isValueNotNou(dbService, 'DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
             ModelUtils.buildModelsForDefaultSelectOptions(values as T[], translateService));
     }
@@ -48,10 +47,8 @@ export default class SystemDataUtils {
             dbService: D, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
-        dbService
-        || throwError('DbService is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(dbService, 'DbService is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
             ModelUtils.buildModelsForSelectOptions(
                 values as T[], translateService, true, keysMapper));
@@ -68,8 +65,7 @@ export default class SystemDataUtils {
             dbService: D, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        dbService
-        || throwError('DbService is required to invoke!');
+        AssertUtils.isValueNotNou(dbService, 'DbService is required to invoke!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
             ModelUtils.buildModelsForDefaultTableSelectOptions(values as T[], translateService));
     }
@@ -87,10 +83,8 @@ export default class SystemDataUtils {
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        dbService
-        || throwError('DbService is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(dbService, 'DbService is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         return dbService.getAllByIndex(indexName, keyRange).then(values =>
             ModelUtils.buildModelsForTableSelectOptions(
                 values as T[], translateService, true, keysMapper));
@@ -108,8 +102,7 @@ export default class SystemDataUtils {
         DS extends BaseDataSource<T, H, D>>(
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null): Promise<T[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter([], false, false);
         return datasource.getAllByIndex(indexName, keyRange).then(values =>
@@ -129,10 +122,8 @@ export default class SystemDataUtils {
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter([], false, false);
         return datasource.getAllByIndex(indexName, keyRange).then(values =>
@@ -152,8 +143,7 @@ export default class SystemDataUtils {
             datasource: DS, indexName: string, keyRange: IDBKeyRange,
             translateService?: TranslateService | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter([], false, false);
         return datasource.getAllByIndex(indexName, keyRange).then(values =>
@@ -174,10 +164,8 @@ export default class SystemDataUtils {
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter([], false, false);
         return datasource.getAllByIndex(indexName, keyRange).then(values =>
@@ -196,8 +184,7 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
             translateService?: TranslateService | null): Promise<T[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter(conf || [], andOperator, false);
         return datasource.getAll().then(values =>
@@ -215,10 +202,8 @@ export default class SystemDataUtils {
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter(conf || [], andOperator, false);
         return datasource.getAll().then(values =>
@@ -237,8 +222,7 @@ export default class SystemDataUtils {
             datasource: D, conf?: Array<any> | null, andOperator?: boolean | false,
             translateService?: TranslateService | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter(conf || [], andOperator, false);
         return datasource.getAll().then(values =>
@@ -258,10 +242,8 @@ export default class SystemDataUtils {
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         datasource.setPaging(1, undefined, false);
         datasource.setFilter(conf || [], andOperator, false);
         return datasource.getAll().then(values =>
@@ -277,8 +259,7 @@ export default class SystemDataUtils {
     public static invokeAllModelsAsDefaultSelectOptions<
         D extends DataSource, T extends IModel>(
             datasource: D, translateService?: TranslateService | null): Promise<T[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
         return SystemDataUtils.invokeModelsByFilterAsDefaultSelectOptions(
             datasource, [], false, translateService);
     }
@@ -292,10 +273,8 @@ export default class SystemDataUtils {
         D extends DataSource, T extends IModel>(
             datasource: D, translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<T[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         return SystemDataUtils.invokeModelsByFilterAsSelectOptions(
             datasource, [], false, translateService, keysMapper);
     }
@@ -309,8 +288,7 @@ export default class SystemDataUtils {
             datasource: D,
             translateService?: TranslateService | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
         return SystemDataUtils.invokeModelsByFilterAsTableSelectOptions(
             datasource, [], false, translateService);
     }
@@ -326,10 +304,8 @@ export default class SystemDataUtils {
             translateService?: TranslateService | null,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null):
         Promise<{ [key: string]: string | string[] | T; }[]> {
-        datasource
-        || throwError('DataSource is required to invoke!');
-        keysMapper
-        || throwError('DataMapper is required!');
+        AssertUtils.isValueNotNou(datasource, 'DataSource is required to invoke!');
+        AssertUtils.isValueNotNou(keysMapper, 'DataMapper is required!');
         return SystemDataUtils.invokeModelsByFilterAsOptions(
             datasource, [], false, translateService, keysMapper);
     }
@@ -339,8 +315,7 @@ export default class SystemDataUtils {
      * @param countryDatasource to invoke
      */
     public static invokeAllCountries(countryDatasource: CountryDatasource): Promise<ICountry[]> {
-        countryDatasource
-        || throwError('CountryDatasource is required to invoke!');
+        AssertUtils.isValueNotNou(countryDatasource, 'CountryDatasource is required to invoke!');
         return SystemDataUtils.invokeAllModelsAsDefaultSelectOptions(countryDatasource);
     }
 
@@ -353,8 +328,7 @@ export default class SystemDataUtils {
     public static invokeAllProvinces(
         provinceDatasource: ProvinceDatasource,
         country: ICountry, translateService?: TranslateService | null): Promise<IProvince[]> {
-        provinceDatasource
-        || throwError('ProvinceDatasource is required to invoke!');
+        AssertUtils.isValueNotNou(provinceDatasource, 'ProvinceDatasource is required to invoke!');
         return (<ProvinceDatasource>provinceDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
@@ -372,8 +346,7 @@ export default class SystemDataUtils {
     public static invokeAllCities(
         cityDatasource: CityDatasource,
         province: IProvince, translateService?: TranslateService | null): Promise<ICity[]> {
-        cityDatasource
-        || throwError('CityDatasource is required to invoke!');
+        AssertUtils.isValueNotNou(cityDatasource, 'CityDatasource is required to invoke!');
         return (<CityDatasource>cityDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false))
@@ -388,8 +361,7 @@ export default class SystemDataUtils {
      */
     public static invokeAllOrganization(
         organizationDatasource: OrganizationDataSource): Promise<TreeviewItem[]> {
-        organizationDatasource
-        || throwError('OrganizationDataSource is required to invoke!');
+        AssertUtils.isValueNotNou(organizationDatasource, 'OrganizationDataSource is required to invoke!');
         return organizationDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false)
@@ -402,8 +374,7 @@ export default class SystemDataUtils {
      */
     public static invokeAllUsersAsSelectOptions(userDatasource: UserDataSource):
         Promise<{ [key: string]: string | string[] | IModel; }[]> {
-        userDatasource
-        || throwError('UserDataSource is required to invoke!');
+        AssertUtils.isValueNotNou(userDatasource, 'UserDataSource is required to invoke!');
         return userDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false)

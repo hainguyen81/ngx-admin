@@ -1,10 +1,10 @@
 /* document header configuration */
 import {Inject, Injectable} from '@angular/core';
-import {throwError} from 'rxjs';
 import {Meta, MetaDefinition, Title} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import ArrayUtils from '../../utils/common/array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* page header configuration */
 export interface IPageHeaderConfig {
@@ -97,7 +97,7 @@ export class PageHeaderService implements IPageHeaderService {
      * @param config to apply
      */
     public setConfig(config: IPageHeaderConfig) {
-        config || throwError('Config must be not undefined');
+        AssertUtils.isValueNotNou(config, 'Config must be not undefined');
         this.config = config;
         this.resolve();
     }
@@ -117,8 +117,8 @@ export class PageHeaderService implements IPageHeaderService {
                 @Inject(NGXLogger) private logger: NGXLogger,
                 @Inject(Title) private _titleService?: Title,
                 @Inject(Meta) private _metaService?: Meta) {
-        logger || throwError('Could not inject NGXLogger');
-        translateService || throwError('Could not inject TranslateService');
+        AssertUtils.isValueNotNou(logger, 'Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(translateService, 'Could not inject TranslateService');
     }
 
     // -------------------------------------------------

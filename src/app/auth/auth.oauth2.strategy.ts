@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {deepExtend, NbAuthResult, NbAuthStrategyClass, NbAuthToken, NbPasswordAuthStrategy} from '@nebular/auth';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {NGXLogger} from 'ngx-logger';
 import {NbxOAuth2AuthDbService, NbxOAuth2AuthHttpService} from './auth.oauth2.service';
@@ -19,6 +19,7 @@ import {AUTH_STRATEGY_OPTIONS} from '../config/auth.config';
 import {NbxPasswordAuthStrategyOptions} from './auth.oauth2.strategy.options';
 import ArrayUtils from '../utils/common/array.utils';
 import ObjectUtils from '../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
@@ -53,12 +54,12 @@ export class NbxOAuth2AuthStrategy extends NbPasswordAuthStrategy {
                 @Inject(ModuleService) private moduleDbService: ModuleService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
         super(http, route);
-        route || throwError('Could not inject route!');
-        authHttpService || throwError('Could not inject HttpService!');
+        AssertUtils.isValueNotNou(route, 'Could not inject route!');
+        AssertUtils.isValueNotNou(authHttpService, 'Could not inject HttpService!');
         const _this = this;
         this.authHttpService.setCreateTokenDelegate((value: any) => _this.createToken(value));
-        authDbService || throwError('Could not inject IndexedDb!');
-        logger || throwError('Could not inject logger!');
+        AssertUtils.isValueNotNou(authDbService, 'Could not inject IndexedDb!');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger!');
         logger.updateConfig(LogConfig);
         this.defaultOptions = deepExtend({}, AUTH_STRATEGY_OPTIONS);
     }

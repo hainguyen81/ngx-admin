@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -7,7 +7,7 @@ import {COMMON} from '../../../../../config/common.config';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Lightbox} from 'ngx-lightbox';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
@@ -21,8 +21,8 @@ import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* warehouse item table settings */
 export const WarehouseItemTableSettings = {
@@ -203,7 +203,8 @@ export class WarehouseItemSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
+        AssertUtils.isValueNotNou(generalSettingsDatasource,
+            'Could not inject GeneralSettingsDatasource instance');
         this.tableHeader = 'warehouse.item.title';
         this.config = WarehouseItemTableSettings;
         this.setContextMenu(WarehouseItemContextMenu);

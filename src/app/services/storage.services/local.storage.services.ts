@@ -1,10 +1,10 @@
-import {LocalStorageService, NgxLocalstorageConfiguration, StorageSerializer,} from 'ngx-localstorage';
+import {LocalStorageService, NgxLocalstorageConfiguration, StorageSerializer} from 'ngx-localstorage';
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {throwError} from 'rxjs';
 import * as SecureLS from 'secure-ls';
 import JsonUtils from '../../utils/common/json.utils';
 import ObjectUtils from '../../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Secure configuration
@@ -66,7 +66,7 @@ export class NgxLocalStorageService extends LocalStorageService {
                 @Inject(TOKEN_STORAGE_CONFIG) _storageConfig?: NgxLocalstorageConfiguration | null) {
         super(_serializer || new DefaultStorageSerializer(),
             _storageConfig || new LocalStorageConfiguration());
-        _logger || throwError('Could not inject NGXLogger instance');
+        AssertUtils.isValueNotNou(_logger, 'Could not inject NGXLogger instance');
         _serializer || _logger.warn('Not inject serializer configuration! The default serializer will be used!');
         _serializer = (_serializer || new DefaultStorageSerializer());
         _storageConfig || _logger.warn(
@@ -106,7 +106,7 @@ export class NgxLocalStorageEncryptionService {
                 @Inject(TOKEN_STORAGE_SERIALIZER) private _serializer?: StorageSerializer | null,
                 @Inject(TOKEN_STORAGE_CONFIG) private _storageConfig?: NgxLocalstorageConfiguration | null,
                 @Inject(TOKEN_SECURE_ENCRYPTION_CONFIG) private _secureConfig?: ISecureEncryptionConfig | null) {
-        _logger || throwError('Could not inject NGXLogger instance');
+        AssertUtils.isValueNotNou(_logger, 'Could not inject NGXLogger instance');
         _secureConfig || _logger.warn(
             'Not inject secure storage configuration! The default configuration will be used!');
         _secureConfig = (_secureConfig || new SecuredLocalStorageEncryptionConfig());

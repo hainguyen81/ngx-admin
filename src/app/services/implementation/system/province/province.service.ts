@@ -7,12 +7,12 @@ import {BaseDbService} from '../../../common/database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {throwError} from 'rxjs';
 import {ICountry} from '../../../../@core/data/system/country';
 import {THIRD_PARTY_API} from '../../../../config/third.party.api';
-import {IThirdPartyApiDataBridgeParam, ThirdPartyApiBridgeDbService,} from '../../../third.party/third.party.api.bridge.service';
+import {IThirdPartyApiDataBridgeParam, ThirdPartyApiBridgeDbService} from '../../../third.party/third.party.api.bridge.service';
 import ArrayUtils from '../../../../utils/common/array.utils';
 import ObjectUtils from '../../../../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class ProvinceDbService extends BaseDbService<IProvince> {
@@ -29,15 +29,14 @@ export class ProvinceDbService extends BaseDbService<IProvince> {
                 @Inject(ThirdPartyApiBridgeDbService)
                 private thirdPartyApiBridge: ThirdPartyApiBridgeDbService<IProvince>) {
         super(dbService, logger, connectionService, DB_STORE.province);
-        thirdPartyApiBridge || throwError('Could not inject ThirdPartyApiBridgeDbService instance');
+        AssertUtils.isValueNotNou(thirdPartyApiBridge, 'Could not inject ThirdPartyApiBridgeDbService instance');
     }
 
     /**
      * TODO Not support for getting all provinces because of performance
      */
     getAll(): Promise<IProvince[]> {
-        throwError(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
-        return Promise.reject(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
+        throw new Error(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
     }
 
     /**
@@ -45,7 +44,7 @@ export class ProvinceDbService extends BaseDbService<IProvince> {
      * @param country to filter
      */
     findByCountry(country?: ICountry | null): Promise<IProvince | IProvince[]> {
-        country || throwError(ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
+        AssertUtils.isValueNotNou(country, ProvinceDbService.EXCEPTION_PERFORMANCE_REASON);
         const _this: ProvinceDbService = this;
         const fetchParam: IThirdPartyApiDataBridgeParam<IProvince> = {
             dbCacheFilter: {

@@ -1,6 +1,6 @@
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {Inject} from '@angular/core';
 import {LogConfig} from '../../config/log.config';
 import {IDbService} from './interface.service';
@@ -9,6 +9,7 @@ import PromiseUtils from '../../utils/common/promise.utils';
 import {IModel} from '../../@core/data/base';
 import {IdGenerators} from '../../config/generator.config';
 import ObjectUtils from '../../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * The delegate Promise function type for delete/update delegate function of IndexDb service
@@ -52,11 +53,11 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
                           @Inject(ConnectionService) private connectionService: ConnectionService,
                           private dbStore: string,
                           private entityKey: string) {
-        dbService || throwError('Could not inject IndexDb!');
-        logger || throwError('Could not inject logger!');
-        connectionService || throwError('Could not inject connection service!');
-        (dbStore || '').length || throwError('Database store name must be not empty!');
-        (entityKey || '').length || throwError('Database entity key property must be not empty!');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject IndexDb!');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger!');
+        AssertUtils.isValueNotNou(connectionService, 'Could not inject connection service!');
+        AssertUtils.isTrueValue((dbStore || '').length > 0, 'Database store name must be not empty!');
+        AssertUtils.isTrueValue((entityKey || '').length > 0, 'Database entity key property must be not empty!');
         logger.updateConfig(LogConfig);
         this._onConnectionMonitor = connectionService.monitor().subscribe((connected) => {
             if (connected) {
@@ -130,7 +131,7 @@ export abstract class AbstractDbService<T> implements IDbService<T> {
 
     deletePernament(entity: T): Promise<number> {
         const entityAny: any = ObjectUtils.as<any>(entity);
-        entityAny[this.getEnityKey()] || throwError(
+        AssertUtils.isValueNotNou(entityAny[this.getEnityKey()],
             'Not found entity primary key from property {' + this.getEnityKey() + '}');
         return new Promise((resolve, reject) => {
             this.getDbService().delete(this.getDbStore(), entityAny[this.getEnityKey()])

@@ -1,5 +1,4 @@
 import {Inject, Injectable} from '@angular/core';
-import {throwError} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {WarehouseCategoryDbService} from '../../../services/implementation/warehouse/warehouse.category/warehouse.category.service';
@@ -7,14 +6,15 @@ import {IWarehouseCategory} from '../../data/warehouse/warehouse.category';
 import {categoryGenerate} from './mock.category';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class MockWarehouseCategoryService implements IMockService {
 
     constructor(@Inject(WarehouseCategoryDbService) private dbService: WarehouseCategoryDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
-        dbService || throwError('Could not inject user database service');
-        logger || throwError('Could not inject logger service');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject user database service');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger service');
         logger.updateConfig(LogConfig);
     }
 

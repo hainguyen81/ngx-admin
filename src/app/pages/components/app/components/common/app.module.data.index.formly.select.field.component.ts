@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
 import {IModel} from '../../../../../@core/data/base';
@@ -6,7 +6,7 @@ import {DataSource} from '@app/types/index';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {BaseDataSource} from '../../../../../services/common/datasource.service';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AppModuleDataFormlySelectFieldComponent} from './app.module.data.formly.select.field.component';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 
@@ -127,7 +127,7 @@ export class AppModuleDataIndexSettingsFormlySelectFieldComponent<
             }
 
         } else {
-            throwError('Must define index to filter or define useDataFilter as false');
+            throw new Error('Must define index to filter or define useDataFilter as false');
         }
     }
 }

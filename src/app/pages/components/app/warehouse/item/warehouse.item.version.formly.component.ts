@@ -1,5 +1,5 @@
 import {FormlyConfig, FormlyFieldConfig} from '@ngx-formly/core';
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -8,16 +8,16 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {WarehouseItemDatasource,} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
-import {WarehouseCategoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import {WarehouseItemDatasource} from '../../../../../services/implementation/warehouse/warehouse.item/warehouse.item.datasource';
+import {WarehouseCategoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {AppFormlyComponent} from '../../components/app.formly.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {throwError} from 'rxjs';
-import {WarehouseSettingsDatasource,} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
+import {WarehouseSettingsDatasource} from '../../../../../services/implementation/warehouse/warehouse.settings/warehouse.settings.datasource';
 import {CustomValidators} from 'ngx-custom-validators';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/common/validation.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export const WarehouseItemVersionFormConfig: FormlyConfig = new FormlyConfig();
 
@@ -347,8 +347,8 @@ export class WarehouseItemVersionFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        categoryDatasource || throwError('Could not inject WarehouseCategoryDatasource instance');
-        settingsDatasource || throwError('Could not inject WarehouseSettingsDatasource instance');
+        AssertUtils.isValueNotNou(categoryDatasource, 'Could not inject WarehouseCategoryDatasource instance');
+        AssertUtils.isValueNotNou(settingsDatasource, 'Could not inject WarehouseSettingsDatasource instance');
         super.config = WarehouseItemVersionFormConfig;
         super.fields = WarehouseItemVersionFormFieldsConfig;
     }

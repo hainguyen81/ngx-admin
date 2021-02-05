@@ -14,10 +14,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subject, throwError} from 'rxjs';
+import {Subject} from 'rxjs';
 import {ISplitAreaConfig} from '../../../splitpane/abstract.splitpane.component';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import FunctionUtils from '@app/utils/common/function.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* Warehouse item version left area configuration */
 export const WarehouseItemVersionFormAreaConfig: ISplitAreaConfig = {
@@ -170,15 +171,15 @@ export class WarehouseItemVersionSplitPaneComponent
             ? <Subject<IWarehouseItem>>options.data['subject'] : undefined);
         const data: IWarehouseItem = (options && options.data['model']
             ? options.data['model'] as IWarehouseItem : undefined);
-        this.saveSubject || throwError('Could not found parent subject to save data!');
-        data || throwError('Could not found dialog data!');
+        AssertUtils.isValueNotNou(this.saveSubject, 'Could not found parent subject to save data!');
+        AssertUtils.isValueNotNou(data, 'Could not found dialog data!');
         _this.dataModel = data;
         options.actionButtons[0].onAction = () => _this.performSave();
         options.actionButtons[1].onAction = () => _this.performReset();
     }
 
     protected doSave(): void {
-        throwError('Not support for saving model from internal component!');
+        throw new Error('Not support for saving model from internal component!');
     }
     private performSave(): boolean {
         if (!this.leftSideComponent || !this.leftSideComponent.submit()) {
@@ -193,7 +194,7 @@ export class WarehouseItemVersionSplitPaneComponent
     }
 
     protected doReset(): void {
-        throwError('Not support for resetting model from internal component!');
+        throw new Error('Not support for resetting model from internal component!');
     }
     private performReset(): boolean {
         this._modifiedDataModel = Object.assign(this._modifiedDataModel, this._dataModel);
@@ -206,6 +207,6 @@ export class WarehouseItemVersionSplitPaneComponent
     }
 
     protected performDelete(): void {
-        throwError('Not support for deleting model from internal component!');
+        throw new Error('Not support for deleting model from internal component!');
     }
 }

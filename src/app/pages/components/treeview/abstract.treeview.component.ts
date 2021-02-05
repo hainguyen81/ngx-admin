@@ -8,7 +8,6 @@ import {DropdownTreeviewComponent, TreeItem, TreeviewComponent, TreeviewConfig, 
 import HtmlUtils from '../../../utils/common/html.utils';
 import KeyboardUtils from '../../../utils/common/keyboard.utils';
 import ObjectUtils from '../../../utils/common/object.utils';
-import {throwError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -17,6 +16,7 @@ import {CONTEXT_MENU_ADD, CONTEXT_MENU_DELETE, CONTEXT_MENU_EDIT} from '../../..
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '../../../utils/common/array.utils';
 import FunctionUtils from 'app/utils/common/function.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * The extended {TreeviewConfig}
@@ -790,7 +790,7 @@ export abstract class AbstractTreeviewComponent<T extends DataSource> extends Ab
      * @return {TreeviewItem}
      */
     public getTreeviewItemByElement(treeviewItemEl: HTMLElement): TreeviewItem {
-        treeviewItemEl || throwError('Could not get tree-view item of undefined element');
+        AssertUtils.isValueNotNou(treeviewItemEl, 'Could not get tree-view item of undefined element');
 
         const itemRowEl: HTMLElement = this.getFirstElementBySelector(
             AbstractTreeviewComponent.TREEVIEW_ITEM_ROW_ELEMENT_SELECTOR, treeviewItemEl);

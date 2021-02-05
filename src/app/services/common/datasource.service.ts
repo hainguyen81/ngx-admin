@@ -1,9 +1,9 @@
 import {DataSource} from '@app/types/index';
 import {IDbService, IHttpService} from './interface.service';
-import {throwError} from 'rxjs';
 import {Inject} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../config/log.config';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Abstract data source for table service
@@ -40,9 +40,9 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
                           private dbService: D,
                           @Inject(NGXLogger) private logger: NGXLogger) {
         super();
-        httpService || throwError('Not found HTTP service');
-        dbService || throwError('Not found database service');
-        logger || throwError('Could not inject logger!');
+        AssertUtils.isValueNotNou(httpService, 'Not found HTTP service');
+        AssertUtils.isValueNotNou(dbService, 'Not found database service');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger!');
         logger.updateConfig(LogConfig);
     }
 
@@ -96,7 +96,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
 
     addFilter(fieldConf: any, andOperator = true, doEmit: boolean = true): AbstractDataSource<T, H, D> {
         if (!fieldConf['field'] || typeof fieldConf['search'] === 'undefined') {
-            throwError('Filter configuration object is not valid');
+            throw new Error('Filter configuration object is not valid');
         }
 
         let found = false;
@@ -131,7 +131,7 @@ export abstract class AbstractDataSource<T, H extends IHttpService<T>, D extends
         if (conf !== null) {
             conf.forEach((fieldConf) => {
                 if (!fieldConf['field'] || typeof fieldConf['direction'] === 'undefined') {
-                    throwError('Sort configuration object is not valid');
+                    throw new Error('Sort configuration object is not valid');
                 }
             });
             this.sortCfg = conf;

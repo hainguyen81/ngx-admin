@@ -1,10 +1,9 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
-import {AppModuleSettingsFormlySelectExFieldComponent,} from '../../components/common/app.module.settings.formly.select.ex.field.component';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
+import {AppModuleSettingsFormlySelectExFieldComponent} from '../../components/common/app.module.settings.formly.select.ex.field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
-import {throwError} from 'rxjs';
 import {IModule} from '../../../../../@core/data/system/module';
 import {DefaultNgxSelectExOptions, INgxSelectExOptions} from '../../../select-ex/abstract.select.ex.component';
 
@@ -48,20 +47,19 @@ export class GeneralSettingsFormlySelectExFieldComponent
     }
 
     set moduleCode(_moduleCode: string) {
-        throwError('Not support for changing module code');
+        throw new Error('Not support for changing module code');
     }
 
     get moduleId(): string {
-        throwError('Not support for requiring module identity');
-        return undefined;
+        throw new Error('Not support for requiring module identity');
     }
 
     set moduleId(_moduleId: string) {
-        throwError('Not support for changing module identity');
+        throw new Error('Not support for changing module identity');
     }
 
     set module(_module: IModule) {
-        throwError('Not support for changing module');
+        throw new Error('Not support for changing module');
     }
 
     /**

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {IModel} from '../../../../../@core/data/base';
 import {AppTreeviewI18n, TOKEN_APP_TREEVIEW_SHOW_ALL} from '../app.treeview.i18n';
 import {TreeviewI18n} from 'ngx-treeview';
@@ -7,8 +7,8 @@ import {BaseDataSource} from '../../../../../services/common/datasource.service'
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {DataSource} from '@app/types/index';
 import {NGXLogger} from 'ngx-logger';
-import {Observable, throwError} from 'rxjs';
-import {AppModuleDataFormlyTreeviewFieldComponent,} from './app.module.data.formly.treeview.field.component';
+import {Observable} from 'rxjs';
+import {AppModuleDataFormlyTreeviewFieldComponent} from './app.module.data.formly.treeview.field.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 
@@ -109,7 +109,7 @@ export class AppModuleDataIndexFormlyTreeviewFieldComponent<
                 this.dataSource, this.dataIndexName, this.dataIndexKey, this.translateService);
 
         } else {
-            throwError('Must define index to filter or define useDataFilter as false');
+            throw new Error('Must define index to filter or define useDataFilter as false');
         }
     }
 }

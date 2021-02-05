@@ -21,7 +21,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AppTabsetComponent} from '../../components/app.tabset.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {AbstractComponent} from '../../../abstract.component';
-import {throwError} from 'rxjs';
 import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.table.component';
 
 export const WAREHOUSE_ITEM_TAB_CONFIGS: ITabConfig[] = [{
@@ -381,15 +380,15 @@ export class WarehouseItemTabsetComponent
     // -------------------------------------------------
 
     protected doSave(): void {
-        throwError('Not support for saving model from internal component!');
+        throw new Error('Not support for saving model from internal component!');
     }
 
     protected doReset(): void {
-        throwError('Not support for resetting model from internal component!');
+        throw new Error('Not support for resetting model from internal component!');
     }
 
     protected performDelete(): void {
-        throwError('Not support for deleting model from internal component!');
+        throw new Error('Not support for deleting model from internal component!');
     }
 
     // -------------------------------------------------

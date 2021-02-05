@@ -17,7 +17,7 @@ import {NumberCellComponent} from '../../../smart-table/number.cell.component';
 import {BarcodeCellComponent} from '../../../smart-table/barcode.cell.component';
 import {IEvent} from '../../../abstract.component';
 import WarehouseItem, {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
-import {of, Subject, Subscription, throwError} from 'rxjs';
+import {of, Subject, Subscription} from 'rxjs';
 import {WarehouseItemVersionSplitPaneComponent} from './warehouse.item.version.splitpane.component';
 import {Cell, DataSource, DefaultEditor, LocalDataSource, Row} from '@app/types/index';
 import {WarehouseItemVersionDatasource} from '../../../../../services/implementation/warehouse/warehouse.item.version/warehouse.item.version.datasource';
@@ -25,6 +25,7 @@ import {IdGenerators} from '../../../../../config/generator.config';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import FunctionUtils from '../../../../../utils/common/function.utils';
 import ObjectUtils from '../../../../../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* warehouse item version table settings */
 export const WarehouseItemVersionTableSettings = {
@@ -211,8 +212,8 @@ export class WarehouseItemVersionSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        warehouseItemVersionDatasource
-        || throwError('Could not inject WarehouseItemVersionDatasource instance');
+        AssertUtils.isValueNotNou(warehouseItemVersionDatasource,
+            'Could not inject WarehouseItemVersionDatasource instance');
         this.tableHeader = 'warehouse.item.title';
         this.config = WarehouseItemVersionTableSettings;
         this.setContextMenu(WarehouseItemVersionContextMenu);
@@ -292,11 +293,11 @@ export class WarehouseItemVersionSmartTableComponent
     private onDeleteVersion($event: IEvent) {
         const dataModel: IWarehouseItem = ($event && $event.data && $event.data['row'] instanceof Row
             ? ($event.data['row'] as Row).getData() as IWarehouseItem : undefined);
-        dataModel || throwError('Could not found the edited data model!');
+        AssertUtils.isValueNotNou(dataModel, 'Could not found the edited data model!');
     }
 
     private openModalDialog(dataModel: IWarehouseItem) {
-        dataModel || throwError('Could not found the dialog data model!');
+        AssertUtils.isValueNotNou(dataModel, 'Could not found the dialog data model!');
         dataModel && this.getModalDialogService().openDialog(
             super.getRootViewContainerRef(), {
             title: this.translate(this.tableHeader),

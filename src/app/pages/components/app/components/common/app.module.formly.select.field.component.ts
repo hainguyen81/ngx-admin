@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {NGXLogger} from 'ngx-logger';
 import Module, {IModule} from '../../../../../@core/data/system/module';
@@ -10,6 +10,7 @@ import {AppFormlySelectFieldComponent} from './app.formly.select.field.component
 import FunctionUtils from '../../../../../utils/common/function.utils';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export const AppModulesNgxSelectOptions: INgxSelectOptions = Object.assign({}, DefaultNgxSelectOptions, {
     /**
@@ -72,7 +73,7 @@ export class AppModuleFormlySelectFieldComponent
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        moduleDataSource || throwError('Could not inject ModuleDatasource instance');
+        AssertUtils.isValueNotNou(moduleDataSource, 'Could not inject ModuleDatasource instance');
         this.config = AppModulesNgxSelectOptions;
     }
 

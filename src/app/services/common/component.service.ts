@@ -1,9 +1,9 @@
 import {ComponentFactory, ComponentFactoryResolver, ComponentRef, Inject, Injectable, Type, ViewContainerRef} from '@angular/core';
 import {IComponentService} from './interface.service';
-import {throwError} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {InjectionConfig} from '../../config/injection.config';
 import ObjectUtils from '@app/utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Abstract component service support for rendering/loading component dynamically, etc.
@@ -45,7 +45,7 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
      * @param viewContainerRef to apply
      */
     public setViewContainerRef(viewContainerRef: ViewContainerRef): void {
-        viewContainerRef || throwError('Could not inject ViewContainerRef');
+        AssertUtils.isValueNotNou(viewContainerRef, 'Could not inject ViewContainerRef');
         this.viewContainerRef = viewContainerRef;
     }
 
@@ -72,10 +72,10 @@ export abstract class AbstractComponentService<T> implements IComponentService<T
                           @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
                           @Inject(NGXLogger) private logger: NGXLogger,
                           private componentType: Type<T>) {
-        componentFactoryResolver || throwError('Could not inject ComponentFactoryResolver');
-        viewContainerRef || throwError('Could not inject ViewContainerRef');
-        logger || throwError('Could not inject NGXLogger');
-        componentType || throwError('Could not inject component type');
+        AssertUtils.isValueNotNou(componentFactoryResolver, 'Could not inject ComponentFactoryResolver');
+        AssertUtils.isValueNotNou(viewContainerRef, 'Could not inject ViewContainerRef');
+        AssertUtils.isValueNotNou(logger, 'Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(componentType, 'Could not inject component type');
     }
 
     // -------------------------------------------------

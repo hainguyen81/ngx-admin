@@ -22,7 +22,7 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {Lightbox} from 'ngx-lightbox';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from '@app/types/index';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ISplitAreaConfig} from '../../splitpane/abstract.splitpane.component';
 import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../../config/toolbar.actions.conf';
@@ -31,6 +31,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../utils/common/object.utils';
 import FunctionUtils from 'app/utils/common/function.utils';
 import PromiseUtils from 'app/utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* Default left area configuration */
 export const LeftTreeAreaConfig: ISplitAreaConfig = {
@@ -185,9 +186,9 @@ export class AppSplitPaneComponent<
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        confirmPopup || throwError('Could not inject ConfirmPopup');
-        leftSideType || throwError('The left side component type is required');
-        rightRightType || throwError('The right right component type is required');
+        AssertUtils.isValueNotNou(confirmPopup, 'Could not inject ConfirmPopup');
+        AssertUtils.isValueNotNou(leftSideType, 'The left side component type is required');
+        AssertUtils.isValueNotNou(rightRightType, 'The right right component type is required');
         this.setHorizontal(true);
         this.setNumberOfAreas(2);
     }
@@ -301,7 +302,7 @@ export class AppSplitPaneComponent<
      * TODO Children classes should override this method for saving data
      */
     protected doSave(): void {
-        throwError('Children classes should override this method for saving data');
+        throw new Error('Children classes should override this method for saving data');
     }
 
     /**
@@ -309,7 +310,7 @@ export class AppSplitPaneComponent<
      * TODO Children classes should override this method for resetting data
      */
     protected doReset(): void {
-        throwError('Children classes should override this method for resetting data');
+        throw new Error('Children classes should override this method for resetting data');
     }
 
     /**
@@ -333,7 +334,7 @@ export class AppSplitPaneComponent<
      * TODO Children classes should override this method for deleting data
      */
     protected performDelete(): void {
-        throwError('Children classes should override this method for deleting data');
+        throw new Error('Children classes should override this method for deleting data');
     }
 
     /**

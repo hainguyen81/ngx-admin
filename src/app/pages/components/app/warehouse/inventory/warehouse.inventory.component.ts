@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -8,23 +8,23 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, ACTION_SERVICE_WORKER, IToolbarActionsConfig,} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, ACTION_SERVICE_WORKER, IToolbarActionsConfig} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {WarehouseInventoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
-import {WarehouseInventoryToolbarComponent,} from './warehouse.inventory.toolbar.component';
-import {WarehouseInventoryPanelComponent,} from './warehouse.inventory.panel.component';
+import {WarehouseInventoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {WarehouseInventoryToolbarComponent} from './warehouse.inventory.toolbar.component';
+import {WarehouseInventoryPanelComponent} from './warehouse.inventory.panel.component';
 import WarehouseInventory, {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {Row} from '@app/types/index';
 import {WarehouseInventoryDetailPanelComponent} from './warehouse.inventory.detail.panel.component';
-import {throwError} from 'rxjs';
 import {IdGenerators} from '../../../../../config/generator.config';
 import ObjectUtils, {DeepCloner} from '../../../../../utils/common/object.utils';
-import {WarehouseInventoryDetailDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
+import {WarehouseInventoryDetailDatasource} from '../../../../../services/implementation/warehouse/warehouse.inventory.detail/warehouse.inventory.detail.datasource';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
 import {AppConfig} from '../../../../../config/app.config';
 import {ServiceWorkerKeys} from '../../../../../config/worker.providers';
 import ArrayUtils from '../../../../../utils/common/array.utils';
 import {AppFlipComponent} from 'app/pages/components/app/components/app.flip.component';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.WAREHOUSE_FEATURES_INVENTORY,
@@ -122,8 +122,8 @@ export class WarehouseInventoryComponent
             WarehouseInventoryToolbarComponent,
             WarehouseInventoryPanelComponent,
             WarehouseInventoryDetailPanelComponent);
-        this.warehouseInventoryDatasource
-        || throwError('Could not inject WarehouseInventoryDetailDatasource');
+        AssertUtils.isValueNotNou(this.warehouseInventoryDatasource,
+            'Could not inject WarehouseInventoryDetailDatasource');
     }
 
     // -------------------------------------------------
@@ -194,7 +194,7 @@ export class WarehouseInventoryComponent
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
         if (row && row.getData()) {
             this.backComponent.dataModel = row.getData() as IWarehouseInventory;
-        } else throwError('Could not found data model to edit');
+        } else throw new Error('Could not found data model to edit');
     }
 
     /**

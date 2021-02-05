@@ -3,11 +3,11 @@ import {BaseDataSource} from '../common/datasource.service';
 import {NGXLogger} from 'ngx-logger';
 import {IApiThirdParty} from '../../@core/data/system/api.third.party';
 import {ThirdPartyApiDbService, ThirdPartyApiHttpService} from './third.party.api.service';
-import {throwError} from 'rxjs';
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 import {IModel} from '../../@core/data/base';
 import {ThirdPartyApiDataParserDefinition} from './data.parsers/third.party.data.parser';
 import ArrayUtils from '../../utils/common/array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Third-party API data parser interface
@@ -51,8 +51,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
     }
 
     getAll(): Promise<T | T[]> {
-        throwError(ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED);
-        return Promise.reject(ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED);
+        throw new Error(ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED);
     }
 
     /**
@@ -79,7 +78,7 @@ export abstract class ThirdPartyApiDatasource<T extends IApiThirdParty>
             errors?: any;
             messages?: any;
         }): Promise<K | K[]> {
-        (url || '').length || throwError(ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED);
+        AssertUtils.isTrueValue((url || '').length > 0, ThirdPartyApiDatasource.EXCEPTION_NOT_SUPPORTED);
         const _this: ThirdPartyApiDatasource<T> = this;
         const criteria: string = [
             _this.getHttpService().config.code,

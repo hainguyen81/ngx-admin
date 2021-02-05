@@ -4,9 +4,10 @@ import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {SwUpdate, UpdateAvailableEvent} from '@angular/service-worker';
 import {first} from 'rxjs/operators';
-import {concat, interval, Subscription, throwError} from 'rxjs';
+import {concat, interval, Subscription} from 'rxjs';
 import {BaseDbService} from '../services/common/database.service';
 import {IModel} from '../@core/data/base';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Abstract service for listening application updater
@@ -29,8 +30,8 @@ export abstract class AbstractUpdateService<T extends IModel> extends BaseHttpSe
                           @Inject(SwUpdate) private swUpdate: SwUpdate,
                           @Inject(BaseDbService) dbService: BaseDbService<T>) {
         super(http, logger, dbService);
-        // appRef || throwError('Could not inject application reference');
-        swUpdate || throwError('Could not inject socket updater subscription');
+        // AssertUtils.isValueNotNou(appRef, 'Could not inject application reference');
+        AssertUtils.isValueNotNou(swUpdate, 'Could not inject socket updater subscription');
         if (!dbService) {
             this.getLogger().warn('Could not found database service for offline mode!');
         }

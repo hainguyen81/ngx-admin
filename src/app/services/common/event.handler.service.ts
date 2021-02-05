@@ -1,8 +1,9 @@
 import {EventEmitter, Inject, Output} from '@angular/core';
-import {fromEvent, Subscribable, throwError} from 'rxjs';
+import {fromEvent, Subscribable} from 'rxjs';
 import {FromEventTarget} from 'rxjs/internal/observable/fromEvent';
 import {NGXLogger} from 'ngx-logger';
 import KeyboardUtils from '../../utils/common/keyboard.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * The delegate Subscribe function type for handling event
@@ -36,9 +37,9 @@ export abstract class AbstractEventHandlerService<T, K> {
     protected constructor(private target: FromEventTarget<T>, private eventName: string,
                           private eventHandlerDelegate: SubscribeHandler<K>,
                           @Inject(NGXLogger) private logger: NGXLogger) {
-        target || throwError('Target object to handle could not be NULL');
-        (eventName || '').length || throwError('Event to handle could not be empty');
-        logger || throwError('Could not inject logger!');
+        AssertUtils.isValueNotNou(target, 'Target object to handle could not be NULL');
+        AssertUtils.isTrueValue((eventName || '').length > 0, 'Event to handle could not be empty');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger!');
         fromEvent(target, eventName).subscribe(e => {
             if (this.getEventHandler()) {
                 this.getEventHandler().apply(this, [e]);

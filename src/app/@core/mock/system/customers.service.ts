@@ -1,5 +1,4 @@
 import {Inject, Injectable} from '@angular/core';
-import {throwError} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {CustomerDbService} from '../../../services/implementation/system/customer/customer.service';
@@ -7,14 +6,15 @@ import {customersGenerate} from './mock.customer';
 import {ICustomer} from '../../data/system/customer';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class MockCustomerService implements IMockService {
 
     constructor(@Inject(CustomerDbService) private dbService: CustomerDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
-        dbService || throwError('Could not inject user database service');
-        logger || throwError('Could not inject logger service');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject user database service');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger service');
         logger.updateConfig(LogConfig);
     }
 

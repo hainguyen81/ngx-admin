@@ -7,12 +7,12 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {NgxTabset2Component} from './tab.component';
-import {throwError} from 'rxjs';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '@app/utils/common/array.utils';
 import ObjectUtils from '@app/utils/common/object.utils';
 import NumberUtils from '@app/utils/common/number.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Base horizontal split-pane component base on {NbTabsetModule}
@@ -78,10 +78,11 @@ export class BaseTabset2Component<T extends DataSource> extends NgxTabset2Compon
     protected setTabComponent(tabIndex: number, componentType: Type<any>): any {
         const viewContainerRef: ViewContainerRef = ArrayUtils.get<ViewContainerRef>(
             this.tabContentHolderViewContainerComponents, tabIndex);
-        (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(tabIndex)
+        AssertUtils.isTrueValue(
+            (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(tabIndex)
             && 0 <= tabIndex && tabIndex < this.numberOfTabs
-            && 0 <= tabIndex && tabIndex < ArrayUtils.lengthOf(this.tabsComponent))
-        || throwError('Could not create tab component at the invalid index tab (' + tabIndex + ')');
+            && 0 <= tabIndex && tabIndex < ArrayUtils.lengthOf(this.tabsComponent)),
+            'Could not create tab component at the invalid index tab (' + tabIndex + ')');
         return super.createComponentAt(viewContainerRef, componentType);
     }
 

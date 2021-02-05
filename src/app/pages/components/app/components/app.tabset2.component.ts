@@ -26,7 +26,7 @@ import {AppToolbarComponent} from './app.toolbar.component';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {ITabConfig} from '../../tab/abstract.tab.component';
 import {ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE, IToolbarActionsConfig} from '../../../../config/toolbar.actions.conf';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import ObjectUtils from '../../../../utils/common/object.utils';
 import FunctionUtils from '../../../../utils/common/function.utils';
 import PromiseUtils from '../../../../utils/common/promise.utils';
@@ -283,7 +283,7 @@ export class AppTabset2Component<
      * TODO Children classes should override this method for saving data
      */
     protected doSave(): void {
-        throwError('Children classes should override this method for saving data');
+        throw new Error('Children classes should override this method for saving data');
     }
 
     /**
@@ -291,7 +291,7 @@ export class AppTabset2Component<
      * TODO Children classes should override this method for resetting data
      */
     protected doReset(): void {
-        throwError('Children classes should override this method for resetting data');
+        throw new Error('Children classes should override this method for resetting data');
     }
 
     /**
@@ -315,7 +315,7 @@ export class AppTabset2Component<
      * TODO Children classes should override this method for deleting data
      */
     protected performDelete(): void {
-        throwError('Children classes should override this method for deleting data');
+        throw new Error('Children classes should override this method for deleting data');
     }
 
     /**

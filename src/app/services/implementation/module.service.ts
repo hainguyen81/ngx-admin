@@ -7,8 +7,8 @@ import {DB_STORE} from '../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
 import {BaseHttpService} from '../common/http.service';
 import {HttpClient} from '@angular/common/http';
-import {throwError} from 'rxjs';
 import {BaseDataSource} from '../common/datasource.service';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class ModuleService extends BaseDbService<IModule> {
@@ -27,7 +27,7 @@ export class ModuleHttpService extends BaseHttpService<IModule> {
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ModuleService) dbService: ModuleService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject user database service for offline mode');
     }
 }
 

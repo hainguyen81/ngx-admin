@@ -26,13 +26,14 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../abstract.component';
 import {NgxSelectComponent, NgxSelectOption} from 'ngx-select-ex';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {IToolbarActionsConfig} from '../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ComponentUtils from 'app/utils/common/component.utils';
 import FunctionUtils from '../../../utils/common/function.utils';
 import PromiseUtils from '../../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Select component base on {NgxSelectComponent}
@@ -128,7 +129,7 @@ export class NgxSelectExComponent extends AbstractSelectExComponent<DataSource>
      * @param _optionImageParser true for using image; else false
      */
     set optionImageParser(_optionImageParser: (item?: NgxSelectOption) => string[] | null) {
-        this.isEnabledOptionImage() || throwError(
+        AssertUtils.isTrueValue(this.isEnabledOptionImage(),
             'Not allow for using option image! Please apply `enableOptionImage` in config to use!');
         this._optionImageParser = _optionImageParser;
     }

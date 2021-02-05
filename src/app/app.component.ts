@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import {ApplicationRef, Component, Inject, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {AnalyticsService, SeoService} from './@core/services';
 import {AppConfig} from './config/app.config';
@@ -21,6 +21,7 @@ import {InjectionConfig} from './config/injection.config';
 import FunctionUtils from './utils/common/function.utils';
 import ObjectUtils from './utils/common/object.utils';
 import PromiseUtils from './utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Component({
     selector: 'ngx-app',
@@ -49,20 +50,20 @@ export class AppComponent implements OnInit, OnDestroy {
                 @Inject(PageHeaderService) private pageHeaderService?: PageHeaderService,
                 @Inject(Title) _titleService?: Title,
                 @Inject(Meta) _metaService?: Meta) {
-        analytics || throwError('Could not inject AnalyticsService');
-        seoService || throwError('Could not inject SeoService');
-        logger || throwError('Could not inject TranslateService');
-        translateService || throwError('Could not inject TranslateService');
-        router || throwError('Could not inject Router');
-        activatedRoute || throwError('Could not inject ActivatedRoute');
-        applicationRef || throwError('Could not inject ApplicationRef');
-        viewContainerRef || throwError('Could not inject ViewContainerRef');
+        AssertUtils.isValueNotNou(analytics, 'Could not inject AnalyticsService');
+        AssertUtils.isValueNotNou(seoService, 'Could not inject SeoService');
+        AssertUtils.isValueNotNou(logger, 'Could not inject TranslateService');
+        AssertUtils.isValueNotNou(translateService, 'Could not inject TranslateService');
+        AssertUtils.isValueNotNou(router, 'Could not inject Router');
+        AssertUtils.isValueNotNou(activatedRoute, 'Could not inject ActivatedRoute');
+        AssertUtils.isValueNotNou(applicationRef, 'Could not inject ApplicationRef');
+        AssertUtils.isValueNotNou(viewContainerRef, 'Could not inject ViewContainerRef');
 
         // check for ensuring Title/Meta service in page header
         pageHeaderService = pageHeaderService || AppUtils.getService(PageHeaderService);
         pageHeaderService = pageHeaderService
             || new PageHeaderService(translateService, logger, _titleService, _metaService);
-        pageHeaderService || throwError('Could not inject PageHeaderService');
+        AssertUtils.isValueNotNou(pageHeaderService, 'Could not inject PageHeaderService');
         if (!pageHeaderService.titleService && _titleService) {
             pageHeaderService.titleService = _titleService;
         }

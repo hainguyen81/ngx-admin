@@ -35,7 +35,7 @@ import {IEvent} from '../../../abstract.component';
 import {InjectionService} from '../../../../../services/common/injection.service';
 import {WarehouseInventoryDetailSummaryComponent} from '../../module.components/warehouse/inventory/warehouse.inventory.detail.summary.component';
 import {AppMultilinguageLabelComponent} from '../../module.components/common/app.multilinguage.label.component';
-import {BehaviorSubject, Subscription, throwError} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {IWarehouseInventoryDetail} from '../../../../../@core/data/warehouse/warehouse.inventory.detail';
@@ -46,6 +46,7 @@ import {IWarehouseInventoryDetailStorage} from '../../../../../@core/data/wareho
 import {IWarehouseItem} from '../../../../../@core/data/warehouse/warehouse.item';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import FunctionUtils from '../../../../../utils/common/function.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* warehouse inventory detail table settings */
 export const WarehouseInventoryDetailTableSettings = {
@@ -319,8 +320,8 @@ export class WarehouseInventoryDetailSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        this._warehouseInventoryDetailDatasource
-        || throwError('Could not inject WarehouseInventoryDetailDatasource');
+        AssertUtils.isValueNotNou(this._warehouseInventoryDetailDatasource,
+            'Could not inject WarehouseInventoryDetailDatasource');
         this.tableHeader = 'warehouse.inventory.title';
         this.config = WarehouseInventoryDetailTableSettings;
         this.setContextMenu(WarehouseInventoryDetailContextMenu);

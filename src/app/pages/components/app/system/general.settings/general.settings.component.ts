@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
@@ -9,15 +9,15 @@ import {Lightbox} from 'ngx-lightbox';
 import {IEvent} from '../../../abstract.component';
 import {Row} from '@app/types/index';
 import GeneralSettings, {IGeneralSettings} from '../../../../../@core/data/system/general.settings';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {GeneralSettingsSmartTableComponent} from './general.settings.table.component';
 import {GeneralSettingsToolbarComponent} from './general.settings.toolbar.component';
 import {GeneralSettingsFormlyComponent} from './general.settings.formly.component';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
-import {throwError} from 'rxjs';
-import {ACTION_BACK, ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE,} from '../../../../../config/toolbar.actions.conf';
+import {ACTION_BACK, ACTION_DELETE, ACTION_DELETE_DATABASE, ACTION_IMPORT, ACTION_RESET, ACTION_SAVE} from '../../../../../config/toolbar.actions.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppTableFlipFormComponent} from '../../components/app.table.flip.form.component';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Component({
     moduleId: CommonConstants.COMMON.MODULE_CODES.SYSTEM_SETTINGS,
@@ -118,9 +118,10 @@ export class GeneralSettingsComponent
     protected onEditData($event: IEvent): void {
         const backComponent: GeneralSettingsFormlyComponent = this.backComponent;
         const row: Row = ($event.data && $event.data['row'] instanceof Row ? $event.data['row'] : undefined);
-        (row && row.getData()) || throwError('Invalid data to edit');
+        AssertUtils.isValueNotNou(row, 'Invalid data to edit');
+        AssertUtils.isValueNotNou(row.getData(), 'Invalid data to edit');
         const setting: IGeneralSettings = row.getData() as IGeneralSettings;
-        setting || throwError('Invalid data to edit');
+        AssertUtils.isValueNotNou(setting, 'Invalid data to edit');
         if (setting.builtin) setting.value = this.translate(setting.value.toString());
         backComponent && backComponent.setModel(setting);
     }

@@ -5,13 +5,13 @@ import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
 import {SplitAreaDirective, SplitComponent} from 'angular-split';
-import {throwError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '@app/utils/common/array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* Split area configuration */
 export interface ISplitAreaConfig {
@@ -129,7 +129,7 @@ export abstract class AbstractSplitpaneComponent<T extends DataSource> extends A
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        (numOfAreas > 0) || throwError('The number of split-area must be equals or greater than 0');
+        AssertUtils.isTrueValue((numOfAreas > 0), 'The number of split-area must be equals or greater than 0');
     }
 
     // -------------------------------------------------

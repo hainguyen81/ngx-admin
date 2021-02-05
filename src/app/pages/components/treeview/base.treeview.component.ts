@@ -4,7 +4,6 @@ import {DataSource} from '@app/types/index';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
@@ -30,7 +29,7 @@ export class BaseNgxTreeviewComponent<T extends DataSource> extends NgxTreeviewC
     }
 
     protected setDropDown(dropdown?: boolean) {
-        throwError('Unsupport changing dropdown property');
+        throw new Error('Unsupport changing dropdown property');
     }
 
     // -------------------------------------------------

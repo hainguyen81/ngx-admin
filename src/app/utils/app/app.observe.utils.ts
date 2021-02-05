@@ -3,14 +3,14 @@ import SystemDataUtils from '../system/system.data.utils';
 import {IGeneralSettings} from '../../@core/data/system/general.settings';
 import {IModel} from '../../@core/data/base';
 import {Type} from '@angular/core';
-import {AppFormlySelectExFieldComponent,} from '../../pages/components/app/components/common/app.formly.select.ex.field.component';
-import {GeneralSettingsDatasource,} from '../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
+import {AppFormlySelectExFieldComponent} from '../../pages/components/app/components/common/app.formly.select.ex.field.component';
+import {GeneralSettingsDatasource} from '../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../@core/data/constants/common.constants';
 import {IDbService, IHttpService} from '../../services/common/interface.service';
 import {BaseDataSource} from '../../services/common/datasource.service';
 import ObjectUtils from '../common/object.utils';
 import ArrayUtils from '../common/array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export default class AppObserveUtils {
 
@@ -34,10 +34,10 @@ export default class AppObserveUtils {
             dataFilter?: (option: T) => boolean,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null,
             noneOption?: T | null): Promise<void> {
-        datasource || throwError('Datasource is required');
-        field || throwError('Field is required');
-        (indexName || '').length || throwError('DB index name is required');
-        keyRange || throwError('Criteria is required');
+        AssertUtils.isValueNotNou(datasource, 'Datasource is required');
+        AssertUtils.isValueNotNou(field, 'Field is required');
+        AssertUtils.isTrueValue((indexName || '').length > 0, 'DB index name is required');
+        AssertUtils.isValueNotNou(keyRange, 'Criteria is required');
         return SystemDataUtils.invokeDatasourceModelsByDatabaseFilterAsSelectOptions(
             datasource, indexName, keyRange, null, keysMapper).then(
                 (settings: IModel[]) => {
@@ -142,20 +142,22 @@ export default class AppObserveUtils {
         T extends IModel, FC extends AppFormlySelectExFieldComponent<T>>(
             field: FormlyFieldConfig, settingFilter: (option: T) => boolean,
             fieldComponentType: Type<FC>, options: T[]): void {
-        field || throwError('Field is required');
+        AssertUtils.isValueNotNou(field, 'Field is required');
         const fieldComponentRef: any = (field.templateOptions && field.templateOptions['componentRef']
             ? <FC>field.templateOptions['componentRef'] : null);
         let settingsFieldComponent: AppFormlySelectExFieldComponent<T> = null;
         if (ObjectUtils.isNou(fieldComponentType)) {
-            (fieldComponentRef && fieldComponentRef instanceof AppFormlySelectExFieldComponent)
-            || throwError('Could not parse field component or invalid component type');
+            AssertUtils.isTrueValue(
+                (fieldComponentRef && fieldComponentRef instanceof AppFormlySelectExFieldComponent),
+                'Could not parse field component or invalid component type');
             settingsFieldComponent = <AppFormlySelectExFieldComponent<T>>fieldComponentRef;
         } else {
-            (fieldComponentRef && fieldComponentRef instanceof fieldComponentType)
-            || throwError('Could not parse field component or invalid component type');
+            AssertUtils.isTrueValue(
+                (fieldComponentRef && fieldComponentRef instanceof fieldComponentType),
+                'Could not parse field component or invalid component type');
             settingsFieldComponent = <FC>fieldComponentRef;
         }
-        settingsFieldComponent || throwError('Could not parse field component or invalid component type');
+        AssertUtils.isValueNotNou(settingsFieldComponent, 'Could not parse field component or invalid component type');
         options = (ObjectUtils.isNou(settingFilter) ? options : (options || []).filter(settingFilter));
         if (settingsFieldComponent && ObjectUtils.isNotNou(options)) {
             settingsFieldComponent.items = options;
@@ -179,15 +181,14 @@ export default class AppObserveUtils {
             tableSettings: any, column: string,
             dataFilter?: (option: { [key: string]: string | string[] | T; }) => boolean,
             keysMapper?: { [key: string]: (model: T) => string | string[] | T } | null): Promise<void> {
-        datasource || throwError('Datasource is required');
-        (indexName || '').length || throwError('DB index name is required');
-        keyRange || throwError('Criteria is required');
-        Object.keys(tableSettings || {}).length
-        || throwError('Table settings is required');
-        Object.keys(tableSettings['columns'] || {}).length
-        || throwError('Table columns setting is required');
-        ((column || '').length && Object.keys(tableSettings['columns'][column] || {}).length)
-        || throwError('Table settings of the observed column is required');
+        AssertUtils.isValueNotNou(datasource, 'Datasource is required');
+        AssertUtils.isTrueValue((indexName || '').length > 0, 'DB index name is required');
+        AssertUtils.isValueNotNou(keyRange, 'Criteria is required');
+        AssertUtils.isTrueValue(Object.keys(tableSettings || {}).length > 0, 'Table settings is required');
+        AssertUtils.isTrueValue(Object.keys(tableSettings['columns'] || {}).length > 0, 'Table columns setting is required');
+        AssertUtils.isTrueValue(
+            ((column || '').length > 0 && Object.keys(tableSettings['columns'][column] || {}).length > 0),
+            'Table settings of the observed column is required');
         tableSettings['columns'][column]['editor'] =
             Object.assign({}, tableSettings['columns'][column]['editor']);
         tableSettings['columns'][column]['editor']['config'] =
@@ -270,16 +271,16 @@ export default class AppObserveUtils {
      * @param value need to translate
      */
     private static translateColumn(tableSettings: any, column: string, value?: string | null): string {
-        Object.keys(tableSettings || {}).length
-        || throwError('Table settings is required');
-        Object.keys(tableSettings['columns'] || {}).length
-        || throwError('Table columns setting is required');
-        ((column || '').length && Object.keys(tableSettings['columns'][column] || {}).length)
-        || throwError('Table settings of the observed column is required');
-        (Object.keys(tableSettings['columns'][column]['editor'] || {}).length
-            && Object.keys(tableSettings['columns'][column]['editor']['config'] || {}).length
-            && Object.keys(tableSettings['columns'][column]['editor']['config']['list'] || {}).length)
-        || throwError('Table editor settings of the observed column is required');
+        AssertUtils.isTrueValue(Object.keys(tableSettings || {}).length > 0, 'Table settings is required');
+        AssertUtils.isTrueValue(Object.keys(tableSettings['columns'] || {}).length > 0, 'Table columns setting is required');
+        AssertUtils.isTrueValue(
+            ((column || '').length > 0 && Object.keys(tableSettings['columns'][column] || {}).length > 0),
+            'Table settings of the observed column is required');
+        AssertUtils.isTrueValue(
+            (Object.keys(tableSettings['columns'][column]['editor'] || {}).length > 0
+            && Object.keys(tableSettings['columns'][column]['editor']['config'] || {}).length > 0
+            && Object.keys(tableSettings['columns'][column]['editor']['config']['list'] || {}).length > 0),
+            'Table editor settings of the observed column is required');
         const options: { [key: string]: string | string[] | IGeneralSettings; }[] =
             <{ [key: string]: string | string[] | IGeneralSettings; }[]>
                 tableSettings['columns'][column]['editor']['config']['list'];

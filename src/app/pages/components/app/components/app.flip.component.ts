@@ -22,7 +22,7 @@ import {Lightbox} from 'ngx-lightbox';
 import {AbstractComponent, IEvent} from '../../abstract.component';
 import {TranslateService} from '@ngx-translate/core';
 import {DataSource} from '@app/types/index';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {
     ACTION_BACK,
     ACTION_DELETE,
@@ -39,6 +39,7 @@ import ObjectUtils from '../../../../utils/common/object.utils';
 import {BaseFlipComponent} from '../../flip/base.flip.component';
 import FunctionUtils from '../../../../utils/common/function.utils';
 import PromiseUtils from '../../../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export const APP_FLIP_TOOLBAR_COMPONENT_TYPE_TOKEN: InjectionToken<Type<AppToolbarComponent<any>>>
     = new InjectionToken<Type<AppToolbarComponent<any>>>('The toolbar component type injection token of the flip-pane');
@@ -200,8 +201,8 @@ export class AppFlipComponent<D extends DataSource,
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        frontComponentType || throwError('The front-flip component type is required');
-        backComponentType || throwError('The back-flip component type is required');
+        AssertUtils.isValueNotNou(frontComponentType, 'The front-flip component type is required');
+        AssertUtils.isValueNotNou(backComponentType, 'The back-flip component type is required');
     }
 
     // -------------------------------------------------

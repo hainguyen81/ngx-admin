@@ -17,12 +17,13 @@ import {
 import {Cell, CellComponent, DefaultEditor, Ng2SmartTableComponent, Row} from '@app/types/index';
 import {TranslateService} from '@ngx-translate/core';
 import {NGXLogger} from 'ngx-logger';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {IEvent} from '../abstract.component';
 import ArrayUtils from '../../../utils/common/array.utils';
 import FunctionUtils from '../../../utils/common/function.utils';
 import ObjectUtils from '../../../utils/common/object.utils';
 import PromiseUtils from '../../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Abstract cell editor as form {FormControl}
@@ -461,9 +462,9 @@ export abstract class AbstractCellEditorFormControlComponent extends FormControl
                           private _asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
                           private _validationMessages?: { [error: string]: string } | null) {
         super(_formState, _validator, _asyncValidator);
-        _translateService || throwError('Could not inject TranslateService');
-        _renderer || throwError('Could not inject Renderer2');
-        _logger || throwError('Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(_translateService, 'Could not inject TranslateService');
+        AssertUtils.isValueNotNou(_renderer, 'Could not inject Renderer2');
+        AssertUtils.isValueNotNou(_logger, 'Could not inject NGXLogger');
     }
 
     // -------------------------------------------------

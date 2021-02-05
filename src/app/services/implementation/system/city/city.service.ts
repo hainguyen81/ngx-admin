@@ -7,12 +7,12 @@ import {BaseDbService} from '../../../common/database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {DB_STORE} from '../../../../config/db.config';
 import {ConnectionService} from 'ng-connection-service';
-import {throwError} from 'rxjs';
 import {THIRD_PARTY_API} from '../../../../config/third.party.api';
 import {IProvince} from '../../../../@core/data/system/province';
-import {IThirdPartyApiDataBridgeParam, ThirdPartyApiBridgeDbService,} from '../../../third.party/third.party.api.bridge.service';
+import {IThirdPartyApiDataBridgeParam, ThirdPartyApiBridgeDbService} from '../../../third.party/third.party.api.bridge.service';
 import ArrayUtils from '../../../../utils/common/array.utils';
 import ObjectUtils from '../../../../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class CityDbService extends BaseDbService<ICity> {
@@ -29,15 +29,14 @@ export class CityDbService extends BaseDbService<ICity> {
                 @Inject(ThirdPartyApiBridgeDbService)
                 private thirdPartyApiBridge: ThirdPartyApiBridgeDbService<ICity>) {
         super(dbService, logger, connectionService, DB_STORE.city);
-        thirdPartyApiBridge || throwError('Could not inject ThirdPartyApiBridgeDbService instance');
+        AssertUtils.isValueNotNou(thirdPartyApiBridge, 'Could not inject ThirdPartyApiBridgeDbService instance');
     }
 
     /**
      * TODO Not support for getting all coutries because of performance
      */
     getAll(): Promise<ICity[]> {
-        throwError(CityDbService.EXCEPTION_PERFORMANCE_REASON);
-        return Promise.reject(CityDbService.EXCEPTION_PERFORMANCE_REASON);
+        throw new Error(CityDbService.EXCEPTION_PERFORMANCE_REASON);
     }
 
     /**
@@ -45,7 +44,7 @@ export class CityDbService extends BaseDbService<ICity> {
      * @param province to filter
      */
     findByProvince(province?: IProvince | null): Promise<ICity | ICity[]> {
-        province || throwError(CityDbService.EXCEPTION_PERFORMANCE_REASON);
+        AssertUtils.isValueNotNou(province, CityDbService.EXCEPTION_PERFORMANCE_REASON);
         const _this: CityDbService = this;
         const fetchParam: IThirdPartyApiDataBridgeParam<ICity> = {
             dbCacheFilter: {
@@ -104,6 +103,6 @@ export class CityHttpService extends BaseHttpService<ICity> {
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(CityDbService) dbService: CityDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject user database service for offline mode');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject user database service for offline mode');
     }
 }

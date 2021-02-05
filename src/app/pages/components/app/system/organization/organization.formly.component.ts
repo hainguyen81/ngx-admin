@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
-import {OrganizationDataSource,} from '../../../../../services/implementation/system/organization/organization.datasource';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
+import {OrganizationDataSource} from '../../../../../services/implementation/system/organization/organization.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -13,17 +13,17 @@ import {Lightbox} from 'ngx-lightbox';
 import {OrganizationTreeviewConfig} from './organization.treeview.component';
 import SystemDataUtils from '../../../../../utils/system/system.data.utils';
 import {AppFormlyComponent} from '../../components/app.formly.component';
-import {AppCountryFormlySelectExFieldComponent,} from '../../components/common/app.country.formly.select.ex.field.component';
-import {AppProvinceFormlySelectExFieldComponent,} from '../../components/common/app.province.formly.select.ex.field.component';
-import {AppCityFormlySelectExFieldComponent,} from '../../components/common/app.city.formly.select.ex.field.component';
+import {AppCountryFormlySelectExFieldComponent} from '../../components/common/app.country.formly.select.ex.field.component';
+import {AppProvinceFormlySelectExFieldComponent} from '../../components/common/app.province.formly.select.ex.field.component';
+import {AppCityFormlySelectExFieldComponent} from '../../components/common/app.city.formly.select.ex.field.component';
 import {IOrganization} from '../../../../../@core/data/system/organization';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import {CustomValidators} from 'ngx-custom-validators';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
-import {throwError} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators} from '@angular/forms';
 import ValidationUtils from '../../../../../utils/common/validation.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* default organization formly config */
 export const OrganizationFormConfig: FormlyConfig = new FormlyConfig();
@@ -397,7 +397,7 @@ export class OrganizationFormlyComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        userDataSource || throwError('Could not inject UserDataSource instance');
+        AssertUtils.isValueNotNou(userDataSource, 'Could not inject UserDataSource instance');
         this.config = OrganizationFormConfig;
         this.fields = OrganizationFormFieldsConfig;
     }

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {CustomerDatasource} from '../../../../../services/implementation/system/customer/customer.datasource';
@@ -10,17 +10,17 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SelectTranslateCellComponent,} from '../../../smart-table/select.translate.cell.component';
+import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {ICustomer} from '../../../../../@core/data/system/customer';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* customers table settings */
 export const CustomerTableSettings = {
@@ -170,7 +170,8 @@ export class CustomerSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
+        AssertUtils.isValueNotNou(generalSettingsDatasource,
+            'Could not inject GeneralSettingsDatasource instance');
         this.tableHeader = 'system.customer.title';
         this.config = CustomerTableSettings;
         this.setContextMenu(CustomerContextMenu);

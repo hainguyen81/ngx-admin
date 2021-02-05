@@ -1,20 +1,20 @@
 import {Inject, Injectable} from '@angular/core';
 import {UserDbService} from '../../../services/implementation/system/user/user.service';
-import {throwError} from 'rxjs';
 import {usersGenerate} from './mock.user';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {IUser} from '../../data/system/user';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class MockUserService implements IMockService {
 
     constructor(@Inject(UserDbService) private dbService: UserDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
-        dbService || throwError('Could not inject user database service');
-        logger || throwError('Could not inject logger service');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject user database service');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger service');
         logger.updateConfig(LogConfig);
     }
 

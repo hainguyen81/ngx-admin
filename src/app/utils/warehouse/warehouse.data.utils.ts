@@ -1,7 +1,7 @@
 import WarehouseUtils from './warehouse.utils';
 import {IWarehouseCategory} from '../../@core/data/warehouse/warehouse.category';
-import {WarehouseCategoryDatasource,} from '../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
-import {throwError} from 'rxjs';
+import {WarehouseCategoryDatasource} from '../../services/implementation/warehouse/warehouse.category/warehouse.category.datasource';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export default class WarehouseDataUtils {
 
@@ -11,8 +11,7 @@ export default class WarehouseDataUtils {
      */
     public static invokeAllWarehouseCategories(
         warehouseCategoryDatasource: WarehouseCategoryDatasource): Promise<any[]> {
-        warehouseCategoryDatasource
-        || throwError('WarehouseCategoryDatasource is required to invoke!');
+        AssertUtils.isValueNotNou(warehouseCategoryDatasource, 'WarehouseCategoryDatasource is required to invoke!');
         return warehouseCategoryDatasource
             .setPaging(1, undefined, false)
             .setFilter([], false, false)

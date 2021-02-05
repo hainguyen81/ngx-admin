@@ -1,5 +1,4 @@
 import {Inject, Injectable} from '@angular/core';
-import {throwError} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {LogConfig} from '../../../config/log.config';
 import {CountryDbService} from '../../../services/implementation/system/country/country.service';
@@ -7,14 +6,15 @@ import {countriesGenerate} from './mock.country';
 import {ICountry} from '../../data/system/country';
 import {IMockService} from '../mock.service';
 import {AppConfig} from '../../../config/app.config';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class MockCountryService implements IMockService {
 
     constructor(@Inject(CountryDbService) private dbService: CountryDbService,
                 @Inject(NGXLogger) private logger: NGXLogger) {
-        dbService || throwError('Could not inject user database service');
-        logger || throwError('Could not inject logger service');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject user database service');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger service');
         logger.updateConfig(LogConfig);
     }
 

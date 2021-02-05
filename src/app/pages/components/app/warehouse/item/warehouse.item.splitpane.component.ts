@@ -14,7 +14,6 @@ import {Constants as CommonConstants} from '../../../../../@core/data/constants/
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppSplitPaneComponent} from '../../components/app.splitpane.component';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
-import {throwError} from 'rxjs';
 import FunctionUtils from '@app/utils/common/function.utils';
 import ObjectUtils from '@app/utils/common/object.utils';
 import {WarehouseItemTabsetComponent} from '@app/pages/components/app/warehouse/item/warehouse.item.tab.component';
@@ -196,16 +195,16 @@ export class WarehouseItemSplitPaneComponent
     }
 
     protected doSave(): void {
-        throwError('Not support for saving model from internal component!');
+        throw new Error('Not support for saving model from internal component!');
 
     }
 
     protected doReset(): void {
-        throwError('Not support for resetting model from internal component!');
+        throw new Error('Not support for resetting model from internal component!');
     }
 
     protected performDelete(): void {
-        throwError('Not support for deleting model from internal component!');
+        throw new Error('Not support for deleting model from internal component!');
     }
 
     // -------------------------------------------------

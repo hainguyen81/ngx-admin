@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {UserDataSource} from '../../../../../services/implementation/system/user/user.datasource';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
@@ -15,13 +15,13 @@ import {ImageCellComponent} from '../../../smart-table/image.cell.component';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
 import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
 import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {IUser} from '../../../../../@core/data/system/user';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* users table settings */
 export const UserTableSettings = {
@@ -169,7 +169,8 @@ export class UserSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
+        AssertUtils.isValueNotNou(generalSettingsDatasource,
+            'Could not inject GeneralSettingsDatasource instance');
         this.tableHeader = 'system.user.title';
         this.config = UserTableSettings;
         this.setContextMenu(UserContextMenu);

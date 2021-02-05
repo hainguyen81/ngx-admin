@@ -8,13 +8,14 @@ import {BaseDataSource} from '../../../../../services/common/datasource.service'
 import {IDbService, IHttpService} from '../../../../../services/common/interface.service';
 import {DataSource} from '@app/types/index';
 import {NGXLogger} from 'ngx-logger';
-import {isObservable, Observable, Subscription, throwError} from 'rxjs';
+import {isObservable, Observable, Subscription} from 'rxjs';
 import {isPromise} from 'rxjs/internal-compatibility';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
 import TimerUtils from '../../../../../utils/common/timer.utils';
 import FunctionUtils from '../../../../../utils/common/function.utils';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Custom formly field for selecting tree
@@ -94,7 +95,7 @@ export class AppModuleDataFormlyTreeviewFieldComponent<
                 @Inject(ElementRef) _elementRef: ElementRef) {
         super(_translateService, _renderer, _logger,
             _factoryResolver, _viewContainerRef, _changeDetectorRef, _elementRef);
-        this._dataSource || throwError('Could not inject DataSource instance');
+        AssertUtils.isValueNotNou(this._dataSource, 'Could not inject DataSource instance');
     }
 
     // -------------------------------------------------

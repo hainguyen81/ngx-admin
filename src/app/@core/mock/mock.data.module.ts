@@ -1,11 +1,10 @@
-import {Inject, InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type,} from '@angular/core';
+import {Inject, InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, SkipSelf, Type} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MockUserService} from './system/users.service';
 import {UserDbService} from '../../services/implementation/system/user/user.service';
 import {LoggerModule, NGXLogger} from 'ngx-logger';
 import {throwIfAlreadyLoaded} from '../core.module';
 import {AppConfig} from '../../config/app.config';
-import {throwError} from 'rxjs';
 import {MockCustomerService} from './system/customers.service';
 import {CustomerDbService} from '../../services/implementation/system/customer/customer.service';
 import {MockOrganizationService} from './system/organization.service';
@@ -34,6 +33,7 @@ import PromiseUtils from '../../utils/common/promise.utils';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxIndexedDBModule} from 'ngx-indexed-db';
 import {BrowserModule} from '@angular/platform-browser';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export const MOCK_DATA_PROVIDERS = [
     {
@@ -119,7 +119,7 @@ export class MockDataModule {
     }
 
     protected getService<T>(token: Type<T> | InjectionToken<T> | any): T {
-        this.moduleInjector || throwError('Could not create injector to inject mock services!');
+        AssertUtils.isValueNotNou(this.moduleInjector, 'Could not create injector to inject mock services!');
         return this.moduleInjector.get(token);
     }
 

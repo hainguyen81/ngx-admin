@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -9,8 +9,7 @@ import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
@@ -19,10 +18,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SelectTranslateCellComponent} from '../../../smart-table/select.translate.cell.component';
 import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {IWarehouseBatchNo} from '../../../../../@core/data/warehouse/warehouse.batch.no';
-import {WarehouseBatchNoDatasource,} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
+import {WarehouseBatchNoDatasource} from '../../../../../services/implementation/warehouse/warehouse.batchno/warehouse.batchno.datasource';
 import {HtmlCellComponent} from '../../../smart-table/html.cell.component';
 import moment, {Moment} from 'moment';
 import ObjectUtils from '../../../../../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* warehouse batch no table settings */
 export const WarehouseBatchNoTableSettings = {
@@ -196,7 +196,8 @@ export class WarehouseBatchNoSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
+        AssertUtils.isValueNotNou(generalSettingsDatasource,
+            'Could not inject GeneralSettingsDatasource instance');
         this.tableHeader = 'warehouse.settings.title';
         this.config = WarehouseBatchNoTableSettings;
         this.setContextMenu(WarehouseBatchNoContextMenu);

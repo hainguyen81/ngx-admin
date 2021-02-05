@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,14 +10,14 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {CheckboxCellComponent} from '../../../smart-table/checkbox.cell.component';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {ModuleDatasource} from '../../../../../services/implementation/module.service';
-import {throwError} from 'rxjs';
 import {IContextMenu} from '../../../../../config/context.menu.conf';
 import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../../../utils/common/object.utils';
 import ArrayUtils from '../../../../../utils/common/array.utils';
 import SystemDataUtils from 'app/utils/system/system.data.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* general settings table settings */
 export const GeneralSettingsTableSettings = {
@@ -149,7 +149,8 @@ export class GeneralSettingsSmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        _moduleDatasource || throwError('Could not inject ModuleDatasource instance');
+        AssertUtils.isValueNotNou(_moduleDatasource,
+            'Could not inject ModuleDatasource instance');
         this.tableHeader = 'system.general.settings.title';
         this.config = GeneralSettingsTableSettings;
         super.setContextMenu(GeneralSettingsContextMenu);

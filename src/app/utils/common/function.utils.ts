@@ -1,5 +1,5 @@
-import {throwError} from 'rxjs';
 import ObjectUtils from './object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Function utilities
@@ -33,10 +33,12 @@ export default class FunctionUtils {
         caller?: any | null | undefined, ...args: any[] | null | undefined): any {
         const trueValue: boolean = (ObjectUtils.isNotNou(ifTrueOrNotNou)
                 && ((typeof ifTrueOrNotNou === 'boolean' && ifTrueOrNotNou === true) || ObjectUtils.isObject(ifTrueOrNotNou)));
-        (emitErrorIfInvalidDelegate === true) && (trueValue === true && FunctionUtils.isFunction(delegateTrue))
-        && throwError('Invalid function to invoke while condition is TRUE!');
-        (emitErrorIfInvalidDelegate === true) && (trueValue !== true && FunctionUtils.isFunction(delegateFalse))
-        && throwError('Invalid function to invoke while condition is FALSE!');
+        AssertUtils.isNotTrueValue(
+            (emitErrorIfInvalidDelegate === true) && (trueValue === true && FunctionUtils.isFunction(delegateTrue)),
+            'Invalid function to invoke while condition is TRUE!');
+        AssertUtils.isNotTrueValue(
+            (emitErrorIfInvalidDelegate === true) && (trueValue !== true && FunctionUtils.isFunction(delegateFalse)),
+            'Invalid function to invoke while condition is FALSE!');
         return (trueValue === true && FunctionUtils.isFunction(delegateTrue)
             ? (delegateTrue.apply(caller || this, args) || defaultValue)
             : (trueValue !== true && FunctionUtils.isFunction(delegateFalse))

@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, ComponentFactoryResolver, ElementRef, Inject, Input, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {of, Subscription, throwError} from 'rxjs';
+import {of, Subscription} from 'rxjs';
 import {FieldType} from '@ngx-formly/material';
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {NGXLogger} from 'ngx-logger';
@@ -10,6 +10,7 @@ import FunctionUtils from '../../utils/common/function.utils';
 import HtmlUtils from '../../utils/common/html.utils';
 import ObjectUtils from '../../utils/common/object.utils';
 import PromiseUtils from '../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFieldConfig>
     extends FieldType<F> implements OnInit, OnDestroy, AfterViewInit, ControlValueAccessor {
@@ -338,9 +339,9 @@ export abstract class AbstractFieldType<F extends FormlyFieldConfig = FormlyFiel
                           @Inject(ChangeDetectorRef) private _changeDetectorRef: ChangeDetectorRef,
                           @Inject(ElementRef) private _elementRef: ElementRef) {
         super();
-        _translateService || throwError('Could not inject TranslateService');
-        _renderer || throwError('Could not inject Renderer2');
-        _logger || throwError('Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(_translateService, 'Could not inject TranslateService');
+        AssertUtils.isValueNotNou(_renderer, 'Could not inject Renderer2');
+        AssertUtils.isValueNotNou(_logger, 'Could not inject NGXLogger');
     }
 
     // -------------------------------------------------

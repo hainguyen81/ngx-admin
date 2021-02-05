@@ -2,9 +2,9 @@ import {Inject, Injectable} from '@angular/core';
 import {CryptoEncUtf8Service} from '../../../config/crypto.config';
 import {StorageSerializer} from 'ngx-localstorage';
 import {NGXLogger} from 'ngx-logger';
-import {throwError} from 'rxjs';
 import EncryptionUtils from '../../../utils/common/encryption.utils';
 import ObjectUtils from '../../../utils/common/object.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Local storage serializer/deserializer service
@@ -17,7 +17,7 @@ export class DefaultLocalStorageSerializerService implements StorageSerializer {
     }
 
     constructor(@Inject(NGXLogger) private _logger: NGXLogger) {
-        this._logger || throwError('Could not inject NGXLogger instance');
+        AssertUtils.isValueNotNou(this._logger, 'Could not inject NGXLogger instance');
     }
 
     serialize(value: any): string {

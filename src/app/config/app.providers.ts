@@ -33,7 +33,6 @@ import {ConnectionService} from 'ng-connection-service';
 import {CustomerDbService, CustomerHttpService} from '../services/implementation/system/customer/customer.service';
 import {CustomerDatasource} from '../services/implementation/system/customer/customer.datasource';
 import {TranslateLoader, TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {OrganizationDbService, OrganizationHttpService} from '../services/implementation/system/organization/organization.service';
 import {OrganizationDataSource} from '../services/implementation/system/organization/organization.datasource';
@@ -96,13 +95,14 @@ import {WarehouseManagementDatasource} from '../services/implementation/warehous
 import {WorkerProviders} from './worker.providers';
 import {createDefaultSecureStorageConfig, createDefaultStorageConfig} from './storage.config';
 import {DeviceDetectorService} from 'ngx-device-detector';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export const BASE_HREF: InjectionToken<string> =
     new InjectionToken<string>('Application baseHref injection');
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient, baseHref: string) {
-    http || throwError('Not found HttpClient to create TranslateHttpLoader');
+    AssertUtils.isValueNotNou(http, 'Not found HttpClient to create TranslateHttpLoader');
     return new TranslateHttpLoader(http, (baseHref || '').concat('/assets/i18n/'));
 }
 

@@ -1,9 +1,9 @@
-import {throwError} from 'rxjs';
 import {BaseDbService} from './database.service';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {NGXLogger} from 'ngx-logger';
 import {Inject, Injectable} from '@angular/core';
 import {ConnectionService} from 'ng-connection-service';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Example empty IndexDb service
@@ -15,8 +15,8 @@ export class EmptyService extends BaseDbService<any> {
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(ConnectionService) connectionService: ConnectionService) {
         super(dbService, logger, connectionService, 'EMPTY');
-        dbService || throwError('Could not inject IndexDb!');
-        logger || throwError('Could not inject logger!');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject IndexDb!');
+        AssertUtils.isValueNotNou(logger, 'Could not inject logger!');
     }
 
     deleteExecutor = (resolve: (value?: (PromiseLike<number> | number)) => void,

@@ -1,9 +1,9 @@
 import {ComponentFactoryResolver, Directive, Inject, Type, ViewContainerRef} from '@angular/core';
-import {throwError} from 'rxjs';
 import {IComponentService} from '../../services/common/interface.service';
 import {AbstractComponentService, BaseComponentService} from '../../services/common/component.service';
 import ComponentUtils from '../../utils/common/component.utils';
 import {NGXLogger} from 'ngx-logger';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Directive({selector: '[ngxComponentPlaceholder]', exportAs: 'ngxComponentPlaceholder'})
 export class ComponentPlaceholderDirective {
@@ -41,9 +41,9 @@ export class ComponentPlaceholderDirective {
     constructor(@Inject(ComponentFactoryResolver) private factoryResolver: ComponentFactoryResolver,
                 @Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
                 @Inject(NGXLogger) private logger: NGXLogger) {
-        factoryResolver || throwError('Could not inject ComponentFactoryResolver');
-        viewContainerRef || throwError('Could not inject ViewContainerRef');
-        logger || throwError('Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(factoryResolver, 'Could not inject ComponentFactoryResolver');
+        AssertUtils.isValueNotNou(viewContainerRef, 'Could not inject ViewContainerRef');
+        AssertUtils.isValueNotNou(logger, 'Could not inject NGXLogger');
     }
 
     /**

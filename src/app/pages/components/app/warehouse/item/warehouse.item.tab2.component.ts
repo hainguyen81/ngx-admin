@@ -18,7 +18,6 @@ import {Constants} from '../../../../../@core/data/constants/common.constants';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WarehouseItemToolbarComponent} from './warehouse.item.toolbar.component';
 import {AbstractComponent} from '../../../abstract.component';
-import {throwError} from 'rxjs';
 import {WarehouseItemVersionSmartTableComponent} from './warehouse.item.version.table.component';
 import {INgxTabConfig} from '@app/pages/components/tabset/abstract.tab.component';
 import {AppTabset2Component} from '@app/pages/components/app/components/app.tabset2.component';
@@ -287,15 +286,15 @@ export class WarehouseItemTabset2Component
     // -------------------------------------------------
 
     protected doSave(): void {
-        throwError('Not support for saving model from internal component!');
+        throw new Error('Not support for saving model from internal component!');
     }
 
     protected doReset(): void {
-        throwError('Not support for resetting model from internal component!');
+        throw new Error('Not support for resetting model from internal component!');
     }
 
     protected performDelete(): void {
-        throwError('Not support for deleting model from internal component!');
+        throw new Error('Not support for deleting model from internal component!');
     }
 
     // -------------------------------------------------

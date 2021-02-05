@@ -1,9 +1,9 @@
 import ObjectUtils from './object.utils';
 import {Type} from '@angular/core';
-import {throwError} from 'rxjs';
 import {TreeviewItem} from 'ngx-treeview';
 import {IModel} from '../../@core/data/base';
 import ArrayUtils from './array.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 export default class HierarchyUtils {
 
@@ -32,13 +32,9 @@ export default class HierarchyUtils {
             item = entityMapper.apply(this, [ entity, item ]);
         }
 
-        if (!item) {
-            if (builtType) {
-                throwError('Could not create new item by the specified built type {' + builtType.name + '}');
-            } else {
-                throwError('Could not create new item by the specified built type or via `entityMapper` method');
-            }
-        }
+        AssertUtils.isValueNotNou(item,
+            (builtType ? 'Could not create new item by the specified built type {' + builtType.name + '}'
+                : 'Could not create new item by the specified built type or via `entityMapper` method'));
 
         if (parentBuilt && (childrenBuiltPropertyName || '').length) {
             // check for building children via temporary variable
@@ -71,9 +67,10 @@ export default class HierarchyUtils {
         entities: M[], entityIdPropertyName: string, entityParentIdPropertyName: string, parent?: M,
         builtType?: Type<N>, parentBuilt?: N, childrenBuiltPropertyName?: string,
         entityMapper?: (entity: M, item: N) => N): N[] {
-        ((entityIdPropertyName || '').length && (entityParentIdPropertyName || '').length)
-        || throwError('Could not build hierarchy that not specify property names to detect child/parent!');
-        (builtType || entityMapper) || throwError(
+        AssertUtils.isTrueValue(
+            ((entityIdPropertyName || '').length > 0 && (entityParentIdPropertyName || '').length > 0),
+            'Could not build hierarchy that not specify property names to detect child/parent!');
+        AssertUtils.isValueNotNou((builtType || entityMapper),
             'Could not build hierarchy that not specify the built type or `entityMapper` method!');
 
         let parentId: any;
@@ -122,13 +119,9 @@ export default class HierarchyUtils {
             item = entityMapper.apply(this, [ entity, item ]);
         }
 
-        if (!item) {
-            if (builtType) {
-                throwError('Could not create new item by the specified built type {' + builtType.name + '}');
-            } else {
-                throwError('Could not create new item by the specified built type or via `entityMapper` method');
-            }
-        }
+        AssertUtils.isValueNotNou(item,
+            (builtType ? 'Could not create new item by the specified built type {' + builtType.name + '}'
+                : 'Could not create new item by the specified built type or via `entityMapper` method'));
 
         if (parent) {
             if ((parentBuiltPropertyName || '').length) {
@@ -168,7 +161,8 @@ export default class HierarchyUtils {
         childrenEntityPropertyName?: string,
         parentBuiltPropertyName?: string, childrenBuiltPropertyName?: string,
         entityMapper?: (entity: M, item: N) => N): N[] {
-        (builtType || entityMapper) || throwError('Could not build hierarchy that not specify the built type or `entityMapper` method!');
+        AssertUtils.isValueNotNou((builtType || entityMapper),
+            'Could not build hierarchy that not specify the built type or `entityMapper` method!');
 
         let items: N[];
         items = [];

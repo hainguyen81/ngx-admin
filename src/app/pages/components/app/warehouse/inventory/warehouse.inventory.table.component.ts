@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef,} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,8 +10,7 @@ import {ConfirmPopup} from 'ngx-material-popup';
 import {Lightbox} from 'ngx-lightbox';
 import {AppSmartTableComponent} from '../../components/app.table.component';
 import {ImageCellComponent} from '../../../smart-table/image.cell.component';
-import {GeneralSettingsDatasource,} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
-import {throwError} from 'rxjs';
+import {GeneralSettingsDatasource} from '../../../../../services/implementation/system/general.settings/general.settings.datasource';
 import {Constants as CommonConstants} from '../../../../../@core/data/constants/common.constants';
 import AppObserveUtils from '../../../../../utils/app/app.observe.utils';
 import PromiseUtils from '../../../../../utils/common/promise.utils';
@@ -22,7 +21,8 @@ import {Cell, DefaultEditor, Row} from '@app/types/index';
 import {RowNumberCellComponent} from '../../../smart-table/row.number.cell.component';
 import {IWarehouseInventory} from '../../../../../@core/data/warehouse/warehouse.inventory';
 import {NumberCellComponent} from '../../../smart-table/number.cell.component';
-import {WarehouseInventoryDatasource,} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import {WarehouseInventoryDatasource} from '../../../../../services/implementation/warehouse/warehouse.inventory/warehouse.inventory.datasource';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* warehouse inventory table settings */
 export const WarehouseInventoryTableSettings = {
@@ -207,7 +207,8 @@ export class WarehouseInventorySmartTableComponent
             viewContainerRef, changeDetectorRef, elementRef,
             modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        generalSettingsDatasource || throwError('Could not inject GeneralSettingsDatasource instance');
+        AssertUtils.isValueNotNou(generalSettingsDatasource,
+            'Could not inject GeneralSettingsDatasource instance');
         this.tableHeader = 'warehouse.inventory.title';
         this.config = WarehouseInventoryTableSettings;
         this.setContextMenu(WarehouseInventoryContextMenu);

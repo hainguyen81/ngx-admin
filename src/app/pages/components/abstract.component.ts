@@ -27,7 +27,7 @@ import {DataSource, LocalDataSource} from '@app/types/index';
 import {ContextMenuComponent, ContextMenuService} from 'ngx-contextmenu';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {Observable, Subscription, throwError} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import HtmlUtils from '../../utils/common/html.utils';
 import KeyboardUtils from '../../utils/common/keyboard.utils';
 import ComponentUtils from '../../utils/common/component.utils';
@@ -52,6 +52,7 @@ import FunctionUtils from '../../utils/common/function.utils';
 import {dbConfig} from '../../config/db.config';
 import TimerUtils from '../../utils/common/timer.utils';
 import PromiseUtils from '../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /* Customize event for abstract component */
 export interface IEvent {
@@ -304,7 +305,7 @@ export abstract class AbstractComponent
      * @return the {AbstractKeydownEventHandlerService} instance
      */
     protected getComponentKeyDownHandlerService(): AbstractKeydownEventHandlerService<Element> {
-        this.componentKeyDownHandlerService || throwError('Could not handle component/document `keydown`');
+        AssertUtils.isValueNotNou(this.componentKeyDownHandlerService, 'Could not handle component/document `keydown`');
         return this.componentKeyDownHandlerService;
     }
 
@@ -313,7 +314,7 @@ export abstract class AbstractComponent
      * @return the {AbstractKeyupEventHandlerService} instance
      */
     protected getComponentKeyUpHandlerService(): AbstractKeyupEventHandlerService<Element> {
-        this.componentKeyUpHandlerService || throwError('Could not handle component/document `keyup`');
+        AssertUtils.isValueNotNou(this.componentKeyUpHandlerService, 'Could not handle component/document `keyup`');
         return this.componentKeyUpHandlerService;
     }
 
@@ -322,7 +323,7 @@ export abstract class AbstractComponent
      * @return the {AbstractKeypressEventHandlerService} instance
      */
     protected getComponentKeyPressHandlerService(): AbstractKeypressEventHandlerService<Element> {
-        this.componentKeyPressHandlerService || throwError('Could not handle component/document `keypress`');
+        AssertUtils.isValueNotNou(this.componentKeyPressHandlerService, 'Could not handle component/document `keypress`');
         return this.componentKeyPressHandlerService;
     }
 
@@ -363,7 +364,7 @@ export abstract class AbstractComponent
      * @param dataSource to apply
      */
     public setDataSource(dataSource: DataSource) {
-        dataSource || throwError('Not found data source!');
+        AssertUtils.isValueNotNou(dataSource, 'Not found data source!');
         this.dataSource = dataSource;
     }
 
@@ -388,7 +389,7 @@ export abstract class AbstractComponent
      * @return the {ModalDialogService} instance
      */
     protected getModalDialogService(): ModalDialogService {
-        this.modalDialogService || throwError('Could not inject ModalDialogService');
+        AssertUtils.isValueNotNou(this.modalDialogService, 'Could not inject ModalDialogService');
         return this.modalDialogService;
     }
 
@@ -397,7 +398,7 @@ export abstract class AbstractComponent
      * @return the {ConfirmPopup} instance
      */
     protected getConfirmPopup(): ConfirmPopup {
-        this.confirmPopup || throwError('Could not inject ConfirmPopup');
+        AssertUtils.isValueNotNou(this.confirmPopup, 'Could not inject ConfirmPopup');
         return this.confirmPopup;
     }
 
@@ -430,7 +431,7 @@ export abstract class AbstractComponent
      * @param contextMenu the context menu items array
      */
     protected setContextMenu(contextMenu: IContextMenu[]) {
-        (contextMenu && contextMenu.length) || throwError('Context menu must be valid');
+        AssertUtils.isTrueValue((contextMenu && contextMenu.length > 0), 'Context menu must be valid');
         this.contextMenu = contextMenu;
     }
 
@@ -471,13 +472,13 @@ export abstract class AbstractComponent
                           @Inject(Lightbox) private lightbox?: Lightbox,
                           @Inject(Router) private router?: Router,
                           @Inject(ActivatedRoute) private activatedRoute?: ActivatedRoute) {
-        contextMenuService || throwError('Could not inject ContextMenuService');
-        toasterService || throwError('Could not inject ToastrService');
-        logger || throwError('Could not inject NGXLogger');
-        renderer || throwError('Could not inject Renderer2');
-        translateService || throwError('Could not inject TranslateService');
-        factoryResolver || throwError('Could not inject ComponentFactoryResolver');
-        router || throwError('Could not inject Router');
+        AssertUtils.isValueNotNou(contextMenuService, 'Could not inject ContextMenuService');
+        AssertUtils.isValueNotNou(toasterService, 'Could not inject ToastrService');
+        AssertUtils.isValueNotNou(logger, 'Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(renderer, 'Could not inject Renderer2');
+        AssertUtils.isValueNotNou(translateService, 'Could not inject TranslateService');
+        AssertUtils.isValueNotNou(factoryResolver, 'Could not inject ComponentFactoryResolver');
+        AssertUtils.isValueNotNou(router, 'Could not inject Router');
         dataSource = dataSource || new LocalDataSource();
     }
 
@@ -1307,8 +1308,8 @@ export abstract class AbstractComponent
      * @return the created component
      */
     protected createComponentAt(viewContainerRef: ViewContainerRef, componentType: Type<any>): any {
-        !viewContainerRef && throwError('Not found view container to create component!');
-        !componentType && throwError('Not found component type to create!');
+        AssertUtils.isValueNotNou(viewContainerRef, 'Not found view container to create component!');
+        AssertUtils.isValueNotNou(componentType, 'Not found component type to create!');
 
         let compServ: IComponentService<any>;
         compServ = new BaseComponentService(
@@ -1324,8 +1325,8 @@ export abstract class AbstractComponent
      * @param options lightbox options
      */
     public openLightbox(album: Array<IAlbum>, imageIndex?: number, options?: {}): void {
-        !this.getLightbox() && throwError('Could not inject Lightbox');
-        (!album || !album.length) && throwError('Empty images album to open');
+        AssertUtils.isValueNotNou(this.getLightbox(), 'Could not inject Lightbox');
+        AssertUtils.isValueNotEmptyArray(album, 'Empty images album to open');
         if (!imageIndex || album.length <= imageIndex || imageIndex < 0) {
             imageIndex = 0;
         }
@@ -1400,7 +1401,7 @@ export abstract class AbstractComponent
      * Close lightbox
      */
     public closeLightbox(): void {
-        !this.getLightbox() && throwError('Could not inject Lightbox');
+        AssertUtils.isValueNotNou(this.getLightbox(), 'Could not inject Lightbox');
         this.getLightbox().close();
     }
 
@@ -1468,8 +1469,8 @@ export abstract class AbstractComponent
         const indexDbService: NgxIndexedDBService = _this.getService(NgxIndexedDBService);
         const localStorage: NgxLocalStorageEncryptionService =
             _this.getService(NgxLocalStorageEncryptionService);
-        indexDbService || throwError('Could not inject NgxIndexedDBService instance');
-        localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
+        AssertUtils.isValueNotNou(indexDbService, 'Could not inject NgxIndexedDBService instance');
+        AssertUtils.isValueNotNou(localStorage, 'Could not inject NgxLocalStorageEncryptionService instance');
         TimerUtils.timeout(() => {
             _this.freeze();
             _this.__deleteDatabase();

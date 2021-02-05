@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
 import {filter, map, takeUntil} from 'rxjs/operators';
-import {Subject, Subscription, throwError} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 /* Authentication */
 import {NbAuthOAuth2Token, NbAuthService, NbAuthToken} from '@nebular/auth';
 import {AppConfig} from '../../../config/app.config';
@@ -23,6 +23,7 @@ import ObjectUtils from '../../../utils/common/object.utils';
 import ArrayUtils from '../../../utils/common/array.utils';
 import FunctionUtils from '../../../utils/common/function.utils';
 import PromiseUtils from '../../../utils/common/promise.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Component({
     selector: 'ngx-header',
@@ -103,15 +104,15 @@ export class HeaderComponent extends AbstractComponent implements OnInit, OnDest
             translateService, factoryResolver, viewContainerRef, changeDetectorRef,
             elementRef, modalDialogService, confirmPopup, lightbox,
             router, activatedRoute);
-        sidebarService || throwError('Could not inject NbSidebarService instance');
-        menuService || throwError('Could not inject NbMenuService instance');
-        themeService || throwError('Could not inject NbThemeService instance');
-        breakpointService || throwError('Could not inject NbMediaBreakpointsService instance');
-        authService || throwError('Could not inject NbAuthService instance');
-        authDbService || throwError('Could not inject NbxOAuth2AuthDbService instance');
-        localStorage || throwError('Could not inject NgxLocalStorageEncryptionService instance');
-        userDbService || throwError('Could not inject UserDbService instance');
-        router || throwError('Could not inject Router instance');
+        AssertUtils.isValueNotNou(sidebarService, 'Could not inject NbSidebarService instance');
+        AssertUtils.isValueNotNou(menuService, 'Could not inject NbMenuService instance');
+        AssertUtils.isValueNotNou(themeService, 'Could not inject NbThemeService instance');
+        AssertUtils.isValueNotNou(breakpointService, 'Could not inject NbMediaBreakpointsService instance');
+        AssertUtils.isValueNotNou(authService, 'Could not inject NbAuthService instance');
+        AssertUtils.isValueNotNou(authDbService, 'Could not inject NbxOAuth2AuthDbService instance');
+        AssertUtils.isValueNotNou(localStorage, 'Could not inject NgxLocalStorageEncryptionService instance');
+        AssertUtils.isValueNotNou(userDbService, 'Could not inject UserDbService instance');
+        AssertUtils.isValueNotNou(router, 'Could not inject Router instance');
     }
 
     ngOnInit(): void {

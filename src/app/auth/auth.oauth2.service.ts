@@ -8,13 +8,14 @@ import {AbstractHttpService} from '../services/common/http.service';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {ServiceResponse} from '../services/common/response.service';
 import {ConnectionService} from 'ng-connection-service';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import EncryptionUtils from '../utils/common/encryption.utils';
 import PromiseUtils from '../utils/common/promise.utils';
 import {IUser} from '../@core/data/system/user';
 import {UserDbService} from '../services/implementation/system/user/user.service';
 import JsonUtils from '../utils/common/json.utils';
 import {RC_AUTH_AUTHORIZATION_BASIC_TYPE, RC_AUTH_AUTHORIZATION_HEADER} from '../config/request.config';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export class NbxOAuth2AuthDbService<T extends NbAuthToken> extends AbstractBaseDbService<T> {
@@ -44,7 +45,7 @@ export class NbxOAuth2AuthHttpService<T extends NbAuthToken> extends AbstractHtt
                 @Inject(NGXLogger) logger: NGXLogger,
                 @Inject(UserDbService) dbService: UserDbService) {
         super(http, logger, dbService);
-        dbService || throwError('Could not inject authentication database service for offline mode');
+        AssertUtils.isValueNotNou(dbService, 'Could not inject authentication database service for offline mode');
     }
 
     private createTokenDelegate: (value: any) => T;

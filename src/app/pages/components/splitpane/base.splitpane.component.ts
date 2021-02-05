@@ -7,12 +7,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';
 import {ModalDialogService} from 'ngx-modal-dialog';
 import {ConfirmPopup} from 'ngx-material-popup';
-import {throwError} from 'rxjs';
 import {Lightbox} from 'ngx-lightbox';
 import {ActivatedRoute, Router} from '@angular/router';
 import ArrayUtils from '@app/utils/common/array.utils';
 import ObjectUtils from '@app/utils/common/object.utils';
 import NumberUtils from '@app/utils/common/number.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 /**
  * Base horizontal split-pane component base on {AngularSplitModule}
@@ -90,9 +90,10 @@ export class BaseSplitPaneComponent<T extends DataSource> extends NgxSplitPaneCo
      */
     protected setAreaComponent(areaIndex: number, componentType: Type<any>): any {
         const viewContainerRef: ViewContainerRef = ArrayUtils.get<ViewContainerRef>(this.getSplitAreaHolderViewContainerComponents(), areaIndex);
-        (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(areaIndex)
-            && 0 <= areaIndex && areaIndex < this.numberOfAreas)
-        || throwError('Could not create area component at the invalid index area (' + areaIndex + ')');
+        AssertUtils.isTrueValue(
+            (ObjectUtils.isNotNou(viewContainerRef) && NumberUtils.isNumber(areaIndex)
+            && 0 <= areaIndex && areaIndex < this.numberOfAreas),
+            'Could not create area component at the invalid index area (' + areaIndex + ')');
         return super.createComponentAt(viewContainerRef, componentType);
     }
 }

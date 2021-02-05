@@ -2,9 +2,9 @@ import {ErrorHandler, Inject, Injectable, Injector} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ToastrService} from 'ngx-toastr';
 import {NGXLogger} from 'ngx-logger';
-import {throwError} from 'rxjs';
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import AppUtils from '../../utils/app/app.utils';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Injectable()
 export default class GlobalErrorsHandler implements ErrorHandler {
@@ -25,7 +25,7 @@ export default class GlobalErrorsHandler implements ErrorHandler {
         // TODO Could not inject this ToastrService as normally from constructor. Because of [ERROR Cannot instantiate cyclic dependency! ApplicationRef]
         // see https://github.com/scttcper/ngx-toastr/issues/179#issuecomment-325724269
         const toastrService: ToastrService = AppUtils.getService(ToastrService);
-        toastrService || throwError('Could not inject ToastrService');
+        AssertUtils.isValueNotNou(toastrService, 'Could not inject ToastrService');
         return toastrService;
     }
 
@@ -53,9 +53,9 @@ export default class GlobalErrorsHandler implements ErrorHandler {
     constructor(@Inject(TranslateService) private translateService: TranslateService,
                 @Inject(NGXLogger) private logger: NGXLogger,
                 private injector: Injector) {
-        translateService || throwError('Could not inject TranslateService');
-        logger || throwError('Could not inject NGXLogger');
-        injector || throwError('Could not inject Injector');
+        AssertUtils.isValueNotNou(translateService, 'Could not inject TranslateService');
+        AssertUtils.isValueNotNou(logger, 'Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(injector, 'Could not inject Injector');
     }
 
     /**

@@ -28,7 +28,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import ObjectUtils from '../../../utils/common/object.utils';
 import ComponentUtils from 'app/utils/common/component.utils';
 import HtmlUtils from 'app/utils/common/html.utils';
-import {Subscription, throwError} from 'rxjs';
+import {Subscription} from 'rxjs';
 import FunctionUtils from 'app/utils/common/function.utils';
 import PromiseUtils from 'app/utils/common/promise.utils';
 
@@ -414,7 +414,7 @@ export class NgxTreeviewComponent extends AbstractTreeviewComponent<DataSource>
             } else if (!this.isDropDown() && this.treeviewComponent) {
                 this.treeviewComponent.selection = this.collectSelection();
             } else {
-                throwError('Could not initialize tree-view selection while component has not been initialized yet!');
+                throw new Error('Could not initialize tree-view selection while component has not been initialized yet!');
             }
         }
     }

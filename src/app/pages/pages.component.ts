@@ -3,7 +3,7 @@ import {MenuService} from '../services/implementation/menu.service';
 import {NbMenuItem} from '@nebular/theme';
 import {NGXLogger} from 'ngx-logger';
 import {TranslateService} from '@ngx-translate/core';
-import {throwError} from 'rxjs';
+import AssertUtils from '@app/utils/common/assert.utils';
 
 @Component({
     selector: 'ngx-pages',
@@ -42,9 +42,9 @@ export class PagesComponent implements AfterViewInit {
     constructor(@Inject(MenuService) private menuService: MenuService,
                 @Inject(NGXLogger) private logger: NGXLogger,
                 @Inject(TranslateService) private translateService: TranslateService) {
-        menuService || throwError('Could not inject MenuService');
-        logger || throwError('Could not inject NGXLogger');
-        translateService || throwError('Could not inject TranslateService');
+        AssertUtils.isValueNotNou(menuService, 'Could not inject MenuService');
+        AssertUtils.isValueNotNou(logger, 'Could not inject NGXLogger');
+        AssertUtils.isValueNotNou(translateService, 'Could not inject TranslateService');
         this._menu = [];
     }
 
