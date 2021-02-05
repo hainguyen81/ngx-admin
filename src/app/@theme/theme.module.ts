@@ -10,6 +10,7 @@ import {
     NbSearchModule,
     NbSelectModule,
     NbSidebarModule,
+    NbTabsetModule,
     NbThemeModule,
     NbUserModule,
 } from '@nebular/theme';
@@ -41,6 +42,7 @@ const NB_MODULES = [
     NbIconModule,
     NbEvaIconsModule,
     NbThemeModule,
+    NbTabsetModule,
 ];
 const SUPPORTED_MODULES = [
     TranslateModule,
