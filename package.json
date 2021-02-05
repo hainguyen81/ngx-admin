@@ -49,13 +49,14 @@
         "release:changelog": "npm run conventional-changelog -- -p angular -i CHANGELOG.md -s"
     },
     "dependencies": {
-        "@agm/core": "^3.0.0-beta.0",
+        "@akveo/ng2-completer": "^9.0.1",
         "@angular/animations": "9.1.13",
         "@angular/cdk": "^9.2.4",
         "@angular/common": "9.1.13",
         "@angular/compiler": "9.1.13",
         "@angular/core": "9.1.13",
         "@angular/forms": "9.1.13",
+        "@angular/google-maps": "^11.1.2",
         "@angular/material": "^9.2.4",
         "@angular/platform-browser": "9.1.13",
         "@angular/platform-browser-dynamic": "9.1.13",
@@ -100,7 +101,6 @@
         "ng-connection-service": "^1.0.4",
         "ng-dynamic-component": "^6.1.1-channel-ivy-ivy.2",
         "ng2-ckeditor": "1.2.7",
-        "ng2-completer": "^9.0.1",
         "ng2-date-picker": "^11.0.0",
         "ng2-smart-table": "^1.6.0",
         "ngx-awesome-uploader": "^10.0.2",
